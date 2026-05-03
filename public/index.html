@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>AI 论文日报阅读站</title>
+    <meta name="description" content="从 arXiv 和 DBLP 采集论文，生成中文摘要并提供本地静态阅读站。" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <section class="hero">
+        <div>
+          <p class="kicker">Research Digest</p>
+          <h1>AI 论文日报阅读站</h1>
+          <p class="hero-copy">自动汇总 arXiv 与 DBLP 候选论文，沉淀中文摘要、研究动机、方法、实验结果和作者单位字段。</p>
+        </div>
+        <div class="data-links">
+          <a class="data-link" href="research-digest/daily.json">今日新论文</a>
+          <a class="data-link" href="research-digest/papers.json">历史库</a>
+        </div>
+      </section>
+
+      <section class="stats-grid" aria-label="数据概览">
+        <article><span>历史库</span><strong id="stat-total">0</strong></article>
+        <article><span>今日新论文</span><strong id="stat-current">0</strong></article>
+        <article><span>待推送</span><strong id="stat-new">0</strong></article>
+        <article><span>生成时间</span><strong id="stat-time">待运行</strong></article>
+      </section>
+
+      <section class="toolbar" aria-label="论文筛选">
+        <label class="control wide">
+          <span>搜索</span>
+          <input id="search-input" type="search" placeholder="标题、作者、关键词" />
+        </label>
+        <label class="control">
+          <span>来源</span>
+          <select id="source-select">
+            <option value="all">全部</option>
+          </select>
+        </label>
+        <label class="control">
+          <span>排序</span>
+          <select id="sort-select">
+            <option value="recommendation">推荐</option>
+            <option value="date">时间</option>
+            <option value="importance">重要度</option>
+            <option value="source">来源</option>
+          </select>
+        </label>
+      </section>
+
+      <section class="digest-workbench" aria-label="摘要工作台">
+        <div class="workbench-head">
+          <div>
+            <p class="kicker dark">Web Summary</p>
+            <h2>网页端摘要工作台</h2>
+          </div>
+          <div class="workbench-actions">
+            <button id="copy-prompt-button" type="button">复制提示词</button>
+            <button id="save-digest-button" type="button">保存摘要</button>
+          </div>
+        </div>
+        <div class="workbench-grid">
+          <label class="control">
+            <span>给 ChatGPT 网页的提示词</span>
+            <textarea id="prompt-output" readonly></textarea>
+          </label>
+          <label class="control">
+            <span>ChatGPT 返回的 JSON</span>
+            <textarea id="digest-input" placeholder="{ &quot;papers&quot;: [...] }"></textarea>
+          </label>
+        </div>
+        <p class="workbench-status" id="workbench-status">待摘要论文 0 篇</p>
+      </section>
+
+      <p class="empty-state" id="empty-state">正在读取论文数据...</p>
+      <section class="paper-list" id="paper-list" aria-live="polite"></section>
+    </main>
+
+    <script src="app.js" type="module"></script>
+  </body>
+</html>
