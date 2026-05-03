@@ -14,11 +14,9 @@ Paper Digest Agent 是一个本地论文速递工具，用来每天搜集 arXiv 
 算法趋势观察：最多 2 篇
 ```
 
-## 功能更新记录
+## What's New / 功能更新记录
 
-| 日期 | 更新概览 | 关键能力 |
-| --- | --- | --- |
-| 2026-05-03 | `PDF 缓存` `工作流状态` `阅读站增强` `摘要提示词增强` | 可选下载 arXiv PDF 到 `public/research-digest/pdfs/`，在 `daily.json` 写入 `localPdfPath/localPdfUrl/pdfStatus`；每篇论文维护 `workflow.collectStatus/digestStatus/emailStatus`，统计 `pendingDigest/pendingEmail/failedDigest/failedEmail/pdfDownloaded/pdfFailed`；阅读站支持状态筛选、PDF 缓存筛选、收藏、已读、未读；网页端摘要提示词携带 `authorAffiliations/affiliations/pdfUrl/localPdfPath/workflow`，提醒模型不能访问 PDF 时不要猜测作者单位。 |
+- **2026-05-03** — ![NEW](https://img.shields.io/badge/NEW-red?style=flat-square) ![PDF Cache](https://img.shields.io/badge/PDF%20Cache-local-blue?style=flat-square) ![Workflow](https://img.shields.io/badge/Workflow-observable-green?style=flat-square) ![Reader](https://img.shields.io/badge/Reader-enhanced-purple?style=flat-square) ![Prompt](https://img.shields.io/badge/Prompt-contextual-orange?style=flat-square) **论文日报工作流可观测升级**：可选下载 arXiv PDF 到 `public/research-digest/pdfs/`，在 `daily.json` 写入 `localPdfPath/localPdfUrl/pdfStatus`；每篇论文维护 `workflow.collectStatus/digestStatus/emailStatus`，统计 `pendingDigest/pendingEmail/failedDigest/failedEmail/pdfDownloaded/pdfFailed`；阅读站支持状态筛选、PDF 缓存筛选、收藏、已读、未读；网页端摘要提示词携带 `authorAffiliations/affiliations/pdfUrl/localPdfPath/workflow`，提醒模型不能访问 PDF 时不要猜测作者单位。
 
 ## 数据结构
 
