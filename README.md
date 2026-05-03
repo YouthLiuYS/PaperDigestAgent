@@ -1,51 +1,239 @@
 # Paper Digest Agent
 
-一个独立的本地论文速递项目：每天从 arXiv 和 DBLP 搜集论文，生成中文摘要、motivation、method、实验结果和作者单位字段，写入本地静态阅读站，并可通过 SMTP 推送邮件。
+Paper Digest Agent 是一个本地论文速递工具，用来每天搜集 arXiv / DBLP 论文，生成中文摘要，并通过本地静态阅读站和邮件推送给你。
 
-数据现在拆成两个库：
+当前默认研究方向是：
 
-- `public/research-digest/daily.json`：当天新搜集、尚未推送或刚推送的论文小库，Codex 自动化只处理这个文件。
-- `public/research-digest/papers.json`：历史库，邮件发送成功后才把当天论文合并进去，用来防止重复推送。
+- `硬件体系结构主线`：AI 处理器、NPU/GPU/TPU、LLM accelerator、Transformer/Attention accelerator、LLM 训推系统、KV cache、PIM/近存、3D/chiplet、硬件友好量化等。
+- `算法趋势观察`：LLM/Agent/多模态/后训练/对齐/世界模型等，用少量名额跟踪 AI 发展趋势。
 
-推荐策略采用双通道：
+默认每日推荐配额：
 
-- `硬件体系结构主线`：AI 处理器、NPU/GPU/TPU、体系结构、LLM 训推系统、KV cache、PIM/近存、硬件友好量化等，默认每天最多 6 篇。
-- `算法趋势观察`：LLM/Agent/多模态/后训练/对齐等 AI 发展趋势，默认每天最多 2 篇，只作为辅助跟踪。
-
-## 快速开始
-
-1. 进入项目：
-   `cd /Users/cyyoung/PaperDigestAgent`
-2. 查看参数：
-   `npm run papers:help`
-3. 不调用 AI、不发邮件的试运行：
-   `npm run papers:demo`
-4. 采集当天新论文，不调用 AI、不发邮件：
-   `npm run papers:collect`
-5. 发送当天已完成摘要、尚未推送的新论文：
-   `npm run papers:email`
-6. 打开本地静态阅读站：
-   `npm run serve` 后访问 `http://127.0.0.1:4173/`
-
-## 环境变量
-
-创建 `.env.local`。如果使用 Codex 自动化或网页端生成摘要，可以不配置 AI key；如果希望脚本直接调用 OpenAI-compatible API，再配置 `PAPER_AGENT_AI_API_KEY`：
-
-```bash
-PAPER_AGENT_AI_API_KEY=sk-...
-PAPER_AGENT_AI_MODEL=gpt-4o-mini
-PAPER_AGENT_ARXIV_QUERIES=(cat:cs.AR OR cat:cs.DC OR cat:cs.PF) AND (all:LLM OR all:transformer OR all:foundation OR all:language) AND (all:accelerator OR all:processor OR all:architecture OR all:hardware OR all:system OR all:serving OR all:training OR all:inference OR all:cache);(all:quantization OR all:compression OR all:pruning OR all:sparsity OR all:low-bit) AND (all:LLM OR all:transformer OR all:language) AND (all:hardware OR all:accelerator OR all:inference OR all:serving OR all:processor);(all:prefill OR all:decoding OR all:KV OR all:cache OR all:attention) AND (all:accelerator OR all:kernel OR all:compiler OR all:serving OR all:memory) AND (all:LLM OR all:transformer);(all:PIM OR all:near-memory OR all:HBM OR all:DRAM OR all:SRAM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI);(all:agent OR all:agents OR all:agentic OR all:reasoning OR all:post-training OR all:alignment OR all:multimodal OR all:world-model) AND (all:LLM OR all:foundation OR all:language)
-PAPER_AGENT_DBLP_QUERIES=LLM accelerator architecture;large language model accelerator;LLM inference accelerator;transformer accelerator architecture;attention accelerator architecture;AI processor large language model;NPU large language model;GPU LLM inference optimization;LLM serving system optimization;large language model inference system;LLM training system optimization;hardware software co-design LLM;hardware aware LLM quantization;large language model quantization hardware;low bit LLM inference accelerator;sparsity LLM accelerator;KV cache optimization LLM;memory efficient LLM inference;near memory computing LLM;processing in memory transformer;chiplet AI accelerator;compiler optimization LLM inference;LLM reasoning agent;multimodal large language model;post-training LLM alignment
-PAPER_AGENT_TARGET_THEMES=LLM accelerator architecture;large language model accelerator;LLM inference acceleration;transformer accelerator;attention accelerator;AI processor architecture;NPU for large language model;GPU LLM inference optimization;LLM serving system optimization;LLM training system optimization;hardware software co-design for LLM;hardware aware LLM quantization;large language model quantization hardware;low-bit LLM inference accelerator;sparsity acceleration for LLM;KV cache optimization;memory efficient LLM inference;near memory computing for LLM;processing in memory for transformer;chiplet AI accelerator;compiler optimization for LLM inference;agent hardware software co-design
-PAPER_AGENT_CONFERENCE_VENUES=ISCA;MICRO;HPCA;ASPLOS;MLSys;OSDI;SOSP;USENIX ATC;SC;PPoPP;EuroSys;DAC;ICCAD;DATE;NeurIPS;ICML;ICLR;ACL;EMNLP
-PAPER_AGENT_CONFERENCE_YEARS=2025;2024;2023;2022
-PAPER_AGENT_COLLECTION_MODE=all
-PAPER_AGENT_MAX_PAPERS=20
-PAPER_AGENT_SITE_URL=http://127.0.0.1:4173/
-PAPER_AGENT_DAILY_OUTPUT=public/research-digest/daily.json
+```text
+硬件体系结构主线：最多 6 篇
+算法趋势观察：最多 2 篇
 ```
 
-如果要发邮件，再加入 SMTP 配置：
+## 数据结构
+
+项目维护两个 JSON 库：
+
+```text
+public/research-digest/daily.json   # 当天新论文工作区
+public/research-digest/papers.json  # 历史论文库
+```
+
+工作方式：
+
+1. 采集脚本只把当天新论文写入 `daily.json`。
+2. Codex 自动化或网页端只给 `daily.json` 里的未推送论文生成摘要。
+3. 邮件脚本只发送 `daily.json` 里“未推送 + 已完成摘要”的论文。
+4. 邮件发送成功后，论文会被标记为 `pushedAt/emailSentAt`，并合并进 `papers.json` 历史库。
+
+这样可以避免每天重复推送历史论文。
+
+## 1. 准备环境
+
+需要：
+
+- macOS / Linux / Windows WSL
+- Node.js 18.17 或更高版本
+- npm
+- 可选：Codex Desktop，用于不花 API 费用生成摘要
+- 可选：SMTP 邮箱授权码，用于邮件推送
+
+检查 Node：
+
+```bash
+node --version
+npm --version
+```
+
+如果 macOS 上没有 Node，可以用 Homebrew 安装：
+
+```bash
+brew install node
+```
+
+## 2. 克隆项目
+
+```bash
+git clone https://github.com/YouthLiuYS/PaperDigestAgent.git
+cd PaperDigestAgent
+```
+
+这个项目没有第三方 npm 依赖，所以通常不需要 `npm install`。
+
+## 3. 创建本地配置
+
+复制配置模板：
+
+```bash
+cp .env.example .env.local
+```
+
+然后编辑 `.env.local`：
+
+```bash
+nano .env.local
+```
+
+`.env.local` 不会提交到 GitHub。它用于保存本地私密配置，比如 SMTP 授权码、API key、搜索主题等。
+
+## 4. 配置搜索主题
+
+`.env.example` 已经内置一套适合 AI 处理器/体系结构 + LLM 系统优化的主题词。
+
+核心变量：
+
+```bash
+PAPER_AGENT_COLLECTION_MODE=all
+PAPER_AGENT_DAILY_MAX_PAPERS=8
+PAPER_AGENT_DAILY_PRIMARY_MAX_PAPERS=6
+PAPER_AGENT_DAILY_TREND_MAX_PAPERS=2
+PAPER_AGENT_CONFERENCE_YEARS=2025;2024;2023;2022
+```
+
+如果你只想看每日最新论文，可以运行：
+
+```bash
+npm run papers:collect:daily
+```
+
+如果你想检索往年会议论文，可以运行：
+
+```bash
+npm run papers:collect:conference
+```
+
+完整模式会同时跑每日最新和往年会议：
+
+```bash
+npm run papers:collect
+```
+
+注意：DBLP 偶尔会慢或返回 `fetch failed`。这不会破坏已有数据，脚本会保留成功采集到的结果。
+
+## 5. 首次试跑
+
+先跑一个不发邮件、不调用 AI 的采集：
+
+```bash
+npm run papers:collect
+```
+
+更稳妥的首次测试可以只跑 daily：
+
+```bash
+node scripts/paper-agent.mjs --mode daily --no-ai --no-email --daily-max 5 --max-per-query 5
+```
+
+成功后会看到类似：
+
+```text
+Paper agent started.
+Collected 8 candidate papers (...), 6 new.
+Wrote 6 daily new papers to public/research-digest/daily.json.
+Paper agent finished.
+```
+
+## 6. 启动本地阅读站
+
+```bash
+npm run serve
+```
+
+打开：
+
+```text
+http://127.0.0.1:4173/
+```
+
+页面会展示：
+
+- 历史论文库
+- 今日新论文
+- 推荐通道标签
+- 中文摘要字段
+- 网页端摘要工作台
+
+如果端口被占用，可以换端口：
+
+```bash
+PORT=4174 npm run serve
+```
+
+## 7. 生成中文摘要
+
+你有三种方式。
+
+### 方式 A：使用 Codex 自动化，推荐
+
+让采集脚本只负责搜论文，让 Codex 每天处理 `daily.json`。
+
+Codex 自动化任务说明可以写成：
+
+```text
+In /path/to/PaperDigestAgent, do not run network collection or email commands.
+Read only public/research-digest/daily.json.
+For each unpushed paper whose digest is missing or still contains fallback text such as AI 摘要未生成, generate rigorous Chinese fields:
+summaryZh, motivationZh, methodZh, experimentsZh, affiliationsZh, tags, importance.
+Only use the metadata and abstract in the JSON.
+Do not invent affiliations or experimental results.
+Write 未在 DBLP/arXiv 元数据中提供 when affiliations are absent.
+Save the updated JSON back to public/research-digest/daily.json.
+Update stats.pendingDigest, stats.pendingEmail, and stats.pushed when possible.
+Do not edit public/research-digest/papers.json.
+```
+
+推荐调度：
+
+```text
+08:20 采集论文
+08:35 Codex 自动化生成摘要
+08:50 发送邮件
+```
+
+### 方式 B：使用本地网页端 + ChatGPT 网页
+
+运行：
+
+```bash
+npm run serve
+```
+
+打开 `http://127.0.0.1:4173/`，在“网页端摘要工作台”里：
+
+1. 点击“复制提示词”。
+2. 粘贴到 ChatGPT 网页。
+3. 把 ChatGPT 返回的 JSON 粘回工作台。
+4. 点击“保存摘要”。
+
+保存后会更新 `public/research-digest/daily.json`。
+
+### 方式 C：使用 OpenAI-compatible API
+
+如果你愿意让脚本直接调用 API，在 `.env.local` 配置：
+
+```bash
+PAPER_AGENT_AI_API_KEY=your-api-key
+PAPER_AGENT_AI_MODEL=gpt-4o-mini
+PAPER_AGENT_AI_API_URL=https://api.openai.com/v1/chat/completions
+```
+
+测试连接：
+
+```bash
+npm run ai:test
+```
+
+然后直接运行脚本即可。注意 API 调用会产生平台用量费用，ChatGPT Pro 会员不等于 API 免费额度。
+
+## 8. 配置邮件推送
+
+在 `.env.local` 里配置 SMTP。
+
+通用示例：
 
 ```bash
 PAPER_AGENT_EMAIL_ENABLED=true
@@ -53,88 +241,175 @@ PAPER_AGENT_SMTP_HOST=smtp.example.com
 PAPER_AGENT_SMTP_PORT=465
 PAPER_AGENT_SMTP_SECURE=true
 PAPER_AGENT_SMTP_USER=paper-agent@example.com
-PAPER_AGENT_SMTP_PASS=your-smtp-password
+PAPER_AGENT_SMTP_PASS=your-smtp-authorization-code
 PAPER_AGENT_MAIL_FROM=Paper Agent <paper-agent@example.com>
 PAPER_AGENT_MAIL_TO=reader@example.com
 ```
 
-## 配置文件
+网易邮箱通常需要：
 
-也可以复制 `paper-agent.config.example.json` 为 `paper-agent.config.json`，然后运行：
+1. 在邮箱设置里开启 SMTP/IMAP 服务。
+2. 生成“授权码”。
+3. `PAPER_AGENT_SMTP_PASS` 填授权码，不要填登录密码。
+
+网易企业邮箱常见端口是 SSL 465 或企业邮箱指定的 SSL 端口。以邮箱后台显示为准。
+
+测试邮件阶段：
 
 ```bash
-node scripts/paper-agent.mjs --config paper-agent.config.json --email-only --send-email
+npm run papers:email
 ```
 
-## 每天定时
+邮件脚本不会重新采集。它只读取 `daily.json` 中未推送且已完成摘要的论文。
 
-本地 crontab 示例，每天 08:20 采集、08:50 发邮件：
+如果没有新论文，会看到：
+
+```text
+Email skipped: no unpushed daily papers with completed summaries.
+```
+
+## 9. 推荐的每日手动流程
+
+```bash
+cd /path/to/PaperDigestAgent
+npm run papers:collect
+npm run serve
+# 用 Codex 自动化或网页端生成 daily.json 的摘要
+npm run papers:email
+```
+
+验证状态：
+
+```bash
+node -e "const fs=require('fs'); for (const f of ['public/research-digest/daily.json','public/research-digest/papers.json']) { const d=JSON.parse(fs.readFileSync(f,'utf8')); console.log(f, d.stats); }"
+```
+
+## 10. 设置每天定时运行
+
+macOS / Linux 可以用 crontab：
+
+```bash
+crontab -e
+```
+
+示例，每天 08:20 采集，08:50 发送邮件：
 
 ```cron
 SHELL=/bin/zsh
 PATH=/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin
-20 8 * * * cd /Users/cyyoung/PaperDigestAgent && /opt/homebrew/bin/node scripts/paper-agent.mjs --mode all --no-ai --no-email >> /Users/cyyoung/PaperDigestAgent/paper-agent.log 2>&1
-50 8 * * * cd /Users/cyyoung/PaperDigestAgent && /opt/homebrew/bin/node scripts/paper-agent.mjs --email-only --send-email >> /Users/cyyoung/PaperDigestAgent/paper-agent.log 2>&1
+20 8 * * * cd /path/to/PaperDigestAgent && /opt/homebrew/bin/node scripts/paper-agent.mjs --mode all --no-ai --no-email >> /path/to/PaperDigestAgent/paper-agent.log 2>&1
+50 8 * * * cd /path/to/PaperDigestAgent && /opt/homebrew/bin/node scripts/paper-agent.mjs --email-only --send-email >> /path/to/PaperDigestAgent/paper-agent.log 2>&1
 ```
 
-其中 `--mode all` 会同时运行“每日最新论文”和“往年会议论文”两类采集。
+如果你用 Codex 自动化生成摘要，建议把 Codex 自动化放在 08:35 左右。
 
-## 两类采集功能
+macOS nano 里保存退出：
 
-Agent 支持两种采集档案：
-
-- `daily-latest`：从 arXiv 最新投稿和 DBLP 主题搜索中搜集最新论文。
-- `conference-archive`：按目标主题、会议名和年份，在 DBLP 往年会议论文中检索。
-
-常用命令：
-
-```bash
-npm run papers:collect
-npm run papers:collect:daily
-npm run papers:collect:conference
+```text
+Ctrl + O   保存
+Enter      确认文件名
+Ctrl + X   退出
 ```
 
-也可以直接传参：
+## 11. 常用命令
 
 ```bash
-node scripts/paper-agent.mjs --mode conference --no-ai --no-email --theme "AI accelerator" --theme "LLM inference" --venue ISCA --venue MICRO --year 2025 --year 2024
+npm run papers:help              # 查看参数
+npm run papers:collect           # 采集每日最新 + 往年会议，不调用 AI，不发邮件
+npm run papers:collect:daily     # 只采集每日最新
+npm run papers:collect:conference # 只采集往年会议
+npm run papers:email             # 只发送 daily.json 中未推送且已摘要的新论文
+npm run serve                    # 启动本地阅读站
+npm run ai:test                  # 测试 OpenAI-compatible API
 ```
 
-关键环境变量：
+自定义一次采集：
 
 ```bash
-PAPER_AGENT_COLLECTION_MODE=all
-PAPER_AGENT_TARGET_THEMES=LLM accelerator architecture;large language model accelerator;LLM inference acceleration;transformer accelerator;attention accelerator;AI processor architecture;NPU for large language model;GPU LLM inference optimization;LLM serving system optimization;LLM training system optimization;hardware software co-design for LLM;hardware aware LLM quantization;large language model quantization hardware;low-bit LLM inference accelerator;sparsity acceleration for LLM;KV cache optimization;memory efficient LLM inference;near memory computing for LLM;processing in memory for transformer;chiplet AI accelerator;compiler optimization for LLM inference;agent hardware software co-design
-PAPER_AGENT_CONFERENCE_VENUES=ISCA;MICRO;HPCA;ASPLOS;MLSys;OSDI;SOSP;USENIX ATC;SC;PPoPP;EuroSys;DAC;ICCAD;DATE;NeurIPS;ICML;ICLR;ACL;EMNLP
-PAPER_AGENT_CONFERENCE_YEARS=2025;2024;2023;2022
-PAPER_AGENT_DAILY_MAX_PAPERS=8
-PAPER_AGENT_DAILY_PRIMARY_MAX_PAPERS=6
-PAPER_AGENT_DAILY_TREND_MAX_PAPERS=2
-PAPER_AGENT_CONFERENCE_MAX_PAPERS=16
-PAPER_AGENT_CONFERENCE_MAX_PER_QUERY=3
-PAPER_AGENT_CONFERENCE_MAX_QUERIES=120
+node scripts/paper-agent.mjs --mode daily --no-ai --no-email --daily-max 8 --daily-primary-max 6 --daily-trend-max 2 --max-per-query 5
 ```
 
-## 输出位置
+## 12. 文件说明
 
-- 当天新论文：`public/research-digest/daily.json`
-- 历史论文库：`public/research-digest/papers.json`
-- 阅读站入口：`public/index.html`
-- 采集脚本：`scripts/paper-agent.mjs`
+```text
+scripts/paper-agent.mjs              # 核心采集/去重/邮件脚本
+scripts/serve.mjs                    # 本地静态站和摘要保存 API
+scripts/test-ai.mjs                  # API 连通性测试
+public/index.html                    # 阅读站页面
+public/app.js                        # 前端逻辑
+public/styles.css                    # 样式
+public/research-digest/daily.json    # 今日新论文工作区
+public/research-digest/papers.json   # 历史库
+.env.example                         # 配置模板
+.env.local                           # 本地私密配置，不提交
+```
 
-## 使用网页端生成摘要，不调用 AI API
+## 13. 排错
 
-如果不想使用 OpenAI API，可以让脚本只负责采集和发邮件，本地网页负责整理提示词和保存 ChatGPT 网页返回的 JSON。
+### 127.0.0.1 拒绝连接
 
-每日流程：
+说明本地站点没启动。运行：
 
 ```bash
-npm run papers:collect
 npm run serve
-# 在 http://127.0.0.1:4173/ 的“网页端摘要工作台”复制提示词
-# 将提示词粘贴到 ChatGPT 网页
-# 将 ChatGPT 返回的 JSON 粘回摘要工作台并保存
-npm run papers:email
 ```
 
-`papers:collect` 不调用 AI API，也不发送邮件，只更新 `daily.json`。`papers:email` 不重新采集，只发送 `daily.json` 中尚未推送且已完成摘要的新论文；发送成功后会把它们标记为已推送，并合并进历史库 `papers.json`。
+然后访问 `http://127.0.0.1:4173/`。
+
+### 端口 4173 被占用
+
+换端口：
+
+```bash
+PORT=4174 npm run serve
+```
+
+### arXiv 返回 503
+
+arXiv 偶尔限流或维护。稍后重试即可。
+
+### DBLP fetch failed
+
+DBLP 搜索接口偶尔较慢。脚本会跳过失败查询，并保留已有数据。首次验证建议先跑：
+
+```bash
+npm run papers:collect:daily
+```
+
+### 邮件显示 SMTP settings are incomplete
+
+检查 `.env.local` 是否配置：
+
+```bash
+PAPER_AGENT_SMTP_HOST
+PAPER_AGENT_SMTP_PORT
+PAPER_AGENT_SMTP_USER
+PAPER_AGENT_SMTP_PASS
+PAPER_AGENT_MAIL_FROM
+PAPER_AGENT_MAIL_TO
+```
+
+### 邮件显示 no unpushed daily papers
+
+说明 `daily.json` 里没有“未推送 + 已完成摘要”的论文。先运行采集，再让 Codex 或网页端补摘要：
+
+```bash
+npm run papers:collect
+```
+
+### API 测试 429 insufficient_quota
+
+这是 OpenAI API 计费额度问题。ChatGPT Pro 会员不自动包含 API 免费额度。可以改用 Codex 自动化或网页端摘要流程。
+
+## 14. 安全提示
+
+不要提交这些文件：
+
+```text
+.env.local
+.env.local.save
+paper-agent.log
+public/research-digest/*.bak
+```
+
+项目的 `.gitignore` 已经默认忽略它们。`.env.local` 里如果曾经写过真实 API key 或邮箱授权码，公开分享项目后建议轮换一次密钥。
