@@ -1,0 +1,121 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/YouthLiuYS/PaperDigestAgent/harness/paper-digest.schema.json",
+  "title": "PaperDigestAgent Harness Digest",
+  "type": "object",
+  "required": [
+    "summaryZh",
+    "motivationZh",
+    "methodZh",
+    "experimentsZh",
+    "affiliationsZh",
+    "tags",
+    "importance",
+    "researchFitZh",
+    "hardwareRelevance",
+    "algorithmRelevance",
+    "systemRelevance",
+    "readPriority",
+    "whyReadZh",
+    "limitationsZh",
+    "motivationDetail",
+    "methodDetail",
+    "experimentDetail",
+    "evidence",
+    "confidence"
+  ],
+  "properties": {
+    "summaryZh": { "type": "string", "minLength": 40 },
+    "motivationZh": { "type": "string", "minLength": 30 },
+    "methodZh": { "type": "string", "minLength": 30 },
+    "experimentsZh": { "type": "string", "minLength": 30 },
+    "affiliationsZh": { "type": "string", "minLength": 4 },
+    "tags": {
+      "type": "array",
+      "minItems": 3,
+      "maxItems": 6,
+      "items": { "type": "string" }
+    },
+    "importance": { "type": "integer", "minimum": 1, "maximum": 5 },
+    "researchFitZh": { "type": "string", "minLength": 16 },
+    "hardwareRelevance": { "type": "integer", "minimum": 1, "maximum": 5 },
+    "algorithmRelevance": { "type": "integer", "minimum": 1, "maximum": 5 },
+    "systemRelevance": { "type": "integer", "minimum": 1, "maximum": 5 },
+    "readPriority": {
+      "type": "string",
+      "enum": ["deep-read", "skim", "archive", "reject"]
+    },
+    "whyReadZh": { "type": "string", "minLength": 16 },
+    "limitationsZh": { "type": "string", "minLength": 8 },
+    "motivationDetail": {
+      "type": "object",
+      "required": ["problemZh", "gapZh", "whyImportantZh", "userRelevanceZh", "evidence"],
+      "properties": {
+        "problemZh": { "type": "string" },
+        "gapZh": { "type": "string" },
+        "whyImportantZh": { "type": "string" },
+        "userRelevanceZh": { "type": "string" },
+        "evidence": { "type": "string" }
+      }
+    },
+    "methodDetail": {
+      "type": "object",
+      "required": ["coreIdeaZh", "componentsZh", "hardwareSystemDetailZh", "noveltyZh", "evidence"],
+      "properties": {
+        "coreIdeaZh": { "type": "string" },
+        "componentsZh": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "type": "string" }
+        },
+        "hardwareSystemDetailZh": { "type": "string" },
+        "noveltyZh": { "type": "string" },
+        "evidence": { "type": "string" }
+      }
+    },
+    "experimentDetail": {
+      "type": "object",
+      "required": ["setupZh", "baselinesZh", "metricsZh", "mainResultsZh", "limitationsZh", "evidence"],
+      "properties": {
+        "setupZh": { "type": "string" },
+        "baselinesZh": { "type": "string" },
+        "metricsZh": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "type": "string" }
+        },
+        "mainResultsZh": { "type": "string" },
+        "limitationsZh": { "type": "string" },
+        "evidence": { "type": "string" }
+      }
+    },
+    "evidence": {
+      "type": "object",
+      "required": ["usedSources", "affiliationEvidence", "experimentEvidence", "missingFields"],
+      "properties": {
+        "usedSources": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "type": "string" }
+        },
+        "affiliationEvidence": { "type": "string" },
+        "experimentEvidence": { "type": "string" },
+        "missingFields": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      }
+    },
+    "confidence": {
+      "type": "object",
+      "required": ["summary", "motivation", "method", "experiments", "affiliations"],
+      "properties": {
+        "summary": { "type": "number", "minimum": 0, "maximum": 1 },
+        "motivation": { "type": "number", "minimum": 0, "maximum": 1 },
+        "method": { "type": "number", "minimum": 0, "maximum": 1 },
+        "experiments": { "type": "number", "minimum": 0, "maximum": 1 },
+        "affiliations": { "type": "number", "minimum": 0, "maximum": 1 }
+      }
+    }
+  }
+}

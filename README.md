@@ -16,7 +16,7 @@ Paper Digest Agent 是一个本地论文速递工具，用来每天搜集 arXiv 
 
 ## What's New / 功能更新记录
 
-- **2026-05-03** — ![NEW](https://img.shields.io/badge/NEW-red?style=flat-square) ![PDF Cache](https://img.shields.io/badge/PDF%20Cache-local-blue?style=flat-square) ![Workflow](https://img.shields.io/badge/Workflow-observable-green?style=flat-square) ![Reader](https://img.shields.io/badge/Reader-enhanced-purple?style=flat-square) ![Prompt](https://img.shields.io/badge/Prompt-contextual-orange?style=flat-square) **论文日报工作流可观测升级**：可选下载 arXiv PDF 到 `public/research-digest/pdfs/`，在 `daily.json` 写入 `localPdfPath/localPdfUrl/pdfStatus`；每篇论文维护 `workflow.collectStatus/digestStatus/emailStatus`，统计 `pendingDigest/pendingEmail/failedDigest/failedEmail/pdfDownloaded/pdfFailed`；阅读站支持状态筛选、PDF 缓存筛选、收藏、已读、未读；网页端摘要提示词携带 `authorAffiliations/affiliations/pdfUrl/localPdfPath/workflow`，提醒模型不能访问 PDF 时不要猜测作者单位。
+- **2026-05-03** — ![NEW](https://img.shields.io/badge/NEW-red?style=flat-square) ![Harness](https://img.shields.io/badge/Harness-paper--reader--v1-blue?style=flat-square) ![Motivation](https://img.shields.io/badge/Motivation-required-green?style=flat-square) ![Method](https://img.shields.io/badge/Method-required-purple?style=flat-square) ![Experiments](https://img.shields.io/badge/Experiments-required-orange?style=flat-square) ![PDF Cache](https://img.shields.io/badge/PDF%20Cache-local-blue?style=flat-square) ![Reader](https://img.shields.io/badge/Reader-enhanced-purple?style=flat-square) **论文日报工作流与 Codex 读论文 harness 升级**：新增 `harness/paper-reader-v1.md`、`harness/paper-digest.schema.json`、`npm run harness:prompt`、`npm run harness:validate`；把 `motivationZh/methodZh/experimentsZh` 设为硬门槛，要求具体问题、方法机制、实验设置/基线/指标/结果和证据来源，空泛或缺证据时标记 `workflow.digestStatus=failed`；同时支持可选 PDF 本地缓存、工作流状态、阅读站状态筛选/收藏/已读，避免把不可靠摘要发进邮件。
 
 ## 数据结构
 
@@ -196,25 +196,30 @@ PORT=4174 npm run serve
 Codex 自动化任务说明可以写成：
 
 ```text
-In /path/to/PaperDigestAgent, do not run network collection or email commands.
-Read only public/research-digest/daily.json.
-For each unpushed paper whose digest is missing or still contains fallback text such as AI 摘要未生成, generate rigorous Chinese fields:
-summaryZh, motivationZh, methodZh, experimentsZh, affiliationsZh, tags, importance.
-Only use the metadata and abstract in the JSON.
-If authorAffiliations or affiliations are present, use them.
-If localPdfPath exists and you can read local files, inspect only the first two PDF pages to improve affiliations.
-Do not invent affiliations or experimental results.
-Write 未在 DBLP/arXiv 元数据中提供 when affiliations are absent or the PDF is not accessible.
-Save the updated JSON back to public/research-digest/daily.json.
-Update stats.pendingDigest, stats.pendingEmail, and stats.pushed when possible.
-Do not edit public/research-digest/papers.json.
+cd /path/to/PaperDigestAgent
+npm run harness:prompt
+```
+
+把命令输出的完整 prompt 交给 Codex 自动化。这个 prompt 会按 `harness/paper-reader-v1.md` 约束 Codex：优先保证 `motivationZh`、`methodZh`、`experimentsZh` 的信息密度和证据来源；如果这三项空泛或缺证据，就把论文标成 `workflow.digestStatus=failed`。
+
+Codex 写回 `daily.json` 后，建议检查：
+
+```bash
+npm run harness:validate
+```
+
+如果你想把校验结果写回 `workflow.digestStatus` 和 stats：
+
+```bash
+npm run harness:validate:write
 ```
 
 推荐调度：
 
 ```text
 08:20 采集论文
-08:35 Codex 自动化生成摘要
+08:35 Codex 自动化根据 harness 生成摘要
+08:45 npm run harness:validate
 08:50 发送邮件
 ```
 
@@ -346,6 +351,9 @@ npm run papers:collect:pdf       # 只采集每日最新，并缓存可用 PDF
 npm run papers:email             # 只发送 daily.json 中未推送且已摘要的新论文
 npm run serve                    # 启动本地阅读站
 npm run ai:test                  # 测试 OpenAI-compatible API
+npm run harness:prompt           # 生成给 Codex 自动化的读论文 harness prompt
+npm run harness:validate         # 检查 daily.json 是否满足 harness
+npm run harness:validate:write   # 将 harness 校验状态写回 daily.json
 ```
 
 自定义一次采集：
@@ -366,6 +374,10 @@ node scripts/paper-agent.mjs --mode daily --no-ai --no-email --download-pdfs --p
 scripts/paper-agent.mjs              # 核心采集/去重/邮件脚本
 scripts/serve.mjs                    # 本地静态站和摘要保存 API
 scripts/test-ai.mjs                  # API 连通性测试
+scripts/build-codex-harness-prompt.mjs # 生成 Codex 读论文 harness prompt
+scripts/validate-digest-harness.mjs  # 校验 motivation/method/experiments 质量
+harness/paper-reader-v1.md           # Codex 读论文协议
+harness/paper-digest.schema.json     # digest 结构化输出 schema
 public/index.html                    # 阅读站页面
 public/app.js                        # 前端逻辑
 public/styles.css                    # 样式

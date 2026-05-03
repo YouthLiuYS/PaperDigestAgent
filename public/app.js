@@ -10,6 +10,8 @@ const state = {
   marks: loadUserMarks()
 };
 
+const HARNESS_VERSION = "paper-reader-v1";
+
 const elements = {
   total: document.querySelector("#stat-total"),
   current: document.querySelector("#stat-current"),
@@ -158,8 +160,15 @@ function bindControls() {
       state.dailyDigest = {
         ...state.dailyDigest,
         papers: state.dailyDigest.papers.map((paper) => {
-          const digest = imported.get(paper.id);
-          return digest ? { ...paper, digest } : paper;
+          const update = imported.get(paper.id);
+          return update ? {
+            ...paper,
+            digest: update.digest,
+            workflow: {
+              ...(paper.workflow ?? {}),
+              ...update.workflow
+            }
+          } : paper;
         })
       };
       state.dailyDigest = {
@@ -313,7 +322,10 @@ function renderPaper(paper) {
         ${renderField("Method", digest.methodZh)}
         ${renderField("实验结果", digest.experimentsZh)}
         ${renderField("作者单位", digest.affiliationsZh)}
+        ${renderField("为什么值得读", digest.whyReadZh)}
+        ${renderField("相关度", renderRelevanceText(digest))}
       </div>
+      ${renderDetailSection(digest)}
       <div class="paper-actions">
         ${paper.url ? `<a href="${escapeAttribute(paper.url)}" target="_blank" rel="noopener noreferrer">打开论文</a>` : ""}
         ${paper.pdfUrl ? `<a href="${escapeAttribute(paper.pdfUrl)}" target="_blank" rel="noopener noreferrer">PDF</a>` : ""}
@@ -384,13 +396,81 @@ function buildDigestPrompt(papers = getPendingDigestPapers()) {
   }));
 
   return [
-    "你是严谨的中文科研论文速递编辑。",
-    "请只根据给定元数据和摘要写作，不要编造作者单位、实验结果或结论。",
-    "如果 authorAffiliations、affiliations 或可读取的 localPdfPath 提供作者单位，可以使用；否则请写“未在 DBLP/arXiv 元数据中提供”。",
-    "如果你在 Codex 本地环境中可以读取 localPdfPath，可以优先参考 PDF 前两页提取作者单位；如果在网页端无法访问本地 PDF，不要猜测。",
+    `你是 PaperDigestAgent 的 ${HARNESS_VERSION} 论文阅读 harness。`,
+    "用户最看重 motivation、method 和 experiments/results；这三项必须具体、可验证、高信息密度，summaryZh 只是辅助字段。",
+    "用户方向：AI 处理器芯片和体系结构、大模型量化算法与体系结构、大模型软硬件协同优化、大模型训推系统优化、KV cache/近存计算/PIM、AI accelerator/NPU/GPU/TPU/chiplet、agent 软硬件协同优化。算法趋势只作为辅助观察。",
+    "阅读协议：L0 先读元数据和 abstract；L1 如果 localPdfPath 可读，优先读 PDF 前两页提取作者单位和问题定义；L2 只对硬件主线/系统相关/重要度高的论文继续读 method/design/evaluation。",
+    "motivationZh 必须回答具体问题、为什么重要、已有瓶颈、和用户方向的关系。",
+    "methodZh 必须回答核心机制、关键组件、算法/系统/体系结构/硬件属性、相对已有方法的新意。",
+    "experimentsZh 必须回答实验设置、对比基线、指标、主要结果；没有证据就写“摘要/PDF可读部分未披露”。",
+    "请只根据给定元数据、摘要和可读取 PDF 写作，不要编造作者单位、实验结果、加速比、数据集、芯片、工艺节点或指标。",
+    "如果 motivationZh、methodZh 或 experimentsZh 空泛、过短或缺证据，请把 workflow.digestStatus 标为 failed。",
     "请返回严格 JSON，不要 Markdown，不要代码块。",
     "JSON schema:",
-    "{\"papers\":[{\"id\":\"原论文 id\",\"digest\":{\"summaryZh\":\"80 到 140 字中文摘要\",\"motivationZh\":\"研究动机\",\"methodZh\":\"核心方法\",\"experimentsZh\":\"实验设置和结果；没有就说明摘要未披露\",\"affiliationsZh\":\"作者单位\",\"tags\":[\"关键词\"],\"importance\":3}}]}",
+    JSON.stringify({
+      papers: [
+        {
+          id: "原论文 id",
+          digest: {
+            summaryZh: "80 到 140 字中文摘要",
+            motivationZh: "具体问题/重要性/已有瓶颈/用户相关性",
+            methodZh: "核心机制/关键组件/软硬件属性/新意",
+            experimentsZh: "实验设置/基线/指标/结果；没有证据写未披露",
+            affiliationsZh: "作者单位；没有可靠证据写未在 DBLP/arXiv 元数据中提供",
+            tags: ["关键词"],
+            importance: 3,
+            researchFitZh: "和用户方向的关系",
+            hardwareRelevance: 5,
+            algorithmRelevance: 2,
+            systemRelevance: 4,
+            readPriority: "deep-read | skim | archive | reject",
+            whyReadZh: "为什么值得/不值得继续读",
+            limitationsZh: "证据缺口或适用边界",
+            motivationDetail: {
+              problemZh: "具体问题",
+              gapZh: "已有方法瓶颈",
+              whyImportantZh: "为什么重要",
+              userRelevanceZh: "和用户方向的关系",
+              evidence: "证据来源"
+            },
+            methodDetail: {
+              coreIdeaZh: "核心想法",
+              componentsZh: ["关键组件"],
+              hardwareSystemDetailZh: "数据流/存储/调度/量化执行/硬件系统细节；没有就说明未披露",
+              noveltyZh: "新意",
+              evidence: "证据来源"
+            },
+            experimentDetail: {
+              setupZh: "模型/任务/数据集/硬件平台",
+              baselinesZh: "对比基线",
+              metricsZh: ["latency", "throughput"],
+              mainResultsZh: "主要结果",
+              limitationsZh: "实验边界或未披露项",
+              evidence: "证据来源"
+            },
+            evidence: {
+              usedSources: ["metadata", "abstract"],
+              affiliationEvidence: "作者单位证据",
+              experimentEvidence: "实验结果证据",
+              missingFields: []
+            },
+            confidence: {
+              summary: 0.9,
+              motivation: 0.8,
+              method: 0.8,
+              experiments: 0.7,
+              affiliations: 0.6
+            }
+          },
+          workflow: {
+            digestStatus: "ready | failed",
+            emailStatus: "ready | waiting-digest",
+            harnessVersion: HARNESS_VERSION,
+            digestError: ""
+          }
+        }
+      ]
+    }),
     "待处理论文:",
     JSON.stringify(compactPapers, null, 2)
   ].join("\n\n");
@@ -454,13 +534,34 @@ function normalizeImportedDigests(value) {
   for (const item of papers) {
     if (!item?.id || !item?.digest) continue;
     digests.set(item.id, {
-      summaryZh: cleanText(item.digest.summaryZh),
-      motivationZh: cleanText(item.digest.motivationZh),
-      methodZh: cleanText(item.digest.methodZh),
-      experimentsZh: cleanText(item.digest.experimentsZh),
-      affiliationsZh: cleanText(item.digest.affiliationsZh),
-      tags: Array.isArray(item.digest.tags) ? item.digest.tags.map(cleanText).filter(Boolean).slice(0, 6) : [],
-      importance: clamp(Number.parseInt(item.digest.importance, 10) || 3, 1, 5)
+      digest: {
+        summaryZh: cleanText(item.digest.summaryZh),
+        motivationZh: cleanText(item.digest.motivationZh),
+        methodZh: cleanText(item.digest.methodZh),
+        experimentsZh: cleanText(item.digest.experimentsZh),
+        affiliationsZh: cleanText(item.digest.affiliationsZh),
+        tags: Array.isArray(item.digest.tags) ? item.digest.tags.map(cleanText).filter(Boolean).slice(0, 6) : [],
+        importance: clamp(Number.parseInt(item.digest.importance, 10) || 3, 1, 5),
+        researchFitZh: cleanText(item.digest.researchFitZh),
+        hardwareRelevance: clamp(Number.parseInt(item.digest.hardwareRelevance, 10) || 1, 1, 5),
+        algorithmRelevance: clamp(Number.parseInt(item.digest.algorithmRelevance, 10) || 1, 1, 5),
+        systemRelevance: clamp(Number.parseInt(item.digest.systemRelevance, 10) || 1, 1, 5),
+        readPriority: normalizeReadPriority(item.digest.readPriority),
+        whyReadZh: cleanText(item.digest.whyReadZh),
+        limitationsZh: cleanText(item.digest.limitationsZh),
+        motivationDetail: normalizeMotivationDetail(item.digest.motivationDetail),
+        methodDetail: normalizeMethodDetail(item.digest.methodDetail),
+        experimentDetail: normalizeExperimentDetail(item.digest.experimentDetail),
+        evidence: normalizeEvidence(item.digest.evidence),
+        confidence: normalizeConfidence(item.digest.confidence)
+      },
+      workflow: {
+        digestStatus: item.workflow?.digestStatus === "failed" ? "failed" : "ready",
+        emailStatus: item.workflow?.digestStatus === "failed" ? "waiting-digest" : "ready",
+        harnessVersion: HARNESS_VERSION,
+        harnessCheckedAt: new Date().toISOString(),
+        digestError: cleanText(item.workflow?.digestError)
+      }
     });
   }
 
@@ -483,6 +584,62 @@ async function saveDigestToServer() {
 function renderField(label, value) {
   if (!value) return "";
   return `<section class="field"><h3>${escapeHtml(label)}</h3><p>${escapeHtml(value)}</p></section>`;
+}
+
+function renderDetailSection(digest) {
+  const motivation = digest.motivationDetail;
+  const method = digest.methodDetail;
+  const experiment = digest.experimentDetail;
+  if (!motivation && !method && !experiment) {
+    return "";
+  }
+
+  return `
+    <details class="detail-panel">
+      <summary>Harness 细节</summary>
+      <div class="detail-grid">
+        ${renderDetailBlock("Motivation Detail", [
+          ["问题", motivation?.problemZh],
+          ["瓶颈", motivation?.gapZh],
+          ["重要性", motivation?.whyImportantZh],
+          ["相关性", motivation?.userRelevanceZh],
+          ["证据", motivation?.evidence]
+        ])}
+        ${renderDetailBlock("Method Detail", [
+          ["核心想法", method?.coreIdeaZh],
+          ["组件", method?.componentsZh?.join("；")],
+          ["系统/硬件细节", method?.hardwareSystemDetailZh],
+          ["新意", method?.noveltyZh],
+          ["证据", method?.evidence]
+        ])}
+        ${renderDetailBlock("Experiment Detail", [
+          ["设置", experiment?.setupZh],
+          ["基线", experiment?.baselinesZh],
+          ["指标", experiment?.metricsZh?.join("；")],
+          ["主要结果", experiment?.mainResultsZh],
+          ["边界", experiment?.limitationsZh],
+          ["证据", experiment?.evidence]
+        ])}
+      </div>
+    </details>
+  `;
+}
+
+function renderDetailBlock(title, rows) {
+  const renderedRows = rows
+    .filter(([, value]) => value)
+    .map(([label, value]) => `<p><strong>${escapeHtml(label)}：</strong>${escapeHtml(value)}</p>`)
+    .join("");
+  return renderedRows ? `<section class="detail-block"><h3>${escapeHtml(title)}</h3>${renderedRows}</section>` : "";
+}
+
+function renderRelevanceText(digest = {}) {
+  return [
+    digest.readPriority ? `阅读优先级 ${digest.readPriority}` : "",
+    digest.hardwareRelevance ? `硬件 ${digest.hardwareRelevance}/5` : "",
+    digest.systemRelevance ? `系统 ${digest.systemRelevance}/5` : "",
+    digest.algorithmRelevance ? `算法 ${digest.algorithmRelevance}/5` : ""
+  ].filter(Boolean).join(" · ");
 }
 
 function compareDateDesc(a, b) {
@@ -521,6 +678,65 @@ function parseJsonFromText(text) {
 
 function cleanText(value) {
   return String(value ?? "").replace(/\s+/g, " ").trim();
+}
+
+function normalizeReadPriority(value) {
+  return ["deep-read", "skim", "archive", "reject"].includes(value) ? value : "archive";
+}
+
+function normalizeMotivationDetail(value = {}) {
+  return {
+    problemZh: cleanText(value.problemZh),
+    gapZh: cleanText(value.gapZh),
+    whyImportantZh: cleanText(value.whyImportantZh),
+    userRelevanceZh: cleanText(value.userRelevanceZh),
+    evidence: cleanText(value.evidence)
+  };
+}
+
+function normalizeMethodDetail(value = {}) {
+  return {
+    coreIdeaZh: cleanText(value.coreIdeaZh),
+    componentsZh: Array.isArray(value.componentsZh) ? value.componentsZh.map(cleanText).filter(Boolean).slice(0, 8) : [],
+    hardwareSystemDetailZh: cleanText(value.hardwareSystemDetailZh),
+    noveltyZh: cleanText(value.noveltyZh),
+    evidence: cleanText(value.evidence)
+  };
+}
+
+function normalizeExperimentDetail(value = {}) {
+  return {
+    setupZh: cleanText(value.setupZh),
+    baselinesZh: cleanText(value.baselinesZh),
+    metricsZh: Array.isArray(value.metricsZh) ? value.metricsZh.map(cleanText).filter(Boolean).slice(0, 8) : [],
+    mainResultsZh: cleanText(value.mainResultsZh),
+    limitationsZh: cleanText(value.limitationsZh),
+    evidence: cleanText(value.evidence)
+  };
+}
+
+function normalizeEvidence(value = {}) {
+  return {
+    usedSources: Array.isArray(value.usedSources) ? value.usedSources.map(cleanText).filter(Boolean).slice(0, 8) : [],
+    affiliationEvidence: cleanText(value.affiliationEvidence),
+    experimentEvidence: cleanText(value.experimentEvidence),
+    missingFields: Array.isArray(value.missingFields) ? value.missingFields.map(cleanText).filter(Boolean).slice(0, 12) : []
+  };
+}
+
+function normalizeConfidence(value = {}) {
+  return {
+    summary: normalizeConfidenceValue(value.summary),
+    motivation: normalizeConfidenceValue(value.motivation),
+    method: normalizeConfidenceValue(value.method),
+    experiments: normalizeConfidenceValue(value.experiments),
+    affiliations: normalizeConfidenceValue(value.affiliations)
+  };
+}
+
+function normalizeConfidenceValue(value) {
+  const number = Number(value);
+  return Number.isFinite(number) ? Math.min(1, Math.max(0, number)) : 0;
 }
 
 function titleKey(title) {
