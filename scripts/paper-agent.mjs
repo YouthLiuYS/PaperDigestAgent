@@ -158,6 +158,11 @@ const DEFAULT_CONFIG = {
   outputPath: process.env.PAPER_AGENT_OUTPUT ?? "public/research-digest/papers.json",
   dailyOutputPath: process.env.PAPER_AGENT_DAILY_OUTPUT ?? "public/research-digest/daily.json",
   siteUrl: process.env.PAPER_AGENT_SITE_URL ?? defaultSiteUrl(),
+  pdf: {
+    enabled: boolFromEnv("PAPER_AGENT_DOWNLOAD_PDFS", false),
+    directory: process.env.PAPER_AGENT_PDF_DIR ?? "public/research-digest/pdfs",
+    maxPerRun: numberFromEnv("PAPER_AGENT_PDF_MAX_PER_RUN", 12)
+  },
   ai: {
     apiUrl: normalizeAiApiUrl(process.env.PAPER_AGENT_AI_API_URL ?? process.env.OPENAI_BASE_URL),
     apiKey: process.env.PAPER_AGENT_AI_API_KEY ?? process.env.OPENAI_API_KEY ?? "",
@@ -236,8 +241,10 @@ async function run(config) {
     );
 
     const enrichedNew = [];
+    const pdfState = { downloaded: 0 };
     for (const paper of newCandidates) {
-      enrichedNew.push(await enrichPaperWithAi(paper, config));
+      const withPdf = await enrichPaperWithPdf(paper, config, pdfState);
+      enrichedNew.push(await enrichPaperWithAi(withPdf, config));
     }
 
     const dailyPapers = sortPapersForDigest(dedupePapers([...existingDailyPapers, ...enrichedNew]));
@@ -401,6 +408,8 @@ function paperSearchText(paper) {
   return normalizeWhitespace([
     paper.title,
     paper.abstract,
+    paper.affiliations?.join(" "),
+    paper.authorAffiliations?.map((item) => `${item.name} ${item.affiliation}`).join(" "),
     paper.venue,
     paper.source,
     paper.categories?.join(" "),
@@ -511,6 +520,59 @@ async function collectConferenceArchivePapers(config) {
   return papers;
 }
 
+async function enrichPaperWithPdf(paper, config, state) {
+  if (!config.pdf.enabled || !paper.pdfUrl) {
+    return normalizePdfMetadata(paper);
+  }
+
+  if (state.downloaded >= config.pdf.maxPerRun) {
+    return {
+      ...normalizePdfMetadata(paper),
+      pdfStatus: paper.pdfStatus ?? "skipped",
+      pdfError: paper.pdfError ?? `本次 PDF 缓存数已达到 ${config.pdf.maxPerRun} 篇上限`
+    };
+  }
+
+  const relativePath = normalizeRelativePath(path.join(config.pdf.directory, pdfFileNameForPaper(paper)));
+  const fullPath = resolveFromRoot(relativePath);
+  const localPdfUrl = publicUrlForRelativePath(relativePath);
+
+  try {
+    await fs.mkdir(path.dirname(fullPath), { recursive: true });
+
+    if (!(await fileExists(fullPath))) {
+      const response = await fetchWithRetry(paper.pdfUrl, {
+        headers: {
+          "Accept": "application/pdf",
+          "User-Agent": "SteelWebPaperAgent/1.0 (research digest; contact configured by user)"
+        }
+      });
+      const buffer = Buffer.from(await response.arrayBuffer());
+      if (!buffer.subarray(0, 5).toString("utf8").startsWith("%PDF")) {
+        throw new Error("下载结果不像 PDF 文件");
+      }
+      await fs.writeFile(fullPath, buffer);
+      state.downloaded += 1;
+    }
+
+    return {
+      ...paper,
+      pdfStatus: "downloaded",
+      pdfDownloadedAt: nowIso(),
+      localPdfPath: relativePath,
+      localPdfUrl
+    };
+  } catch (error) {
+    return {
+      ...paper,
+      pdfStatus: "failed",
+      pdfError: formatError(error),
+      localPdfPath: relativePath,
+      localPdfUrl
+    };
+  }
+}
+
 function buildConferenceQueries(config) {
   const queries = [];
 
@@ -548,14 +610,18 @@ function parseArxivFeed(xml) {
     const categories = [...entry.matchAll(/<category\b([^>]*)\/?>/g)]
       .map((match) => parseXmlAttributes(match[1]).term)
       .filter(Boolean);
+    const authorEntries = parseArxivAuthors(entry);
+    const authorAffiliations = authorEntries
+      .filter((author) => author.affiliation)
+      .map((author) => ({ name: author.name, affiliation: author.affiliation }));
 
     return {
       id: `arxiv:${arxivId}`,
       source: "arXiv",
       title: normalizeWhitespace(textFromXml(entry, "title")),
-      authors: [...entry.matchAll(/<author>[\s\S]*?<name>([\s\S]*?)<\/name>[\s\S]*?<\/author>/g)]
-        .map((match) => normalizeWhitespace(decodeXml(stripTags(match[1]))))
-        .filter(Boolean),
+      authors: authorEntries.map((author) => author.name).filter(Boolean),
+      authorAffiliations,
+      affiliations: uniqueList(authorAffiliations.map((author) => author.affiliation)),
       abstract: normalizeWhitespace(textFromXml(entry, "summary")),
       venue: "arXiv",
       published: textFromXml(entry, "published"),
@@ -568,6 +634,13 @@ function parseArxivFeed(xml) {
       lastSeenAt: nowIso()
     };
   });
+}
+
+function parseArxivAuthors(entry) {
+  return [...entry.matchAll(/<author>([\s\S]*?)<\/author>/g)].map((match) => ({
+    name: normalizeWhitespace(textFromXml(match[1], "name")),
+    affiliation: normalizeWhitespace(textFromXml(match[1], "arxiv:affiliation") || textFromXml(match[1], "affiliation"))
+  })).filter((author) => author.name);
 }
 
 function parseDblpResults(json) {
@@ -643,9 +716,13 @@ async function enrichPaperWithAi(paper, config) {
       venue: paper.venue,
       published: paper.published,
       authors: paper.authors,
+      authorAffiliations: paper.authorAffiliations,
+      affiliations: paper.affiliations,
       categories: paper.categories,
       abstract: paper.abstract,
-      url: paper.url
+      url: paper.url,
+      pdfUrl: paper.pdfUrl,
+      localPdfPath: paper.localPdfPath
     }
   });
 
@@ -678,7 +755,15 @@ async function enrichPaperWithAi(paper, config) {
     }
 
     const digest = normalizeAiDigest(parseJsonFromText(content));
-    return { ...paper, digest };
+    return {
+      ...paper,
+      digest,
+      workflow: {
+        ...(paper.workflow ?? {}),
+        digestStatus: "ready",
+        emailStatus: paper.pushedAt || paper.emailSentAt ? "sent" : "ready"
+      }
+    };
   } catch (error) {
     const reason = error instanceof Error ? error.message : String(error);
     if (config.ai.requireAi) {
@@ -690,18 +775,25 @@ async function enrichPaperWithAi(paper, config) {
 }
 
 function withFallbackDigest(paper, reason) {
+  const fallbackAffiliations = formatAffiliations(paper) || "未在 DBLP/arXiv 元数据中提供。";
   const sourceNote = paper.abstract
     ? `AI 摘要未生成。原始摘要要点：${truncateCn(paper.abstract, 160)}`
     : "AI 摘要未生成；当前来源元数据未提供摘要。";
 
   return {
     ...paper,
+    workflow: {
+      ...(paper.workflow ?? {}),
+      digestStatus: reason.includes("AI 调用失败") ? "failed" : "pending",
+      emailStatus: "waiting-digest",
+      digestError: reason
+    },
     digest: {
       summaryZh: sourceNote,
       motivationZh: reason,
       methodZh: paper.abstract ? "请配置 AI 后重新运行，以生成方法提炼。" : "来源未提供摘要，无法可靠提炼方法。",
       experimentsZh: "来源元数据未披露完整实验设置或结果。",
-      affiliationsZh: "未在 DBLP/arXiv 元数据中提供。",
+      affiliationsZh: fallbackAffiliations,
       tags: paper.categories?.length ? paper.categories.slice(0, 5) : [paper.source],
       importance: 3
     }
@@ -736,7 +828,27 @@ function markPushedPaper(paper, pushedAt) {
     ...paper,
     pushedAt,
     emailSentAt: pushedAt,
-    firstPushedAt: paper.firstPushedAt ?? paper.pushedAt ?? paper.emailSentAt ?? pushedAt
+    firstPushedAt: paper.firstPushedAt ?? paper.pushedAt ?? paper.emailSentAt ?? pushedAt,
+    workflow: {
+      ...(paper.workflow ?? {}),
+      digestStatus: "ready",
+      emailStatus: "sent",
+      emailSentAt: pushedAt,
+      lastEmailError: ""
+    }
+  };
+}
+
+function markEmailFailedPaper(paper, error, failedAt) {
+  return {
+    ...paper,
+    workflow: {
+      ...(paper.workflow ?? {}),
+      digestStatus: hasUsableDigest(paper) ? "ready" : "pending",
+      emailStatus: "failed",
+      lastEmailError: formatError(error),
+      emailFailedAt: failedAt
+    }
   };
 }
 
@@ -769,7 +881,21 @@ async function sendDailyDigestEmail(config, dailyDigest, historyDigest) {
     ? `论文日报 ${formatDate(new Date())}: ${readyPapers.length} 篇新论文`
     : `论文日报 ${formatDate(new Date())}: 今日无新增论文`;
   const html = renderEmailHtml(config, dailyDigest, readyPapers);
-  await sendSmtpMail(config.email, { subject, html });
+  try {
+    await sendSmtpMail(config.email, { subject, html });
+  } catch (error) {
+    const failedAt = nowIso();
+    const readyIndex = buildExistingIndex(readyPapers);
+    const failedDailyPapers = dailyPapers.map((paper) => findExistingPaper(paper, readyIndex) ? markEmailFailedPaper(paper, error, failedAt) : paper);
+    const failedDailyDigest = buildDailyDigest(config, failedDailyPapers, dailyDigest.digestDate ?? localDateKey(), {
+      collected: dailyDigest.stats?.collected ?? 0,
+      dailyCount: dailyDigest.stats?.dailyCandidates ?? 0,
+      conferenceCount: dailyDigest.stats?.conferenceCandidates ?? 0,
+      newlyAdded: dailyDigest.stats?.newlyAdded ?? 0
+    });
+    await writeDigest(config.dailyOutputPath, failedDailyDigest);
+    throw new Error(`Email failed: ${formatError(error)}`);
+  }
   console.log(`Email sent to ${config.email.to.join(", ")}.`);
 
   if (readyPapers.length === 0) {
@@ -808,7 +934,7 @@ function renderEmailHtml(config, digest, newPapers) {
       ${emailField("Method", paper.digest?.methodZh)}
       ${emailField("实验结果", paper.digest?.experimentsZh)}
       ${emailField("作者单位", paper.digest?.affiliationsZh)}
-      <p style="margin:12px 0 0;"><a href="${escapeAttribute(paper.url)}" style="color:#0c58a8;">打开论文</a>${paper.pdfUrl ? ` · <a href="${escapeAttribute(paper.pdfUrl)}" style="color:#0c58a8;">PDF</a>` : ""}</p>
+      <p style="margin:12px 0 0;"><a href="${escapeAttribute(paper.url)}" style="color:#0c58a8;">打开论文</a>${paper.pdfUrl ? ` · <a href="${escapeAttribute(paper.pdfUrl)}" style="color:#0c58a8;">PDF</a>` : ""}${paper.localPdfUrl ? ` · <a href="${escapeAttribute(config.siteUrl.replace(/\/$/, "") + paper.localPdfUrl)}" style="color:#0c58a8;">本地 PDF</a>` : ""}</p>
     </article>
   `).join("");
 
@@ -1040,6 +1166,18 @@ function parseArgs(args) {
       case "--no-ai":
         parsed.noAi = true;
         break;
+      case "--download-pdfs":
+        parsed.pdf = { ...(parsed.pdf ?? {}), enabled: true };
+        break;
+      case "--no-pdf":
+        parsed.pdf = { ...(parsed.pdf ?? {}), enabled: false };
+        break;
+      case "--pdf-dir":
+        parsed.pdf = { ...(parsed.pdf ?? {}), directory: next() };
+        break;
+      case "--pdf-max":
+        parsed.pdf = { ...(parsed.pdf ?? {}), maxPerRun: Number.parseInt(next(), 10) };
+        break;
       case "--mode":
         parsed.collectionMode = next();
         break;
@@ -1123,6 +1261,10 @@ Options:
   --conference-max <n>   Max conference-archive papers to keep in this run.
   --output <path>        Output digest JSON path.
   --daily-output <path>  Daily new-paper JSON path.
+  --download-pdfs        Cache arXiv PDFs locally when pdfUrl is available.
+  --no-pdf               Do not download PDFs for this run.
+  --pdf-dir <path>       Local PDF cache directory.
+  --pdf-max <n>          Max PDFs to download in one run.
   --email-only           Do not collect; send unpushed papers from daily JSON.
   --send-email           Send digest email through SMTP.
   --no-email             Never send email for this run.
@@ -1153,6 +1295,12 @@ function normalizeConfig(config) {
     conferenceYears: parseYears(asArray(config.conferenceYears).join(";")),
     outputPath: config.outputPath || "public/research-digest/papers.json",
     dailyOutputPath: config.dailyOutputPath || "public/research-digest/daily.json",
+    pdf: {
+      ...config.pdf,
+      enabled: Boolean(config.pdf?.enabled),
+      directory: config.pdf?.directory || "public/research-digest/pdfs",
+      maxPerRun: positiveInt(config.pdf?.maxPerRun, 12)
+    },
     ai: {
       ...config.ai,
       apiUrl: normalizeAiApiUrl(config.ai?.apiUrl),
@@ -1196,7 +1344,7 @@ function getDailyPapersForDate(digest, digestDate) {
 }
 
 function buildDailyDigest(config, papers, digestDate, runStats = {}) {
-  const dailyPapers = sortPapersForDigest(dedupePapers(papers));
+  const dailyPapers = sortPapersForDigest(dedupePapers(papers).map(normalizePaperWorkflow));
   return {
     generatedAt: nowIso(),
     digestDate,
@@ -1215,6 +1363,10 @@ function buildDailyDigest(config, papers, digestDate, runStats = {}) {
       pendingDigest: dailyPapers.filter((paper) => !hasUsableDigest(paper)).length,
       pendingEmail: dailyPapers.filter((paper) => !paper.pushedAt && !paper.emailSentAt && hasUsableDigest(paper)).length,
       pushed: dailyPapers.filter((paper) => paper.pushedAt || paper.emailSentAt).length,
+      failedDigest: dailyPapers.filter((paper) => paper.workflow?.digestStatus === "failed").length,
+      failedEmail: dailyPapers.filter((paper) => paper.workflow?.emailStatus === "failed").length,
+      pdfDownloaded: dailyPapers.filter((paper) => paper.pdfStatus === "downloaded").length,
+      pdfFailed: dailyPapers.filter((paper) => paper.pdfStatus === "failed").length,
       hardwarePrimary: dailyPapers.filter((paper) => paper.recommendationTrack === "hardware-primary").length,
       algorithmTrend: dailyPapers.filter((paper) => paper.recommendationTrack === "algorithm-trend").length,
       lowRelevance: dailyPapers.filter((paper) => paper.recommendationTrack === "off-topic").length
@@ -1224,7 +1376,7 @@ function buildDailyDigest(config, papers, digestDate, runStats = {}) {
 }
 
 function buildHistoryDigest(config, previousDigest, papers) {
-  const archivedPapers = sortPapersForDigest(dedupePapers(papers)).slice(0, config.archiveLimit);
+  const archivedPapers = sortPapersForDigest(dedupePapers(papers).map(normalizePaperWorkflow)).slice(0, config.archiveLimit);
   return {
     ...previousDigest,
     generatedAt: nowIso(),
@@ -1238,6 +1390,7 @@ function buildHistoryDigest(config, previousDigest, papers) {
       current: 0,
       newlyAdded: 0,
       pushed: archivedPapers.filter((paper) => paper.pushedAt || paper.emailSentAt).length,
+      pdfDownloaded: archivedPapers.filter((paper) => paper.pdfStatus === "downloaded").length,
       hardwarePrimary: archivedPapers.filter((paper) => paper.recommendationTrack === "hardware-primary").length,
       algorithmTrend: archivedPapers.filter((paper) => paper.recommendationTrack === "algorithm-trend").length,
       lowRelevance: archivedPapers.filter((paper) => paper.recommendationTrack === "off-topic").length
@@ -1259,7 +1412,10 @@ function buildSources(config) {
     dailyMaxPapers: config.dailyMaxPapers,
     dailyPrimaryMaxPapers: config.dailyPrimaryMaxPapers,
     dailyTrendMaxPapers: config.dailyTrendMaxPapers,
-    conferenceMaxPapers: config.conferenceMaxPapers
+    conferenceMaxPapers: config.conferenceMaxPapers,
+    pdfDownloadEnabled: config.pdf.enabled,
+    pdfDirectory: config.pdf.directory,
+    pdfMaxPerRun: config.pdf.maxPerRun
   };
 }
 
@@ -1339,6 +1495,7 @@ function mergeExistingPaper(existing, paper) {
     targetThemes: uniqueList([...(existing.targetThemes ?? [existing.targetTheme]), ...(paper.targetThemes ?? [paper.targetTheme])]),
     conferenceVenues: uniqueList([...(existing.conferenceVenues ?? [existing.conferenceVenue]), ...(paper.conferenceVenues ?? [paper.conferenceVenue])]),
     conferenceYears: uniqueList([...(existing.conferenceYears ?? [existing.conferenceYear]), ...(paper.conferenceYears ?? [paper.conferenceYear])]),
+    affiliations: uniqueList([...(existing.affiliations ?? []), ...(paper.affiliations ?? [])]),
     firstSeenAt: existing.firstSeenAt ?? existing.collectedAt ?? nowIso(),
     lastSeenAt: nowIso()
   };
@@ -1384,14 +1541,16 @@ function preferRicherPaper(a, b) {
     matchedQueries: uniqueList([...(a.matchedQueries ?? [a.matchedQuery]), ...(b.matchedQueries ?? [b.matchedQuery])]),
     targetThemes: uniqueList([...(a.targetThemes ?? [a.targetTheme]), ...(b.targetThemes ?? [b.targetTheme])]),
     conferenceVenues: uniqueList([...(a.conferenceVenues ?? [a.conferenceVenue]), ...(b.conferenceVenues ?? [b.conferenceVenue])]),
-    conferenceYears: uniqueList([...(a.conferenceYears ?? [a.conferenceYear]), ...(b.conferenceYears ?? [b.conferenceYear])])
+    conferenceYears: uniqueList([...(a.conferenceYears ?? [a.conferenceYear]), ...(b.conferenceYears ?? [b.conferenceYear])]),
+    affiliations: uniqueList([...(a.affiliations ?? []), ...(b.affiliations ?? [])])
   };
 }
 
 function richnessScore(paper) {
   return [
     paper.abstract?.length ?? 0,
-    paper.pdfUrl ? 50 : 0,
+    paper.localPdfPath ? 80 : paper.pdfUrl ? 50 : 0,
+    paper.affiliations?.length ? 60 : 0,
     paper.authors?.length ?? 0,
     paper.digest ? 100 : 0
   ].reduce((sum, value) => sum + value, 0);
@@ -1426,6 +1585,74 @@ function parseXmlAttributes(input) {
     attrs[match[1]] = decodeXml(match[2]);
   }
   return attrs;
+}
+
+function normalizePaperWorkflow(paper) {
+  const pushed = Boolean(paper.pushedAt || paper.emailSentAt);
+  const digestReady = hasUsableDigest(paper);
+  const workflow = {
+    ...(paper.workflow ?? {}),
+    collectStatus: paper.workflow?.collectStatus ?? "collected",
+    digestStatus: digestReady ? "ready" : paper.workflow?.digestStatus ?? "pending",
+    emailStatus: pushed ? "sent" : digestReady ? paper.workflow?.emailStatus === "failed" ? "failed" : "ready" : "waiting-digest",
+    pdfStatus: paper.pdfStatus ?? paper.workflow?.pdfStatus ?? (paper.pdfUrl ? "remote" : "none")
+  };
+
+  if (paper.pdfError) {
+    workflow.pdfError = paper.pdfError;
+  }
+
+  return {
+    ...normalizePdfMetadata(paper),
+    workflow
+  };
+}
+
+function normalizePdfMetadata(paper) {
+  return {
+    ...paper,
+    pdfStatus: paper.pdfStatus ?? (paper.localPdfPath ? "downloaded" : paper.pdfUrl ? "remote" : "none")
+  };
+}
+
+function formatAffiliations(paper) {
+  const direct = uniqueList(paper.affiliations ?? []);
+  if (direct.length) {
+    return direct.join("；");
+  }
+
+  const authorAffiliations = asArray(paper.authorAffiliations)
+    .map((item) => normalizeWhitespace(item?.affiliation ?? ""))
+    .filter(Boolean);
+  return uniqueList(authorAffiliations).join("；");
+}
+
+function pdfFileNameForPaper(paper) {
+  const base = String(paper.id || stableHash(`${paper.title}:${paper.published}`))
+    .replace(/^arxiv:/, "arxiv-")
+    .replace(/^doi:/, "doi-")
+    .replace(/^dblp:/, "dblp-")
+    .replace(/[^A-Za-z0-9._-]+/g, "-")
+    .slice(0, 96);
+  return `${base || stableHash(paper.title)}.pdf`;
+}
+
+async function fileExists(filePath) {
+  try {
+    await fs.access(filePath);
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+function normalizeRelativePath(value) {
+  return String(value).replace(/\\/g, "/").replace(/^\.?\//, "");
+}
+
+function publicUrlForRelativePath(relativePath) {
+  const normalized = normalizeRelativePath(relativePath);
+  return normalized.startsWith("public/") ? `/${normalized.slice("public/".length)}` : "";
 }
 
 function textFromXml(xml, tag) {

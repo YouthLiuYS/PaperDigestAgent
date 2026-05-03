@@ -14,6 +14,12 @@ Paper Digest Agent 是一个本地论文速递工具，用来每天搜集 arXiv 
 算法趋势观察：最多 2 篇
 ```
 
+## 功能更新记录
+
+| 日期 | 更新概览 | 关键能力 |
+| --- | --- | --- |
+| 2026-05-03 | `PDF 缓存` `工作流状态` `阅读站增强` `摘要提示词增强` | 可选下载 arXiv PDF 到 `public/research-digest/pdfs/`，在 `daily.json` 写入 `localPdfPath/localPdfUrl/pdfStatus`；每篇论文维护 `workflow.collectStatus/digestStatus/emailStatus`，统计 `pendingDigest/pendingEmail/failedDigest/failedEmail/pdfDownloaded/pdfFailed`；阅读站支持状态筛选、PDF 缓存筛选、收藏、已读、未读；网页端摘要提示词携带 `authorAffiliations/affiliations/pdfUrl/localPdfPath/workflow`，提醒模型不能访问 PDF 时不要猜测作者单位。 |
+
 ## 数据结构
 
 项目维护两个 JSON 库：
@@ -21,14 +27,16 @@ Paper Digest Agent 是一个本地论文速递工具，用来每天搜集 arXiv 
 ```text
 public/research-digest/daily.json   # 当天新论文工作区
 public/research-digest/papers.json  # 历史论文库
+public/research-digest/pdfs/        # 可选 PDF 本地缓存，默认不提交到 GitHub
 ```
 
 工作方式：
 
 1. 采集脚本只把当天新论文写入 `daily.json`。
-2. Codex 自动化或网页端只给 `daily.json` 里的未推送论文生成摘要。
-3. 邮件脚本只发送 `daily.json` 里“未推送 + 已完成摘要”的论文。
-4. 邮件发送成功后，论文会被标记为 `pushedAt/emailSentAt`，并合并进 `papers.json` 历史库。
+2. 如果开启 PDF 缓存，脚本会下载 arXiv PDF 并把本地路径写入论文条目。
+3. Codex 自动化或网页端只给 `daily.json` 里的未推送论文生成摘要。
+4. 邮件脚本只发送 `daily.json` 里“未推送 + 已完成摘要”的论文。
+5. 邮件发送成功后，论文会被标记为 `pushedAt/emailSentAt`，并合并进 `papers.json` 历史库。
 
 这样可以避免每天重复推送历史论文。
 
@@ -94,6 +102,20 @@ PAPER_AGENT_DAILY_TREND_MAX_PAPERS=2
 PAPER_AGENT_CONFERENCE_YEARS=2025;2024;2023;2022
 ```
 
+可选 PDF 缓存：
+
+```bash
+PAPER_AGENT_DOWNLOAD_PDFS=false
+PAPER_AGENT_PDF_DIR=public/research-digest/pdfs
+PAPER_AGENT_PDF_MAX_PER_RUN=12
+```
+
+默认关闭 PDF 缓存，因为下载 PDF 会让每日采集变慢。需要 Codex 更准确地提取作者单位时，可以临时开启：
+
+```bash
+node scripts/paper-agent.mjs --mode daily --no-ai --no-email --download-pdfs --pdf-max 6
+```
+
 如果你只想看每日最新论文，可以运行：
 
 ```bash
@@ -154,6 +176,8 @@ http://127.0.0.1:4173/
 - 历史论文库
 - 今日新论文
 - 推荐通道标签
+- 工作流状态和 PDF 缓存状态
+- 收藏、已读、未读筛选
 - 中文摘要字段
 - 网页端摘要工作台
 
@@ -179,8 +203,10 @@ Read only public/research-digest/daily.json.
 For each unpushed paper whose digest is missing or still contains fallback text such as AI 摘要未生成, generate rigorous Chinese fields:
 summaryZh, motivationZh, methodZh, experimentsZh, affiliationsZh, tags, importance.
 Only use the metadata and abstract in the JSON.
+If authorAffiliations or affiliations are present, use them.
+If localPdfPath exists and you can read local files, inspect only the first two PDF pages to improve affiliations.
 Do not invent affiliations or experimental results.
-Write 未在 DBLP/arXiv 元数据中提供 when affiliations are absent.
+Write 未在 DBLP/arXiv 元数据中提供 when affiliations are absent or the PDF is not accessible.
 Save the updated JSON back to public/research-digest/daily.json.
 Update stats.pendingDigest, stats.pendingEmail, and stats.pushed when possible.
 Do not edit public/research-digest/papers.json.
@@ -318,6 +344,7 @@ npm run papers:help              # 查看参数
 npm run papers:collect           # 采集每日最新 + 往年会议，不调用 AI，不发邮件
 npm run papers:collect:daily     # 只采集每日最新
 npm run papers:collect:conference # 只采集往年会议
+npm run papers:collect:pdf       # 只采集每日最新，并缓存可用 PDF
 npm run papers:email             # 只发送 daily.json 中未推送且已摘要的新论文
 npm run serve                    # 启动本地阅读站
 npm run ai:test                  # 测试 OpenAI-compatible API
@@ -327,6 +354,12 @@ npm run ai:test                  # 测试 OpenAI-compatible API
 
 ```bash
 node scripts/paper-agent.mjs --mode daily --no-ai --no-email --daily-max 8 --daily-primary-max 6 --daily-trend-max 2 --max-per-query 5
+```
+
+带 PDF 缓存的采集：
+
+```bash
+node scripts/paper-agent.mjs --mode daily --no-ai --no-email --download-pdfs --pdf-max 6
 ```
 
 ## 12. 文件说明
@@ -340,6 +373,7 @@ public/app.js                        # 前端逻辑
 public/styles.css                    # 样式
 public/research-digest/daily.json    # 今日新论文工作区
 public/research-digest/papers.json   # 历史库
+public/research-digest/pdfs/         # 可选 PDF 缓存，默认忽略
 .env.example                         # 配置模板
 .env.local                           # 本地私密配置，不提交
 ```
@@ -410,6 +444,7 @@ npm run papers:collect
 .env.local.save
 paper-agent.log
 public/research-digest/*.bak
+public/research-digest/pdfs/
 ```
 
 项目的 `.gitignore` 已经默认忽略它们。`.env.local` 里如果曾经写过真实 API key 或邮箱授权码，公开分享项目后建议轮换一次密钥。

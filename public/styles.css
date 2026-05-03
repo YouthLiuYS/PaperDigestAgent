@@ -83,7 +83,8 @@ h1 {
 }
 
 .data-link,
-.paper-actions a {
+.paper-actions a,
+.paper-actions button {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -147,7 +148,7 @@ h1 {
   margin-top: 18px;
   padding: 14px;
   display: grid;
-  grid-template-columns: minmax(220px, 1fr) 150px 150px;
+  grid-template-columns: minmax(220px, 1fr) repeat(4, minmax(128px, 150px));
   gap: 10px;
   align-items: end;
 }
@@ -314,12 +315,41 @@ h1 {
   padding: 2px 8px;
 }
 
+.status-badge {
+  border-radius: 6px;
+  font-weight: 900;
+  padding: 2px 8px;
+}
+
+.status-badge.ready {
+  background: rgba(37, 122, 103, 0.1);
+  color: #1c6d5b;
+}
+
+.status-badge.pending {
+  background: rgba(242, 165, 27, 0.14);
+  color: #876000;
+}
+
+.status-badge.failed {
+  background: rgba(181, 49, 42, 0.1);
+  color: #9a332c;
+}
+
 .paper-card h2 {
   margin: 10px 0 0;
   color: #102849;
   font-size: clamp(1.18rem, 2vw, 1.65rem);
   line-height: 1.32;
   letter-spacing: 0;
+}
+
+.paper-card.is-read {
+  opacity: 0.72;
+}
+
+.paper-card.is-favorite {
+  border-color: rgba(242, 165, 27, 0.62);
 }
 
 .authors {
@@ -381,10 +411,23 @@ h1 {
   background: #fff;
 }
 
+.paper-actions button {
+  border-color: rgba(18, 63, 119, 0.18);
+  color: #394a62;
+  background: #fff;
+  cursor: pointer;
+}
+
+.paper-actions button.active {
+  border-color: rgba(242, 165, 27, 0.66);
+  background: rgba(242, 165, 27, 0.12);
+  color: #795300;
+}
+
 @media (max-width: 860px) {
   .hero { align-items: flex-start; flex-direction: column; }
   .stats-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .toolbar { grid-template-columns: 1fr 1fr; }
+  .toolbar { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .control.wide { grid-column: span 2; }
   .workbench-head { flex-direction: column; }
   .workbench-grid { grid-template-columns: 1fr; }

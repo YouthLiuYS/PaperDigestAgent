@@ -4,7 +4,10 @@ const state = {
   dailyDigest: { papers: [], stats: {} },
   query: "",
   source: "all",
-  sort: "recommendation"
+  status: "all",
+  view: "all",
+  sort: "recommendation",
+  marks: loadUserMarks()
 };
 
 const elements = {
@@ -14,6 +17,8 @@ const elements = {
   time: document.querySelector("#stat-time"),
   search: document.querySelector("#search-input"),
   source: document.querySelector("#source-select"),
+  status: document.querySelector("#status-select"),
+  view: document.querySelector("#view-select"),
   sort: document.querySelector("#sort-select"),
   promptOutput: document.querySelector("#prompt-output"),
   digestInput: document.querySelector("#digest-input"),
@@ -86,7 +91,10 @@ function buildDailyStats(papers, previousStats = {}) {
     current: papers.length,
     pendingDigest: papers.filter((paper) => !hasUsableDigest(paper)).length,
     pendingEmail: papers.filter((paper) => !paper.pushedAt && !paper.emailSentAt && hasUsableDigest(paper)).length,
-    pushed: papers.filter((paper) => paper.pushedAt || paper.emailSentAt).length
+    pushed: papers.filter((paper) => paper.pushedAt || paper.emailSentAt).length,
+    failedDigest: papers.filter((paper) => getPaperWorkflow(paper).digestStatus === "failed").length,
+    failedEmail: papers.filter((paper) => getPaperWorkflow(paper).emailStatus === "failed").length,
+    pdfDownloaded: papers.filter((paper) => paper.pdfStatus === "downloaded" || paper.localPdfPath).length
   };
 }
 
@@ -112,9 +120,25 @@ function bindControls() {
     renderPapers();
   });
 
+  elements.status.addEventListener("change", (event) => {
+    state.status = event.target.value;
+    renderPapers();
+  });
+
+  elements.view.addEventListener("change", (event) => {
+    state.view = event.target.value;
+    renderPapers();
+  });
+
   elements.sort.addEventListener("change", (event) => {
     state.sort = event.target.value;
     renderPapers();
+  });
+
+  elements.list.addEventListener("click", (event) => {
+    const button = event.target.closest("[data-paper-action]");
+    if (!button) return;
+    togglePaperMark(button.dataset.paperKey, button.dataset.paperAction);
   });
 
   elements.copyPrompt.addEventListener("click", async () => {
@@ -179,6 +203,8 @@ function renderWorkbench() {
 function renderPapers() {
   const papers = state.digest.papers
     .filter((paper) => state.source === "all" || paper.source === state.source)
+    .filter(matchesStatus)
+    .filter(matchesView)
     .filter(matchesQuery)
     .sort(comparePapers);
 
@@ -212,6 +238,27 @@ function matchesQuery(paper) {
   ].join(" ").toLowerCase().includes(state.query);
 }
 
+function matchesStatus(paper) {
+  if (state.status === "all") return true;
+  if (state.status === "pending-digest") return !hasUsableDigest(paper);
+  if (state.status === "pending-email") return !paper.pushedAt && !paper.emailSentAt && hasUsableDigest(paper);
+  if (state.status === "pushed") return Boolean(paper.pushedAt || paper.emailSentAt);
+  if (state.status === "failed") {
+    const workflow = getPaperWorkflow(paper);
+    return workflow.digestStatus === "failed" || workflow.emailStatus === "failed" || paper.pdfStatus === "failed";
+  }
+  if (state.status === "pdf") return paper.pdfStatus === "downloaded" || Boolean(paper.localPdfPath);
+  return true;
+}
+
+function matchesView(paper) {
+  const mark = getPaperMark(paper);
+  if (state.view === "favorites") return Boolean(mark.favorite);
+  if (state.view === "read") return Boolean(mark.read);
+  if (state.view === "unread") return !mark.read;
+  return true;
+}
+
 function comparePapers(a, b) {
   if (state.sort === "recommendation") {
     return recommendationRank(a) - recommendationRank(b)
@@ -241,13 +288,18 @@ function renderPaper(paper) {
   const digest = paper.digest ?? {};
   const tags = (digest.tags ?? paper.categories ?? []).filter(Boolean).slice(0, 6);
   const collectionLabels = getCollectionLabels(paper);
+  const mark = getPaperMark(paper);
+  const paperKey = paperStorageKey(paper);
+  const workflow = getPaperWorkflow(paper);
 
   return `
-    <article class="paper-card">
+    <article class="paper-card ${mark.favorite ? "is-favorite" : ""} ${mark.read ? "is-read" : ""}">
       <div class="meta-row">
         <span class="source-badge">${escapeHtml(paper.source ?? "Unknown")}</span>
         ${collectionLabels.map((label) => `<span class="mode-badge">${escapeHtml(label)}</span>`).join("")}
         ${paper.recommendationLabel ? `<span class="track-badge">${escapeHtml(paper.recommendationLabel)}</span>` : ""}
+        ${renderWorkflowBadge(workflow.digestStatus)}
+        ${renderPdfBadge(paper)}
         <span>${escapeHtml(formatDate(paper.published || paper.updated))}</span>
         ${paper.venue ? `<span>${escapeHtml(paper.venue)}</span>` : ""}
         <span>重要度 ${escapeHtml(digest.importance ?? 3)}/5</span>
@@ -265,9 +317,25 @@ function renderPaper(paper) {
       <div class="paper-actions">
         ${paper.url ? `<a href="${escapeAttribute(paper.url)}" target="_blank" rel="noopener noreferrer">打开论文</a>` : ""}
         ${paper.pdfUrl ? `<a href="${escapeAttribute(paper.pdfUrl)}" target="_blank" rel="noopener noreferrer">PDF</a>` : ""}
+        ${paper.localPdfUrl ? `<a href="${escapeAttribute(paper.localPdfUrl)}" target="_blank" rel="noopener noreferrer">本地 PDF</a>` : ""}
+        <button class="mark-button ${mark.favorite ? "active" : ""}" type="button" data-paper-action="favorite" data-paper-key="${escapeAttribute(paperKey)}">${mark.favorite ? "已收藏" : "收藏"}</button>
+        <button class="mark-button ${mark.read ? "active" : ""}" type="button" data-paper-action="read" data-paper-key="${escapeAttribute(paperKey)}">${mark.read ? "已读" : "标为已读"}</button>
       </div>
     </article>
   `;
+}
+
+function renderWorkflowBadge(status) {
+  if (status === "ready") return `<span class="status-badge ready">摘要完成</span>`;
+  if (status === "failed") return `<span class="status-badge failed">摘要失败</span>`;
+  if (status === "pending") return `<span class="status-badge pending">待摘要</span>`;
+  return "";
+}
+
+function renderPdfBadge(paper) {
+  if (paper.pdfStatus === "downloaded" || paper.localPdfPath) return `<span class="status-badge ready">PDF 已缓存</span>`;
+  if (paper.pdfStatus === "failed") return `<span class="status-badge failed">PDF 失败</span>`;
+  return "";
 }
 
 function getCollectionLabels(paper) {
@@ -300,25 +368,83 @@ function buildDigestPrompt(papers = getPendingDigestPapers()) {
     title: paper.title,
     source: paper.source,
     authors: paper.authors ?? [],
+    authorAffiliations: paper.authorAffiliations ?? [],
+    affiliations: paper.affiliations ?? [],
     venue: paper.venue ?? "",
     published: paper.published ?? "",
     categories: paper.categories ?? [],
     abstract: paper.abstract ?? "",
     recommendationTrack: paper.recommendationTrack ?? "",
     relevanceReason: paper.relevanceReason ?? "",
-    url: paper.url ?? ""
+    url: paper.url ?? "",
+    pdfUrl: paper.pdfUrl ?? "",
+    localPdfPath: paper.localPdfPath ?? "",
+    pdfStatus: paper.pdfStatus ?? "",
+    workflow: getPaperWorkflow(paper)
   }));
 
   return [
     "你是严谨的中文科研论文速递编辑。",
     "请只根据给定元数据和摘要写作，不要编造作者单位、实验结果或结论。",
-    "如果元数据没有提供作者单位，请写“未在 DBLP/arXiv 元数据中提供”。",
+    "如果 authorAffiliations、affiliations 或可读取的 localPdfPath 提供作者单位，可以使用；否则请写“未在 DBLP/arXiv 元数据中提供”。",
+    "如果你在 Codex 本地环境中可以读取 localPdfPath，可以优先参考 PDF 前两页提取作者单位；如果在网页端无法访问本地 PDF，不要猜测。",
     "请返回严格 JSON，不要 Markdown，不要代码块。",
     "JSON schema:",
     "{\"papers\":[{\"id\":\"原论文 id\",\"digest\":{\"summaryZh\":\"80 到 140 字中文摘要\",\"motivationZh\":\"研究动机\",\"methodZh\":\"核心方法\",\"experimentsZh\":\"实验设置和结果；没有就说明摘要未披露\",\"affiliationsZh\":\"作者单位\",\"tags\":[\"关键词\"],\"importance\":3}}]}",
     "待处理论文:",
     JSON.stringify(compactPapers, null, 2)
   ].join("\n\n");
+}
+
+function togglePaperMark(key, action) {
+  if (!key || !["favorite", "read"].includes(action)) return;
+  const current = state.marks[key] ?? {};
+  state.marks = {
+    ...state.marks,
+    [key]: {
+      ...current,
+      [action]: !current[action],
+      updatedAt: new Date().toISOString()
+    }
+  };
+  saveUserMarks(state.marks);
+  renderPapers();
+}
+
+function getPaperMark(paper) {
+  return state.marks[paperStorageKey(paper)] ?? {};
+}
+
+function getPaperWorkflow(paper) {
+  const pushed = Boolean(paper.pushedAt || paper.emailSentAt);
+  const digestReady = hasUsableDigest(paper);
+  return {
+    ...(paper.workflow ?? {}),
+    collectStatus: "collected",
+    digestStatus: digestReady ? "ready" : paper.workflow?.digestStatus ?? "pending",
+    emailStatus: pushed ? "sent" : digestReady ? paper.workflow?.emailStatus === "failed" ? "failed" : "ready" : "waiting-digest",
+    pdfStatus: paper.pdfStatus ?? paper.workflow?.pdfStatus ?? (paper.localPdfPath ? "downloaded" : paper.pdfUrl ? "remote" : "none")
+  };
+}
+
+function paperStorageKey(paper) {
+  return paper.id || titleKey(paper.title);
+}
+
+function loadUserMarks() {
+  try {
+    return JSON.parse(localStorage.getItem("paper-digest-agent:marks:v1") ?? "{}");
+  } catch {
+    return {};
+  }
+}
+
+function saveUserMarks(marks) {
+  try {
+    localStorage.setItem("paper-digest-agent:marks:v1", JSON.stringify(marks));
+  } catch {
+    setWorkbenchStatus("浏览器未允许保存收藏状态");
+  }
 }
 
 function normalizeImportedDigests(value) {
