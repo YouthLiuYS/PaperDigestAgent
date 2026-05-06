@@ -16,7 +16,9 @@ Paper Digest Agent 是一个本地论文速递工具，用来每天搜集 arXiv 
 
 ## What's New / 功能更新记录
 
-- **2026-05-03** — ![NEW](https://img.shields.io/badge/NEW-red?style=flat-square) ![Harness](https://img.shields.io/badge/Harness-paper--reader--v1-blue?style=flat-square) ![Motivation](https://img.shields.io/badge/Motivation-required-green?style=flat-square) ![Method](https://img.shields.io/badge/Method-required-purple?style=flat-square) ![Experiments](https://img.shields.io/badge/Experiments-required-orange?style=flat-square) ![PDF Cache](https://img.shields.io/badge/PDF%20Cache-local-blue?style=flat-square) ![Reader](https://img.shields.io/badge/Reader-enhanced-purple?style=flat-square) **论文日报工作流与 Codex 读论文 harness 升级**：新增 `harness/paper-reader-v1.md`、`harness/paper-digest.schema.json`、`npm run harness:prompt`、`npm run harness:validate`；把 `motivationZh/methodZh/experimentsZh` 设为硬门槛，要求具体问题、方法机制、实验设置/基线/指标/结果和证据来源，空泛或缺证据时标记 `workflow.digestStatus=failed`；同时支持可选 PDF 本地缓存、工作流状态、阅读站状态筛选/收藏/已读，避免把不可靠摘要发进邮件。
+- **2026-05-06** — ![Actions](https://img.shields.io/badge/GitHub%20Actions-cloud--daily-blue?style=flat-square) ![Pages](https://img.shields.io/badge/Pages-static--reader-green?style=flat-square) ![Email](https://img.shields.io/badge/Email-secrets--based-orange?style=flat-square) **云端无人值守运行**：新增 GitHub Actions 工作流，每天 08:20（Asia/Shanghai）在云端采集论文、调用 OpenAI-compatible API 生成 harness 摘要、发送邮件，并把 `daily.json/papers.json` 状态提交回仓库；新增 GitHub Pages 部署工作流，把 `public/` 发布为可在线访问的静态阅读站，避免本机睡眠导致定时任务错过。
+- **2026-05-04** — ![NEW](https://img.shields.io/badge/NEW-red?style=flat-square) ![Discovery](https://img.shields.io/badge/Discovery-unseen--first-blue?style=flat-square) ![Backfill](https://img.shields.io/badge/Backfill-auto-green?style=flat-square) ![Daily](https://img.shields.io/badge/Daily-more--new-orange?style=flat-square) **每日新论文发现策略升级**：采集流程改为“先和历史库/当天库去重，再从未推送候选里排序推荐”，避免 Top N 都是旧论文时漏掉后排新论文；当未推送论文不足 `PAPER_AGENT_MIN_NEW_PAPERS` 时，自动扩大 arXiv 时间窗和每条 query 数量进行 `daily-backfill` 补充发现，尽量保证每天都有新论文进入摘要与邮件流程。
+- **2026-05-03** — ![Harness](https://img.shields.io/badge/Harness-paper--reader--v1-blue?style=flat-square) ![Motivation](https://img.shields.io/badge/Motivation-required-green?style=flat-square) ![Method](https://img.shields.io/badge/Method-required-purple?style=flat-square) ![Experiments](https://img.shields.io/badge/Experiments-required-orange?style=flat-square) ![PDF Cache](https://img.shields.io/badge/PDF%20Cache-local-blue?style=flat-square) ![Reader](https://img.shields.io/badge/Reader-enhanced-purple?style=flat-square) **论文日报工作流与 Codex 读论文 harness 升级**：新增 `harness/paper-reader-v1.md`、`harness/paper-digest.schema.json`、`npm run harness:prompt`、`npm run harness:validate`；把 `motivationZh/methodZh/experimentsZh` 设为硬门槛，要求具体问题、方法机制、实验设置/基线/指标/结果和证据来源，空泛或缺证据时标记 `workflow.digestStatus=failed`；同时支持可选 PDF 本地缓存、工作流状态、阅读站状态筛选/收藏/已读，避免把不可靠摘要发进邮件。
 
 ## 数据结构
 
@@ -97,8 +99,14 @@ PAPER_AGENT_COLLECTION_MODE=all
 PAPER_AGENT_DAILY_MAX_PAPERS=8
 PAPER_AGENT_DAILY_PRIMARY_MAX_PAPERS=6
 PAPER_AGENT_DAILY_TREND_MAX_PAPERS=2
+PAPER_AGENT_MIN_NEW_PAPERS=5
+PAPER_AGENT_BACKFILL_ENABLED=true
+PAPER_AGENT_BACKFILL_DAYS=45
+PAPER_AGENT_BACKFILL_MAX_PER_QUERY=24
 PAPER_AGENT_CONFERENCE_YEARS=2025;2024;2023;2022
 ```
+
+`PAPER_AGENT_MIN_NEW_PAPERS` 是每天希望尽量产出的未推送论文数量。若常规每日最新结果不够，agent 会启用 backfill：扩大 arXiv 近邻时间窗和每条 query 返回数量，并把补充发现标记为 `daily-backfill`。它仍然会和历史库去重，所以不会故意重复推送旧论文。
 
 可选 PDF 缓存：
 
@@ -313,7 +321,98 @@ npm run papers:email
 node -e "const fs=require('fs'); for (const f of ['public/research-digest/daily.json','public/research-digest/papers.json']) { const d=JSON.parse(fs.readFileSync(f,'utf8')); console.log(f, d.stats); }"
 ```
 
-## 10. 设置每天定时运行
+## 10. GitHub Actions 云端运行
+
+如果希望电脑睡眠时也能工作，推荐使用 GitHub Actions。项目已内置两个工作流：
+
+```text
+.github/workflows/paper-agent.yml  # 每天采集、摘要、发邮件、提交 JSON 状态
+.github/workflows/pages.yml        # 发布 public/ 为 GitHub Pages 静态阅读站
+```
+
+默认计划任务是每天 `00:20 UTC`，也就是北京时间 `08:20`。Actions 运行后会：
+
+1. 读取仓库里的历史库 `public/research-digest/papers.json`。
+2. 搜集当天新论文，并自动 backfill 补充未见过的论文。
+3. 使用 OpenAI-compatible API 生成中文摘要、motivation、method、实验结果和作者单位。
+4. 发送邮件。
+5. 邮件成功后把论文标记为 `pushedAt/emailSentAt`，合并进历史库。
+6. 把更新后的 `daily.json/papers.json` commit 回仓库。
+7. 触发 GitHub Pages，把静态阅读站更新到线上。
+
+注意：GitHub Actions 不能直接调用你本机的 Codex Desktop 或 ChatGPT 网页端。要做到云端全自动摘要和邮件，必须配置 OpenAI-compatible API key；如果不配置 API key，Actions 可以采集论文并提交 JSON，但邮件会因为没有可用摘要而跳过。
+
+### 配置 Secrets
+
+打开 GitHub 仓库：
+
+```text
+Settings -> Secrets and variables -> Actions
+```
+
+在 `Secrets` 里新增：
+
+```text
+PAPER_AGENT_AI_API_KEY       # OpenAI-compatible API key
+PAPER_AGENT_SMTP_HOST        # SMTP 地址，例如 smtp.163.com 或企业邮箱后台给出的地址
+PAPER_AGENT_SMTP_PORT        # 常见为 465
+PAPER_AGENT_SMTP_SECURE      # true
+PAPER_AGENT_SMTP_STARTTLS    # false 或 true，以邮箱后台为准
+PAPER_AGENT_SMTP_USER        # 发件邮箱账号
+PAPER_AGENT_SMTP_PASS        # 邮箱 SMTP 授权码，不是登录密码
+PAPER_AGENT_MAIL_FROM        # Paper Agent <你的发件邮箱>
+PAPER_AGENT_MAIL_TO          # 收件邮箱，多个用英文分号分隔
+```
+
+可选地，在 `Variables` 里新增：
+
+```text
+PAPER_AGENT_AI_MODEL=gpt-4o-mini
+PAPER_AGENT_AI_API_URL=https://api.openai.com/v1/chat/completions
+PAPER_AGENT_REQUIRE_AI=true
+PAPER_AGENT_SITE_URL=https://YouthLiuYS.github.io/PaperDigestAgent/
+```
+
+`PAPER_AGENT_REQUIRE_AI=true` 会让 AI 摘要失败时直接标红失败，便于在 Actions 页面排查；如果你希望失败时保留 fallback 数据，可以不设置。
+
+### 手动运行 Actions
+
+在 GitHub 页面运行：
+
+```text
+Actions -> Paper Digest Agent -> Run workflow
+```
+
+也可以用 `gh`：
+
+```bash
+gh workflow run "Paper Digest Agent" -f collection_mode=daily -f send_email=true
+gh run list --workflow "Paper Digest Agent"
+```
+
+如果你想手动补一次往年会议库：
+
+```bash
+gh workflow run "Paper Digest Agent" -f collection_mode=conference -f send_email=false
+```
+
+### 启用 GitHub Pages
+
+打开：
+
+```text
+Settings -> Pages
+```
+
+把 Source 设为 `GitHub Actions`。第一次 `Deploy Reader Site` 成功后，阅读站通常会在这里：
+
+```text
+https://YouthLiuYS.github.io/PaperDigestAgent/
+```
+
+GitHub Pages 上的阅读站是静态只读版，可以查看论文库和摘要；“网页端摘要工作台”的保存功能仍然只适合本地 `npm run serve`，因为 Pages 没有本地写文件 API。
+
+## 11. 设置每天定时运行
 
 macOS / Linux 可以用 crontab：
 
@@ -340,7 +439,7 @@ Enter      确认文件名
 Ctrl + X   退出
 ```
 
-## 11. 常用命令
+## 12. 常用命令
 
 ```bash
 npm run papers:help              # 查看参数
@@ -362,13 +461,19 @@ npm run harness:validate:write   # 将 harness 校验状态写回 daily.json
 node scripts/paper-agent.mjs --mode daily --no-ai --no-email --daily-max 8 --daily-primary-max 6 --daily-trend-max 2 --max-per-query 5
 ```
 
+如果想提高“每天都有新论文”的概率，可以临时扩大补充发现：
+
+```bash
+node scripts/paper-agent.mjs --mode daily --no-ai --no-email --min-new 6 --backfill-days 60 --backfill-max-per-query 32
+```
+
 带 PDF 缓存的采集：
 
 ```bash
 node scripts/paper-agent.mjs --mode daily --no-ai --no-email --download-pdfs --pdf-max 6
 ```
 
-## 12. 文件说明
+## 13. 文件说明
 
 ```text
 scripts/paper-agent.mjs              # 核心采集/去重/邮件脚本
@@ -384,11 +489,13 @@ public/styles.css                    # 样式
 public/research-digest/daily.json    # 今日新论文工作区
 public/research-digest/papers.json   # 历史库
 public/research-digest/pdfs/         # 可选 PDF 缓存，默认忽略
+.github/workflows/paper-agent.yml    # GitHub Actions 云端采集/摘要/邮件/提交状态
+.github/workflows/pages.yml          # GitHub Pages 静态阅读站部署
 .env.example                         # 配置模板
 .env.local                           # 本地私密配置，不提交
 ```
 
-## 13. 排错
+## 14. 排错
 
 ### 127.0.0.1 拒绝连接
 
@@ -445,7 +552,18 @@ npm run papers:collect
 
 这是 OpenAI API 计费额度问题。ChatGPT Pro 会员不自动包含 API 免费额度。可以改用 Codex 自动化或网页端摘要流程。
 
-## 14. 安全提示
+### GitHub Actions 没有发邮件
+
+先看 Actions 日志里的 `Run paper digest agent` 步骤：
+
+- `Email skipped: SMTP settings are incomplete.`：SMTP Secrets 没配全。
+- `Email skipped: no unpushed daily papers with completed summaries.`：没有可发送的“新论文 + 可用摘要”，通常是 API key 未配置或 AI 摘要失败。
+- `AI API 401/429`：API key 无效、额度不足或模型不可用。
+- `Email failed`：SMTP 地址、端口、授权码或发件人配置不对。
+
+如果邮件已经成功发送，但下一天又重复发送同一批论文，通常是 Actions 没有成功把 `pushedAt/emailSentAt` commit 回仓库，需要检查 `Commit updated digest data` 步骤。
+
+## 15. 安全提示
 
 不要提交这些文件：
 

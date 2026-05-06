@@ -1,0 +1,122 @@
+name: Paper Digest Agent
+
+on:
+  schedule:
+    # 00:20 UTC = 08:20 Asia/Shanghai.
+    - cron: "20 0 * * *"
+  workflow_dispatch:
+    inputs:
+      collection_mode:
+        description: "Collection mode: daily, conference, or all"
+        required: false
+        default: "daily"
+        type: choice
+        options:
+          - daily
+          - conference
+          - all
+      send_email:
+        description: "Send email after digest generation"
+        required: false
+        default: true
+        type: boolean
+
+permissions:
+  contents: write
+
+concurrency:
+  group: paper-digest-agent
+  cancel-in-progress: false
+
+jobs:
+  digest:
+    name: Collect, summarize, and email papers
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    env:
+      TZ: Asia/Shanghai
+      PAPER_AGENT_COLLECTION_MODE: ${{ inputs.collection_mode || 'daily' }}
+      PAPER_AGENT_SITE_URL: ${{ vars.PAPER_AGENT_SITE_URL || format('https://{0}.github.io/{1}/', github.repository_owner, github.event.repository.name) }}
+      PAPER_AGENT_EMAIL_ENABLED: ${{ inputs.send_email || github.event_name == 'schedule' }}
+      PAPER_AGENT_REQUIRE_AI: ${{ vars.PAPER_AGENT_REQUIRE_AI || 'false' }}
+      PAPER_AGENT_AI_API_KEY: ${{ secrets.PAPER_AGENT_AI_API_KEY }}
+      PAPER_AGENT_AI_API_URL: ${{ vars.PAPER_AGENT_AI_API_URL || 'https://api.openai.com/v1/chat/completions' }}
+      PAPER_AGENT_AI_MODEL: ${{ vars.PAPER_AGENT_AI_MODEL || 'gpt-4o-mini' }}
+      PAPER_AGENT_SMTP_HOST: ${{ secrets.PAPER_AGENT_SMTP_HOST }}
+      PAPER_AGENT_SMTP_PORT: ${{ secrets.PAPER_AGENT_SMTP_PORT }}
+      PAPER_AGENT_SMTP_SECURE: ${{ secrets.PAPER_AGENT_SMTP_SECURE }}
+      PAPER_AGENT_SMTP_STARTTLS: ${{ secrets.PAPER_AGENT_SMTP_STARTTLS }}
+      PAPER_AGENT_SMTP_USER: ${{ secrets.PAPER_AGENT_SMTP_USER }}
+      PAPER_AGENT_SMTP_PASS: ${{ secrets.PAPER_AGENT_SMTP_PASS }}
+      PAPER_AGENT_MAIL_FROM: ${{ secrets.PAPER_AGENT_MAIL_FROM }}
+      PAPER_AGENT_MAIL_TO: ${{ secrets.PAPER_AGENT_MAIL_TO }}
+      PAPER_AGENT_ARXIV_QUERIES: ${{ vars.PAPER_AGENT_ARXIV_QUERIES }}
+      PAPER_AGENT_DBLP_QUERIES: ${{ vars.PAPER_AGENT_DBLP_QUERIES }}
+      PAPER_AGENT_TARGET_THEMES: ${{ vars.PAPER_AGENT_TARGET_THEMES }}
+      PAPER_AGENT_CONFERENCE_VENUES: ${{ vars.PAPER_AGENT_CONFERENCE_VENUES }}
+      PAPER_AGENT_CONFERENCE_YEARS: ${{ vars.PAPER_AGENT_CONFERENCE_YEARS }}
+      PAPER_AGENT_DAILY_MAX_PAPERS: ${{ vars.PAPER_AGENT_DAILY_MAX_PAPERS || '8' }}
+      PAPER_AGENT_DAILY_PRIMARY_MAX_PAPERS: ${{ vars.PAPER_AGENT_DAILY_PRIMARY_MAX_PAPERS || '6' }}
+      PAPER_AGENT_DAILY_TREND_MAX_PAPERS: ${{ vars.PAPER_AGENT_DAILY_TREND_MAX_PAPERS || '2' }}
+      PAPER_AGENT_MIN_NEW_PAPERS: ${{ vars.PAPER_AGENT_MIN_NEW_PAPERS || '5' }}
+      PAPER_AGENT_BACKFILL_ENABLED: ${{ vars.PAPER_AGENT_BACKFILL_ENABLED || 'true' }}
+      PAPER_AGENT_BACKFILL_DAYS: ${{ vars.PAPER_AGENT_BACKFILL_DAYS || '45' }}
+      PAPER_AGENT_BACKFILL_MAX_PER_QUERY: ${{ vars.PAPER_AGENT_BACKFILL_MAX_PER_QUERY || '24' }}
+      PAPER_AGENT_CONFERENCE_MAX_PAPERS: ${{ vars.PAPER_AGENT_CONFERENCE_MAX_PAPERS || '16' }}
+      PAPER_AGENT_CONFERENCE_MAX_PER_QUERY: ${{ vars.PAPER_AGENT_CONFERENCE_MAX_PER_QUERY || '3' }}
+      PAPER_AGENT_CONFERENCE_MAX_QUERIES: ${{ vars.PAPER_AGENT_CONFERENCE_MAX_QUERIES || '120' }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Validate scripts
+        run: |
+          node --check scripts/paper-agent.mjs
+          node --check scripts/validate-digest-harness.mjs
+
+      - name: Run paper digest agent
+        id: agent
+        shell: bash
+        run: |
+          set +e
+          email_args=(--no-email)
+          if [[ "$PAPER_AGENT_EMAIL_ENABLED" == "true" ]]; then
+            email_args=(--send-email)
+          fi
+          node scripts/paper-agent.mjs --mode "$PAPER_AGENT_COLLECTION_MODE" "${email_args[@]}"
+          status=$?
+          echo "exit_code=$status" >> "$GITHUB_OUTPUT"
+          exit 0
+
+      - name: Validate digest harness
+        if: always()
+        shell: bash
+        run: |
+          node scripts/validate-digest-harness.mjs --write
+
+      - name: Commit updated digest data
+        if: always()
+        shell: bash
+        run: |
+          git config user.name "paper-digest-agent[bot]"
+          git config user.email "paper-digest-agent[bot]@users.noreply.github.com"
+          git add public/research-digest/daily.json public/research-digest/papers.json
+          if git diff --cached --quiet; then
+            echo "No digest data changes to commit."
+          else
+            git commit -m "Update paper digest data"
+            git pull --rebase
+            git push
+          fi
+
+      - name: Fail if agent failed
+        if: always() && steps.agent.outputs.exit_code != '0'
+        run: exit "${{ steps.agent.outputs.exit_code }}"

@@ -354,6 +354,7 @@ function getCollectionLabels(paper) {
   const types = paper.collectionTypes ?? [paper.collectionType];
   return types.filter(Boolean).map((type) => {
     if (type === "daily-latest") return "每日最新";
+    if (type === "daily-backfill") return "补充发现";
     if (type === "conference-archive") return "往年会议";
     return type;
   });

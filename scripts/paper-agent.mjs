@@ -13,9 +13,85 @@ const repoRoot = path.resolve(__dirname, "..");
 await loadEnvFile(path.join(repoRoot, ".env.local"));
 await loadEnvFile(path.join(repoRoot, ".env"));
 
-const DEFAULT_ARXIV_QUERIES = ["cat:cs.AI OR cat:cs.CL OR cat:cs.LG"];
-const DEFAULT_DBLP_QUERIES = ["machine learning", "artificial intelligence"];
-const DEFAULT_CONFERENCE_VENUES = ["NeurIPS", "ICML", "ICLR", "CVPR", "ACL", "EMNLP", "KDD", "SIGIR"];
+const DEFAULT_ARXIV_QUERIES = [
+  "(cat:cs.AR OR cat:cs.DC OR cat:cs.PF) AND (all:LLM OR all:transformer OR all:foundation OR all:language) AND (all:accelerator OR all:processor OR all:architecture OR all:hardware OR all:system OR all:serving OR all:training OR all:inference OR all:cache)",
+  "(all:quantization OR all:compression OR all:pruning OR all:sparsity OR all:low-bit) AND (all:LLM OR all:transformer OR all:language) AND (all:hardware OR all:accelerator OR all:inference OR all:serving OR all:processor)",
+  "(all:prefill OR all:decoding OR all:KV OR all:cache OR all:attention) AND (all:accelerator OR all:kernel OR all:compiler OR all:serving OR all:memory) AND (all:LLM OR all:transformer)",
+  "(all:PIM OR all:near-memory OR all:HBM OR all:DRAM OR all:SRAM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI)",
+  "(all:agent OR all:agents OR all:agentic OR all:reasoning OR all:post-training OR all:alignment OR all:multimodal OR all:world-model) AND (all:LLM OR all:foundation OR all:language)"
+];
+const DEFAULT_DBLP_QUERIES = [
+  "LLM accelerator architecture",
+  "large language model accelerator",
+  "LLM inference accelerator",
+  "transformer accelerator architecture",
+  "attention accelerator architecture",
+  "AI processor large language model",
+  "NPU large language model",
+  "GPU LLM inference optimization",
+  "LLM serving system optimization",
+  "large language model inference system",
+  "LLM training system optimization",
+  "hardware software co-design LLM",
+  "hardware aware LLM quantization",
+  "large language model quantization hardware",
+  "low bit LLM inference accelerator",
+  "sparsity LLM accelerator",
+  "KV cache optimization LLM",
+  "memory efficient LLM inference",
+  "near memory computing LLM",
+  "processing in memory transformer",
+  "chiplet AI accelerator",
+  "compiler optimization LLM inference",
+  "LLM reasoning agent",
+  "multimodal large language model",
+  "post-training LLM alignment"
+];
+const DEFAULT_TARGET_THEMES = [
+  "LLM accelerator architecture",
+  "large language model accelerator",
+  "LLM inference acceleration",
+  "transformer accelerator",
+  "attention accelerator",
+  "AI processor architecture",
+  "NPU for large language model",
+  "GPU LLM inference optimization",
+  "LLM serving system optimization",
+  "LLM training system optimization",
+  "hardware software co-design for LLM",
+  "hardware aware LLM quantization",
+  "large language model quantization hardware",
+  "low-bit LLM inference accelerator",
+  "sparsity acceleration for LLM",
+  "KV cache optimization",
+  "memory efficient LLM inference",
+  "near memory computing for LLM",
+  "processing in memory for transformer",
+  "chiplet AI accelerator",
+  "compiler optimization for LLM inference",
+  "agent hardware software co-design"
+];
+const DEFAULT_CONFERENCE_VENUES = [
+  "ISCA",
+  "MICRO",
+  "HPCA",
+  "ASPLOS",
+  "MLSys",
+  "OSDI",
+  "SOSP",
+  "USENIX ATC",
+  "SC",
+  "PPoPP",
+  "EuroSys",
+  "DAC",
+  "ICCAD",
+  "DATE",
+  "NeurIPS",
+  "ICML",
+  "ICLR",
+  "ACL",
+  "EMNLP"
+];
 const FALLBACK_DIGEST_MARKERS = [
   "AI 摘要未生成",
   "命令行启用了 --no-ai",
@@ -147,13 +223,17 @@ const DEFAULT_CONFIG = {
   dailyMaxPapers: numberFromEnv("PAPER_AGENT_DAILY_MAX_PAPERS", numberFromEnv("PAPER_AGENT_MAX_PAPERS", 12)),
   dailyPrimaryMaxPapers: numberFromEnv("PAPER_AGENT_DAILY_PRIMARY_MAX_PAPERS", 6),
   dailyTrendMaxPapers: numberFromEnv("PAPER_AGENT_DAILY_TREND_MAX_PAPERS", 2),
+  minNewPapers: numberFromEnv("PAPER_AGENT_MIN_NEW_PAPERS", 5),
+  backfillEnabled: boolFromEnv("PAPER_AGENT_BACKFILL_ENABLED", true),
+  backfillDays: numberFromEnv("PAPER_AGENT_BACKFILL_DAYS", 45),
+  backfillMaxPerQuery: numberFromEnv("PAPER_AGENT_BACKFILL_MAX_PER_QUERY", 24),
   conferenceMaxPapers: numberFromEnv("PAPER_AGENT_CONFERENCE_MAX_PAPERS", 12),
   conferenceMaxPerQuery: numberFromEnv("PAPER_AGENT_CONFERENCE_MAX_PER_QUERY", 3),
   conferenceMaxQueries: numberFromEnv("PAPER_AGENT_CONFERENCE_MAX_QUERIES", 40),
   archiveLimit: numberFromEnv("PAPER_AGENT_ARCHIVE_LIMIT", 240),
   arxivQueries: listFromEnv("PAPER_AGENT_ARXIV_QUERIES") ?? DEFAULT_ARXIV_QUERIES,
   dblpQueries: configuredDblpQueries,
-  targetThemes: listFromEnv("PAPER_AGENT_TARGET_THEMES") ?? configuredDblpQueries,
+  targetThemes: listFromEnv("PAPER_AGENT_TARGET_THEMES") ?? DEFAULT_TARGET_THEMES,
   conferenceVenues: listFromEnv("PAPER_AGENT_CONFERENCE_VENUES") ?? DEFAULT_CONFERENCE_VENUES,
   conferenceYears: yearsFromEnv("PAPER_AGENT_CONFERENCE_YEARS") ?? defaultConferenceYears(),
   outputPath: process.env.PAPER_AGENT_OUTPUT ?? "public/research-digest/papers.json",
@@ -225,6 +305,8 @@ async function run(config) {
     collected: dailyDigest.stats?.collected ?? 0,
     dailyCount: dailyDigest.stats?.dailyCandidates ?? 0,
     conferenceCount: dailyDigest.stats?.conferenceCandidates ?? 0,
+    backfillCount: dailyDigest.stats?.backfillCandidates ?? 0,
+    rawCandidates: dailyDigest.stats?.rawCandidates ?? dailyDigest.stats?.collected ?? 0,
     newlyAdded: dailyDigest.stats?.newlyAdded ?? 0
   });
 
@@ -233,12 +315,12 @@ async function run(config) {
     console.log(`History library has ${historyPapers.length} papers at ${config.outputPath}.`);
   } else {
     const knownIndex = buildExistingIndex([...historyPapers, ...existingDailyPapers]);
-    const collection = await collectPapers(config);
+    const collection = await collectPapers(config, knownIndex);
     const candidates = collection.candidates;
 
     const newCandidates = candidates.filter((paper) => !findExistingPaper(paper, knownIndex));
     console.log(
-      `Collected ${candidates.length} candidate papers (${collection.daily.length} daily, ${collection.conference.length} conference), ${newCandidates.length} new.`
+      `Collected ${collection.rawCandidates} candidate papers (${collection.daily.length} daily, ${collection.conference.length} conference, ${collection.backfill.length} backfill), ${newCandidates.length} new selected.`
     );
 
     const enrichedNew = [];
@@ -253,6 +335,8 @@ async function run(config) {
       collected: candidates.length,
       dailyCount: collection.daily.length,
       conferenceCount: collection.conference.length,
+      backfillCount: collection.backfill.length,
+      rawCandidates: collection.rawCandidates,
       newlyAdded: enrichedNew.length
     });
 
@@ -270,23 +354,69 @@ async function run(config) {
   console.log("Paper agent finished.");
 }
 
-async function collectPapers(config) {
-  const daily = isDailyMode(config)
-    ? selectRecommendedPapers(dedupePapers([
+async function collectPapers(config, knownIndex = null) {
+  const dailyPool = isDailyMode(config)
+    ? dedupePapers([
       ...(await collectArxivPapers(config)),
       ...(await collectDblpPapers(config))
-    ]), config.dailyMaxPapers, config)
+    ])
+    : [];
+
+  const conferencePool = isConferenceMode(config)
+    ? dedupePapers(await collectConferenceArchivePapers(config))
+    : [];
+
+  const daily = isDailyMode(config)
+    ? selectRecommendedPapers(filterUnseenPapers(dailyPool, knownIndex), config.dailyMaxPapers, config)
     : [];
 
   const conference = isConferenceMode(config)
-    ? selectRecommendedPapers(dedupePapers(await collectConferenceArchivePapers(config)), config.conferenceMaxPapers, config)
+    ? selectRecommendedPapers(filterUnseenPapers(conferencePool, knownIndex, daily), config.conferenceMaxPapers, config)
+    : [];
+
+  const selected = dedupePapers([...daily, ...conference]);
+  const backfill = config.backfillEnabled && isDailyMode(config) && selected.length < config.minNewPapers
+    ? selectRecommendedPapers(
+      filterUnseenPapers(await collectBackfillPapers(config), knownIndex, selected),
+      Math.max(config.minNewPapers, config.dailyMaxPapers) - selected.length,
+      config
+    )
     : [];
 
   return {
     daily,
     conference,
-    candidates: sortPapersByDate(dedupePapers([...daily, ...conference]))
+    backfill,
+    rawCandidates: dailyPool.length + conferencePool.length,
+    candidates: sortPapersByDate(dedupePapers([...selected, ...backfill]))
   };
+}
+
+async function collectBackfillPapers(config) {
+  const backfillConfig = {
+    ...config,
+    daysBack: Math.max(config.daysBack, config.backfillDays),
+    maxPerQuery: Math.max(config.maxPerQuery, config.backfillMaxPerQuery)
+  };
+  console.log(`Backfill enabled: expanding daily search to ${backfillConfig.daysBack} days and ${backfillConfig.maxPerQuery} results/query.`);
+  return dedupePapers([
+    ...(await collectArxivPapers(backfillConfig, "daily-backfill")),
+    ...(await collectDblpPapers(backfillConfig, "daily-backfill"))
+  ]);
+}
+
+function filterUnseenPapers(papers, knownIndex, selected = []) {
+  const selectedIds = new Set(selected.map((paper) => paper.id).filter(Boolean));
+  const selectedTitles = new Set(selected.map((paper) => titleKey(paper.title)).filter(Boolean));
+  return papers.filter((paper) => {
+    if (knownIndex && findExistingPaper(paper, knownIndex)) {
+      return false;
+    }
+    if (selectedIds.has(paper.id) || selectedTitles.has(titleKey(paper.title))) {
+      return false;
+    }
+    return true;
+  });
 }
 
 function selectRecommendedPapers(papers, limit, config) {
@@ -423,7 +553,7 @@ function paperSearchText(paper) {
   ].join(" ")).toLowerCase();
 }
 
-async function collectArxivPapers(config) {
+async function collectArxivPapers(config, collectionType = "daily-latest") {
   const papers = [];
   const cutoff = Date.now() - config.daysBack * 24 * 60 * 60 * 1000;
 
@@ -444,7 +574,7 @@ async function collectArxivPapers(config) {
           return Number.isNaN(published) || published >= cutoff;
         })
         .map((paper) => tagPaper(paper, {
-          collectionType: "daily-latest",
+          collectionType,
           matchedQuery: query
         }));
 
@@ -459,7 +589,7 @@ async function collectArxivPapers(config) {
   return papers;
 }
 
-async function collectDblpPapers(config) {
+async function collectDblpPapers(config, collectionType = "daily-latest") {
   const papers = [];
 
   for (const query of config.dblpQueries) {
@@ -472,7 +602,7 @@ async function collectDblpPapers(config) {
       const url = `https://dblp.org/search/publ/api?${params.toString()}`;
       const json = await fetchJson(url);
       papers.push(...parseDblpResults(json).map((paper) => tagPaper(paper, {
-        collectionType: "daily-latest",
+        collectionType,
         matchedQuery: query
       })));
     } catch (error) {
@@ -1062,6 +1192,8 @@ async function sendDailyDigestEmail(config, dailyDigest, historyDigest) {
       collected: dailyDigest.stats?.collected ?? 0,
       dailyCount: dailyDigest.stats?.dailyCandidates ?? 0,
       conferenceCount: dailyDigest.stats?.conferenceCandidates ?? 0,
+      backfillCount: dailyDigest.stats?.backfillCandidates ?? 0,
+      rawCandidates: dailyDigest.stats?.rawCandidates ?? dailyDigest.stats?.collected ?? 0,
       newlyAdded: dailyDigest.stats?.newlyAdded ?? 0
     });
     await writeDigest(config.dailyOutputPath, failedDailyDigest);
@@ -1084,6 +1216,8 @@ async function sendDailyDigestEmail(config, dailyDigest, historyDigest) {
     collected: dailyDigest.stats?.collected ?? 0,
     dailyCount: dailyDigest.stats?.dailyCandidates ?? 0,
     conferenceCount: dailyDigest.stats?.conferenceCandidates ?? 0,
+    backfillCount: dailyDigest.stats?.backfillCandidates ?? 0,
+    rawCandidates: dailyDigest.stats?.rawCandidates ?? dailyDigest.stats?.collected ?? 0,
     newlyAdded: dailyDigest.stats?.newlyAdded ?? 0
   });
   const historyPapers = Array.isArray(historyDigest.papers) ? historyDigest.papers : [];
@@ -1403,6 +1537,18 @@ function parseArgs(args) {
       case "--daily-trend-max":
         parsed.dailyTrendMaxPapers = Number.parseInt(next(), 10);
         break;
+      case "--min-new":
+        parsed.minNewPapers = Number.parseInt(next(), 10);
+        break;
+      case "--no-backfill":
+        parsed.backfillEnabled = false;
+        break;
+      case "--backfill-days":
+        parsed.backfillDays = Number.parseInt(next(), 10);
+        break;
+      case "--backfill-max-per-query":
+        parsed.backfillMaxPerQuery = Number.parseInt(next(), 10);
+        break;
       case "--conference-max":
         parsed.conferenceMaxPapers = Number.parseInt(next(), 10);
         break;
@@ -1441,6 +1587,10 @@ Options:
   --daily-max <n>        Max daily-latest papers to keep in this run.
   --daily-primary-max <n> Max hardware/architecture-track daily papers.
   --daily-trend-max <n>  Max algorithm-trend daily papers.
+  --min-new <n>          Target minimum unpushed papers; backfill tries to reach this.
+  --no-backfill          Disable expanded daily backfill discovery.
+  --backfill-days <n>    Backfill arXiv lookback window.
+  --backfill-max-per-query <n> Max results per query during backfill.
   --conference-max <n>   Max conference-archive papers to keep in this run.
   --output <path>        Output digest JSON path.
   --daily-output <path>  Daily new-paper JSON path.
@@ -1467,6 +1617,10 @@ function normalizeConfig(config) {
     dailyMaxPapers: positiveInt(config.dailyMaxPapers, positiveInt(config.maxPapers, 12)),
     dailyPrimaryMaxPapers: positiveInt(config.dailyPrimaryMaxPapers, 6),
     dailyTrendMaxPapers: positiveInt(config.dailyTrendMaxPapers, 2),
+    minNewPapers: positiveInt(config.minNewPapers, 5),
+    backfillEnabled: Boolean(config.backfillEnabled),
+    backfillDays: positiveInt(config.backfillDays, 45),
+    backfillMaxPerQuery: positiveInt(config.backfillMaxPerQuery, 24),
     conferenceMaxPapers: positiveInt(config.conferenceMaxPapers, 12),
     conferenceMaxPerQuery: positiveInt(config.conferenceMaxPerQuery, 3),
     conferenceMaxQueries: positiveInt(config.conferenceMaxQueries, 40),
@@ -1542,6 +1696,8 @@ function buildDailyDigest(config, papers, digestDate, runStats = {}) {
       collected: runStats.collected ?? 0,
       dailyCandidates: runStats.dailyCount ?? 0,
       conferenceCandidates: runStats.conferenceCount ?? 0,
+      backfillCandidates: runStats.backfillCount ?? 0,
+      rawCandidates: runStats.rawCandidates ?? runStats.collected ?? 0,
       newlyAdded: runStats.newlyAdded ?? 0,
       pendingDigest: dailyPapers.filter((paper) => !hasUsableDigest(paper)).length,
       pendingEmail: dailyPapers.filter((paper) => !paper.pushedAt && !paper.emailSentAt && hasUsableDigest(paper)).length,
@@ -1595,6 +1751,10 @@ function buildSources(config) {
     dailyMaxPapers: config.dailyMaxPapers,
     dailyPrimaryMaxPapers: config.dailyPrimaryMaxPapers,
     dailyTrendMaxPapers: config.dailyTrendMaxPapers,
+    minNewPapers: config.minNewPapers,
+    backfillEnabled: config.backfillEnabled,
+    backfillDays: config.backfillDays,
+    backfillMaxPerQuery: config.backfillMaxPerQuery,
     conferenceMaxPapers: config.conferenceMaxPapers,
     pdfDownloadEnabled: config.pdf.enabled,
     pdfDirectory: config.pdf.directory,
@@ -1608,6 +1768,7 @@ function buildPaperStats(papers) {
     arxiv: papers.filter((paper) => paper.source === "arXiv").length,
     dblp: papers.filter((paper) => paper.source === "DBLP").length,
     dailyLatest: papers.filter((paper) => paper.collectionTypes?.includes("daily-latest") || paper.collectionType === "daily-latest").length,
+    dailyBackfill: papers.filter((paper) => paper.collectionTypes?.includes("daily-backfill") || paper.collectionType === "daily-backfill").length,
     conferenceArchive: papers.filter((paper) => paper.collectionTypes?.includes("conference-archive") || paper.collectionType === "conference-archive").length
   };
 }
