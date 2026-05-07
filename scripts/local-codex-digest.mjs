@@ -254,8 +254,8 @@ async function resolveCodexBin(explicitPath) {
     explicitPath,
     process.env.PAPER_AGENT_CODEX_BIN,
     process.env.CODEX_BIN,
-    DEFAULT_CODEX_BIN,
-    "codex"
+    "codex",
+    DEFAULT_CODEX_BIN
   ].filter(Boolean);
 
   for (const candidate of candidates) {
