@@ -69,12 +69,23 @@ export function buildHarnessPrompt(papers, options = {}) {
   const compactPapers = papers.map(compactPaperForHarness);
   const projectPath = options.projectPath ?? repoRoot;
   const dailyPath = options.dailyPath ?? "public/research-digest/daily.json";
+  const outputMode = options.outputMode ?? "json";
+  const fileInstruction = outputMode === "file"
+    ? [
+      `Read and update only ${dailyPath}. Do not edit public/research-digest/papers.json.`,
+      "Apply the generated digest objects directly to the matching papers in daily.json.",
+      "After editing, return a short plain-text report with processed/failed counts."
+    ]
+    : [
+      "Do not edit files. Return only the JSON object described below.",
+      `Use ${dailyPath} only as context for matching paper ids.`
+    ];
 
   return [
     `You are the ${HARNESS_VERSION} reading harness for PaperDigestAgent.`,
     "",
     `Work only inside ${projectPath}.`,
-    `Read and update only ${dailyPath}. Do not edit public/research-digest/papers.json.`,
+    ...fileInstruction,
     "Process only the paper ids provided below.",
     "",
     "User research direction:",
@@ -97,7 +108,9 @@ export function buildHarnessPrompt(papers, options = {}) {
     "- If evidence is missing, explicitly say 摘要/PDF可读部分未披露.",
     "- Avoid vague phrases like 提升性能 or 提出一种方法 unless followed by concrete mechanism/evidence.",
     "- If motivationZh, methodZh, or experimentsZh is vague, generic, unsupported, or too short, mark workflow.digestStatus as failed instead of pretending the paper has been analyzed.",
-    "- Output valid JSON only. No Markdown fences.",
+    outputMode === "file"
+      ? "- When editing the file, write valid JSON. Do not change unrelated papers."
+      : "- Output valid JSON only. No Markdown fences.",
     "",
     "Required output schema:",
     JSON.stringify({
@@ -257,7 +270,7 @@ export function applyHarnessValidation(paper, validation, checkedAt = new Date()
     workflow: {
       ...(paper.workflow ?? {}),
       digestStatus: ready ? "ready" : "failed",
-      emailStatus: ready && isUnpushedPaper(paper) ? "ready" : paper.workflow?.emailStatus ?? "waiting-digest",
+      emailStatus: ready && isUnpushedPaper(paper) ? "ready" : "waiting-digest",
       harnessVersion: HARNESS_VERSION,
       harnessCheckedAt: checkedAt,
       digestError: ready ? "" : validation.issues.join("; "),
@@ -270,10 +283,14 @@ export function buildHarnessStats(digest) {
   const papers = Array.isArray(digest.papers) ? digest.papers : [];
   return {
     pendingDigest: papers.filter((paper) => !hasUsableDigest(paper)).length,
-    pendingEmail: papers.filter((paper) => isUnpushedPaper(paper) && hasUsableDigest(paper)).length,
+    pendingEmail: papers.filter((paper) => isUnpushedPaper(paper) && isReadyForEmail(paper)).length,
     failedDigest: papers.filter((paper) => paper.workflow?.digestStatus === "failed").length,
     pushed: papers.filter((paper) => paper.pushedAt || paper.emailSentAt).length
   };
+}
+
+export function isReadyForEmail(paper) {
+  return hasUsableDigest(paper) && paper.workflow?.digestStatus === "ready";
 }
 
 function validateMotivationDetail(detail, issues) {

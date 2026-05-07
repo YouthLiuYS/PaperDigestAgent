@@ -1,4 +1,4 @@
-name: Paper Digest Agent
+name: Paper Collection Agent
 
 on:
   schedule:
@@ -15,11 +15,6 @@ on:
           - daily
           - conference
           - all
-      send_email:
-        description: "Send email after digest generation"
-        required: false
-        default: true
-        type: boolean
 
 permissions:
   contents: write
@@ -30,26 +25,13 @@ concurrency:
 
 jobs:
   digest:
-    name: Collect, summarize, and email papers
+    name: Collect papers for local Codex
     runs-on: ubuntu-latest
     timeout-minutes: 45
     env:
       TZ: Asia/Shanghai
       PAPER_AGENT_COLLECTION_MODE: ${{ inputs.collection_mode || 'daily' }}
       PAPER_AGENT_SITE_URL: ${{ vars.PAPER_AGENT_SITE_URL || format('https://{0}.github.io/{1}/', github.repository_owner, github.event.repository.name) }}
-      PAPER_AGENT_EMAIL_ENABLED: ${{ inputs.send_email || github.event_name == 'schedule' }}
-      PAPER_AGENT_REQUIRE_AI: ${{ vars.PAPER_AGENT_REQUIRE_AI || 'false' }}
-      PAPER_AGENT_AI_API_KEY: ${{ secrets.PAPER_AGENT_AI_API_KEY }}
-      PAPER_AGENT_AI_API_URL: ${{ vars.PAPER_AGENT_AI_API_URL || 'https://api.openai.com/v1/chat/completions' }}
-      PAPER_AGENT_AI_MODEL: ${{ vars.PAPER_AGENT_AI_MODEL || 'gpt-4o-mini' }}
-      PAPER_AGENT_SMTP_HOST: ${{ secrets.PAPER_AGENT_SMTP_HOST }}
-      PAPER_AGENT_SMTP_PORT: ${{ secrets.PAPER_AGENT_SMTP_PORT }}
-      PAPER_AGENT_SMTP_SECURE: ${{ secrets.PAPER_AGENT_SMTP_SECURE }}
-      PAPER_AGENT_SMTP_STARTTLS: ${{ secrets.PAPER_AGENT_SMTP_STARTTLS }}
-      PAPER_AGENT_SMTP_USER: ${{ secrets.PAPER_AGENT_SMTP_USER }}
-      PAPER_AGENT_SMTP_PASS: ${{ secrets.PAPER_AGENT_SMTP_PASS }}
-      PAPER_AGENT_MAIL_FROM: ${{ secrets.PAPER_AGENT_MAIL_FROM }}
-      PAPER_AGENT_MAIL_TO: ${{ secrets.PAPER_AGENT_MAIL_TO }}
       PAPER_AGENT_ARXIV_QUERIES: ${{ vars.PAPER_AGENT_ARXIV_QUERIES }}
       PAPER_AGENT_DBLP_QUERIES: ${{ vars.PAPER_AGENT_DBLP_QUERIES }}
       PAPER_AGENT_TARGET_THEMES: ${{ vars.PAPER_AGENT_TARGET_THEMES }}
@@ -82,25 +64,15 @@ jobs:
           node --check scripts/paper-agent.mjs
           node --check scripts/validate-digest-harness.mjs
 
-      - name: Run paper digest agent
+      - name: Run paper collection agent
         id: agent
         shell: bash
         run: |
           set +e
-          email_args=(--no-email)
-          if [[ "$PAPER_AGENT_EMAIL_ENABLED" == "true" ]]; then
-            email_args=(--send-email)
-          fi
-          node scripts/paper-agent.mjs --mode "$PAPER_AGENT_COLLECTION_MODE" "${email_args[@]}"
+          node scripts/paper-agent.mjs --mode "$PAPER_AGENT_COLLECTION_MODE" --no-ai --no-email
           status=$?
           echo "exit_code=$status" >> "$GITHUB_OUTPUT"
           exit 0
-
-      - name: Validate digest harness
-        if: always()
-        shell: bash
-        run: |
-          node scripts/validate-digest-harness.mjs --write
 
       - name: Commit updated digest data
         if: always()

@@ -1124,6 +1124,10 @@ function hasUsableDigest(paper) {
   return Boolean(digest.summaryZh && !FALLBACK_DIGEST_MARKERS.some((marker) => text.includes(marker)));
 }
 
+function isReadyForEmail(paper) {
+  return hasUsableDigest(paper) && paper.workflow?.digestStatus === "ready";
+}
+
 function markPushedPaper(paper, pushedAt) {
   return {
     ...paper,
@@ -1161,7 +1165,7 @@ async function sendDailyDigestEmail(config, dailyDigest, historyDigest) {
 
   const dailyPapers = Array.isArray(dailyDigest.papers) ? dailyDigest.papers : [];
   const unpushedPapers = dailyPapers.filter((paper) => !paper.pushedAt && !paper.emailSentAt);
-  const readyPapers = sortPapersForDigest(unpushedPapers.filter(hasUsableDigest));
+  const readyPapers = sortPapersForDigest(unpushedPapers.filter(isReadyForEmail));
   const waitingForDigest = unpushedPapers.length - readyPapers.length;
 
   if (waitingForDigest > 0) {
@@ -1700,7 +1704,7 @@ function buildDailyDigest(config, papers, digestDate, runStats = {}) {
       rawCandidates: runStats.rawCandidates ?? runStats.collected ?? 0,
       newlyAdded: runStats.newlyAdded ?? 0,
       pendingDigest: dailyPapers.filter((paper) => !hasUsableDigest(paper)).length,
-      pendingEmail: dailyPapers.filter((paper) => !paper.pushedAt && !paper.emailSentAt && hasUsableDigest(paper)).length,
+      pendingEmail: dailyPapers.filter((paper) => !paper.pushedAt && !paper.emailSentAt && isReadyForEmail(paper)).length,
       pushed: dailyPapers.filter((paper) => paper.pushedAt || paper.emailSentAt).length,
       failedDigest: dailyPapers.filter((paper) => paper.workflow?.digestStatus === "failed").length,
       failedEmail: dailyPapers.filter((paper) => paper.workflow?.emailStatus === "failed").length,

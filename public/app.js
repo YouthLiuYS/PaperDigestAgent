@@ -92,7 +92,7 @@ function buildDailyStats(papers, previousStats = {}) {
     total: papers.length,
     current: papers.length,
     pendingDigest: papers.filter((paper) => !hasUsableDigest(paper)).length,
-    pendingEmail: papers.filter((paper) => !paper.pushedAt && !paper.emailSentAt && hasUsableDigest(paper)).length,
+    pendingEmail: papers.filter((paper) => !paper.pushedAt && !paper.emailSentAt && isReadyForEmail(paper)).length,
     pushed: papers.filter((paper) => paper.pushedAt || paper.emailSentAt).length,
     failedDigest: papers.filter((paper) => getPaperWorkflow(paper).digestStatus === "failed").length,
     failedEmail: papers.filter((paper) => getPaperWorkflow(paper).emailStatus === "failed").length,
@@ -375,6 +375,10 @@ function hasUsableDigest(paper) {
   return Boolean(summary && !["AI 摘要未生成", "命令行启用了 --no-ai", "AI 调用失败", "未配置 PAPER_AGENT_AI_API_KEY"].some((marker) => text.includes(marker)));
 }
 
+function isReadyForEmail(paper) {
+  return hasUsableDigest(paper) && getPaperWorkflow(paper).digestStatus === "ready";
+}
+
 function buildDigestPrompt(papers = getPendingDigestPapers()) {
   const compactPapers = papers.map((paper) => ({
     id: paper.id,
@@ -499,11 +503,12 @@ function getPaperMark(paper) {
 function getPaperWorkflow(paper) {
   const pushed = Boolean(paper.pushedAt || paper.emailSentAt);
   const digestReady = hasUsableDigest(paper);
+  const digestStatus = digestReady && paper.workflow?.digestStatus !== "failed" ? "ready" : paper.workflow?.digestStatus ?? "pending";
   return {
     ...(paper.workflow ?? {}),
     collectStatus: "collected",
-    digestStatus: digestReady ? "ready" : paper.workflow?.digestStatus ?? "pending",
-    emailStatus: pushed ? "sent" : digestReady ? paper.workflow?.emailStatus === "failed" ? "failed" : "ready" : "waiting-digest",
+    digestStatus,
+    emailStatus: pushed ? "sent" : digestStatus === "ready" ? paper.workflow?.emailStatus === "failed" ? "failed" : "ready" : "waiting-digest",
     pdfStatus: paper.pdfStatus ?? paper.workflow?.pdfStatus ?? (paper.localPdfPath ? "downloaded" : paper.pdfUrl ? "remote" : "none")
   };
 }
