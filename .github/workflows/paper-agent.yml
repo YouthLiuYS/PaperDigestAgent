@@ -2,8 +2,9 @@ name: Paper Collection Agent
 
 on:
   schedule:
-    # 00:20 UTC = 08:20 Asia/Shanghai.
-    - cron: "20 0 * * *"
+    # 20:20 UTC = 04:20 Asia/Shanghai on the next calendar day.
+    # The early cloud collection gives GitHub Actions delay enough buffer before local Codex wakes at 09:10.
+    - cron: "20 20 * * *"
   workflow_dispatch:
     inputs:
       collection_mode:

@@ -359,7 +359,7 @@ npm run codex:daily
 .github/workflows/pages.yml        # 发布 public/ 为 GitHub Pages 静态阅读站
 ```
 
-默认计划任务是每天 `00:20 UTC`，也就是北京时间 `08:20`。Actions 运行后会：
+默认计划任务是每天 `20:20 UTC`，也就是北京时间次日 `04:20`。这个时间会给 GitHub Actions 的排队延迟留出缓冲，确保本地 Mac 在 `09:10` 醒来后更可能已经拿到新论文。Actions 运行后会：
 
 1. 读取仓库里的历史库 `public/research-digest/papers.json`。
 2. 搜集当天新论文，并自动 backfill 补充未见过的论文。
@@ -370,8 +370,8 @@ npm run codex:daily
 注意：GitHub Actions 不能直接调用你本机的 Codex Desktop。当前设计是两阶段：
 
 ```text
-08:20 GitHub Actions 云端采集论文 -> 提交 daily.json
-08:35 本地 Codex Desktop/CLI 拉取 daily.json -> 读论文 -> 发邮件 -> 推回 GitHub
+04:20 GitHub Actions 云端采集论文 -> 提交 daily.json
+09:15 本地 Codex Desktop/CLI 拉取 daily.json -> 读论文 -> 发邮件 -> 推回 GitHub
 ```
 
 ### GitHub 端配置
