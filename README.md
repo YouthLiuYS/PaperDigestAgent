@@ -442,17 +442,26 @@ PATH=/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin
 50 8 * * * cd /path/to/PaperDigestAgent && /opt/homebrew/bin/node scripts/paper-agent.mjs --email-only --send-email >> /path/to/PaperDigestAgent/paper-agent.log 2>&1
 ```
 
-如果使用“GitHub Actions 采集 + 本地 Codex 读论文”的混合模式，本地只需要在 08:35 左右接力：
+如果使用“GitHub Actions 采集 + 本地 Codex 读论文”的混合模式，建议让 Mac 先在 09:10 自动唤醒：
+
+```bash
+sudo pmset repeat wakeorpoweron MTWRFSU 09:10:00
+```
+
+然后让本地任务在 09:15 接力：
 
 ```cron
 SHELL=/bin/zsh
 PATH=/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin
-35 8 * * * cd /path/to/PaperDigestAgent && /opt/homebrew/bin/node scripts/local-codex-digest.mjs --pull --send-email --push >> /path/to/PaperDigestAgent/paper-agent.log 2>&1
+15 9 * * * /path/to/PaperDigestAgent/scripts/local-codex-daily-sleep.sh >> /path/to/PaperDigestAgent/paper-agent.log 2>&1
 ```
 
-这条任务要求 Mac 在 08:35 左右处于唤醒状态；因为它要调用本地 Codex Desktop/CLI，电脑睡眠时无法执行。
+包装脚本会在任务期间使用 `caffeinate` 防止中途睡眠；任务成功结束后，如果检测到最近没有用户操作，就执行 `pmset sleepnow` 让 Mac 睡回去。可以用下面的变量调整行为：
 
-如果你用 Codex 自动化生成摘要，建议把 Codex 自动化放在 08:35 左右。
+```bash
+PAPER_AGENT_SLEEP_AFTER_CODEX=true
+PAPER_AGENT_SLEEP_MIN_IDLE_SECONDS=300
+```
 
 macOS nano 里保存退出：
 
@@ -473,6 +482,7 @@ npm run papers:collect:pdf       # 只采集每日最新，并缓存可用 PDF
 npm run codex:dry-run            # 生成本地 Codex prompt，不真正调用 Codex
 npm run codex:digest             # 调用本地 Codex 读 daily.json 并合并摘要
 npm run codex:daily              # 拉取 GitHub、Codex 摘要、发邮件、提交并推回
+npm run codex:daily:sleep        # codex:daily 完成后，空闲时让 Mac 睡回去
 npm run papers:email             # 只发送 daily.json 中未推送且已摘要的新论文
 npm run serve                    # 启动本地阅读站
 npm run ai:test                  # 测试 OpenAI-compatible API
@@ -506,6 +516,7 @@ scripts/paper-agent.mjs              # 核心采集/去重/邮件脚本
 scripts/serve.mjs                    # 本地静态站和摘要保存 API
 scripts/test-ai.mjs                  # API 连通性测试
 scripts/local-codex-digest.mjs       # 本地 Codex Desktop/CLI 读论文、合并、发信、推送
+scripts/local-codex-daily-sleep.sh   # 本地 Codex 接力包装脚本，完成后按空闲状态睡眠
 scripts/build-codex-harness-prompt.mjs # 生成 Codex 读论文 harness prompt
 scripts/validate-digest-harness.mjs  # 校验 motivation/method/experiments 质量
 harness/paper-reader-v1.md           # Codex 读论文协议
