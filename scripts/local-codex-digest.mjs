@@ -68,8 +68,6 @@ const codexArgs = [
   repoRoot,
   "--sandbox",
   "read-only",
-  "--ask-for-approval",
-  "never",
   "--output-last-message",
   outputPath
 ];
