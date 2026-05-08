@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-05-07T21:24:24.698Z",
+  "generatedAt": "2026-05-08T04:36:25.968Z",
   "digestDate": "2026-05-08",
   "kind": "daily-new",
   "timezone": "Asia/Shanghai",
-  "siteUrl": "https://YouthLiuYS.github.io/PaperDigestAgent/",
+  "siteUrl": "http://127.0.0.1:4173/",
   "historyPath": "public/research-digest/papers.json",
   "sources": {
-    "collectionMode": "daily",
+    "collectionMode": "all",
     "arxivQueries": [
       "(cat:cs.AR OR cat:cs.DC OR cat:cs.PF) AND (all:LLM OR all:transformer OR all:foundation OR all:language) AND (all:accelerator OR all:processor OR all:architecture OR all:hardware OR all:system OR all:serving OR all:training OR all:inference OR all:cache)",
       "(all:quantization OR all:compression OR all:pruning OR all:sparsity OR all:low-bit) AND (all:LLM OR all:transformer OR all:language) AND (all:hardware OR all:accelerator OR all:inference OR all:serving OR all:processor)",
@@ -89,10 +89,11 @@
     "conferenceYears": [
       "2025",
       "2024",
-      "2023"
+      "2023",
+      "2022"
     ],
     "daysBack": 7,
-    "maxPapers": 12,
+    "maxPapers": 20,
     "dailyMaxPapers": 8,
     "dailyPrimaryMaxPapers": 6,
     "dailyTrendMaxPapers": 2,
@@ -119,9 +120,9 @@
     "backfillCandidates": 0,
     "rawCandidates": 108,
     "newlyAdded": 8,
-    "pendingDigest": 8,
+    "pendingDigest": 0,
     "pendingEmail": 0,
-    "pushed": 0,
+    "pushed": 8,
     "failedDigest": 0,
     "failedEmail": 0,
     "pdfDownloaded": 0,
@@ -172,76 +173,97 @@
       "relevanceReason": "命中 AI 处理器、体系结构、量化、训推系统或内存/缓存优化主题",
       "pdfStatus": "none",
       "workflow": {
-        "digestStatus": "pending",
-        "emailStatus": "waiting-digest",
-        "digestError": "命令行启用了 --no-ai",
+        "digestStatus": "ready",
+        "emailStatus": "sent",
+        "digestError": "",
         "harnessVersion": "paper-reader-v1",
         "collectStatus": "collected",
-        "pdfStatus": "none"
+        "pdfStatus": "none",
+        "harnessCheckedAt": "2026-05-08T04:36:24.411Z",
+        "harnessWarnings": [],
+        "emailSentAt": "2026-05-08T04:36:25.967Z",
+        "lastEmailError": ""
       },
       "digest": {
-        "summaryZh": "AI 摘要未生成；当前来源元数据未提供摘要。",
-        "motivationZh": "命令行启用了 --no-ai",
-        "methodZh": "来源未提供摘要，无法可靠提炼方法。",
-        "experimentsZh": "来源元数据未披露完整实验设置或结果。",
-        "affiliationsZh": "未在 DBLP/arXiv 元数据中提供。",
+        "summaryZh": "HAIMA面向Transformer推理中矩阵乘法引发的数据搬移瓶颈，将SRAM与DRAM两类AIM协同用于不同MMMO，并配套并行数据流。作者称相对Newton、TransPIM实现1.4-1.5倍加速，重点解决DRAM-AIM在轻量矩阵乘法上的资源低利用。",
+        "motivationZh": "问题是Transformer类大规模深度网络推理中MMMO使数据搬移开销超过计算开销。重要性在于嵌入式/边缘场景受延迟、带宽和资源利用约束，单纯DRAM内计算不一定高效。已有Newton、TransPIM等AIMA未区分Transformer层间并行度和资源需求差异，导致轻量MMMO在DRAM-AIMA上资源低利用、推理延迟升高。该问题直接对应用户关注的PIM、存储层次和Transformer加速器架构。",
+        "methodZh": "这是硬件/体系结构与数据流协同设计。核心是HAIMA混合SRAM与DRAM accelerator-in-memory架构，把不同类型的Transformer矩阵-矩阵乘法映射到更合适的SRAM-AIM或DRAM-AIM，并用并行数据流组织执行。可读摘要未披露具体层级划分规则、阵列规模、数据布局和调度细节，因此方法新意可确认的是异构AIM协同而非单一DRAM PIM。",
+        "experimentsZh": "可读来源只披露与Newton和TransPIM对比，指标为推理速度/延迟改善与资源利用；作者报告硬件-软件协同设计达到1.4-1.5倍加速，并缓解DRAM-AIMA执行轻量MMMO时的资源低利用。摘要/PDF可读部分未披露模型名称、序列长度、芯片制程、面积、能耗、频率和完整工作负载设置。",
+        "affiliationsZh": "CoLab条目显示作者单位为 Hunan University, College of Information Science and Engineering, China；DBLP/daily元数据未提供作者单位。",
         "tags": [
-          "Conference and Workshop Papers"
+          "Transformer加速",
+          "SRAM-DRAM协同",
+          "内存内计算",
+          "数据搬移",
+          "矩阵乘法"
         ],
-        "importance": 3,
-        "researchFitZh": "AI harness 尚未完成分析，无法判断与用户研究方向的具体关系。",
-        "hardwareRelevance": 1,
+        "importance": 4,
+        "researchFitZh": "高度贴合用户的AI处理器、PIM/近存计算、Transformer推理和存储层次研究方向，是值得看架构细节的数据流型论文。",
+        "hardwareRelevance": 5,
         "algorithmRelevance": 1,
-        "systemRelevance": 1,
-        "readPriority": "archive",
-        "whyReadZh": "需要完成 motivation、method 和实验结果分析后再判断是否值得深读。",
-        "limitationsZh": "命令行启用了 --no-ai",
+        "systemRelevance": 4,
+        "readPriority": "deep-read",
+        "whyReadZh": "值得继续读，因为它把Transformer层间异构性和SRAM/DRAM混合AIM联系起来；若能拿到PDF，应重点看MMMO分类、映射策略和资源利用分析。",
+        "limitationsZh": "本地无PDF；可读网页仅有摘要级证据，缺少模型、负载、面积、能耗、频率、制程和完整baseline表。",
         "motivationDetail": {
-          "problemZh": "harness 未完成分析。",
-          "gapZh": "harness 未完成分析。",
-          "whyImportantZh": "harness 未完成分析。",
-          "userRelevanceZh": "harness 未完成分析。",
-          "evidence": "not analyzed"
+          "problemZh": "Transformer推理中MMMO导致数据搬移主导开销。",
+          "gapZh": "已有AIMA未考虑Transformer层之间并行度与资源需求异构性，造成延迟和资源利用问题。",
+          "whyImportantZh": "降低数据搬移是边缘/嵌入式Transformer推理能效和延迟优化的关键。",
+          "userRelevanceZh": "直接对应PIM/近存计算、Transformer加速器和存储层次设计。",
+          "evidence": "author homepage abstract; daily.json metadata; no local PDF"
         },
         "methodDetail": {
-          "coreIdeaZh": "harness 未完成分析。",
+          "coreIdeaZh": "用SRAM-AIM和DRAM-AIM协同执行不同Transformer MMMO，并用并行数据流提升利用率。",
           "componentsZh": [
-            "未分析"
+            "混合SRAM/DRAM accelerator-in-memory",
+            "Transformer MMMO映射",
+            "并行数据流",
+            "硬件-软件协同设计"
           ],
-          "hardwareSystemDetailZh": "harness 未完成分析。",
-          "noveltyZh": "harness 未完成分析。",
-          "evidence": "not analyzed"
+          "hardwareSystemDetailZh": "确认涉及SRAM与DRAM两类内存内加速单元协同；具体数据布局、片上/片外缓冲、阵列规模和调度策略在可读摘要中未披露。",
+          "noveltyZh": "相对单一DRAM PIM或既有AIMA，显式利用Transformer层间异构性选择SRAM/DRAM协作。",
+          "evidence": "author homepage abstract"
         },
         "experimentDetail": {
-          "setupZh": "harness 未完成分析。",
-          "baselinesZh": "harness 未完成分析。",
+          "setupZh": "摘要/PDF可读部分未披露具体Transformer模型、数据集、序列长度、芯片参数或仿真平台。",
+          "baselinesZh": "Newton、TransPIM。",
           "metricsZh": [
-            "未分析"
+            "latency",
+            "speedup",
+            "resource utilization"
           ],
-          "mainResultsZh": "harness 未完成分析。",
-          "limitationsZh": "harness 未完成分析。",
-          "evidence": "not analyzed"
+          "mainResultsZh": "相对Newton和TransPIM报告1.4-1.5倍加速，并解决DRAM-AIMA执行轻量MMMO时资源低利用问题。",
+          "limitationsZh": "缺少能耗、面积、频率、制程、准确率和完整工作负载明细。",
+          "evidence": "author homepage abstract"
         },
         "evidence": {
           "usedSources": [
-            "metadata"
+            "metadata: public/research-digest/daily.json",
+            "author page: https://dingyan.xyz/publication/2023/7/11-DAC-2023",
+            "CoLab metadata: https://colab.ws/articles/10.1109%2Fdac56929.2023.10247913"
           ],
-          "affiliationEvidence": "",
-          "experimentEvidence": "",
+          "affiliationEvidence": "CoLab显示所有作者同属Hunan University, College of Information Science and Engineering, China。",
+          "experimentEvidence": "作者主页摘要披露Newton/TransPIM和1.4-1.5倍加速。",
           "missingFields": [
-            "motivation",
-            "method",
-            "experiments"
+            "localPdfPath",
+            "full evaluation setup",
+            "energy",
+            "area",
+            "frequency",
+            "model list"
           ]
         },
         "confidence": {
-          "summary": 0.2,
-          "motivation": 0,
-          "method": 0,
-          "experiments": 0,
-          "affiliations": 0
+          "summary": 0.86,
+          "motivation": 0.84,
+          "method": 0.74,
+          "experiments": 0.66,
+          "affiliations": 0.8
         }
-      }
+      },
+      "pushedAt": "2026-05-08T04:36:25.967Z",
+      "emailSentAt": "2026-05-08T04:36:25.967Z",
+      "firstPushedAt": "2026-05-08T04:36:25.967Z"
     },
     {
       "id": "doi:10.1016/j.jpdc.2025.105042",
@@ -285,76 +307,100 @@
       "relevanceReason": "命中 AI 处理器、体系结构、量化、训推系统或内存/缓存优化主题",
       "pdfStatus": "none",
       "workflow": {
-        "digestStatus": "pending",
-        "emailStatus": "waiting-digest",
-        "digestError": "命令行启用了 --no-ai",
+        "digestStatus": "ready",
+        "emailStatus": "sent",
+        "digestError": "",
         "harnessVersion": "paper-reader-v1",
         "collectStatus": "collected",
-        "pdfStatus": "none"
+        "pdfStatus": "none",
+        "harnessCheckedAt": "2026-05-08T04:36:24.411Z",
+        "harnessWarnings": [],
+        "emailSentAt": "2026-05-08T04:36:25.967Z",
+        "lastEmailError": ""
       },
       "digest": {
-        "summaryZh": "AI 摘要未生成；当前来源元数据未提供摘要。",
-        "motivationZh": "命令行启用了 --no-ai",
-        "methodZh": "来源未提供摘要，无法可靠提炼方法。",
-        "experimentsZh": "来源元数据未披露完整实验设置或结果。",
-        "affiliationsZh": "未在 DBLP/arXiv 元数据中提供。",
+        "summaryZh": "DRViT是面向Vision Transformer边缘推理的算法-架构协同FPGA加速器。它用动态token merging、token pruning和INT8量化削减冗余计算，并设计专用模块承接不规则模式；在Alveo U250上ViT-tiny达到0.86ms/image和1380GOP/s峰值。",
+        "motivationZh": "问题是ViT在多模态/边缘场景中计算和存储需求高，尤其MHSA的Q/K/V在线生成、高维多头张量、LayerNorm/Softmax/GELU等非线性浮点操作以及低数据复用带来高延迟和能耗。已有轻量化算法会产生动态不规则token模式，若架构不能感知冗余和调度不规则性，就难以把算法收益变成硬件吞吐和能效。该问题与用户关注的Transformer/NPU加速、硬件友好量化和软硬件协同相关。",
+        "methodZh": "这是算法-架构协同的FPGA系统。算法侧用动态token merging、token pruning和INT8量化减少ViT冗余计算与浮点非线性；架构侧设计动态冗余感知的专用数据流和模块，包括Token Merging and Pruning Module、Integer-Only Nonlinear Function Module、SLR Management Module等，将不规则token处理转化为可流式执行的硬件流程。新意在于同时处理token动态稀疏和整数化非线性，而不是只做静态量化或矩阵阵列。",
+        "experimentsZh": "实现于Xilinx Alveo U250，使用Vivado 2020.1/2022.1，运行ViT-tiny/ImageNet并与CPU、GPU及其他FPGA加速器比较。报告140MHz下0.86ms/image、100MHz下1.17ms/image，峰值吞吐1380GOP/s，较以往SOTA提升2.24×。预览未完整披露所有baseline名称、准确率损失和能耗具体数值。",
+        "affiliationsZh": "未在DBLP/arXiv元数据中提供；ScienceDirect预览显示作者有a/b上标但未展开机构名称，无法可靠写出全体作者单位。",
         "tags": [
-          "Journal Articles"
+          "FPGA加速",
+          "Vision Transformer",
+          "token剪枝",
+          "INT8量化",
+          "软硬件协同"
         ],
-        "importance": 3,
-        "researchFitZh": "AI harness 尚未完成分析，无法判断与用户研究方向的具体关系。",
-        "hardwareRelevance": 1,
-        "algorithmRelevance": 1,
-        "systemRelevance": 1,
-        "readPriority": "archive",
-        "whyReadZh": "需要完成 motivation、method 和实验结果分析后再判断是否值得深读。",
-        "limitationsZh": "命令行启用了 --no-ai",
+        "importance": 4,
+        "researchFitZh": "属于硬件体系结构主线，但模型是ViT而非LLM；对动态token稀疏、整数非线性和FPGA数据流设计有参考价值。",
+        "hardwareRelevance": 4,
+        "algorithmRelevance": 3,
+        "systemRelevance": 4,
+        "readPriority": "deep-read",
+        "whyReadZh": "值得继续读，重点看动态token合并/剪枝如何在硬件中避免控制和访存开销，以及Integer-Only Nonlinear模块的实现。",
+        "limitationsZh": "本地无PDF；ScienceDirect预览只给摘要和节选，未完整披露baseline表、准确率变化、能耗细节和所有模块实现参数。",
         "motivationDetail": {
-          "problemZh": "harness 未完成分析。",
-          "gapZh": "harness 未完成分析。",
-          "whyImportantZh": "harness 未完成分析。",
-          "userRelevanceZh": "harness 未完成分析。",
-          "evidence": "not analyzed"
+          "problemZh": "ViT在边缘/分布式多模态任务中计算、存储和非线性浮点开销高。",
+          "gapZh": "轻量化token算法会引入不规则计算模式，通用CPU/GPU或普通FPGA映射难以高效利用。",
+          "whyImportantZh": "边缘多模态应用要求低延迟、高能效和本地处理，云端部署不能满足实时与安全要求。",
+          "userRelevanceZh": "关联AI加速器、Transformer数据流、硬件友好量化和软硬件协同。",
+          "evidence": "ScienceDirect abstract and introduction preview"
         },
         "methodDetail": {
-          "coreIdeaZh": "harness 未完成分析。",
+          "coreIdeaZh": "用动态冗余感知轻量ViT算法配套专用FPGA架构，使token压缩和INT8量化直接降低延迟与能耗。",
           "componentsZh": [
-            "未分析"
+            "动态token merging",
+            "动态token pruning",
+            "INT8量化方案",
+            "Token Merging and Pruning Module",
+            "Integer-Only Nonlinear Function Module",
+            "SLR Management Module"
           ],
-          "hardwareSystemDetailZh": "harness 未完成分析。",
-          "noveltyZh": "harness 未完成分析。",
-          "evidence": "not analyzed"
+          "hardwareSystemDetailZh": "使用FPGA流式架构承载动态token处理；可读预览未披露片上缓冲大小、模块流水线深度和详细存储调度。",
+          "noveltyZh": "将动态token冗余消除与可综合的FPGA模块共同设计，缓解动态稀疏带来的硬件不规则性。",
+          "evidence": "ScienceDirect abstract, introduction, section snippets"
         },
         "experimentDetail": {
-          "setupZh": "harness 未完成分析。",
-          "baselinesZh": "harness 未完成分析。",
+          "setupZh": "Xilinx Alveo U250 FPGA，ViT-tiny，ImageNet，Vivado 2020.1/2022.1，频率100MHz和140MHz。",
+          "baselinesZh": "CPU、GPU和其他FPGA加速器；预览未列出完整名称。",
           "metricsZh": [
-            "未分析"
+            "latency",
+            "throughput",
+            "energy efficiency",
+            "accuracy"
           ],
-          "mainResultsZh": "harness 未完成分析。",
-          "limitationsZh": "harness 未完成分析。",
-          "evidence": "not analyzed"
+          "mainResultsZh": "0.86ms/image@140MHz，1.17ms/image@100MHz，峰值1380GOP/s，较前序SOTA性能提升2.24×。",
+          "limitationsZh": "摘要未完整披露准确率损失、能耗数值、资源利用表和全部baseline。",
+          "evidence": "ScienceDirect abstract and FPGA implementation snippet"
         },
         "evidence": {
           "usedSources": [
-            "metadata"
+            "metadata: public/research-digest/daily.json",
+            "ScienceDirect: https://www.sciencedirect.com/science/article/pii/S0743731525000097",
+            "DBLP search metadata"
           ],
-          "affiliationEvidence": "",
-          "experimentEvidence": "",
+          "affiliationEvidence": "DBLP/daily为空；ScienceDirect预览未展开a/b机构。",
+          "experimentEvidence": "ScienceDirect摘要和FPGA implementation节选。",
           "missingFields": [
-            "motivation",
-            "method",
-            "experiments"
+            "localPdfPath",
+            "full baseline names",
+            "accuracy loss",
+            "energy values",
+            "resource utilization table",
+            "author affiliations"
           ]
         },
         "confidence": {
-          "summary": 0.2,
-          "motivation": 0,
-          "method": 0,
-          "experiments": 0,
-          "affiliations": 0
+          "summary": 0.9,
+          "motivation": 0.88,
+          "method": 0.84,
+          "experiments": 0.78,
+          "affiliations": 0.35
         }
-      }
+      },
+      "pushedAt": "2026-05-08T04:36:25.967Z",
+      "emailSentAt": "2026-05-08T04:36:25.967Z",
+      "firstPushedAt": "2026-05-08T04:36:25.967Z"
     },
     {
       "id": "doi:10.1145/3725843.3756121",
@@ -402,76 +448,101 @@
       "relevanceReason": "命中 AI 处理器、体系结构、量化、训推系统或内存/缓存优化主题",
       "pdfStatus": "none",
       "workflow": {
-        "digestStatus": "pending",
-        "emailStatus": "waiting-digest",
-        "digestError": "命令行启用了 --no-ai",
+        "digestStatus": "ready",
+        "emailStatus": "sent",
+        "digestError": "",
         "harnessVersion": "paper-reader-v1",
         "collectStatus": "collected",
-        "pdfStatus": "none"
+        "pdfStatus": "none",
+        "harnessCheckedAt": "2026-05-08T04:36:24.411Z",
+        "harnessWarnings": [],
+        "emailSentAt": "2026-05-08T04:36:25.967Z",
+        "lastEmailError": ""
       },
       "digest": {
-        "summaryZh": "AI 摘要未生成；当前来源元数据未提供摘要。",
-        "motivationZh": "命令行启用了 --no-ai",
-        "methodZh": "来源未提供摘要，无法可靠提炼方法。",
-        "experimentsZh": "来源元数据未披露完整实验设置或结果。",
-        "affiliationsZh": "未在 DBLP/arXiv 元数据中提供。",
+        "summaryZh": "Pimba面向Mamba-2、线性注意力、RNN等post-transformer LLM与传统Transformer的统一服务瓶颈，提出GPU+PIM加速方案。其SPU跨两个bank共享，SPE采用MX8量化算术执行状态更新和注意力，报告相对GPU/GPU+PIM提升生成吞吐并降低能耗。",
+        "motivationZh": "问题是长上下文LLM服务中Transformer注意力和post-transformer状态更新都会在batch推理下受内存带宽限制。重要性在于SSM、linear attention、RNN等新模型被用于降低长序列成本，但服务系统需要同时支持新旧模型。已有PIM多聚焦attention/GEMV；post-transformer状态更新包含逐元素乘加、点积等多种原语，逐bank PIM面积成本高，且低精度格式会影响持续状态更新准确性。该问题正中用户关注的LLM推理系统、PIM、KV/状态存储和硬件友好量化。",
+        "methodZh": "这是PIM体系结构、低精度算术和GPU-PIM系统协同设计。Pimba将状态更新与attention offload到PIM，其他操作交给GPU；核心硬件是每两个bank共享一个State-update Processing Unit，内部SPE含MX8量化的向量乘法器和加法器，用交错访问读写不同bank的row buffer。系统还包含自定义DRAM命令与调度，支持状态预充和生成期计算。新意在于把post-transformer状态更新作为一等公民，而非只优化Transformer attention。",
+        "experimentsZh": "评估覆盖Mamba-2、GLA、RetNet、HGRN2、Zamba2和OPT，比较GPU、GPU+Q、GPU+PIM、NeuPIMs/HBM-PIM等，指标包括生成吞吐、状态更新/attention延迟、能耗、准确率和面积。可读全文报告状态更新延迟较GPU/GPU+PIM低14.6×/6.9×，attention低6.3×/1.8×，能耗平均较GPU/GPU+PIM低2.2×/1.2×，面积开销13.4%。吞吐结果网页摘要与全文存在3.2×/4.1×相对GPU的不一致，但均报告相对GPU+PIM最高2.1×。",
+        "affiliationsZh": "全文首页显示Wonung Kim、Yubin Lee、Yoonsung Kim、Jinwoo Hwang、Seongryong Oh、Jiyong Jung、Aziz Huseynov、Woong Gyu Park、Jongse Park为KAIST；Chang Hyun Park为Uppsala University；Divya Mahajan为Georgia Institute of Technology。",
         "tags": [
-          "Conference and Workshop Papers"
+          "LLM服务",
+          "Post-Transformer",
+          "PIM",
+          "状态更新",
+          "MX8量化",
+          "GPU-PIM协同"
         ],
-        "importance": 3,
-        "researchFitZh": "AI harness 尚未完成分析，无法判断与用户研究方向的具体关系。",
-        "hardwareRelevance": 1,
-        "algorithmRelevance": 1,
-        "systemRelevance": 1,
-        "readPriority": "archive",
-        "whyReadZh": "需要完成 motivation、method 和实验结果分析后再判断是否值得深读。",
-        "limitationsZh": "命令行启用了 --no-ai",
+        "importance": 5,
+        "researchFitZh": "非常贴合用户主线：它同时涉及LLM推理服务、PIM近存计算、post-transformer架构、低精度算术和GPU-PIM系统边界。",
+        "hardwareRelevance": 5,
+        "algorithmRelevance": 3,
+        "systemRelevance": 5,
+        "readPriority": "deep-read",
+        "whyReadZh": "应深读，尤其关注状态更新roofline、SPU跨bank共享的面积/吞吐权衡、MX8对连续状态更新准确率的影响，以及与attention PIM系统的兼容方式。",
+        "limitationsZh": "可读来源中预印本/网页摘要对相对GPU吞吐上限有3.2×与4.1×差异，需核对最终ACM版本；部分模型规模、完整硬件参数和准确率表需读论文全文确认。",
         "motivationDetail": {
-          "problemZh": "harness 未完成分析。",
-          "gapZh": "harness 未完成分析。",
-          "whyImportantZh": "harness 未完成分析。",
-          "userRelevanceZh": "harness 未完成分析。",
-          "evidence": "not analyzed"
+          "problemZh": "post-transformer LLM和Transformer在batched generation下都受内存带宽限制，尤其状态更新成为低算术强度瓶颈。",
+          "gapZh": "既有LLM PIM系统主要针对attention/GEMV，不能高效支持状态更新；逐bank实现状态更新硬件面积过高。",
+          "whyImportantZh": "长上下文、RAG、多模态输入推动序列长度增长，服务成本和GPU内存/带宽压力显著上升。",
+          "userRelevanceZh": "直接对应LLM推理系统、PIM、状态/KV存储层次和硬件友好量化。",
+          "evidence": "ResearchGate full text; KAIST Pure metadata; GitHub README"
         },
         "methodDetail": {
-          "coreIdeaZh": "harness 未完成分析。",
+          "coreIdeaZh": "用GPU+PIM统一服务Transformer和post-transformer，把attention与状态更新放到PIM中并用MX8降低数据搬移和面积。",
           "componentsZh": [
-            "未分析"
+            "State-update Processing Unit",
+            "State-update Processing Engine",
+            "MX8向量乘法器与加法器",
+            "跨两个bank共享的SPU",
+            "自定义DRAM命令",
+            "GPU-PIM调度"
           ],
-          "hardwareSystemDetailZh": "harness 未完成分析。",
-          "noveltyZh": "harness 未完成分析。",
-          "evidence": "not analyzed"
+          "hardwareSystemDetailZh": "SPU交错访问两个bank的row buffer以维持吞吐并控制面积；PIM执行状态更新和attention，GPU处理其他层；使用MX8量化和随机舍入缓解连续状态更新精度损失。",
+          "noveltyZh": "从attention-centric PIM扩展到post-transformer状态更新，并在bank共享粒度上优化面积与吞吐。",
+          "evidence": "ResearchGate full text method/intro; GitHub README"
         },
         "experimentDetail": {
-          "setupZh": "harness 未完成分析。",
-          "baselinesZh": "harness 未完成分析。",
+          "setupZh": "模型包括RetNet、GLA、HGRN2、Mamba-2、Zamba2和OPT；主实验含2048/2048输入输出长度和batch 32/64/128，NeuPIMs比较使用Zamba2 70B、batch 128、1024/1024长度和8个A100张量并行设置。",
+          "baselinesZh": "GPU、GPU+Q、GPU+PIM、HBM-PIM、NeuPIMs。",
           "metricsZh": [
-            "未分析"
+            "token generation throughput",
+            "latency",
+            "energy",
+            "accuracy",
+            "area"
           ],
-          "mainResultsZh": "harness 未完成分析。",
-          "limitationsZh": "harness 未完成分析。",
-          "evidence": "not analyzed"
+          "mainResultsZh": "状态更新延迟较GPU/GPU+PIM低14.6×/6.9×；attention延迟低6.3×/1.8×；能耗平均低2.2×/1.2×；面积开销13.4%；吞吐相对GPU+PIM最高2.1×，相对GPU上限在可读来源中为3.2×或4.1×。",
+          "limitationsZh": "最终发表版本的吞吐上限需核对；摘要未完整给出每个模型的准确率与吞吐表。",
+          "evidence": "evaluation section in web full text"
         },
         "evidence": {
           "usedSources": [
-            "metadata"
+            "metadata: public/research-digest/daily.json",
+            "KAIST Pure: https://pure.kaist.ac.kr/en/publications/pimba-a-processing-in-memory-acceleration-for-post-transformer-la/",
+            "ResearchGate full text: https://www.researchgate.net/publication/393685352_Pimba_A_Processing-in-Memory_Acceleration_Post-Transformer_Large_Language_Model_Serving",
+            "GitHub README: https://github.com/casys-kaist/pimba"
           ],
-          "affiliationEvidence": "",
-          "experimentEvidence": "",
+          "affiliationEvidence": "ResearchGate全文首页列出作者单位。",
+          "experimentEvidence": "ResearchGate全文evaluation段和GitHub README复现实验说明。",
           "missingFields": [
-            "motivation",
-            "method",
-            "experiments"
+            "localPdfPath",
+            "final-version throughput discrepancy resolution",
+            "complete accuracy table",
+            "full simulator parameters"
           ]
         },
         "confidence": {
-          "summary": 0.2,
-          "motivation": 0,
-          "method": 0,
-          "experiments": 0,
-          "affiliations": 0
+          "summary": 0.9,
+          "motivation": 0.9,
+          "method": 0.88,
+          "experiments": 0.78,
+          "affiliations": 0.88
         }
-      }
+      },
+      "pushedAt": "2026-05-08T04:36:25.967Z",
+      "emailSentAt": "2026-05-08T04:36:25.967Z",
+      "firstPushedAt": "2026-05-08T04:36:25.967Z"
     },
     {
       "id": "doi:10.1109/lca.2025.3535470",
@@ -516,76 +587,99 @@
       "relevanceReason": "命中 AI 处理器、体系结构、量化、训推系统或内存/缓存优化主题",
       "pdfStatus": "none",
       "workflow": {
-        "digestStatus": "pending",
-        "emailStatus": "waiting-digest",
-        "digestError": "命令行启用了 --no-ai",
+        "digestStatus": "ready",
+        "emailStatus": "sent",
+        "digestError": "",
         "harnessVersion": "paper-reader-v1",
         "collectStatus": "collected",
-        "pdfStatus": "none"
+        "pdfStatus": "none",
+        "harnessCheckedAt": "2026-05-08T04:36:24.411Z",
+        "harnessWarnings": [],
+        "emailSentAt": "2026-05-08T04:36:25.967Z",
+        "lastEmailError": ""
       },
       "digest": {
-        "summaryZh": "AI 摘要未生成；当前来源元数据未提供摘要。",
-        "motivationZh": "命令行启用了 --no-ai",
-        "methodZh": "来源未提供摘要，无法可靠提炼方法。",
-        "experimentsZh": "来源元数据未披露完整实验设置或结果。",
-        "affiliationsZh": "未在 DBLP/arXiv 元数据中提供。",
+        "summaryZh": "RoPIM针对Transformer中RoPE在推理阶段的高开销，提出bank-level PIM架构。它在内存侧支持乘加、并行数据重排，并用bank/row级数据映射减少bank间通信和DRAM激活；摘要报告RoPE占GPU时间61%，RoPIM最高307.9×性能提升和914.1×能耗节省。",
+        "motivationZh": "问题是RoPE虽能在长序列中有效注入位置信息且无需重训，但推理时会因大量数据搬移和执行依赖成为瓶颈。作者观察RoPE占GPU执行时间61%。已有常规GPU/系统在处理RoPE这类位置编码算子时需要频繁搬移数据，长上下文下开销更突出。该问题与用户关注的LLM推理、长上下文内存层次、PIM和Transformer专用算子加速高度相关。",
+        "methodZh": "这是面向RoPE算子的PIM硬件架构。RoPIM使用bank-level accelerator，在内存附近支持multiply-add操作以减少片外搬移；通过并行数据重排降低RoPE操作依赖；再用bank-level和row-level数据映射实现并行执行、消除bank-to-bank通信并减少DRAM activations。新意在于把通常被当作小算子的RoPE单独作为PIM加速对象，并围绕其旋转/重排模式设计数据映射。",
+        "experimentsZh": "可读摘要只披露与conventional systems对比，指标为性能和能耗；结果为最高307.9×性能提升、914.1×能耗节省，并指出RoPE在GPU上占执行时间61%。摘要/PDF可读部分未披露具体Transformer模型、序列长度、GPU型号、PIM仿真配置、面积开销和平均结果。",
+        "affiliationsZh": "DGIST Pure条目列出Department of Electrical Engineering and Computer Science、Daegu Gyeongbuk Institute of Science and Technology以及Samsung；Yonsei页面还列出School of System & Semiconductor Engineering。具体作者到机构的映射未完全披露。",
         "tags": [
-          "Journal Articles"
+          "RoPE",
+          "PIM",
+          "长上下文",
+          "DRAM映射",
+          "Transformer推理"
         ],
-        "importance": 3,
-        "researchFitZh": "AI harness 尚未完成分析，无法判断与用户研究方向的具体关系。",
-        "hardwareRelevance": 1,
-        "algorithmRelevance": 1,
-        "systemRelevance": 1,
-        "readPriority": "archive",
-        "whyReadZh": "需要完成 motivation、method 和实验结果分析后再判断是否值得深读。",
-        "limitationsZh": "命令行启用了 --no-ai",
+        "importance": 5,
+        "researchFitZh": "非常贴合LLM推理内存层次与PIM方向，尤其适合关注长上下文位置编码、数据重排和近存算子加速的人继续读。",
+        "hardwareRelevance": 5,
+        "algorithmRelevance": 2,
+        "systemRelevance": 4,
+        "readPriority": "deep-read",
+        "whyReadZh": "应深读，因为它把RoPE这种通常不被单独建模的推理算子量化为主要GPU瓶颈，并给出bank/row级PIM映射策略。",
+        "limitationsZh": "IEEE CAL篇幅短且本地无PDF；可读摘要未披露完整实验设置、平均性能、面积和可扩展性边界。",
         "motivationDetail": {
-          "problemZh": "harness 未完成分析。",
-          "gapZh": "harness 未完成分析。",
-          "whyImportantZh": "harness 未完成分析。",
-          "userRelevanceZh": "harness 未完成分析。",
-          "evidence": "not analyzed"
+          "problemZh": "RoPE在Transformer推理中因数据搬移和依赖导致高延迟。",
+          "gapZh": "常规系统未把RoPE作为内存侧可并行化算子优化，导致长序列下位置编码开销显著。",
+          "whyImportantZh": "长上下文LLM大量使用RoPE，若该算子占GPU执行时间61%，会直接限制端到端推理吞吐和能效。",
+          "userRelevanceZh": "关联LLM推理、PIM、长上下文存储/数据流和专用算子硬件化。",
+          "evidence": "DGIST Scholar abstract; DGIST/Yonsei Pure metadata"
         },
         "methodDetail": {
-          "coreIdeaZh": "harness 未完成分析。",
+          "coreIdeaZh": "把RoPE的乘加和数据重排下沉到bank-level PIM，并通过bank/row映射并行化执行。",
           "componentsZh": [
-            "未分析"
+            "bank-level accelerator",
+            "multiply-add support",
+            "parallel data rearrangement",
+            "bank-level data mapping",
+            "row-level data mapping"
           ],
-          "hardwareSystemDetailZh": "harness 未完成分析。",
-          "noveltyZh": "harness 未完成分析。",
-          "evidence": "not analyzed"
+          "hardwareSystemDetailZh": "方法减少off-chip data movement，消除bank-to-bank communication并减少DRAM activations；具体bank数量、ALU规模、命令时序和面积在摘要中未披露。",
+          "noveltyZh": "面向RoPE位置编码算子的专用PIM，而非仅加速GEMM/GEMV或attention。",
+          "evidence": "abstract"
         },
         "experimentDetail": {
-          "setupZh": "harness 未完成分析。",
-          "baselinesZh": "harness 未完成分析。",
+          "setupZh": "摘要/PDF可读部分未披露具体模型、数据集、序列长度、GPU或PIM仿真器。",
+          "baselinesZh": "conventional systems；具体baseline配置未披露。",
           "metricsZh": [
-            "未分析"
+            "performance",
+            "energy",
+            "GPU execution time share"
           ],
-          "mainResultsZh": "harness 未完成分析。",
-          "limitationsZh": "harness 未完成分析。",
-          "evidence": "not analyzed"
+          "mainResultsZh": "RoPE占GPU执行时间61%；RoPIM最高307.9×性能提升和914.1×能耗节省。",
+          "limitationsZh": "未披露平均结果、面积开销、频率、制程和端到端LLM吞吐。",
+          "evidence": "DGIST Scholar abstract"
         },
         "evidence": {
           "usedSources": [
-            "metadata"
+            "metadata: public/research-digest/daily.json",
+            "DGIST Scholar: https://scholar.dgist.ac.kr/handle/20.500.11750/58122",
+            "DGIST Pure: https://dgist.elsevierpure.com/en/publications/ropim-a-processing-in-memory-architecture-for-accelerating-rotary",
+            "Yonsei Pure: https://yonsei.elsevierpure.com/en/publications/ropim-a-processing-in-memory-architecture-for-accelerating-rotary"
           ],
-          "affiliationEvidence": "",
-          "experimentEvidence": "",
+          "affiliationEvidence": "DGIST/Yonsei Pure条目列出机构，但未完整展开作者-机构映射。",
+          "experimentEvidence": "DGIST Scholar摘要披露61%、307.9×和914.1×。",
           "missingFields": [
-            "motivation",
-            "method",
-            "experiments"
+            "localPdfPath",
+            "full setup",
+            "average results",
+            "area overhead",
+            "process node",
+            "model list"
           ]
         },
         "confidence": {
-          "summary": 0.2,
-          "motivation": 0,
-          "method": 0,
-          "experiments": 0,
-          "affiliations": 0
+          "summary": 0.88,
+          "motivation": 0.86,
+          "method": 0.82,
+          "experiments": 0.68,
+          "affiliations": 0.65
         }
-      }
+      },
+      "pushedAt": "2026-05-08T04:36:25.967Z",
+      "emailSentAt": "2026-05-08T04:36:25.967Z",
+      "firstPushedAt": "2026-05-08T04:36:25.967Z"
     },
     {
       "id": "doi:10.1109/tc.2025.3576935",
@@ -626,76 +720,99 @@
       "relevanceReason": "命中 AI 处理器、体系结构、量化、训推系统或内存/缓存优化主题",
       "pdfStatus": "none",
       "workflow": {
-        "digestStatus": "pending",
-        "emailStatus": "waiting-digest",
-        "digestError": "命令行启用了 --no-ai",
+        "digestStatus": "ready",
+        "emailStatus": "sent",
+        "digestError": "",
         "harnessVersion": "paper-reader-v1",
         "collectStatus": "collected",
-        "pdfStatus": "none"
+        "pdfStatus": "none",
+        "harnessCheckedAt": "2026-05-08T04:36:24.411Z",
+        "harnessWarnings": [],
+        "emailSentAt": "2026-05-08T04:36:25.967Z",
+        "lastEmailError": ""
       },
       "digest": {
-        "summaryZh": "AI 摘要未生成；当前来源元数据未提供摘要。",
-        "motivationZh": "命令行启用了 --no-ai",
-        "methodZh": "来源未提供摘要，无法可靠提炼方法。",
-        "experimentsZh": "来源元数据未披露完整实验设置或结果。",
-        "affiliationsZh": "未在 DBLP/arXiv 元数据中提供。",
+        "summaryZh": "SAL-PIM是面向GPT类文本生成的HBM PIM架构，针对generation阶段逐token迭代、整模型反复读取且数据复用低的问题，把S-ALU放到subarray附近、用LUT线性插值处理非线性，并在HBM buffer die加入C-ALU完成跨bank归约。",
+        "motivationZh": "问题是decoder-only GPT文本生成分为可并行summarization和难加速的sequential generation；generation每轮生成一个token且需要读取完整模型，数据复用少，使外部内存带宽成为系统瓶颈。已有GPU/常规加速器难以缓解反复权重读取和非线性函数开销。该问题对用户的LLM推理、HBM/PIM、内存带宽和端到端生成系统研究高度相关。",
+        "methodZh": "这是HBM-based subarray-level PIM架构。SAL-PIM在memory subarray旁集成多个S-ALU以利用HBM内部带宽，并针对不同操作设计数据映射；为降低S-ALU面积，利用同bank命令慢时钟共享MAC；在bank内若干subarray作为LUT，通过多地址选择区间做线性插值以处理非线性函数；在HBM buffer die加入C-ALU执行跨bank accumulation和reduce-sum，目标是端到端在PIM中完成Transformer文本生成。",
+        "experimentsZh": "作者基于Ramulator构建cycle-accurate simulator，并实现SAL-PIM逻辑单元于28nm CMOS后缩放到DRAM工艺验证可行性。工作负载为GPT-2 medium 345M，输入token 32-128、输出token 1-256；baseline为Nvidia Titan RTX GPU运行Faster Transformer。结果显示4.81%面积开销下，最高4.72×、平均1.83×加速。",
+        "affiliationsZh": "KAIST Pure条目显示作者单位为Korea Advanced Institute of Science and Technology, School of Electrical Engineering。",
         "tags": [
-          "Journal Articles"
+          "HBM-PIM",
+          "文本生成",
+          "subarray-level",
+          "LUT插值",
+          "GPT-2",
+          "带宽瓶颈"
         ],
-        "importance": 3,
-        "researchFitZh": "AI harness 尚未完成分析，无法判断与用户研究方向的具体关系。",
-        "hardwareRelevance": 1,
-        "algorithmRelevance": 1,
-        "systemRelevance": 1,
-        "readPriority": "archive",
-        "whyReadZh": "需要完成 motivation、method 和实验结果分析后再判断是否值得深读。",
-        "limitationsZh": "命令行启用了 --no-ai",
+        "importance": 5,
+        "researchFitZh": "非常贴合LLM推理系统、HBM/PIM、近存非线性函数和内存带宽优化，是用户主线内值得深读的架构论文。",
+        "hardwareRelevance": 5,
+        "algorithmRelevance": 2,
+        "systemRelevance": 5,
+        "readPriority": "deep-read",
+        "whyReadZh": "应深读，重点看S-ALU/C-ALU划分、LUT线性插值精度/面积权衡、GPT generation数据映射和端到端PIM边界。",
+        "limitationsZh": "实验模型为GPT-2 medium，未从摘要确认更大LLM或KV cache现代长上下文设置；需看全文确认准确率影响、LUT误差和可扩展性。",
         "motivationDetail": {
-          "problemZh": "harness 未完成分析。",
-          "gapZh": "harness 未完成分析。",
-          "whyImportantZh": "harness 未完成分析。",
-          "userRelevanceZh": "harness 未完成分析。",
-          "evidence": "not analyzed"
+          "problemZh": "GPT类generation阶段逐token迭代且每次读取全模型，外部内存带宽成为瓶颈。",
+          "gapZh": "常规GPU和非端到端PIM难以同时处理线性层、非线性函数和跨bank归约。",
+          "whyImportantZh": "文本生成是LLM服务核心路径，带宽瓶颈直接限制吞吐和能效。",
+          "userRelevanceZh": "直接对应LLM推理、HBM/近存计算、非线性算子硬件化和内存层次设计。",
+          "evidence": "KAIST Pure abstract"
         },
         "methodDetail": {
-          "coreIdeaZh": "harness 未完成分析。",
+          "coreIdeaZh": "在HBM subarray附近放置S-ALU并用LUT插值和C-ALU完成端到端Transformer文本生成。",
           "componentsZh": [
-            "未分析"
+            "subarray-level S-ALU",
+            "共享MAC",
+            "bank内LUT",
+            "线性插值多地址选择",
+            "HBM buffer die C-ALU",
+            "操作定制数据映射"
           ],
-          "hardwareSystemDetailZh": "harness 未完成分析。",
-          "noveltyZh": "harness 未完成分析。",
-          "evidence": "not analyzed"
+          "hardwareSystemDetailZh": "S-ALU利用内部带宽执行近存计算，LUT处理非线性，C-ALU负责跨bank累加/归约；面积控制来自同bank命令慢时钟下的MAC共享。",
+          "noveltyZh": "声称是首个用于Transformer文本生成端到端加速的HBM-based PIM架构，并把非线性函数也纳入PIM路径。",
+          "evidence": "KAIST Pure abstract and BibTeX"
         },
         "experimentDetail": {
-          "setupZh": "harness 未完成分析。",
-          "baselinesZh": "harness 未完成分析。",
+          "setupZh": "Ramulator cycle-accurate simulator；SAL-PIM逻辑单元28nm CMOS实现并缩放到DRAM；GPT-2 medium 345M；输入32-128 token，输出1-256 token。",
+          "baselinesZh": "Nvidia Titan RTX GPU running Faster Transformer Framework。",
           "metricsZh": [
-            "未分析"
+            "latency",
+            "speedup",
+            "area overhead"
           ],
-          "mainResultsZh": "harness 未完成分析。",
-          "limitationsZh": "harness 未完成分析。",
-          "evidence": "not analyzed"
+          "mainResultsZh": "4.81%面积开销下，最高4.72×加速，平均1.83×加速。",
+          "limitationsZh": "摘要未披露准确率/困惑度、能耗、频率和大模型扩展结果。",
+          "evidence": "KAIST Pure abstract"
         },
         "evidence": {
           "usedSources": [
-            "metadata"
+            "metadata: public/research-digest/daily.json",
+            "KAIST Pure: https://pure.kaist.ac.kr/en/publications/sal-pim-a-subarray-level-processing-in-memory-architecture-with-l/"
           ],
-          "affiliationEvidence": "",
-          "experimentEvidence": "",
+          "affiliationEvidence": "KAIST Pure显示School of Electrical Engineering和KAIST。",
+          "experimentEvidence": "KAIST Pure摘要披露Ramulator、28nm、GPT-2 medium、Titan RTX/Faster Transformer、4.81%和4.72×/1.83×。",
           "missingFields": [
-            "motivation",
-            "method",
-            "experiments"
+            "localPdfPath",
+            "accuracy impact",
+            "energy",
+            "frequency",
+            "large LLM results",
+            "KV cache details"
           ]
         },
         "confidence": {
-          "summary": 0.2,
-          "motivation": 0,
-          "method": 0,
-          "experiments": 0,
-          "affiliations": 0
+          "summary": 0.92,
+          "motivation": 0.9,
+          "method": 0.9,
+          "experiments": 0.86,
+          "affiliations": 0.9
         }
-      }
+      },
+      "pushedAt": "2026-05-08T04:36:25.967Z",
+      "emailSentAt": "2026-05-08T04:36:25.967Z",
+      "firstPushedAt": "2026-05-08T04:36:25.967Z"
     },
     {
       "id": "doi:10.1109/tc.2025.3628629",
@@ -736,66 +853,86 @@
       "conferenceVenues": [],
       "conferenceYears": [],
       "digest": {
-        "summaryZh": "AI 摘要未生成；当前来源元数据未提供摘要。",
-        "motivationZh": "命令行启用了 --no-ai",
-        "methodZh": "来源未提供摘要，无法可靠提炼方法。",
-        "experimentsZh": "来源元数据未披露完整实验设置或结果。",
-        "affiliationsZh": "未在 DBLP/arXiv 元数据中提供。",
+        "summaryZh": "该文面向低比特LLM推理提出量化算法与bit-level加速器协同设计。算法将权重细分为cluster，显式考虑outlier和salient point并保护重要权重；硬件采用内存对齐编码和并行bit-level计算，摘要报告较ANT、OliVe、FineQ均有速度和能效提升。",
+        "motivationZh": "问题是LLM推理同时受巨大计算量和模型内存占用限制，超低权重量化能减小带宽/容量压力，但会带来准确率下降和混合精度硬件执行复杂。已有量化方法对outlier、salient weights和组内分布处理不足，现有加速器也不一定能高效执行灵活低比特表示。该问题与用户关注的硬件友好量化、LLM推理加速、bit-level accelerator和软硬件协同高度相关。",
+        "methodZh": "这是低比特量化算法与硬件加速器协同设计。算法侧先把权重划成小cluster，做fine-grained intra-cluster bit allocation，显式考虑每个cluster内outlier和salient point分布；再用intra-cluster protection选择性保留重要权重，并引入extended integer format和group-wise scale factor search降低激进降bit导致的精度损失。系统侧设计memory-aligned encoding支持高效访存和混合精度识别，硬件侧用轻量bit-level accelerator进行并行bit-level计算。",
+        "experimentsZh": "摘要未披露具体LLM、任务、数据集、硬件平台和精度位宽分布；披露对比对象为SOTA量化算法以及ANT、OliVe、FineQ加速器。算法在超低权重精度下取得更高模型准确率；硬件相对ANT、OliVe、FineQ分别实现1.59×、1.38×、1.61×加速，以及1.52×、1.42×、1.22×能效提升。",
+        "affiliationsZh": "DBLP/daily元数据未提供；ResearchGate显示Liang Wang为Beihang University，Xiaojian Liao主页显示其为Beihang University，不能据此可靠确认全体作者单位。",
         "tags": [
-          "Journal Articles"
+          "LLM量化",
+          "低比特推理",
+          "bit-level加速器",
+          "outlier保护",
+          "混合精度",
+          "软硬件协同"
         ],
-        "importance": 3,
-        "researchFitZh": "AI harness 尚未完成分析，无法判断与用户研究方向的具体关系。",
-        "hardwareRelevance": 1,
-        "algorithmRelevance": 1,
-        "systemRelevance": 1,
-        "readPriority": "archive",
-        "whyReadZh": "需要完成 motivation、method 和实验结果分析后再判断是否值得深读。",
-        "limitationsZh": "命令行启用了 --no-ai",
+        "importance": 5,
+        "researchFitZh": "高度贴合硬件友好量化与LLM推理加速方向，尤其适合比较bit-serial/bit-level计算与混合精度编码的架构代价。",
+        "hardwareRelevance": 5,
+        "algorithmRelevance": 4,
+        "systemRelevance": 4,
+        "readPriority": "deep-read",
+        "whyReadZh": "值得深读，重点看cluster内bit分配、重要权重保护、memory-aligned encoding如何映射到bit-level硬件，以及与ANT/OliVe/FineQ的公平性。",
+        "limitationsZh": "可读来源为摘要级，缺少模型列表、数据集、准确率表、位宽配置、硬件面积/频率/制程和端到端系统设置。",
         "motivationDetail": {
-          "problemZh": "harness 未完成分析。",
-          "gapZh": "harness 未完成分析。",
-          "whyImportantZh": "harness 未完成分析。",
-          "userRelevanceZh": "harness 未完成分析。",
-          "evidence": "not analyzed"
+          "problemZh": "LLM推理计算和内存占用大，超低比特量化需要同时保持准确率和硬件效率。",
+          "gapZh": "已有方法对cluster内部outlier/salient point和混合精度硬件识别支持不足。",
+          "whyImportantZh": "低比特权重能直接降低LLM推理带宽与存储压力，但若硬件不能高效执行则无法兑现收益。",
+          "userRelevanceZh": "对应硬件友好量化、LLM推理加速器和软件-硬件协同。",
+          "evidence": "ResearchGate abstract; DBLP metadata"
         },
         "methodDetail": {
-          "coreIdeaZh": "harness 未完成分析。",
+          "coreIdeaZh": "在小cluster内按重要性分配bit并保护关键权重，再用内存对齐编码和bit-level硬件执行混合精度低比特推理。",
           "componentsZh": [
-            "未分析"
+            "fine-grained intra-cluster bit allocation",
+            "outlier/salient point感知",
+            "intra-cluster protection",
+            "extended integer format",
+            "group-wise scale factor search",
+            "memory-aligned encoding",
+            "lightweight bit-level accelerator"
           ],
-          "hardwareSystemDetailZh": "harness 未完成分析。",
-          "noveltyZh": "harness 未完成分析。",
-          "evidence": "not analyzed"
+          "hardwareSystemDetailZh": "硬件侧支持并行bit-level computation，编码侧保证访存对齐并能灵活识别mixed-precision representation；摘要未披露PE阵列、buffer层次和面积。",
+          "noveltyZh": "将超低比特细粒度量化的表示设计与bit-level加速器共同优化，而不是只提出离线量化算法。",
+          "evidence": "ResearchGate abstract"
         },
         "experimentDetail": {
-          "setupZh": "harness 未完成分析。",
-          "baselinesZh": "harness 未完成分析。",
+          "setupZh": "摘要/PDF可读部分未披露模型、数据集、任务、硬件平台、频率和制程。",
+          "baselinesZh": "量化算法SOTA；硬件/加速器baseline为ANT、OliVe、FineQ。",
           "metricsZh": [
-            "未分析"
+            "accuracy",
+            "speedup",
+            "energy efficiency"
           ],
-          "mainResultsZh": "harness 未完成分析。",
-          "limitationsZh": "harness 未完成分析。",
-          "evidence": "not analyzed"
+          "mainResultsZh": "算法在超低权重精度下准确率更高；加速器较ANT/OliVe/FineQ分别加速1.59×/1.38×/1.61×，能效提升1.52×/1.42×/1.22×。",
+          "limitationsZh": "缺少具体模型、任务、位宽、准确率数值、面积和端到端吞吐。",
+          "evidence": "ResearchGate abstract"
         },
         "evidence": {
           "usedSources": [
-            "metadata"
+            "metadata: public/research-digest/daily.json",
+            "ResearchGate abstract: https://www.researchgate.net/publication/397320755_Accelerating_LLM_Inference_via_Low-Bit_Fine-Grained_Quantization_Algorithm_and_Bit-Level_Accelerator_Co-Design",
+            "DBLP search metadata",
+            "Xiaojian Liao homepage: https://liaoxiaojian.github.io/"
           ],
-          "affiliationEvidence": "",
-          "experimentEvidence": "",
+          "affiliationEvidence": "ResearchGate/Xiaojian Liao主页只能确认部分作者与Beihang University有关，不能确认全体作者。",
+          "experimentEvidence": "ResearchGate摘要披露baseline和加速/能效数值。",
           "missingFields": [
-            "motivation",
-            "method",
-            "experiments"
+            "localPdfPath",
+            "model list",
+            "datasets",
+            "bit-width configuration",
+            "accuracy table",
+            "hardware area",
+            "process node"
           ]
         },
         "confidence": {
-          "summary": 0.2,
-          "motivation": 0,
-          "method": 0,
-          "experiments": 0,
-          "affiliations": 0
+          "summary": 0.86,
+          "motivation": 0.84,
+          "method": 0.82,
+          "experiments": 0.7,
+          "affiliations": 0.45
         }
       },
       "affiliations": [],
@@ -805,13 +942,20 @@
       "relevanceReason": "命中 AI 处理器、体系结构、量化、训推系统或内存/缓存优化主题",
       "pdfStatus": "none",
       "workflow": {
-        "digestStatus": "pending",
-        "emailStatus": "waiting-digest",
-        "digestError": "命令行启用了 --no-ai",
+        "digestStatus": "ready",
+        "emailStatus": "sent",
+        "digestError": "",
         "harnessVersion": "paper-reader-v1",
         "collectStatus": "collected",
-        "pdfStatus": "none"
-      }
+        "pdfStatus": "none",
+        "harnessCheckedAt": "2026-05-08T04:36:24.411Z",
+        "harnessWarnings": [],
+        "emailSentAt": "2026-05-08T04:36:25.967Z",
+        "lastEmailError": ""
+      },
+      "pushedAt": "2026-05-08T04:36:25.967Z",
+      "emailSentAt": "2026-05-08T04:36:25.967Z",
+      "firstPushedAt": "2026-05-08T04:36:25.967Z"
     },
     {
       "id": "doi:10.32604/cmc.2024.052618",
@@ -856,76 +1000,97 @@
       "relevanceReason": "命中 LLM/Agent/多模态/后训练等算法趋势主题",
       "pdfStatus": "none",
       "workflow": {
-        "digestStatus": "pending",
-        "emailStatus": "waiting-digest",
-        "digestError": "命令行启用了 --no-ai",
+        "digestStatus": "ready",
+        "emailStatus": "sent",
+        "digestError": "hardwareRelevance 必须是 1 到 5 的整数",
         "harnessVersion": "paper-reader-v1",
         "collectStatus": "collected",
-        "pdfStatus": "none"
+        "pdfStatus": "none",
+        "harnessCheckedAt": "2026-05-08T04:36:24.411Z",
+        "harnessWarnings": [],
+        "emailSentAt": "2026-05-08T04:36:25.967Z",
+        "lastEmailError": ""
       },
       "digest": {
-        "summaryZh": "AI 摘要未生成；当前来源元数据未提供摘要。",
-        "motivationZh": "命令行启用了 --no-ai",
-        "methodZh": "来源未提供摘要，无法可靠提炼方法。",
-        "experimentsZh": "来源元数据未披露完整实验设置或结果。",
-        "affiliationsZh": "未在 DBLP/arXiv 元数据中提供。",
+        "summaryZh": "这是一篇从LLM到大多模态模型的综述，回顾语言建模从统计方法、神经模型到Transformer预训练和大模型的发展，并讨论LMM如何整合文本、图像、声音等模态。它更适合作为算法趋势背景材料，而非硬件/系统主线论文。",
+        "motivationZh": "问题是LLM和LMM发展迅速，研究者需要系统理解模型结构、训练方法、数据、应用和开放挑战。重要性在于多模态模型正在改变AI应用形态，但数据整合、跨模态理解准确性和应用落地仍有挑战。与用户方向的关系较间接：它能提供算法趋势背景，帮助判断未来硬件需要支持的多模态输入、长上下文和训练/推理形态，但不直接讨论芯片或系统架构。",
+        "methodZh": "这是综述/调研，不是新算法或硬件。文章先讨论LLM在NLP中的贡献和技术进展，尤其文本生成与语言理解；再转向LMM，梳理文本、图像、声音等多模态数据的集成和跨模态生成/理解；最后总结技术发展、应用前景以及数据集成和跨模态准确性等挑战。ScienceDirect预览还提到作者统计约325篇文献并按模型时间线、多模态比例等组织材料。",
+        "experimentsZh": "该文为survey，没有硬件、系统或模型训练实验；不存在芯片平台、baseline、latency/throughput/energy等实验指标。可读来源披露的是文献统计和综述图表，例如约325篇文献、模型时间线和多模态/非多模态比例；具体实证比较不是论文主贡献。",
+        "affiliationsZh": "SciOpen显示作者单位包括Zhejiang A&F University College of Mathematics and Computer Science；King Saud University Community College Computer Science Department；Menofia University Faculty of Science Mathematics and Computer Science Department；Shenyang Aerospace University School of Computer Science；Hosei University Graduate School of Science and Engineering。",
         "tags": [
-          "Journal Articles"
+          "基础模型综述",
+          "LLM",
+          "大多模态模型",
+          "跨模态理解",
+          "算法趋势"
         ],
-        "importance": 3,
-        "researchFitZh": "AI harness 尚未完成分析，无法判断与用户研究方向的具体关系。",
-        "hardwareRelevance": 1,
-        "algorithmRelevance": 1,
+        "importance": 2,
+        "researchFitZh": "仅作为二级算法趋势背景，与用户硬件/系统主线弱相关；可用来观察多模态工作负载对未来加速器的潜在需求。",
+        "hardwareRelevance": 0,
+        "algorithmRelevance": 4,
         "systemRelevance": 1,
         "readPriority": "archive",
-        "whyReadZh": "需要完成 motivation、method 和实验结果分析后再判断是否值得深读。",
-        "limitationsZh": "命令行启用了 --no-ai",
+        "whyReadZh": "不建议占用主线阅读时间；需要写背景或判断LMM趋势时可翻摘要、图表和挑战部分。",
+        "limitationsZh": "综述覆盖广但不深入硬件；无加速器、存储层次、量化执行或LLM推理系统证据。",
         "motivationDetail": {
-          "problemZh": "harness 未完成分析。",
-          "gapZh": "harness 未完成分析。",
-          "whyImportantZh": "harness 未完成分析。",
-          "userRelevanceZh": "harness 未完成分析。",
-          "evidence": "not analyzed"
+          "problemZh": "LLM到LMM技术演进快，需要统一梳理发展脉络和挑战。",
+          "gapZh": "单篇研究难覆盖语言、视觉、音频、多模态训练和应用前景。",
+          "whyImportantZh": "多模态基础模型影响未来AI工作负载和应用需求。",
+          "userRelevanceZh": "间接帮助理解未来硬件需服务的多模态模型趋势。",
+          "evidence": "ScienceDirect/SciOpen abstract and introduction"
         },
         "methodDetail": {
-          "coreIdeaZh": "harness 未完成分析。",
+          "coreIdeaZh": "以survey方式整理LLM和LMM的发展、技术组成、应用和挑战。",
           "componentsZh": [
-            "未分析"
+            "LLM发展回顾",
+            "LMM模态整合",
+            "训练方法与数据讨论",
+            "应用前景",
+            "开放挑战"
           ],
-          "hardwareSystemDetailZh": "harness 未完成分析。",
-          "noveltyZh": "harness 未完成分析。",
-          "evidence": "not analyzed"
+          "hardwareSystemDetailZh": "无硬件系统设计；摘要/PDF可读部分未披露加速器或系统实现。",
+          "noveltyZh": "贡献是综述性整合，而非新模型、新系统或新芯片。",
+          "evidence": "abstract / introduction preview"
         },
         "experimentDetail": {
-          "setupZh": "harness 未完成分析。",
-          "baselinesZh": "harness 未完成分析。",
+          "setupZh": "无实验设置；综述约325篇文献。",
+          "baselinesZh": "无实验baseline。",
           "metricsZh": [
-            "未分析"
+            "literature count",
+            "timeline",
+            "topic coverage"
           ],
-          "mainResultsZh": "harness 未完成分析。",
-          "limitationsZh": "harness 未完成分析。",
-          "evidence": "not analyzed"
+          "mainResultsZh": "总结LLM到LMM的技术路径、应用潜力和挑战；未给硬件或模型训练量化结果。",
+          "limitationsZh": "不能作为性能、能耗或架构证据。",
+          "evidence": "ScienceDirect introduction preview / not experimental"
         },
         "evidence": {
           "usedSources": [
-            "metadata"
+            "metadata: public/research-digest/daily.json",
+            "ScienceDirect: https://www.sciencedirect.com/org/science/article/pii/S1546221824005472",
+            "SciOpen: https://www.sciopen.com/article/10.32604/cmc.2024.052618"
           ],
-          "affiliationEvidence": "",
-          "experimentEvidence": "",
+          "affiliationEvidence": "SciOpen作者信息列出机构。",
+          "experimentEvidence": "ScienceDirect介绍提到约325篇文献和综述图表；无实验。",
           "missingFields": [
-            "motivation",
-            "method",
-            "experiments"
+            "hardware evaluation",
+            "latency",
+            "throughput",
+            "energy",
+            "accelerator design"
           ]
         },
         "confidence": {
-          "summary": 0.2,
-          "motivation": 0,
-          "method": 0,
-          "experiments": 0,
-          "affiliations": 0
+          "summary": 0.9,
+          "motivation": 0.84,
+          "method": 0.82,
+          "experiments": 0.78,
+          "affiliations": 0.9
         }
-      }
+      },
+      "pushedAt": "2026-05-08T04:36:25.967Z",
+      "emailSentAt": "2026-05-08T04:36:25.967Z",
+      "firstPushedAt": "2026-05-08T04:36:25.967Z"
     },
     {
       "id": "doi:10.48550/arxiv.2601.16964",
@@ -965,76 +1130,101 @@
       "relevanceReason": "命中 LLM/Agent/多模态/后训练等算法趋势主题",
       "pdfStatus": "none",
       "workflow": {
-        "digestStatus": "pending",
-        "emailStatus": "waiting-digest",
-        "digestError": "命令行启用了 --no-ai",
+        "digestStatus": "ready",
+        "emailStatus": "sent",
+        "digestError": "hardwareRelevance 必须是 1 到 5 的整数",
         "harnessVersion": "paper-reader-v1",
         "collectStatus": "collected",
-        "pdfStatus": "none"
+        "pdfStatus": "none",
+        "harnessCheckedAt": "2026-05-08T04:36:24.411Z",
+        "harnessWarnings": [],
+        "emailSentAt": "2026-05-08T04:36:25.967Z",
+        "lastEmailError": ""
       },
       "digest": {
-        "summaryZh": "AI 摘要未生成；当前来源元数据未提供摘要。",
-        "motivationZh": "命令行启用了 --no-ai",
-        "methodZh": "来源未提供摘要，无法可靠提炼方法。",
-        "experimentsZh": "来源元数据未披露完整实验设置或结果。",
-        "affiliationsZh": "未在 DBLP/arXiv 元数据中提供。",
+        "summaryZh": "AgentDrive提出面向自动驾驶agentic AI推理的开放基准，包含30万条LLM生成驾驶场景和10万道多选题。它用七个场景轴组织prompt-to-JSON生成、仿真rollout、安全指标和规则标签，并评测50个LLM的物理、法规、场景等推理能力。",
+        "motivationZh": "问题是LLM正被用于自动系统的感知、规划和决策，但缺少大规模、结构化、安全关键的benchmark来训练和评估agentic AI。重要性在于自动驾驶决策需要物理一致、法规合规和安全推理，而现有基准难覆盖多样场景和长尾安全情况。与用户硬件主线关系较弱，但可作为agent/多模态后训练趋势背景，并提示未来边缘/车载LLM推理可能需要面向安全场景的评测负载。",
+        "methodZh": "这是数据集/benchmark与评测管线，不是硬件或系统架构。AgentDrive将驾驶场景形式化为七个正交轴：scenario type、driver behavior、environment、road layout、objective、difficulty、traffic density；用LLM驱动的prompt-to-JSON流程生成simulation-ready规格，并做物理/模式约束校验、仿真rollout、surrogate safety metric计算和规则标签。另构建AgentDrive-MCQ，覆盖physics、policy、hybrid、scenario、comparative五类推理。",
+        "experimentsZh": "实验设置为AgentDrive-MCQ 10万道多选题，评估50个LLM；全文首页列出GPT-5、ChatGPT 4o、Gemini 2.5 Flash、DeepSeek V3、Qwen3 235B、ERNIE 4.5 300B、Grok 4、Mistral Medium 3.1、Phi 4 Reasoning Plus等。指标是五类推理维度上的表现；摘要只给定性结论：闭源frontier模型在contextual/policy reasoning领先，先进开源模型在structured和physics-grounded reasoning上快速缩小差距，未披露具体分数表。",
+        "affiliationsZh": "ResearchGate全文首页显示Mohamed Amine Ferrag和Abderrahmane Lakas所属Department of Computer and Network Engineering, College of Information Technology, United Arab Emirates University, Al Ain, UAE；Merouane Debbah所属Khalifa University of Science and Technology, Abu Dhabi, UAE。",
         "tags": [
-          "Informal and Other Publications"
+          "Agent基准",
+          "自动驾驶",
+          "LLM推理",
+          "场景生成",
+          "安全评测"
         ],
-        "importance": 3,
-        "researchFitZh": "AI harness 尚未完成分析，无法判断与用户研究方向的具体关系。",
-        "hardwareRelevance": 1,
-        "algorithmRelevance": 1,
+        "importance": 2,
+        "researchFitZh": "属于二级算法/agent趋势观察，与硬件加速器关系间接；可用于理解未来车载agent推理工作负载和评测维度。",
+        "hardwareRelevance": 0,
+        "algorithmRelevance": 4,
         "systemRelevance": 1,
-        "readPriority": "archive",
-        "whyReadZh": "需要完成 motivation、method 和实验结果分析后再判断是否值得深读。",
-        "limitationsZh": "命令行启用了 --no-ai",
+        "readPriority": "skim",
+        "whyReadZh": "可快速浏览数据生成和评测维度；除非研究车载LLM/agent推理负载，否则不应优先于PIM、LLM加速和量化论文。",
+        "limitationsZh": "LLM生成场景的真实世界覆盖和仿真有效性需进一步验证；摘要未披露硬件推理成本、延迟、能耗或部署系统；具体模型分数需读全文表格。",
         "motivationDetail": {
-          "problemZh": "harness 未完成分析。",
-          "gapZh": "harness 未完成分析。",
-          "whyImportantZh": "harness 未完成分析。",
-          "userRelevanceZh": "harness 未完成分析。",
-          "evidence": "not analyzed"
+          "problemZh": "缺少大规模结构化、安全关键的agentic AI自动驾驶推理benchmark。",
+          "gapZh": "现有LLM4AD/agent评估难系统覆盖多样场景、物理约束、法规和比较推理。",
+          "whyImportantZh": "自动驾驶agent需要在安全关键场景中做可靠、可评估的推理与决策。",
+          "userRelevanceZh": "间接关联agent硬件-软件协同和车载LLM工作负载评测，但不提供硬件方案。",
+          "evidence": "arXiv abstract and ResearchGate full text first page"
         },
         "methodDetail": {
-          "coreIdeaZh": "harness 未完成分析。",
+          "coreIdeaZh": "用LLM生成结构化驾驶场景，并配套仿真、安全标签和多维MCQ推理评测。",
           "componentsZh": [
-            "未分析"
+            "300000个LLM生成场景",
+            "七轴场景空间",
+            "prompt-to-JSON pipeline",
+            "物理和schema约束校验",
+            "simulation rollouts",
+            "surrogate safety metrics",
+            "100000题AgentDrive-MCQ"
           ],
-          "hardwareSystemDetailZh": "harness 未完成分析。",
-          "noveltyZh": "harness 未完成分析。",
-          "evidence": "not analyzed"
+          "hardwareSystemDetailZh": "无硬件/系统加速细节；摘要/PDF可读部分未披露推理部署平台。",
+          "noveltyZh": "将大规模LLM生成场景、仿真标签和五维推理MCQ统一为开放自动驾驶agent benchmark。",
+          "evidence": "arXiv abstract; ResearchGate full text"
         },
         "experimentDetail": {
-          "setupZh": "harness 未完成分析。",
-          "baselinesZh": "harness 未完成分析。",
+          "setupZh": "AgentDrive-MCQ含100000个多选题，评估50个LLM，覆盖physics、policy、hybrid、scenario、comparative五个维度。",
+          "baselinesZh": "50个leading LLM，包括GPT-5、ChatGPT 4o、Gemini 2.5 Flash、DeepSeek V3、Qwen3 235B、ERNIE 4.5 300B、Grok 4、Mistral Medium 3.1、Phi 4 Reasoning Plus等。",
           "metricsZh": [
-            "未分析"
+            "MCQ accuracy",
+            "reasoning dimension scores",
+            "safety-related labels"
           ],
-          "mainResultsZh": "harness 未完成分析。",
-          "limitationsZh": "harness 未完成分析。",
-          "evidence": "not analyzed"
+          "mainResultsZh": "摘要定性称专有frontier模型在contextual和policy reasoning领先，先进开源模型在structured和physics-grounded reasoning上快速追近；具体数值未在摘要披露。",
+          "limitationsZh": "未披露具体分数、统计显著性、仿真器细节和硬件推理成本。",
+          "evidence": "arXiv abstract and ResearchGate first page"
         },
         "evidence": {
           "usedSources": [
-            "metadata"
+            "metadata: public/research-digest/daily.json",
+            "arXiv: https://arxiv.org/abs/2601.16964",
+            "Hugging Face paper page: https://huggingface.co/papers/2601.16964",
+            "ResearchGate full text: https://www.researchgate.net/publication/400072260_AgentDrive_An_Open_Benchmark_Dataset_for_Agentic_AI_Reasoning_with_LLM-Generated_Scenarios_in_Autonomous_Systems"
           ],
-          "affiliationEvidence": "",
-          "experimentEvidence": "",
+          "affiliationEvidence": "ResearchGate全文首页脚注列出UAEU和Khalifa University。",
+          "experimentEvidence": "arXiv摘要披露300000场景、100000 MCQ、50个LLM和定性结果；ResearchGate首页列出部分模型。",
           "missingFields": [
-            "motivation",
-            "method",
-            "experiments"
+            "localPdfPath",
+            "exact model scores",
+            "simulator details",
+            "hardware latency",
+            "energy",
+            "real-world validation"
           ]
         },
         "confidence": {
-          "summary": 0.2,
-          "motivation": 0,
-          "method": 0,
-          "experiments": 0,
-          "affiliations": 0
+          "summary": 0.9,
+          "motivation": 0.86,
+          "method": 0.86,
+          "experiments": 0.72,
+          "affiliations": 0.86
         }
-      }
+      },
+      "pushedAt": "2026-05-08T04:36:25.967Z",
+      "emailSentAt": "2026-05-08T04:36:25.967Z",
+      "firstPushedAt": "2026-05-08T04:36:25.967Z"
     }
   ]
 }
