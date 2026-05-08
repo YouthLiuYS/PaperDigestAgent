@@ -183,6 +183,10 @@ function mergeDigestUpdates(currentDigest, imported, filePath) {
 function sanitizeDigest(digest) {
   return {
     ...digest,
+    importance: normalizeScore(digest.importance),
+    hardwareRelevance: normalizeScore(digest.hardwareRelevance),
+    algorithmRelevance: normalizeScore(digest.algorithmRelevance),
+    systemRelevance: normalizeScore(digest.systemRelevance),
     tags: Array.isArray(digest.tags) ? digest.tags.map(cleanText).filter(Boolean).slice(0, 8) : [],
     motivationDetail: normalizeObject(digest.motivationDetail),
     methodDetail: {
@@ -208,6 +212,14 @@ function sanitizeDigest(digest) {
     },
     confidence: normalizeObject(digest.confidence)
   };
+}
+
+function normalizeScore(value) {
+  const parsed = Number.parseInt(value, 10);
+  if (!Number.isInteger(parsed)) {
+    return 1;
+  }
+  return Math.min(5, Math.max(1, parsed));
 }
 
 function normalizeObject(value) {

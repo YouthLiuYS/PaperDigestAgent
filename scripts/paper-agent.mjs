@@ -1938,11 +1938,14 @@ function parseXmlAttributes(input) {
 function normalizePaperWorkflow(paper) {
   const pushed = Boolean(paper.pushedAt || paper.emailSentAt);
   const digestReady = hasUsableDigest(paper);
+  const digestStatus = paper.workflow?.digestStatus === "failed"
+    ? "failed"
+    : digestReady ? "ready" : paper.workflow?.digestStatus ?? "pending";
   const workflow = {
     ...(paper.workflow ?? {}),
     collectStatus: paper.workflow?.collectStatus ?? "collected",
-    digestStatus: digestReady ? "ready" : paper.workflow?.digestStatus ?? "pending",
-    emailStatus: pushed ? "sent" : digestReady ? paper.workflow?.emailStatus === "failed" ? "failed" : "ready" : "waiting-digest",
+    digestStatus,
+    emailStatus: pushed ? "sent" : digestStatus === "ready" ? paper.workflow?.emailStatus === "failed" ? "failed" : "ready" : "waiting-digest",
     pdfStatus: paper.pdfStatus ?? paper.workflow?.pdfStatus ?? (paper.pdfUrl ? "remote" : "none")
   };
 
