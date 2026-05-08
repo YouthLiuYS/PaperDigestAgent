@@ -17,7 +17,7 @@ const DEFAULT_ARXIV_QUERIES = [
   "(cat:cs.AR OR cat:cs.DC OR cat:cs.PF) AND (all:LLM OR all:transformer OR all:foundation OR all:language) AND (all:accelerator OR all:processor OR all:architecture OR all:hardware OR all:system OR all:serving OR all:training OR all:inference OR all:cache)",
   "(all:quantization OR all:compression OR all:pruning OR all:sparsity OR all:low-bit) AND (all:LLM OR all:transformer OR all:language) AND (all:hardware OR all:accelerator OR all:inference OR all:serving OR all:processor)",
   "(all:prefill OR all:decoding OR all:KV OR all:cache OR all:attention) AND (all:accelerator OR all:kernel OR all:compiler OR all:serving OR all:memory) AND (all:LLM OR all:transformer)",
-  "(all:PIM OR all:near-memory OR all:HBM OR all:DRAM OR all:SRAM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI)",
+  "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)",
   "(all:agent OR all:agents OR all:agentic OR all:reasoning OR all:post-training OR all:alignment OR all:multimodal OR all:world-model) AND (all:LLM OR all:foundation OR all:language)"
 ];
 const DEFAULT_DBLP_QUERIES = [
@@ -40,7 +40,12 @@ const DEFAULT_DBLP_QUERIES = [
   "KV cache optimization LLM",
   "memory efficient LLM inference",
   "near memory computing LLM",
-  "processing in memory transformer",
+  "processing near memory LLM",
+  "processing near memory transformer",
+  "near data processing LLM",
+  "memory side accelerator LLM",
+  "CXL memory accelerator LLM",
+  "HBM near memory accelerator",
   "chiplet AI accelerator",
   "compiler optimization LLM inference",
   "LLM reasoning agent",
@@ -66,7 +71,11 @@ const DEFAULT_TARGET_THEMES = [
   "KV cache optimization",
   "memory efficient LLM inference",
   "near memory computing for LLM",
-  "processing in memory for transformer",
+  "processing near memory for transformer",
+  "near data processing for LLM",
+  "memory side accelerator for LLM",
+  "CXL memory architecture for LLM",
+  "HBM near memory accelerator",
   "chiplet AI accelerator",
   "compiler optimization for LLM inference",
   "agent hardware software co-design"
@@ -119,14 +128,29 @@ const HARDWARE_KEYWORDS = [
   ["hardware", 5],
   ["systolic", 5],
   ["dataflow", 4],
-  ["near-memory", 5],
-  ["near memory", 5],
-  ["processing in memory", 5],
-  ["in-memory", 4],
-  ["pim", 5],
+  ["processing near memory", 8],
+  ["processing-near-memory", 8],
+  ["near-memory processing", 8],
+  ["near memory processing", 8],
+  ["near-memory computing", 7],
+  ["near memory computing", 7],
+  ["near-memory", 6],
+  ["near memory", 6],
+  ["near-data processing", 7],
+  ["near data processing", 7],
+  ["near-data", 5],
+  ["memory-side", 6],
+  ["memory side", 6],
+  ["cxl", 4],
+  ["processing in memory", 1],
+  ["processing-in-memory", 1],
+  ["in-memory", 1],
+  ["pim", 1],
   ["hbm", 4],
-  ["dram", 3],
-  ["sram", 3],
+  ["hbm3", 4],
+  ["3d memory", 4],
+  ["dram", 2],
+  ["sram", 2],
   ["kv cache", 4],
   ["attention accelerator", 6],
   ["transformer accelerator", 6],
@@ -145,6 +169,39 @@ const HARDWARE_KEYWORDS = [
   ["pruning", 2],
   ["compression", 2],
   ["outlier", 2]
+];
+const PNM_KEYWORDS = [
+  ["pnm", 6],
+  ["processing near memory", 8],
+  ["processing-near-memory", 8],
+  ["near-memory processing", 8],
+  ["near memory processing", 8],
+  ["near-memory computing", 7],
+  ["near memory computing", 7],
+  ["near-memory", 5],
+  ["near memory", 5],
+  ["near-data processing", 7],
+  ["near data processing", 7],
+  ["near-data", 5],
+  ["memory-side", 6],
+  ["memory side", 6],
+  ["cxl memory", 5],
+  ["hbm near", 5]
+];
+const PIM_ONLY_KEYWORDS = [
+  ["processing in memory", 8],
+  ["processing-in-memory", 8],
+  ["accelerator-in-memory", 8],
+  ["in-memory accelerator", 7],
+  ["in memory accelerator", 7],
+  ["in-memory computing", 7],
+  ["in-memory architecture", 6],
+  ["bank-level pim", 7],
+  ["subarray-level", 6],
+  ["hbm-pim", 6],
+  ["ropim", 7],
+  ["sal-pim", 7],
+  ["pim", 6]
 ];
 const MODEL_CORE_KEYWORDS = [
   ["large language model", 5],
@@ -459,11 +516,18 @@ function annotateRecommendation(paper) {
 
 function classifyRecommendation(paper) {
   const text = paperSearchText(paper);
-  const hardwareScore = keywordScore(text, HARDWARE_KEYWORDS);
+  const evidenceText = paperEvidenceText(paper);
+  const baseHardwareScore = keywordScore(text, HARDWARE_KEYWORDS);
+  const pnmScore = keywordScore(evidenceText, PNM_KEYWORDS);
+  const pimOnlyPenalty = pnmScore > 0 ? 0 : Math.min(14, keywordScore(evidenceText, PIM_ONLY_KEYWORDS));
+  const hardwareScore = Math.max(0, baseHardwareScore + pnmScore * 0.75 - pimOnlyPenalty);
   const coreScore = keywordScore(text, MODEL_CORE_KEYWORDS);
   const trendScore = keywordScore(text, ALGORITHM_TREND_KEYWORDS);
   const venueBoost = paper.collectionTypes?.includes("conference-archive") || paper.collectionType === "conference-archive" ? 3 : 0;
   const offTopic = OFF_TOPIC_KEYWORDS.some((keyword) => text.includes(keyword));
+  const hardwareReason = pnmScore > 0
+    ? "命中 PNM/processing-near-memory、近数据计算、memory-side/CXL/HBM 或 AI 处理器体系结构主题"
+    : "命中 AI 处理器、体系结构、量化、训推系统或内存/缓存优化主题";
 
   if (offTopic && hardwareScore < 4 && coreScore < 3) {
     return {
@@ -473,11 +537,19 @@ function classifyRecommendation(paper) {
     };
   }
 
+  if (pimOnlyPenalty >= 8 && hardwareScore < 5 && trendScore < 3) {
+    return {
+      track: "off-topic",
+      score: Math.max(0, hardwareScore + coreScore * 0.5),
+      reason: "仅命中 PIM/in-memory 信号，缺少 PNM/near-data/memory-side 近存计算证据"
+    };
+  }
+
   if (hardwareScore + venueBoost >= 5 && (coreScore >= 2 || venueBoost > 0)) {
     return {
       track: "hardware-primary",
       score: hardwareScore * 2 + coreScore + venueBoost + trendScore * 0.25,
-      reason: "命中 AI 处理器、体系结构、量化、训推系统或内存/缓存优化主题"
+      reason: hardwareReason
     };
   }
 
@@ -493,7 +565,7 @@ function classifyRecommendation(paper) {
     return {
       track: "hardware-primary",
       score: hardwareScore * 1.5 + coreScore,
-      reason: "命中硬件、体系结构或系统优化关键词"
+      reason: pnmScore > 0 ? hardwareReason : "命中硬件、体系结构或系统优化关键词"
     };
   }
 
@@ -548,6 +620,20 @@ function paperSearchText(paper) {
     paper.matchedQueries?.join(" "),
     paper.targetTheme,
     paper.targetThemes?.join(" "),
+    paper.conferenceVenue,
+    paper.conferenceVenues?.join(" ")
+  ].join(" ")).toLowerCase();
+}
+
+function paperEvidenceText(paper) {
+  return normalizeWhitespace([
+    paper.title,
+    paper.abstract,
+    paper.affiliations?.join(" "),
+    paper.authorAffiliations?.map((item) => `${item.name} ${item.affiliation}`).join(" "),
+    paper.venue,
+    paper.source,
+    paper.categories?.join(" "),
     paper.conferenceVenue,
     paper.conferenceVenues?.join(" ")
   ].join(" ")).toLowerCase();
@@ -839,7 +925,7 @@ async function enrichPaperWithAi(paper, config) {
       "大模型量化算法与体系结构",
       "大模型软硬件协同优化",
       "大模型训推系统优化",
-      "KV cache/存储层次/近存计算/PIM",
+      "KV cache/存储层次/PNM processing-near-memory/近数据计算；PIM 仅作次级参考",
       "AI accelerator/NPU/GPU/TPU/chiplet",
       "agent 软硬件协同优化"
     ],

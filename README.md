@@ -4,7 +4,7 @@ Paper Digest Agent 是一个本地论文速递工具，用来每天搜集 arXiv 
 
 当前默认研究方向是：
 
-- `硬件体系结构主线`：AI 处理器、NPU/GPU/TPU、LLM accelerator、Transformer/Attention accelerator、LLM 训推系统、KV cache、PIM/近存、3D/chiplet、硬件友好量化等。
+- `硬件体系结构主线`：AI 处理器、NPU/GPU/TPU、LLM accelerator、Transformer/Attention accelerator、LLM 训推系统、KV cache、PNM/processing-near-memory、近数据计算、memory-side/CXL/HBM、3D/chiplet、硬件友好量化等；PIM-only 论文只作为次级参考，不再优先占用主线名额。
 - `算法趋势观察`：LLM/Agent/多模态/后训练/对齐/世界模型等，用少量名额跟踪 AI 发展趋势。
 
 默认每日推荐配额：
@@ -16,6 +16,7 @@ Paper Digest Agent 是一个本地论文速递工具，用来每天搜集 arXiv 
 
 ## What's New / 功能更新记录
 
+- **2026-05-08** — ![PNM](https://img.shields.io/badge/PNM-near--memory--first-blue?style=flat-square) ![Ranking](https://img.shields.io/badge/Ranking-PIM--only--downrank-orange?style=flat-square) ![Search](https://img.shields.io/badge/Search-near--data%20%2B%20memory--side-green?style=flat-square) **PNM/近存优先策略**：默认 arXiv/DBLP/会议主题从泛化 PIM 调整为 PNM、processing-near-memory、near-data processing、memory-side/CXL/HBM 等近存/近数据方向；推荐排序新增 PNM 加权与 PIM-only 扣分，避免只有 processing-in-memory 信号的论文反复占用 AI 处理器体系结构主线名额。
 - **2026-05-07** — ![Codex](https://img.shields.io/badge/Codex-Desktop--local-blue?style=flat-square) ![Hybrid](https://img.shields.io/badge/Workflow-cloud--collect%20%2B%20local--read-green?style=flat-square) ![No API Digest](https://img.shields.io/badge/Digest-no--api--by--default-orange?style=flat-square) ![Wake](https://img.shields.io/badge/macOS-wake--sleep-lightgrey?style=flat-square) **本地 Codex 读论文闭环**：新增 `scripts/local-codex-digest.mjs`、`npm run codex:digest`、`npm run codex:daily`，用本机 Codex Desktop/CLI 非交互读取 `daily.json` 待摘要论文，按 harness 产出结构化中文摘要并自动合并、校验、发邮件、提交推回 GitHub；GitHub Actions 改为默认只采集新论文并提交待摘要状态，不再默认调用 API 摘要或云端发邮件；云端采集提前到北京时间 `04:20`，适配本机 Codex CLI v0.128 参数，并优先调用 npm latest 的全局 `codex`，配合 macOS 定时唤醒/空闲睡眠完成本地接力。
 - **2026-05-06** — ![Actions](https://img.shields.io/badge/GitHub%20Actions-cloud--daily-blue?style=flat-square) ![Pages](https://img.shields.io/badge/Pages-static--reader-green?style=flat-square) ![Email](https://img.shields.io/badge/Email-secrets--based-orange?style=flat-square) **云端工作流基础设施**：新增 GitHub Actions 与 GitHub Pages 工作流，让仓库可以定时运行采集任务、提交 `daily.json/papers.json` 状态，并把 `public/` 发布为可在线访问的静态阅读站，避免本地静态站只能在电脑醒着时访问。
 - **2026-05-04** — ![NEW](https://img.shields.io/badge/NEW-red?style=flat-square) ![Discovery](https://img.shields.io/badge/Discovery-unseen--first-blue?style=flat-square) ![Backfill](https://img.shields.io/badge/Backfill-auto-green?style=flat-square) ![Daily](https://img.shields.io/badge/Daily-more--new-orange?style=flat-square) **每日新论文发现策略升级**：采集流程改为“先和历史库/当天库去重，再从未推送候选里排序推荐”，避免 Top N 都是旧论文时漏掉后排新论文；当未推送论文不足 `PAPER_AGENT_MIN_NEW_PAPERS` 时，自动扩大 arXiv 时间窗和每条 query 数量进行 `daily-backfill` 补充发现，尽量保证每天都有新论文进入摘要与邮件流程。
