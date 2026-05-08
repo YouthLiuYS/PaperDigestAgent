@@ -299,7 +299,7 @@ async function run(config) {
   const historyDigest = await readDigest(config.outputPath);
   const historyPapers = Array.isArray(historyDigest.papers) ? historyDigest.papers : [];
   const dailyDigest = await readDigest(config.dailyOutputPath);
-  const digestDate = localDateKey();
+  const digestDate = cli.digestDate ?? (cli.emailOnly && dailyDigest.digestDate ? dailyDigest.digestDate : localDateKey());
   const existingDailyPapers = getDailyPapersForDate(dailyDigest, digestDate);
   let activeDailyDigest = buildDailyDigest(config, existingDailyPapers, digestDate, {
     collected: dailyDigest.stats?.collected ?? 0,
@@ -1182,9 +1182,10 @@ async function sendDailyDigestEmail(config, dailyDigest, historyDigest) {
     return;
   }
 
+  const subjectDate = String(dailyDigest.digestDate ?? "").trim() || formatDate(new Date());
   const subject = readyPapers.length > 0
-    ? `论文日报 ${formatDate(new Date())}: ${readyPapers.length} 篇新论文`
-    : `论文日报 ${formatDate(new Date())}: 今日无新增论文`;
+    ? `论文日报 ${subjectDate}: ${readyPapers.length} 篇新论文`
+    : `论文日报 ${subjectDate}: 今日无新增论文`;
   const html = renderEmailHtml(config, dailyDigest, readyPapers);
   try {
     await sendSmtpMail(config.email, { subject, html });
@@ -1517,6 +1518,9 @@ function parseArgs(args) {
       case "--daily-output":
         parsed.dailyOutputPath = next();
         break;
+      case "--digest-date":
+        parsed.digestDate = next();
+        break;
       case "--arxiv-query":
         parsed.arxivQueries = [...(parsed.arxivQueries ?? []), next()];
         break;
@@ -1598,6 +1602,7 @@ Options:
   --conference-max <n>   Max conference-archive papers to keep in this run.
   --output <path>        Output digest JSON path.
   --daily-output <path>  Daily new-paper JSON path.
+  --digest-date <date>   Digest date to process, useful for backfilling old daily JSON.
   --download-pdfs        Cache arXiv PDFs locally when pdfUrl is available.
   --no-pdf               Do not download PDFs for this run.
   --pdf-dir <path>       Local PDF cache directory.
