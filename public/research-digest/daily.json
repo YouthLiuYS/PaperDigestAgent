@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-05-12T21:41:46.806Z",
-  "digestDate": "2026-05-13",
+  "generatedAt": "2026-05-13T21:46:56.492Z",
+  "digestDate": "2026-05-14",
   "kind": "daily-new",
   "timezone": "Asia/Shanghai",
   "siteUrl": "https://YouthLiuYS.github.io/PaperDigestAgent/",
@@ -126,7 +126,7 @@
     "dailyCandidates": 8,
     "conferenceCandidates": 0,
     "backfillCandidates": 0,
-    "rawCandidates": 143,
+    "rawCandidates": 139,
     "newlyAdded": 8,
     "pendingDigest": 8,
     "pendingEmail": 0,
@@ -141,32 +141,156 @@
   },
   "papers": [
     {
-      "id": "arxiv:2605.10933",
+      "id": "arxiv:2605.12464",
       "source": "arXiv",
-      "title": "DECO: Sparse Mixture-of-Experts with Dense-Comparable Performance on End-Side Devices",
+      "title": "Search Your Block Floating Point Scales!",
       "authors": [
-        "Chenyang Song",
-        "Weilin Zhao",
-        "Xu Han",
-        "Chaojun Xiao",
-        "Yingfa Chen",
-        "Zhiyuan Liu"
+        "Tanmaey Gupta",
+        "Hayden Prairie",
+        "Xiaoxia Wu",
+        "Reyna Abhyankar",
+        "Qingyang Wu",
+        "Austin Silveria",
+        "Pragaash Ponnusamy",
+        "Jue Wang",
+        "Ben Athiwaratkun",
+        "Leon Song",
+        "Tri Dao",
+        "Daniel Y. Fu",
+        "Chris De Sa"
       ],
       "authorAffiliations": [],
       "affiliations": [],
-      "abstract": "While Mixture-of-Experts (MoE) scales model capacity without proportionally increasing computation, its massive total parameter footprint creates significant storage and memory-access bottlenecks, which hinder efficient end-side deployment that simultaneously requires high performance, low computational cost, and small storage overhead. To achieve these properties, we present DECO, a sparse MoE architecture designed to match the performance of dense Transformers under identical total parameter budgets and training tokens. DECO utilizes the differentiable and flexible ReLU-based routing enhanced by learnable expert-wise scaling, which adaptively balances the contributions of routed and shared experts. Furthermore, we introduce NormSiLU, an activation function that normalizes inputs prior to SiLU operators, producing a more stable trend of routed-expert activation ratio and a higher intrinsic sparsity level. We also identify an empirical advantage in using non-gated MLP experts with ReLU-based routing, indicating the possibility of MoE architecture simplification. Experiments demonstrate that DECO, activating only 20% of experts, matches dense performance and outperforms established MoE baselines. Our specialized acceleration kernel delivers a 3.00$\\times$ speedup on real hardware compared with dense inference. Codes and checkpoints will be released.",
+      "abstract": "Quantization has emerged as a standard technique for accelerating inference for generative models by enabling faster low-precision computations and reduced memory transfers. Recently, GPU accelerators have added first-class support for microscaling Block Floating Point (BFP) formats. Standard BFP algorithms use a fixed scale based on the maximum magnitude of the block. We observe that this scale choice can be suboptimal with respect to quantization errors. In this work, we propose ScaleSearch, an alternative strategy for selecting these scale factors: using a fine-grained search leveraging the mantissa bits in microscaling formats to minimize the quantization error for the given distribution. ScaleSearch can be integrated with existing quantization methods such as Post Training Quantization and low-precision attention, and is shown to improve their performance. Additionally, we introduce ScaleSearchAttention, an accelerated NVFP4-based attention algorithm, which uses ScaleSearch and adapted prior techniques to ensure near-0 performance loss for causal language modeling. Experiments show that ScaleSearch reduces quantization error by 27% for NVFP4 and improves language model PTQ by up to 15 points for MATH500 (Qwen3-8B), while ScaleSearchAttention improves Wikitext-2 PPL by upto 0.77 points for Llama 3.1 70B. The proposed methods closely match baseline performance while providing quantization accuracy improvements.",
       "venue": "arXiv",
-      "published": "2026-05-11T17:58:28Z",
-      "updated": "2026-05-11T17:58:28Z",
-      "url": "http://arxiv.org/abs/2605.10933v1",
-      "pdfUrl": "https://arxiv.org/pdf/2605.10933v1",
+      "published": "2026-05-12T17:50:08Z",
+      "updated": "2026-05-12T17:50:08Z",
+      "url": "http://arxiv.org/abs/2605.12464v1",
+      "pdfUrl": "https://arxiv.org/pdf/2605.12464v1",
       "categories": [
         "cs.LG",
+        "cs.AR",
+        "cs.PF"
+      ],
+      "collectedAt": "2026-05-13T21:46:30.798Z",
+      "firstSeenAt": "2026-05-13T21:46:30.798Z",
+      "lastSeenAt": "2026-05-13T21:46:30.798Z",
+      "collectionType": "daily-latest",
+      "matchedQuery": "(cat:cs.AR OR cat:cs.DC OR cat:cs.PF) AND (all:LLM OR all:transformer OR all:foundation OR all:language) AND (all:accelerator OR all:processor OR all:architecture OR all:hardware OR all:system OR all:serving OR all:training OR all:inference OR all:cache)",
+      "collectionTypes": [
+        "daily-latest"
+      ],
+      "matchedQueries": [
+        "(cat:cs.AR OR cat:cs.DC OR cat:cs.PF) AND (all:LLM OR all:transformer OR all:foundation OR all:language) AND (all:accelerator OR all:processor OR all:architecture OR all:hardware OR all:system OR all:serving OR all:training OR all:inference OR all:cache)",
+        "(all:quantization OR all:compression OR all:pruning OR all:sparsity OR all:low-bit) AND (all:LLM OR all:transformer OR all:language) AND (all:hardware OR all:accelerator OR all:inference OR all:serving OR all:processor)",
+        "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)"
+      ],
+      "targetThemes": [],
+      "conferenceVenues": [],
+      "conferenceYears": [],
+      "digest": {
+        "summaryZh": "AI 摘要未生成。原始摘要要点：Quantization has emerged as a standard technique for accelerating inference for generative models by enabling faster low-precision computations and reduced memo...",
+        "motivationZh": "命令行启用了 --no-ai",
+        "methodZh": "请配置 AI 后重新运行，以生成方法提炼。",
+        "experimentsZh": "来源元数据未披露完整实验设置或结果。",
+        "affiliationsZh": "未在 DBLP/arXiv 元数据中提供。",
+        "tags": [
+          "cs.LG",
+          "cs.AR",
+          "cs.PF"
+        ],
+        "importance": 3,
+        "researchFitZh": "AI harness 尚未完成分析，无法判断与用户研究方向的具体关系。",
+        "hardwareRelevance": 1,
+        "algorithmRelevance": 1,
+        "systemRelevance": 1,
+        "readPriority": "archive",
+        "whyReadZh": "需要完成 motivation、method 和实验结果分析后再判断是否值得深读。",
+        "limitationsZh": "命令行启用了 --no-ai",
+        "motivationDetail": {
+          "problemZh": "harness 未完成分析。",
+          "gapZh": "harness 未完成分析。",
+          "whyImportantZh": "harness 未完成分析。",
+          "userRelevanceZh": "harness 未完成分析。",
+          "evidence": "not analyzed"
+        },
+        "methodDetail": {
+          "coreIdeaZh": "harness 未完成分析。",
+          "componentsZh": [
+            "未分析"
+          ],
+          "hardwareSystemDetailZh": "harness 未完成分析。",
+          "noveltyZh": "harness 未完成分析。",
+          "evidence": "not analyzed"
+        },
+        "experimentDetail": {
+          "setupZh": "harness 未完成分析。",
+          "baselinesZh": "harness 未完成分析。",
+          "metricsZh": [
+            "未分析"
+          ],
+          "mainResultsZh": "harness 未完成分析。",
+          "limitationsZh": "harness 未完成分析。",
+          "evidence": "not analyzed"
+        },
+        "evidence": {
+          "usedSources": [
+            "metadata"
+          ],
+          "affiliationEvidence": "",
+          "experimentEvidence": "",
+          "missingFields": [
+            "motivation",
+            "method",
+            "experiments"
+          ]
+        },
+        "confidence": {
+          "summary": 0.2,
+          "motivation": 0,
+          "method": 0,
+          "experiments": 0,
+          "affiliations": 0
+        }
+      },
+      "recommendationTrack": "hardware-primary",
+      "recommendationLabel": "硬件体系结构主线",
+      "recommendationScore": 201,
+      "relevanceReason": "命中 AI 处理器、体系结构、量化、训推系统或内存/缓存优化主题",
+      "pdfStatus": "remote",
+      "workflow": {
+        "digestStatus": "pending",
+        "emailStatus": "waiting-digest",
+        "digestError": "命令行启用了 --no-ai",
+        "harnessVersion": "paper-reader-v1",
+        "collectStatus": "collected",
+        "pdfStatus": "remote"
+      }
+    },
+    {
+      "id": "arxiv:2605.12260",
+      "source": "arXiv",
+      "title": "PRISM: Pareto-Efficient Retrieval over Intent-Aware Structured Memory for Long-Horizon Agents",
+      "authors": [
+        "Jingyi Peng",
+        "Zhongwei Wan",
+        "Weiting Liu",
+        "Qiuzhuang Sun"
+      ],
+      "authorAffiliations": [],
+      "affiliations": [],
+      "abstract": "Long-horizon language agents accumulate conversation history far faster than any fixed context window can hold, making memory management critical to both answer accuracy and serving cost. Existing approaches either expand the context window without addressing what is retrieved, perform heavy ingestion-time fact extraction at substantial token cost, or rely on heuristic graph traversal that leaves both accuracy and efficiency on the table. We present PRISM, a training-free retrieval-side framework that treats long-horizon memory as a joint retrieval-and-compression problem over a graph-structured memory. PRISM combines four orthogonal inference-time components: Hierarchical Bundle Search over typed relation paths, Query-Sensitive Edge Costing that aligns traversal with detected query intent, Evidence Compression that compresses the candidate bundle into a compact answer-side context, and Adaptive Intent Routing that routes most queries through zero-LLM tiers. By formulating retrieval as min-cost selection over typed path templates and pairing it with an LLM-side compression step, PRISM surfaces the right evidence under a strict context budget without any fine-tuning or modification to the upstream ingestion pipeline. Experiments on the LoCoMo benchmark show that PRISM delivers substantially higher LLM-judge accuracy than every same-protocol baseline at an order-of-magnitude smaller context budget, occupying a previously empty corner of the accuracy-context-cost frontier and demonstrating a superior balance between answer quality and retrieval efficiency.",
+      "venue": "arXiv",
+      "published": "2026-05-12T15:28:30Z",
+      "updated": "2026-05-12T15:28:30Z",
+      "url": "http://arxiv.org/abs/2605.12260v1",
+      "pdfUrl": "https://arxiv.org/pdf/2605.12260v1",
+      "categories": [
         "cs.CL"
       ],
-      "collectedAt": "2026-05-12T21:41:24.183Z",
-      "firstSeenAt": "2026-05-12T21:41:24.183Z",
-      "lastSeenAt": "2026-05-12T21:41:24.183Z",
+      "collectedAt": "2026-05-13T21:46:32.665Z",
+      "firstSeenAt": "2026-05-13T21:46:32.665Z",
+      "lastSeenAt": "2026-05-13T21:46:32.665Z",
       "collectionType": "daily-latest",
       "matchedQuery": "(all:quantization OR all:compression OR all:pruning OR all:sparsity OR all:low-bit) AND (all:LLM OR all:transformer OR all:language) AND (all:hardware OR all:accelerator OR all:inference OR all:serving OR all:processor)",
       "collectionTypes": [
@@ -180,13 +304,12 @@
       "conferenceVenues": [],
       "conferenceYears": [],
       "digest": {
-        "summaryZh": "AI 摘要未生成。原始摘要要点：While Mixture-of-Experts (MoE) scales model capacity without proportionally increasing computation, its massive total parameter footprint creates significant st...",
+        "summaryZh": "AI 摘要未生成。原始摘要要点：Long-horizon language agents accumulate conversation history far faster than any fixed context window can hold, making memory management critical to both answer...",
         "motivationZh": "命令行启用了 --no-ai",
         "methodZh": "请配置 AI 后重新运行，以生成方法提炼。",
         "experimentsZh": "来源元数据未披露完整实验设置或结果。",
         "affiliationsZh": "未在 DBLP/arXiv 元数据中提供。",
         "tags": [
-          "cs.LG",
           "cs.CL"
         ],
         "importance": 3,
@@ -245,7 +368,7 @@
       },
       "recommendationTrack": "hardware-primary",
       "recommendationLabel": "硬件体系结构主线",
-      "recommendationScore": 205,
+      "recommendationScore": 183.5,
       "relevanceReason": "命中 AI 处理器、体系结构、量化、训推系统或内存/缓存优化主题",
       "pdfStatus": "remote",
       "workflow": {
@@ -258,31 +381,31 @@
       }
     },
     {
-      "id": "arxiv:2605.09781",
+      "id": "arxiv:2605.12332",
       "source": "arXiv",
-      "title": "Parameter-Efficient Neuroevolution for Diverse LLM Generation: Quality-Diversity Optimization via Prompt Embedding Evolution",
+      "title": "Towards Automated Air Traffic Safety Assessment Around Non-Towered Airports Using Large Language Models",
       "authors": [
-        "Dongxin Guo",
-        "Jikun Wu",
-        "Siu Ming Yiu"
+        "Torsten Darrell",
+        "Mahyar Ghazanfari",
+        "Jordan Kam",
+        "Alexandre Bayen",
+        "Amin Tabrizian",
+        "Peng Wei"
       ],
       "authorAffiliations": [],
       "affiliations": [],
-      "abstract": "Large Language Models exhibit mode collapse, producing homogeneous outputs that fail to explore valid solution spaces. We present QD-LLM, a framework for parameter-efficient neuroevolution that evolves prompt embeddings, compact neural interfaces (~32K parameters) that steer generation in frozen LLMs (70B+ parameters), within a Quality-Diversity (QD) optimization framework. Our contributions: (1) evolved prompt embeddings via gradient-free optimization enabling behavioral steering without model fine-tuning; (2) hybrid behavior characterization combining semantic and explicit features with formal coverage bounds (Theorem 1) under validated near-independence (NMI $= 0.08 \\pm 0.02$); (3) co-evolutionary variation operators including targeted behavioral mutation via finite-difference gradient estimation. On HumanEval (164 problems), MBPP, and creative writing benchmarks, QD-LLM achieves 46.4% higher coverage and 41.4% higher QD-Score than QDAIF ($p<0.001$, 30 runs, Vargha-Delaney $A=0.94$). We demonstrate downstream utility: diverse archives improve test generation (34% more edge cases) and fine-tuning data quality (8.3% accuracy gain). We validate across open-source LLMs (Llama-3-70B, Mistral-Large) with full embedding access, establishing prompt embedding evolution as an effective paradigm bridging neuroevolution and modern LLMs.",
+      "abstract": "We investigate frameworks for post-flight safety analysis at non-towered airports using large language models (LLMs). Non-towered airports rely on the Common Traffic Advisory Frequency (CTAF) for air traffic coordination and experience frequent near mid-air collisions due to the pilot self-announcement communication protocol. We propose a general vision-language model (VLM) approach to analyze the transcribed CTAF radio communications in natural language, METeorological Aerodrome Report (METAR) weather data, Automatic Dependent Surveillance-Broadcast (ADS-B) flight trajectories, and Visual Flight Rules sectional charts of the airfield. We provide a preliminary study at Half Moon Bay Airport, with a qualitative real world case study and a quantitative evaluation using a new synthetic dataset of communications and weather modalities. We qualitatively evaluate our framework on real flight data using Gemini 2.5 Pro, demonstrating accurate identification of a right-of-way violation. The synthetic dataset is derived from real examples and includes a 12-category hazard taxonomy, and is used to benchmark three open-source (Qwen 2.5-7B, Mistral-7B, Gemma-2-9B) and three closed-source (GPT-4o, GPT-5.4, Claude Sonnet 4.6) LLM models on the subset of inputs related to CTAF and METAR. Even limited to CTAF and METAR inputs and open source LLMs, instances of our framework typically achieve a macro F1 score above 0.85 on a binary nominal/danger classification task. Future work includes a quantitative evaluation across all modalities and a larger number of real world examples. Taken together, our results suggest that VLM analysis of safety at non-towered airports may be a valuable future capability.",
       "venue": "arXiv",
-      "published": "2026-05-10T22:00:15Z",
-      "updated": "2026-05-10T22:00:15Z",
-      "url": "http://arxiv.org/abs/2605.09781v1",
-      "pdfUrl": "https://arxiv.org/pdf/2605.09781v1",
+      "published": "2026-05-12T16:15:15Z",
+      "updated": "2026-05-12T16:15:15Z",
+      "url": "http://arxiv.org/abs/2605.12332v1",
+      "pdfUrl": "https://arxiv.org/pdf/2605.12332v1",
       "categories": [
-        "cs.NE",
-        "cs.AI",
-        "cs.CL",
-        "cs.LG"
+        "cs.AI"
       ],
-      "collectedAt": "2026-05-12T21:41:28.260Z",
-      "firstSeenAt": "2026-05-12T21:41:28.260Z",
-      "lastSeenAt": "2026-05-12T21:41:28.260Z",
+      "collectedAt": "2026-05-13T21:46:37.118Z",
+      "firstSeenAt": "2026-05-13T21:46:37.118Z",
+      "lastSeenAt": "2026-05-13T21:46:37.118Z",
       "collectionType": "daily-latest",
       "matchedQuery": "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)",
       "collectionTypes": [
@@ -296,7 +419,7 @@
       "conferenceYears": [],
       "recommendationTrack": "hardware-primary",
       "recommendationLabel": "硬件体系结构主线",
-      "recommendationScore": 158,
+      "recommendationScore": 163.5,
       "relevanceReason": "命中 AI 处理器、体系结构、量化、训推系统或内存/缓存优化主题",
       "pdfStatus": "remote",
       "workflow": {
@@ -308,16 +431,13 @@
         "pdfStatus": "remote"
       },
       "digest": {
-        "summaryZh": "AI 摘要未生成。原始摘要要点：Large Language Models exhibit mode collapse, producing homogeneous outputs that fail to explore valid solution spaces. We present QD-LLM, a framework for parame...",
+        "summaryZh": "AI 摘要未生成。原始摘要要点：We investigate frameworks for post-flight safety analysis at non-towered airports using large language models (LLMs). Non-towered airports rely on the Common Tr...",
         "motivationZh": "命令行启用了 --no-ai",
         "methodZh": "请配置 AI 后重新运行，以生成方法提炼。",
         "experimentsZh": "来源元数据未披露完整实验设置或结果。",
         "affiliationsZh": "未在 DBLP/arXiv 元数据中提供。",
         "tags": [
-          "cs.NE",
-          "cs.AI",
-          "cs.CL",
-          "cs.LG"
+          "cs.AI"
         ],
         "importance": 3,
         "researchFitZh": "AI harness 尚未完成分析，无法判断与用户研究方向的具体关系。",
@@ -375,41 +495,30 @@
       }
     },
     {
-      "id": "arxiv:2605.10906",
+      "id": "arxiv:2605.12466",
       "source": "arXiv",
-      "title": "DataMaster: Towards Autonomous Data Engineering for Machine Learning",
+      "title": "Solve the Loop: Attractor Models for Language and Reasoning",
       "authors": [
-        "Yaxin Du",
-        "Xiyuan Yang",
-        "Zhifan Zhou",
-        "Wanxu Liu",
-        "Zixing Lei",
-        "Zimeng Chen",
-        "Fenyi Liu",
-        "Haotian Wu",
-        "Yuzhu Cai",
-        "Zexi Liu",
-        "Xinyu Zhu",
-        "WenHao Wang",
-        "Linfeng Zhang",
-        "Chen Qian",
-        "Siheng Chen"
+        "Jacob Fein-Ashley",
+        "Paria Rashidinejad"
       ],
       "authorAffiliations": [],
       "affiliations": [],
-      "abstract": "As model families, training recipes, and compute budgets become increasingly standardized, further gains in machine learning systems depend increasingly on data. Yet data engineering remains largely manual and ad hoc: practitioners repeatedly search for external datasets, adapt them to existing pipelines, validate candidate data through downstream training, and carry forward lessons from prior attempts. We study task-conditioned autonomous data engineering, where an autonomous agent improves a fixed learning algorithm by optimizing only the data side, including external data discovery, data selection and composition, cleaning and transformation. The goal is to obtain a stronger downstream solution while leaving the learning algorithm unchanged. To address the open-ended search space, branch-dependent refinement, and delayed validation inherent in autonomous data engineering, we propose DataMaster, a data-agent framework that integrates tree-structured search, shared candidate data, and cumulative memory. DataMaster consists of three key components: a DataTree that organizes alternative data-engineering branches, a shared Data Pool that stores discovered external data sources for reuse, and a Global Memory that records node outcomes, artifacts, and reusable findings. Together, these components allow the agent to discover candidate data, construct executable training inputs, evaluate them through downstream feedback, and carry useful evidence across branches. We evaluate DataMaster on two types of benchmarks, MLE-Bench Lite and PostTrainBench. On MLE-Bench Lite, it improves medal rate by 32.27% over the initial score; on PostTrainBench, it surpasses the instruct model on GPQA (31.02% vs 30.35%).",
+      "abstract": "Looped Transformers offer a promising alternative to purely feed-forward computation by iteratively refining latent representations, improving language modeling and reasoning. Yet recurrent architectures remain unstable to train, costly to optimize and deploy, and constrained to small, fixed recurrence depths. We introduce Attractor Models, in which a backbone module first proposes output embeddings, then an attractor module refines them by solving for the fixed point, with gradients obtained through implicit differentiation. Thus, training memory remains constant in effective depth, and iterations are chosen adaptively by convergence. Empirically, Attractor Models outperform existing models across two regimes, large-scale language-model pretraining and reasoning with tiny models. In language modeling, Attractor Models deliver a Pareto improvement over standard Transformers and stable looped models across sizes, improving perplexity by up to 46.6% and downstream accuracy by up to 19.7% while reducing training cost. Notably, a 770M Attractor Model outperforms a 1.3B Transformer trained on twice as many tokens. On challenging reasoning tasks, we show that our model with only 27M parameters and approximately 1000 examples achieves 91.4% accuracy on Sudoku-Extreme and 93.1% on Maze-Hard, scaling favorably where frontier models like Claude and GPT o3, fail completely, and specialized recursive reasoners collapse at larger sizes. Lastly, we show that Attractor Models exhibit a novel phenomenon, which we call equilibrium internalization: fixed-point training places the model's initial output embedding near equilibrium, allowing the solver to be removed at inference time with little degradation. Together, these results suggest that Attractor Models make iterative refinement scalable by turning recurrence into a computation the model can learn to internalize.",
       "venue": "arXiv",
-      "published": "2026-05-11T17:46:24Z",
-      "updated": "2026-05-11T17:46:24Z",
-      "url": "http://arxiv.org/abs/2605.10906v1",
-      "pdfUrl": "https://arxiv.org/pdf/2605.10906v1",
+      "published": "2026-05-12T17:51:26Z",
+      "updated": "2026-05-12T17:51:26Z",
+      "url": "http://arxiv.org/abs/2605.12466v1",
+      "pdfUrl": "https://arxiv.org/pdf/2605.12466v1",
       "categories": [
         "cs.LG",
-        "cs.AI"
+        "cs.AI",
+        "cs.CL",
+        "cs.NE"
       ],
-      "collectedAt": "2026-05-12T21:41:28.259Z",
-      "firstSeenAt": "2026-05-12T21:41:28.259Z",
-      "lastSeenAt": "2026-05-12T21:41:28.259Z",
+      "collectedAt": "2026-05-13T21:46:37.117Z",
+      "firstSeenAt": "2026-05-13T21:46:37.117Z",
+      "lastSeenAt": "2026-05-13T21:46:37.117Z",
       "collectionType": "daily-latest",
       "matchedQuery": "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)",
       "collectionTypes": [
@@ -423,7 +532,7 @@
       "conferenceYears": [],
       "recommendationTrack": "hardware-primary",
       "recommendationLabel": "硬件体系结构主线",
-      "recommendationScore": 153.5,
+      "recommendationScore": 161.75,
       "relevanceReason": "命中 AI 处理器、体系结构、量化、训推系统或内存/缓存优化主题",
       "pdfStatus": "remote",
       "workflow": {
@@ -435,14 +544,16 @@
         "pdfStatus": "remote"
       },
       "digest": {
-        "summaryZh": "AI 摘要未生成。原始摘要要点：As model families, training recipes, and compute budgets become increasingly standardized, further gains in machine learning systems depend increasingly on data...",
+        "summaryZh": "AI 摘要未生成。原始摘要要点：Looped Transformers offer a promising alternative to purely feed-forward computation by iteratively refining latent representations, improving language modeling...",
         "motivationZh": "命令行启用了 --no-ai",
         "methodZh": "请配置 AI 后重新运行，以生成方法提炼。",
         "experimentsZh": "来源元数据未披露完整实验设置或结果。",
         "affiliationsZh": "未在 DBLP/arXiv 元数据中提供。",
         "tags": [
           "cs.LG",
-          "cs.AI"
+          "cs.AI",
+          "cs.CL",
+          "cs.NE"
         ],
         "importance": 3,
         "researchFitZh": "AI harness 尚未完成分析，无法判断与用户研究方向的具体关系。",
@@ -500,33 +611,31 @@
       }
     },
     {
-      "id": "arxiv:2605.09536",
+      "id": "arxiv:2605.12049",
       "source": "arXiv",
-      "title": "TAD: Temporal-Aware Trajectory Self-Distillation for Fast and Accurate Diffusion LLM",
+      "title": "Scaling Laws and Tradeoffs in Recurrent Networks of Expressive Neurons",
       "authors": [
-        "Haoyang Zhou",
-        "Li Kong",
-        "Shijie Ren",
-        "Xiting Wang",
-        "Shuang Liang",
-        "Guowei Wang",
-        "Zhenxuan Pan"
+        "Aaron Spieler",
+        "Georg Martius",
+        "Anna Levina"
       ],
       "authorAffiliations": [],
       "affiliations": [],
-      "abstract": "Diffusion large language models (dLLMs) offer a promising paradigm for parallel text generation, but in practice they face an accuracy-parallelism trade-off, where increasing tokens per forward (TPF) often degrades generation quality. Existing acceleration methods often gain speed at the cost of accuracy. To address this limitation, we propose TAD, a Temporal-Aware trajectory self-Distillation framework. During data construction, we condition a teacher model on both the prompt and the ground-truth response to generate decoding trajectories, recording the intermediate masked states throughout the process. Based on how many decoding steps remain before each masked token is revealed, we partition masked positions into near and distant subsets. For near tokens, we train the student with a hard cross-entropy loss using the teacher trajectory tokens as labels, encouraging confident predictions for tokens that are about to be decoded. For distant tokens, we apply a soft KL divergence loss between the teacher and student token distributions, providing softer supervision and preserving future planning knowledge. This temporal-aware partition naturally gives rise to two deployment configurations: a Quality model that prioritizes accuracy and a Speed model that favors more aggressive acceleration. Experiments show that TAD consistently improves the accuracy-parallelism trade-off. On LLaDA, it raises average accuracy from 46.2\\% to 51.6\\% with the Quality model and average AUP from 46.2 to 257.1 with the Speed model. Our code is available at: https://github.com/BHmingyang/TAD",
+      "abstract": "Cortical neurons are complex, multi-timescale processors wired into recurrent circuits, shaped by long evolutionary pressure under stringent biological constraints. Mainstream machine learning, by contrast, predominantly builds models from extremely simple units, a default inherited from early neural-network theory. We treat this as a normative architectural question. How should one split a fixed parameter budget $P$ between the number of units $N$, per-unit effective complexity $k_e$, and per-unit connectivity $k_c$? What controls the optimal allocation? This calls for a model in which per-unit complexity can be tuned independently of width and connectivity. Accordingly, we introduce the ELM Network, whose recurrent layer is built from Expressive Leaky Memory (ELM) neurons, chosen to mirror functional components of cortical neurons. The architecture allows for individually adjusting $N$, $k_e$, and $k_c$ and trains stably across orders of magnitude in scale. We evaluate the model on two qualitatively different sequence benchmarks: the neuromorphic SHD-Adding task and Enwik8 character-level language modeling. Performance improves monotonically along each of the three axes individually. Under a fixed budget, a clear non-trivial optimum emerges in their tradeoff, and larger budgets favor both more and more complex neurons. A closed-form information-theoretic model captures these tradeoffs and attributes the diminishing returns at two ends to: per-neuron signal-to-noise saturation and across-neuron redundancy. A hyperparameter sweep spanning three orders of magnitude in trainable parameters traces a near-Pareto-frontier scaling law consistent with the framework. This suggests that the simple-unit default in ML is not obviously optimal once this tradeoff surface is probed, and offers a normative lens on cortex's reliance on complex spatio-temporal integrators.",
       "venue": "arXiv",
-      "published": "2026-05-10T13:38:53Z",
-      "updated": "2026-05-10T13:38:53Z",
-      "url": "http://arxiv.org/abs/2605.09536v1",
-      "pdfUrl": "https://arxiv.org/pdf/2605.09536v1",
+      "published": "2026-05-12T12:29:33Z",
+      "updated": "2026-05-12T12:29:33Z",
+      "url": "http://arxiv.org/abs/2605.12049v1",
+      "pdfUrl": "https://arxiv.org/pdf/2605.12049v1",
       "categories": [
-        "cs.CL",
-        "cs.AI"
+        "cs.LG",
+        "cs.AI",
+        "cs.IT",
+        "cs.NE"
       ],
-      "collectedAt": "2026-05-12T21:41:28.260Z",
-      "firstSeenAt": "2026-05-12T21:41:28.260Z",
-      "lastSeenAt": "2026-05-12T21:41:28.260Z",
+      "collectedAt": "2026-05-13T21:46:37.118Z",
+      "firstSeenAt": "2026-05-13T21:46:37.118Z",
+      "lastSeenAt": "2026-05-13T21:46:37.118Z",
       "collectionType": "daily-latest",
       "matchedQuery": "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)",
       "collectionTypes": [
@@ -540,7 +649,7 @@
       "conferenceYears": [],
       "recommendationTrack": "hardware-primary",
       "recommendationLabel": "硬件体系结构主线",
-      "recommendationScore": 150.5,
+      "recommendationScore": 153,
       "relevanceReason": "命中 AI 处理器、体系结构、量化、训推系统或内存/缓存优化主题",
       "pdfStatus": "remote",
       "workflow": {
@@ -552,14 +661,16 @@
         "pdfStatus": "remote"
       },
       "digest": {
-        "summaryZh": "AI 摘要未生成。原始摘要要点：Diffusion large language models (dLLMs) offer a promising paradigm for parallel text generation, but in practice they face an accuracy-parallelism trade-off, wh...",
+        "summaryZh": "AI 摘要未生成。原始摘要要点：Cortical neurons are complex, multi-timescale processors wired into recurrent circuits, shaped by long evolutionary pressure under stringent biological constrai...",
         "motivationZh": "命令行启用了 --no-ai",
         "methodZh": "请配置 AI 后重新运行，以生成方法提炼。",
         "experimentsZh": "来源元数据未披露完整实验设置或结果。",
         "affiliationsZh": "未在 DBLP/arXiv 元数据中提供。",
         "tags": [
-          "cs.CL",
-          "cs.AI"
+          "cs.LG",
+          "cs.AI",
+          "cs.IT",
+          "cs.NE"
         ],
         "importance": 3,
         "researchFitZh": "AI harness 尚未完成分析，无法判断与用户研究方向的具体关系。",
@@ -617,34 +728,32 @@
       }
     },
     {
-      "id": "arxiv:2605.10789",
+      "id": "arxiv:2605.12007",
       "source": "arXiv",
-      "title": "Rapid Forest Fuel Load Estimation via Virtual Remote Sensing and Metric-Scale Feed-Forward 3D Reconstruction",
+      "title": "A geometry-aligned multi-fidelity framework for uncertainty quantification of wildfire spread",
       "authors": [
-        "Quanyun Wu",
-        "Kyle Gao",
-        "Wentao Sun",
-        "Zhengsen Xu",
-        "Hudson Sun",
-        "Linlin Xu",
-        "Yuhao Chen",
-        "David A. Clausi",
-        "Jonathan Li"
+        "Konstantinos Vogiatzoglou",
+        "Costas Papadimitriou",
+        "Vasilis Bontozoglou",
+        "Petros Koumoutsakos",
+        "Han Gao"
       ],
       "authorAffiliations": [],
       "affiliations": [],
-      "abstract": "Accurate quantification of forest coverage and combustible biomass (fuel load) is critical for wildfire risk assessment and ecosystem management. However, traditional methods relying on airborne LiDAR or field surveys are cost-prohibitive and time-intensive, while satellite imagery often lacks the vertical resolution required for canopy volume analysis. This paper proposes a novel, automated pipeline for rapid forest inventory using virtual remote sensing data derived from Google Earth Studio (GES). Our approach first generates low-altitude orbital imagery and camera poses for a target region. For dense 3D reconstruction, we employ Pi-Long, developed within the VGGT-Long framework. This model serves as a scalable extension of the Pi-3 feed-forward Transformer architecture. To address the inherent scale ambiguity in monocular reconstruction, we introduce a metric recovery module that aligns the reconstructed trajectory with GES ground truth poses via Sim(3) Umeyama optimization. The metric-scale point cloud is then orthogonally projected into Bird's-Eye-View (BEV) height and density maps. Finally, we employ a watershed-based segmentation algorithm combined with height variance analysis to classify tree species (conifer vs. broadleaf), calculate Leaf Area Index (LAI), and estimate total fuel load. Experimental results demonstrate that this pipeline offers a scalable, cost-effective alternative to physical scanning, enabling near-real-time estimation of forest biomass with high geometric consistency.",
+      "abstract": "Forward propagation of input uncertainties in physics-based wildfire models is computationally prohibitive, limiting the use of high-fidelity simulators in risk assessment workflows. This work introduces a geometry-aligned bi-fidelity surrogate framework that addresses the convection-dominated nature of wildfire spread by mapping low- and high-fidelity solution snapshots onto a common reference domain prior to basis selection and reconstruction. Unlike conventional bi-fidelity schemes, which combine spatially shifted snapshots and thus suffer from oscillations and excess basis requirements near sharp fronts, the proposed mapping aligns the dominant front geometry through per-variable shift/stretch transforms in 1D and an activity indicator-based affine alignment in 2D, so that reduced bases compare physically corresponding structures rather than displaced ones. Building on the ADfiRe physics-based simulator, we demonstrate the method on 1D and 2D test cases in which low- and high-fidelity models differ in mesh resolution and physical completeness. Across both settings, the geometry-aligned surrogate reproduces full-field temperature and fuel composition with substantially lower error than its unmapped counterpart, eliminates Gibbs-type oscillations near steep gradients, and recovers high-fidelity probability density functions for key quantities of interest (e.g., maximum temperature, evaporated moisture, and burned area). After offline training, online predictions are roughly three orders of magnitude cheaper than direct high-fidelity evaluation, making the framework a practical building block for many-query uncertainty quantification once the offline cost is amortized over enough queries. We discuss the conditions under which the geometric alignment is most effective, its limitations for non-convex or topologically complex fronts, and the path toward validation against real data.",
       "venue": "arXiv",
-      "published": "2026-05-11T16:21:28Z",
-      "updated": "2026-05-11T16:21:28Z",
-      "url": "http://arxiv.org/abs/2605.10789v1",
-      "pdfUrl": "https://arxiv.org/pdf/2605.10789v1",
+      "published": "2026-05-12T11:55:52Z",
+      "updated": "2026-05-12T11:55:52Z",
+      "url": "http://arxiv.org/abs/2605.12007v1",
+      "pdfUrl": "https://arxiv.org/pdf/2605.12007v1",
       "categories": [
-        "cs.CV"
+        "cs.CE",
+        "physics.comp-ph",
+        "physics.data-an"
       ],
-      "collectedAt": "2026-05-12T21:41:28.259Z",
-      "firstSeenAt": "2026-05-12T21:41:28.259Z",
-      "lastSeenAt": "2026-05-12T21:41:28.259Z",
+      "collectedAt": "2026-05-13T21:46:37.118Z",
+      "firstSeenAt": "2026-05-13T21:46:37.118Z",
+      "lastSeenAt": "2026-05-13T21:46:37.118Z",
       "collectionType": "daily-latest",
       "matchedQuery": "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)",
       "collectionTypes": [
@@ -658,7 +767,7 @@
       "conferenceYears": [],
       "recommendationTrack": "hardware-primary",
       "recommendationLabel": "硬件体系结构主线",
-      "recommendationScore": 149,
+      "recommendationScore": 151.75,
       "relevanceReason": "命中 AI 处理器、体系结构、量化、训推系统或内存/缓存优化主题",
       "pdfStatus": "remote",
       "workflow": {
@@ -670,7 +779,175 @@
         "pdfStatus": "remote"
       },
       "digest": {
-        "summaryZh": "AI 摘要未生成。原始摘要要点：Accurate quantification of forest coverage and combustible biomass (fuel load) is critical for wildfire risk assessment and ecosystem management. However, tradi...",
+        "summaryZh": "AI 摘要未生成。原始摘要要点：Forward propagation of input uncertainties in physics-based wildfire models is computationally prohibitive, limiting the use of high-fidelity simulators in risk...",
+        "motivationZh": "命令行启用了 --no-ai",
+        "methodZh": "请配置 AI 后重新运行，以生成方法提炼。",
+        "experimentsZh": "来源元数据未披露完整实验设置或结果。",
+        "affiliationsZh": "未在 DBLP/arXiv 元数据中提供。",
+        "tags": [
+          "cs.CE",
+          "physics.comp-ph",
+          "physics.data-an"
+        ],
+        "importance": 3,
+        "researchFitZh": "AI harness 尚未完成分析，无法判断与用户研究方向的具体关系。",
+        "hardwareRelevance": 1,
+        "algorithmRelevance": 1,
+        "systemRelevance": 1,
+        "readPriority": "archive",
+        "whyReadZh": "需要完成 motivation、method 和实验结果分析后再判断是否值得深读。",
+        "limitationsZh": "命令行启用了 --no-ai",
+        "motivationDetail": {
+          "problemZh": "harness 未完成分析。",
+          "gapZh": "harness 未完成分析。",
+          "whyImportantZh": "harness 未完成分析。",
+          "userRelevanceZh": "harness 未完成分析。",
+          "evidence": "not analyzed"
+        },
+        "methodDetail": {
+          "coreIdeaZh": "harness 未完成分析。",
+          "componentsZh": [
+            "未分析"
+          ],
+          "hardwareSystemDetailZh": "harness 未完成分析。",
+          "noveltyZh": "harness 未完成分析。",
+          "evidence": "not analyzed"
+        },
+        "experimentDetail": {
+          "setupZh": "harness 未完成分析。",
+          "baselinesZh": "harness 未完成分析。",
+          "metricsZh": [
+            "未分析"
+          ],
+          "mainResultsZh": "harness 未完成分析。",
+          "limitationsZh": "harness 未完成分析。",
+          "evidence": "not analyzed"
+        },
+        "evidence": {
+          "usedSources": [
+            "metadata"
+          ],
+          "affiliationEvidence": "",
+          "experimentEvidence": "",
+          "missingFields": [
+            "motivation",
+            "method",
+            "experiments"
+          ]
+        },
+        "confidence": {
+          "summary": 0.2,
+          "motivation": 0,
+          "method": 0,
+          "experiments": 0,
+          "affiliations": 0
+        }
+      }
+    },
+    {
+      "id": "arxiv:2605.12500",
+      "source": "arXiv",
+      "title": "SenseNova-U1: Unifying Multimodal Understanding and Generation with NEO-unify Architecture",
+      "authors": [
+        "Haiwen Diao",
+        "Penghao Wu",
+        "Hanming Deng",
+        "Jiahao Wang",
+        "Shihao Bai",
+        "Silei Wu",
+        "Weichen Fan",
+        "Wenjie Ye",
+        "Wenwen Tong",
+        "Xiangyu Fan",
+        "Yan Li",
+        "Yubo Wang",
+        "Zhijie Cao",
+        "Zhiqian Lin",
+        "Zhitao Yang",
+        "Zhongang Cai",
+        "Yuwei Niu",
+        "Yue Zhu",
+        "Bo Liu",
+        "Chengguang Lv",
+        "Haojia Yu",
+        "Haozhe Xie",
+        "Hongli Wang",
+        "Jianan Fan",
+        "Jiaqi Li",
+        "Jiefan Lu",
+        "Jingcheng Ni",
+        "Junxiang Xu",
+        "Kaihuan Liang",
+        "Lianqiang Shi",
+        "Linjun Dai",
+        "Linyan Wang",
+        "Oscar Qian",
+        "Peng Gao",
+        "Pengfei Liu",
+        "Qingping Sun",
+        "Rui Shen",
+        "Ruisi Wang",
+        "Shengnan Ma",
+        "Shuang Yang",
+        "Siyi Xie",
+        "Siying Li",
+        "Tianbo Zhong",
+        "Xiangli Kong",
+        "Xuanke Shi",
+        "Yang Gao",
+        "Yongqiang Yao",
+        "Yves Wang",
+        "Zhengqi Bai",
+        "Zhengyu Lin",
+        "Zixin Yin",
+        "Wenxiu Sun",
+        "Ruihao Gong",
+        "Quan Wang",
+        "Lewei Lu",
+        "Lei Yang",
+        "Ziwei Liu",
+        "Dahua Lin"
+      ],
+      "authorAffiliations": [],
+      "affiliations": [],
+      "abstract": "Recent large vision-language models (VLMs) remain fundamentally constrained by a persistent dichotomy: understanding and generation are treated as distinct problems, leading to fragmented architectures, cascaded pipelines, and misaligned representation spaces. We argue that this divide is not merely an engineering artifact, but a structural limitation that hinders the emergence of native multimodal intelligence. Hence, we introduce SenseNova-U1, a native unified multimodal paradigm built upon NEO-unify, in which understanding and generation evolve as synergistic views of a single underlying process. We launch two native unified variants, SenseNova-U1-8B-MoT and SenseNova-U1-A3B-MoT, built on dense (8B) and mixture-of-experts (30B-A3B) understanding baselines, respectively. Designed from first principles, they rival top-tier understanding-only VLMs across text understanding, vision-language perception, knowledge reasoning, agentic decision-making, and spatial intelligence. Meanwhile, they deliver strong semantic consistency and visual fidelity, excelling in conventional or knowledge-intensive any-to-image (X2I) synthesis, complex text-rich infographic generation, and interleaved vision-language generation, with or without think patterns. Beyond performance, we show detailed model design, data preprocessing, pre-/post-training, and inference strategies to support community research. Last but not least, preliminary evidence demonstrates that our models extend beyond perception and generation, performing strongly in vision-language-action (VLA) and world model (WM) scenarios. This points toward a broader roadmap where models do not translate between modalities, but think and act across them in a native manner. Multimodal AI is no longer about connecting separate systems, but about building a unified one and trusting the necessary capabilities to emerge from within.",
+      "venue": "arXiv",
+      "published": "2026-05-12T17:59:58Z",
+      "updated": "2026-05-12T17:59:58Z",
+      "url": "http://arxiv.org/abs/2605.12500v1",
+      "pdfUrl": "https://arxiv.org/pdf/2605.12500v1",
+      "categories": [
+        "cs.CV"
+      ],
+      "collectedAt": "2026-05-13T21:46:39.166Z",
+      "firstSeenAt": "2026-05-13T21:46:39.166Z",
+      "lastSeenAt": "2026-05-13T21:46:39.166Z",
+      "collectionType": "daily-latest",
+      "matchedQuery": "(all:agent OR all:agents OR all:agentic OR all:reasoning OR all:post-training OR all:alignment OR all:multimodal OR all:world-model) AND (all:LLM OR all:foundation OR all:language)",
+      "collectionTypes": [
+        "daily-latest"
+      ],
+      "matchedQueries": [
+        "(all:agent OR all:agents OR all:agentic OR all:reasoning OR all:post-training OR all:alignment OR all:multimodal OR all:world-model) AND (all:LLM OR all:foundation OR all:language)"
+      ],
+      "targetThemes": [],
+      "conferenceVenues": [],
+      "conferenceYears": [],
+      "recommendationTrack": "algorithm-trend",
+      "recommendationLabel": "算法趋势观察",
+      "recommendationScore": 50.6,
+      "relevanceReason": "命中 LLM/Agent/多模态/后训练等算法趋势主题",
+      "pdfStatus": "remote",
+      "workflow": {
+        "digestStatus": "pending",
+        "emailStatus": "waiting-digest",
+        "digestError": "命令行启用了 --no-ai",
+        "harnessVersion": "paper-reader-v1",
+        "collectStatus": "collected",
+        "pdfStatus": "remote"
+      },
+      "digest": {
+        "summaryZh": "AI 摘要未生成。原始摘要要点：Recent large vision-language models (VLMs) remain fundamentally constrained by a persistent dichotomy: understanding and generation are treated as distinct prob...",
         "motivationZh": "命令行启用了 --no-ai",
         "methodZh": "请配置 AI 后重新运行，以生成方法提炼。",
         "experimentsZh": "来源元数据未披露完整实验设置或结果。",
@@ -734,148 +1011,35 @@
       }
     },
     {
-      "id": "arxiv:2605.09947",
+      "id": "arxiv:2605.12484",
       "source": "arXiv",
-      "title": "The Free Particle--Oscillator--Inverted Oscillator Triangle: Conformal Bridges, Metaplectic Rotations and $\\mathfrak{osp}(1|2)$ Structure",
+      "title": "Learning, Fast and Slow: Towards LLMs That Adapt Continually",
       "authors": [
-        "Andrey Alcala",
-        "Mikhail S. Plyushchay"
+        "Rishabh Tiwari",
+        "Kusha Sareen",
+        "Lakshya A Agrawal",
+        "Joseph E. Gonzalez",
+        "Matei Zaharia",
+        "Kurt Keutzer",
+        "Inderjit S Dhillon",
+        "Rishabh Agarwal",
+        "Devvrit Khatri"
       ],
       "authorAffiliations": [],
       "affiliations": [],
-      "abstract": "We study the free particle (FP), the harmonic oscillator (HO) and the inverted harmonic oscillator (IHO) as parabolic, elliptic and hyperbolic realizations of one conformal/metaplectic structure, naturally extended to the superconformal algebra $\\mathfrak{osp}(1|2)$. Since the corresponding self-adjoint Hamiltonians have different spectra, the relations between them are not ordinary unitary equivalences. They are instead bridge transformations between different realizations of the same conformal module. We show that the zero-energy Jordan states of the FP are mapped to HO bound states and to the two IHO Gamow families, while FP plane waves are mapped to HO coherent states and, after light-cone Mellin decomposition, to the IHO scattering data. The direct FP--IHO bridge is a real metaplectic quarter-rotation, in contrast with the stationary FP--HO conformal bridge, which is nonunitary in the Schrödinger representation but becomes unitary as a change of polarization to the Fock--Bargmann representation. The IHO transmission and reflection amplitudes are obtained as Fourier--Mellin connection coefficients, equivalently as Weber/Stokes connection data. We also describe the hyperbolic Cayley--Niederer map for the time-dependent Schrödinger equation, the Wigner/separatrix picture, and the coherent-state and Bogoliubov-transformation aspects of the construction. Some physical applications of the hyperbolic sector are briefly discussed, including quantum Hall saddle scattering, Schwinger-type production, Rindler/Unruh and near-horizon Hawking settings, and Berry--Keating/inverse-square structures.",
+      "abstract": "Large language models (LLMs) are trained for downstream tasks by updating their parameters (e.g., via RL). However, updating parameters forces them to absorb task-specific information, which can result in catastrophic forgetting and loss of plasticity. In contrast, in-context learning with fixed LLM parameters can cheaply and rapidly adapt to task-specific requirements (e.g., prompt optimization), but cannot by itself typically match the performance gains available through updating LLM parameters. There is no good reason for restricting learning to being in-context or in-weights. Moreover, humans also likely learn at different time scales (e.g., System 1 vs 2). To this end, we introduce a fast-slow learning framework for LLMs, with model parameters as \"slow\" weights and optimized context as \"fast\" weights. These fast \"weights\" can learn from textual feedback to absorb the task-specific information, while allowing slow weights to stay closer to the base model and persist general reasoning behaviors. Fast-Slow Training (FST) is up to 3x more sample-efficient than only slow learning (RL) across reasoning tasks, while consistently reaching a higher performance asymptote. Moreover, FST-trained models remain closer to the base LLM (up to 70% less KL divergence), resulting in less catastrophic forgetting than RL-training. This reduced drift also preserves plasticity: after training on one task, FST trained models adapt more effectively to a subsequent task than parameter-only trained models. In continual learning scenarios, where task domains change on the fly, FST continues to acquire each new task while parameter-only RL stalls.",
       "venue": "arXiv",
-      "published": "2026-05-11T03:51:09Z",
-      "updated": "2026-05-11T03:51:09Z",
-      "url": "http://arxiv.org/abs/2605.09947v1",
-      "pdfUrl": "https://arxiv.org/pdf/2605.09947v1",
+      "published": "2026-05-12T17:58:20Z",
+      "updated": "2026-05-12T17:58:20Z",
+      "url": "http://arxiv.org/abs/2605.12484v1",
+      "pdfUrl": "https://arxiv.org/pdf/2605.12484v1",
       "categories": [
-        "hep-th"
+        "cs.LG",
+        "cs.AI"
       ],
-      "collectedAt": "2026-05-12T21:41:28.259Z",
-      "firstSeenAt": "2026-05-12T21:41:28.259Z",
-      "lastSeenAt": "2026-05-12T21:41:28.259Z",
-      "collectionType": "daily-latest",
-      "matchedQuery": "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)",
-      "collectionTypes": [
-        "daily-latest"
-      ],
-      "matchedQueries": [
-        "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)"
-      ],
-      "targetThemes": [],
-      "conferenceVenues": [],
-      "conferenceYears": [],
-      "recommendationTrack": "hardware-primary",
-      "recommendationLabel": "硬件体系结构主线",
-      "recommendationScore": 147,
-      "relevanceReason": "命中 AI 处理器、体系结构、量化、训推系统或内存/缓存优化主题",
-      "pdfStatus": "remote",
-      "workflow": {
-        "digestStatus": "pending",
-        "emailStatus": "waiting-digest",
-        "digestError": "命令行启用了 --no-ai",
-        "harnessVersion": "paper-reader-v1",
-        "collectStatus": "collected",
-        "pdfStatus": "remote"
-      },
-      "digest": {
-        "summaryZh": "AI 摘要未生成。原始摘要要点：We study the free particle (FP), the harmonic oscillator (HO) and the inverted harmonic oscillator (IHO) as parabolic, elliptic and hyperbolic realizations of o...",
-        "motivationZh": "命令行启用了 --no-ai",
-        "methodZh": "请配置 AI 后重新运行，以生成方法提炼。",
-        "experimentsZh": "来源元数据未披露完整实验设置或结果。",
-        "affiliationsZh": "未在 DBLP/arXiv 元数据中提供。",
-        "tags": [
-          "hep-th"
-        ],
-        "importance": 3,
-        "researchFitZh": "AI harness 尚未完成分析，无法判断与用户研究方向的具体关系。",
-        "hardwareRelevance": 1,
-        "algorithmRelevance": 1,
-        "systemRelevance": 1,
-        "readPriority": "archive",
-        "whyReadZh": "需要完成 motivation、method 和实验结果分析后再判断是否值得深读。",
-        "limitationsZh": "命令行启用了 --no-ai",
-        "motivationDetail": {
-          "problemZh": "harness 未完成分析。",
-          "gapZh": "harness 未完成分析。",
-          "whyImportantZh": "harness 未完成分析。",
-          "userRelevanceZh": "harness 未完成分析。",
-          "evidence": "not analyzed"
-        },
-        "methodDetail": {
-          "coreIdeaZh": "harness 未完成分析。",
-          "componentsZh": [
-            "未分析"
-          ],
-          "hardwareSystemDetailZh": "harness 未完成分析。",
-          "noveltyZh": "harness 未完成分析。",
-          "evidence": "not analyzed"
-        },
-        "experimentDetail": {
-          "setupZh": "harness 未完成分析。",
-          "baselinesZh": "harness 未完成分析。",
-          "metricsZh": [
-            "未分析"
-          ],
-          "mainResultsZh": "harness 未完成分析。",
-          "limitationsZh": "harness 未完成分析。",
-          "evidence": "not analyzed"
-        },
-        "evidence": {
-          "usedSources": [
-            "metadata"
-          ],
-          "affiliationEvidence": "",
-          "experimentEvidence": "",
-          "missingFields": [
-            "motivation",
-            "method",
-            "experiments"
-          ]
-        },
-        "confidence": {
-          "summary": 0.2,
-          "motivation": 0,
-          "method": 0,
-          "experiments": 0,
-          "affiliations": 0
-        }
-      }
-    },
-    {
-      "id": "arxiv:2605.10921",
-      "source": "arXiv",
-      "title": "RoboMemArena: A Comprehensive and Challenging Robotic Memory Benchmark",
-      "authors": [
-        "Huashuo Lei",
-        "Wenxuan Song",
-        "Huarui Zhang",
-        "Jieyuan Pei",
-        "Jiayi Chen",
-        "Haodong Yan",
-        "Han Zhao",
-        "Pengxiang Ding",
-        "Zhipeng Zhang",
-        "Lida Huang",
-        "Donglin Wang",
-        "Yan Wang",
-        "Haoang Li"
-      ],
-      "authorAffiliations": [],
-      "affiliations": [],
-      "abstract": "Memory is a critical component of robotic intelligence, as robots must rely on past observations and actions to accomplish long-horizon tasks in partially observable environments. However, existing robotic memory benchmarks still lack multimodal annotations for memory formation, provide limited task coverage and structural complexity, and remain restricted to simulation without real-world evaluation. We address this gap with RoboMemArena, a large-scale benchmark of 26 tasks, with average trajectory lengths exceeding 1,000 steps per task and 68.9% of subtasks being memory-dependent. The generation pipeline leverages a vision-language model (VLM) to design and compose subtasks, generates full trajectories through atomic functions, and provides memory-related annotations, including subtask instructions and native keyframe annotations, while paired real-world memory tasks support physical evaluation. We further design PrediMem, a dual-system VLA in which a high-level VLM planner manages a memory bank with recent and keyframe buffers and uses a predictive coding head to improve sensitivity to task dynamics. Extensive experiments on RoboMemArena show that PrediMem outperforms all baselines and provides insights into memory management, model architecture, and scaling laws for complex memory systems.",
-      "venue": "arXiv",
-      "published": "2026-05-11T17:54:49Z",
-      "updated": "2026-05-11T17:54:49Z",
-      "url": "http://arxiv.org/abs/2605.10921v1",
-      "pdfUrl": "https://arxiv.org/pdf/2605.10921v1",
-      "categories": [
-        "cs.RO"
-      ],
-      "collectedAt": "2026-05-12T21:41:30.499Z",
-      "firstSeenAt": "2026-05-12T21:41:30.499Z",
-      "lastSeenAt": "2026-05-12T21:41:30.499Z",
+      "collectedAt": "2026-05-13T21:46:39.167Z",
+      "firstSeenAt": "2026-05-13T21:46:39.167Z",
+      "lastSeenAt": "2026-05-13T21:46:39.167Z",
       "collectionType": "daily-latest",
       "matchedQuery": "(all:agent OR all:agents OR all:agentic OR all:reasoning OR all:post-training OR all:alignment OR all:multimodal OR all:world-model) AND (all:LLM OR all:foundation OR all:language)",
       "collectionTypes": [
@@ -889,7 +1053,7 @@
       "conferenceYears": [],
       "recommendationTrack": "algorithm-trend",
       "recommendationLabel": "算法趋势观察",
-      "recommendationScore": 42,
+      "recommendationScore": 37.2,
       "relevanceReason": "命中 LLM/Agent/多模态/后训练等算法趋势主题",
       "pdfStatus": "remote",
       "workflow": {
@@ -901,128 +1065,14 @@
         "pdfStatus": "remote"
       },
       "digest": {
-        "summaryZh": "AI 摘要未生成。原始摘要要点：Memory is a critical component of robotic intelligence, as robots must rely on past observations and actions to accomplish long-horizon tasks in partially obser...",
+        "summaryZh": "AI 摘要未生成。原始摘要要点：Large language models (LLMs) are trained for downstream tasks by updating their parameters (e.g., via RL). However, updating parameters forces them to absorb ta...",
         "motivationZh": "命令行启用了 --no-ai",
         "methodZh": "请配置 AI 后重新运行，以生成方法提炼。",
         "experimentsZh": "来源元数据未披露完整实验设置或结果。",
         "affiliationsZh": "未在 DBLP/arXiv 元数据中提供。",
         "tags": [
-          "cs.RO"
-        ],
-        "importance": 3,
-        "researchFitZh": "AI harness 尚未完成分析，无法判断与用户研究方向的具体关系。",
-        "hardwareRelevance": 1,
-        "algorithmRelevance": 1,
-        "systemRelevance": 1,
-        "readPriority": "archive",
-        "whyReadZh": "需要完成 motivation、method 和实验结果分析后再判断是否值得深读。",
-        "limitationsZh": "命令行启用了 --no-ai",
-        "motivationDetail": {
-          "problemZh": "harness 未完成分析。",
-          "gapZh": "harness 未完成分析。",
-          "whyImportantZh": "harness 未完成分析。",
-          "userRelevanceZh": "harness 未完成分析。",
-          "evidence": "not analyzed"
-        },
-        "methodDetail": {
-          "coreIdeaZh": "harness 未完成分析。",
-          "componentsZh": [
-            "未分析"
-          ],
-          "hardwareSystemDetailZh": "harness 未完成分析。",
-          "noveltyZh": "harness 未完成分析。",
-          "evidence": "not analyzed"
-        },
-        "experimentDetail": {
-          "setupZh": "harness 未完成分析。",
-          "baselinesZh": "harness 未完成分析。",
-          "metricsZh": [
-            "未分析"
-          ],
-          "mainResultsZh": "harness 未完成分析。",
-          "limitationsZh": "harness 未完成分析。",
-          "evidence": "not analyzed"
-        },
-        "evidence": {
-          "usedSources": [
-            "metadata"
-          ],
-          "affiliationEvidence": "",
-          "experimentEvidence": "",
-          "missingFields": [
-            "motivation",
-            "method",
-            "experiments"
-          ]
-        },
-        "confidence": {
-          "summary": 0.2,
-          "motivation": 0,
-          "method": 0,
-          "experiments": 0,
-          "affiliations": 0
-        }
-      }
-    },
-    {
-      "id": "arxiv:2605.10925",
-      "source": "arXiv",
-      "title": "PriorVLA: Prior-Preserving Adaptation for Vision-Language-Action Models",
-      "authors": [
-        "Xinyu Guo",
-        "Bin Xie",
-        "Wei Chai",
-        "Xianchi Deng",
-        "Tiancai Wang",
-        "Zhengxing Wu",
-        "Xingyu Chen"
-      ],
-      "authorAffiliations": [],
-      "affiliations": [],
-      "abstract": "Large-scale pretraining has made Vision-Language-Action (VLA) models promising foundations for generalist robot manipulation, yet adapting them to downstream tasks remains necessary. However, the common practice of full fine-tuning treats pretraining as initialization and can shift broad priors toward narrow training-distribution patterns. We propose PriorVLA, a novel framework that preserves pretrained priors and learns to leverage them for effective adaptation. PriorVLA keeps a frozen Prior Expert as a read-only prior source and trains an Adaptation Expert for downstream specialization. Expert Queries capture scene priors from the pretrained VLM and motor priors from the Prior Expert, integrating both into the Adaptation Expert to guide adaptation. Together, PriorVLA updates only 25% of the parameters updated by full fine-tuning. Across RoboTwin 2.0, LIBERO, and real-world tasks, PriorVLA achieves stronger overall performance than full fine-tuning and state-of-the-art VLA baselines, with the largest gains under out-of-distribution (OOD) and few-shot settings. PriorVLA improves over pi0.5 by 11 points on RoboTwin 2.0-Hard and achieves 99.1% average success on LIBERO. Across eight real-world tasks and two embodiments, PriorVLA reaches 81% in-distribution (ID) and 57% OOD success with standard data. With only 10 demonstrations per task, PriorVLA reaches 48% ID and 32% OOD success, surpassing pi0.5 by 24 and 22 points, respectively.",
-      "venue": "arXiv",
-      "published": "2026-05-11T17:56:02Z",
-      "updated": "2026-05-11T17:56:02Z",
-      "url": "http://arxiv.org/abs/2605.10925v1",
-      "pdfUrl": "https://arxiv.org/pdf/2605.10925v1",
-      "categories": [
-        "cs.RO"
-      ],
-      "collectedAt": "2026-05-12T21:41:30.499Z",
-      "firstSeenAt": "2026-05-12T21:41:30.499Z",
-      "lastSeenAt": "2026-05-12T21:41:30.499Z",
-      "collectionType": "daily-latest",
-      "matchedQuery": "(all:agent OR all:agents OR all:agentic OR all:reasoning OR all:post-training OR all:alignment OR all:multimodal OR all:world-model) AND (all:LLM OR all:foundation OR all:language)",
-      "collectionTypes": [
-        "daily-latest"
-      ],
-      "matchedQueries": [
-        "(all:agent OR all:agents OR all:agentic OR all:reasoning OR all:post-training OR all:alignment OR all:multimodal OR all:world-model) AND (all:LLM OR all:foundation OR all:language)"
-      ],
-      "targetThemes": [],
-      "conferenceVenues": [],
-      "conferenceYears": [],
-      "recommendationTrack": "algorithm-trend",
-      "recommendationLabel": "算法趋势观察",
-      "recommendationScore": 41.8,
-      "relevanceReason": "命中 LLM/Agent/多模态/后训练等算法趋势主题",
-      "pdfStatus": "remote",
-      "workflow": {
-        "digestStatus": "pending",
-        "emailStatus": "waiting-digest",
-        "digestError": "命令行启用了 --no-ai",
-        "harnessVersion": "paper-reader-v1",
-        "collectStatus": "collected",
-        "pdfStatus": "remote"
-      },
-      "digest": {
-        "summaryZh": "AI 摘要未生成。原始摘要要点：Large-scale pretraining has made Vision-Language-Action (VLA) models promising foundations for generalist robot manipulation, yet adapting them to downstream ta...",
-        "motivationZh": "命令行启用了 --no-ai",
-        "methodZh": "请配置 AI 后重新运行，以生成方法提炼。",
-        "experimentsZh": "来源元数据未披露完整实验设置或结果。",
-        "affiliationsZh": "未在 DBLP/arXiv 元数据中提供。",
-        "tags": [
-          "cs.RO"
+          "cs.LG",
+          "cs.AI"
         ],
         "importance": 3,
         "researchFitZh": "AI harness 尚未完成分析，无法判断与用户研究方向的具体关系。",
