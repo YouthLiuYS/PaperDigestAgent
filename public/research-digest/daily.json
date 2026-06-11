@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-06-10T22:25:32.017Z",
-  "digestDate": "2026-06-11",
+  "generatedAt": "2026-06-11T22:22:09.962Z",
+  "digestDate": "2026-06-12",
   "kind": "daily-new",
   "timezone": "Asia/Shanghai",
   "siteUrl": "https://YouthLiuYS.github.io/PaperDigestAgent/",
@@ -126,7 +126,7 @@
     "dailyCandidates": 8,
     "conferenceCandidates": 0,
     "backfillCandidates": 0,
-    "rawCandidates": 64,
+    "rawCandidates": 60,
     "newlyAdded": 8,
     "pendingDigest": 8,
     "pendingEmail": 0,
@@ -141,38 +141,147 @@
   },
   "papers": [
     {
-      "id": "arxiv:2606.10706",
+      "id": "arxiv:2606.11690",
       "source": "arXiv",
-      "title": "Unifying Data, Memory, and Compute Efficiency in LLM training: A Survey",
+      "title": "Beyond Per-Token Pricing: A Concurrency-Aware Methodology for LLM Infrastructure Cost Estimation",
       "authors": [
-        "Vanessa Schmidt",
-        "Huy Hoang Nguyen",
-        "Cédric Jung",
-        "Shirin Salehi",
-        "Anke Schmeink"
+        "Chitral Patil"
       ],
       "authorAffiliations": [],
       "affiliations": [],
-      "abstract": "Resource constraints increasingly determine what can be trained, fine-tuned, and deployed in large language models (LLMs), yet efficiency is often studied through isolated techniques rather than as an interacting system of limits. This survey adopts a constraint-centric perspective and organizes recent progress around three coupled bottlenecks: data efficiency (what to train on), memory efficiency (how to fit training), and compute budget awareness (when and where to spend FLOPs). On the data axis, we review selection and pruning methods that maximize learning per token, ranging from scalable proxy signals based on learning dynamics to gradient- and influence-based scoring, as well as difficulty-aware and curriculum-style strategies. We highlight emerging evidence that different notions of good data dominate in different regimes, implying that optimal subsets depend on the task objective and resource budget rather than being universal. On the systems side, we show that GPU memory, not raw compute, is often the dominant bottleneck in fine-tuning, and that effective scaling requires jointly reducing weight storage, optimizer states, and activation memory rather than optimizing any single component in isolation. Beyond memory, we frame training and inference as compute-governed processes in which optimization, data selection, and decoding must explicitly account for finite FLOP budgets. We review evidence for compute-optimal allocation and stopping rules, where computation should be halted or reallocated once marginal performance gains fall below a budget-dependent threshold. Together, these results unify compute-aware data selection, scaling laws, and adaptive inference under a common principle of resource-conditioned decision-making.",
+      "abstract": "Every public LLM cost calculator we surveyed treats GPU utilization as a fixed input -- entered by the user, baked in as a preset, or silently assumed at 100% -- never measured against the operator's actual load. We show that this assumption is the dominant source of error: on identical H100 hardware, effective cost spans \\$0.21 to \\$15.25 per million output tokens, an underutilization penalty of 2.5-24x across low-to-moderate enterprise loads (1-10 rps) and up to 36.3x near idle -- driven by one operator-controlled variable, offered request rate lambda, which sets in-flight concurrency via Little's Law and which no open-source calculator exposes. Because calculators take utilization as a user-supplied input, any utilization-naive estimate understates true cost by exactly 1/U, systematically mispricing self-hosting -- most severely over-selling it for low-traffic workloads. We propose a measurement methodology that parameterizes the relationship as C_eff = f(H, M, Q, lambda, L), validate it with 42 benchmarks across dense, ultra-sparse MoE, and sparse MoE models, and release vllm-cost-meter, an open-source cost meter that attaches to a live vLLM server and reports real \\$/M-tokens against the operator's own traffic. We further show that FP8 quantization benefits the MoE architectures we tested roughly 2.2-2.4x more than the dense model (+69 to +74% vs. +31% peak throughput; n=3, broader validation needed), and our data are consistent with active parameter count, not total model size, being a primary predictor of saturation economics. To rule out single-hardware confounding we repeat the core sweep on A100 80GB PCIe (56 runs): the load-driven spread reproduces at 7.0-11.4x, the active-parameters ordering survives at FP8, and the dense-FP8 advantage inverts on silicon without native FP8 tensor cores -- a hardware-conditional caveat the framework already accommodates.",
       "venue": "arXiv",
-      "published": "2026-06-09T11:09:58Z",
-      "updated": "2026-06-09T11:09:58Z",
-      "url": "http://arxiv.org/abs/2606.10706v1",
-      "pdfUrl": "https://arxiv.org/pdf/2606.10706v1",
+      "published": "2026-06-10T06:07:24Z",
+      "updated": "2026-06-10T06:07:24Z",
+      "url": "http://arxiv.org/abs/2606.11690v1",
+      "pdfUrl": "https://arxiv.org/pdf/2606.11690v1",
       "categories": [
-        "cs.LG",
-        "cs.AI"
+        "cs.DC",
+        "cs.PF"
       ],
-      "collectedAt": "2026-06-10T22:20:59.079Z",
-      "firstSeenAt": "2026-06-10T22:20:59.079Z",
-      "lastSeenAt": "2026-06-10T22:20:59.079Z",
+      "collectedAt": "2026-06-11T22:17:34.116Z",
+      "firstSeenAt": "2026-06-11T22:17:34.116Z",
+      "lastSeenAt": "2026-06-11T22:17:34.116Z",
       "collectionType": "daily-latest",
-      "matchedQuery": "(all:quantization OR all:compression OR all:pruning OR all:sparsity OR all:low-bit) AND (all:LLM OR all:transformer OR all:language) AND (all:hardware OR all:accelerator OR all:inference OR all:serving OR all:processor)",
+      "matchedQuery": "(cat:cs.AR OR cat:cs.DC OR cat:cs.PF) AND (all:LLM OR all:transformer OR all:foundation OR all:language) AND (all:accelerator OR all:processor OR all:architecture OR all:hardware OR all:system OR all:serving OR all:training OR all:inference OR all:cache)",
       "collectionTypes": [
         "daily-latest"
       ],
       "matchedQueries": [
+        "(cat:cs.AR OR cat:cs.DC OR cat:cs.PF) AND (all:LLM OR all:transformer OR all:foundation OR all:language) AND (all:accelerator OR all:processor OR all:architecture OR all:hardware OR all:system OR all:serving OR all:training OR all:inference OR all:cache)",
         "(all:quantization OR all:compression OR all:pruning OR all:sparsity OR all:low-bit) AND (all:LLM OR all:transformer OR all:language) AND (all:hardware OR all:accelerator OR all:inference OR all:serving OR all:processor)",
+        "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)"
+      ],
+      "targetThemes": [],
+      "conferenceVenues": [],
+      "conferenceYears": [],
+      "digest": {
+        "summaryZh": "AI 摘要未生成。原始摘要要点：Every public LLM cost calculator we surveyed treats GPU utilization as a fixed input -- entered by the user, baked in as a preset, or silently assumed at 100% -...",
+        "motivationZh": "命令行启用了 --no-ai",
+        "methodZh": "请配置 AI 后重新运行，以生成方法提炼。",
+        "experimentsZh": "来源元数据未披露完整实验设置或结果。",
+        "affiliationsZh": "未在 DBLP/arXiv 元数据中提供。",
+        "tags": [
+          "cs.DC",
+          "cs.PF"
+        ],
+        "importance": 3,
+        "researchFitZh": "AI harness 尚未完成分析，无法判断与用户研究方向的具体关系。",
+        "hardwareRelevance": 1,
+        "algorithmRelevance": 1,
+        "systemRelevance": 1,
+        "readPriority": "archive",
+        "whyReadZh": "需要完成 motivation、method 和实验结果分析后再判断是否值得深读。",
+        "limitationsZh": "命令行启用了 --no-ai",
+        "motivationDetail": {
+          "problemZh": "harness 未完成分析。",
+          "gapZh": "harness 未完成分析。",
+          "whyImportantZh": "harness 未完成分析。",
+          "userRelevanceZh": "harness 未完成分析。",
+          "evidence": "not analyzed"
+        },
+        "methodDetail": {
+          "coreIdeaZh": "harness 未完成分析。",
+          "componentsZh": [
+            "未分析"
+          ],
+          "hardwareSystemDetailZh": "harness 未完成分析。",
+          "noveltyZh": "harness 未完成分析。",
+          "evidence": "not analyzed"
+        },
+        "experimentDetail": {
+          "setupZh": "harness 未完成分析。",
+          "baselinesZh": "harness 未完成分析。",
+          "metricsZh": [
+            "未分析"
+          ],
+          "mainResultsZh": "harness 未完成分析。",
+          "limitationsZh": "harness 未完成分析。",
+          "evidence": "not analyzed"
+        },
+        "evidence": {
+          "usedSources": [
+            "metadata"
+          ],
+          "affiliationEvidence": "",
+          "experimentEvidence": "",
+          "missingFields": [
+            "motivation",
+            "method",
+            "experiments"
+          ]
+        },
+        "confidence": {
+          "summary": 0.2,
+          "motivation": 0,
+          "method": 0,
+          "experiments": 0,
+          "affiliations": 0
+        }
+      },
+      "recommendationTrack": "hardware-primary",
+      "recommendationLabel": "硬件体系结构主线",
+      "recommendationScore": 219,
+      "relevanceReason": "命中 AI 处理器、体系结构、量化、训推系统或内存/缓存优化主题",
+      "pdfStatus": "remote",
+      "workflow": {
+        "digestStatus": "pending",
+        "emailStatus": "waiting-digest",
+        "digestError": "命令行启用了 --no-ai",
+        "harnessVersion": "paper-reader-v1",
+        "collectStatus": "collected",
+        "pdfStatus": "remote"
+      }
+    },
+    {
+      "id": "arxiv:2606.11716",
+      "source": "arXiv",
+      "title": "A Fast Locality Simulator for GEMM Design-Space Exploration on Multi-Chiplet GPUs",
+      "authors": [
+        "Euijun Chung",
+        "Hyesoon Kim"
+      ],
+      "authorAffiliations": [],
+      "affiliations": [],
+      "abstract": "Multi-chiplet GPUs split memory into local and remote HBM regions across a silicon interposer, and reducing the remote HBM traffic is crucial for the performance and energy efficiency of multi-chiplet GPUs. For general matrix multiplication (GEMM), the dominant operator in large language models (LLMs), the resulting inter-chiplet traffic depends strongly on kernel choices such as operand layout, CTA traversal order, and data placement, and the optimal strategy to minimize remote accesses is nontrivial. We present a fast, functional, tile-level locality simulator that models CTA scheduling, per-chiplet L2 caches, and local/remote HBM accesses to evaluate a full-size LLM GEMM configuration. Across representative LLM GEMMs, the simulator shows that remote traffic varies by up to 90x across the design space for the same GEMM dimensions. Moreover, using the simulator as feedback, an agentic AI discovers that a 2D block-swizzle CTA traversal reduces remote traffic over the best 1D traversal by up to 5.1x under round-robin placement, identifying CTA traversal order as a first-order, GEMM-dependent design knob for inter-chiplet traffic.",
+      "venue": "arXiv",
+      "published": "2026-06-10T06:43:39Z",
+      "updated": "2026-06-10T06:43:39Z",
+      "url": "http://arxiv.org/abs/2606.11716v1",
+      "pdfUrl": "https://arxiv.org/pdf/2606.11716v1",
+      "categories": [
+        "cs.AR"
+      ],
+      "collectedAt": "2026-06-11T22:17:34.116Z",
+      "firstSeenAt": "2026-06-11T22:17:34.116Z",
+      "lastSeenAt": "2026-06-11T22:17:34.116Z",
+      "collectionType": "daily-latest",
+      "matchedQuery": "(cat:cs.AR OR cat:cs.DC OR cat:cs.PF) AND (all:LLM OR all:transformer OR all:foundation OR all:language) AND (all:accelerator OR all:processor OR all:architecture OR all:hardware OR all:system OR all:serving OR all:training OR all:inference OR all:cache)",
+      "collectionTypes": [
+        "daily-latest"
+      ],
+      "matchedQueries": [
+        "(cat:cs.AR OR cat:cs.DC OR cat:cs.PF) AND (all:LLM OR all:transformer OR all:foundation OR all:language) AND (all:accelerator OR all:processor OR all:architecture OR all:hardware OR all:system OR all:serving OR all:training OR all:inference OR all:cache)",
         "(all:prefill OR all:decoding OR all:KV OR all:cache OR all:attention) AND (all:accelerator OR all:kernel OR all:compiler OR all:serving OR all:memory) AND (all:LLM OR all:transformer)",
         "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)"
       ],
@@ -180,14 +289,13 @@
       "conferenceVenues": [],
       "conferenceYears": [],
       "digest": {
-        "summaryZh": "AI 摘要未生成。原始摘要要点：Resource constraints increasingly determine what can be trained, fine-tuned, and deployed in large language models (LLMs), yet efficiency is often studied throu...",
+        "summaryZh": "AI 摘要未生成。原始摘要要点：Multi-chiplet GPUs split memory into local and remote HBM regions across a silicon interposer, and reducing the remote HBM traffic is crucial for the performanc...",
         "motivationZh": "命令行启用了 --no-ai",
         "methodZh": "请配置 AI 后重新运行，以生成方法提炼。",
         "experimentsZh": "来源元数据未披露完整实验设置或结果。",
         "affiliationsZh": "未在 DBLP/arXiv 元数据中提供。",
         "tags": [
-          "cs.LG",
-          "cs.AI"
+          "cs.AR"
         ],
         "importance": 3,
         "researchFitZh": "AI harness 尚未完成分析，无法判断与用户研究方向的具体关系。",
@@ -245,7 +353,7 @@
       },
       "recommendationTrack": "hardware-primary",
       "recommendationLabel": "硬件体系结构主线",
-      "recommendationScore": 208,
+      "recommendationScore": 200.25,
       "relevanceReason": "命中 AI 处理器、体系结构、量化、训推系统或内存/缓存优化主题",
       "pdfStatus": "remote",
       "workflow": {
@@ -258,63 +366,48 @@
       }
     },
     {
-      "id": "arxiv:2606.11050",
+      "id": "arxiv:2606.11718",
       "source": "arXiv",
-      "title": "LLM-Mediated Demand Response Coordination in Smart Microgrids",
+      "title": "Making Locality-aware GEMM Compatible with Page-Granularity Placement on Chiplet GPUs",
       "authors": [
-        "J. de Curtò",
-        "I. de Zarzà"
+        "Euijun Chung",
+        "Jae Hyung Ju",
+        "Hyesoon Kim"
       ],
       "authorAffiliations": [],
       "affiliations": [],
-      "abstract": "Effective demand response in smart microgrids requires prosumers to cooperate voluntarily under strategic self-interest, a coordination problem structurally equivalent to a repeated Prisoner's Dilemma on a social network. This paper presents a multi-agent simulation in which a Large Language Model (LLM) Influence Compiler issues structured demand-response directives to a population of heterogeneous prosumer agents, each governed by a hybrid decision architecture combining game-theoretic base probability (derived from payoff history, neighbour imitation, and exploitation memory) with LLM narrative evaluation of incoming coordination signals. The hybrid architecture resolves a key methodological challenge: LLMs aligned via Reinforcement Learning from Human Feedback (RLHF) exhibit strong cooperation bias when used as direct decision-makers, producing flat dynamics regardless of grid conditions. By separating strategic reasoning from grounded narrative evaluation, the model generates realistic prosumer behaviour across six personality archetypes, with baseline cooperation near 50% and clear differentiation under influence. Compiled structured directives achieve 33.3% demand-curtailment cooperation versus 27.0% for unstructured messaging and 28.0% for a no-intervention baseline ($Δ_\\mathrm{comp} = +0.063$), with the advantage preserved across both grounded and idealized agent substrates ($Δ= +0.083$) and across all resistance levels ($R = 0.1$ to $0.7$). Hub-targeted dissemination via high-centrality network nodes outperforms peripheral or random targeting, confirming that grid topology provides mechanistic amplification independent of message content. These results suggest that structured LLM compilation, grounded agent reasoning, and network-aware targeting are complementary design principles for scalable, interpretable demand-response coordination in smart-city energy systems.",
+      "abstract": "Multi-chiplet GPUs scale compute throughput and high-bandwidth memory (HBM) capacity, but their non-uniform memory system makes locality between chiplets and their data critical to the GPU's performance and energy efficiency. Locality-aware scheduling and data placement identify which data should reside near each chiplet. However, in general matrix multiplication (GEMM), locality-aware data placement often becomes incompatible with a fixed page-granularity data interleaving, since the optimal granularity for mapping data across chiplets varies widely across workloads. We propose Chiplet-Contiguous Layout, a global memory layout that stores chiplet-local data contiguously. Chiplet-Contiguous Layout enables locality-aware placement compatible with page-granularity placement across diverse large language model (LLM) GEMM shapes, without changes to the operating system or hardware. On representative LLM inference and training GEMMs from Qwen 3 30B and Llama 3.1 70B, Chiplet-Contiguous Layout on average reduces remote HBM traffic by 24.7x on Qwen and 19.2x on Llama over 4KB interleaving, and by 4.1x and 2.1x over coarse locality-aware placement.",
       "venue": "arXiv",
-      "published": "2026-06-09T16:16:06Z",
-      "updated": "2026-06-09T16:16:06Z",
-      "url": "http://arxiv.org/abs/2606.11050v1",
-      "pdfUrl": "https://arxiv.org/pdf/2606.11050v1",
+      "published": "2026-06-10T06:47:27Z",
+      "updated": "2026-06-10T06:47:27Z",
+      "url": "http://arxiv.org/abs/2606.11718v1",
+      "pdfUrl": "https://arxiv.org/pdf/2606.11718v1",
       "categories": [
-        "cs.MA",
-        "cs.GT",
-        "eess.SY"
+        "cs.AR"
       ],
-      "collectedAt": "2026-06-10T22:21:02.482Z",
-      "firstSeenAt": "2026-06-10T22:21:02.482Z",
-      "lastSeenAt": "2026-06-10T22:21:02.482Z",
+      "collectedAt": "2026-06-11T22:17:34.116Z",
+      "firstSeenAt": "2026-06-11T22:17:34.116Z",
+      "lastSeenAt": "2026-06-11T22:17:34.116Z",
       "collectionType": "daily-latest",
-      "matchedQuery": "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)",
+      "matchedQuery": "(cat:cs.AR OR cat:cs.DC OR cat:cs.PF) AND (all:LLM OR all:transformer OR all:foundation OR all:language) AND (all:accelerator OR all:processor OR all:architecture OR all:hardware OR all:system OR all:serving OR all:training OR all:inference OR all:cache)",
       "collectionTypes": [
         "daily-latest"
       ],
       "matchedQueries": [
+        "(cat:cs.AR OR cat:cs.DC OR cat:cs.PF) AND (all:LLM OR all:transformer OR all:foundation OR all:language) AND (all:accelerator OR all:processor OR all:architecture OR all:hardware OR all:system OR all:serving OR all:training OR all:inference OR all:cache)",
         "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)"
       ],
       "targetThemes": [],
       "conferenceVenues": [],
       "conferenceYears": [],
-      "recommendationTrack": "hardware-primary",
-      "recommendationLabel": "硬件体系结构主线",
-      "recommendationScore": 174,
-      "relevanceReason": "命中 AI 处理器、体系结构、量化、训推系统或内存/缓存优化主题",
-      "pdfStatus": "remote",
-      "workflow": {
-        "digestStatus": "pending",
-        "emailStatus": "waiting-digest",
-        "digestError": "命令行启用了 --no-ai",
-        "harnessVersion": "paper-reader-v1",
-        "collectStatus": "collected",
-        "pdfStatus": "remote"
-      },
       "digest": {
-        "summaryZh": "AI 摘要未生成。原始摘要要点：Effective demand response in smart microgrids requires prosumers to cooperate voluntarily under strategic self-interest, a coordination problem structurally equ...",
+        "summaryZh": "AI 摘要未生成。原始摘要要点：Multi-chiplet GPUs scale compute throughput and high-bandwidth memory (HBM) capacity, but their non-uniform memory system makes locality between chiplets and th...",
         "motivationZh": "命令行启用了 --no-ai",
         "methodZh": "请配置 AI 后重新运行，以生成方法提炼。",
         "experimentsZh": "来源元数据未披露完整实验设置或结果。",
         "affiliationsZh": "未在 DBLP/arXiv 元数据中提供。",
         "tags": [
-          "cs.MA",
-          "cs.GT",
-          "eess.SY"
+          "cs.AR"
         ],
         "importance": 3,
         "researchFitZh": "AI harness 尚未完成分析，无法判断与用户研究方向的具体关系。",
@@ -369,45 +462,10 @@
           "experiments": 0,
           "affiliations": 0
         }
-      }
-    },
-    {
-      "id": "arxiv:2606.11015",
-      "source": "arXiv",
-      "title": "Structure from Reasoning, Numbers from Search: On-Premise Open LLMs as Structural Priors for Coupled MIMO Controller Tuning",
-      "authors": [
-        "Jiaxuan Chen",
-        "Haonan Li",
-        "Yang Shu"
-      ],
-      "authorAffiliations": [],
-      "affiliations": [],
-      "abstract": "Tuning controllers for strongly coupled multi-input multi-output (MIMO) industrial processes is hard: decentralized classical auto-tuning ignores loop interaction, and local numerical optimization from natural initializations stalls in the resulting non-convex cost landscape. We ask whether on-premise open-source large language models (LLMs), which keep data on-site and need no plant model, can help. On a single-loop CSTR, classical relay-feedback tuning (IAE 0.106, near the 0.102 optimum) beats an LLM tuner (0.162): for simple loops the LLM adds nothing. The picture inverts on a strongly coupled quadruple-tank with conflicting set-points, scored by a penalized cost J = IAE + lambda*TV(u) that rewards tracking without chattering actuators. There, naive relay tuning (J ~ 28.6) and naive LLM tuning (29.7) are no better than open loop (22.7), and a local optimizer from balanced starts fails in 10/10 runs. A scaffolded open LLM instead reasons about the coupling, proposes the counter-intuitive asymmetric structure, and reaches J ~ 16.9 +/- 0.2 from any start; refining it with a classical optimizer attains the smooth global optimum (J ~ 12.0, 10/10 vs. 0/10), which even applies a non-obvious negative integral correction decentralized tuning cannot. A global optimizer (differential evolution) also reaches this optimum, so the LLM is not the only route; its advantage is sample efficiency and interpretability: a usable controller in 18 evaluations (where the global optimizer is worse than open loop) plus a stated rationale. This edge grows with dimension, reaching ~6x fewer evaluations on a 3x3 plant. The behaviour generalizes across four open models, and on a benign plant the LLM offers no advantage, sharpening the boundary. We contribute a reproducible benchmark delimiting when open LLMs help in control tuning: not as optimizers, but as a sample-efficient, interpretable structural prior.",
-      "venue": "arXiv",
-      "published": "2026-06-09T15:53:40Z",
-      "updated": "2026-06-09T15:53:40Z",
-      "url": "http://arxiv.org/abs/2606.11015v1",
-      "pdfUrl": "https://arxiv.org/pdf/2606.11015v1",
-      "categories": [
-        "cs.AI"
-      ],
-      "collectedAt": "2026-06-10T22:21:02.482Z",
-      "firstSeenAt": "2026-06-10T22:21:02.482Z",
-      "lastSeenAt": "2026-06-10T22:21:02.482Z",
-      "collectionType": "daily-latest",
-      "matchedQuery": "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)",
-      "collectionTypes": [
-        "daily-latest"
-      ],
-      "matchedQueries": [
-        "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)"
-      ],
-      "targetThemes": [],
-      "conferenceVenues": [],
-      "conferenceYears": [],
+      },
       "recommendationTrack": "hardware-primary",
       "recommendationLabel": "硬件体系结构主线",
-      "recommendationScore": 168.75,
+      "recommendationScore": 186,
       "relevanceReason": "命中 AI 处理器、体系结构、量化、训推系统或内存/缓存优化主题",
       "pdfStatus": "remote",
       "workflow": {
@@ -417,131 +475,53 @@
         "harnessVersion": "paper-reader-v1",
         "collectStatus": "collected",
         "pdfStatus": "remote"
-      },
-      "digest": {
-        "summaryZh": "AI 摘要未生成。原始摘要要点：Tuning controllers for strongly coupled multi-input multi-output (MIMO) industrial processes is hard: decentralized classical auto-tuning ignores loop interacti...",
-        "motivationZh": "命令行启用了 --no-ai",
-        "methodZh": "请配置 AI 后重新运行，以生成方法提炼。",
-        "experimentsZh": "来源元数据未披露完整实验设置或结果。",
-        "affiliationsZh": "未在 DBLP/arXiv 元数据中提供。",
-        "tags": [
-          "cs.AI"
-        ],
-        "importance": 3,
-        "researchFitZh": "AI harness 尚未完成分析，无法判断与用户研究方向的具体关系。",
-        "hardwareRelevance": 1,
-        "algorithmRelevance": 1,
-        "systemRelevance": 1,
-        "readPriority": "archive",
-        "whyReadZh": "需要完成 motivation、method 和实验结果分析后再判断是否值得深读。",
-        "limitationsZh": "命令行启用了 --no-ai",
-        "motivationDetail": {
-          "problemZh": "harness 未完成分析。",
-          "gapZh": "harness 未完成分析。",
-          "whyImportantZh": "harness 未完成分析。",
-          "userRelevanceZh": "harness 未完成分析。",
-          "evidence": "not analyzed"
-        },
-        "methodDetail": {
-          "coreIdeaZh": "harness 未完成分析。",
-          "componentsZh": [
-            "未分析"
-          ],
-          "hardwareSystemDetailZh": "harness 未完成分析。",
-          "noveltyZh": "harness 未完成分析。",
-          "evidence": "not analyzed"
-        },
-        "experimentDetail": {
-          "setupZh": "harness 未完成分析。",
-          "baselinesZh": "harness 未完成分析。",
-          "metricsZh": [
-            "未分析"
-          ],
-          "mainResultsZh": "harness 未完成分析。",
-          "limitationsZh": "harness 未完成分析。",
-          "evidence": "not analyzed"
-        },
-        "evidence": {
-          "usedSources": [
-            "metadata"
-          ],
-          "affiliationEvidence": "",
-          "experimentEvidence": "",
-          "missingFields": [
-            "motivation",
-            "method",
-            "experiments"
-          ]
-        },
-        "confidence": {
-          "summary": 0.2,
-          "motivation": 0,
-          "method": 0,
-          "experiments": 0,
-          "affiliations": 0
-        }
       }
     },
     {
-      "id": "arxiv:2606.10254",
+      "id": "arxiv:2606.11712",
       "source": "arXiv",
-      "title": "RealMath-Eval: Why SOTA Judges Struggle with Real Human Reasoning",
+      "title": "Substrate Asymmetry in User-Side Memory: A Diagnostic Framework",
       "authors": [
-        "Yiteng Mao",
-        "Kenan Xu",
-        "Yijia Lyu",
-        "Wenhao Li",
-        "Jianlong Chen",
-        "Xiangfeng Wang"
+        "Youwang Deng"
       ],
       "authorAffiliations": [],
       "affiliations": [],
-      "abstract": "While Large Language Models (LLMs) have achieved near-perfect performance in \\emph{solving} high-school mathematics, their ability to \\emph{evaluate} the diverse reasoning processes of real human students remains under-examined. To bridge this gap, we introduce \\textbf{RealMath-Eval}, a rigorously annotated benchmark of 224 real-world exam responses from high schools. Our initial evaluation reveals that even state-of-the-art LLM judges struggle significantly on this task, exhibiting a high Mean Squared Error ($\\sim$2.96) against expert human grading. To probe a plausible explanation, we contrast this performance with a control setting where the same judges evaluate synthetic LLM-generated solutions. We identify a stark ``Evaluation Gap'': judges are considerably more accurate and consistent on synthetic text (MSE $\\sim$1.17) but struggle to generalize to authentic student reasoning. Through semantic embedding analysis, we find that synthetic errors suffer from a ``structural collapse'' into predictable, low-dimensional linear subspaces, whereas human errors form a more diverse error space. Furthermore, generative probability probes suggest that human reasoning involves significantly higher information-theoretic surprisal, indicating that student reasoning transitions are more out-of-distribution for current models. Finally, we find that surface-level style transfer fails to close this gap. Our findings suggest that current LLM evaluation pipelines relying heavily on synthetic data may not adequately capture the diversity of authentic student mathematical reasoning.",
+      "abstract": "User-side memory in LLMs is typically scored as a single \"personalization\" capability: given a user's history, is the output more user-aware? We show this aggregate metric hides opposite-direction failures. Memory factorises into at least three orthogonal axes -- behavioral consistency (style, voice), factual presence (recall facts in history), and factual absence (abstain when a fact is absent) -- and no single substrate wins all three. Comparing per-user gamma-LoRA (a small LoRA adapter trained on each user's history; gamma denotes per-user, not per-task) against BGE-large dense top-K retrieval on a controlled 50-user synthetic corpus and a real-data probe (LaMP-3), we find gamma-LoRA decisively wins behavioral style while RAG decisively wins factual absence -- and the same query-projection cells in attention layers 21-35 causally load-bear both effects in opposite directions (zeroing those LoRA weights raises absence-probe TPR by +33 pp and drops presence-probe TPR by 20 pp). On the more heavily RLHF-tuned Llama-3.1-8B-Instruct the asymmetry strengthens, not heals: parametric memory's behavioral advantage collapses while its absence-calibration deficit against retrieval widens -- an alignment tax on parametric user-memory. On real-data LaMP-3, gamma-LoRA underperforms a majority baseline; a 9-condition mitigation sweep diagnoses this as instruction-following collapse, not substrate failure (a 9x2 cross-product shows the eval-time {1..5} logit mask drives main_acc to >=0.995 on every recipe), and the best training-time fix replicates bit-identically on Llama. Finally, substrate-selection routing is question-classification, not calibration: a 110M DistilBERT on the question text alone beats every logit-based router. We contribute the diagnostic framework, the diagnosed real-data negative, the alignment-tax replication, and the routing-as-classification finding.",
       "venue": "arXiv",
-      "published": "2026-06-08T23:40:34Z",
-      "updated": "2026-06-08T23:40:34Z",
-      "url": "http://arxiv.org/abs/2606.10254v1",
-      "pdfUrl": "https://arxiv.org/pdf/2606.10254v1",
+      "published": "2026-06-10T06:39:20Z",
+      "updated": "2026-06-10T06:39:20Z",
+      "url": "http://arxiv.org/abs/2606.11712v1",
+      "pdfUrl": "https://arxiv.org/pdf/2606.11712v1",
       "categories": [
+        "cs.CL",
         "cs.AI",
-        "cs.CL"
+        "cs.LG"
       ],
-      "collectedAt": "2026-06-10T22:21:02.482Z",
-      "firstSeenAt": "2026-06-10T22:21:02.482Z",
-      "lastSeenAt": "2026-06-10T22:21:02.482Z",
+      "collectedAt": "2026-06-11T22:17:37.851Z",
+      "firstSeenAt": "2026-06-11T22:17:37.851Z",
+      "lastSeenAt": "2026-06-11T22:17:37.851Z",
       "collectionType": "daily-latest",
-      "matchedQuery": "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)",
+      "matchedQuery": "(all:prefill OR all:decoding OR all:KV OR all:cache OR all:attention) AND (all:accelerator OR all:kernel OR all:compiler OR all:serving OR all:memory) AND (all:LLM OR all:transformer)",
       "collectionTypes": [
         "daily-latest"
       ],
       "matchedQueries": [
+        "(all:prefill OR all:decoding OR all:KV OR all:cache OR all:attention) AND (all:accelerator OR all:kernel OR all:compiler OR all:serving OR all:memory) AND (all:LLM OR all:transformer)",
         "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)"
       ],
       "targetThemes": [],
       "conferenceVenues": [],
       "conferenceYears": [],
-      "recommendationTrack": "hardware-primary",
-      "recommendationLabel": "硬件体系结构主线",
-      "recommendationScore": 150.75,
-      "relevanceReason": "命中 AI 处理器、体系结构、量化、训推系统或内存/缓存优化主题",
-      "pdfStatus": "remote",
-      "workflow": {
-        "digestStatus": "pending",
-        "emailStatus": "waiting-digest",
-        "digestError": "命令行启用了 --no-ai",
-        "harnessVersion": "paper-reader-v1",
-        "collectStatus": "collected",
-        "pdfStatus": "remote"
-      },
       "digest": {
-        "summaryZh": "AI 摘要未生成。原始摘要要点：While Large Language Models (LLMs) have achieved near-perfect performance in \\emph{solving} high-school mathematics, their ability to \\emph{evaluate} the divers...",
+        "summaryZh": "AI 摘要未生成。原始摘要要点：User-side memory in LLMs is typically scored as a single \"personalization\" capability: given a user's history, is the output more user-aware? We show this aggre...",
         "motivationZh": "命令行启用了 --no-ai",
         "methodZh": "请配置 AI 后重新运行，以生成方法提炼。",
         "experimentsZh": "来源元数据未披露完整实验设置或结果。",
         "affiliationsZh": "未在 DBLP/arXiv 元数据中提供。",
         "tags": [
+          "cs.CL",
           "cs.AI",
-          "cs.CL"
+          "cs.LG"
         ],
         "importance": 3,
         "researchFitZh": "AI harness 尚未完成分析，无法判断与用户研究方向的具体关系。",
@@ -596,38 +576,44 @@
           "experiments": 0,
           "affiliations": 0
         }
+      },
+      "recommendationTrack": "hardware-primary",
+      "recommendationLabel": "硬件体系结构主线",
+      "recommendationScore": 161.75,
+      "relevanceReason": "命中 AI 处理器、体系结构、量化、训推系统或内存/缓存优化主题",
+      "pdfStatus": "remote",
+      "workflow": {
+        "digestStatus": "pending",
+        "emailStatus": "waiting-digest",
+        "digestError": "命令行启用了 --no-ai",
+        "harnessVersion": "paper-reader-v1",
+        "collectStatus": "collected",
+        "pdfStatus": "remote"
       }
     },
     {
-      "id": "arxiv:2606.09697",
+      "id": "arxiv:2606.12097",
       "source": "arXiv",
-      "title": "PsychoSafe: Eliciting Psychologically-Informed Refusals in Large Language Models",
+      "title": "Weibull-Stationary Stochastic Differential Equations for Conditional Long-Horizon Wind Power Forecasting",
       "authors": [
-        "Gianluca Barmina",
-        "Federico Torrielli",
-        "Sven Harms",
-        "Jacob Nielsen",
-        "Felix Mächtle",
-        "Stine Lyngsø Beltoft",
-        "Peter Schneider-Kamp",
-        "Thomas Eisenbarth",
-        "Lukas Galke Poech",
-        "Anne Lauscher"
+        "Luca Di Persio",
+        "Mehrdad Ghadiri"
       ],
       "authorAffiliations": [],
       "affiliations": [],
-      "abstract": "Large language models (LLMs) routinely face requests that should be refused, creating a trade-off between helpfulness and harm prevention. However, refusals themselves can be helpful. In high-risk interactions involving crisis, coercion, or escalating intent, blunt non-compliance may prevent direct harm while still failing to support the needs of the person behind the request. We present PsychoSafe, a psychologically-informed refusal framework that reframes refusal as structured supportive communication grounded in evidence-based intervention strategies. To develop PsychoSafe, we construct a corpus of 8019 prompt-response pairs spanning five psychologically salient risk domains and apply prompting and parameter-efficient fine-tuning to Qwen 3.5 27B. On a balanced validation set of 500 prompts, evaluated with an LLM judge and validated through human ratings, PsychoSafe prompting improves overall refusal quality by 28.1% over a generic baseline, with particularly strong gains in external resource referral (+46.8%) and psychological grounding (+34.8%), while preserving downstream performance on non-refusal tasks. Fine-tuning achieves near-perfect refusal and resource-referral rates but reduces response relevance. Additional evaluations on SORRY-Bench and XSTest show strong in-domain robustness but limited out-of-domain generalization, suggesting that future work should diversify fine-tuning data to help models apply interventions selectively rather than schematically.",
+      "abstract": "We present a one-month-ahead conditional probabilistic framework for wind-power forecasting at ten-minute resolution. Monthly Weibull shape and scale parameters are estimated from serially dependent SCADA wind-speed data, corrected through a Godambe covariance, and forecast by a heteroskedastic Kalman filter on a bivariate VAR(1) state-space model. Conditional on the MMSE forecasted Weibull invariant law, we construct and compare three positive wind-speed SDE models: an Ornstein-Uhlenbeck-Weibull transform, a Fokker-Planck drift-first diffusion, and a Fokker-Planck diffusion-first model. The simulated wind-speed ensembles are mapped to power through a calibrated XGBoost power curve. Applied to January 2021 data from a Senvion MM92 turbine at Kelmarsh Wind Farm, the three SDE formulations are statistically indistinguishable in probabilistic accuracy, with mean CRPS values between 1.569 and 1.575 m/s. The diffusion-first model is therefore preferred on computational grounds, reducing runtime by about a factor of seven relative to the OU-Weibull model. In the power domain, the Wasserstein distance between simulated and observed distributions is 26.1-27.6 kW, below $1.4\\%$ of rated capacity, while the monthly energy-yield bias is about $-7.3\\%$ for the examined month. Exceedance-probability errors remain below 1.6 percentage points over the 0-1500 kW range and about 2.2 percentage points near rated power. These quantities provide decision-relevant probabilistic inputs for downstream operational problems, rather than completed reserve, storage, market, or fatigue-optimization decisions. Full marginalisation over the Kalman predictive law of the Weibull parameters is left as a natural extension.",
       "venue": "arXiv",
-      "published": "2026-06-08T16:19:18Z",
-      "updated": "2026-06-08T16:19:18Z",
-      "url": "http://arxiv.org/abs/2606.09697v1",
-      "pdfUrl": "https://arxiv.org/pdf/2606.09697v1",
+      "published": "2026-06-10T13:54:42Z",
+      "updated": "2026-06-10T13:54:42Z",
+      "url": "http://arxiv.org/abs/2606.12097v1",
+      "pdfUrl": "https://arxiv.org/pdf/2606.12097v1",
       "categories": [
-        "cs.CL"
+        "stat.AP",
+        "physics.data-an"
       ],
-      "collectedAt": "2026-06-10T22:21:02.482Z",
-      "firstSeenAt": "2026-06-10T22:21:02.482Z",
-      "lastSeenAt": "2026-06-10T22:21:02.482Z",
+      "collectedAt": "2026-06-11T22:17:39.703Z",
+      "firstSeenAt": "2026-06-11T22:17:39.703Z",
+      "lastSeenAt": "2026-06-11T22:17:39.703Z",
       "collectionType": "daily-latest",
       "matchedQuery": "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)",
       "collectionTypes": [
@@ -641,7 +627,7 @@
       "conferenceYears": [],
       "recommendationTrack": "hardware-primary",
       "recommendationLabel": "硬件体系结构主线",
-      "recommendationScore": 150,
+      "recommendationScore": 161.5,
       "relevanceReason": "命中 AI 处理器、体系结构、量化、训推系统或内存/缓存优化主题",
       "pdfStatus": "remote",
       "workflow": {
@@ -653,13 +639,14 @@
         "pdfStatus": "remote"
       },
       "digest": {
-        "summaryZh": "AI 摘要未生成。原始摘要要点：Large language models (LLMs) routinely face requests that should be refused, creating a trade-off between helpfulness and harm prevention. However, refusals the...",
+        "summaryZh": "AI 摘要未生成。原始摘要要点：We present a one-month-ahead conditional probabilistic framework for wind-power forecasting at ten-minute resolution. Monthly Weibull shape and scale parameters...",
         "motivationZh": "命令行启用了 --no-ai",
         "methodZh": "请配置 AI 后重新运行，以生成方法提炼。",
         "experimentsZh": "来源元数据未披露完整实验设置或结果。",
         "affiliationsZh": "未在 DBLP/arXiv 元数据中提供。",
         "tags": [
-          "cs.CL"
+          "stat.AP",
+          "physics.data-an"
         ],
         "importance": 3,
         "researchFitZh": "AI harness 尚未完成分析，无法判断与用户研究方向的具体关系。",
@@ -717,40 +704,31 @@
       }
     },
     {
-      "id": "arxiv:2606.09811",
+      "id": "arxiv:2606.12035",
       "source": "arXiv",
-      "title": "AHA-WAM:Asynchronous Horizon-Adaptive World-Action Modeling with Observation-Guided Context Routing",
+      "title": "Shadow Engineering of Quantum Processes",
       "authors": [
-        "Jisong Cai",
-        "Long Ling",
-        "Shiwei Chu",
-        "Zhongshan Liu",
-        "Jiayue Kang",
-        "Zhixuan Liang",
-        "Wenjie Xu",
-        "Yinan Mao",
-        "Weinan Zhang",
-        "Xiaokang Yang",
-        "Ru Ying",
-        "Ran Zheng",
-        "Yao Mu"
+        "Tian-Ci Tian",
+        "De-Tao Jiang",
+        "Wei-Ming Zhu",
+        "Wei-You Liao",
+        "Hong-Wei Li",
+        "He-Liang Huang"
       ],
       "authorAffiliations": [],
       "affiliations": [],
-      "abstract": "World-action models have emerged as a promising paradigm for robot manipulation, jointly modeling visual scene dynamics and actions to inject physical priors into policy learning. However, existing world-action models couple world prediction and action execution at the same temporal resolution, forcing the world branch to model near-term frame variations that are redundant and weakly informative. We posit that strictly binding world prediction and action execution to the same temporal rhythm may underutilize the potential of the video branch for embodied control. Therefore, we propose AHA-WAM, an Asynchronous Horizon-Adaptive World-Action Model built on a dual Diffusion Transformer (DiT) architecture that reorganizes world-action modeling around this temporal asymmetry. AHA-WAM instantiates the video DiT as a low-frequency world planner that maintains rolling key-value memory over past observations and exposes reusable layerwise latent context encoding long-horizon scene evolution, while a high-frequency action DiT executes short action chunks in closed loop by querying this context through layerwise joint attention. To support asynchronous execution, we introduce horizon-adaptive offset training and Observation-Guided Video-Context Routing (OVCR), which together let the action expert exploit long-horizon world context while remaining responsive to real-time execution state without rerunning the video DiT. Experiments on RoboTwin and real-world manipulation tasks show that AHA-WAM achieves state-of-the-art performance without any robot-data pretraining, attaining 92.80% average success on RoboTwin and 78.3% success across 4 real-world tasks, while reaching 24.17 Hz closed-loop control with a 4.59x speedup over Fast-WAM.",
+      "abstract": "Characterizing quantum processes is essential for hardware benchmarking, error diagnosis, and algorithm verification. While recent work [PRX QUANTUM \\textbf{4}, 040337 (2023)] extended classical shadows from quantum state to quantum process, enabling efficient single-channel $\\mathcal{E}$ property prediction, its applicability to composite processes $f(\\mathcal{E}_1, \\mathcal{E}_2,\\cdots, \\mathcal{E}_k)$ remains unexplored. We introduce shadow engineering, a framework encoding the classical shadows of processes into sparse transfer matrices to predict $f(\\mathcal{E}_1, \\mathcal{E}_2,\\cdots, \\mathcal{E}_k)$ properties with proven polynomial sample complexity, matching single-channel efficiency while exponentially lower than quantum process tomography. Crucially, this approach repurposes existing $\\mathcal{E}_m$-shadow data without physical execution of $f(\\mathcal{E}_1, \\mathcal{E}_2,\\cdots, \\mathcal{E}_k)$, enabling flexible quantum process characterization with minimal hardware overhead. We demonstrate the framework's effectiveness and practicality on a superconducting quantum processor for typical applications such as error mitigation and Hamiltonian dynamical simulation. This framework unlocks new capabilities for predicting complex quantum behaviors without physical re-execution, with immediate applications in near-term device calibration and quantum simulation.",
       "venue": "arXiv",
-      "published": "2026-06-08T17:55:18Z",
-      "updated": "2026-06-08T17:55:18Z",
-      "url": "http://arxiv.org/abs/2606.09811v1",
-      "pdfUrl": "https://arxiv.org/pdf/2606.09811v1",
+      "published": "2026-06-10T12:57:15Z",
+      "updated": "2026-06-10T12:57:15Z",
+      "url": "http://arxiv.org/abs/2606.12035v1",
+      "pdfUrl": "https://arxiv.org/pdf/2606.12035v1",
       "categories": [
-        "cs.RO",
-        "cs.AI",
-        "cs.CV"
+        "quant-ph"
       ],
-      "collectedAt": "2026-06-10T22:21:02.482Z",
-      "firstSeenAt": "2026-06-10T22:21:02.482Z",
-      "lastSeenAt": "2026-06-10T22:21:02.482Z",
+      "collectedAt": "2026-06-11T22:17:39.704Z",
+      "firstSeenAt": "2026-06-11T22:17:39.704Z",
+      "lastSeenAt": "2026-06-11T22:17:39.704Z",
       "collectionType": "daily-latest",
       "matchedQuery": "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)",
       "collectionTypes": [
@@ -764,7 +742,7 @@
       "conferenceYears": [],
       "recommendationTrack": "hardware-primary",
       "recommendationLabel": "硬件体系结构主线",
-      "recommendationScore": 149.5,
+      "recommendationScore": 151,
       "relevanceReason": "命中 AI 处理器、体系结构、量化、训推系统或内存/缓存优化主题",
       "pdfStatus": "remote",
       "workflow": {
@@ -776,15 +754,13 @@
         "pdfStatus": "remote"
       },
       "digest": {
-        "summaryZh": "AI 摘要未生成。原始摘要要点：World-action models have emerged as a promising paradigm for robot manipulation, jointly modeling visual scene dynamics and actions to inject physical priors in...",
+        "summaryZh": "AI 摘要未生成。原始摘要要点：Characterizing quantum processes is essential for hardware benchmarking, error diagnosis, and algorithm verification. While recent work [PRX QUANTUM \\textbf{4},...",
         "motivationZh": "命令行启用了 --no-ai",
         "methodZh": "请配置 AI 后重新运行，以生成方法提炼。",
         "experimentsZh": "来源元数据未披露完整实验设置或结果。",
         "affiliationsZh": "未在 DBLP/arXiv 元数据中提供。",
         "tags": [
-          "cs.RO",
-          "cs.AI",
-          "cs.CV"
+          "quant-ph"
         ],
         "importance": 3,
         "researchFitZh": "AI harness 尚未完成分析，无法判断与用户研究方向的具体关系。",
@@ -842,32 +818,32 @@
       }
     },
     {
-      "id": "arxiv:2606.11187",
+      "id": "arxiv:2606.12403",
       "source": "arXiv",
-      "title": "Next Forcing: Causal World Modeling with Multi-Chunk Prediction",
+      "title": "World Pilot: Steering Vision-Language-Action Models with World-Action Priors",
       "authors": [
-        "Gangwei Xu",
-        "Qihang Zhang",
-        "Jiaming Zhou",
-        "Xing Zhu",
-        "Yujun Shen",
-        "Xin Yang",
-        "Yinghao Xu"
+        "Zefu Lin",
+        "Rongxu Cui",
+        "Junjia Xu",
+        "Xiaojuan Jin",
+        "Wenling Li",
+        "Lue Fan",
+        "Zhaoxiang Zhang"
       ],
       "authorAffiliations": [],
       "affiliations": [],
-      "abstract": "Autoregressive video generation has emerged as a powerful paradigm for World Action Models (WAMs). However, existing approaches suffer from slow training convergence and limited converged accuracy, particularly at high frame rates, as the training supervision is confined to the current chunk without explicit signals about future dynamics; they also suffer from slow inference due to iterative video denoising. In this paper, we present Next Forcing, a multi-chunk prediction (MCP) framework for causal world modeling that enables faster training, higher accuracy, and accelerated inference. Inspired by multi-token prediction in large language models, Next Forcing introduces an MCP training objective that augments the main model with lightweight auxiliary MCP modules to simultaneously denoise video chunks at multiple future temporal horizons (next$^1$, next$^2$, next$^3$ chunks). These MCP modules form a causal chain across prediction depths, where intermediate features fused from multiple layers of the main model are leveraged to predict future dynamics, allowing near-future predictions to inform farther-future ones and providing dense multi-scale temporal supervision back to the main model. During training, the MCP modules significantly accelerate convergence and improve converged accuracy, especially at high frame rates: at 50 fps, Next Forcing achieves a 93.1% relative improvement over LingBot-VA at 5k training steps and 2.3x faster convergence, and establishes new state-of-the-art results on the RoboTwin benchmark (94.1/93.5% on Clean/Random). At inference, the MCP modules can be retained to predict the next video chunk in parallel with the current one, achieving 2x inference acceleration. Next Forcing also demonstrates significant improvements on PhyWorld, a benchmark evaluating adherence to physical laws in video generation, and over 50% FVD reduction on general video pretraining.",
+      "abstract": "Vision-Language-Action (VLA) models inherit semantic grounding from large-scale pretraining and perform competently across in-distribution manipulation tasks. This grounding, however, is built on static image-text pairs, whereas manipulation is a continuous, contact-rich process whose dynamics this pretraining cannot capture. We present World Pilot, a VLA framework that augments the policy with priors from a World-Action Model (WAM), routed into the decision chain through two complementary pathways. Latent Steering conditions the perception layer on a scene-evolution latent, and Action Steering supplies an anticipated trajectory as a motion prior to the action generator. Together the two priors equip the VLA with an anticipated view of the scene and a trajectory-level motion hint alongside its semantic conditioning, and the scene-evolution prior remains effective even when supplied by a video-pretrained world model that has not been action-post-trained. World Pilot attains a state-of-the-art Total success rate of 84.7% on the LIBERO-Plus zero-shot OOD benchmark and the highest success rate on every real-robot setting across four manipulation tasks, with the largest margins under shifts in viewpoint, geometry, deformable state, and pose. Project Website: https://world-pilot.github.io/",
       "venue": "arXiv",
-      "published": "2026-06-09T17:59:22Z",
-      "updated": "2026-06-09T17:59:22Z",
-      "url": "http://arxiv.org/abs/2606.11187v1",
-      "pdfUrl": "https://arxiv.org/pdf/2606.11187v1",
+      "published": "2026-06-10T17:59:08Z",
+      "updated": "2026-06-10T17:59:08Z",
+      "url": "http://arxiv.org/abs/2606.12403v1",
+      "pdfUrl": "https://arxiv.org/pdf/2606.12403v1",
       "categories": [
-        "cs.CV"
+        "cs.RO"
       ],
-      "collectedAt": "2026-06-10T22:21:04.142Z",
-      "firstSeenAt": "2026-06-10T22:21:04.142Z",
-      "lastSeenAt": "2026-06-10T22:21:04.142Z",
+      "collectedAt": "2026-06-11T22:17:41.556Z",
+      "firstSeenAt": "2026-06-11T22:17:41.556Z",
+      "lastSeenAt": "2026-06-11T22:17:41.556Z",
       "collectionType": "daily-latest",
       "matchedQuery": "(all:agent OR all:agents OR all:agentic OR all:reasoning OR all:post-training OR all:alignment OR all:multimodal OR all:world-model) AND (all:LLM OR all:foundation OR all:language)",
       "collectionTypes": [
@@ -881,7 +857,7 @@
       "conferenceYears": [],
       "recommendationTrack": "algorithm-trend",
       "recommendationLabel": "算法趋势观察",
-      "recommendationScore": 42.3,
+      "recommendationScore": 46.400000000000006,
       "relevanceReason": "命中 LLM/Agent/多模态/后训练等算法趋势主题",
       "pdfStatus": "remote",
       "workflow": {
@@ -893,13 +869,13 @@
         "pdfStatus": "remote"
       },
       "digest": {
-        "summaryZh": "AI 摘要未生成。原始摘要要点：Autoregressive video generation has emerged as a powerful paradigm for World Action Models (WAMs). However, existing approaches suffer from slow training conver...",
+        "summaryZh": "AI 摘要未生成。原始摘要要点：Vision-Language-Action (VLA) models inherit semantic grounding from large-scale pretraining and perform competently across in-distribution manipulation tasks. T...",
         "motivationZh": "命令行启用了 --no-ai",
         "methodZh": "请配置 AI 后重新运行，以生成方法提炼。",
         "experimentsZh": "来源元数据未披露完整实验设置或结果。",
         "affiliationsZh": "未在 DBLP/arXiv 元数据中提供。",
         "tags": [
-          "cs.CV"
+          "cs.RO"
         ],
         "importance": 3,
         "researchFitZh": "AI harness 尚未完成分析，无法判断与用户研究方向的具体关系。",
@@ -957,44 +933,32 @@
       }
     },
     {
-      "id": "arxiv:2606.11188",
+      "id": "arxiv:2606.12396",
       "source": "arXiv",
-      "title": "ARM: An AutoRegressive Large Multimodal Model with Unified Discrete Representations",
+      "title": "VLGA: Vision-Language-Geometry-Action Models for Autonomous Driving",
       "authors": [
-        "Junke Wang",
-        "Xiao Wang",
-        "Jiacheng Pan",
-        "Xuefeng Hu",
-        "Feng Li",
-        "Jingxiang Sun",
-        "Chaorui Deng",
-        "Zilong Chen",
-        "Yunpeng Chen",
-        "Kaibin Tian",
-        "Matthew Gwilliam",
-        "Hao Chen",
-        "Danhui Guan",
-        "Kun Xu",
-        "Weilin Huang",
-        "Zuxuan Wu",
-        "Haoqi Fan",
-        "Yu-Gang Jiang",
-        "Zhenheng Yang"
+        "Jin Yao",
+        "Dhruva Dixith Kurra",
+        "Tom Lampo",
+        "Zezhou Cheng",
+        "Danhua Guo",
+        "Burhan Yaman"
       ],
       "authorAffiliations": [],
       "affiliations": [],
-      "abstract": "This paper introduces ARM, a discrete representation-based AutoRegressive Model that unifies image understanding, generation, and editing within a next-token prediction framework. ARM is built on three efforts: first, we train a discrete semantic visual tokenizer that maps images into compact token sequences. Our tokenizer is supervised with multiple objectives that jointly promote semantic discriminability, language alignment and faithful reconstruction, thereby supporting diverse tasks in a shared latent space. With this, we train a 7B autoregressive model over large-scale text and image token sequences, seamlessly developing vision-language perception and generation capabilities. Finally, to further improve preference-aligned behavior for text-to-image generation and instruction-guided editing, ARM applies reinforcement learning (RL) to optimize task-level objectives such as visual quality, instruction adherence, and edit consistency. Surprisingly, the results show that RL not only substantially improves performance on the target tasks (e.g., raising WISE overall from 0.50 to 0.56, GEdit-Bench-EN G_O from 5.75 to 6.68), but also induces cross-task synergy between text-to-image generation and editing. Collectively, these findings highlight autoregressive modeling, when paired with strong representations and preference optimization, as a scalable foundation for multimodal intelligence. Code: https://github.com/wdrink/ARM.",
+      "abstract": "Vision-language-action (VLA) models can describe scenes and reason about them in language, yet still struggle to ground their actions in the dense 3D world around them. Existing approaches either inject features from a frozen 3D foundation model without an objective that ensures the policy uses them, or constrain geometry with sparse box and map losses that provide no dense spatial signal. We introduce VLGA, the first vision-language-action model supervised to reconstruct the dense 3D world it drives through. VLGA introduces geometry as a fourth modality alongside vision, language, and action through a dedicated expert supervised by a per-pixel pointmap regression loss against LiDAR. Extensive experiments conducted on challenging nuScenes and Bench2Drive datasets for open-loop and closed-loop evaluations, respectively, show the superiority of VLGA over counterpart VLA methods. In particular, on open-loop nuScenes, VLGA sets a new state of the art among VLA methods without ego status, with the lowest L2 (0.50\\,m average) and 3-second collision rate (0.18\\%). On closed-loop Bench2Drive, VLGA attains the state-of-the-art driving score of 79.08, +0.71 over the strongest prior VLA, at comparable efficiency and comfort.",
       "venue": "arXiv",
-      "published": "2026-06-09T17:59:28Z",
-      "updated": "2026-06-09T17:59:28Z",
-      "url": "http://arxiv.org/abs/2606.11188v1",
-      "pdfUrl": "https://arxiv.org/pdf/2606.11188v1",
+      "published": "2026-06-10T17:57:06Z",
+      "updated": "2026-06-10T17:57:06Z",
+      "url": "http://arxiv.org/abs/2606.12396v1",
+      "pdfUrl": "https://arxiv.org/pdf/2606.12396v1",
       "categories": [
-        "cs.CV"
+        "cs.CV",
+        "cs.RO"
       ],
-      "collectedAt": "2026-06-10T22:21:04.142Z",
-      "firstSeenAt": "2026-06-10T22:21:04.142Z",
-      "lastSeenAt": "2026-06-10T22:21:04.142Z",
+      "collectedAt": "2026-06-11T22:17:41.556Z",
+      "firstSeenAt": "2026-06-11T22:17:41.556Z",
+      "lastSeenAt": "2026-06-11T22:17:41.556Z",
       "collectionType": "daily-latest",
       "matchedQuery": "(all:agent OR all:agents OR all:agentic OR all:reasoning OR all:post-training OR all:alignment OR all:multimodal OR all:world-model) AND (all:LLM OR all:foundation OR all:language)",
       "collectionTypes": [
@@ -1008,7 +972,7 @@
       "conferenceYears": [],
       "recommendationTrack": "algorithm-trend",
       "recommendationLabel": "算法趋势观察",
-      "recommendationScore": 35.4,
+      "recommendationScore": 45,
       "relevanceReason": "命中 LLM/Agent/多模态/后训练等算法趋势主题",
       "pdfStatus": "remote",
       "workflow": {
@@ -1020,13 +984,14 @@
         "pdfStatus": "remote"
       },
       "digest": {
-        "summaryZh": "AI 摘要未生成。原始摘要要点：This paper introduces ARM, a discrete representation-based AutoRegressive Model that unifies image understanding, generation, and editing within a next-token pr...",
+        "summaryZh": "AI 摘要未生成。原始摘要要点：Vision-language-action (VLA) models can describe scenes and reason about them in language, yet still struggle to ground their actions in the dense 3D world arou...",
         "motivationZh": "命令行启用了 --no-ai",
         "methodZh": "请配置 AI 后重新运行，以生成方法提炼。",
         "experimentsZh": "来源元数据未披露完整实验设置或结果。",
         "affiliationsZh": "未在 DBLP/arXiv 元数据中提供。",
         "tags": [
-          "cs.CV"
+          "cs.CV",
+          "cs.RO"
         ],
         "importance": 3,
         "researchFitZh": "AI harness 尚未完成分析，无法判断与用户研究方向的具体关系。",
