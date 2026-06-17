@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-06-16T22:27:42.456Z",
-  "digestDate": "2026-06-17",
+  "generatedAt": "2026-06-17T22:19:10.334Z",
+  "digestDate": "2026-06-18",
   "kind": "daily-new",
   "timezone": "Asia/Shanghai",
   "siteUrl": "https://YouthLiuYS.github.io/PaperDigestAgent/",
@@ -141,144 +141,31 @@
   },
   "papers": [
     {
-      "id": "arxiv:2606.16959",
+      "id": "arxiv:2606.17358",
       "source": "arXiv",
-      "title": "Diagonal-Budgeted Trotterization for Efficient Quantum Hamiltonian Simulation",
+      "title": "OTRO: Oblivious Tokenization Path with Square-Root ORAM",
       "authors": [
-        "Srikar Chundury",
-        "Blake Burgstahler",
-        "Jiajia Li",
-        "In-Saeng Suh",
-        "Frank Mueller"
+        "Jonghyun Lee",
+        "Yongqin Wang",
+        "Rachit Rajat",
+        "Daniel Wong",
+        "Mengyuan Li",
+        "Murali Annavaram"
       ],
       "authorAffiliations": [],
       "affiliations": [],
-      "abstract": "Efficient classical simulation of quantum Hamiltonian dynamics is often bottlenecked by exponential state growth and the overhead of generic sparse linear algebra. We introduce diagonal-budgeted Trotterization, a structure-aware strategy that decomposes Hamiltonians into factors preserving diagonal sparsity while tightly controlling fidelity loss. Our implementation, HamSim, utilizes a compact diagonal-sparse data layout and specialized C++/CUDA kernels to bypass the overheads of generic formats like CSR. By leveraging SIMD vectorization, multithreading, and GPU acceleration, HamSim achieves high performance across heterogeneous architectures. Benchmarks on the HamLib suite show that HamSim significantly outperforms Qiskit-Aer. On CPUs, HamSim attains speedups of $182$--$1,269\\times$ on optimization instances (TSP, MaxCut) and $4.8$--$841\\times$ on physical models (TFIM, Heisenberg). On GPUs, it achieves up to $178\\times$ speedup for $12$--$16$ qubit problems. Unlike traditional Trotterization, HamSim maintains near-perfect fidelity without requiring exponential steps. This demonstrates that diagonal-aware numerical kernels provide a scalable foundation for high-fidelity classical Hamiltonian simulation.",
+      "abstract": "The CPU-side large language model (LLM) tokenizer is a critical security gap in LLM serving through a confidential computing stack with CPU and GPU trusted execution environments (TEEs). Tokenizers converts the prompts through table-driven lookups, and the resulting memory access patterns are a powerful source of side-channel leakage. Recent work demonstrates end-to-end recovery of user prompts from tokenizer access pattern on production Intel TDX. However, a drop-in use of the popular tree-based Oblivious RAMs (e.g., PathORAM) to prevent access-pattern leakage introduces $\\sim$13$\\times$ tokenizer slowdown, resulting in 10-58% higher time-to-first-token (TTFT). In this paper, we present OTRO, an efficient, oblivious tokenization path tailored to latency-critical LLM serving. OTRO relies on square-root ORAM for fast single-access lookups, but avoids its prohibitive $O(N\\log^2N$) rebuild cost every $\\sqrt{N}$ accesses through three key innovations. First, OTRO provides a pool of replicated square-root ORAM instances that utilize the read-only nature of tokenizer table. Second, an epoch-based rotation policy decouples accesses from rebuilds and pads each epoch with dummy accesses to its boundaries, minimizing observable information. Lastly, chunked KV-cache-aware tokenization further overlaps rebuilds with GPU prefill and minimizes the instance count. Implemented as modules in HuggingFace Tokenizers and nano-vLLM, running within a TDX-enabled CVM with an NVIDIA H100 GPU, OTRO limits TTFT overhead to at most 4.5%, keeps tokenizer-induced latency under 10\\% of total TTFT, and adds less than 0.5 GB of memory overhead while reducing the tokenizer's observable leakage across various model families and sizes.",
       "venue": "arXiv",
-      "published": "2026-06-15T17:00:06Z",
-      "updated": "2026-06-15T17:00:06Z",
-      "url": "http://arxiv.org/abs/2606.16959v1",
-      "pdfUrl": "https://arxiv.org/pdf/2606.16959v1",
+      "published": "2026-06-15T23:21:32Z",
+      "updated": "2026-06-15T23:21:32Z",
+      "url": "http://arxiv.org/abs/2606.17358v1",
+      "pdfUrl": "https://arxiv.org/pdf/2606.17358v1",
       "categories": [
-        "quant-ph",
-        "cs.DC"
+        "cs.CR"
       ],
-      "collectedAt": "2026-06-16T22:23:06.495Z",
-      "firstSeenAt": "2026-06-16T22:23:06.495Z",
-      "lastSeenAt": "2026-06-16T22:23:06.495Z",
-      "collectionType": "daily-latest",
-      "matchedQuery": "(cat:cs.AR OR cat:cs.DC OR cat:cs.PF) AND (all:LLM OR all:transformer OR all:foundation OR all:language) AND (all:accelerator OR all:processor OR all:architecture OR all:hardware OR all:system OR all:serving OR all:training OR all:inference OR all:cache)",
-      "collectionTypes": [
-        "daily-latest"
-      ],
-      "matchedQueries": [
-        "(cat:cs.AR OR cat:cs.DC OR cat:cs.PF) AND (all:LLM OR all:transformer OR all:foundation OR all:language) AND (all:accelerator OR all:processor OR all:architecture OR all:hardware OR all:system OR all:serving OR all:training OR all:inference OR all:cache)",
-        "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)"
-      ],
-      "targetThemes": [],
-      "conferenceVenues": [],
-      "conferenceYears": [],
-      "digest": {
-        "summaryZh": "AI 摘要未生成。原始摘要要点：Efficient classical simulation of quantum Hamiltonian dynamics is often bottlenecked by exponential state growth and the overhead of generic sparse linear algeb...",
-        "motivationZh": "命令行启用了 --no-ai",
-        "methodZh": "请配置 AI 后重新运行，以生成方法提炼。",
-        "experimentsZh": "来源元数据未披露完整实验设置或结果。",
-        "affiliationsZh": "未在 DBLP/arXiv 元数据中提供。",
-        "tags": [
-          "quant-ph",
-          "cs.DC"
-        ],
-        "importance": 3,
-        "researchFitZh": "AI harness 尚未完成分析，无法判断与用户研究方向的具体关系。",
-        "hardwareRelevance": 1,
-        "algorithmRelevance": 1,
-        "systemRelevance": 1,
-        "readPriority": "archive",
-        "whyReadZh": "需要完成 motivation、method 和实验结果分析后再判断是否值得深读。",
-        "limitationsZh": "命令行启用了 --no-ai",
-        "motivationDetail": {
-          "problemZh": "harness 未完成分析。",
-          "gapZh": "harness 未完成分析。",
-          "whyImportantZh": "harness 未完成分析。",
-          "userRelevanceZh": "harness 未完成分析。",
-          "evidence": "not analyzed"
-        },
-        "methodDetail": {
-          "coreIdeaZh": "harness 未完成分析。",
-          "componentsZh": [
-            "未分析"
-          ],
-          "hardwareSystemDetailZh": "harness 未完成分析。",
-          "noveltyZh": "harness 未完成分析。",
-          "evidence": "not analyzed"
-        },
-        "experimentDetail": {
-          "setupZh": "harness 未完成分析。",
-          "baselinesZh": "harness 未完成分析。",
-          "metricsZh": [
-            "未分析"
-          ],
-          "mainResultsZh": "harness 未完成分析。",
-          "limitationsZh": "harness 未完成分析。",
-          "evidence": "not analyzed"
-        },
-        "evidence": {
-          "usedSources": [
-            "metadata"
-          ],
-          "affiliationEvidence": "",
-          "experimentEvidence": "",
-          "missingFields": [
-            "motivation",
-            "method",
-            "experiments"
-          ]
-        },
-        "confidence": {
-          "summary": 0.2,
-          "motivation": 0,
-          "method": 0,
-          "experiments": 0,
-          "affiliations": 0
-        }
-      },
-      "recommendationTrack": "hardware-primary",
-      "recommendationLabel": "硬件体系结构主线",
-      "recommendationScore": 179,
-      "relevanceReason": "命中 AI 处理器、体系结构、量化、训推系统或内存/缓存优化主题",
-      "pdfStatus": "remote",
-      "workflow": {
-        "digestStatus": "pending",
-        "emailStatus": "waiting-digest",
-        "digestError": "命令行启用了 --no-ai",
-        "harnessVersion": "paper-reader-v1",
-        "collectStatus": "collected",
-        "pdfStatus": "remote"
-      }
-    },
-    {
-      "id": "arxiv:2606.16819",
-      "source": "arXiv",
-      "title": "From the NYU Ultracomputer to Modern Exascale: A Historical and Architectural Survey of In-Network Computing and Scalable Synchronization",
-      "authors": [
-        "Lars Warren Ericson"
-      ],
-      "authorAffiliations": [],
-      "affiliations": [],
-      "abstract": "This paper presents a historical and technical survey of the hardware architectures, interconnection networks, and synchronization primitives that have shaped massively parallel systems over the past four decades. We examine the design of the NYU Ultracomputer and the IBM Research Parallel Processor Prototype (RP3), focusing on the hardware implementation of the Fetch-and-Add primitive in multistage interconnection networks. We contrast these early attempts at fine-grained, shared-memory hardware combining with the distributed-memory architectures of the IBM SP series and the modern in-network computation models found in NVIDIA SHARP and HPE Slingshot. We provide a technical analysis of message-passing synchronization, presenting a complete profiling of MPI operation frequencies and detailing the low-level hardware mapping of one-sided RMA atomics to PCIe Atomics and GPU caches. We investigate the software-hardware boundary in modern deep learning, detailing how HIP translation, Triton compilation, and 4-bit quantization (W4A16) execute on modern heterogeneous silicon. To evaluate alternative network node designs, we present a historical hardware case study analyzing the feasibility of implementing active combining switches using message-passing Inmos Transputers programmed in Occam. Finally, we contextualize the evolution of concurrent software synchronization by examining Isaac Dimitrovsky's parallel \"group lock\" primitive, tracing its downstream echoes in group mutual exclusion (GME) and room synchronization, and reflect on the historical, philosophical divide between American systems engineering and European formal methods.",
-      "venue": "arXiv",
-      "published": "2026-06-15T15:03:10Z",
-      "updated": "2026-06-15T15:03:10Z",
-      "url": "http://arxiv.org/abs/2606.16819v1",
-      "pdfUrl": "https://arxiv.org/pdf/2606.16819v1",
-      "categories": [
-        "cs.DC",
-        "cs.AR",
-        "cs.GL"
-      ],
-      "collectedAt": "2026-06-16T22:23:11.940Z",
-      "firstSeenAt": "2026-06-16T22:23:11.940Z",
-      "lastSeenAt": "2026-06-16T22:23:11.940Z",
+      "collectedAt": "2026-06-17T22:14:47.039Z",
+      "firstSeenAt": "2026-06-17T22:14:47.039Z",
+      "lastSeenAt": "2026-06-17T22:14:47.039Z",
       "collectionType": "daily-latest",
       "matchedQuery": "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)",
       "collectionTypes": [
@@ -292,7 +179,7 @@
       "conferenceYears": [],
       "recommendationTrack": "hardware-primary",
       "recommendationLabel": "硬件体系结构主线",
-      "recommendationScore": 173,
+      "recommendationScore": 164,
       "relevanceReason": "命中 AI 处理器、体系结构、量化、训推系统或内存/缓存优化主题",
       "pdfStatus": "remote",
       "workflow": {
@@ -304,15 +191,13 @@
         "pdfStatus": "remote"
       },
       "digest": {
-        "summaryZh": "AI 摘要未生成。原始摘要要点：This paper presents a historical and technical survey of the hardware architectures, interconnection networks, and synchronization primitives that have shaped m...",
+        "summaryZh": "AI 摘要未生成。原始摘要要点：The CPU-side large language model (LLM) tokenizer is a critical security gap in LLM serving through a confidential computing stack with CPU and GPU trusted exec...",
         "motivationZh": "命令行启用了 --no-ai",
         "methodZh": "请配置 AI 后重新运行，以生成方法提炼。",
         "experimentsZh": "来源元数据未披露完整实验设置或结果。",
         "affiliationsZh": "未在 DBLP/arXiv 元数据中提供。",
         "tags": [
-          "cs.DC",
-          "cs.AR",
-          "cs.GL"
+          "cs.CR"
         ],
         "importance": 3,
         "researchFitZh": "AI harness 尚未完成分析，无法判断与用户研究方向的具体关系。",
@@ -370,29 +255,30 @@
       }
     },
     {
-      "id": "arxiv:2606.15870",
+      "id": "arxiv:2606.17421",
       "source": "arXiv",
-      "title": "Google's Training Supercomputers from TPU v2 to Ironwood: Architectural Stability, Scale, Resilience, Power Efficiency, and Sustainability Across Five Generations",
+      "title": "Bifrost: Hybrid TEE-FHE Inference for Privacy-Preserving Transformer and LLM Serving",
       "authors": [
-        "Norman P. Jouppi",
-        "Sridhar Lakshmanamurthy",
-        "Cliff Young",
-        "David Patterson"
+        "Chenghao Chen",
+        "Kailun Qin",
+        "Xiaolin Zhang",
+        "Chi Zhang",
+        "Dawu Gu"
       ],
       "authorAffiliations": [],
       "affiliations": [],
-      "abstract": "This paper (to appear in the July/August 2026 issue of IEEE Micro magazine) summarizes five generations of Google s TPUs, from TPU v2 to Ironwood, highlighting their evolution as scalable, resilient, power-efficient, sustainable supercomputers for AI training. It details the TPU s stable architecture, which has surprisingly easily accommodated the rapidly changing deep neural network workloads, such as the rise of Transformers. Key advancements over eight years include 10x increase in HBM capacity and bandwidth per node, a 100x increase in peak node performance, and a 3600x increase in supercomputer performance. The paper also discusses the role of optical circuit switches, built-in self test, and hardware replay in enhancing resilience and how TPU's environmental impact is reduced with substantial improvements in performance per Watt and in carbon emissions per floating point operation. It concludes by identifying six features that may well characterize successful training accelerators of this decade.",
+      "abstract": "Cloud-hosted transformer and large language model (LLM) inference creates a direct confidentiality problem: user prompts may contain sensitive code, business data, personal information, or regulated documents, yet remote serving exposes intermediate state to the cloud software stack and accelerator runtime. Fully homomorphic encryption (FHE) keeps accelerator-side execution ciphertext-only, but end-to-end LLM inference remains expensive because linear layers are interleaved with non-linear, cache-state, and refresh-sensitive operators. CPU trusted execution environments (TEEs) can execute those operators natively, but a CPU TEE alone does not define how an untrusted accelerator should participate. We present Bifrost, a hybrid TEE-FHE serving architecture in which secrets are provisioned only to an attested CPU TEE, while the accelerator, device memory, driver/runtime stack, and host software remain outside the trusted computing base. Bifrost uses FHE as a secure delegation mechanism for projection and feed-forward linear layers on accelerator-backed CKKS, while non-linear operators, attention-side control logic, KV-state transitions, and decrypt-then-encrypt refresh execute inside the CPU TEE. Bifrost+ further applies a prefill/decode split: prompt-side KV state is built inside the CPU TEE, and only decode-side state enters the hybrid ciphertext path. In an estimator-style comparison matching Euston's methodology, Bifrost reduces projected latency by 9.25x on GPT-2 (1.5B) and 9.91x on LLaMA 3 (8B). In direct CKKS/FHE deployments, Bifrost+ reduces TTFT by 14.6-45.8x on GPT-2 (124M) and 15.3-53.4x on Qwen3 (0.6B). The systems lesson is selective encrypted execution: use FHE only where ciphertext-only accelerator delegation is required, and keep non-linear, refresh, and prompt-side work inside the CPU TEE.",
       "venue": "arXiv",
-      "published": "2026-06-14T15:44:31Z",
-      "updated": "2026-06-14T15:44:31Z",
-      "url": "http://arxiv.org/abs/2606.15870v1",
-      "pdfUrl": "https://arxiv.org/pdf/2606.15870v1",
+      "published": "2026-06-16T02:06:57Z",
+      "updated": "2026-06-16T02:06:57Z",
+      "url": "http://arxiv.org/abs/2606.17421v1",
+      "pdfUrl": "https://arxiv.org/pdf/2606.17421v1",
       "categories": [
-        "cs.AR"
+        "cs.CR"
       ],
-      "collectedAt": "2026-06-16T22:23:11.941Z",
-      "firstSeenAt": "2026-06-16T22:23:11.941Z",
-      "lastSeenAt": "2026-06-16T22:23:11.941Z",
+      "collectedAt": "2026-06-17T22:14:47.038Z",
+      "firstSeenAt": "2026-06-17T22:14:47.038Z",
+      "lastSeenAt": "2026-06-17T22:14:47.038Z",
       "collectionType": "daily-latest",
       "matchedQuery": "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)",
       "collectionTypes": [
@@ -406,7 +292,7 @@
       "conferenceYears": [],
       "recommendationTrack": "hardware-primary",
       "recommendationLabel": "硬件体系结构主线",
-      "recommendationScore": 171,
+      "recommendationScore": 162,
       "relevanceReason": "命中 AI 处理器、体系结构、量化、训推系统或内存/缓存优化主题",
       "pdfStatus": "remote",
       "workflow": {
@@ -418,13 +304,13 @@
         "pdfStatus": "remote"
       },
       "digest": {
-        "summaryZh": "AI 摘要未生成。原始摘要要点：This paper (to appear in the July/August 2026 issue of IEEE Micro magazine) summarizes five generations of Google s TPUs, from TPU v2 to Ironwood, highlighting ...",
+        "summaryZh": "AI 摘要未生成。原始摘要要点：Cloud-hosted transformer and large language model (LLM) inference creates a direct confidentiality problem: user prompts may contain sensitive code, business da...",
         "motivationZh": "命令行启用了 --no-ai",
         "methodZh": "请配置 AI 后重新运行，以生成方法提炼。",
         "experimentsZh": "来源元数据未披露完整实验设置或结果。",
         "affiliationsZh": "未在 DBLP/arXiv 元数据中提供。",
         "tags": [
-          "cs.AR"
+          "cs.CR"
         ],
         "importance": 3,
         "researchFitZh": "AI harness 尚未完成分析，无法判断与用户研究方向的具体关系。",
@@ -482,33 +368,27 @@
       }
     },
     {
-      "id": "arxiv:2606.16135",
+      "id": "arxiv:2606.17497",
       "source": "arXiv",
-      "title": "SwiftCache: Efficient LLM Serving for Multi-turn Conversations with Heterogeneous KV Cache Sharing",
+      "title": "Design principles for stable and generalizable data-driven discretizations for solving linear hyperbolic conservation laws",
       "authors": [
-        "Jianmin Hu",
-        "Minxian Xu",
-        "Sa Wang",
-        "Chong Ma",
-        "Min Shen",
-        "Kejiang Ye",
-        "Lin Qu",
-        "Chengzhong Xu"
+        "Antoine-Alexis Nasser",
+        "Alistair Adcroft"
       ],
       "authorAffiliations": [],
       "affiliations": [],
-      "abstract": "Multi-turn conversation is a fundamental scenario in LLM applications, widely used in chatbots and AI agents. As the conversation evolves, historical tokens accumulate continuously. Existing systems cache their key-value (KV) pairs to avoid redundant computation. However, limited GPU memory (HBM) capacity often forces these KV caches to be offloaded to CPU memory or SSD, making KV cache reloads increasingly costly in terms of latency as the context grows. Meanwhile, the constrained HBM capacity also limits the maximum inference length, thereby restricting the number of turns that can be supported in a conversation. To address these two challenges, we propose SwiftCache, a collaborative inference system that enables heterogeneous models to share underutilized GPU memory and NVLink bandwidth within a server. Specifically, models with low KV cache demand donate idle GPU memory to store the prefix cache of high-demand models, allowing cross-model KV cache sharing over NVLink and avoiding slow PCIe transfers. SwiftCache further reduces memory pressure by keeping only the KV cache of the currently active layer in local GPU memory, thereby enabling longer-context inference. Our experiments on real-world workloads show that SwiftCache reduces P99 time-to-first-token (TTFT) by up to 69% and extends maximum context length by up to 3.98x compared to vLLM and SGLang, with minimal interference to co-located models.",
+      "abstract": "We investigate data-driven finite-volume discretizations of the linear advection equation in one dimension. Neural networks for use as numerical advection schemes are constructed adhering to first principles of numerical analysis, allowing us to examine how normalization, training data, and architectural choices influence stability, accuracy, and shape preservation. (i) We show that reconstruction based solely on cell averages leads to a multi-valued learning problem, explaining limited generalization when training data includes widely different curvature regimes. (ii) Numerical stability and good generalization can be achieved by enforcing semilinearity (Lin and Rood 1998) through local stencil-scale normalization, which ensures invariance under affine transformations of the inputs. (iii) A new data-driven flux limiter is introduced that outperforms the classical 'OSTVD3' (Arora and Roe, 1997) scheme in shape preservation by introducing mild antidiffusion in near-linear regimes, while higher-order reconstruction in non-monotonic regions provides limited benefit. (iv) We show that training on polynomial profiles yields stable, high-order accurate discretizations, with the polynomial degree controlling the formal order of accuracy. Together, these results illustrate how the representational, architectural, and training choices govern the stability and generalization of data-driven finite-volume schemes for linear advection.",
       "venue": "arXiv",
-      "published": "2026-06-15T02:48:15Z",
-      "updated": "2026-06-15T02:48:15Z",
-      "url": "http://arxiv.org/abs/2606.16135v1",
-      "pdfUrl": "https://arxiv.org/pdf/2606.16135v1",
+      "published": "2026-06-16T04:13:03Z",
+      "updated": "2026-06-16T04:13:03Z",
+      "url": "http://arxiv.org/abs/2606.17497v1",
+      "pdfUrl": "https://arxiv.org/pdf/2606.17497v1",
       "categories": [
-        "cs.DC"
+        "math.NA"
       ],
-      "collectedAt": "2026-06-16T22:23:11.940Z",
-      "firstSeenAt": "2026-06-16T22:23:11.940Z",
-      "lastSeenAt": "2026-06-16T22:23:11.940Z",
+      "collectedAt": "2026-06-17T22:14:47.038Z",
+      "firstSeenAt": "2026-06-17T22:14:47.038Z",
+      "lastSeenAt": "2026-06-17T22:14:47.038Z",
       "collectionType": "daily-latest",
       "matchedQuery": "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)",
       "collectionTypes": [
@@ -522,7 +402,7 @@
       "conferenceYears": [],
       "recommendationTrack": "hardware-primary",
       "recommendationLabel": "硬件体系结构主线",
-      "recommendationScore": 169.5,
+      "recommendationScore": 151.5,
       "relevanceReason": "命中 AI 处理器、体系结构、量化、训推系统或内存/缓存优化主题",
       "pdfStatus": "remote",
       "workflow": {
@@ -534,13 +414,13 @@
         "pdfStatus": "remote"
       },
       "digest": {
-        "summaryZh": "AI 摘要未生成。原始摘要要点：Multi-turn conversation is a fundamental scenario in LLM applications, widely used in chatbots and AI agents. As the conversation evolves, historical tokens acc...",
+        "summaryZh": "AI 摘要未生成。原始摘要要点：We investigate data-driven finite-volume discretizations of the linear advection equation in one dimension. Neural networks for use as numerical advection schem...",
         "motivationZh": "命令行启用了 --no-ai",
         "methodZh": "请配置 AI 后重新运行，以生成方法提炼。",
         "experimentsZh": "来源元数据未披露完整实验设置或结果。",
         "affiliationsZh": "未在 DBLP/arXiv 元数据中提供。",
         "tags": [
-          "cs.DC"
+          "math.NA"
         ],
         "importance": 3,
         "researchFitZh": "AI harness 尚未完成分析，无法判断与用户研究方向的具体关系。",
@@ -598,32 +478,35 @@
       }
     },
     {
-      "id": "arxiv:2606.15838",
+      "id": "arxiv:2606.17750",
       "source": "arXiv",
-      "title": "Intelligent Multimodal Retrieval and Reasoning for Geospatial Knowledge Discovery on the I-GUIDE Platform",
+      "title": "AC calorimetric study of magneto-quantum oscillations in anisotropic multiband V$_2$Ga$_5$ superconductor",
       "authors": [
-        "Yunfan Kang",
-        "Erick Li",
-        "Furqan Baig",
-        "Wei Hu",
-        "Alexander Michels",
-        "Anand Padmanabhan",
-        "Shaowen Wang"
+        "Yevhen V. Petrenko",
+        "Jozef Kačmarčík",
+        "Tomáš Samuely",
+        "Jozef Haniš",
+        "Slavomír Gabáni",
+        "Szymon Królak",
+        "Michal J. Winiarski",
+        "Tomasz Klimczuk",
+        "Martin Gmitra",
+        "Peter Samuely"
       ],
       "authorAffiliations": [],
       "affiliations": [],
-      "abstract": "Geospatial knowledge discovery increasingly requires search across heterogeneous artifacts: datasets, maps, notebooks, software, publications, and the provenance links among them. Conventional geoportals support metadata and spatial filtering, but they rarely provide semantic retrieval, graph-aware provenance traversal, and conversational synthesis in one integrated system. This paper presents I-GUIDE Smart Search, a production multimodal geospatial retrieval-augmented generation (RAG) system embedded in the I-GUIDE Platform, and reports on its design, deployment, and evaluation. The system combines production-maintained OpenSearch keyword, vector, and spatial indexes with a Neo4j knowledge graph and an iterative RAG pipeline for memory-aware query augmentation, reasoning, retrieval-method routing, relevance grading, grounded generation, hallucination and relevance checking. In a single-A100 RAG deployment, I-GUIDE Smart Search supports interactive use up to about 100 concurrent simulated users, reaching 4.4 requests per second with p50 latency near 25 seconds despite 20-50 LLM calls per query. For answer quality, we evaluate a four-category benchmark of 170 unique human-filtered user-facing queries, together with ten intent-specific probe sets generated from the deployed indexes and graph. Smart Search improves retrieved evidence coverage and judged answer quality over non-retrieval and naive-RAG baselines, with the clearest gains on exact-identifier, spatially constrained, simple-recommendation, and domain-specific factual queries requiring current indexed evidence. We distill transferable deployment lessons for spatial RAG systems, covering spatial metadata quality, graph provenance, retrieval routing, interface contracts, refusal-aware evaluation, latency-cost tradeoffs, and the role of the user interface in deployed geospatial cyberinfrastructure.",
+      "abstract": "Unlike de Haas--van Alphen measurements, heat-capacity magneto-quantum oscillations directly probe the oscillatory bulk quasiparticle density of states. Here, we report the observation of MQOs in V$_2$Ga$_5$ single crystals studied via highly sensitive ac calorimetry. The strongest MQO signal is observed for a magnetic field applied along the vanadium chains, in excellent agreement with de Haas--van Alphen magnetization data. A single dominant frequency of 126.6 T resolved by fast Fourier transform confirms the true bulk origin of the elliptical $γ$ Fermi-surface pocket located near the Z point of the Brillouin zone. The angular dependence of the FFT frequency closely tracks the anisotropy of the $γ$ pocket, as supported by first-principles calculations. Analysis of the temperature- and field-dependent MQO amplitudes allows the precise determination of the effective cyclotron mass, Dingle temperature, quantum relaxation time, carrier mobility, and electron mean free path. Furthermore, we demonstrate that the net Berry flux is invariant with respect to the magnetic-field orientation, as a consequence of a conserved hybridization phase twist within the $γ$ pocket. These findings establish ac calorimetry as a powerful macroscopic probe of topological orbital hybridization in complex intermetallics.",
       "venue": "arXiv",
-      "published": "2026-06-14T14:39:29Z",
-      "updated": "2026-06-14T14:39:29Z",
-      "url": "http://arxiv.org/abs/2606.15838v1",
-      "pdfUrl": "https://arxiv.org/pdf/2606.15838v1",
+      "published": "2026-06-16T10:10:40Z",
+      "updated": "2026-06-16T10:10:40Z",
+      "url": "http://arxiv.org/abs/2606.17750v1",
+      "pdfUrl": "https://arxiv.org/pdf/2606.17750v1",
       "categories": [
-        "cs.IR"
+        "cond-mat.supr-con"
       ],
-      "collectedAt": "2026-06-16T22:23:11.941Z",
-      "firstSeenAt": "2026-06-16T22:23:11.941Z",
-      "lastSeenAt": "2026-06-16T22:23:11.941Z",
+      "collectedAt": "2026-06-17T22:14:47.036Z",
+      "firstSeenAt": "2026-06-17T22:14:47.036Z",
+      "lastSeenAt": "2026-06-17T22:14:47.036Z",
       "collectionType": "daily-latest",
       "matchedQuery": "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)",
       "collectionTypes": [
@@ -637,7 +520,7 @@
       "conferenceYears": [],
       "recommendationTrack": "hardware-primary",
       "recommendationLabel": "硬件体系结构主线",
-      "recommendationScore": 149.5,
+      "recommendationScore": 145,
       "relevanceReason": "命中 AI 处理器、体系结构、量化、训推系统或内存/缓存优化主题",
       "pdfStatus": "remote",
       "workflow": {
@@ -649,13 +532,13 @@
         "pdfStatus": "remote"
       },
       "digest": {
-        "summaryZh": "AI 摘要未生成。原始摘要要点：Geospatial knowledge discovery increasingly requires search across heterogeneous artifacts: datasets, maps, notebooks, software, publications, and the provenanc...",
+        "summaryZh": "AI 摘要未生成。原始摘要要点：Unlike de Haas--van Alphen measurements, heat-capacity magneto-quantum oscillations directly probe the oscillatory bulk quasiparticle density of states. Here, w...",
         "motivationZh": "命令行启用了 --no-ai",
         "methodZh": "请配置 AI 后重新运行，以生成方法提炼。",
         "experimentsZh": "来源元数据未披露完整实验设置或结果。",
         "affiliationsZh": "未在 DBLP/arXiv 元数据中提供。",
         "tags": [
-          "cs.IR"
+          "cond-mat.supr-con"
         ],
         "importance": 3,
         "researchFitZh": "AI harness 尚未完成分析，无法判断与用户研究方向的具体关系。",
@@ -713,34 +596,27 @@
       }
     },
     {
-      "id": "arxiv:2606.15899",
+      "id": "arxiv:2606.18146",
       "source": "arXiv",
-      "title": "SkillVetBench: LLM-as-Judge for Multi-Dimensional Security Risk Evaluation in Open-Source LLM Agent Skills",
+      "title": "Spatial Disease Mapping and Disparity Detection Using Generative AI: An Amortized Bayesian Learning Framework",
       "authors": [
-        "Ismail Hossain",
-        "Sai Puppala",
-        "Md Jahangir Alam",
-        "Tanzim Ahad",
-        "Sajedul Talukder"
+        "Luca Aiello",
+        "Sudipto Banerjee"
       ],
       "authorAffiliations": [],
       "affiliations": [],
-      "abstract": "Open-source LLM agent ecosystems are growing rapidly, yet the security of community-contributed skills - modular tool definitions that extend agent capabilities - remains largely unvetted. The gap we fill: existing scanners operate at the code layer and are structurally blind to instruction-layer and multi-agent risk - natural-language directives that hijack an agent, exfiltrate data through encoded side channels, or chain harm across pipelines - so what is needed is a semantic, multi-dimensional vetting system rather than another signature matcher. We present SKILLVETBENCH, a live public leaderboard on Hugging Face that uses an LLM-as-Judge to vet agent skills. What is new: SARS (Skill Agentic Risk Score), a five-dimensional agentic-risk metric with a principled weighted formula for instruction-following systems. What is integrated: full CVSS v4.0 vector decomposition and a ClawHub dual-view that places our LLM-generated review beside the official marketplace verdict. What is demonstrated: drawing on our companion benchmark paper [ 1], the LLM-as-Judge stage achieves zero false negatives across 78 confirmed-malicious skills and zero false positives across 22 benign controls, while the best static baseline (SKILLSIEVE) still misses 15%; for instruction-layer categories such as Prompt Injection and Memory Poisoning, conventional tools miss between 89% and 100% of threats (e.g., CODEBERT detects none of nine memory-poisoning skills). Detection rates vary from 35% to 95% across four LLM evaluators, motivating ensemble scoring in production deployments.",
+      "abstract": "We introduce an amortized Bayesian framework for spatial boundary detection that generalizes posterior inference across areal graphs with varying numbers of regions and diverse adjacency structures. The underlying model couples a Poisson count likelihood with a covariate-driven rule to interrupt smoothing across dissimilar neighboring areas, utilizing a directed acyclic graph autoregressive (DAGAR) prior to capture residual spatial dependence. To approximate the target posterior distribution, a neural engine is trained on simulated maps: a permutation-invariant summary network encodes graph-aware representations of the observed counts, offsets, covariates, and adjacency matrices, while a conditional normalizing flow generates the approximate posterior draws. Simulation studies demonstrate accurate parameter recovery, near-nominal interval coverage, well-calibrated posterior predictive behavior, and informative posterior boundary probabilities. Benchmarking against Markov chain Monte Carlo (MCMC) confirms close agreement regarding primary boundary evidence, and an ablation study validates the inclusion of model-guided graph summaries. Finally, applications to Glasgow respiratory disease and California lung cancer data demonstrate that a single trained neural engine can be seamlessly deployed across real-world maps with distinct graph structures, yielding boundary conclusions consistent with established localized smoothing analyses.",
       "venue": "arXiv",
-      "published": "2026-06-14T16:30:33Z",
-      "updated": "2026-06-14T16:30:33Z",
-      "url": "http://arxiv.org/abs/2606.15899v1",
-      "pdfUrl": "https://arxiv.org/pdf/2606.15899v1",
+      "published": "2026-06-16T16:45:39Z",
+      "updated": "2026-06-16T16:45:39Z",
+      "url": "http://arxiv.org/abs/2606.18146v1",
+      "pdfUrl": "https://arxiv.org/pdf/2606.18146v1",
       "categories": [
-        "cs.CR",
-        "cs.AI",
-        "cs.HC",
-        "cs.LG",
-        "cs.MA"
+        "stat.ME"
       ],
-      "collectedAt": "2026-06-16T22:23:11.941Z",
-      "firstSeenAt": "2026-06-16T22:23:11.941Z",
-      "lastSeenAt": "2026-06-16T22:23:11.941Z",
+      "collectedAt": "2026-06-17T22:14:47.035Z",
+      "firstSeenAt": "2026-06-17T22:14:47.035Z",
+      "lastSeenAt": "2026-06-17T22:14:47.035Z",
       "collectionType": "daily-latest",
       "matchedQuery": "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)",
       "collectionTypes": [
@@ -754,7 +630,7 @@
       "conferenceYears": [],
       "recommendationTrack": "hardware-primary",
       "recommendationLabel": "硬件体系结构主线",
-      "recommendationScore": 147.25,
+      "recommendationScore": 141,
       "relevanceReason": "命中 AI 处理器、体系结构、量化、训推系统或内存/缓存优化主题",
       "pdfStatus": "remote",
       "workflow": {
@@ -766,17 +642,13 @@
         "pdfStatus": "remote"
       },
       "digest": {
-        "summaryZh": "AI 摘要未生成。原始摘要要点：Open-source LLM agent ecosystems are growing rapidly, yet the security of community-contributed skills - modular tool definitions that extend agent capabilities...",
+        "summaryZh": "AI 摘要未生成。原始摘要要点：We introduce an amortized Bayesian framework for spatial boundary detection that generalizes posterior inference across areal graphs with varying numbers of reg...",
         "motivationZh": "命令行启用了 --no-ai",
         "methodZh": "请配置 AI 后重新运行，以生成方法提炼。",
         "experimentsZh": "来源元数据未披露完整实验设置或结果。",
         "affiliationsZh": "未在 DBLP/arXiv 元数据中提供。",
         "tags": [
-          "cs.CR",
-          "cs.AI",
-          "cs.HC",
-          "cs.LG",
-          "cs.MA"
+          "stat.ME"
         ],
         "importance": 3,
         "researchFitZh": "AI harness 尚未完成分析，无法判断与用户研究方向的具体关系。",
@@ -834,37 +706,153 @@
       }
     },
     {
-      "id": "arxiv:2606.17046",
+      "id": "arxiv:2606.18140",
       "source": "arXiv",
-      "title": "Geometric Action Model for Robot Policy Learning",
+      "title": "Singular Vector Finite Element Basis Functions for Tetrahedra in Complex Electromagnetic Geometries",
       "authors": [
-        "Jisang Han",
-        "Seonghu Jeon",
-        "Jaewoo Jung",
-        "René Zurbrügg",
-        "Honggyu An",
-        "Tifanny Portela",
-        "Marco Hutter",
-        "Marc Pollefeys",
-        "Seungryong Kim",
-        "Sunghwan Hong"
+        "Samuel T. Elkin",
+        "Ghazi Khan",
+        "Ebrahim Forati",
+        "Brandon W. Langley",
+        "Dogan Timucin",
+        "Reza Molavi",
+        "Thomas E. Roth"
       ],
       "authorAffiliations": [],
       "affiliations": [],
-      "abstract": "Generalist robot policies must follow user instructions while reasoning about how objects, cameras, and robot actions interact in the 3D physical world. Recent vision-language-action models (VLAs) and video world-action models (WAMs) inherit strong semantic or temporal priors from large-scale foundation models, but they still operate primarily on 2D image frames or 2D-derived latent spaces, leaving implicit the 3D geometry required for contact-rich manipulation. We propose the Geometric Action Model (GAM), a language-conditioned manipulation policy that directly repurposes a pretrained geometric foundation model (GFM) as a shared substrate for perception, temporal prediction, and action decoding. GAM splits the GFM at an intermediate layer: the shallow layers serve as an observation encoder, and a causal future predictor inserted at the split layer forecasts future latent tokens conditioned on language, proprioception, and action history. The predicted future tokens are then routed through the remaining GFM blocks for feature propagation and decoding, allowing a single backbone to produce both future geometry and actions. This design equips the GFM with language-conditioned temporal world modeling through minimal architectural modification while preserving its rich geometric priors. Across a broad suite of simulation and real-robot manipulation benchmarks, GAM is more accurate, more robust, faster, and lighter than current foundation-model-scale baselines.",
+      "abstract": "Electromagnetic finite element method (FEM) implementations using traditional basis functions struggle to accurately represent field behavior near singular features such as conducting wedges. To combat this, specialized singular basis functions have been introduced to directly model the singular fields in these regions, leading to substantially improved performance. While these efforts have been pursued extensively in 2D, few functions have been developed for 3D elements. In this work, we develop basis functions for this in tetrahedra. Unlike prior functions, these basis functions are additive, meaning they are included alongside the standard vector basis functions to achieve more robust performance. Further, these functions are designed to be adaptable to tetrahedra touching several unique singular features by using combinations of basis functions singular with respect to each node and edge in the element, making them applicable to highly complex geometries. Higher-order interpolatory versions of the basis functions for modeling singular behavior with greater accuracy are also provided. These basis functions lead to substantial improvements in accuracy relative to the standard basis functions, and allow otherwise expensive simulations to be performed at far lower costs. As an application example, we perform simulations to extract critical quantities for designing superconducting qubits that significantly depend on the behavior of singular fields. In Ansys HFSS, this took 21.27 hours and a peak memory usage of 6.23 TB with 800 processors available, while using our singular basis functions achieved comparable results in 196 seconds while using 27.24 GB of memory and only 16 processors. Due to these benefits, our singular basis functions could be applied to enable design optimization of electromagnetic geometries with dominantly singular behavior, such as superconducting qubits.",
       "venue": "arXiv",
-      "published": "2026-06-15T17:58:03Z",
-      "updated": "2026-06-15T17:58:03Z",
-      "url": "http://arxiv.org/abs/2606.17046v1",
-      "pdfUrl": "https://arxiv.org/pdf/2606.17046v1",
+      "published": "2026-06-16T16:41:10Z",
+      "updated": "2026-06-16T16:41:10Z",
+      "url": "http://arxiv.org/abs/2606.18140v1",
+      "pdfUrl": "https://arxiv.org/pdf/2606.18140v1",
       "categories": [
-        "cs.RO",
-        "cs.CV",
-        "cs.LG"
+        "physics.comp-ph",
+        "quant-ph"
       ],
-      "collectedAt": "2026-06-16T22:23:13.613Z",
-      "firstSeenAt": "2026-06-16T22:23:13.613Z",
-      "lastSeenAt": "2026-06-16T22:23:13.613Z",
+      "collectedAt": "2026-06-17T22:14:47.035Z",
+      "firstSeenAt": "2026-06-17T22:14:47.035Z",
+      "lastSeenAt": "2026-06-17T22:14:47.035Z",
+      "collectionType": "daily-latest",
+      "matchedQuery": "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)",
+      "collectionTypes": [
+        "daily-latest"
+      ],
+      "matchedQueries": [
+        "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)"
+      ],
+      "targetThemes": [],
+      "conferenceVenues": [],
+      "conferenceYears": [],
+      "recommendationTrack": "hardware-primary",
+      "recommendationLabel": "硬件体系结构主线",
+      "recommendationScore": 141,
+      "relevanceReason": "命中 AI 处理器、体系结构、量化、训推系统或内存/缓存优化主题",
+      "pdfStatus": "remote",
+      "workflow": {
+        "digestStatus": "pending",
+        "emailStatus": "waiting-digest",
+        "digestError": "命令行启用了 --no-ai",
+        "harnessVersion": "paper-reader-v1",
+        "collectStatus": "collected",
+        "pdfStatus": "remote"
+      },
+      "digest": {
+        "summaryZh": "AI 摘要未生成。原始摘要要点：Electromagnetic finite element method (FEM) implementations using traditional basis functions struggle to accurately represent field behavior near singular feat...",
+        "motivationZh": "命令行启用了 --no-ai",
+        "methodZh": "请配置 AI 后重新运行，以生成方法提炼。",
+        "experimentsZh": "来源元数据未披露完整实验设置或结果。",
+        "affiliationsZh": "未在 DBLP/arXiv 元数据中提供。",
+        "tags": [
+          "physics.comp-ph",
+          "quant-ph"
+        ],
+        "importance": 3,
+        "researchFitZh": "AI harness 尚未完成分析，无法判断与用户研究方向的具体关系。",
+        "hardwareRelevance": 1,
+        "algorithmRelevance": 1,
+        "systemRelevance": 1,
+        "readPriority": "archive",
+        "whyReadZh": "需要完成 motivation、method 和实验结果分析后再判断是否值得深读。",
+        "limitationsZh": "命令行启用了 --no-ai",
+        "motivationDetail": {
+          "problemZh": "harness 未完成分析。",
+          "gapZh": "harness 未完成分析。",
+          "whyImportantZh": "harness 未完成分析。",
+          "userRelevanceZh": "harness 未完成分析。",
+          "evidence": "not analyzed"
+        },
+        "methodDetail": {
+          "coreIdeaZh": "harness 未完成分析。",
+          "componentsZh": [
+            "未分析"
+          ],
+          "hardwareSystemDetailZh": "harness 未完成分析。",
+          "noveltyZh": "harness 未完成分析。",
+          "evidence": "not analyzed"
+        },
+        "experimentDetail": {
+          "setupZh": "harness 未完成分析。",
+          "baselinesZh": "harness 未完成分析。",
+          "metricsZh": [
+            "未分析"
+          ],
+          "mainResultsZh": "harness 未完成分析。",
+          "limitationsZh": "harness 未完成分析。",
+          "evidence": "not analyzed"
+        },
+        "evidence": {
+          "usedSources": [
+            "metadata"
+          ],
+          "affiliationEvidence": "",
+          "experimentEvidence": "",
+          "missingFields": [
+            "motivation",
+            "method",
+            "experiments"
+          ]
+        },
+        "confidence": {
+          "summary": 0.2,
+          "motivation": 0,
+          "method": 0,
+          "experiments": 0,
+          "affiliations": 0
+        }
+      }
+    },
+    {
+      "id": "arxiv:2606.18216",
+      "source": "arXiv",
+      "title": "Zone of Proximal Policy Optimization: Teacher in Prompts, Not Gradients",
+      "authors": [
+        "Byung-Kwan Lee",
+        "Ximing Lu",
+        "Shizhe Diao",
+        "Minki Kang",
+        "Saurav Muralidharan",
+        "Karan Sapra",
+        "Andrew Tao",
+        "Pavlo Molchanov",
+        "Yejin Choi",
+        "Yu-Chiang Frank Wang",
+        "Ryo Hachiuma"
+      ],
+      "authorAffiliations": [],
+      "affiliations": [],
+      "abstract": "Knowledge distillation transfers a teacher's competence to a small student but is brittle in the small-student regime: forcing the student to imitate logits from a much larger teacher concentrates it on the teacher's sharpest modes, hurting generalization on benchmark families beyond the training corpus. Reinforcement learning (RL) avoids logit imitation by training on the student's own rollouts. However, on questions where every rollout fails-yielding zero advantage and being silently discarded-injecting a stronger teacher's response into the policy gradient breaks the on-policy assumption and induces drift. We introduce Zone of Proximal Policy Optimization (ZPPO), inspired by Vygotsky's zone of proximal development, which keeps the teacher inside the prompt rather than the policy gradient. On hard questions, ZPPO constructs two reformulated prompts: a Binary Candidate-included Question (BCQ) pairs one correct teacher response with one incorrect student response as anonymized candidates the student must discriminate, and a Negative Candidate-included Question (NCQ) aggregates the student's wrong rollouts into a single prompt to surface their shared failure modes. A prompt replay buffer recirculates each hard question until it either graduates-the student's mean rollout accuracy on it reaches half- or is FIFO-evicted under finite capacity, amplifying BCQ and NCQ inside the student's current zone of proximal development. On the Qwen3.5 family at four student scales (0.8B-9B) with a 27B teacher, post-trained as vision-language models and evaluated on a 31-benchmark suite (16 VLM, 10 LLM, 5 Video), ZPPO outperforms off/on-policy distillation and GRPO, with the largest gains at the smallest scale.",
+      "venue": "arXiv",
+      "published": "2026-06-16T17:46:02Z",
+      "updated": "2026-06-16T17:46:02Z",
+      "url": "http://arxiv.org/abs/2606.18216v1",
+      "pdfUrl": "https://arxiv.org/pdf/2606.18216v1",
+      "categories": [
+        "cs.CL"
+      ],
+      "collectedAt": "2026-06-17T22:14:48.906Z",
+      "firstSeenAt": "2026-06-17T22:14:48.906Z",
+      "lastSeenAt": "2026-06-17T22:14:48.906Z",
       "collectionType": "daily-latest",
       "matchedQuery": "(all:agent OR all:agents OR all:agentic OR all:reasoning OR all:post-training OR all:alignment OR all:multimodal OR all:world-model) AND (all:LLM OR all:foundation OR all:language)",
       "collectionTypes": [
@@ -878,7 +866,7 @@
       "conferenceYears": [],
       "recommendationTrack": "algorithm-trend",
       "recommendationLabel": "算法趋势观察",
-      "recommendationScore": 49.6,
+      "recommendationScore": 38.6,
       "relevanceReason": "命中 LLM/Agent/多模态/后训练等算法趋势主题",
       "pdfStatus": "remote",
       "workflow": {
@@ -890,15 +878,13 @@
         "pdfStatus": "remote"
       },
       "digest": {
-        "summaryZh": "AI 摘要未生成。原始摘要要点：Generalist robot policies must follow user instructions while reasoning about how objects, cameras, and robot actions interact in the 3D physical world. Recent ...",
+        "summaryZh": "AI 摘要未生成。原始摘要要点：Knowledge distillation transfers a teacher's competence to a small student but is brittle in the small-student regime: forcing the student to imitate logits fro...",
         "motivationZh": "命令行启用了 --no-ai",
         "methodZh": "请配置 AI 后重新运行，以生成方法提炼。",
         "experimentsZh": "来源元数据未披露完整实验设置或结果。",
         "affiliationsZh": "未在 DBLP/arXiv 元数据中提供。",
         "tags": [
-          "cs.RO",
-          "cs.CV",
-          "cs.LG"
+          "cs.CL"
         ],
         "importance": 3,
         "researchFitZh": "AI harness 尚未完成分析，无法判断与用户研究方向的具体关系。",
@@ -956,33 +942,32 @@
       }
     },
     {
-      "id": "arxiv:2606.17053",
+      "id": "arxiv:2606.18250",
       "source": "arXiv",
-      "title": "Context-Aware RL for Agentic and Multimodal LLMs",
+      "title": "Future Dynamic 3D Reconstruction: A 3D World Model with Disentangled Ego-Motion",
       "authors": [
-        "Peiyang Xu",
-        "Bangzheng Li",
-        "Sijia Liu",
-        "Karthik R. Narasimhan",
-        "Pramod Viswanath",
-        "Prateek Mittal",
-        "Xingyu Fu"
+        "Nils Morbitzer",
+        "Jonathan Evers",
+        "Artem Savkin",
+        "Thomas Stauner",
+        "Nassir Navab",
+        "Federico Tombari",
+        "Stefano Gasperini"
       ],
       "authorAffiliations": [],
       "affiliations": [],
-      "abstract": "Large language models (LLMs) often fail when answering requires identifying a small but decisive piece of evidence within a long or complex context, such as a single line in a tool trace or a subtle detail in an image. We propose ContextRL, a context-aware reinforcement learning (RL) method that improves long-horizon reasoning and multimodal performance through an \\emph{indirect} auxiliary objective. Instead of supervising only the final answer, ContextRL presents the model with a query, an answer, and two highly similar contexts, and rewards it for selecting the context that supports the query--answer pair, thereby encouraging fine-grained grounding. We construct contrastive context data in two domains: for coding agents, trajectories serve as contexts, yielding 1k pairs built via condition filtering; for multimodal reasoning, images serve as contexts, yielding 7K pairs built via generative editing and similarity search. ContextRL achieves average gains of +2.2% over standard GRPO on 5 long-horizon benchmarks, and +1.8% across 12 diverse visual question answering benchmarks. To disentangle the effect of the proposed objective from that of additional data, we compare against data-augmentation baselines that repurpose the same contrastive contexts as standard query--context--answer examples. These baselines provide little to no improvement, showing that the gains arise from the proposed context-selection objective rather than from the contrastive data alone.",
+      "abstract": "Forecasting the evolution of dynamic environments is crucial for autonomous agents. While generative world models have recently achieved high photorealism in 2D video synthesis by mixing ego-motion and environmental dynamics within the image plane, they exhibit physical inconsistencies, such as morphing or vanishing objects, especially over long time horizons. In this paper, we propose FR3D, a world model that predicts a persistent 3D latent representation for future dynamic 3D reconstruction. Unlike prior works that treat the world as a sequence of image-based features, FR3D explicitly decouples the 3D evolution of the scene from the agent's trajectory, treating the inferred ego-motion as a latent proxy for action. This disentanglement resolves the ambiguities between self-motion and world-motion, ensuring geometric consistency into the future. Furthermore, we introduce a teacher-student distillation strategy that leverages the spatial \"common sense\" of off-the-shelf foundation models, leading to robust zero-shot generalization. Extensive experiments demonstrate FR3D's strong performance for future dynamic 3D reconstruction from monocular observations across multiple datasets, even 2 seconds into the future. Project page: https://fr3d-wm.github.io.",
       "venue": "arXiv",
-      "published": "2026-06-15T17:59:28Z",
-      "updated": "2026-06-15T17:59:28Z",
-      "url": "http://arxiv.org/abs/2606.17053v1",
-      "pdfUrl": "https://arxiv.org/pdf/2606.17053v1",
+      "published": "2026-06-16T17:59:46Z",
+      "updated": "2026-06-16T17:59:46Z",
+      "url": "http://arxiv.org/abs/2606.18250v1",
+      "pdfUrl": "https://arxiv.org/pdf/2606.18250v1",
       "categories": [
-        "cs.CL",
         "cs.CV"
       ],
-      "collectedAt": "2026-06-16T22:23:13.613Z",
-      "firstSeenAt": "2026-06-16T22:23:13.613Z",
-      "lastSeenAt": "2026-06-16T22:23:13.613Z",
+      "collectedAt": "2026-06-17T22:14:48.906Z",
+      "firstSeenAt": "2026-06-17T22:14:48.906Z",
+      "lastSeenAt": "2026-06-17T22:14:48.906Z",
       "collectionType": "daily-latest",
       "matchedQuery": "(all:agent OR all:agents OR all:agentic OR all:reasoning OR all:post-training OR all:alignment OR all:multimodal OR all:world-model) AND (all:LLM OR all:foundation OR all:language)",
       "collectionTypes": [
@@ -996,7 +981,7 @@
       "conferenceYears": [],
       "recommendationTrack": "algorithm-trend",
       "recommendationLabel": "算法趋势观察",
-      "recommendationScore": 40.2,
+      "recommendationScore": 37.8,
       "relevanceReason": "命中 LLM/Agent/多模态/后训练等算法趋势主题",
       "pdfStatus": "remote",
       "workflow": {
@@ -1008,13 +993,12 @@
         "pdfStatus": "remote"
       },
       "digest": {
-        "summaryZh": "AI 摘要未生成。原始摘要要点：Large language models (LLMs) often fail when answering requires identifying a small but decisive piece of evidence within a long or complex context, such as a s...",
+        "summaryZh": "AI 摘要未生成。原始摘要要点：Forecasting the evolution of dynamic environments is crucial for autonomous agents. While generative world models have recently achieved high photorealism in 2D...",
         "motivationZh": "命令行启用了 --no-ai",
         "methodZh": "请配置 AI 后重新运行，以生成方法提炼。",
         "experimentsZh": "来源元数据未披露完整实验设置或结果。",
         "affiliationsZh": "未在 DBLP/arXiv 元数据中提供。",
         "tags": [
-          "cs.CL",
           "cs.CV"
         ],
         "importance": 3,
