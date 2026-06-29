@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-06-28T21:35:25.331Z",
-  "digestDate": "2026-06-29",
+  "generatedAt": "2026-06-29T21:49:31.933Z",
+  "digestDate": "2026-06-30",
   "kind": "daily-new",
   "timezone": "Asia/Shanghai",
   "siteUrl": "https://YouthLiuYS.github.io/PaperDigestAgent/",
@@ -126,7 +126,7 @@
     "dailyCandidates": 8,
     "conferenceCandidates": 0,
     "backfillCandidates": 0,
-    "rawCandidates": 64,
+    "rawCandidates": 67,
     "newlyAdded": 8,
     "pendingDigest": 8,
     "pendingEmail": 0,
@@ -140,121 +140,6 @@
     "lowRelevance": 0
   },
   "papers": [
-    {
-      "id": "arxiv:2606.26607",
-      "source": "arXiv",
-      "title": "Moebius: Serving Mixture-of-Expert Models with Seamless Runtime Parallelism Switch",
-      "authors": [
-        "Shaoyu Wang",
-        "Yizhuo Liang",
-        "Jaeyong Song",
-        "Chong Li",
-        "Seo Jin Park"
-      ],
-      "authorAffiliations": [],
-      "affiliations": [],
-      "abstract": "Mixture-of-Experts (MoE) architectures scale large language models (LLMs) to hundreds of billions of parameters. Serving a single MoE model requires multiple GPUs operating in parallel, typically through tensor parallelism (TP) or expert parallelism (EP). The optimal choice depends on the number of in-flight requests: TP is faster at low concurrency, whereas EP wins at high concurrency. Production workloads cross this boundary continually: online serving sees bursty arrivals that subside into quiet periods, and reinforcement-learning rollouts begin as a high-concurrency burst that decays into a long tail of stragglers. Pinning either layout therefore forfeits performance when the workload crosses to the other side. We present Moebius, a serving system that switches between EP and TP at runtime without restarting the engine or dropping in-flight requests. Our key insight is that EP and TP are two layouts of one model, not two models: they compute the same function over byte-identical expert weights and KV cache, so a switch changes only which rank owns each slice. Moving those owner-changed slices is the sole irreducible cost, and modern high-bandwidth GPU interconnects make it fast enough to do between decode steps without draining in-flight requests. Moebius preserves each parallelism's runtime resident, and reshards the single copy of expert weights and KV cache at fixed addresses with fused GPU-to-GPU transfer kernels. On 8x H200 GPUs serving Qwen3-235B-A22B, Moebius matches the better static parallelism at every operating point, and beats it on RL rollouts by 1.16-1.25x across steps. Each switch completes in 215-434 ms, and Moebius holds both layouts resident with only 2.4% memory overhead.",
-      "venue": "arXiv",
-      "published": "2026-06-25T05:10:20Z",
-      "updated": "2026-06-25T05:10:20Z",
-      "url": "http://arxiv.org/abs/2606.26607v1",
-      "pdfUrl": "https://arxiv.org/pdf/2606.26607v1",
-      "categories": [
-        "cs.DC"
-      ],
-      "collectedAt": "2026-06-28T21:30:49.313Z",
-      "firstSeenAt": "2026-06-28T21:30:49.313Z",
-      "lastSeenAt": "2026-06-28T21:30:49.313Z",
-      "collectionType": "daily-latest",
-      "matchedQuery": "(cat:cs.AR OR cat:cs.DC OR cat:cs.PF) AND (all:LLM OR all:transformer OR all:foundation OR all:language) AND (all:accelerator OR all:processor OR all:architecture OR all:hardware OR all:system OR all:serving OR all:training OR all:inference OR all:cache)",
-      "collectionTypes": [
-        "daily-latest"
-      ],
-      "matchedQueries": [
-        "(cat:cs.AR OR cat:cs.DC OR cat:cs.PF) AND (all:LLM OR all:transformer OR all:foundation OR all:language) AND (all:accelerator OR all:processor OR all:architecture OR all:hardware OR all:system OR all:serving OR all:training OR all:inference OR all:cache)",
-        "(all:prefill OR all:decoding OR all:KV OR all:cache OR all:attention) AND (all:accelerator OR all:kernel OR all:compiler OR all:serving OR all:memory) AND (all:LLM OR all:transformer)",
-        "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)"
-      ],
-      "targetThemes": [],
-      "conferenceVenues": [],
-      "conferenceYears": [],
-      "digest": {
-        "summaryZh": "AI 摘要未生成。原始摘要要点：Mixture-of-Experts (MoE) architectures scale large language models (LLMs) to hundreds of billions of parameters. Serving a single MoE model requires multiple GP...",
-        "motivationZh": "命令行启用了 --no-ai",
-        "methodZh": "请配置 AI 后重新运行，以生成方法提炼。",
-        "experimentsZh": "来源元数据未披露完整实验设置或结果。",
-        "affiliationsZh": "未在 DBLP/arXiv 元数据中提供。",
-        "tags": [
-          "cs.DC"
-        ],
-        "importance": 3,
-        "researchFitZh": "AI harness 尚未完成分析，无法判断与用户研究方向的具体关系。",
-        "hardwareRelevance": 1,
-        "algorithmRelevance": 1,
-        "systemRelevance": 1,
-        "readPriority": "archive",
-        "whyReadZh": "需要完成 motivation、method 和实验结果分析后再判断是否值得深读。",
-        "limitationsZh": "命令行启用了 --no-ai",
-        "motivationDetail": {
-          "problemZh": "harness 未完成分析。",
-          "gapZh": "harness 未完成分析。",
-          "whyImportantZh": "harness 未完成分析。",
-          "userRelevanceZh": "harness 未完成分析。",
-          "evidence": "not analyzed"
-        },
-        "methodDetail": {
-          "coreIdeaZh": "harness 未完成分析。",
-          "componentsZh": [
-            "未分析"
-          ],
-          "hardwareSystemDetailZh": "harness 未完成分析。",
-          "noveltyZh": "harness 未完成分析。",
-          "evidence": "not analyzed"
-        },
-        "experimentDetail": {
-          "setupZh": "harness 未完成分析。",
-          "baselinesZh": "harness 未完成分析。",
-          "metricsZh": [
-            "未分析"
-          ],
-          "mainResultsZh": "harness 未完成分析。",
-          "limitationsZh": "harness 未完成分析。",
-          "evidence": "not analyzed"
-        },
-        "evidence": {
-          "usedSources": [
-            "metadata"
-          ],
-          "affiliationEvidence": "",
-          "experimentEvidence": "",
-          "missingFields": [
-            "motivation",
-            "method",
-            "experiments"
-          ]
-        },
-        "confidence": {
-          "summary": 0.2,
-          "motivation": 0,
-          "method": 0,
-          "experiments": 0,
-          "affiliations": 0
-        }
-      },
-      "recommendationTrack": "hardware-primary",
-      "recommendationLabel": "硬件体系结构主线",
-      "recommendationScore": 204,
-      "relevanceReason": "命中 AI 处理器、体系结构、量化、训推系统或内存/缓存优化主题",
-      "pdfStatus": "remote",
-      "workflow": {
-        "digestStatus": "pending",
-        "emailStatus": "waiting-digest",
-        "digestError": "命令行启用了 --no-ai",
-        "harnessVersion": "paper-reader-v1",
-        "collectStatus": "collected",
-        "pdfStatus": "remote"
-      }
-    },
     {
       "id": "arxiv:2606.26883",
       "source": "arXiv",
@@ -277,9 +162,9 @@
       "categories": [
         "cs.DL"
       ],
-      "collectedAt": "2026-06-28T21:30:52.936Z",
-      "firstSeenAt": "2026-06-28T21:30:52.936Z",
-      "lastSeenAt": "2026-06-28T21:30:52.936Z",
+      "collectedAt": "2026-06-29T21:45:02.120Z",
+      "firstSeenAt": "2026-06-29T21:45:02.120Z",
+      "lastSeenAt": "2026-06-29T21:45:02.120Z",
       "collectionType": "daily-latest",
       "matchedQuery": "(all:prefill OR all:decoding OR all:KV OR all:cache OR all:attention) AND (all:accelerator OR all:kernel OR all:compiler OR all:serving OR all:memory) AND (all:LLM OR all:transformer)",
       "collectionTypes": [
@@ -370,29 +255,29 @@
       }
     },
     {
-      "id": "arxiv:2606.26530",
+      "id": "arxiv:2606.27884",
       "source": "arXiv",
-      "title": "\\textsc{DiARC}: Distinguishing Positive and Negative Samples Helps Improving ARC-like Reasoning Ability of Large Language Models",
+      "title": "SEADA: An efficient methodology for optimizing mixed-precision DNNs on multi-precision spatial architectures",
       "authors": [
-        "Yuxuan Yang",
-        "Feiyang Li",
-        "Yile Wang"
+        "Leandro Fiorin",
+        "Marco Ronzani",
+        "Cristina Silvano"
       ],
       "authorAffiliations": [],
       "affiliations": [],
-      "abstract": "The Abstraction and Reasoning Corpus (ARC;~\\citealp{chollet2019measure}) contains tasks that require summarizing patterns from limited grid samples and predicting output grids. Recently, many large language model based approaches have attempted to transform it into a text-based reasoning task. However, methods based on open-source models have generally yielded unsatisfactory results, while those relying on closed-source models are too costly. Current efforts mainly focus on data augmentation, constructing ARC-like data for more comprehensive supervised fine-tuning. In this work, we argue that solving ARC-like problems requires not only \\textit{positive} sample supervision but also the ability to improve model reasoning by distinguishing \\textit{negative} samples. To this end, we draw on the idea of preference alignment and propose \\textsc{DiARC}, a method that constructs preference pairs to enable the model to distinguish between them. Specifically, we propose three ways to construct negative samples, including output-level visual transformations, DSL-level rule inversion, and task-specific rule editing. The resulting negative samples provide informative near-miss alternatives while keeping the observed demonstrations unchanged. Experimental results across multiple ARC-like benchmarks show that \\textsc{DiARC} consistently improves performance over baseline models. The code is released at https://github.com/szu-tera/DiARC.",
+      "abstract": "Mixed-precision computation has been introduced in deep neural networks (DNNs) as an effective approach to reduce latency, energy consumption, and memory footprint. However, efficiently mapping mixed-precision networks onto multi-precision spatial architectures poses several challenges. These include determining the appropriate precision for each layer, balancing layer-wise accuracy sensitivity to quantization against architectural heterogeneity and system-level constraints, and accurately estimating the system-level cost of heterogeneous precision assignments. This work presents SEADA, an efficient methodology designed to address these challenges. SEADA comprises: (i) a configurable system-level analytical cost model of a multi-precision spatial accelerator architecture; (ii) a fast mapping tool that identifies near-optimal mappings of DNN workloads onto the target integer accelerator; (iii) analytical models for floating-point layers to estimate the overall benefits of mixed-precision execution; and (iv) a per-layer precision selection methodology based on bit-level entropy, enabling efficient assignment across multiple numerical precisions. SEADA's efficiency provides designers with a robust framework for the design-space exploration of multi-precision architectures.",
       "venue": "arXiv",
-      "published": "2026-06-25T02:10:29Z",
-      "updated": "2026-06-25T02:10:29Z",
-      "url": "http://arxiv.org/abs/2606.26530v1",
-      "pdfUrl": "https://arxiv.org/pdf/2606.26530v1",
+      "published": "2026-06-26T09:27:19Z",
+      "updated": "2026-06-26T09:27:19Z",
+      "url": "http://arxiv.org/abs/2606.27884v1",
+      "pdfUrl": "https://arxiv.org/pdf/2606.27884v1",
       "categories": [
-        "cs.CL",
+        "cs.AR",
         "cs.AI"
       ],
-      "collectedAt": "2026-06-28T21:30:54.732Z",
-      "firstSeenAt": "2026-06-28T21:30:54.732Z",
-      "lastSeenAt": "2026-06-28T21:30:54.732Z",
+      "collectedAt": "2026-06-29T21:45:04.013Z",
+      "firstSeenAt": "2026-06-29T21:45:04.013Z",
+      "lastSeenAt": "2026-06-29T21:45:04.013Z",
       "collectionType": "daily-latest",
       "matchedQuery": "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)",
       "collectionTypes": [
@@ -406,7 +291,7 @@
       "conferenceYears": [],
       "recommendationTrack": "hardware-primary",
       "recommendationLabel": "硬件体系结构主线",
-      "recommendationScore": 159.5,
+      "recommendationScore": 167,
       "relevanceReason": "命中 AI 处理器、体系结构、量化、训推系统或内存/缓存优化主题",
       "pdfStatus": "remote",
       "workflow": {
@@ -418,7 +303,237 @@
         "pdfStatus": "remote"
       },
       "digest": {
-        "summaryZh": "AI 摘要未生成。原始摘要要点：The Abstraction and Reasoning Corpus (ARC;~\\citealp{chollet2019measure}) contains tasks that require summarizing patterns from limited grid samples and predicti...",
+        "summaryZh": "AI 摘要未生成。原始摘要要点：Mixed-precision computation has been introduced in deep neural networks (DNNs) as an effective approach to reduce latency, energy consumption, and memory footpr...",
+        "motivationZh": "命令行启用了 --no-ai",
+        "methodZh": "请配置 AI 后重新运行，以生成方法提炼。",
+        "experimentsZh": "来源元数据未披露完整实验设置或结果。",
+        "affiliationsZh": "未在 DBLP/arXiv 元数据中提供。",
+        "tags": [
+          "cs.AR",
+          "cs.AI"
+        ],
+        "importance": 3,
+        "researchFitZh": "AI harness 尚未完成分析，无法判断与用户研究方向的具体关系。",
+        "hardwareRelevance": 1,
+        "algorithmRelevance": 1,
+        "systemRelevance": 1,
+        "readPriority": "archive",
+        "whyReadZh": "需要完成 motivation、method 和实验结果分析后再判断是否值得深读。",
+        "limitationsZh": "命令行启用了 --no-ai",
+        "motivationDetail": {
+          "problemZh": "harness 未完成分析。",
+          "gapZh": "harness 未完成分析。",
+          "whyImportantZh": "harness 未完成分析。",
+          "userRelevanceZh": "harness 未完成分析。",
+          "evidence": "not analyzed"
+        },
+        "methodDetail": {
+          "coreIdeaZh": "harness 未完成分析。",
+          "componentsZh": [
+            "未分析"
+          ],
+          "hardwareSystemDetailZh": "harness 未完成分析。",
+          "noveltyZh": "harness 未完成分析。",
+          "evidence": "not analyzed"
+        },
+        "experimentDetail": {
+          "setupZh": "harness 未完成分析。",
+          "baselinesZh": "harness 未完成分析。",
+          "metricsZh": [
+            "未分析"
+          ],
+          "mainResultsZh": "harness 未完成分析。",
+          "limitationsZh": "harness 未完成分析。",
+          "evidence": "not analyzed"
+        },
+        "evidence": {
+          "usedSources": [
+            "metadata"
+          ],
+          "affiliationEvidence": "",
+          "experimentEvidence": "",
+          "missingFields": [
+            "motivation",
+            "method",
+            "experiments"
+          ]
+        },
+        "confidence": {
+          "summary": 0.2,
+          "motivation": 0,
+          "method": 0,
+          "experiments": 0,
+          "affiliations": 0
+        }
+      }
+    },
+    {
+      "id": "arxiv:2606.27936",
+      "source": "arXiv",
+      "title": "Agentic AI-Powered Re-Identification: An Emerging, Scalable Threat to Mobility Microdata Privacy",
+      "authors": [
+        "Oscar Thees",
+        "Roman Müller",
+        "Matthias Templ"
+      ],
+      "authorAffiliations": [],
+      "affiliations": [],
+      "abstract": "The widespread collection of fine-grained location data by commercial data brokers creates a re-identification risk that is not widely recognised by the public. While prior research has established that mobility traces are highly unique and that individuals can, in principle, be identified from a handful of spatio-temporal points, such attacks have historically required significant manual effort from skilled analysts, limiting their practical scale. In this feasibility study, we demonstrate in a real world setting that agentic AI fundamentally changes this threat model. We present an end-to-end pipeline in which large language model agents autonomously search the open web, cross-reference public records and social media, and resolve raw coordinate sequences to candidate identities - without human intervention. We evaluate the pipeline on a spatio-temporal dataset containing simulated location points anchored at and around true home and work addresses, focusing on a high-risk disclosure scenario. Our results demonstrate that, from spatio-temporal data and public sources alone, our agentic AI successfully re-identified 18 of the 25 re-identifiable individuals (72%) and 18 of 43 cases overall (41.9%). We discuss implications for Statistical Disclosure Control (SDC) practice and outline the near-future escalation that data custodians and regulators must anticipate. De facto anonymity - an implicit foundation of SDC practice - is shifting. Agentic AI strengthens the case that re-identification is reasonably likely by any means under the GDPR Recital-26 standard, at costs of minutes-and-dollars per target.",
+      "venue": "arXiv",
+      "published": "2026-06-26T10:27:52Z",
+      "updated": "2026-06-26T10:27:52Z",
+      "url": "http://arxiv.org/abs/2606.27936v1",
+      "pdfUrl": "https://arxiv.org/pdf/2606.27936v1",
+      "categories": [
+        "cs.CR",
+        "cs.AI",
+        "stat.AP"
+      ],
+      "collectedAt": "2026-06-29T21:45:04.013Z",
+      "firstSeenAt": "2026-06-29T21:45:04.013Z",
+      "lastSeenAt": "2026-06-29T21:45:04.013Z",
+      "collectionType": "daily-latest",
+      "matchedQuery": "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)",
+      "collectionTypes": [
+        "daily-latest"
+      ],
+      "matchedQueries": [
+        "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)"
+      ],
+      "targetThemes": [],
+      "conferenceVenues": [],
+      "conferenceYears": [],
+      "recommendationTrack": "hardware-primary",
+      "recommendationLabel": "硬件体系结构主线",
+      "recommendationScore": 162.25,
+      "relevanceReason": "命中 AI 处理器、体系结构、量化、训推系统或内存/缓存优化主题",
+      "pdfStatus": "remote",
+      "workflow": {
+        "digestStatus": "pending",
+        "emailStatus": "waiting-digest",
+        "digestError": "命令行启用了 --no-ai",
+        "harnessVersion": "paper-reader-v1",
+        "collectStatus": "collected",
+        "pdfStatus": "remote"
+      },
+      "digest": {
+        "summaryZh": "AI 摘要未生成。原始摘要要点：The widespread collection of fine-grained location data by commercial data brokers creates a re-identification risk that is not widely recognised by the public....",
+        "motivationZh": "命令行启用了 --no-ai",
+        "methodZh": "请配置 AI 后重新运行，以生成方法提炼。",
+        "experimentsZh": "来源元数据未披露完整实验设置或结果。",
+        "affiliationsZh": "未在 DBLP/arXiv 元数据中提供。",
+        "tags": [
+          "cs.CR",
+          "cs.AI",
+          "stat.AP"
+        ],
+        "importance": 3,
+        "researchFitZh": "AI harness 尚未完成分析，无法判断与用户研究方向的具体关系。",
+        "hardwareRelevance": 1,
+        "algorithmRelevance": 1,
+        "systemRelevance": 1,
+        "readPriority": "archive",
+        "whyReadZh": "需要完成 motivation、method 和实验结果分析后再判断是否值得深读。",
+        "limitationsZh": "命令行启用了 --no-ai",
+        "motivationDetail": {
+          "problemZh": "harness 未完成分析。",
+          "gapZh": "harness 未完成分析。",
+          "whyImportantZh": "harness 未完成分析。",
+          "userRelevanceZh": "harness 未完成分析。",
+          "evidence": "not analyzed"
+        },
+        "methodDetail": {
+          "coreIdeaZh": "harness 未完成分析。",
+          "componentsZh": [
+            "未分析"
+          ],
+          "hardwareSystemDetailZh": "harness 未完成分析。",
+          "noveltyZh": "harness 未完成分析。",
+          "evidence": "not analyzed"
+        },
+        "experimentDetail": {
+          "setupZh": "harness 未完成分析。",
+          "baselinesZh": "harness 未完成分析。",
+          "metricsZh": [
+            "未分析"
+          ],
+          "mainResultsZh": "harness 未完成分析。",
+          "limitationsZh": "harness 未完成分析。",
+          "evidence": "not analyzed"
+        },
+        "evidence": {
+          "usedSources": [
+            "metadata"
+          ],
+          "affiliationEvidence": "",
+          "experimentEvidence": "",
+          "missingFields": [
+            "motivation",
+            "method",
+            "experiments"
+          ]
+        },
+        "confidence": {
+          "summary": 0.2,
+          "motivation": 0,
+          "method": 0,
+          "experiments": 0,
+          "affiliations": 0
+        }
+      }
+    },
+    {
+      "id": "arxiv:2606.27785",
+      "source": "arXiv",
+      "title": "Output-Space Allocation Costs for Calibration-Guided LLM Compression: An Empirical Study",
+      "authors": [
+        "Qiong Tang",
+        "Xiangkun Hu",
+        "Xiangyang Liu",
+        "Yiran Chen",
+        "Yunfan Shao"
+      ],
+      "authorAffiliations": [],
+      "affiliations": [],
+      "abstract": "Training-free compression methods for large language models (LLMs) often use calibration data to guide compression decisions. ROCKET, a recent method combining sparse-dictionary factorization with multi-choice knapsack problem (MCKP) allocation, derives its per-layer factorization from an output reconstruction objective but uses weight-space Frobenius error as the MCKP allocation cost. We investigate whether aligning the allocation cost with the output-space objective improves compressed model fidelity. On Qwen3-8B at 50\\% compression, our ROCKET-ActCost achieves +0.8 percentage points higher average accuracy across 8 zero-shot benchmarks (53.1\\% vs 52.3\\%), but increases WikiText perplexity by 16\\% (61.46 vs 52.98). This accuracy-perplexity tradeoff reveals that different allocation objectives favor different downstream metrics. The high correlation ($>$0.99) between weight-space and output-space errors limits allocation divergence, explaining the modest effect size. On Llama-3.2-1B at 20\\% compression, the two methods produce near-identical results (53.3\\% vs 53.5\\% accuracy, 14.45 vs 14.66 PPL), suggesting that the effect of the cost function is minor at lower compression ratios.",
+      "venue": "arXiv",
+      "published": "2026-06-26T07:15:17Z",
+      "updated": "2026-06-26T07:15:17Z",
+      "url": "http://arxiv.org/abs/2606.27785v1",
+      "pdfUrl": "https://arxiv.org/pdf/2606.27785v1",
+      "categories": [
+        "cs.CL",
+        "cs.AI"
+      ],
+      "collectedAt": "2026-06-29T21:45:04.013Z",
+      "firstSeenAt": "2026-06-29T21:45:04.013Z",
+      "lastSeenAt": "2026-06-29T21:45:04.013Z",
+      "collectionType": "daily-latest",
+      "matchedQuery": "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)",
+      "collectionTypes": [
+        "daily-latest"
+      ],
+      "matchedQueries": [
+        "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)"
+      ],
+      "targetThemes": [],
+      "conferenceVenues": [],
+      "conferenceYears": [],
+      "recommendationTrack": "hardware-primary",
+      "recommendationLabel": "硬件体系结构主线",
+      "recommendationScore": 162,
+      "relevanceReason": "命中 AI 处理器、体系结构、量化、训推系统或内存/缓存优化主题",
+      "pdfStatus": "remote",
+      "workflow": {
+        "digestStatus": "pending",
+        "emailStatus": "waiting-digest",
+        "digestError": "命令行启用了 --no-ai",
+        "harnessVersion": "paper-reader-v1",
+        "collectStatus": "collected",
+        "pdfStatus": "remote"
+      },
+      "digest": {
+        "summaryZh": "AI 摘要未生成。原始摘要要点：Training-free compression methods for large language models (LLMs) often use calibration data to guide compression decisions. ROCKET, a recent method combining ...",
         "motivationZh": "命令行启用了 --no-ai",
         "methodZh": "请配置 AI 后重新运行，以生成方法提炼。",
         "experimentsZh": "来源元数据未披露完整实验设置或结果。",
@@ -483,266 +598,30 @@
       }
     },
     {
-      "id": "arxiv:2606.26541",
+      "id": "arxiv:2606.27683",
       "source": "arXiv",
-      "title": "Can Large Language Models Reliably Code Qualitative Humanitarian Data? A Benchmark Study Against Human Expert Adjudication",
+      "title": "CBD: API-Only LLM Black-Box Unlearning through Controlled Behavioral Divergence",
       "authors": [
-        "Jerome Marston",
-        "Tino Kreutzer",
-        "Salomé Garnier",
-        "Ella Boone",
-        "Phuong N Pham",
-        "Patrick Vinck"
+        "Zhiqiang Xie",
+        "Yijing Lin",
+        "Zhipeng Gao",
+        "Dong In Kim"
       ],
       "authorAffiliations": [],
       "affiliations": [],
-      "abstract": "Data from affected populations are crucial for informing humanitarian response, but their value depends on timely and consistent interpretation of nuanced accounts of need. Humanitarian organizations often lack the staff, time, and specialist expertise required to analyze this information at scale. Large language models (LLMs) may expand this capacity, but their reliability for coding qualitative humanitarian data has not been directly established. This benchmark study compares 46 LLMs to a human Gold Standard using 150 high-fidelity synthetic humanitarian transcripts. Evaluation combined inter-rater reliability testing with Krippendorff's alpha, discrepancy analysis distinguishing correct, near-correct, and incorrect codes, and qualitative assessment across humanitarian-specific criteria including discrimination, complex needs hierarchies, and non-standard communication styles. The authors find that multiple LLMs can perform deductive coding at reliability levels comparable to experienced human coders, especially when structured prompts and reasoning-enabled configurations are used. At the same time, aggregate reliability metrics alone are insufficient for deployment decisions. Models varied in recognizing needs expressed indirectly, needs outside predefined categories, and protection-relevant concerns such as physical safety and discrimination. These findings suggest that LLMs can materially expand humanitarian analytical capacity, but not as substitutes for human judgment. Appropriate use requires structured codebooks, reasoning-enabled models, attention to theme-specific performance, and tiered oversight focused on categories where miscoding would have the greatest programmatic consequences. For sensitive humanitarian data, open-weights models deployed on self-hosted infrastructure may offer a viable path for combining analytical scalability with stronger data governance.",
+      "abstract": "Edge devices increasingly invoke large language models (LLMs) through API services for context aware edge intelligence, while edge generated data may be collected to improve LLMs and may introduce sensitive, copyrighted, harmful, or outdated information into model behavior. Machine unlearning offers a practical way to remove the influence of undesired data without retraining LLMs. However, existing methods still face two gaps. The first is API only black box access, where target model parameters and internal logits are unavailable. The second is how to preserve retained utility when unlearning target data and retained data share highly similar prompt structures or semantic patterns. To address these challenges, we propose Controlled Behavioral Divergence (CBD), an API only black box unlearning framework. CBD uses two auxiliary models to create controlled behavioral divergence between retained inputs and unlearning target inputs, converts this divergence into an unlearning relevance score, and routes unlearning related prompts away from the target LLM. To improve discrimination accuracy under high similarity between target and retained data, CBD constructs a gradient statistics based discriminative basis by estimating empirical Fisher matrices and solving a regularized generalized eigenvalue problem, guiding the unlearning signal toward target specific information rather than shared prompt structures. Compared with eleven white box and gray box unlearning baselines, CBD achieves a better unlearning utility trade off and its performance varies little across settings. On ToFU forget10, CBD approaches the retrained reference on the forget set while raising model utility to 74.90, about 15% above the second best baseline. On WMDP, it lowers hazardous knowledge accuracy to 25.68, near random guessing, while preserving MMLU accuracy of 52.67. Code is at https://github.com/DGL-codes/CBD.",
       "venue": "arXiv",
-      "published": "2026-06-25T02:27:23Z",
-      "updated": "2026-06-25T02:27:23Z",
-      "url": "http://arxiv.org/abs/2606.26541v1",
-      "pdfUrl": "https://arxiv.org/pdf/2606.26541v1",
+      "published": "2026-06-26T03:29:46Z",
+      "updated": "2026-06-26T03:29:46Z",
+      "url": "http://arxiv.org/abs/2606.27683v1",
+      "pdfUrl": "https://arxiv.org/pdf/2606.27683v1",
       "categories": [
         "cs.LG",
-        "cs.CY"
-      ],
-      "collectedAt": "2026-06-28T21:30:54.732Z",
-      "firstSeenAt": "2026-06-28T21:30:54.732Z",
-      "lastSeenAt": "2026-06-28T21:30:54.732Z",
-      "collectionType": "daily-latest",
-      "matchedQuery": "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)",
-      "collectionTypes": [
-        "daily-latest"
-      ],
-      "matchedQueries": [
-        "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)"
-      ],
-      "targetThemes": [],
-      "conferenceVenues": [],
-      "conferenceYears": [],
-      "recommendationTrack": "hardware-primary",
-      "recommendationLabel": "硬件体系结构主线",
-      "recommendationScore": 151.25,
-      "relevanceReason": "命中 AI 处理器、体系结构、量化、训推系统或内存/缓存优化主题",
-      "pdfStatus": "remote",
-      "workflow": {
-        "digestStatus": "pending",
-        "emailStatus": "waiting-digest",
-        "digestError": "命令行启用了 --no-ai",
-        "harnessVersion": "paper-reader-v1",
-        "collectStatus": "collected",
-        "pdfStatus": "remote"
-      },
-      "digest": {
-        "summaryZh": "AI 摘要未生成。原始摘要要点：Data from affected populations are crucial for informing humanitarian response, but their value depends on timely and consistent interpretation of nuanced accou...",
-        "motivationZh": "命令行启用了 --no-ai",
-        "methodZh": "请配置 AI 后重新运行，以生成方法提炼。",
-        "experimentsZh": "来源元数据未披露完整实验设置或结果。",
-        "affiliationsZh": "未在 DBLP/arXiv 元数据中提供。",
-        "tags": [
-          "cs.LG",
-          "cs.CY"
-        ],
-        "importance": 3,
-        "researchFitZh": "AI harness 尚未完成分析，无法判断与用户研究方向的具体关系。",
-        "hardwareRelevance": 1,
-        "algorithmRelevance": 1,
-        "systemRelevance": 1,
-        "readPriority": "archive",
-        "whyReadZh": "需要完成 motivation、method 和实验结果分析后再判断是否值得深读。",
-        "limitationsZh": "命令行启用了 --no-ai",
-        "motivationDetail": {
-          "problemZh": "harness 未完成分析。",
-          "gapZh": "harness 未完成分析。",
-          "whyImportantZh": "harness 未完成分析。",
-          "userRelevanceZh": "harness 未完成分析。",
-          "evidence": "not analyzed"
-        },
-        "methodDetail": {
-          "coreIdeaZh": "harness 未完成分析。",
-          "componentsZh": [
-            "未分析"
-          ],
-          "hardwareSystemDetailZh": "harness 未完成分析。",
-          "noveltyZh": "harness 未完成分析。",
-          "evidence": "not analyzed"
-        },
-        "experimentDetail": {
-          "setupZh": "harness 未完成分析。",
-          "baselinesZh": "harness 未完成分析。",
-          "metricsZh": [
-            "未分析"
-          ],
-          "mainResultsZh": "harness 未完成分析。",
-          "limitationsZh": "harness 未完成分析。",
-          "evidence": "not analyzed"
-        },
-        "evidence": {
-          "usedSources": [
-            "metadata"
-          ],
-          "affiliationEvidence": "",
-          "experimentEvidence": "",
-          "missingFields": [
-            "motivation",
-            "method",
-            "experiments"
-          ]
-        },
-        "confidence": {
-          "summary": 0.2,
-          "motivation": 0,
-          "method": 0,
-          "experiments": 0,
-          "affiliations": 0
-        }
-      }
-    },
-    {
-      "id": "arxiv:2606.26629",
-      "source": "arXiv",
-      "title": "From Weights to Features: SAE-Guided Activation Regularization for LLM Continual Learning",
-      "authors": [
-        "Evan Ning",
-        "Wei Xue",
-        "Dong Lou",
-        "Yike Guo"
-      ],
-      "authorAffiliations": [],
-      "affiliations": [],
-      "abstract": "Weight-space regularization methods such as Elastic Weight Consolidation (EWC) are the standard approach to catastrophic forgetting in continual learning. However, those methods tend to underperform when applied to large language models. We argue that such underperformance can be partly explained by the ``polysemantic'' nature of large language models: per-weight importance estimates utilized by EWC-style regularization are too coarse and cannot isolate the knowledge that needs protection. In this paper, we propose regularizing instead in the model's activation space, using pretrained Sparse Autoencoders (SAEs) as a monosemantic feature dictionary. From the perspective of constrained optimization, we derive a new loss function that uses the SAE feature dictionary to explicitly balance stability and plasticity, and show that EWC is a special case in the one-sided weight-space penalty setting. Unlike replay-based methods that store or revisit examples from earlier tasks, our method requires no previous-task data after mask construction: current-task data is used to compute a compact SAE feature mask, and only this mask is retained for later training. Further, since the feature space has significantly lower dimensionality than the parameter space, the proposed method is more memory efficient. On the TRACE and MedCL continual learning benchmarks, the method achieves the strongest result among approaches without introducing task-specific architectural components, also surpassing traditional weight-space regularization methods like EWC. Beyond performance comparisons, we provide empirical evidence for the polysemanticity thesis: task-relevant representations are linearly separable in the SAE feature basis but indistinguishable from chance in the weight basis, and weight-space protection is nearly non-selective at the concept level.",
-      "venue": "arXiv",
-      "published": "2026-06-25T05:46:04Z",
-      "updated": "2026-06-25T05:46:04Z",
-      "url": "http://arxiv.org/abs/2606.26629v1",
-      "pdfUrl": "https://arxiv.org/pdf/2606.26629v1",
-      "categories": [
-        "cs.LG",
-        "cs.CL"
-      ],
-      "collectedAt": "2026-06-28T21:30:54.732Z",
-      "firstSeenAt": "2026-06-28T21:30:54.732Z",
-      "lastSeenAt": "2026-06-28T21:30:54.732Z",
-      "collectionType": "daily-latest",
-      "matchedQuery": "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)",
-      "collectionTypes": [
-        "daily-latest"
-      ],
-      "matchedQueries": [
-        "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)"
-      ],
-      "targetThemes": [],
-      "conferenceVenues": [],
-      "conferenceYears": [],
-      "recommendationTrack": "hardware-primary",
-      "recommendationLabel": "硬件体系结构主线",
-      "recommendationScore": 150,
-      "relevanceReason": "命中 AI 处理器、体系结构、量化、训推系统或内存/缓存优化主题",
-      "pdfStatus": "remote",
-      "workflow": {
-        "digestStatus": "pending",
-        "emailStatus": "waiting-digest",
-        "digestError": "命令行启用了 --no-ai",
-        "harnessVersion": "paper-reader-v1",
-        "collectStatus": "collected",
-        "pdfStatus": "remote"
-      },
-      "digest": {
-        "summaryZh": "AI 摘要未生成。原始摘要要点：Weight-space regularization methods such as Elastic Weight Consolidation (EWC) are the standard approach to catastrophic forgetting in continual learning. Howev...",
-        "motivationZh": "命令行启用了 --no-ai",
-        "methodZh": "请配置 AI 后重新运行，以生成方法提炼。",
-        "experimentsZh": "来源元数据未披露完整实验设置或结果。",
-        "affiliationsZh": "未在 DBLP/arXiv 元数据中提供。",
-        "tags": [
-          "cs.LG",
-          "cs.CL"
-        ],
-        "importance": 3,
-        "researchFitZh": "AI harness 尚未完成分析，无法判断与用户研究方向的具体关系。",
-        "hardwareRelevance": 1,
-        "algorithmRelevance": 1,
-        "systemRelevance": 1,
-        "readPriority": "archive",
-        "whyReadZh": "需要完成 motivation、method 和实验结果分析后再判断是否值得深读。",
-        "limitationsZh": "命令行启用了 --no-ai",
-        "motivationDetail": {
-          "problemZh": "harness 未完成分析。",
-          "gapZh": "harness 未完成分析。",
-          "whyImportantZh": "harness 未完成分析。",
-          "userRelevanceZh": "harness 未完成分析。",
-          "evidence": "not analyzed"
-        },
-        "methodDetail": {
-          "coreIdeaZh": "harness 未完成分析。",
-          "componentsZh": [
-            "未分析"
-          ],
-          "hardwareSystemDetailZh": "harness 未完成分析。",
-          "noveltyZh": "harness 未完成分析。",
-          "evidence": "not analyzed"
-        },
-        "experimentDetail": {
-          "setupZh": "harness 未完成分析。",
-          "baselinesZh": "harness 未完成分析。",
-          "metricsZh": [
-            "未分析"
-          ],
-          "mainResultsZh": "harness 未完成分析。",
-          "limitationsZh": "harness 未完成分析。",
-          "evidence": "not analyzed"
-        },
-        "evidence": {
-          "usedSources": [
-            "metadata"
-          ],
-          "affiliationEvidence": "",
-          "experimentEvidence": "",
-          "missingFields": [
-            "motivation",
-            "method",
-            "experiments"
-          ]
-        },
-        "confidence": {
-          "summary": 0.2,
-          "motivation": 0,
-          "method": 0,
-          "experiments": 0,
-          "affiliations": 0
-        }
-      }
-    },
-    {
-      "id": "arxiv:2606.26836",
-      "source": "arXiv",
-      "title": "The Capability Frontier: Benchmarks Miss 82% of Model Performance",
-      "authors": [
-        "Bradley Fowler",
-        "Ryan Smith",
-        "Daniel Thi Graviet",
-        "William Myers",
-        "Joshua Greaves",
-        "Narmeen Fatimah Oozeer",
-        "Antía García",
-        "Philip Quirke",
-        "Amirali Abdullah",
-        "Fazl Barez",
-        "Shriyash Kaustubh Upadhyay"
-      ],
-      "authorAffiliations": [],
-      "affiliations": [],
-      "abstract": "Existing benchmarks typically report accuracy for a single model on a single run. This systematically understates real-world LLM capabilities, particularly under heterogeneous data distributions: (i) different models get different questions correct according to their specializations, and (ii) given a budget, multiple generations can be sampled and selectively retained. To quantify this gap, we introduce the Capability Frontier: a Pareto frontier over a set of models that characterizes the best achievable performance at each cost level under optimal selection across models and generations (i.e., via an oracle). Our construction corrects for two opposing biases: underestimation from single-model evaluation and overestimation from taking maxima over noisy samples. We study 21 LLMs across 16 widely used benchmarks spanning coding, reasoning, medicine, factuality, instruction following, and agentic tasks, comparing Capability Frontier performance at matched cost to each benchmark's top-performing model. Correcting for single-model evaluation yields a 54% error rate reduction; additionally correcting for single runs yields an 82% improvement, with SOTA accuracy matched at 85% cost reduction. Complementing these empirical results, we use controlled probabilistic simulations to show that higher query topic entropy produces a near-monotonic increase in the performance gap between oracle routing and the best single model. Our findings suggest collective LLM capabilities are substantially underestimated, with implications for evaluation and deployment in data-heterogeneous, multi-domain settings.",
-      "venue": "arXiv",
-      "published": "2026-06-25T10:20:47Z",
-      "updated": "2026-06-25T10:20:47Z",
-      "url": "http://arxiv.org/abs/2606.26836v1",
-      "pdfUrl": "https://arxiv.org/pdf/2606.26836v1",
-      "categories": [
         "cs.AI"
       ],
-      "collectedAt": "2026-06-28T21:30:54.732Z",
-      "firstSeenAt": "2026-06-28T21:30:54.732Z",
-      "lastSeenAt": "2026-06-28T21:30:54.732Z",
+      "collectedAt": "2026-06-29T21:45:04.013Z",
+      "firstSeenAt": "2026-06-29T21:45:04.013Z",
+      "lastSeenAt": "2026-06-29T21:45:04.013Z",
       "collectionType": "daily-latest",
       "matchedQuery": "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)",
       "collectionTypes": [
@@ -756,7 +635,7 @@
       "conferenceYears": [],
       "recommendationTrack": "hardware-primary",
       "recommendationLabel": "硬件体系结构主线",
-      "recommendationScore": 148,
+      "recommendationScore": 160,
       "relevanceReason": "命中 AI 处理器、体系结构、量化、训推系统或内存/缓存优化主题",
       "pdfStatus": "remote",
       "workflow": {
@@ -768,12 +647,13 @@
         "pdfStatus": "remote"
       },
       "digest": {
-        "summaryZh": "AI 摘要未生成。原始摘要要点：Existing benchmarks typically report accuracy for a single model on a single run. This systematically understates real-world LLM capabilities, particularly unde...",
+        "summaryZh": "AI 摘要未生成。原始摘要要点：Edge devices increasingly invoke large language models (LLMs) through API services for context aware edge intelligence, while edge generated data may be collect...",
         "motivationZh": "命令行启用了 --no-ai",
         "methodZh": "请配置 AI 后重新运行，以生成方法提炼。",
         "experimentsZh": "来源元数据未披露完整实验设置或结果。",
         "affiliationsZh": "未在 DBLP/arXiv 元数据中提供。",
         "tags": [
+          "cs.LG",
           "cs.AI"
         ],
         "importance": 3,
@@ -832,43 +712,43 @@
       }
     },
     {
-      "id": "arxiv:2606.27359",
+      "id": "arxiv:2606.27472",
       "source": "arXiv",
-      "title": "When are likely answers right? On Sequence Probability and Correctness in LLMs",
+      "title": "Supersede: Diagnosing and Training the Memory-Update Gap in LLM Agents",
       "authors": [
-        "Johannes Zenn",
-        "Jonas Geiping"
+        "Vedant Patel"
       ],
       "authorAffiliations": [],
       "affiliations": [],
-      "abstract": "Many decoding methods for large language models can be understood as shifting probability mass toward outputs that are more likely under the model, either locally at the token level or globally at the sequence level. Therefore, their success depends on a fundamental question: when does sequence probability, that is, the conditional probability of a continuation given a prompt, actually align with correctness? In this paper, we set out to quantify this relationship across decoding methods, models, and benchmarks at four levels: across decoding methods, across hyperparameters within a method, across prompt-answer pairs within a dataset, and across repeated responses to the same prompt. We find that higher sequence probability is often predictive of correctness across prompt-answer pairs within a fixed dataset. However, this relationship does not generally transfer to decoding decisions: increasing sequence probability by changing hyperparameters or methods does not reliably improve accuracy. Further, sequence probability is not a good indicator of correctness for responses to the same prompt. These findings clarify when decoding can and cannot be expected to improve correctness, and provide practical guidance for decoding, self-consistency, and verifier-free self-improvement.",
+      "abstract": "Large language model (LLM) agents operate over long, multi-session interactions in which facts change: a user moves, a price updates, a plan is revised. Acting correctly requires using the current value of a fact and discarding values that have been superseded. We isolate this ability on real conversational data and show that it is a distinct, unsolved failure. On the knowledge-update subset of LongMemEval, replacing an agent's full context with a bounded, self-maintained memory drops accuracy from 92% to 77% even on a frontier model (gpt-5.4), a gap that is statistically significant (paired McNemar p<0.005) and persists across model scale while full-context accuracy saturates near 92%. The bottleneck is therefore memory maintenance, not comprehension, and is not closed by a stronger model. We then ask whether this is merely an undersized memory, and find it is not: as the conversation grows 24x, accuracy falls further (from 68% to 28%), and granting the agent proportionally more memory yields no detectable recovery (28% to 28%, n=25). The failure scales with the length of the conversation, not the compression ratio. We release Supersede, an open reinforcement-learning environment (on the verifiers / prime-rl stack) that turns this measurement into a training signal: agents are rewarded for answering from the current value and penalized for stale ones. Finally, we close the loop and show the gap is trainable: GRPO fine-tuning a small open model (Qwen2.5-3B) on this environment nearly doubles its held-out supersession accuracy on real, unseen conversations (9.0% to 16.7%, a single run), along a monotonic checkpoint curve indicating the learned policy, not the harness, carries the gain. To our knowledge this is the first trainable environment whose reward targets temporal fact-currency, and the first evidence the supersession gap can be trained down, not only measured.",
       "venue": "arXiv",
-      "published": "2026-06-25T17:58:02Z",
-      "updated": "2026-06-25T17:58:02Z",
-      "url": "http://arxiv.org/abs/2606.27359v1",
-      "pdfUrl": "https://arxiv.org/pdf/2606.27359v1",
+      "published": "2026-06-25T18:50:32Z",
+      "updated": "2026-06-25T18:50:32Z",
+      "url": "http://arxiv.org/abs/2606.27472v1",
+      "pdfUrl": "https://arxiv.org/pdf/2606.27472v1",
       "categories": [
-        "stat.ML",
+        "cs.CL",
+        "cs.AI",
         "cs.LG"
       ],
-      "collectedAt": "2026-06-28T21:30:56.346Z",
-      "firstSeenAt": "2026-06-28T21:30:56.346Z",
-      "lastSeenAt": "2026-06-28T21:30:56.346Z",
+      "collectedAt": "2026-06-29T21:45:04.013Z",
+      "firstSeenAt": "2026-06-29T21:45:04.013Z",
+      "lastSeenAt": "2026-06-29T21:45:04.013Z",
       "collectionType": "daily-latest",
-      "matchedQuery": "(all:agent OR all:agents OR all:agentic OR all:reasoning OR all:post-training OR all:alignment OR all:multimodal OR all:world-model) AND (all:LLM OR all:foundation OR all:language)",
+      "matchedQuery": "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)",
       "collectionTypes": [
         "daily-latest"
       ],
       "matchedQueries": [
-        "(all:agent OR all:agents OR all:agentic OR all:reasoning OR all:post-training OR all:alignment OR all:multimodal OR all:world-model) AND (all:LLM OR all:foundation OR all:language)"
+        "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)"
       ],
       "targetThemes": [],
       "conferenceVenues": [],
       "conferenceYears": [],
-      "recommendationTrack": "algorithm-trend",
-      "recommendationLabel": "算法趋势观察",
-      "recommendationScore": 38.2,
-      "relevanceReason": "命中 LLM/Agent/多模态/后训练等算法趋势主题",
+      "recommendationTrack": "hardware-primary",
+      "recommendationLabel": "硬件体系结构主线",
+      "recommendationScore": 156.5,
+      "relevanceReason": "命中 AI 处理器、体系结构、量化、训推系统或内存/缓存优化主题",
       "pdfStatus": "remote",
       "workflow": {
         "digestStatus": "pending",
@@ -879,13 +759,14 @@
         "pdfStatus": "remote"
       },
       "digest": {
-        "summaryZh": "AI 摘要未生成。原始摘要要点：Many decoding methods for large language models can be understood as shifting probability mass toward outputs that are more likely under the model, either local...",
+        "summaryZh": "AI 摘要未生成。原始摘要要点：Large language model (LLM) agents operate over long, multi-session interactions in which facts change: a user moves, a price updates, a plan is revised. Acting ...",
         "motivationZh": "命令行启用了 --no-ai",
         "methodZh": "请配置 AI 后重新运行，以生成方法提炼。",
         "experimentsZh": "来源元数据未披露完整实验设置或结果。",
         "affiliationsZh": "未在 DBLP/arXiv 元数据中提供。",
         "tags": [
-          "stat.ML",
+          "cs.CL",
+          "cs.AI",
           "cs.LG"
         ],
         "importance": 3,
@@ -944,31 +825,34 @@
       }
     },
     {
-      "id": "arxiv:2606.27317",
+      "id": "arxiv:2606.28266",
       "source": "arXiv",
-      "title": "OctoSense: Self-Supervised Learning for Multimodal Robot Perception",
+      "title": "RSICCLLM: A Multimodal Large Language Model for Remote Sensing Image Change Captioning",
       "authors": [
-        "Anthony Bisulco",
-        "Jeremy Wang",
-        "Kostas Daniilidis",
-        "Randall Balestriero",
-        "Pratik Chaudhari"
+        "Yelin Wang",
+        "Zijia Song",
+        "Shuo Ye",
+        "Chuanguang Yang",
+        "Miaoyu Wang",
+        "Yong Xu",
+        "Zhulin An",
+        "Yongjun Xu",
+        "Zitong Yu"
       ],
       "authorAffiliations": [],
       "affiliations": [],
-      "abstract": "We present OctoSense, an open-source sensor platform with stereo RGB and event cameras, LiDAR, a thermal camera, an inertial measurement unit, RTK-corrected global positioning system, and proprioception (CAN bus data from a car, and joint angles for a quadruped robot). The eponymous OctoSense dataset contains 59 hours of time-synchronized driving data across different types of environments at different times of the day, including situations with highly degraded sensors. We demonstrate multi-modal self-supervised learning using such real-world robotics data, where sensors have different representations, frequencies, latencies and noise. Our approach, a \"late-fusion\" masked autoencoder, (i) uses modality-specific tokenizers to account for different spatiotemporal characteristics of these sensors, and (ii) caches modality-specific tokens at inference time to process new measurements as they come. This architecture (i) is fast (6.68 ms and 112 ms on NVIDIA 5090 and Orin NX respectively, to compute the representation), (ii) performs better than existing image-only foundation models on tasks such as estimation of optical flow, depth, semantic segmentation, and ego-motion (translation, rotation, and steering angle), and (iii) predicts robustly at nighttime or in situations where sensory data is degraded. See our project page for links to the dataset, code, and supplementary videos: https://abisulco.com/octosense/.",
+      "abstract": "Remote Sensing Image Change Captioning (RSICC) aims to describe changes between bi-temporal remote sensing images and holds significant research and application value. However, most existing methods rely on conventional deep learning architectures, and the limited model capacity constrains performance. Although large-model post-training techniques have achieved great success in general domains, their direct transfer to RSICC remains challenging due to data scarcity and the need for fine-grained change understanding. To address this, we propose RSICCLLM, the first post-training framework for large vision-language models in RSICC. Specifically, we design a data generation paradigm, release the instruction dataset RSICI, and establish a task-specific RSICC benchmark. We further introduce Difference-aware Supervised Fine-tuning to explicitly extract change representations and guide the model in perceiving and understanding temporal differences. In addition, we propose Dual-Negative Preference Optimization (DNPO), which employs two complementary negative-sample construction strategies to construct the preference dataset RSICP and further refine model performance. Extensive experiments validate the superior capability of RSICCLLM, which achieves outstanding results with only 7B parameters, surpassing models of substantially larger scales. The code and dataset will be made publicly available at https://github.com/keaill/RSICCLLM.",
       "venue": "arXiv",
-      "published": "2026-06-25T17:30:49Z",
-      "updated": "2026-06-25T17:30:49Z",
-      "url": "http://arxiv.org/abs/2606.27317v1",
-      "pdfUrl": "https://arxiv.org/pdf/2606.27317v1",
+      "published": "2026-06-26T16:57:40Z",
+      "updated": "2026-06-26T16:57:40Z",
+      "url": "http://arxiv.org/abs/2606.28266v1",
+      "pdfUrl": "https://arxiv.org/pdf/2606.28266v1",
       "categories": [
-        "cs.CV",
-        "cs.RO"
+        "cs.CV"
       ],
-      "collectedAt": "2026-06-28T21:30:56.347Z",
-      "firstSeenAt": "2026-06-28T21:30:56.347Z",
-      "lastSeenAt": "2026-06-28T21:30:56.347Z",
+      "collectedAt": "2026-06-29T21:45:06.003Z",
+      "firstSeenAt": "2026-06-29T21:45:06.003Z",
+      "lastSeenAt": "2026-06-29T21:45:06.003Z",
       "collectionType": "daily-latest",
       "matchedQuery": "(all:agent OR all:agents OR all:agentic OR all:reasoning OR all:post-training OR all:alignment OR all:multimodal OR all:world-model) AND (all:LLM OR all:foundation OR all:language)",
       "collectionTypes": [
@@ -982,7 +866,7 @@
       "conferenceYears": [],
       "recommendationTrack": "algorithm-trend",
       "recommendationLabel": "算法趋势观察",
-      "recommendationScore": 34.2,
+      "recommendationScore": 40.6,
       "relevanceReason": "命中 LLM/Agent/多模态/后训练等算法趋势主题",
       "pdfStatus": "remote",
       "workflow": {
@@ -994,14 +878,133 @@
         "pdfStatus": "remote"
       },
       "digest": {
-        "summaryZh": "AI 摘要未生成。原始摘要要点：We present OctoSense, an open-source sensor platform with stereo RGB and event cameras, LiDAR, a thermal camera, an inertial measurement unit, RTK-corrected glo...",
+        "summaryZh": "AI 摘要未生成。原始摘要要点：Remote Sensing Image Change Captioning (RSICC) aims to describe changes between bi-temporal remote sensing images and holds significant research and application...",
         "motivationZh": "命令行启用了 --no-ai",
         "methodZh": "请配置 AI 后重新运行，以生成方法提炼。",
         "experimentsZh": "来源元数据未披露完整实验设置或结果。",
         "affiliationsZh": "未在 DBLP/arXiv 元数据中提供。",
         "tags": [
-          "cs.CV",
-          "cs.RO"
+          "cs.CV"
+        ],
+        "importance": 3,
+        "researchFitZh": "AI harness 尚未完成分析，无法判断与用户研究方向的具体关系。",
+        "hardwareRelevance": 1,
+        "algorithmRelevance": 1,
+        "systemRelevance": 1,
+        "readPriority": "archive",
+        "whyReadZh": "需要完成 motivation、method 和实验结果分析后再判断是否值得深读。",
+        "limitationsZh": "命令行启用了 --no-ai",
+        "motivationDetail": {
+          "problemZh": "harness 未完成分析。",
+          "gapZh": "harness 未完成分析。",
+          "whyImportantZh": "harness 未完成分析。",
+          "userRelevanceZh": "harness 未完成分析。",
+          "evidence": "not analyzed"
+        },
+        "methodDetail": {
+          "coreIdeaZh": "harness 未完成分析。",
+          "componentsZh": [
+            "未分析"
+          ],
+          "hardwareSystemDetailZh": "harness 未完成分析。",
+          "noveltyZh": "harness 未完成分析。",
+          "evidence": "not analyzed"
+        },
+        "experimentDetail": {
+          "setupZh": "harness 未完成分析。",
+          "baselinesZh": "harness 未完成分析。",
+          "metricsZh": [
+            "未分析"
+          ],
+          "mainResultsZh": "harness 未完成分析。",
+          "limitationsZh": "harness 未完成分析。",
+          "evidence": "not analyzed"
+        },
+        "evidence": {
+          "usedSources": [
+            "metadata"
+          ],
+          "affiliationEvidence": "",
+          "experimentEvidence": "",
+          "missingFields": [
+            "motivation",
+            "method",
+            "experiments"
+          ]
+        },
+        "confidence": {
+          "summary": 0.2,
+          "motivation": 0,
+          "method": 0,
+          "experiments": 0,
+          "affiliations": 0
+        }
+      }
+    },
+    {
+      "id": "arxiv:2606.28249",
+      "source": "arXiv",
+      "title": "HPRO: Hierarchical Progressive Reward Optimization via Preference Extraction for Emotional Text-to-Speech",
+      "authors": [
+        "Sihang Nie",
+        "Xiaofen Xing",
+        "Rui Xing",
+        "Haoming Li",
+        "Ruitong Xiao",
+        "Jingyuan Xing",
+        "Baiji Liu",
+        "Xiangmin Xu"
+      ],
+      "authorAffiliations": [],
+      "affiliations": [],
+      "abstract": "Recently, Large Language Model (LLM)-based Text-to-Speech (TTS) models have achieved remarkable naturalness. However, the standard Supervised Fine-Tuning paradigm often converges to statistically averaged prosody, limiting emotional expressiveness. While preference-driven optimization offers a promising alternative, existing approaches suffer from two structural mismatches: information conflict, where content and emotion in a shared latent space produce conflicting gradients, leading to reward hacking and semantic degradation; and scale gap, where sparse sentence-level rewards struggle to guide dense frame-level generation. To overcome these challenges, we propose HPRO, a hierarchical progressive reward optimization framework. Within HPRO, we introduce the HD-Emo codec as a novel differentiable reward model to resolve the information conflict. It extracts speech into distinct content and style preference tokens, structurally isolating emotional optimization from semantic content. Building upon this structured preference space, HPRO bridges the scale gap by progressively aligning frame-, word- and sentence-level objectives. Experiments demonstrate that HPRO significantly enhances emotional expressiveness, while effectively preserving linguistic intelligibility. The code and audio samples are publicly available at https://xxh333.github.io/hpro-demo/.",
+      "venue": "arXiv",
+      "published": "2026-06-26T16:35:48Z",
+      "updated": "2026-06-26T16:35:48Z",
+      "url": "http://arxiv.org/abs/2606.28249v1",
+      "pdfUrl": "https://arxiv.org/pdf/2606.28249v1",
+      "categories": [
+        "eess.AS",
+        "cs.CL",
+        "cs.SD"
+      ],
+      "collectedAt": "2026-06-29T21:45:06.004Z",
+      "firstSeenAt": "2026-06-29T21:45:06.004Z",
+      "lastSeenAt": "2026-06-29T21:45:06.004Z",
+      "collectionType": "daily-latest",
+      "matchedQuery": "(all:agent OR all:agents OR all:agentic OR all:reasoning OR all:post-training OR all:alignment OR all:multimodal OR all:world-model) AND (all:LLM OR all:foundation OR all:language)",
+      "collectionTypes": [
+        "daily-latest"
+      ],
+      "matchedQueries": [
+        "(all:agent OR all:agents OR all:agentic OR all:reasoning OR all:post-training OR all:alignment OR all:multimodal OR all:world-model) AND (all:LLM OR all:foundation OR all:language)"
+      ],
+      "targetThemes": [],
+      "conferenceVenues": [],
+      "conferenceYears": [],
+      "recommendationTrack": "algorithm-trend",
+      "recommendationLabel": "算法趋势观察",
+      "recommendationScore": 37.2,
+      "relevanceReason": "命中 LLM/Agent/多模态/后训练等算法趋势主题",
+      "pdfStatus": "remote",
+      "workflow": {
+        "digestStatus": "pending",
+        "emailStatus": "waiting-digest",
+        "digestError": "命令行启用了 --no-ai",
+        "harnessVersion": "paper-reader-v1",
+        "collectStatus": "collected",
+        "pdfStatus": "remote"
+      },
+      "digest": {
+        "summaryZh": "AI 摘要未生成。原始摘要要点：Recently, Large Language Model (LLM)-based Text-to-Speech (TTS) models have achieved remarkable naturalness. However, the standard Supervised Fine-Tuning paradi...",
+        "motivationZh": "命令行启用了 --no-ai",
+        "methodZh": "请配置 AI 后重新运行，以生成方法提炼。",
+        "experimentsZh": "来源元数据未披露完整实验设置或结果。",
+        "affiliationsZh": "未在 DBLP/arXiv 元数据中提供。",
+        "tags": [
+          "eess.AS",
+          "cs.CL",
+          "cs.SD"
         ],
         "importance": 3,
         "researchFitZh": "AI harness 尚未完成分析，无法判断与用户研究方向的具体关系。",
