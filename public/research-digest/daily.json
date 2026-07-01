@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-06-30T21:53:13.405Z",
-  "digestDate": "2026-07-01",
+  "generatedAt": "2026-07-01T21:54:20.838Z",
+  "digestDate": "2026-07-02",
   "kind": "daily-new",
   "timezone": "Asia/Shanghai",
   "siteUrl": "https://YouthLiuYS.github.io/PaperDigestAgent/",
@@ -126,7 +126,7 @@
     "dailyCandidates": 8,
     "conferenceCandidates": 0,
     "backfillCandidates": 0,
-    "rawCandidates": 55,
+    "rawCandidates": 58,
     "newlyAdded": 8,
     "pendingDigest": 8,
     "pendingEmail": 0,
@@ -141,39 +141,34 @@
   },
   "papers": [
     {
-      "id": "arxiv:2606.29986",
+      "id": "arxiv:2606.31163",
       "source": "arXiv",
-      "title": "HBM Is Not All You Need: Efficient Disaggregated LLM Serving across Memory-heterogeneous Accelerators",
+      "title": "ComplianceGate: Classifier-Gated Multi-Tier LLM Routing for Inference in Regulated Industries",
       "authors": [
-        "Zhixiang Wei",
-        "Yun Wang",
-        "James Yen",
-        "Mingyuan Xia",
-        "Zhengwei Qi"
+        "Abhishek Dey"
       ],
       "authorAffiliations": [],
       "affiliations": [],
-      "abstract": "LLM inference comprises a compute-bound prefill phase and a memory-bound decode phase, and recent systems disaggregate them onto separate hardware. Yet today's datacenter GPUs rely on costly HBM whose bandwidth sits almost entirely idle during prefill. LLM serving across memory-heterogeneous accelerators (MemHA) pairs GDDR-based accelerators for prefill with HBM-based GPUs for decode, promising lower cost without sacrificing performance. Pushed to its most economical form, MemHA serving is inherently cross-vendor, since the best-suited chip for each phase may come from a different vendor. This breaks two assumptions that single-vendor disaggregation takes for granted -- a KV format both ends consume natively, and a shared software stack. We present \\textbf{HMA-Serve}, a MemHA-centric disaggregated serving system pairing GDDR-based accelerators for prefill with HBM-based GPUs for decode efficiently. HMA-Serve achieves this through (1) phase-wise quantization, applying vendor-native low precision for high-throughput prefill while keeping decode in high-precision BF16, (2) a compute-transfer pipeline that overlaps each layer's KV cache transfer with later-layer prefill to reduce time-to-first-token (TTFT), and (3) deferred dequantization, shipping raw quantized bytes and reconstructing them lazily on the decode GPU to reduce network bandwidth and HBM usage. Across four Qwen3 models (4B--32B) and three production traces, HMA-Serve delivers up to $3.2\\times$ higher goodput than state-of-the-art memory-homogeneous methods and $4.8\\times$ higher goodput-per-dollar, with no measurable loss on generation-quality benchmarks.",
+      "abstract": "Large language models deployed in regulated industries operate under two constraints: compliance enforcement and cost efficiency. Personally identifiable information (PII) in user queries can reach model endpoints before the system determines whether that data should leave its jurisdictional boundary. Serving all queries through a single large model consumes full GPU capacity regardless of query complexity while offering no mechanism for geographic routing. Mixture-of-Experts architectures do not address this routing occurs between expert layers within the model after data has already arrived at the endpoint, with all experts loaded in memory regardless of query complexity. We propose a classifier-gated routing architecture that enforces compliance by design. A trained encoder classifier sits before any decoder inference, evaluating each query for complexity and data sensitivity, then routing it to an appropriately sized dense model in the appropriate geographic location. PII-containing queries route to local endpoints before any LLM computation begins, making data residency violations structurally impossible. Simple queries reach small, fast models at a fraction of the cost. Our evaluation on 600 queries demonstrates 39% median latency reduction, 33-52% cost savings depending on query distribution, and generation throughput of 122-200 tokens/second versus 50-64 for the baseline. The encoder classifier achieves 99.2% accuracy with near-perfect PII recall at 7ms inference overhead, establishing pre-inference classification as a practical path to compliance-by-design LLM deployment.",
       "venue": "arXiv",
-      "published": "2026-06-29T09:00:38Z",
-      "updated": "2026-06-29T09:00:38Z",
-      "url": "http://arxiv.org/abs/2606.29986v1",
-      "pdfUrl": "https://arxiv.org/pdf/2606.29986v1",
+      "published": "2026-06-30T05:49:50Z",
+      "updated": "2026-06-30T05:49:50Z",
+      "url": "http://arxiv.org/abs/2606.31163v1",
+      "pdfUrl": "https://arxiv.org/pdf/2606.31163v1",
       "categories": [
-        "cs.AR",
-        "cs.DC"
+        "cs.LG",
+        "cs.AI",
+        "cs.CL"
       ],
-      "collectedAt": "2026-06-30T21:48:21.361Z",
-      "firstSeenAt": "2026-06-30T21:48:21.361Z",
-      "lastSeenAt": "2026-06-30T21:48:21.361Z",
+      "collectedAt": "2026-07-01T21:49:32.804Z",
+      "firstSeenAt": "2026-07-01T21:49:32.804Z",
+      "lastSeenAt": "2026-07-01T21:49:32.804Z",
       "collectionType": "daily-latest",
-      "matchedQuery": "(cat:cs.AR OR cat:cs.DC OR cat:cs.PF) AND (all:LLM OR all:transformer OR all:foundation OR all:language) AND (all:accelerator OR all:processor OR all:architecture OR all:hardware OR all:system OR all:serving OR all:training OR all:inference OR all:cache)",
+      "matchedQuery": "(all:prefill OR all:decoding OR all:KV OR all:cache OR all:attention) AND (all:accelerator OR all:kernel OR all:compiler OR all:serving OR all:memory) AND (all:LLM OR all:transformer)",
       "collectionTypes": [
         "daily-latest"
       ],
       "matchedQueries": [
-        "(cat:cs.AR OR cat:cs.DC OR cat:cs.PF) AND (all:LLM OR all:transformer OR all:foundation OR all:language) AND (all:accelerator OR all:processor OR all:architecture OR all:hardware OR all:system OR all:serving OR all:training OR all:inference OR all:cache)",
-        "(all:quantization OR all:compression OR all:pruning OR all:sparsity OR all:low-bit) AND (all:LLM OR all:transformer OR all:language) AND (all:hardware OR all:accelerator OR all:inference OR all:serving OR all:processor)",
         "(all:prefill OR all:decoding OR all:KV OR all:cache OR all:attention) AND (all:accelerator OR all:kernel OR all:compiler OR all:serving OR all:memory) AND (all:LLM OR all:transformer)",
         "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)"
       ],
@@ -181,14 +176,15 @@
       "conferenceVenues": [],
       "conferenceYears": [],
       "digest": {
-        "summaryZh": "AI 摘要未生成。原始摘要要点：LLM inference comprises a compute-bound prefill phase and a memory-bound decode phase, and recent systems disaggregate them onto separate hardware. Yet today's ...",
+        "summaryZh": "AI 摘要未生成。原始摘要要点：Large language models deployed in regulated industries operate under two constraints: compliance enforcement and cost efficiency. Personally identifiable inform...",
         "motivationZh": "命令行启用了 --no-ai",
         "methodZh": "请配置 AI 后重新运行，以生成方法提炼。",
         "experimentsZh": "来源元数据未披露完整实验设置或结果。",
         "affiliationsZh": "未在 DBLP/arXiv 元数据中提供。",
         "tags": [
-          "cs.AR",
-          "cs.DC"
+          "cs.LG",
+          "cs.AI",
+          "cs.CL"
         ],
         "importance": 3,
         "researchFitZh": "AI harness 尚未完成分析，无法判断与用户研究方向的具体关系。",
@@ -246,119 +242,7 @@
       },
       "recommendationTrack": "hardware-primary",
       "recommendationLabel": "硬件体系结构主线",
-      "recommendationScore": 229,
-      "relevanceReason": "命中 AI 处理器、体系结构、量化、训推系统或内存/缓存优化主题",
-      "pdfStatus": "remote",
-      "workflow": {
-        "digestStatus": "pending",
-        "emailStatus": "waiting-digest",
-        "digestError": "命令行启用了 --no-ai",
-        "harnessVersion": "paper-reader-v1",
-        "collectStatus": "collected",
-        "pdfStatus": "remote"
-      }
-    },
-    {
-      "id": "arxiv:2606.30238",
-      "source": "arXiv",
-      "title": "Sparse Sensor Placement in Multi-Agent Reinforcement Learning Control of Rayleigh-Bénard Convection",
-      "authors": [
-        "Jan Stenner",
-        "Hans Harder",
-        "Sebastian Peitz"
-      ],
-      "authorAffiliations": [],
-      "affiliations": [],
-      "abstract": "This paper studies sparse sensor placement for control of Rayleigh-Bénard convection with multi-agent reinforcement learning. We train dense expert policies with windowed observations and distill sparse apprentice policies by supervised learning with grouped regularization on encoder input weights. The framework combines ordered non-convex grouped regularization and iterative reweighted grouped regularization, and uses a grouping construction that enforces consistent pruning across overlapping observation windows. Experiments with fixed and varying initial conditions show that Multi-Agent Transformer policies train more stably than proximal policy optimization baselines, while sparse apprentices retain control behavior comparable to dense experts. Sparsity results are strong for the proposed grouped methods across settings, including maximal sparsity in all fixed-initial-condition setting variants and maximal or near-maximal sparsity in varying-initial-condition setting variants. As an additional proof of concept, training from learned minimal sensor sets reduces per-agent observation size from 360 to 12 and preserves the overall training trend in simulation while reducing data throughput. The results provide both an interpretable basis for identifying control-relevant spatial regions and state components, and a practical pathway toward sensor-efficient control under realistic hardware constraints.",
-      "venue": "arXiv",
-      "published": "2026-06-29T12:49:35Z",
-      "updated": "2026-06-29T12:49:35Z",
-      "url": "http://arxiv.org/abs/2606.30238v1",
-      "pdfUrl": "https://arxiv.org/pdf/2606.30238v1",
-      "categories": [
-        "cs.MA"
-      ],
-      "collectedAt": "2026-06-30T21:48:23.026Z",
-      "firstSeenAt": "2026-06-30T21:48:23.026Z",
-      "lastSeenAt": "2026-06-30T21:48:23.026Z",
-      "collectionType": "daily-latest",
-      "matchedQuery": "(all:quantization OR all:compression OR all:pruning OR all:sparsity OR all:low-bit) AND (all:LLM OR all:transformer OR all:language) AND (all:hardware OR all:accelerator OR all:inference OR all:serving OR all:processor)",
-      "collectionTypes": [
-        "daily-latest"
-      ],
-      "matchedQueries": [
-        "(all:quantization OR all:compression OR all:pruning OR all:sparsity OR all:low-bit) AND (all:LLM OR all:transformer OR all:language) AND (all:hardware OR all:accelerator OR all:inference OR all:serving OR all:processor)",
-        "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)"
-      ],
-      "targetThemes": [],
-      "conferenceVenues": [],
-      "conferenceYears": [],
-      "digest": {
-        "summaryZh": "AI 摘要未生成。原始摘要要点：This paper studies sparse sensor placement for control of Rayleigh-Bénard convection with multi-agent reinforcement learning. We train dense expert policies wit...",
-        "motivationZh": "命令行启用了 --no-ai",
-        "methodZh": "请配置 AI 后重新运行，以生成方法提炼。",
-        "experimentsZh": "来源元数据未披露完整实验设置或结果。",
-        "affiliationsZh": "未在 DBLP/arXiv 元数据中提供。",
-        "tags": [
-          "cs.MA"
-        ],
-        "importance": 3,
-        "researchFitZh": "AI harness 尚未完成分析，无法判断与用户研究方向的具体关系。",
-        "hardwareRelevance": 1,
-        "algorithmRelevance": 1,
-        "systemRelevance": 1,
-        "readPriority": "archive",
-        "whyReadZh": "需要完成 motivation、method 和实验结果分析后再判断是否值得深读。",
-        "limitationsZh": "命令行启用了 --no-ai",
-        "motivationDetail": {
-          "problemZh": "harness 未完成分析。",
-          "gapZh": "harness 未完成分析。",
-          "whyImportantZh": "harness 未完成分析。",
-          "userRelevanceZh": "harness 未完成分析。",
-          "evidence": "not analyzed"
-        },
-        "methodDetail": {
-          "coreIdeaZh": "harness 未完成分析。",
-          "componentsZh": [
-            "未分析"
-          ],
-          "hardwareSystemDetailZh": "harness 未完成分析。",
-          "noveltyZh": "harness 未完成分析。",
-          "evidence": "not analyzed"
-        },
-        "experimentDetail": {
-          "setupZh": "harness 未完成分析。",
-          "baselinesZh": "harness 未完成分析。",
-          "metricsZh": [
-            "未分析"
-          ],
-          "mainResultsZh": "harness 未完成分析。",
-          "limitationsZh": "harness 未完成分析。",
-          "evidence": "not analyzed"
-        },
-        "evidence": {
-          "usedSources": [
-            "metadata"
-          ],
-          "affiliationEvidence": "",
-          "experimentEvidence": "",
-          "missingFields": [
-            "motivation",
-            "method",
-            "experiments"
-          ]
-        },
-        "confidence": {
-          "summary": 0.2,
-          "motivation": 0,
-          "method": 0,
-          "experiments": 0,
-          "affiliations": 0
-        }
-      },
-      "recommendationTrack": "hardware-primary",
-      "recommendationLabel": "硬件体系结构主线",
-      "recommendationScore": 198.25,
+      "recommendationScore": 184,
       "relevanceReason": "命中 AI 处理器、体系结构、量化、训推系统或内存/缓存优化主题",
       "pdfStatus": "remote",
       "workflow": {
@@ -391,9 +275,9 @@
       "categories": [
         "cs.AI"
       ],
-      "collectedAt": "2026-06-30T21:48:26.764Z",
-      "firstSeenAt": "2026-06-30T21:48:26.764Z",
-      "lastSeenAt": "2026-06-30T21:48:26.764Z",
+      "collectedAt": "2026-07-01T21:49:34.576Z",
+      "firstSeenAt": "2026-07-01T21:49:34.576Z",
+      "lastSeenAt": "2026-07-01T21:49:34.576Z",
       "collectionType": "daily-latest",
       "matchedQuery": "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)",
       "collectionTypes": [
@@ -506,9 +390,9 @@
         "cs.AI",
         "cs.MA"
       ],
-      "collectedAt": "2026-06-30T21:48:26.764Z",
-      "firstSeenAt": "2026-06-30T21:48:26.764Z",
-      "lastSeenAt": "2026-06-30T21:48:26.764Z",
+      "collectedAt": "2026-07-01T21:49:34.576Z",
+      "firstSeenAt": "2026-07-01T21:49:34.576Z",
+      "lastSeenAt": "2026-07-01T21:49:34.576Z",
       "collectionType": "daily-latest",
       "matchedQuery": "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)",
       "collectionTypes": [
@@ -599,6 +483,133 @@
       }
     },
     {
+      "id": "arxiv:2606.30755",
+      "source": "arXiv",
+      "title": "Understanding and Evaluating Claw-like Agent Security Through a Computer-Systems Lens",
+      "authors": [
+        "Peizhi Niu",
+        "Wenjie Qu",
+        "Shangding Gu",
+        "Tianneng Shi",
+        "Yuankai Li",
+        "Ahmad Tawaha",
+        "Hend Alzahrani",
+        "Vincent Siu",
+        "Boyi Li",
+        "Chenguang Wang",
+        "Jiaheng Zhang",
+        "Basel Alomair",
+        "Ming Jin",
+        "Muhao Chen",
+        "Chi Wang",
+        "Costas Spanos",
+        "Dawn Song"
+      ],
+      "authorAffiliations": [],
+      "affiliations": [],
+      "abstract": "Claw-like AI agents (e.g., OpenClaw) are always-on processes with persistent access to credentials, files, tools, and external services. They take on system-level responsibilities -- installing packages, maintaining state, scheduling subtasks, and mediating I/O -- making security failures far more severe than in other agents. Yet existing benchmarks focus on model responses and tool calls, leaving cross-component failure modes largely unmeasured. We adopt a computer-system analogy: treating a Claw-like agent as an agentic computer system whose gateway runtime plays an OS-like mediation role, whose Skills resemble user-installed applications, and whose Plugins resemble loadable extensions with runtime privileges. Each component has a classical counterpart whose protection mechanisms -- refined over decades of cybersecurity research -- are absent on the agent side. From this perspective, we develop SafeClawArena, a benchmark of 406 adversarial tasks across four attack surfaces (Skill Supply-Chain Integrity, Persistent State Exploitation, Cross-Boundary Data Flow, and Indirect Prompt Injection), executed in containerized replicas of real agent platforms with canary-marked credentials and evaluated via automated taint tracking across nine output channels. We evaluate three platforms (OpenClaw, NemoClaw, SeClaw) and five frontier LLMs. The highest attack success rate reaches 70%; malicious Plugins succeed in 100% of cases regardless of the LLM. SeClaw cuts GPT-5.4's attack success rate from 70% to 22%, partly through utility-security tradeoffs rather than active defenses, while Claude-Opus-4.6 already sits near a 22% floor on every platform. These results expose the inadequacy of current defenses and suggest directions for future hardening. Code and data: https://github.com/sunblaze-ucb/SafeClawArena.",
+      "venue": "arXiv",
+      "published": "2026-06-29T18:00:45Z",
+      "updated": "2026-06-29T18:00:45Z",
+      "url": "http://arxiv.org/abs/2606.30755v1",
+      "pdfUrl": "https://arxiv.org/pdf/2606.30755v1",
+      "categories": [
+        "cs.CR",
+        "cs.AI"
+      ],
+      "collectedAt": "2026-07-01T21:49:34.576Z",
+      "firstSeenAt": "2026-07-01T21:49:34.576Z",
+      "lastSeenAt": "2026-07-01T21:49:34.576Z",
+      "collectionType": "daily-latest",
+      "matchedQuery": "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)",
+      "collectionTypes": [
+        "daily-latest"
+      ],
+      "matchedQueries": [
+        "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)"
+      ],
+      "targetThemes": [],
+      "conferenceVenues": [],
+      "conferenceYears": [],
+      "recommendationTrack": "hardware-primary",
+      "recommendationLabel": "硬件体系结构主线",
+      "recommendationScore": 155.25,
+      "relevanceReason": "命中 AI 处理器、体系结构、量化、训推系统或内存/缓存优化主题",
+      "pdfStatus": "remote",
+      "workflow": {
+        "digestStatus": "pending",
+        "emailStatus": "waiting-digest",
+        "digestError": "命令行启用了 --no-ai",
+        "harnessVersion": "paper-reader-v1",
+        "collectStatus": "collected",
+        "pdfStatus": "remote"
+      },
+      "digest": {
+        "summaryZh": "AI 摘要未生成。原始摘要要点：Claw-like AI agents (e.g., OpenClaw) are always-on processes with persistent access to credentials, files, tools, and external services. They take on system-lev...",
+        "motivationZh": "命令行启用了 --no-ai",
+        "methodZh": "请配置 AI 后重新运行，以生成方法提炼。",
+        "experimentsZh": "来源元数据未披露完整实验设置或结果。",
+        "affiliationsZh": "未在 DBLP/arXiv 元数据中提供。",
+        "tags": [
+          "cs.CR",
+          "cs.AI"
+        ],
+        "importance": 3,
+        "researchFitZh": "AI harness 尚未完成分析，无法判断与用户研究方向的具体关系。",
+        "hardwareRelevance": 1,
+        "algorithmRelevance": 1,
+        "systemRelevance": 1,
+        "readPriority": "archive",
+        "whyReadZh": "需要完成 motivation、method 和实验结果分析后再判断是否值得深读。",
+        "limitationsZh": "命令行启用了 --no-ai",
+        "motivationDetail": {
+          "problemZh": "harness 未完成分析。",
+          "gapZh": "harness 未完成分析。",
+          "whyImportantZh": "harness 未完成分析。",
+          "userRelevanceZh": "harness 未完成分析。",
+          "evidence": "not analyzed"
+        },
+        "methodDetail": {
+          "coreIdeaZh": "harness 未完成分析。",
+          "componentsZh": [
+            "未分析"
+          ],
+          "hardwareSystemDetailZh": "harness 未完成分析。",
+          "noveltyZh": "harness 未完成分析。",
+          "evidence": "not analyzed"
+        },
+        "experimentDetail": {
+          "setupZh": "harness 未完成分析。",
+          "baselinesZh": "harness 未完成分析。",
+          "metricsZh": [
+            "未分析"
+          ],
+          "mainResultsZh": "harness 未完成分析。",
+          "limitationsZh": "harness 未完成分析。",
+          "evidence": "not analyzed"
+        },
+        "evidence": {
+          "usedSources": [
+            "metadata"
+          ],
+          "affiliationEvidence": "",
+          "experimentEvidence": "",
+          "missingFields": [
+            "motivation",
+            "method",
+            "experiments"
+          ]
+        },
+        "confidence": {
+          "summary": 0.2,
+          "motivation": 0,
+          "method": 0,
+          "experiments": 0,
+          "affiliations": 0
+        }
+      }
+    },
+    {
       "id": "arxiv:2606.30484",
       "source": "arXiv",
       "title": "Offline accuracy is not enough: closed-loop instability and stabilisation of a wall-sensor neural estimator in opposition control",
@@ -618,9 +629,9 @@
       "categories": [
         "physics.flu-dyn"
       ],
-      "collectedAt": "2026-06-30T21:48:26.764Z",
-      "firstSeenAt": "2026-06-30T21:48:26.764Z",
-      "lastSeenAt": "2026-06-30T21:48:26.764Z",
+      "collectedAt": "2026-07-01T21:49:34.576Z",
+      "firstSeenAt": "2026-07-01T21:49:34.576Z",
+      "lastSeenAt": "2026-07-01T21:49:34.576Z",
       "collectionType": "daily-latest",
       "matchedQuery": "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)",
       "collectionTypes": [
@@ -710,28 +721,30 @@
       }
     },
     {
-      "id": "arxiv:2606.30372",
+      "id": "arxiv:2606.31660",
       "source": "arXiv",
-      "title": "Using Large Language Models as Low-Cost Statistical Estimators for Human-Response Data",
+      "title": "Contrastive Regularization of Machine Learning Potentials",
       "authors": [
-        "Haobo Yang"
+        "Dimitrios Tzivrailis",
+        "Georgios Sotiropoulos",
+        "Alberto Rosso",
+        "Eiji Kawasaki"
       ],
       "authorAffiliations": [],
       "affiliations": [],
-      "abstract": "Quantitative research across the social and behavioral sciences depends on human subject experiments that are expensive, slow, and subject to sampling bias. Here we show that pretrained large language models induce risk-equivalent estimators of conditional expectations under squared loss, establishing restricted functional risk equivalence: under squared loss, the LLM induces an estimator whose risk matches the Bayes optimal risk for squared-loss prediction of conditional expectations for any inference that depends on the data only through the conditional mean. We formalize the LLM as a misspecified functional estimator $T(\\hat{P}_n)$ trained on i.i.d.\\ data, decompose the estimation error into representation bias $ε_{\\mathrm{rep}}$ and optimization error, and prove that under mild regularity conditions the LLM's expected error converges to the irreducible population variance plus the squared representation bias, with the representation bias bounded by the Pinsker inequality. The identifiability error $δ$ propagates into the effective bias, inflating the asymptotic risk floor. We establish restricted functional risk equivalence via a bidirectional Le Cam deficiency analysis: the forward deficiency vanishes asymptotically while the reverse deficiency is exactly zero. We provide finite-sample concentration bounds and a calibration protocol with explicit decision rules. The result is a precise, provable statement: a well-calibrated LLM achieves the Bayes-optimal risk for conditional-mean-dependent inference, bounded by explicit scope conditions. In practical applications, this means that under satisfied conditions and well-calibrated models, large language models can be used in many prediction and decision-making tasks that originally relied on human experiments, approximating near-optimal statistical inference at lower cost.",
+      "abstract": "Machine learning interatomic potentials are trained to predict energies and forces but built to be sampled: their purpose is to drive molecular simulations whose observables average over the equilibrium distribution the potential defines. They exemplify a broader AI problem -- learned regressors deployed as generators -- where pointwise accuracy does not guarantee a correct distribution. We show that potentials trained by standard Mean Squared Error (MSE) minimization on Density Functional Theory (DFT) data can reach chemical accuracy on held-out data, yet still fail as samplers: their trajectories drift into spurious low-energy minima and return thermodynamic observables that depart sharply from the reference. To correct this, we introduce Contrastive Regularized MSE (CRMSE), a post-training step that augments the MSE with a contrastive term derived from the Kullback--Leibler divergence between the potential's implicit Boltzmann distribution and the target. The network serves as its own energy-based model: persistent Langevin chains expose the configurations it drifts into and raise their energy, adding no new ab initio data. On the ethanol and aspirin molecules of the MD17 dataset, CRMSE confines the sampler to the physical basin and recovers the energy distribution, interatomic-distance distributions, and dihedral free-energy profiles to near-quantitative agreement with DFT, while preserving force accuracy and keeping energy errors within chemical accuracy; it remains effective when the training set is sharply reduced. That MSE training fails this way on MD17 -- one of the most widely used benchmarks -- while a minimal contrastive correction repairs it suggests that reliable sampling depends less on data volume than on training the model against the distribution it produces: distribution-level training is not a refinement of regression accuracy, but a distinct requirement.",
       "venue": "arXiv",
-      "published": "2026-06-29T14:34:28Z",
-      "updated": "2026-06-29T14:34:28Z",
-      "url": "http://arxiv.org/abs/2606.30372v1",
-      "pdfUrl": "https://arxiv.org/pdf/2606.30372v1",
+      "published": "2026-06-30T13:39:50Z",
+      "updated": "2026-06-30T13:39:50Z",
+      "url": "http://arxiv.org/abs/2606.31660v1",
+      "pdfUrl": "https://arxiv.org/pdf/2606.31660v1",
       "categories": [
-        "cs.AI",
-        "cs.CY",
-        "cs.HC"
+        "physics.chem-ph",
+        "cond-mat.mtrl-sci"
       ],
-      "collectedAt": "2026-06-30T21:48:26.764Z",
-      "firstSeenAt": "2026-06-30T21:48:26.764Z",
-      "lastSeenAt": "2026-06-30T21:48:26.764Z",
+      "collectedAt": "2026-07-01T21:49:34.576Z",
+      "firstSeenAt": "2026-07-01T21:49:34.576Z",
+      "lastSeenAt": "2026-07-01T21:49:34.576Z",
       "collectionType": "daily-latest",
       "matchedQuery": "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)",
       "collectionTypes": [
@@ -745,7 +758,7 @@
       "conferenceYears": [],
       "recommendationTrack": "hardware-primary",
       "recommendationLabel": "硬件体系结构主线",
-      "recommendationScore": 150,
+      "recommendationScore": 148,
       "relevanceReason": "命中 AI 处理器、体系结构、量化、训推系统或内存/缓存优化主题",
       "pdfStatus": "remote",
       "workflow": {
@@ -757,15 +770,14 @@
         "pdfStatus": "remote"
       },
       "digest": {
-        "summaryZh": "AI 摘要未生成。原始摘要要点：Quantitative research across the social and behavioral sciences depends on human subject experiments that are expensive, slow, and subject to sampling bias. Her...",
+        "summaryZh": "AI 摘要未生成。原始摘要要点：Machine learning interatomic potentials are trained to predict energies and forces but built to be sampled: their purpose is to drive molecular simulations whos...",
         "motivationZh": "命令行启用了 --no-ai",
         "methodZh": "请配置 AI 后重新运行，以生成方法提炼。",
         "experimentsZh": "来源元数据未披露完整实验设置或结果。",
         "affiliationsZh": "未在 DBLP/arXiv 元数据中提供。",
         "tags": [
-          "cs.AI",
-          "cs.CY",
-          "cs.HC"
+          "physics.chem-ph",
+          "cond-mat.mtrl-sci"
         ],
         "importance": 3,
         "researchFitZh": "AI harness 尚未完成分析，无法判断与用户研究方向的具体关系。",
@@ -823,31 +835,34 @@
       }
     },
     {
-      "id": "arxiv:2606.30613",
+      "id": "arxiv:2606.32029",
       "source": "arXiv",
-      "title": "Sequential Planning via Anchored Robotic Keypoints",
+      "title": "When LLMs Read Tables Carelessly: Measuring and Reducing Data Referencing Errors",
       "authors": [
-        "Bryce Grant",
-        "Aryeh Rothenberg",
-        "Logan Senning",
-        "Zonghe Chua",
-        "Zach Patterson",
-        "Peng Wang"
+        "Yuqing Yang",
+        "Qi Zhu",
+        "Zhen Han",
+        "Boran Han",
+        "Zhengyuan Shen",
+        "Shuai Wang",
+        "Vassilis N. Ioannidis",
+        "Huzefa Rangwala"
       ],
       "authorAffiliations": [],
       "affiliations": [],
-      "abstract": "We present Sequential Planning via Anchored Robotic Keypoints, SPARK, a training-free neurosymbolic manipulation system that reaches 43.7% on six LIBERO-PRO position \\& task cells, more than doubling CaP-Agent0 and Vision-Language-Action (VLA) baselines. CaP-Agent0, a multi-turn code-generation agent, achieves 18.2% by re-querying an LLM at every turn, but its restart-from-scratch solution proves costly against minor policy failures. Perception is the layer that fails most under position and task changes so SPARK spends its computation there. A single Gemini call composes the plan as a typed behavior tree (BT) of composable primitives, each already containing the low-level control (motion, grasping, depth geometry) a code-generation agent would otherwise regenerate on every trial. The rest of the budget goes to perception: a second Gemini call proposes three alternative text prompts per object, SAM3 evaluates each, and we keep the prompt$\\to$label pair with the most confident detection and a recovery loop then retries a failed primitive against freshly detected objects, with no new LLM call. The alternative prompts add +27.7 points on the spatial suite and +10.0 on the object suite, with the recovery loop adding +5.0 overall. SPARK runs the same primitives on three robot families (UR10e, Franka FR3, bimanual Franka) across nine unique tasks at twenty trials each, averaging 68%. Since the detector, planner, and controller modules sit behind the typed plan, they swap independently without training, and each primitive's checkable post-condition traces a failure to the corresponding module or a kinematic limit. Every trial logs a verified, labeled trajectory, so a training-free planner that already beats VLAs can supply the data those policies need without teleoperation. Project page: https://cwru-aism.github.io/spark-page/",
+      "abstract": "While large language models (LLMs) perform well on table tasks, they still make data referencing errors (DREs), i.e., incorrectly citing or omitting table values, despite understanding the table structure. Beyond final-answer accuracy, DREs directly compromise the correctness and reliability of intermediate reasoning steps. Yet prior studies have only offered limited, small-scale analyses. In this work, we present the first systematic evaluation of tabular data referencing errors across different models and tasks. Our results show that DREs occur across all tested models (1.7B to 20B parameters). Furthermore, we demonstrate that incorporating data referencing as a critic significantly improves answer accuracy up to 12.0%, through critic-based filtering and rejection sampling. Finally, we trained a lightweight 4B-parameter critic model that achieves an average F1 score of 78.2% in detecting both in-distribution and out-of-distribution DREs, and effectively assists inference for larger models.",
       "venue": "arXiv",
-      "published": "2026-06-29T17:48:01Z",
-      "updated": "2026-06-29T17:48:01Z",
-      "url": "http://arxiv.org/abs/2606.30613v1",
-      "pdfUrl": "https://arxiv.org/pdf/2606.30613v1",
+      "published": "2026-06-30T17:54:50Z",
+      "updated": "2026-06-30T17:54:50Z",
+      "url": "http://arxiv.org/abs/2606.32029v1",
+      "pdfUrl": "https://arxiv.org/pdf/2606.32029v1",
       "categories": [
-        "cs.RO"
+        "cs.CL",
+        "cs.AI"
       ],
-      "collectedAt": "2026-06-30T21:48:28.786Z",
-      "firstSeenAt": "2026-06-30T21:48:28.786Z",
-      "lastSeenAt": "2026-06-30T21:48:28.786Z",
+      "collectedAt": "2026-07-01T21:49:36.712Z",
+      "firstSeenAt": "2026-07-01T21:49:36.712Z",
+      "lastSeenAt": "2026-07-01T21:49:36.712Z",
       "collectionType": "daily-latest",
       "matchedQuery": "(all:agent OR all:agents OR all:agentic OR all:reasoning OR all:post-training OR all:alignment OR all:multimodal OR all:world-model) AND (all:LLM OR all:foundation OR all:language)",
       "collectionTypes": [
@@ -861,7 +876,7 @@
       "conferenceYears": [],
       "recommendationTrack": "algorithm-trend",
       "recommendationLabel": "算法趋势观察",
-      "recommendationScore": 41.8,
+      "recommendationScore": 37.2,
       "relevanceReason": "命中 LLM/Agent/多模态/后训练等算法趋势主题",
       "pdfStatus": "remote",
       "workflow": {
@@ -873,128 +888,127 @@
         "pdfStatus": "remote"
       },
       "digest": {
-        "summaryZh": "AI 摘要未生成。原始摘要要点：We present Sequential Planning via Anchored Robotic Keypoints, SPARK, a training-free neurosymbolic manipulation system that reaches 43.7% on six LIBERO-PRO pos...",
+        "summaryZh": "AI 摘要未生成。原始摘要要点：While large language models (LLMs) perform well on table tasks, they still make data referencing errors (DREs), i.e., incorrectly citing or omitting table value...",
+        "motivationZh": "命令行启用了 --no-ai",
+        "methodZh": "请配置 AI 后重新运行，以生成方法提炼。",
+        "experimentsZh": "来源元数据未披露完整实验设置或结果。",
+        "affiliationsZh": "未在 DBLP/arXiv 元数据中提供。",
+        "tags": [
+          "cs.CL",
+          "cs.AI"
+        ],
+        "importance": 3,
+        "researchFitZh": "AI harness 尚未完成分析，无法判断与用户研究方向的具体关系。",
+        "hardwareRelevance": 1,
+        "algorithmRelevance": 1,
+        "systemRelevance": 1,
+        "readPriority": "archive",
+        "whyReadZh": "需要完成 motivation、method 和实验结果分析后再判断是否值得深读。",
+        "limitationsZh": "命令行启用了 --no-ai",
+        "motivationDetail": {
+          "problemZh": "harness 未完成分析。",
+          "gapZh": "harness 未完成分析。",
+          "whyImportantZh": "harness 未完成分析。",
+          "userRelevanceZh": "harness 未完成分析。",
+          "evidence": "not analyzed"
+        },
+        "methodDetail": {
+          "coreIdeaZh": "harness 未完成分析。",
+          "componentsZh": [
+            "未分析"
+          ],
+          "hardwareSystemDetailZh": "harness 未完成分析。",
+          "noveltyZh": "harness 未完成分析。",
+          "evidence": "not analyzed"
+        },
+        "experimentDetail": {
+          "setupZh": "harness 未完成分析。",
+          "baselinesZh": "harness 未完成分析。",
+          "metricsZh": [
+            "未分析"
+          ],
+          "mainResultsZh": "harness 未完成分析。",
+          "limitationsZh": "harness 未完成分析。",
+          "evidence": "not analyzed"
+        },
+        "evidence": {
+          "usedSources": [
+            "metadata"
+          ],
+          "affiliationEvidence": "",
+          "experimentEvidence": "",
+          "missingFields": [
+            "motivation",
+            "method",
+            "experiments"
+          ]
+        },
+        "confidence": {
+          "summary": 0.2,
+          "motivation": 0,
+          "method": 0,
+          "experiments": 0,
+          "affiliations": 0
+        }
+      }
+    },
+    {
+      "id": "arxiv:2606.32028",
+      "source": "arXiv",
+      "title": "DVG-WM: Disentangled Video Generation Enables Efficient Embodied World Model for Robotic Manipulation",
+      "authors": [
+        "Ziyu Shan",
+        "Zhenyu Wu",
+        "Xiaofeng Wang",
+        "Zheng Zhu",
+        "Ziwei Wang"
+      ],
+      "authorAffiliations": [],
+      "affiliations": [],
+      "abstract": "Video-based embodied world models provide an appealing substrate for robotic manipulation by predicting future states, yet current approaches remain limited by a fundamental entanglement: accurately modeling dynamics typically requires low-level temporal reasoning, while producing high-resolution frames demands expansive visual synthesis according to high-level semantics. This entanglement results in slow inference speed for iterative planning or too coarse predictions to retain contact-rich details. To solve this dilemma, we present Disentangled Video Generation World Model (DVG-WM), an efficient framework that explicitly decomposes world modeling into dynamics learning and visual synthesis. Conditioned on an initial observation and a language instruction, our model first generates a plausible sequence of intermediate visual states to preview the physical interaction and refines them to obtain high-fidelity videos. Furthermore, an efficient cascading mechanism is proposed, where DVG-WM uses flow matching to directly map the dynamics to video latents, and introduces a latent degradation mechanism to regenerate contact-rich details. Experiments on LIBERO and real-world platforms demonstrate improved video quality with up to 3.97 times acceleration, validating that disentangled video generation can be an efficient embodied world model for robotic manipulation.",
+      "venue": "arXiv",
+      "published": "2026-06-30T17:54:32Z",
+      "updated": "2026-06-30T17:54:32Z",
+      "url": "http://arxiv.org/abs/2606.32028v1",
+      "pdfUrl": "https://arxiv.org/pdf/2606.32028v1",
+      "categories": [
+        "cs.RO"
+      ],
+      "collectedAt": "2026-07-01T21:49:36.712Z",
+      "firstSeenAt": "2026-07-01T21:49:36.712Z",
+      "lastSeenAt": "2026-07-01T21:49:36.712Z",
+      "collectionType": "daily-latest",
+      "matchedQuery": "(all:agent OR all:agents OR all:agentic OR all:reasoning OR all:post-training OR all:alignment OR all:multimodal OR all:world-model) AND (all:LLM OR all:foundation OR all:language)",
+      "collectionTypes": [
+        "daily-latest"
+      ],
+      "matchedQueries": [
+        "(all:agent OR all:agents OR all:agentic OR all:reasoning OR all:post-training OR all:alignment OR all:multimodal OR all:world-model) AND (all:LLM OR all:foundation OR all:language)"
+      ],
+      "targetThemes": [],
+      "conferenceVenues": [],
+      "conferenceYears": [],
+      "recommendationTrack": "algorithm-trend",
+      "recommendationLabel": "算法趋势观察",
+      "recommendationScore": 34.6,
+      "relevanceReason": "命中 LLM/Agent/多模态/后训练等算法趋势主题",
+      "pdfStatus": "remote",
+      "workflow": {
+        "digestStatus": "pending",
+        "emailStatus": "waiting-digest",
+        "digestError": "命令行启用了 --no-ai",
+        "harnessVersion": "paper-reader-v1",
+        "collectStatus": "collected",
+        "pdfStatus": "remote"
+      },
+      "digest": {
+        "summaryZh": "AI 摘要未生成。原始摘要要点：Video-based embodied world models provide an appealing substrate for robotic manipulation by predicting future states, yet current approaches remain limited by ...",
         "motivationZh": "命令行启用了 --no-ai",
         "methodZh": "请配置 AI 后重新运行，以生成方法提炼。",
         "experimentsZh": "来源元数据未披露完整实验设置或结果。",
         "affiliationsZh": "未在 DBLP/arXiv 元数据中提供。",
         "tags": [
           "cs.RO"
-        ],
-        "importance": 3,
-        "researchFitZh": "AI harness 尚未完成分析，无法判断与用户研究方向的具体关系。",
-        "hardwareRelevance": 1,
-        "algorithmRelevance": 1,
-        "systemRelevance": 1,
-        "readPriority": "archive",
-        "whyReadZh": "需要完成 motivation、method 和实验结果分析后再判断是否值得深读。",
-        "limitationsZh": "命令行启用了 --no-ai",
-        "motivationDetail": {
-          "problemZh": "harness 未完成分析。",
-          "gapZh": "harness 未完成分析。",
-          "whyImportantZh": "harness 未完成分析。",
-          "userRelevanceZh": "harness 未完成分析。",
-          "evidence": "not analyzed"
-        },
-        "methodDetail": {
-          "coreIdeaZh": "harness 未完成分析。",
-          "componentsZh": [
-            "未分析"
-          ],
-          "hardwareSystemDetailZh": "harness 未完成分析。",
-          "noveltyZh": "harness 未完成分析。",
-          "evidence": "not analyzed"
-        },
-        "experimentDetail": {
-          "setupZh": "harness 未完成分析。",
-          "baselinesZh": "harness 未完成分析。",
-          "metricsZh": [
-            "未分析"
-          ],
-          "mainResultsZh": "harness 未完成分析。",
-          "limitationsZh": "harness 未完成分析。",
-          "evidence": "not analyzed"
-        },
-        "evidence": {
-          "usedSources": [
-            "metadata"
-          ],
-          "affiliationEvidence": "",
-          "experimentEvidence": "",
-          "missingFields": [
-            "motivation",
-            "method",
-            "experiments"
-          ]
-        },
-        "confidence": {
-          "summary": 0.2,
-          "motivation": 0,
-          "method": 0,
-          "experiments": 0,
-          "affiliations": 0
-        }
-      }
-    },
-    {
-      "id": "arxiv:2606.30632",
-      "source": "arXiv",
-      "title": "GROW$^2$: Grounding Which and Where for Robot Tool Use",
-      "authors": [
-        "Yuhong Deng",
-        "Yuyao Liu",
-        "David Hsu"
-      ],
-      "authorAffiliations": [],
-      "affiliations": [],
-      "abstract": "Can the robot use a plate to cut a cake if no knife is available? Tool use greatly expands robot capabilities, but to use tools creatively beyond their intended functions, the robot faces the challenge of $\\textit{open-world affordance grounding}$: select an open-category object to act as a tool and localize its specific region of action. To this end, we introduce GROW$^2$ (GROunding Which and Where), which leverages object parts as a natural abstraction to split the grounding process hierarchically into semantic and geometric levels, thus bypassing the need for data-heavy, end-to-end training. Semantically, GROW$^2$ harnesses the commonsense reasoning of Vision-Language Models (VLMs) to parse a natural-language task instruction, select a suitable object as the tool, and identify task-relevant parts on the tool and the target object. Geometrically, vision foundation models then ground the selected parts into precise 3D regions from a single RGB-D image. Experiments on established benchmarks show that GROW$^2$ outperforms state-of-the-art baselines on affordance prediction benchmarks. Further, it achieves zero-shot generalization over open-category objects and outperforms baselines in both simulated and real-world robot tool use experiments.",
-      "venue": "arXiv",
-      "published": "2026-06-29T17:56:53Z",
-      "updated": "2026-06-29T17:56:53Z",
-      "url": "http://arxiv.org/abs/2606.30632v1",
-      "pdfUrl": "https://arxiv.org/pdf/2606.30632v1",
-      "categories": [
-        "cs.RO",
-        "cs.AI",
-        "cs.CV"
-      ],
-      "collectedAt": "2026-06-30T21:48:28.786Z",
-      "firstSeenAt": "2026-06-30T21:48:28.786Z",
-      "lastSeenAt": "2026-06-30T21:48:28.786Z",
-      "collectionType": "daily-latest",
-      "matchedQuery": "(all:agent OR all:agents OR all:agentic OR all:reasoning OR all:post-training OR all:alignment OR all:multimodal OR all:world-model) AND (all:LLM OR all:foundation OR all:language)",
-      "collectionTypes": [
-        "daily-latest"
-      ],
-      "matchedQueries": [
-        "(all:agent OR all:agents OR all:agentic OR all:reasoning OR all:post-training OR all:alignment OR all:multimodal OR all:world-model) AND (all:LLM OR all:foundation OR all:language)"
-      ],
-      "targetThemes": [],
-      "conferenceVenues": [],
-      "conferenceYears": [],
-      "recommendationTrack": "algorithm-trend",
-      "recommendationLabel": "算法趋势观察",
-      "recommendationScore": 38.8,
-      "relevanceReason": "命中 LLM/Agent/多模态/后训练等算法趋势主题",
-      "pdfStatus": "remote",
-      "workflow": {
-        "digestStatus": "pending",
-        "emailStatus": "waiting-digest",
-        "digestError": "命令行启用了 --no-ai",
-        "harnessVersion": "paper-reader-v1",
-        "collectStatus": "collected",
-        "pdfStatus": "remote"
-      },
-      "digest": {
-        "summaryZh": "AI 摘要未生成。原始摘要要点：Can the robot use a plate to cut a cake if no knife is available? Tool use greatly expands robot capabilities, but to use tools creatively beyond their intended...",
-        "motivationZh": "命令行启用了 --no-ai",
-        "methodZh": "请配置 AI 后重新运行，以生成方法提炼。",
-        "experimentsZh": "来源元数据未披露完整实验设置或结果。",
-        "affiliationsZh": "未在 DBLP/arXiv 元数据中提供。",
-        "tags": [
-          "cs.RO",
-          "cs.AI",
-          "cs.CV"
         ],
         "importance": 3,
         "researchFitZh": "AI harness 尚未完成分析，无法判断与用户研究方向的具体关系。",
