@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-07-01T21:54:20.838Z",
-  "digestDate": "2026-07-02",
+  "generatedAt": "2026-07-02T21:39:42.073Z",
+  "digestDate": "2026-07-03",
   "kind": "daily-new",
   "timezone": "Asia/Shanghai",
   "siteUrl": "https://YouthLiuYS.github.io/PaperDigestAgent/",
@@ -126,7 +126,7 @@
     "dailyCandidates": 8,
     "conferenceCandidates": 0,
     "backfillCandidates": 0,
-    "rawCandidates": 58,
+    "rawCandidates": 50,
     "newlyAdded": 8,
     "pendingDigest": 8,
     "pendingEmail": 0,
@@ -141,28 +141,35 @@
   },
   "papers": [
     {
-      "id": "arxiv:2606.31163",
+      "id": "arxiv:2607.00341",
       "source": "arXiv",
-      "title": "ComplianceGate: Classifier-Gated Multi-Tier LLM Routing for Inference in Regulated Industries",
+      "title": "DiscoLoop: Looping Discrete Embeddings and Continuous Hidden States for Multi-hop Reasoning",
       "authors": [
-        "Abhishek Dey"
+        "Hengyu Fu",
+        "Tianyu Guo",
+        "Zixuan Wang",
+        "Hanlin Zhu",
+        "Jason D. Lee",
+        "Jiantao Jiao",
+        "Stuart Russell",
+        "Song Mei"
       ],
       "authorAffiliations": [],
       "affiliations": [],
-      "abstract": "Large language models deployed in regulated industries operate under two constraints: compliance enforcement and cost efficiency. Personally identifiable information (PII) in user queries can reach model endpoints before the system determines whether that data should leave its jurisdictional boundary. Serving all queries through a single large model consumes full GPU capacity regardless of query complexity while offering no mechanism for geographic routing. Mixture-of-Experts architectures do not address this routing occurs between expert layers within the model after data has already arrived at the endpoint, with all experts loaded in memory regardless of query complexity. We propose a classifier-gated routing architecture that enforces compliance by design. A trained encoder classifier sits before any decoder inference, evaluating each query for complexity and data sensitivity, then routing it to an appropriately sized dense model in the appropriate geographic location. PII-containing queries route to local endpoints before any LLM computation begins, making data residency violations structurally impossible. Simple queries reach small, fast models at a fraction of the cost. Our evaluation on 600 queries demonstrates 39% median latency reduction, 33-52% cost savings depending on query distribution, and generation throughput of 122-200 tokens/second versus 50-64 for the baseline. The encoder classifier achieves 99.2% accuracy with near-perfect PII recall at 7ms inference overhead, establishing pre-inference classification as a practical path to compliance-by-design LLM deployment.",
+      "abstract": "Large language models achieve strong performance on many reasoning tasks when allowed to externalize intermediate steps as Chain-of-Thought (CoT). However, many questions require the model to internalize the multi-step reasoning within a single forward pass before generating the answer. We study this challenge through two-hop reasoning, a representative task where the model must compose multiple pieces of parametric knowledge within a single forward pass. Standard non-recurrent Transformers suffer from a depth-local storage problem: facts learned in earlier layers are unavailable where second-hop retrieval happens. We found that Looped Transformers mitigate this issue by reusing the same memory, but still generalize imperfectly. We show that the remaining bottleneck is representational. In the two-hop reasoning task, the first loop often makes the correct bridge entity nearly perfectly decodable, yet the corresponding hidden state remains poorly aligned with the bridge token embedding. Surprisingly, an easy training-free realignment intervention nearly closes the generalization gap. Building upon this insight, we propose DiscoLoop, a looping architecture whose recurrence carries both a discrete embedding channel and a continuous hidden-state channel. DiscoLoop achieves near-perfect accuracy with substantially fewer training steps across symbolic and synthetic-language multi-hop reasoning tasks. When applied to real-world pretraining, DiscoLoop attains lower training loss and stronger benchmark performance than looped-transformer baselines, suggesting that the mixed-channel design transfers to practical language modeling.",
       "venue": "arXiv",
-      "published": "2026-06-30T05:49:50Z",
-      "updated": "2026-06-30T05:49:50Z",
-      "url": "http://arxiv.org/abs/2606.31163v1",
-      "pdfUrl": "https://arxiv.org/pdf/2606.31163v1",
+      "published": "2026-07-01T02:32:02Z",
+      "updated": "2026-07-01T02:32:02Z",
+      "url": "http://arxiv.org/abs/2607.00341v1",
+      "pdfUrl": "https://arxiv.org/pdf/2607.00341v1",
       "categories": [
-        "cs.LG",
+        "cs.CL",
         "cs.AI",
-        "cs.CL"
+        "cs.LG"
       ],
-      "collectedAt": "2026-07-01T21:49:32.804Z",
-      "firstSeenAt": "2026-07-01T21:49:32.804Z",
-      "lastSeenAt": "2026-07-01T21:49:32.804Z",
+      "collectedAt": "2026-07-02T21:34:43.932Z",
+      "firstSeenAt": "2026-07-02T21:34:43.932Z",
+      "lastSeenAt": "2026-07-02T21:34:43.932Z",
       "collectionType": "daily-latest",
       "matchedQuery": "(all:prefill OR all:decoding OR all:KV OR all:cache OR all:attention) AND (all:accelerator OR all:kernel OR all:compiler OR all:serving OR all:memory) AND (all:LLM OR all:transformer)",
       "collectionTypes": [
@@ -176,15 +183,15 @@
       "conferenceVenues": [],
       "conferenceYears": [],
       "digest": {
-        "summaryZh": "AI 摘要未生成。原始摘要要点：Large language models deployed in regulated industries operate under two constraints: compliance enforcement and cost efficiency. Personally identifiable inform...",
+        "summaryZh": "AI 摘要未生成。原始摘要要点：Large language models achieve strong performance on many reasoning tasks when allowed to externalize intermediate steps as Chain-of-Thought (CoT). However, many...",
         "motivationZh": "命令行启用了 --no-ai",
         "methodZh": "请配置 AI 后重新运行，以生成方法提炼。",
         "experimentsZh": "来源元数据未披露完整实验设置或结果。",
         "affiliationsZh": "未在 DBLP/arXiv 元数据中提供。",
         "tags": [
-          "cs.LG",
+          "cs.CL",
           "cs.AI",
-          "cs.CL"
+          "cs.LG"
         ],
         "importance": 3,
         "researchFitZh": "AI harness 尚未完成分析，无法判断与用户研究方向的具体关系。",
@@ -242,7 +249,7 @@
       },
       "recommendationTrack": "hardware-primary",
       "recommendationLabel": "硬件体系结构主线",
-      "recommendationScore": 184,
+      "recommendationScore": 172.75,
       "relevanceReason": "命中 AI 处理器、体系结构、量化、训推系统或内存/缓存优化主题",
       "pdfStatus": "remote",
       "workflow": {
@@ -255,271 +262,30 @@
       }
     },
     {
-      "id": "arxiv:2606.30442",
+      "id": "arxiv:2607.00481",
       "source": "arXiv",
-      "title": "The FIL Hypothesis: Inductive Biases Help with Kernel Engineering",
+      "title": "Beyond the Prompt: Jailbreaking Function-Calling LLMs via Simulated Moderation Traces",
       "authors": [
-        "Nikolai Rozanov",
-        "Subhabrata Dutta",
-        "Preslav Nakov",
-        "Iryna Gurevych"
+        "Junlong Liu",
+        "Haobo Wang",
+        "Weiqi Luo",
+        "Xiaojun Jia"
       ],
       "authorAffiliations": [],
       "affiliations": [],
-      "abstract": "The Bitter Lesson, which posits that general-purpose methods that scale with computation and data ultimately outperform those with built-in human knowledge, has become a dominant paradigm in the era of Large Language Models. We revisit this principle by observing a new and critical scaling dimension: the duration of the Feedback Information Loop (FIL), the time required for a system to receive a verification signal after generating a prediction. Most historic successes in Artificial Intelligence (AI) have benefited from near instantaneous feedback (e.g., games or classification tasks), but we argue that future AI applications in science and the physical world will inherently involve FILs ranging from hours to weeks. This trend poses a fundamental scaling limit, as obtaining enough verification steps required by purely data-driven methods becomes practically impossible. Additionally, we propose a method that is orthogonal to purely data-driven approaches, based on human-inspired expert knowledge. The method relies on inductive biases and constraining the solution space. We provide an initial validation of the hypothesis and the method, by studying the real-world GPU programming task, a domain with non-trivial FIL, and demonstrate that incorporating inductive biases yields superior performance over data-driven approaches. The code is released under: https://github.com/ai-nikolai/robust_kernelbench",
+      "abstract": "Jailbreak attacks remain a critical threat to the safe deployment of large language models (LLMs). While prior work has primarily studied attacks and defenses at the prompt level, we show that this prompt-centric paradigm overlooks a structural vulnerability in stateful, function-calling environments. In such applications, developer-defined schemas, structured arguments, and untrusted tool outputs are interleaved into a single shared model context. This architecture expands the attack surface by blurring the boundary between trusted control logic and untrusted data, allowing adversarial intent to be distributed across a multi-turn execution path. We exploit this architectural flaw through SMT, a black-box attack framework based on Simulated Moderation Traces. Departing from purely prompt-based interactions, SMT constructs a multi-turn trajectory that simulates a legitimate moderation-auditing workflow. Within this trajectory, a fabricated moderation frame leverages red-team testing as a pretext to elicit harmful generations. The subsequent validation feedback treats safety refusals as execution failures, prompting refinements that gradually weaken the model's safety constraints and ultimately trigger harmful outputs. Extensive empirical evaluations on prominent commercial LLMs from five different providers across two standardized safety benchmarks show that SMT consistently achieves the highest average attack success rate and HarmScore while requiring a near-minimal number of queries, substantially outperforming existing baselines. These findings demonstrate that prompt-level sanitization alone is fundamentally insufficient for defending tool-enabled LLM systems and highlight the urgent need for context-aware validation across schemas, arguments, tool outputs, and accumulated conversation state. The code is available at https://github.com/liujlong27/SMT.",
       "venue": "arXiv",
-      "published": "2026-06-29T15:16:33Z",
-      "updated": "2026-06-29T15:16:33Z",
-      "url": "http://arxiv.org/abs/2606.30442v1",
-      "pdfUrl": "https://arxiv.org/pdf/2606.30442v1",
-      "categories": [
-        "cs.AI"
-      ],
-      "collectedAt": "2026-07-01T21:49:34.576Z",
-      "firstSeenAt": "2026-07-01T21:49:34.576Z",
-      "lastSeenAt": "2026-07-01T21:49:34.576Z",
-      "collectionType": "daily-latest",
-      "matchedQuery": "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)",
-      "collectionTypes": [
-        "daily-latest"
-      ],
-      "matchedQueries": [
-        "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)"
-      ],
-      "targetThemes": [],
-      "conferenceVenues": [],
-      "conferenceYears": [],
-      "recommendationTrack": "hardware-primary",
-      "recommendationLabel": "硬件体系结构主线",
-      "recommendationScore": 162,
-      "relevanceReason": "命中 AI 处理器、体系结构、量化、训推系统或内存/缓存优化主题",
-      "pdfStatus": "remote",
-      "workflow": {
-        "digestStatus": "pending",
-        "emailStatus": "waiting-digest",
-        "digestError": "命令行启用了 --no-ai",
-        "harnessVersion": "paper-reader-v1",
-        "collectStatus": "collected",
-        "pdfStatus": "remote"
-      },
-      "digest": {
-        "summaryZh": "AI 摘要未生成。原始摘要要点：The Bitter Lesson, which posits that general-purpose methods that scale with computation and data ultimately outperform those with built-in human knowledge, has...",
-        "motivationZh": "命令行启用了 --no-ai",
-        "methodZh": "请配置 AI 后重新运行，以生成方法提炼。",
-        "experimentsZh": "来源元数据未披露完整实验设置或结果。",
-        "affiliationsZh": "未在 DBLP/arXiv 元数据中提供。",
-        "tags": [
-          "cs.AI"
-        ],
-        "importance": 3,
-        "researchFitZh": "AI harness 尚未完成分析，无法判断与用户研究方向的具体关系。",
-        "hardwareRelevance": 1,
-        "algorithmRelevance": 1,
-        "systemRelevance": 1,
-        "readPriority": "archive",
-        "whyReadZh": "需要完成 motivation、method 和实验结果分析后再判断是否值得深读。",
-        "limitationsZh": "命令行启用了 --no-ai",
-        "motivationDetail": {
-          "problemZh": "harness 未完成分析。",
-          "gapZh": "harness 未完成分析。",
-          "whyImportantZh": "harness 未完成分析。",
-          "userRelevanceZh": "harness 未完成分析。",
-          "evidence": "not analyzed"
-        },
-        "methodDetail": {
-          "coreIdeaZh": "harness 未完成分析。",
-          "componentsZh": [
-            "未分析"
-          ],
-          "hardwareSystemDetailZh": "harness 未完成分析。",
-          "noveltyZh": "harness 未完成分析。",
-          "evidence": "not analyzed"
-        },
-        "experimentDetail": {
-          "setupZh": "harness 未完成分析。",
-          "baselinesZh": "harness 未完成分析。",
-          "metricsZh": [
-            "未分析"
-          ],
-          "mainResultsZh": "harness 未完成分析。",
-          "limitationsZh": "harness 未完成分析。",
-          "evidence": "not analyzed"
-        },
-        "evidence": {
-          "usedSources": [
-            "metadata"
-          ],
-          "affiliationEvidence": "",
-          "experimentEvidence": "",
-          "missingFields": [
-            "motivation",
-            "method",
-            "experiments"
-          ]
-        },
-        "confidence": {
-          "summary": 0.2,
-          "motivation": 0,
-          "method": 0,
-          "experiments": 0,
-          "affiliations": 0
-        }
-      }
-    },
-    {
-      "id": "arxiv:2606.30555",
-      "source": "arXiv",
-      "title": "Linguistic Firewall: Geometry as Defense in Multi-Agent Systems Routing",
-      "authors": [
-        "Dvir Alsheich",
-        "Adar Peleg",
-        "Ben Hagag",
-        "Rom Himelstein",
-        "Amit Levi",
-        "Avi Mendelson"
-      ],
-      "authorAffiliations": [],
-      "affiliations": [],
-      "abstract": "The rapid integration of Large Language Models (LLMs) has driven the evolution of Multi-Agent Systems (MAS), where specialized agents collaborate to execute complex workflows. Effective orchestration in these environments requires robust routing mechanisms to efficiently allocate tasks to the most suitable agent. However, existing routers fundamentally rely on unverified proxies, ranging from textual self-descriptions to static surrogate representations, to gauge an agent's competence. This reliance on non-empirical data creates a critical gap between an agent's projected profile and its actual operational capabilities, introducing severe security vulnerabilities. Malicious agents can easily misrepresent their proficiencies or harbor covert backdoors that evade both standard external analysis and static representation-learning techniques. In this work, we introduce ANTAP (Automatic Non-Textual Agent Picker), an evaluation-driven routing architecture that discards indirect proxies in favor of active capability testing. By dynamically querying agents to ascertain their true competencies empirically, ANTAP distills performance into fixed behavioral operators within a shared semantic space. At inference time, routing is performed via a purely non-textual algebraic projection, establishing a \"linguistic firewall\" that renders metadata-based attacks inexpressible. In our experiments, ANTAP achieves near-zero ASR against description-based injection attacks, compared to 67.3\\% and above for the description-based router baseline. Against adaptive embedding attacks, ANTAP achieves substantially lower ASR than the embedding-based baseline, with a 20\\% reduction, while remaining resilient to description manipulation by design.",
-      "venue": "arXiv",
-      "published": "2026-06-29T16:51:06Z",
-      "updated": "2026-06-29T16:51:06Z",
-      "url": "http://arxiv.org/abs/2606.30555v1",
-      "pdfUrl": "https://arxiv.org/pdf/2606.30555v1",
-      "categories": [
-        "cs.AI",
-        "cs.MA"
-      ],
-      "collectedAt": "2026-07-01T21:49:34.576Z",
-      "firstSeenAt": "2026-07-01T21:49:34.576Z",
-      "lastSeenAt": "2026-07-01T21:49:34.576Z",
-      "collectionType": "daily-latest",
-      "matchedQuery": "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)",
-      "collectionTypes": [
-        "daily-latest"
-      ],
-      "matchedQueries": [
-        "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)"
-      ],
-      "targetThemes": [],
-      "conferenceVenues": [],
-      "conferenceYears": [],
-      "recommendationTrack": "hardware-primary",
-      "recommendationLabel": "硬件体系结构主线",
-      "recommendationScore": 160.5,
-      "relevanceReason": "命中 AI 处理器、体系结构、量化、训推系统或内存/缓存优化主题",
-      "pdfStatus": "remote",
-      "workflow": {
-        "digestStatus": "pending",
-        "emailStatus": "waiting-digest",
-        "digestError": "命令行启用了 --no-ai",
-        "harnessVersion": "paper-reader-v1",
-        "collectStatus": "collected",
-        "pdfStatus": "remote"
-      },
-      "digest": {
-        "summaryZh": "AI 摘要未生成。原始摘要要点：The rapid integration of Large Language Models (LLMs) has driven the evolution of Multi-Agent Systems (MAS), where specialized agents collaborate to execute com...",
-        "motivationZh": "命令行启用了 --no-ai",
-        "methodZh": "请配置 AI 后重新运行，以生成方法提炼。",
-        "experimentsZh": "来源元数据未披露完整实验设置或结果。",
-        "affiliationsZh": "未在 DBLP/arXiv 元数据中提供。",
-        "tags": [
-          "cs.AI",
-          "cs.MA"
-        ],
-        "importance": 3,
-        "researchFitZh": "AI harness 尚未完成分析，无法判断与用户研究方向的具体关系。",
-        "hardwareRelevance": 1,
-        "algorithmRelevance": 1,
-        "systemRelevance": 1,
-        "readPriority": "archive",
-        "whyReadZh": "需要完成 motivation、method 和实验结果分析后再判断是否值得深读。",
-        "limitationsZh": "命令行启用了 --no-ai",
-        "motivationDetail": {
-          "problemZh": "harness 未完成分析。",
-          "gapZh": "harness 未完成分析。",
-          "whyImportantZh": "harness 未完成分析。",
-          "userRelevanceZh": "harness 未完成分析。",
-          "evidence": "not analyzed"
-        },
-        "methodDetail": {
-          "coreIdeaZh": "harness 未完成分析。",
-          "componentsZh": [
-            "未分析"
-          ],
-          "hardwareSystemDetailZh": "harness 未完成分析。",
-          "noveltyZh": "harness 未完成分析。",
-          "evidence": "not analyzed"
-        },
-        "experimentDetail": {
-          "setupZh": "harness 未完成分析。",
-          "baselinesZh": "harness 未完成分析。",
-          "metricsZh": [
-            "未分析"
-          ],
-          "mainResultsZh": "harness 未完成分析。",
-          "limitationsZh": "harness 未完成分析。",
-          "evidence": "not analyzed"
-        },
-        "evidence": {
-          "usedSources": [
-            "metadata"
-          ],
-          "affiliationEvidence": "",
-          "experimentEvidence": "",
-          "missingFields": [
-            "motivation",
-            "method",
-            "experiments"
-          ]
-        },
-        "confidence": {
-          "summary": 0.2,
-          "motivation": 0,
-          "method": 0,
-          "experiments": 0,
-          "affiliations": 0
-        }
-      }
-    },
-    {
-      "id": "arxiv:2606.30755",
-      "source": "arXiv",
-      "title": "Understanding and Evaluating Claw-like Agent Security Through a Computer-Systems Lens",
-      "authors": [
-        "Peizhi Niu",
-        "Wenjie Qu",
-        "Shangding Gu",
-        "Tianneng Shi",
-        "Yuankai Li",
-        "Ahmad Tawaha",
-        "Hend Alzahrani",
-        "Vincent Siu",
-        "Boyi Li",
-        "Chenguang Wang",
-        "Jiaheng Zhang",
-        "Basel Alomair",
-        "Ming Jin",
-        "Muhao Chen",
-        "Chi Wang",
-        "Costas Spanos",
-        "Dawn Song"
-      ],
-      "authorAffiliations": [],
-      "affiliations": [],
-      "abstract": "Claw-like AI agents (e.g., OpenClaw) are always-on processes with persistent access to credentials, files, tools, and external services. They take on system-level responsibilities -- installing packages, maintaining state, scheduling subtasks, and mediating I/O -- making security failures far more severe than in other agents. Yet existing benchmarks focus on model responses and tool calls, leaving cross-component failure modes largely unmeasured. We adopt a computer-system analogy: treating a Claw-like agent as an agentic computer system whose gateway runtime plays an OS-like mediation role, whose Skills resemble user-installed applications, and whose Plugins resemble loadable extensions with runtime privileges. Each component has a classical counterpart whose protection mechanisms -- refined over decades of cybersecurity research -- are absent on the agent side. From this perspective, we develop SafeClawArena, a benchmark of 406 adversarial tasks across four attack surfaces (Skill Supply-Chain Integrity, Persistent State Exploitation, Cross-Boundary Data Flow, and Indirect Prompt Injection), executed in containerized replicas of real agent platforms with canary-marked credentials and evaluated via automated taint tracking across nine output channels. We evaluate three platforms (OpenClaw, NemoClaw, SeClaw) and five frontier LLMs. The highest attack success rate reaches 70%; malicious Plugins succeed in 100% of cases regardless of the LLM. SeClaw cuts GPT-5.4's attack success rate from 70% to 22%, partly through utility-security tradeoffs rather than active defenses, while Claude-Opus-4.6 already sits near a 22% floor on every platform. These results expose the inadequacy of current defenses and suggest directions for future hardening. Code and data: https://github.com/sunblaze-ucb/SafeClawArena.",
-      "venue": "arXiv",
-      "published": "2026-06-29T18:00:45Z",
-      "updated": "2026-06-29T18:00:45Z",
-      "url": "http://arxiv.org/abs/2606.30755v1",
-      "pdfUrl": "https://arxiv.org/pdf/2606.30755v1",
+      "published": "2026-07-01T06:08:07Z",
+      "updated": "2026-07-01T06:08:07Z",
+      "url": "http://arxiv.org/abs/2607.00481v1",
+      "pdfUrl": "https://arxiv.org/pdf/2607.00481v1",
       "categories": [
         "cs.CR",
         "cs.AI"
       ],
-      "collectedAt": "2026-07-01T21:49:34.576Z",
-      "firstSeenAt": "2026-07-01T21:49:34.576Z",
-      "lastSeenAt": "2026-07-01T21:49:34.576Z",
+      "collectedAt": "2026-07-02T21:34:45.855Z",
+      "firstSeenAt": "2026-07-02T21:34:45.855Z",
+      "lastSeenAt": "2026-07-02T21:34:45.855Z",
       "collectionType": "daily-latest",
       "matchedQuery": "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)",
       "collectionTypes": [
@@ -533,7 +299,7 @@
       "conferenceYears": [],
       "recommendationTrack": "hardware-primary",
       "recommendationLabel": "硬件体系结构主线",
-      "recommendationScore": 155.25,
+      "recommendationScore": 166.5,
       "relevanceReason": "命中 AI 处理器、体系结构、量化、训推系统或内存/缓存优化主题",
       "pdfStatus": "remote",
       "workflow": {
@@ -545,7 +311,7 @@
         "pdfStatus": "remote"
       },
       "digest": {
-        "summaryZh": "AI 摘要未生成。原始摘要要点：Claw-like AI agents (e.g., OpenClaw) are always-on processes with persistent access to credentials, files, tools, and external services. They take on system-lev...",
+        "summaryZh": "AI 摘要未生成。原始摘要要点：Jailbreak attacks remain a critical threat to the safe deployment of large language models (LLMs). While prior work has primarily studied attacks and defenses a...",
         "motivationZh": "命令行启用了 --no-ai",
         "methodZh": "请配置 AI 后重新运行，以生成方法提炼。",
         "experimentsZh": "来源元数据未披露完整实验设置或结果。",
@@ -610,28 +376,236 @@
       }
     },
     {
-      "id": "arxiv:2606.30484",
+      "id": "arxiv:2607.00642",
       "source": "arXiv",
-      "title": "Offline accuracy is not enough: closed-loop instability and stabilisation of a wall-sensor neural estimator in opposition control",
+      "title": "Coachable agents for interactive gameplay",
       "authors": [
-        "Giorgio Maria Cavallazzi",
-        "Miguel Pérez-Cuadrado",
-        "Alfredo Pinelli"
+        "Roberto Capobianco",
+        "Harm van Seijen",
+        "Nolan D. Bard",
+        "Neil Burch",
+        "Fatima Davelouis",
+        "Josh Davidson",
+        "Alisa Devlic",
+        "Yunshu Du",
+        "Ishan Durugkar",
+        "Siddhant Gangapurwala",
+        "Daniel Hernandez",
+        "G. Zacharias Holland",
+        "Sahil Jain",
+        "Kenta Kawamoto",
+        "Raksha Kumaraswamy",
+        "Patrick MacAlpine",
+        "Dustin R. Morrill",
+        "Declan Oller",
+        "Francesco Riccio",
+        "Akanksha Saran",
+        "Craig Sherstan",
+        "Kaushik Subramanian",
+        "Thomas J. Walsh",
+        "Samuel Barrett",
+        "Kizza N. Frisbee",
+        "Mady Govil",
+        "Johannes Günther",
+        "Varun R. Kompella",
+        "James A. MacGlashan",
+        "Maxwell Svetlik",
+        "Michael D. Thomure",
+        "Jaden B. Travnik",
+        "Kevin Waugh",
+        "Elahe Aghapour",
+        "Florian Fuchs",
+        "Andreanne Lemay",
+        "Shruti Mishra",
+        "Takuma Seno",
+        "Peter Stone",
+        "Michael Spranger",
+        "Peter R. Wurman"
       ],
-      "authorAffiliations": [],
-      "affiliations": [],
-      "abstract": "Opposition control reduces skin-friction drag by opposing the wall-normal velocity on a near-wall detection plane, but the detection-plane velocity it requires is not available from wall-mounted sensors. Wall data can reconstruct inner-flow quantities accurately when assessed offline on a fixed flow state, and we ask whether such a reconstructed field can instead serve as a live surrogate sensor inside the feedback loop. We train a recurrent estimator to infer the detection-plane velocity from the two wall-shear-stress components in opposition-controlled turbulence. Offline it performs extremely well, reaching a correlation of 0.99 and near-unity coherence across the energetic scales; yet the same estimator fails in closed loop, decorrelating from the true field within a few viscous time units as the control collapses. The failure is not one of accuracy but of distribution shift induced by the controller itself: small closed-loop errors carry the flow off the attractor represented in the training data, while unresolved high-wavenumber errors enter through the wall boundary condition and return as out-of-distribution inputs. Standard remedies such as low-pass filtering and exponential averaging only delay numerical breakdown while accelerating decorrelation. Stable wall-only control is recovered by imposing spectral consistency on the deployed actuation and retraining the estimator on its own closed-loop data, giving a controller that holds much of the drag reduction of ideal opposition control from wall quantities alone. The obstacle is not whether the near-wall flow can be reconstructed offline, but whether that reconstruction stays dynamically consistent when allowed to modify the flow it senses.",
+      "authorAffiliations": [
+        {
+          "name": "Roberto Capobianco",
+          "affiliation": "Sony AI, Zurich, Switzerland"
+        },
+        {
+          "name": "Harm van Seijen",
+          "affiliation": "Sony AI, North America, various locations"
+        },
+        {
+          "name": "Nolan D. Bard",
+          "affiliation": "Sony AI, North America, various locations"
+        },
+        {
+          "name": "Neil Burch",
+          "affiliation": "Sony AI, North America, various locations"
+        },
+        {
+          "name": "Fatima Davelouis",
+          "affiliation": "Sony AI, North America, various locations"
+        },
+        {
+          "name": "Josh Davidson",
+          "affiliation": "Sony AI, North America, various locations"
+        },
+        {
+          "name": "Alisa Devlic",
+          "affiliation": "Sony AI, Zurich, Switzerland"
+        },
+        {
+          "name": "Yunshu Du",
+          "affiliation": "Sony AI, North America, various locations"
+        },
+        {
+          "name": "Ishan Durugkar",
+          "affiliation": "Sony AI, North America, various locations"
+        },
+        {
+          "name": "Siddhant Gangapurwala",
+          "affiliation": "Sony AI, North America, various locations"
+        },
+        {
+          "name": "Daniel Hernandez",
+          "affiliation": "Sony AI, North America, various locations"
+        },
+        {
+          "name": "G. Zacharias Holland",
+          "affiliation": "Sony AI, North America, various locations"
+        },
+        {
+          "name": "Sahil Jain",
+          "affiliation": "Sony AI, North America, various locations"
+        },
+        {
+          "name": "Kenta Kawamoto",
+          "affiliation": "Sony AI, Tokyo, Japan"
+        },
+        {
+          "name": "Raksha Kumaraswamy",
+          "affiliation": "Sony AI, North America, various locations"
+        },
+        {
+          "name": "Patrick MacAlpine",
+          "affiliation": "Sony AI, North America, various locations"
+        },
+        {
+          "name": "Dustin R. Morrill",
+          "affiliation": "Sony AI, North America, various locations"
+        },
+        {
+          "name": "Declan Oller",
+          "affiliation": "Sony AI, North America, various locations"
+        },
+        {
+          "name": "Francesco Riccio",
+          "affiliation": "Sony AI, Zurich, Switzerland"
+        },
+        {
+          "name": "Akanksha Saran",
+          "affiliation": "Sony AI, North America, various locations"
+        },
+        {
+          "name": "Craig Sherstan",
+          "affiliation": "Sony AI, Tokyo, Japan"
+        },
+        {
+          "name": "Kaushik Subramanian",
+          "affiliation": "Sony AI, Zurich, Switzerland"
+        },
+        {
+          "name": "Thomas J. Walsh",
+          "affiliation": "Sony AI, North America, various locations"
+        },
+        {
+          "name": "Samuel Barrett",
+          "affiliation": "Sony AI, North America, various locations"
+        },
+        {
+          "name": "Kizza N. Frisbee",
+          "affiliation": "Sony AI, North America, various locations"
+        },
+        {
+          "name": "Mady Govil",
+          "affiliation": "Sony AI, North America, various locations"
+        },
+        {
+          "name": "Johannes Günther",
+          "affiliation": "Sony AI, North America, various locations"
+        },
+        {
+          "name": "Varun R. Kompella",
+          "affiliation": "Sony AI, North America, various locations"
+        },
+        {
+          "name": "James A. MacGlashan",
+          "affiliation": "Sony AI, North America, various locations"
+        },
+        {
+          "name": "Maxwell Svetlik",
+          "affiliation": "Sony AI, North America, various locations"
+        },
+        {
+          "name": "Michael D. Thomure",
+          "affiliation": "Sony AI, North America, various locations"
+        },
+        {
+          "name": "Jaden B. Travnik",
+          "affiliation": "Sony AI, North America, various locations"
+        },
+        {
+          "name": "Kevin Waugh",
+          "affiliation": "Sony AI, North America, various locations"
+        },
+        {
+          "name": "Elahe Aghapour",
+          "affiliation": "Sony AI, North America, various locations"
+        },
+        {
+          "name": "Florian Fuchs",
+          "affiliation": "Sony AI, Zurich, Switzerland"
+        },
+        {
+          "name": "Andreanne Lemay",
+          "affiliation": "Sony AI, North America, various locations"
+        },
+        {
+          "name": "Shruti Mishra",
+          "affiliation": "Sony AI, Zurich, Switzerland"
+        },
+        {
+          "name": "Takuma Seno",
+          "affiliation": "Sony AI, Tokyo, Japan"
+        },
+        {
+          "name": "Peter Stone",
+          "affiliation": "Sony AI, North America, various locations"
+        },
+        {
+          "name": "Michael Spranger",
+          "affiliation": "Sony AI, Tokyo, Japan"
+        },
+        {
+          "name": "Peter R. Wurman",
+          "affiliation": "Sony AI, North America, various locations"
+        }
+      ],
+      "affiliations": [
+        "Sony AI, Zurich, Switzerland",
+        "Sony AI, North America, various locations",
+        "Sony AI, Tokyo, Japan"
+      ],
+      "abstract": "Reinforcement learning has proven to be a valuable tool in the creation of advanced AI and robotic systems, contributing to everything from game playing to robotics to foundation models. Through trial-and-error, these AI systems typically learn one, near-optimal behavior to solve their tasks. However, there are many use cases in which one would like to assert some level of control, preferably in real time, over how the task is solved. We refer to these modifications of a core task as styles. We combine universal value function approximators (UVFAs) with carefully selected training scenarios, learning algorithms, and data augmentation to create a framework for coaching agents that exhibit styles in complex domains. We demonstrate the framework's application in the AAA video games Horizon Forbidden West and Gran Turismo, and in an open-source humanoid test domain. Despite the different nature of the domains -- car racing, stylized game combat, and humanoid walking -- each agent shows strong coherence to the style requests while still satisfying the main task in its domain. Importantly, the techniques outlined in this paper allow an end user to choose the final behavior at run time, giving them flexible control over the final executed performance.",
       "venue": "arXiv",
-      "published": "2026-06-29T15:46:29Z",
-      "updated": "2026-06-29T15:46:29Z",
-      "url": "http://arxiv.org/abs/2606.30484v1",
-      "pdfUrl": "https://arxiv.org/pdf/2606.30484v1",
+      "published": "2026-07-01T08:57:25Z",
+      "updated": "2026-07-01T08:57:25Z",
+      "url": "http://arxiv.org/abs/2607.00642v1",
+      "pdfUrl": "https://arxiv.org/pdf/2607.00642v1",
       "categories": [
-        "physics.flu-dyn"
+        "cs.AI",
+        "cs.LG"
       ],
-      "collectedAt": "2026-07-01T21:49:34.576Z",
-      "firstSeenAt": "2026-07-01T21:49:34.576Z",
-      "lastSeenAt": "2026-07-01T21:49:34.576Z",
+      "collectedAt": "2026-07-02T21:34:45.855Z",
+      "firstSeenAt": "2026-07-02T21:34:45.855Z",
+      "lastSeenAt": "2026-07-02T21:34:45.855Z",
       "collectionType": "daily-latest",
       "matchedQuery": "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)",
       "collectionTypes": [
@@ -645,7 +619,7 @@
       "conferenceYears": [],
       "recommendationTrack": "hardware-primary",
       "recommendationLabel": "硬件体系结构主线",
-      "recommendationScore": 151,
+      "recommendationScore": 150.25,
       "relevanceReason": "命中 AI 处理器、体系结构、量化、训推系统或内存/缓存优化主题",
       "pdfStatus": "remote",
       "workflow": {
@@ -657,13 +631,14 @@
         "pdfStatus": "remote"
       },
       "digest": {
-        "summaryZh": "AI 摘要未生成。原始摘要要点：Opposition control reduces skin-friction drag by opposing the wall-normal velocity on a near-wall detection plane, but the detection-plane velocity it requires ...",
+        "summaryZh": "AI 摘要未生成。原始摘要要点：Reinforcement learning has proven to be a valuable tool in the creation of advanced AI and robotic systems, contributing to everything from game playing to robo...",
         "motivationZh": "命令行启用了 --no-ai",
         "methodZh": "请配置 AI 后重新运行，以生成方法提炼。",
         "experimentsZh": "来源元数据未披露完整实验设置或结果。",
-        "affiliationsZh": "未在 DBLP/arXiv 元数据中提供。",
+        "affiliationsZh": "Sony AI, Zurich, Switzerland；Sony AI, North America, various locations；Sony AI, Tokyo, Japan",
         "tags": [
-          "physics.flu-dyn"
+          "cs.AI",
+          "cs.LG"
         ],
         "importance": 3,
         "researchFitZh": "AI harness 尚未完成分析，无法判断与用户研究方向的具体关系。",
@@ -703,7 +678,7 @@
           "usedSources": [
             "metadata"
           ],
-          "affiliationEvidence": "",
+          "affiliationEvidence": "metadata",
           "experimentEvidence": "",
           "missingFields": [
             "motivation",
@@ -716,7 +691,7 @@
           "motivation": 0,
           "method": 0,
           "experiments": 0,
-          "affiliations": 0
+          "affiliations": 0.4
         }
       }
     },
@@ -742,9 +717,9 @@
         "physics.chem-ph",
         "cond-mat.mtrl-sci"
       ],
-      "collectedAt": "2026-07-01T21:49:34.576Z",
-      "firstSeenAt": "2026-07-01T21:49:34.576Z",
-      "lastSeenAt": "2026-07-01T21:49:34.576Z",
+      "collectedAt": "2026-07-02T21:34:45.856Z",
+      "firstSeenAt": "2026-07-02T21:34:45.856Z",
+      "lastSeenAt": "2026-07-02T21:34:45.856Z",
       "collectionType": "daily-latest",
       "matchedQuery": "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)",
       "collectionTypes": [
@@ -835,34 +810,266 @@
       }
     },
     {
-      "id": "arxiv:2606.32029",
+      "id": "arxiv:2607.00099",
       "source": "arXiv",
-      "title": "When LLMs Read Tables Carelessly: Measuring and Reducing Data Referencing Errors",
+      "title": "Grid-Interactive Thermal Management of AI Data Centers via Contextual Distributionally Robust Optimization",
       "authors": [
-        "Yuqing Yang",
-        "Qi Zhu",
-        "Zhen Han",
-        "Boran Han",
-        "Zhengyuan Shen",
-        "Shuai Wang",
-        "Vassilis N. Ioannidis",
-        "Huzefa Rangwala"
+        "Jiachen Shen",
+        "Jian Shi",
+        "Yijie Yang",
+        "Chenye Wu",
+        "Dan Wang",
+        "Ju Bin Song",
+        "Zhu Han"
       ],
       "authorAffiliations": [],
       "affiliations": [],
-      "abstract": "While large language models (LLMs) perform well on table tasks, they still make data referencing errors (DREs), i.e., incorrectly citing or omitting table values, despite understanding the table structure. Beyond final-answer accuracy, DREs directly compromise the correctness and reliability of intermediate reasoning steps. Yet prior studies have only offered limited, small-scale analyses. In this work, we present the first systematic evaluation of tabular data referencing errors across different models and tasks. Our results show that DREs occur across all tested models (1.7B to 20B parameters). Furthermore, we demonstrate that incorporating data referencing as a critic significantly improves answer accuracy up to 12.0%, through critic-based filtering and rejection sampling. Finally, we trained a lightweight 4B-parameter critic model that achieves an average F1 score of 78.2% in detecting both in-distribution and out-of-distribution DREs, and effectively assists inference for larger models.",
+      "abstract": "Thermal management in AI data centers is increasingly challenged by bursty workloads and uncertain heat generation. To prevent thermal violations, existing cooling strategies either enforce conservative, rigid bounds that severely limit grid responsiveness, or rely on forecast-driven controllers that perform poorly under AI workload uncertainty and distribution shifts. To overcome the above challenges, this paper proposes a Contextual Distributionally Robust Optimization (CDRO) framework for grid-interactive cooling control. Unlike standard DRO with fixed ambiguity sets, the proposed approach dynamically adapts the Wasserstein radius using real-time AI and grid context. This safely shrinks uncertainty bounds during stable regimes, unlocking deep demand-side flexibility. Theoretically, we formulate the control as an infinite-dimensional inf-sup problem, derive an exact tractable reformulation for the Wasserstein worst-case expected-cost term, and then derive a tractable conservative deterministic counterpart for the Distributionally Robust Conditional Value at Risk (DR-CVaR) thermal safety constraint. Solved via a scalable nested Alternating Direction Method of Multipliers (ADMM) algorithm, the CDRO controller achieves near-zero thermal violations under extreme workload spikes in high-fidelity EnergyPlus co-simulations. Simultaneously, it reduces the operational cost premium of robustness by approximately 13.7 percentage points relative to standard Min-Max Model Predictive Control (MPC).",
       "venue": "arXiv",
-      "published": "2026-06-30T17:54:50Z",
-      "updated": "2026-06-30T17:54:50Z",
-      "url": "http://arxiv.org/abs/2606.32029v1",
-      "pdfUrl": "https://arxiv.org/pdf/2606.32029v1",
+      "published": "2026-06-30T19:41:03Z",
+      "updated": "2026-06-30T19:41:03Z",
+      "url": "http://arxiv.org/abs/2607.00099v1",
+      "pdfUrl": "https://arxiv.org/pdf/2607.00099v1",
       "categories": [
-        "cs.CL",
+        "eess.SY"
+      ],
+      "collectedAt": "2026-07-02T21:34:45.855Z",
+      "firstSeenAt": "2026-07-02T21:34:45.855Z",
+      "lastSeenAt": "2026-07-02T21:34:45.855Z",
+      "collectionType": "daily-latest",
+      "matchedQuery": "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)",
+      "collectionTypes": [
+        "daily-latest"
+      ],
+      "matchedQueries": [
+        "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)"
+      ],
+      "targetThemes": [],
+      "conferenceVenues": [],
+      "conferenceYears": [],
+      "recommendationTrack": "hardware-primary",
+      "recommendationLabel": "硬件体系结构主线",
+      "recommendationScore": 147.5,
+      "relevanceReason": "命中 AI 处理器、体系结构、量化、训推系统或内存/缓存优化主题",
+      "pdfStatus": "remote",
+      "workflow": {
+        "digestStatus": "pending",
+        "emailStatus": "waiting-digest",
+        "digestError": "命令行启用了 --no-ai",
+        "harnessVersion": "paper-reader-v1",
+        "collectStatus": "collected",
+        "pdfStatus": "remote"
+      },
+      "digest": {
+        "summaryZh": "AI 摘要未生成。原始摘要要点：Thermal management in AI data centers is increasingly challenged by bursty workloads and uncertain heat generation. To prevent thermal violations, existing cool...",
+        "motivationZh": "命令行启用了 --no-ai",
+        "methodZh": "请配置 AI 后重新运行，以生成方法提炼。",
+        "experimentsZh": "来源元数据未披露完整实验设置或结果。",
+        "affiliationsZh": "未在 DBLP/arXiv 元数据中提供。",
+        "tags": [
+          "eess.SY"
+        ],
+        "importance": 3,
+        "researchFitZh": "AI harness 尚未完成分析，无法判断与用户研究方向的具体关系。",
+        "hardwareRelevance": 1,
+        "algorithmRelevance": 1,
+        "systemRelevance": 1,
+        "readPriority": "archive",
+        "whyReadZh": "需要完成 motivation、method 和实验结果分析后再判断是否值得深读。",
+        "limitationsZh": "命令行启用了 --no-ai",
+        "motivationDetail": {
+          "problemZh": "harness 未完成分析。",
+          "gapZh": "harness 未完成分析。",
+          "whyImportantZh": "harness 未完成分析。",
+          "userRelevanceZh": "harness 未完成分析。",
+          "evidence": "not analyzed"
+        },
+        "methodDetail": {
+          "coreIdeaZh": "harness 未完成分析。",
+          "componentsZh": [
+            "未分析"
+          ],
+          "hardwareSystemDetailZh": "harness 未完成分析。",
+          "noveltyZh": "harness 未完成分析。",
+          "evidence": "not analyzed"
+        },
+        "experimentDetail": {
+          "setupZh": "harness 未完成分析。",
+          "baselinesZh": "harness 未完成分析。",
+          "metricsZh": [
+            "未分析"
+          ],
+          "mainResultsZh": "harness 未完成分析。",
+          "limitationsZh": "harness 未完成分析。",
+          "evidence": "not analyzed"
+        },
+        "evidence": {
+          "usedSources": [
+            "metadata"
+          ],
+          "affiliationEvidence": "",
+          "experimentEvidence": "",
+          "missingFields": [
+            "motivation",
+            "method",
+            "experiments"
+          ]
+        },
+        "confidence": {
+          "summary": 0.2,
+          "motivation": 0,
+          "method": 0,
+          "experiments": 0,
+          "affiliations": 0
+        }
+      }
+    },
+    {
+      "id": "arxiv:2606.31433",
+      "source": "arXiv",
+      "title": "A new model for long-term forecasting of Galactic cosmic rays",
+      "authors": [
+        "David Pelosi",
+        "Fernando Barão",
+        "Bruna Bertucci",
+        "Emanuele Fiandrini",
+        "Miguel Orcinha",
+        "Nicola Tomassetti"
+      ],
+      "authorAffiliations": [],
+      "affiliations": [],
+      "abstract": "The modulation of galactic cosmic rays, driven by the evolution of the heliospheric magnetic field, strongly influences the intensity of cosmic rays reaching near-Earth space. Characterizing this process is crucial both for advancing our understanding of cosmic-ray transport and for assessing radiation exposure and related hazards in space environments. Here we present a newly developed forecasting framework built on a numerical description of charged particle transport in the heliosphere and its dependence on solar activity, designed for the long-term forecasting of galactic cosmic-ray fluxes. It solves a one-dimensional, spherically symmetric form of the Parker transport equation, including diffusion, solar-wind advection, and adiabatic energy losses. The model has been validated using multi-species flux measurements from space-based experiments: PAMELA, AMS-02, and ACE. Its strategy is based on Hilbert-Huang transform filtering and cross-correlation between delayed solar proxies and effective model parameters. Our charge-sign- and rigidity-dependent parametric description of the diffusion-advection processes yields good overall agreement with the data, as shown by the reconstruction uncertainty. The robustness of this approach is validated across a broad set of multichannel datasets covering different particle species, energy ranges, and phases of solar activity, supporting its applicability to space radiation monitoring and forecasting. Furthermore, when coupled with solar-proxy forecasting models, it enables decadal-scale predictions of galactic cosmic-ray fluxes, thereby supporting long-term planning and radiation-risk assessment for future space missions.",
+      "venue": "arXiv",
+      "published": "2026-06-30T10:00:20Z",
+      "updated": "2026-06-30T10:00:20Z",
+      "url": "http://arxiv.org/abs/2606.31433v1",
+      "pdfUrl": "https://arxiv.org/pdf/2606.31433v1",
+      "categories": [
+        "physics.space-ph",
+        "astro-ph.HE",
+        "astro-ph.SR"
+      ],
+      "collectedAt": "2026-07-02T21:34:45.856Z",
+      "firstSeenAt": "2026-07-02T21:34:45.856Z",
+      "lastSeenAt": "2026-07-02T21:34:45.856Z",
+      "collectionType": "daily-latest",
+      "matchedQuery": "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)",
+      "collectionTypes": [
+        "daily-latest"
+      ],
+      "matchedQueries": [
+        "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)"
+      ],
+      "targetThemes": [],
+      "conferenceVenues": [],
+      "conferenceYears": [],
+      "recommendationTrack": "hardware-primary",
+      "recommendationLabel": "硬件体系结构主线",
+      "recommendationScore": 147.5,
+      "relevanceReason": "命中 AI 处理器、体系结构、量化、训推系统或内存/缓存优化主题",
+      "pdfStatus": "remote",
+      "workflow": {
+        "digestStatus": "pending",
+        "emailStatus": "waiting-digest",
+        "digestError": "命令行启用了 --no-ai",
+        "harnessVersion": "paper-reader-v1",
+        "collectStatus": "collected",
+        "pdfStatus": "remote"
+      },
+      "digest": {
+        "summaryZh": "AI 摘要未生成。原始摘要要点：The modulation of galactic cosmic rays, driven by the evolution of the heliospheric magnetic field, strongly influences the intensity of cosmic rays reaching ne...",
+        "motivationZh": "命令行启用了 --no-ai",
+        "methodZh": "请配置 AI 后重新运行，以生成方法提炼。",
+        "experimentsZh": "来源元数据未披露完整实验设置或结果。",
+        "affiliationsZh": "未在 DBLP/arXiv 元数据中提供。",
+        "tags": [
+          "physics.space-ph",
+          "astro-ph.HE",
+          "astro-ph.SR"
+        ],
+        "importance": 3,
+        "researchFitZh": "AI harness 尚未完成分析，无法判断与用户研究方向的具体关系。",
+        "hardwareRelevance": 1,
+        "algorithmRelevance": 1,
+        "systemRelevance": 1,
+        "readPriority": "archive",
+        "whyReadZh": "需要完成 motivation、method 和实验结果分析后再判断是否值得深读。",
+        "limitationsZh": "命令行启用了 --no-ai",
+        "motivationDetail": {
+          "problemZh": "harness 未完成分析。",
+          "gapZh": "harness 未完成分析。",
+          "whyImportantZh": "harness 未完成分析。",
+          "userRelevanceZh": "harness 未完成分析。",
+          "evidence": "not analyzed"
+        },
+        "methodDetail": {
+          "coreIdeaZh": "harness 未完成分析。",
+          "componentsZh": [
+            "未分析"
+          ],
+          "hardwareSystemDetailZh": "harness 未完成分析。",
+          "noveltyZh": "harness 未完成分析。",
+          "evidence": "not analyzed"
+        },
+        "experimentDetail": {
+          "setupZh": "harness 未完成分析。",
+          "baselinesZh": "harness 未完成分析。",
+          "metricsZh": [
+            "未分析"
+          ],
+          "mainResultsZh": "harness 未完成分析。",
+          "limitationsZh": "harness 未完成分析。",
+          "evidence": "not analyzed"
+        },
+        "evidence": {
+          "usedSources": [
+            "metadata"
+          ],
+          "affiliationEvidence": "",
+          "experimentEvidence": "",
+          "missingFields": [
+            "motivation",
+            "method",
+            "experiments"
+          ]
+        },
+        "confidence": {
+          "summary": 0.2,
+          "motivation": 0,
+          "method": 0,
+          "experiments": 0,
+          "affiliations": 0
+        }
+      }
+    },
+    {
+      "id": "arxiv:2607.01212",
+      "source": "arXiv",
+      "title": "FurnitureVLA: Learning Long-Horizon Bimanual Furniture Assembly with Vision-Language-Action Model",
+      "authors": [
+        "Chenyang Ma",
+        "Yue Yang",
+        "Radu Corcodel",
+        "Siddarth Jain",
+        "Andrew Wu",
+        "Chiori Hori",
+        "Diego Romeres"
+      ],
+      "authorAffiliations": [],
+      "affiliations": [],
+      "abstract": "Current work on robot furniture assembly mostly focuses on toy-scale settings or single-arm manipulation. We introduce FurnitureVLA, the first systematic study of real-scale bimanual furniture assembly using Vision-Language-Action models (VLAs). We formalize the task, develop a scalable simulation pipeline for expert data generation and evaluation, and build a VR teleoperation system for single-operator bimanual control to collect high-quality real-world demonstrations. To address extreme long-horizon assembly with up to 7 subtasks and 1550 control steps, we propose a progress-enhanced VLA, finetuned on semantically grounded subtasks, that jointly predicts actions and a continuous progress signal, enabling automatic subtask transitions and reducing compounding errors during inference. We further study perception and control design factors that critically affect precision in real-scale assembly. FurnitureVLA improves average simulation success from 48% to 80% compared to baselines across three furniture types, with an additional 21% gain from our design factor study. We validate on a real Kinova Gen3 platform with only 16% drop on the hardest task.",
+      "venue": "arXiv",
+      "published": "2026-07-01T17:51:21Z",
+      "updated": "2026-07-01T17:51:21Z",
+      "url": "http://arxiv.org/abs/2607.01212v1",
+      "pdfUrl": "https://arxiv.org/pdf/2607.01212v1",
+      "categories": [
+        "cs.RO",
         "cs.AI"
       ],
-      "collectedAt": "2026-07-01T21:49:36.712Z",
-      "firstSeenAt": "2026-07-01T21:49:36.712Z",
-      "lastSeenAt": "2026-07-01T21:49:36.712Z",
+      "collectedAt": "2026-07-02T21:34:47.629Z",
+      "firstSeenAt": "2026-07-02T21:34:47.629Z",
+      "lastSeenAt": "2026-07-02T21:34:47.629Z",
       "collectionType": "daily-latest",
       "matchedQuery": "(all:agent OR all:agents OR all:agentic OR all:reasoning OR all:post-training OR all:alignment OR all:multimodal OR all:world-model) AND (all:LLM OR all:foundation OR all:language)",
       "collectionTypes": [
@@ -876,7 +1083,7 @@
       "conferenceYears": [],
       "recommendationTrack": "algorithm-trend",
       "recommendationLabel": "算法趋势观察",
-      "recommendationScore": 37.2,
+      "recommendationScore": 41.8,
       "relevanceReason": "命中 LLM/Agent/多模态/后训练等算法趋势主题",
       "pdfStatus": "remote",
       "workflow": {
@@ -888,13 +1095,13 @@
         "pdfStatus": "remote"
       },
       "digest": {
-        "summaryZh": "AI 摘要未生成。原始摘要要点：While large language models (LLMs) perform well on table tasks, they still make data referencing errors (DREs), i.e., incorrectly citing or omitting table value...",
+        "summaryZh": "AI 摘要未生成。原始摘要要点：Current work on robot furniture assembly mostly focuses on toy-scale settings or single-arm manipulation. We introduce FurnitureVLA, the first systematic study ...",
         "motivationZh": "命令行启用了 --no-ai",
         "methodZh": "请配置 AI 后重新运行，以生成方法提炼。",
         "experimentsZh": "来源元数据未披露完整实验设置或结果。",
         "affiliationsZh": "未在 DBLP/arXiv 元数据中提供。",
         "tags": [
-          "cs.CL",
+          "cs.RO",
           "cs.AI"
         ],
         "importance": 3,
@@ -953,30 +1160,31 @@
       }
     },
     {
-      "id": "arxiv:2606.32028",
+      "id": "arxiv:2607.01223",
       "source": "arXiv",
-      "title": "DVG-WM: Disentangled Video Generation Enables Efficient Embodied World Model for Robotic Manipulation",
+      "title": "Theoria: Rewrite-Acceptability Verification over Informal Reasoning States",
       "authors": [
-        "Ziyu Shan",
-        "Zhenyu Wu",
-        "Xiaofeng Wang",
-        "Zheng Zhu",
-        "Ziwei Wang"
+        "Ben Slivinski",
+        "Michael Saldivar"
       ],
       "authorAffiliations": [],
       "affiliations": [],
-      "abstract": "Video-based embodied world models provide an appealing substrate for robotic manipulation by predicting future states, yet current approaches remain limited by a fundamental entanglement: accurately modeling dynamics typically requires low-level temporal reasoning, while producing high-resolution frames demands expansive visual synthesis according to high-level semantics. This entanglement results in slow inference speed for iterative planning or too coarse predictions to retain contact-rich details. To solve this dilemma, we present Disentangled Video Generation World Model (DVG-WM), an efficient framework that explicitly decomposes world modeling into dynamics learning and visual synthesis. Conditioned on an initial observation and a language instruction, our model first generates a plausible sequence of intermediate visual states to preview the physical interaction and refines them to obtain high-fidelity videos. Furthermore, an efficient cascading mechanism is proposed, where DVG-WM uses flow matching to directly map the dynamics to video latents, and introduces a latent degradation mechanism to regenerate contact-rich details. Experiments on LIBERO and real-world platforms demonstrate improved video quality with up to 3.97 times acceleration, validating that disentangled video generation can be an efficient embodied world model for robotic manipulation.",
+      "abstract": "When should an AI system's answer be trusted? Formal proof assistants offer certainty but cannot reach most of the problem distribution; scalar LLM judges offer coverage but produce opaque scores that cannot be audited after the fact and are subject to the same coherence issues as any LLM. We present Theoria, a verification architecture that closes this gap. A candidate solution is rewritten into a sequence of typed state transitions, each licensed by an explicit justification, whether that be a citation, computation, or problem-given fact, and every transition is independently auditable. The foundational invariant is completeness of change: every difference between consecutive proof states must be accounted for, so hidden premises surface as unlicensed mutations rather than passing silently. On HLE-Verified Gold (185 text-only expert problems), Theoria certifies 105 at 91.4% strict precision (Wilson 95% CI [84.5%, 95.4%]). Every certification produces a human readable proof trace in which each step can be independently challenged. Holistic LLM judges achieve comparable precision at matched coverage but fail on different problems (Jaccard 0.14-0.36), making the approaches complementary. On 95 adversarial poisoned proofs across 15 domains, structured judges catch 94.7% versus 83.2% for holistic judging (p= 0.0017). The overall 11.5 pp gap concentrates in hidden premises (90.6% vs. 62.5%, a 28 pp difference) and fabricated citations (100% vs. 90%), the error classes where the formal analysis predicts an advantage; performance is identical on arithmetic and theorem-misapplication errors, where no advantage is predicted. On GPQA Diamond (n= 65), certified precision is 97.1% (Wilson CI [85.1%, 99.5%]).",
       "venue": "arXiv",
-      "published": "2026-06-30T17:54:32Z",
-      "updated": "2026-06-30T17:54:32Z",
-      "url": "http://arxiv.org/abs/2606.32028v1",
-      "pdfUrl": "https://arxiv.org/pdf/2606.32028v1",
+      "published": "2026-07-01T17:56:42Z",
+      "updated": "2026-07-01T17:56:42Z",
+      "url": "http://arxiv.org/abs/2607.01223v1",
+      "pdfUrl": "https://arxiv.org/pdf/2607.01223v1",
       "categories": [
-        "cs.RO"
+        "cs.AI",
+        "cs.CL",
+        "cs.LG",
+        "cs.LO",
+        "cs.SE"
       ],
-      "collectedAt": "2026-07-01T21:49:36.712Z",
-      "firstSeenAt": "2026-07-01T21:49:36.712Z",
-      "lastSeenAt": "2026-07-01T21:49:36.712Z",
+      "collectedAt": "2026-07-02T21:34:47.628Z",
+      "firstSeenAt": "2026-07-02T21:34:47.628Z",
+      "lastSeenAt": "2026-07-02T21:34:47.628Z",
       "collectionType": "daily-latest",
       "matchedQuery": "(all:agent OR all:agents OR all:agentic OR all:reasoning OR all:post-training OR all:alignment OR all:multimodal OR all:world-model) AND (all:LLM OR all:foundation OR all:language)",
       "collectionTypes": [
@@ -990,7 +1198,7 @@
       "conferenceYears": [],
       "recommendationTrack": "algorithm-trend",
       "recommendationLabel": "算法趋势观察",
-      "recommendationScore": 34.6,
+      "recommendationScore": 31,
       "relevanceReason": "命中 LLM/Agent/多模态/后训练等算法趋势主题",
       "pdfStatus": "remote",
       "workflow": {
@@ -1002,13 +1210,17 @@
         "pdfStatus": "remote"
       },
       "digest": {
-        "summaryZh": "AI 摘要未生成。原始摘要要点：Video-based embodied world models provide an appealing substrate for robotic manipulation by predicting future states, yet current approaches remain limited by ...",
+        "summaryZh": "AI 摘要未生成。原始摘要要点：When should an AI system's answer be trusted? Formal proof assistants offer certainty but cannot reach most of the problem distribution; scalar LLM judges offer...",
         "motivationZh": "命令行启用了 --no-ai",
         "methodZh": "请配置 AI 后重新运行，以生成方法提炼。",
         "experimentsZh": "来源元数据未披露完整实验设置或结果。",
         "affiliationsZh": "未在 DBLP/arXiv 元数据中提供。",
         "tags": [
-          "cs.RO"
+          "cs.AI",
+          "cs.CL",
+          "cs.LG",
+          "cs.LO",
+          "cs.SE"
         ],
         "importance": 3,
         "researchFitZh": "AI harness 尚未完成分析，无法判断与用户研究方向的具体关系。",
