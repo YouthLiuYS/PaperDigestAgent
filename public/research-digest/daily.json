@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-07-02T21:39:42.073Z",
-  "digestDate": "2026-07-03",
+  "generatedAt": "2026-07-03T21:37:41.371Z",
+  "digestDate": "2026-07-04",
   "kind": "daily-new",
   "timezone": "Asia/Shanghai",
   "siteUrl": "https://YouthLiuYS.github.io/PaperDigestAgent/",
@@ -126,7 +126,7 @@
     "dailyCandidates": 8,
     "conferenceCandidates": 0,
     "backfillCandidates": 0,
-    "rawCandidates": 50,
+    "rawCandidates": 65,
     "newlyAdded": 8,
     "pendingDigest": 8,
     "pendingEmail": 0,
@@ -141,967 +141,791 @@
   },
   "papers": [
     {
-      "id": "arxiv:2607.00341",
+      "id": "arxiv:2607.02501",
       "source": "arXiv",
-      "title": "DiscoLoop: Looping Discrete Embeddings and Continuous Hidden States for Multi-hop Reasoning",
+      "title": "Embodied.cpp: A Portable Inference Runtime of Embodied AI Models on Heterogeneous Robots",
       "authors": [
-        "Hengyu Fu",
-        "Tianyu Guo",
-        "Zixuan Wang",
-        "Hanlin Zhu",
-        "Jason D. Lee",
-        "Jiantao Jiao",
-        "Stuart Russell",
-        "Song Mei"
+        "Ling Xu",
+        "Chuyu Han",
+        "Borui Li",
+        "Hao Wu",
+        "Shiqi Jiang",
+        "Ting Cao",
+        "Chuanyou Li",
+        "Sheng Zhong",
+        "Shuai Wang"
       ],
       "authorAffiliations": [],
       "affiliations": [],
-      "abstract": "Large language models achieve strong performance on many reasoning tasks when allowed to externalize intermediate steps as Chain-of-Thought (CoT). However, many questions require the model to internalize the multi-step reasoning within a single forward pass before generating the answer. We study this challenge through two-hop reasoning, a representative task where the model must compose multiple pieces of parametric knowledge within a single forward pass. Standard non-recurrent Transformers suffer from a depth-local storage problem: facts learned in earlier layers are unavailable where second-hop retrieval happens. We found that Looped Transformers mitigate this issue by reusing the same memory, but still generalize imperfectly. We show that the remaining bottleneck is representational. In the two-hop reasoning task, the first loop often makes the correct bridge entity nearly perfectly decodable, yet the corresponding hidden state remains poorly aligned with the bridge token embedding. Surprisingly, an easy training-free realignment intervention nearly closes the generalization gap. Building upon this insight, we propose DiscoLoop, a looping architecture whose recurrence carries both a discrete embedding channel and a continuous hidden-state channel. DiscoLoop achieves near-perfect accuracy with substantially fewer training steps across symbolic and synthetic-language multi-hop reasoning tasks. When applied to real-world pretraining, DiscoLoop attains lower training loss and stronger benchmark performance than looped-transformer baselines, suggesting that the mixed-channel design transfers to practical language modeling.",
+      "abstract": "Embodied AI models now span vision-language-action (VLA) models and world-action models (WAMs), but practical deployment remains fragmented across model-specific Python stacks, backend assumptions, and robot-side glue code, especially on heterogeneous edge devices. Existing inference runtimes are designed mainly for request-response serving and therefore do not satisfy the runtime contract of embodied deployment: multi-rate execution inside closed-loop control, latency-first batch-1 inference on heterogeneous hardware, and extensible embodied interfaces beyond fixed token I/O. We present Embodied.cpp, a portable C++ inference runtime for embodied models. Based on an architectural analysis of representative VLA models and WAMs, Embodied.cpp captures a shared execution path and organizes it into five layers: input adapters, sequence builders, backbone execution, head plugins, and deployment adapters. The runtime provides modular multi-rate execution, latency-first fused inference, and extensible operator and I/O support, enabling deployment across heterogeneous devices, robots, and simulators through one backend abstraction. We evaluate Embodied.cpp on two VLA models, HY-VLA and pi0.5, and on a preliminary WAM benchmark using a LingBot-VA Transformer block. The VLA deployments achieve successful closed-loop execution with 100.0% and 91.0% task success rates, respectively. The WAM benchmark reduces block memory from 312.2 MiB to 88.1 MiB. These results show that Embodied.cpp improves deployment efficiency while preserving high accuracy across diverse embodied model architectures.",
       "venue": "arXiv",
-      "published": "2026-07-01T02:32:02Z",
-      "updated": "2026-07-01T02:32:02Z",
-      "url": "http://arxiv.org/abs/2607.00341v1",
-      "pdfUrl": "https://arxiv.org/pdf/2607.00341v1",
-      "categories": [
-        "cs.CL",
-        "cs.AI",
-        "cs.LG"
-      ],
-      "collectedAt": "2026-07-02T21:34:43.932Z",
-      "firstSeenAt": "2026-07-02T21:34:43.932Z",
-      "lastSeenAt": "2026-07-02T21:34:43.932Z",
-      "collectionType": "daily-latest",
-      "matchedQuery": "(all:prefill OR all:decoding OR all:KV OR all:cache OR all:attention) AND (all:accelerator OR all:kernel OR all:compiler OR all:serving OR all:memory) AND (all:LLM OR all:transformer)",
-      "collectionTypes": [
-        "daily-latest"
-      ],
-      "matchedQueries": [
-        "(all:prefill OR all:decoding OR all:KV OR all:cache OR all:attention) AND (all:accelerator OR all:kernel OR all:compiler OR all:serving OR all:memory) AND (all:LLM OR all:transformer)",
-        "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)"
-      ],
-      "targetThemes": [],
-      "conferenceVenues": [],
-      "conferenceYears": [],
-      "digest": {
-        "summaryZh": "AI 摘要未生成。原始摘要要点：Large language models achieve strong performance on many reasoning tasks when allowed to externalize intermediate steps as Chain-of-Thought (CoT). However, many...",
-        "motivationZh": "命令行启用了 --no-ai",
-        "methodZh": "请配置 AI 后重新运行，以生成方法提炼。",
-        "experimentsZh": "来源元数据未披露完整实验设置或结果。",
-        "affiliationsZh": "未在 DBLP/arXiv 元数据中提供。",
-        "tags": [
-          "cs.CL",
-          "cs.AI",
-          "cs.LG"
-        ],
-        "importance": 3,
-        "researchFitZh": "AI harness 尚未完成分析，无法判断与用户研究方向的具体关系。",
-        "hardwareRelevance": 1,
-        "algorithmRelevance": 1,
-        "systemRelevance": 1,
-        "readPriority": "archive",
-        "whyReadZh": "需要完成 motivation、method 和实验结果分析后再判断是否值得深读。",
-        "limitationsZh": "命令行启用了 --no-ai",
-        "motivationDetail": {
-          "problemZh": "harness 未完成分析。",
-          "gapZh": "harness 未完成分析。",
-          "whyImportantZh": "harness 未完成分析。",
-          "userRelevanceZh": "harness 未完成分析。",
-          "evidence": "not analyzed"
-        },
-        "methodDetail": {
-          "coreIdeaZh": "harness 未完成分析。",
-          "componentsZh": [
-            "未分析"
-          ],
-          "hardwareSystemDetailZh": "harness 未完成分析。",
-          "noveltyZh": "harness 未完成分析。",
-          "evidence": "not analyzed"
-        },
-        "experimentDetail": {
-          "setupZh": "harness 未完成分析。",
-          "baselinesZh": "harness 未完成分析。",
-          "metricsZh": [
-            "未分析"
-          ],
-          "mainResultsZh": "harness 未完成分析。",
-          "limitationsZh": "harness 未完成分析。",
-          "evidence": "not analyzed"
-        },
-        "evidence": {
-          "usedSources": [
-            "metadata"
-          ],
-          "affiliationEvidence": "",
-          "experimentEvidence": "",
-          "missingFields": [
-            "motivation",
-            "method",
-            "experiments"
-          ]
-        },
-        "confidence": {
-          "summary": 0.2,
-          "motivation": 0,
-          "method": 0,
-          "experiments": 0,
-          "affiliations": 0
-        }
-      },
-      "recommendationTrack": "hardware-primary",
-      "recommendationLabel": "硬件体系结构主线",
-      "recommendationScore": 172.75,
-      "relevanceReason": "命中 AI 处理器、体系结构、量化、训推系统或内存/缓存优化主题",
-      "pdfStatus": "remote",
-      "workflow": {
-        "digestStatus": "pending",
-        "emailStatus": "waiting-digest",
-        "digestError": "命令行启用了 --no-ai",
-        "harnessVersion": "paper-reader-v1",
-        "collectStatus": "collected",
-        "pdfStatus": "remote"
-      }
-    },
-    {
-      "id": "arxiv:2607.00481",
-      "source": "arXiv",
-      "title": "Beyond the Prompt: Jailbreaking Function-Calling LLMs via Simulated Moderation Traces",
-      "authors": [
-        "Junlong Liu",
-        "Haobo Wang",
-        "Weiqi Luo",
-        "Xiaojun Jia"
-      ],
-      "authorAffiliations": [],
-      "affiliations": [],
-      "abstract": "Jailbreak attacks remain a critical threat to the safe deployment of large language models (LLMs). While prior work has primarily studied attacks and defenses at the prompt level, we show that this prompt-centric paradigm overlooks a structural vulnerability in stateful, function-calling environments. In such applications, developer-defined schemas, structured arguments, and untrusted tool outputs are interleaved into a single shared model context. This architecture expands the attack surface by blurring the boundary between trusted control logic and untrusted data, allowing adversarial intent to be distributed across a multi-turn execution path. We exploit this architectural flaw through SMT, a black-box attack framework based on Simulated Moderation Traces. Departing from purely prompt-based interactions, SMT constructs a multi-turn trajectory that simulates a legitimate moderation-auditing workflow. Within this trajectory, a fabricated moderation frame leverages red-team testing as a pretext to elicit harmful generations. The subsequent validation feedback treats safety refusals as execution failures, prompting refinements that gradually weaken the model's safety constraints and ultimately trigger harmful outputs. Extensive empirical evaluations on prominent commercial LLMs from five different providers across two standardized safety benchmarks show that SMT consistently achieves the highest average attack success rate and HarmScore while requiring a near-minimal number of queries, substantially outperforming existing baselines. These findings demonstrate that prompt-level sanitization alone is fundamentally insufficient for defending tool-enabled LLM systems and highlight the urgent need for context-aware validation across schemas, arguments, tool outputs, and accumulated conversation state. The code is available at https://github.com/liujlong27/SMT.",
-      "venue": "arXiv",
-      "published": "2026-07-01T06:08:07Z",
-      "updated": "2026-07-01T06:08:07Z",
-      "url": "http://arxiv.org/abs/2607.00481v1",
-      "pdfUrl": "https://arxiv.org/pdf/2607.00481v1",
-      "categories": [
-        "cs.CR",
-        "cs.AI"
-      ],
-      "collectedAt": "2026-07-02T21:34:45.855Z",
-      "firstSeenAt": "2026-07-02T21:34:45.855Z",
-      "lastSeenAt": "2026-07-02T21:34:45.855Z",
-      "collectionType": "daily-latest",
-      "matchedQuery": "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)",
-      "collectionTypes": [
-        "daily-latest"
-      ],
-      "matchedQueries": [
-        "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)"
-      ],
-      "targetThemes": [],
-      "conferenceVenues": [],
-      "conferenceYears": [],
-      "recommendationTrack": "hardware-primary",
-      "recommendationLabel": "硬件体系结构主线",
-      "recommendationScore": 166.5,
-      "relevanceReason": "命中 AI 处理器、体系结构、量化、训推系统或内存/缓存优化主题",
-      "pdfStatus": "remote",
-      "workflow": {
-        "digestStatus": "pending",
-        "emailStatus": "waiting-digest",
-        "digestError": "命令行启用了 --no-ai",
-        "harnessVersion": "paper-reader-v1",
-        "collectStatus": "collected",
-        "pdfStatus": "remote"
-      },
-      "digest": {
-        "summaryZh": "AI 摘要未生成。原始摘要要点：Jailbreak attacks remain a critical threat to the safe deployment of large language models (LLMs). While prior work has primarily studied attacks and defenses a...",
-        "motivationZh": "命令行启用了 --no-ai",
-        "methodZh": "请配置 AI 后重新运行，以生成方法提炼。",
-        "experimentsZh": "来源元数据未披露完整实验设置或结果。",
-        "affiliationsZh": "未在 DBLP/arXiv 元数据中提供。",
-        "tags": [
-          "cs.CR",
-          "cs.AI"
-        ],
-        "importance": 3,
-        "researchFitZh": "AI harness 尚未完成分析，无法判断与用户研究方向的具体关系。",
-        "hardwareRelevance": 1,
-        "algorithmRelevance": 1,
-        "systemRelevance": 1,
-        "readPriority": "archive",
-        "whyReadZh": "需要完成 motivation、method 和实验结果分析后再判断是否值得深读。",
-        "limitationsZh": "命令行启用了 --no-ai",
-        "motivationDetail": {
-          "problemZh": "harness 未完成分析。",
-          "gapZh": "harness 未完成分析。",
-          "whyImportantZh": "harness 未完成分析。",
-          "userRelevanceZh": "harness 未完成分析。",
-          "evidence": "not analyzed"
-        },
-        "methodDetail": {
-          "coreIdeaZh": "harness 未完成分析。",
-          "componentsZh": [
-            "未分析"
-          ],
-          "hardwareSystemDetailZh": "harness 未完成分析。",
-          "noveltyZh": "harness 未完成分析。",
-          "evidence": "not analyzed"
-        },
-        "experimentDetail": {
-          "setupZh": "harness 未完成分析。",
-          "baselinesZh": "harness 未完成分析。",
-          "metricsZh": [
-            "未分析"
-          ],
-          "mainResultsZh": "harness 未完成分析。",
-          "limitationsZh": "harness 未完成分析。",
-          "evidence": "not analyzed"
-        },
-        "evidence": {
-          "usedSources": [
-            "metadata"
-          ],
-          "affiliationEvidence": "",
-          "experimentEvidence": "",
-          "missingFields": [
-            "motivation",
-            "method",
-            "experiments"
-          ]
-        },
-        "confidence": {
-          "summary": 0.2,
-          "motivation": 0,
-          "method": 0,
-          "experiments": 0,
-          "affiliations": 0
-        }
-      }
-    },
-    {
-      "id": "arxiv:2607.00642",
-      "source": "arXiv",
-      "title": "Coachable agents for interactive gameplay",
-      "authors": [
-        "Roberto Capobianco",
-        "Harm van Seijen",
-        "Nolan D. Bard",
-        "Neil Burch",
-        "Fatima Davelouis",
-        "Josh Davidson",
-        "Alisa Devlic",
-        "Yunshu Du",
-        "Ishan Durugkar",
-        "Siddhant Gangapurwala",
-        "Daniel Hernandez",
-        "G. Zacharias Holland",
-        "Sahil Jain",
-        "Kenta Kawamoto",
-        "Raksha Kumaraswamy",
-        "Patrick MacAlpine",
-        "Dustin R. Morrill",
-        "Declan Oller",
-        "Francesco Riccio",
-        "Akanksha Saran",
-        "Craig Sherstan",
-        "Kaushik Subramanian",
-        "Thomas J. Walsh",
-        "Samuel Barrett",
-        "Kizza N. Frisbee",
-        "Mady Govil",
-        "Johannes Günther",
-        "Varun R. Kompella",
-        "James A. MacGlashan",
-        "Maxwell Svetlik",
-        "Michael D. Thomure",
-        "Jaden B. Travnik",
-        "Kevin Waugh",
-        "Elahe Aghapour",
-        "Florian Fuchs",
-        "Andreanne Lemay",
-        "Shruti Mishra",
-        "Takuma Seno",
-        "Peter Stone",
-        "Michael Spranger",
-        "Peter R. Wurman"
-      ],
-      "authorAffiliations": [
-        {
-          "name": "Roberto Capobianco",
-          "affiliation": "Sony AI, Zurich, Switzerland"
-        },
-        {
-          "name": "Harm van Seijen",
-          "affiliation": "Sony AI, North America, various locations"
-        },
-        {
-          "name": "Nolan D. Bard",
-          "affiliation": "Sony AI, North America, various locations"
-        },
-        {
-          "name": "Neil Burch",
-          "affiliation": "Sony AI, North America, various locations"
-        },
-        {
-          "name": "Fatima Davelouis",
-          "affiliation": "Sony AI, North America, various locations"
-        },
-        {
-          "name": "Josh Davidson",
-          "affiliation": "Sony AI, North America, various locations"
-        },
-        {
-          "name": "Alisa Devlic",
-          "affiliation": "Sony AI, Zurich, Switzerland"
-        },
-        {
-          "name": "Yunshu Du",
-          "affiliation": "Sony AI, North America, various locations"
-        },
-        {
-          "name": "Ishan Durugkar",
-          "affiliation": "Sony AI, North America, various locations"
-        },
-        {
-          "name": "Siddhant Gangapurwala",
-          "affiliation": "Sony AI, North America, various locations"
-        },
-        {
-          "name": "Daniel Hernandez",
-          "affiliation": "Sony AI, North America, various locations"
-        },
-        {
-          "name": "G. Zacharias Holland",
-          "affiliation": "Sony AI, North America, various locations"
-        },
-        {
-          "name": "Sahil Jain",
-          "affiliation": "Sony AI, North America, various locations"
-        },
-        {
-          "name": "Kenta Kawamoto",
-          "affiliation": "Sony AI, Tokyo, Japan"
-        },
-        {
-          "name": "Raksha Kumaraswamy",
-          "affiliation": "Sony AI, North America, various locations"
-        },
-        {
-          "name": "Patrick MacAlpine",
-          "affiliation": "Sony AI, North America, various locations"
-        },
-        {
-          "name": "Dustin R. Morrill",
-          "affiliation": "Sony AI, North America, various locations"
-        },
-        {
-          "name": "Declan Oller",
-          "affiliation": "Sony AI, North America, various locations"
-        },
-        {
-          "name": "Francesco Riccio",
-          "affiliation": "Sony AI, Zurich, Switzerland"
-        },
-        {
-          "name": "Akanksha Saran",
-          "affiliation": "Sony AI, North America, various locations"
-        },
-        {
-          "name": "Craig Sherstan",
-          "affiliation": "Sony AI, Tokyo, Japan"
-        },
-        {
-          "name": "Kaushik Subramanian",
-          "affiliation": "Sony AI, Zurich, Switzerland"
-        },
-        {
-          "name": "Thomas J. Walsh",
-          "affiliation": "Sony AI, North America, various locations"
-        },
-        {
-          "name": "Samuel Barrett",
-          "affiliation": "Sony AI, North America, various locations"
-        },
-        {
-          "name": "Kizza N. Frisbee",
-          "affiliation": "Sony AI, North America, various locations"
-        },
-        {
-          "name": "Mady Govil",
-          "affiliation": "Sony AI, North America, various locations"
-        },
-        {
-          "name": "Johannes Günther",
-          "affiliation": "Sony AI, North America, various locations"
-        },
-        {
-          "name": "Varun R. Kompella",
-          "affiliation": "Sony AI, North America, various locations"
-        },
-        {
-          "name": "James A. MacGlashan",
-          "affiliation": "Sony AI, North America, various locations"
-        },
-        {
-          "name": "Maxwell Svetlik",
-          "affiliation": "Sony AI, North America, various locations"
-        },
-        {
-          "name": "Michael D. Thomure",
-          "affiliation": "Sony AI, North America, various locations"
-        },
-        {
-          "name": "Jaden B. Travnik",
-          "affiliation": "Sony AI, North America, various locations"
-        },
-        {
-          "name": "Kevin Waugh",
-          "affiliation": "Sony AI, North America, various locations"
-        },
-        {
-          "name": "Elahe Aghapour",
-          "affiliation": "Sony AI, North America, various locations"
-        },
-        {
-          "name": "Florian Fuchs",
-          "affiliation": "Sony AI, Zurich, Switzerland"
-        },
-        {
-          "name": "Andreanne Lemay",
-          "affiliation": "Sony AI, North America, various locations"
-        },
-        {
-          "name": "Shruti Mishra",
-          "affiliation": "Sony AI, Zurich, Switzerland"
-        },
-        {
-          "name": "Takuma Seno",
-          "affiliation": "Sony AI, Tokyo, Japan"
-        },
-        {
-          "name": "Peter Stone",
-          "affiliation": "Sony AI, North America, various locations"
-        },
-        {
-          "name": "Michael Spranger",
-          "affiliation": "Sony AI, Tokyo, Japan"
-        },
-        {
-          "name": "Peter R. Wurman",
-          "affiliation": "Sony AI, North America, various locations"
-        }
-      ],
-      "affiliations": [
-        "Sony AI, Zurich, Switzerland",
-        "Sony AI, North America, various locations",
-        "Sony AI, Tokyo, Japan"
-      ],
-      "abstract": "Reinforcement learning has proven to be a valuable tool in the creation of advanced AI and robotic systems, contributing to everything from game playing to robotics to foundation models. Through trial-and-error, these AI systems typically learn one, near-optimal behavior to solve their tasks. However, there are many use cases in which one would like to assert some level of control, preferably in real time, over how the task is solved. We refer to these modifications of a core task as styles. We combine universal value function approximators (UVFAs) with carefully selected training scenarios, learning algorithms, and data augmentation to create a framework for coaching agents that exhibit styles in complex domains. We demonstrate the framework's application in the AAA video games Horizon Forbidden West and Gran Turismo, and in an open-source humanoid test domain. Despite the different nature of the domains -- car racing, stylized game combat, and humanoid walking -- each agent shows strong coherence to the style requests while still satisfying the main task in its domain. Importantly, the techniques outlined in this paper allow an end user to choose the final behavior at run time, giving them flexible control over the final executed performance.",
-      "venue": "arXiv",
-      "published": "2026-07-01T08:57:25Z",
-      "updated": "2026-07-01T08:57:25Z",
-      "url": "http://arxiv.org/abs/2607.00642v1",
-      "pdfUrl": "https://arxiv.org/pdf/2607.00642v1",
-      "categories": [
-        "cs.AI",
-        "cs.LG"
-      ],
-      "collectedAt": "2026-07-02T21:34:45.855Z",
-      "firstSeenAt": "2026-07-02T21:34:45.855Z",
-      "lastSeenAt": "2026-07-02T21:34:45.855Z",
-      "collectionType": "daily-latest",
-      "matchedQuery": "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)",
-      "collectionTypes": [
-        "daily-latest"
-      ],
-      "matchedQueries": [
-        "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)"
-      ],
-      "targetThemes": [],
-      "conferenceVenues": [],
-      "conferenceYears": [],
-      "recommendationTrack": "hardware-primary",
-      "recommendationLabel": "硬件体系结构主线",
-      "recommendationScore": 150.25,
-      "relevanceReason": "命中 AI 处理器、体系结构、量化、训推系统或内存/缓存优化主题",
-      "pdfStatus": "remote",
-      "workflow": {
-        "digestStatus": "pending",
-        "emailStatus": "waiting-digest",
-        "digestError": "命令行启用了 --no-ai",
-        "harnessVersion": "paper-reader-v1",
-        "collectStatus": "collected",
-        "pdfStatus": "remote"
-      },
-      "digest": {
-        "summaryZh": "AI 摘要未生成。原始摘要要点：Reinforcement learning has proven to be a valuable tool in the creation of advanced AI and robotic systems, contributing to everything from game playing to robo...",
-        "motivationZh": "命令行启用了 --no-ai",
-        "methodZh": "请配置 AI 后重新运行，以生成方法提炼。",
-        "experimentsZh": "来源元数据未披露完整实验设置或结果。",
-        "affiliationsZh": "Sony AI, Zurich, Switzerland；Sony AI, North America, various locations；Sony AI, Tokyo, Japan",
-        "tags": [
-          "cs.AI",
-          "cs.LG"
-        ],
-        "importance": 3,
-        "researchFitZh": "AI harness 尚未完成分析，无法判断与用户研究方向的具体关系。",
-        "hardwareRelevance": 1,
-        "algorithmRelevance": 1,
-        "systemRelevance": 1,
-        "readPriority": "archive",
-        "whyReadZh": "需要完成 motivation、method 和实验结果分析后再判断是否值得深读。",
-        "limitationsZh": "命令行启用了 --no-ai",
-        "motivationDetail": {
-          "problemZh": "harness 未完成分析。",
-          "gapZh": "harness 未完成分析。",
-          "whyImportantZh": "harness 未完成分析。",
-          "userRelevanceZh": "harness 未完成分析。",
-          "evidence": "not analyzed"
-        },
-        "methodDetail": {
-          "coreIdeaZh": "harness 未完成分析。",
-          "componentsZh": [
-            "未分析"
-          ],
-          "hardwareSystemDetailZh": "harness 未完成分析。",
-          "noveltyZh": "harness 未完成分析。",
-          "evidence": "not analyzed"
-        },
-        "experimentDetail": {
-          "setupZh": "harness 未完成分析。",
-          "baselinesZh": "harness 未完成分析。",
-          "metricsZh": [
-            "未分析"
-          ],
-          "mainResultsZh": "harness 未完成分析。",
-          "limitationsZh": "harness 未完成分析。",
-          "evidence": "not analyzed"
-        },
-        "evidence": {
-          "usedSources": [
-            "metadata"
-          ],
-          "affiliationEvidence": "metadata",
-          "experimentEvidence": "",
-          "missingFields": [
-            "motivation",
-            "method",
-            "experiments"
-          ]
-        },
-        "confidence": {
-          "summary": 0.2,
-          "motivation": 0,
-          "method": 0,
-          "experiments": 0,
-          "affiliations": 0.4
-        }
-      }
-    },
-    {
-      "id": "arxiv:2606.31660",
-      "source": "arXiv",
-      "title": "Contrastive Regularization of Machine Learning Potentials",
-      "authors": [
-        "Dimitrios Tzivrailis",
-        "Georgios Sotiropoulos",
-        "Alberto Rosso",
-        "Eiji Kawasaki"
-      ],
-      "authorAffiliations": [],
-      "affiliations": [],
-      "abstract": "Machine learning interatomic potentials are trained to predict energies and forces but built to be sampled: their purpose is to drive molecular simulations whose observables average over the equilibrium distribution the potential defines. They exemplify a broader AI problem -- learned regressors deployed as generators -- where pointwise accuracy does not guarantee a correct distribution. We show that potentials trained by standard Mean Squared Error (MSE) minimization on Density Functional Theory (DFT) data can reach chemical accuracy on held-out data, yet still fail as samplers: their trajectories drift into spurious low-energy minima and return thermodynamic observables that depart sharply from the reference. To correct this, we introduce Contrastive Regularized MSE (CRMSE), a post-training step that augments the MSE with a contrastive term derived from the Kullback--Leibler divergence between the potential's implicit Boltzmann distribution and the target. The network serves as its own energy-based model: persistent Langevin chains expose the configurations it drifts into and raise their energy, adding no new ab initio data. On the ethanol and aspirin molecules of the MD17 dataset, CRMSE confines the sampler to the physical basin and recovers the energy distribution, interatomic-distance distributions, and dihedral free-energy profiles to near-quantitative agreement with DFT, while preserving force accuracy and keeping energy errors within chemical accuracy; it remains effective when the training set is sharply reduced. That MSE training fails this way on MD17 -- one of the most widely used benchmarks -- while a minimal contrastive correction repairs it suggests that reliable sampling depends less on data volume than on training the model against the distribution it produces: distribution-level training is not a refinement of regression accuracy, but a distinct requirement.",
-      "venue": "arXiv",
-      "published": "2026-06-30T13:39:50Z",
-      "updated": "2026-06-30T13:39:50Z",
-      "url": "http://arxiv.org/abs/2606.31660v1",
-      "pdfUrl": "https://arxiv.org/pdf/2606.31660v1",
-      "categories": [
-        "physics.chem-ph",
-        "cond-mat.mtrl-sci"
-      ],
-      "collectedAt": "2026-07-02T21:34:45.856Z",
-      "firstSeenAt": "2026-07-02T21:34:45.856Z",
-      "lastSeenAt": "2026-07-02T21:34:45.856Z",
-      "collectionType": "daily-latest",
-      "matchedQuery": "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)",
-      "collectionTypes": [
-        "daily-latest"
-      ],
-      "matchedQueries": [
-        "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)"
-      ],
-      "targetThemes": [],
-      "conferenceVenues": [],
-      "conferenceYears": [],
-      "recommendationTrack": "hardware-primary",
-      "recommendationLabel": "硬件体系结构主线",
-      "recommendationScore": 148,
-      "relevanceReason": "命中 AI 处理器、体系结构、量化、训推系统或内存/缓存优化主题",
-      "pdfStatus": "remote",
-      "workflow": {
-        "digestStatus": "pending",
-        "emailStatus": "waiting-digest",
-        "digestError": "命令行启用了 --no-ai",
-        "harnessVersion": "paper-reader-v1",
-        "collectStatus": "collected",
-        "pdfStatus": "remote"
-      },
-      "digest": {
-        "summaryZh": "AI 摘要未生成。原始摘要要点：Machine learning interatomic potentials are trained to predict energies and forces but built to be sampled: their purpose is to drive molecular simulations whos...",
-        "motivationZh": "命令行启用了 --no-ai",
-        "methodZh": "请配置 AI 后重新运行，以生成方法提炼。",
-        "experimentsZh": "来源元数据未披露完整实验设置或结果。",
-        "affiliationsZh": "未在 DBLP/arXiv 元数据中提供。",
-        "tags": [
-          "physics.chem-ph",
-          "cond-mat.mtrl-sci"
-        ],
-        "importance": 3,
-        "researchFitZh": "AI harness 尚未完成分析，无法判断与用户研究方向的具体关系。",
-        "hardwareRelevance": 1,
-        "algorithmRelevance": 1,
-        "systemRelevance": 1,
-        "readPriority": "archive",
-        "whyReadZh": "需要完成 motivation、method 和实验结果分析后再判断是否值得深读。",
-        "limitationsZh": "命令行启用了 --no-ai",
-        "motivationDetail": {
-          "problemZh": "harness 未完成分析。",
-          "gapZh": "harness 未完成分析。",
-          "whyImportantZh": "harness 未完成分析。",
-          "userRelevanceZh": "harness 未完成分析。",
-          "evidence": "not analyzed"
-        },
-        "methodDetail": {
-          "coreIdeaZh": "harness 未完成分析。",
-          "componentsZh": [
-            "未分析"
-          ],
-          "hardwareSystemDetailZh": "harness 未完成分析。",
-          "noveltyZh": "harness 未完成分析。",
-          "evidence": "not analyzed"
-        },
-        "experimentDetail": {
-          "setupZh": "harness 未完成分析。",
-          "baselinesZh": "harness 未完成分析。",
-          "metricsZh": [
-            "未分析"
-          ],
-          "mainResultsZh": "harness 未完成分析。",
-          "limitationsZh": "harness 未完成分析。",
-          "evidence": "not analyzed"
-        },
-        "evidence": {
-          "usedSources": [
-            "metadata"
-          ],
-          "affiliationEvidence": "",
-          "experimentEvidence": "",
-          "missingFields": [
-            "motivation",
-            "method",
-            "experiments"
-          ]
-        },
-        "confidence": {
-          "summary": 0.2,
-          "motivation": 0,
-          "method": 0,
-          "experiments": 0,
-          "affiliations": 0
-        }
-      }
-    },
-    {
-      "id": "arxiv:2607.00099",
-      "source": "arXiv",
-      "title": "Grid-Interactive Thermal Management of AI Data Centers via Contextual Distributionally Robust Optimization",
-      "authors": [
-        "Jiachen Shen",
-        "Jian Shi",
-        "Yijie Yang",
-        "Chenye Wu",
-        "Dan Wang",
-        "Ju Bin Song",
-        "Zhu Han"
-      ],
-      "authorAffiliations": [],
-      "affiliations": [],
-      "abstract": "Thermal management in AI data centers is increasingly challenged by bursty workloads and uncertain heat generation. To prevent thermal violations, existing cooling strategies either enforce conservative, rigid bounds that severely limit grid responsiveness, or rely on forecast-driven controllers that perform poorly under AI workload uncertainty and distribution shifts. To overcome the above challenges, this paper proposes a Contextual Distributionally Robust Optimization (CDRO) framework for grid-interactive cooling control. Unlike standard DRO with fixed ambiguity sets, the proposed approach dynamically adapts the Wasserstein radius using real-time AI and grid context. This safely shrinks uncertainty bounds during stable regimes, unlocking deep demand-side flexibility. Theoretically, we formulate the control as an infinite-dimensional inf-sup problem, derive an exact tractable reformulation for the Wasserstein worst-case expected-cost term, and then derive a tractable conservative deterministic counterpart for the Distributionally Robust Conditional Value at Risk (DR-CVaR) thermal safety constraint. Solved via a scalable nested Alternating Direction Method of Multipliers (ADMM) algorithm, the CDRO controller achieves near-zero thermal violations under extreme workload spikes in high-fidelity EnergyPlus co-simulations. Simultaneously, it reduces the operational cost premium of robustness by approximately 13.7 percentage points relative to standard Min-Max Model Predictive Control (MPC).",
-      "venue": "arXiv",
-      "published": "2026-06-30T19:41:03Z",
-      "updated": "2026-06-30T19:41:03Z",
-      "url": "http://arxiv.org/abs/2607.00099v1",
-      "pdfUrl": "https://arxiv.org/pdf/2607.00099v1",
-      "categories": [
-        "eess.SY"
-      ],
-      "collectedAt": "2026-07-02T21:34:45.855Z",
-      "firstSeenAt": "2026-07-02T21:34:45.855Z",
-      "lastSeenAt": "2026-07-02T21:34:45.855Z",
-      "collectionType": "daily-latest",
-      "matchedQuery": "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)",
-      "collectionTypes": [
-        "daily-latest"
-      ],
-      "matchedQueries": [
-        "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)"
-      ],
-      "targetThemes": [],
-      "conferenceVenues": [],
-      "conferenceYears": [],
-      "recommendationTrack": "hardware-primary",
-      "recommendationLabel": "硬件体系结构主线",
-      "recommendationScore": 147.5,
-      "relevanceReason": "命中 AI 处理器、体系结构、量化、训推系统或内存/缓存优化主题",
-      "pdfStatus": "remote",
-      "workflow": {
-        "digestStatus": "pending",
-        "emailStatus": "waiting-digest",
-        "digestError": "命令行启用了 --no-ai",
-        "harnessVersion": "paper-reader-v1",
-        "collectStatus": "collected",
-        "pdfStatus": "remote"
-      },
-      "digest": {
-        "summaryZh": "AI 摘要未生成。原始摘要要点：Thermal management in AI data centers is increasingly challenged by bursty workloads and uncertain heat generation. To prevent thermal violations, existing cool...",
-        "motivationZh": "命令行启用了 --no-ai",
-        "methodZh": "请配置 AI 后重新运行，以生成方法提炼。",
-        "experimentsZh": "来源元数据未披露完整实验设置或结果。",
-        "affiliationsZh": "未在 DBLP/arXiv 元数据中提供。",
-        "tags": [
-          "eess.SY"
-        ],
-        "importance": 3,
-        "researchFitZh": "AI harness 尚未完成分析，无法判断与用户研究方向的具体关系。",
-        "hardwareRelevance": 1,
-        "algorithmRelevance": 1,
-        "systemRelevance": 1,
-        "readPriority": "archive",
-        "whyReadZh": "需要完成 motivation、method 和实验结果分析后再判断是否值得深读。",
-        "limitationsZh": "命令行启用了 --no-ai",
-        "motivationDetail": {
-          "problemZh": "harness 未完成分析。",
-          "gapZh": "harness 未完成分析。",
-          "whyImportantZh": "harness 未完成分析。",
-          "userRelevanceZh": "harness 未完成分析。",
-          "evidence": "not analyzed"
-        },
-        "methodDetail": {
-          "coreIdeaZh": "harness 未完成分析。",
-          "componentsZh": [
-            "未分析"
-          ],
-          "hardwareSystemDetailZh": "harness 未完成分析。",
-          "noveltyZh": "harness 未完成分析。",
-          "evidence": "not analyzed"
-        },
-        "experimentDetail": {
-          "setupZh": "harness 未完成分析。",
-          "baselinesZh": "harness 未完成分析。",
-          "metricsZh": [
-            "未分析"
-          ],
-          "mainResultsZh": "harness 未完成分析。",
-          "limitationsZh": "harness 未完成分析。",
-          "evidence": "not analyzed"
-        },
-        "evidence": {
-          "usedSources": [
-            "metadata"
-          ],
-          "affiliationEvidence": "",
-          "experimentEvidence": "",
-          "missingFields": [
-            "motivation",
-            "method",
-            "experiments"
-          ]
-        },
-        "confidence": {
-          "summary": 0.2,
-          "motivation": 0,
-          "method": 0,
-          "experiments": 0,
-          "affiliations": 0
-        }
-      }
-    },
-    {
-      "id": "arxiv:2606.31433",
-      "source": "arXiv",
-      "title": "A new model for long-term forecasting of Galactic cosmic rays",
-      "authors": [
-        "David Pelosi",
-        "Fernando Barão",
-        "Bruna Bertucci",
-        "Emanuele Fiandrini",
-        "Miguel Orcinha",
-        "Nicola Tomassetti"
-      ],
-      "authorAffiliations": [],
-      "affiliations": [],
-      "abstract": "The modulation of galactic cosmic rays, driven by the evolution of the heliospheric magnetic field, strongly influences the intensity of cosmic rays reaching near-Earth space. Characterizing this process is crucial both for advancing our understanding of cosmic-ray transport and for assessing radiation exposure and related hazards in space environments. Here we present a newly developed forecasting framework built on a numerical description of charged particle transport in the heliosphere and its dependence on solar activity, designed for the long-term forecasting of galactic cosmic-ray fluxes. It solves a one-dimensional, spherically symmetric form of the Parker transport equation, including diffusion, solar-wind advection, and adiabatic energy losses. The model has been validated using multi-species flux measurements from space-based experiments: PAMELA, AMS-02, and ACE. Its strategy is based on Hilbert-Huang transform filtering and cross-correlation between delayed solar proxies and effective model parameters. Our charge-sign- and rigidity-dependent parametric description of the diffusion-advection processes yields good overall agreement with the data, as shown by the reconstruction uncertainty. The robustness of this approach is validated across a broad set of multichannel datasets covering different particle species, energy ranges, and phases of solar activity, supporting its applicability to space radiation monitoring and forecasting. Furthermore, when coupled with solar-proxy forecasting models, it enables decadal-scale predictions of galactic cosmic-ray fluxes, thereby supporting long-term planning and radiation-risk assessment for future space missions.",
-      "venue": "arXiv",
-      "published": "2026-06-30T10:00:20Z",
-      "updated": "2026-06-30T10:00:20Z",
-      "url": "http://arxiv.org/abs/2606.31433v1",
-      "pdfUrl": "https://arxiv.org/pdf/2606.31433v1",
-      "categories": [
-        "physics.space-ph",
-        "astro-ph.HE",
-        "astro-ph.SR"
-      ],
-      "collectedAt": "2026-07-02T21:34:45.856Z",
-      "firstSeenAt": "2026-07-02T21:34:45.856Z",
-      "lastSeenAt": "2026-07-02T21:34:45.856Z",
-      "collectionType": "daily-latest",
-      "matchedQuery": "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)",
-      "collectionTypes": [
-        "daily-latest"
-      ],
-      "matchedQueries": [
-        "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)"
-      ],
-      "targetThemes": [],
-      "conferenceVenues": [],
-      "conferenceYears": [],
-      "recommendationTrack": "hardware-primary",
-      "recommendationLabel": "硬件体系结构主线",
-      "recommendationScore": 147.5,
-      "relevanceReason": "命中 AI 处理器、体系结构、量化、训推系统或内存/缓存优化主题",
-      "pdfStatus": "remote",
-      "workflow": {
-        "digestStatus": "pending",
-        "emailStatus": "waiting-digest",
-        "digestError": "命令行启用了 --no-ai",
-        "harnessVersion": "paper-reader-v1",
-        "collectStatus": "collected",
-        "pdfStatus": "remote"
-      },
-      "digest": {
-        "summaryZh": "AI 摘要未生成。原始摘要要点：The modulation of galactic cosmic rays, driven by the evolution of the heliospheric magnetic field, strongly influences the intensity of cosmic rays reaching ne...",
-        "motivationZh": "命令行启用了 --no-ai",
-        "methodZh": "请配置 AI 后重新运行，以生成方法提炼。",
-        "experimentsZh": "来源元数据未披露完整实验设置或结果。",
-        "affiliationsZh": "未在 DBLP/arXiv 元数据中提供。",
-        "tags": [
-          "physics.space-ph",
-          "astro-ph.HE",
-          "astro-ph.SR"
-        ],
-        "importance": 3,
-        "researchFitZh": "AI harness 尚未完成分析，无法判断与用户研究方向的具体关系。",
-        "hardwareRelevance": 1,
-        "algorithmRelevance": 1,
-        "systemRelevance": 1,
-        "readPriority": "archive",
-        "whyReadZh": "需要完成 motivation、method 和实验结果分析后再判断是否值得深读。",
-        "limitationsZh": "命令行启用了 --no-ai",
-        "motivationDetail": {
-          "problemZh": "harness 未完成分析。",
-          "gapZh": "harness 未完成分析。",
-          "whyImportantZh": "harness 未完成分析。",
-          "userRelevanceZh": "harness 未完成分析。",
-          "evidence": "not analyzed"
-        },
-        "methodDetail": {
-          "coreIdeaZh": "harness 未完成分析。",
-          "componentsZh": [
-            "未分析"
-          ],
-          "hardwareSystemDetailZh": "harness 未完成分析。",
-          "noveltyZh": "harness 未完成分析。",
-          "evidence": "not analyzed"
-        },
-        "experimentDetail": {
-          "setupZh": "harness 未完成分析。",
-          "baselinesZh": "harness 未完成分析。",
-          "metricsZh": [
-            "未分析"
-          ],
-          "mainResultsZh": "harness 未完成分析。",
-          "limitationsZh": "harness 未完成分析。",
-          "evidence": "not analyzed"
-        },
-        "evidence": {
-          "usedSources": [
-            "metadata"
-          ],
-          "affiliationEvidence": "",
-          "experimentEvidence": "",
-          "missingFields": [
-            "motivation",
-            "method",
-            "experiments"
-          ]
-        },
-        "confidence": {
-          "summary": 0.2,
-          "motivation": 0,
-          "method": 0,
-          "experiments": 0,
-          "affiliations": 0
-        }
-      }
-    },
-    {
-      "id": "arxiv:2607.01212",
-      "source": "arXiv",
-      "title": "FurnitureVLA: Learning Long-Horizon Bimanual Furniture Assembly with Vision-Language-Action Model",
-      "authors": [
-        "Chenyang Ma",
-        "Yue Yang",
-        "Radu Corcodel",
-        "Siddarth Jain",
-        "Andrew Wu",
-        "Chiori Hori",
-        "Diego Romeres"
-      ],
-      "authorAffiliations": [],
-      "affiliations": [],
-      "abstract": "Current work on robot furniture assembly mostly focuses on toy-scale settings or single-arm manipulation. We introduce FurnitureVLA, the first systematic study of real-scale bimanual furniture assembly using Vision-Language-Action models (VLAs). We formalize the task, develop a scalable simulation pipeline for expert data generation and evaluation, and build a VR teleoperation system for single-operator bimanual control to collect high-quality real-world demonstrations. To address extreme long-horizon assembly with up to 7 subtasks and 1550 control steps, we propose a progress-enhanced VLA, finetuned on semantically grounded subtasks, that jointly predicts actions and a continuous progress signal, enabling automatic subtask transitions and reducing compounding errors during inference. We further study perception and control design factors that critically affect precision in real-scale assembly. FurnitureVLA improves average simulation success from 48% to 80% compared to baselines across three furniture types, with an additional 21% gain from our design factor study. We validate on a real Kinova Gen3 platform with only 16% drop on the hardest task.",
-      "venue": "arXiv",
-      "published": "2026-07-01T17:51:21Z",
-      "updated": "2026-07-01T17:51:21Z",
-      "url": "http://arxiv.org/abs/2607.01212v1",
-      "pdfUrl": "https://arxiv.org/pdf/2607.01212v1",
+      "published": "2026-07-02T17:58:28Z",
+      "updated": "2026-07-02T17:58:28Z",
+      "url": "http://arxiv.org/abs/2607.02501v1",
+      "pdfUrl": "https://arxiv.org/pdf/2607.02501v1",
       "categories": [
         "cs.RO",
-        "cs.AI"
+        "cs.CV",
+        "cs.OS"
       ],
-      "collectedAt": "2026-07-02T21:34:47.629Z",
-      "firstSeenAt": "2026-07-02T21:34:47.629Z",
-      "lastSeenAt": "2026-07-02T21:34:47.629Z",
+      "collectedAt": "2026-07-03T21:33:11.361Z",
+      "firstSeenAt": "2026-07-03T21:33:11.361Z",
+      "lastSeenAt": "2026-07-03T21:33:11.361Z",
       "collectionType": "daily-latest",
-      "matchedQuery": "(all:agent OR all:agents OR all:agentic OR all:reasoning OR all:post-training OR all:alignment OR all:multimodal OR all:world-model) AND (all:LLM OR all:foundation OR all:language)",
+      "matchedQuery": "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)",
       "collectionTypes": [
         "daily-latest"
       ],
       "matchedQueries": [
+        "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)",
         "(all:agent OR all:agents OR all:agentic OR all:reasoning OR all:post-training OR all:alignment OR all:multimodal OR all:world-model) AND (all:LLM OR all:foundation OR all:language)"
       ],
       "targetThemes": [],
       "conferenceVenues": [],
       "conferenceYears": [],
-      "recommendationTrack": "algorithm-trend",
-      "recommendationLabel": "算法趋势观察",
-      "recommendationScore": 41.8,
-      "relevanceReason": "命中 LLM/Agent/多模态/后训练等算法趋势主题",
-      "pdfStatus": "remote",
-      "workflow": {
-        "digestStatus": "pending",
-        "emailStatus": "waiting-digest",
-        "digestError": "命令行启用了 --no-ai",
-        "harnessVersion": "paper-reader-v1",
-        "collectStatus": "collected",
-        "pdfStatus": "remote"
-      },
       "digest": {
-        "summaryZh": "AI 摘要未生成。原始摘要要点：Current work on robot furniture assembly mostly focuses on toy-scale settings or single-arm manipulation. We introduce FurnitureVLA, the first systematic study ...",
+        "summaryZh": "AI 摘要未生成。原始摘要要点：Embodied AI models now span vision-language-action (VLA) models and world-action models (WAMs), but practical deployment remains fragmented across model-specifi...",
         "motivationZh": "命令行启用了 --no-ai",
         "methodZh": "请配置 AI 后重新运行，以生成方法提炼。",
         "experimentsZh": "来源元数据未披露完整实验设置或结果。",
         "affiliationsZh": "未在 DBLP/arXiv 元数据中提供。",
         "tags": [
           "cs.RO",
+          "cs.CV",
+          "cs.OS"
+        ],
+        "importance": 3,
+        "researchFitZh": "AI harness 尚未完成分析，无法判断与用户研究方向的具体关系。",
+        "hardwareRelevance": 1,
+        "algorithmRelevance": 1,
+        "systemRelevance": 1,
+        "readPriority": "archive",
+        "whyReadZh": "需要完成 motivation、method 和实验结果分析后再判断是否值得深读。",
+        "limitationsZh": "命令行启用了 --no-ai",
+        "motivationDetail": {
+          "problemZh": "harness 未完成分析。",
+          "gapZh": "harness 未完成分析。",
+          "whyImportantZh": "harness 未完成分析。",
+          "userRelevanceZh": "harness 未完成分析。",
+          "evidence": "not analyzed"
+        },
+        "methodDetail": {
+          "coreIdeaZh": "harness 未完成分析。",
+          "componentsZh": [
+            "未分析"
+          ],
+          "hardwareSystemDetailZh": "harness 未完成分析。",
+          "noveltyZh": "harness 未完成分析。",
+          "evidence": "not analyzed"
+        },
+        "experimentDetail": {
+          "setupZh": "harness 未完成分析。",
+          "baselinesZh": "harness 未完成分析。",
+          "metricsZh": [
+            "未分析"
+          ],
+          "mainResultsZh": "harness 未完成分析。",
+          "limitationsZh": "harness 未完成分析。",
+          "evidence": "not analyzed"
+        },
+        "evidence": {
+          "usedSources": [
+            "metadata"
+          ],
+          "affiliationEvidence": "",
+          "experimentEvidence": "",
+          "missingFields": [
+            "motivation",
+            "method",
+            "experiments"
+          ]
+        },
+        "confidence": {
+          "summary": 0.2,
+          "motivation": 0,
+          "method": 0,
+          "experiments": 0,
+          "affiliations": 0
+        }
+      },
+      "recommendationTrack": "hardware-primary",
+      "recommendationLabel": "硬件体系结构主线",
+      "recommendationScore": 195.25,
+      "relevanceReason": "命中 AI 处理器、体系结构、量化、训推系统或内存/缓存优化主题",
+      "pdfStatus": "remote",
+      "workflow": {
+        "digestStatus": "pending",
+        "emailStatus": "waiting-digest",
+        "digestError": "命令行启用了 --no-ai",
+        "harnessVersion": "paper-reader-v1",
+        "collectStatus": "collected",
+        "pdfStatus": "remote"
+      }
+    },
+    {
+      "id": "arxiv:2607.01617",
+      "source": "arXiv",
+      "title": "3DLS: A 3D Logic-Stacked Architecture for Disaggregated LLM Serving",
+      "authors": [
+        "Jaehun Lee",
+        "In-Jun Jung",
+        "Joo-Young Kim"
+      ],
+      "authorAffiliations": [],
+      "affiliations": [],
+      "abstract": "Large language model (LLM) serving increasingly combines prefill-decode (PD) disaggregation with tensor parallelism (TP) to support large models and long contexts. In conventional 2D/2.5D chiplet architectures, layer-wise prefill-to-decode KV-cache transfer decode-side TP collectives share the same lateral die-to-die (D2D) interconnect, creating mixed-traffic contention on the decode critical path. This contention increases communication latency, prolongs token generation intervals, and degrades end-to-end serving performance. We propose 3DLS, a logic-on-logic 3D-stacked chiplet architecture that separates traffic classes by routing KV-cache transfers through vertical interconnects while preserving decode-side TP collectives on the lateral D2D fabric. 3DLS achieves up to 1.49$\\times$ throughput and 60.2\\% lower end-to-end (E2E) latency over the shared-fabric planar baseline, and still achieves up to 1.17$\\times$ throughput and 31.4\\% lower E2E latency over a workload-aware priority-managed planar baseline. These results highlight that physical isolation is an important design principle for future chiplet-based PD-disaggregated LLM serving systems.",
+      "venue": "arXiv",
+      "published": "2026-07-02T02:32:44Z",
+      "updated": "2026-07-02T02:32:44Z",
+      "url": "http://arxiv.org/abs/2607.01617v1",
+      "pdfUrl": "https://arxiv.org/pdf/2607.01617v1",
+      "categories": [
+        "cs.AR"
+      ],
+      "collectedAt": "2026-07-03T21:33:05.764Z",
+      "firstSeenAt": "2026-07-03T21:33:05.764Z",
+      "lastSeenAt": "2026-07-03T21:33:05.764Z",
+      "collectionType": "daily-latest",
+      "matchedQuery": "(cat:cs.AR OR cat:cs.DC OR cat:cs.PF) AND (all:LLM OR all:transformer OR all:foundation OR all:language) AND (all:accelerator OR all:processor OR all:architecture OR all:hardware OR all:system OR all:serving OR all:training OR all:inference OR all:cache)",
+      "collectionTypes": [
+        "daily-latest"
+      ],
+      "matchedQueries": [
+        "(cat:cs.AR OR cat:cs.DC OR cat:cs.PF) AND (all:LLM OR all:transformer OR all:foundation OR all:language) AND (all:accelerator OR all:processor OR all:architecture OR all:hardware OR all:system OR all:serving OR all:training OR all:inference OR all:cache)",
+        "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)"
+      ],
+      "targetThemes": [],
+      "conferenceVenues": [],
+      "conferenceYears": [],
+      "digest": {
+        "summaryZh": "AI 摘要未生成。原始摘要要点：Large language model (LLM) serving increasingly combines prefill-decode (PD) disaggregation with tensor parallelism (TP) to support large models and long contex...",
+        "motivationZh": "命令行启用了 --no-ai",
+        "methodZh": "请配置 AI 后重新运行，以生成方法提炼。",
+        "experimentsZh": "来源元数据未披露完整实验设置或结果。",
+        "affiliationsZh": "未在 DBLP/arXiv 元数据中提供。",
+        "tags": [
+          "cs.AR"
+        ],
+        "importance": 3,
+        "researchFitZh": "AI harness 尚未完成分析，无法判断与用户研究方向的具体关系。",
+        "hardwareRelevance": 1,
+        "algorithmRelevance": 1,
+        "systemRelevance": 1,
+        "readPriority": "archive",
+        "whyReadZh": "需要完成 motivation、method 和实验结果分析后再判断是否值得深读。",
+        "limitationsZh": "命令行启用了 --no-ai",
+        "motivationDetail": {
+          "problemZh": "harness 未完成分析。",
+          "gapZh": "harness 未完成分析。",
+          "whyImportantZh": "harness 未完成分析。",
+          "userRelevanceZh": "harness 未完成分析。",
+          "evidence": "not analyzed"
+        },
+        "methodDetail": {
+          "coreIdeaZh": "harness 未完成分析。",
+          "componentsZh": [
+            "未分析"
+          ],
+          "hardwareSystemDetailZh": "harness 未完成分析。",
+          "noveltyZh": "harness 未完成分析。",
+          "evidence": "not analyzed"
+        },
+        "experimentDetail": {
+          "setupZh": "harness 未完成分析。",
+          "baselinesZh": "harness 未完成分析。",
+          "metricsZh": [
+            "未分析"
+          ],
+          "mainResultsZh": "harness 未完成分析。",
+          "limitationsZh": "harness 未完成分析。",
+          "evidence": "not analyzed"
+        },
+        "evidence": {
+          "usedSources": [
+            "metadata"
+          ],
+          "affiliationEvidence": "",
+          "experimentEvidence": "",
+          "missingFields": [
+            "motivation",
+            "method",
+            "experiments"
+          ]
+        },
+        "confidence": {
+          "summary": 0.2,
+          "motivation": 0,
+          "method": 0,
+          "experiments": 0,
+          "affiliations": 0
+        }
+      },
+      "recommendationTrack": "hardware-primary",
+      "recommendationLabel": "硬件体系结构主线",
+      "recommendationScore": 186,
+      "relevanceReason": "命中 AI 处理器、体系结构、量化、训推系统或内存/缓存优化主题",
+      "pdfStatus": "remote",
+      "workflow": {
+        "digestStatus": "pending",
+        "emailStatus": "waiting-digest",
+        "digestError": "命令行启用了 --no-ai",
+        "harnessVersion": "paper-reader-v1",
+        "collectStatus": "collected",
+        "pdfStatus": "remote"
+      }
+    },
+    {
+      "id": "arxiv:2607.02202",
+      "source": "arXiv",
+      "title": "Gamma-ray production cross sections in proton interactions with natMg, natSi and 56Fe targets: measurement over the energy range of $E_p = 66$-125 MeV, data analysis, results and discussion. Astrophysical implications",
+      "authors": [
+        "M. Debabi",
+        "S. Ouichaoui",
+        "A. Belhout",
+        "J. Kiener",
+        "E. A. Lawrie",
+        "J. J. Lawrie",
+        "D. Moussa",
+        "W. Yahia-Cherif",
+        "Y. Rahma",
+        "V. Tatischeff",
+        "V.",
+        "H. Benhabiles-Mezhoud",
+        "T. D. Bucher",
+        "A. Chafa",
+        "L. J. Conradie",
+        "S. Damache",
+        "I. Deloncle",
+        "J. L. Easton",
+        "C. Hamadache",
+        "F. Hammache",
+        "P. Jones",
+        "V. B. Kheswa",
+        "N. A. Khumalo",
+        "A. Kunyana",
+        "T. Lamula",
+        "S. N. T. Majola",
+        "J. Ndayishimye",
+        "D. Negi",
+        "S. P. Noncolela",
+        "S. Ouziane",
+        "P. Papka",
+        "N. de Séréville",
+        "J. F. Sharpey-Schafer",
+        "O. Shirinda",
+        "A. Trabelsi",
+        "M. Wiedeking",
+        "S. Wyngaardt"
+      ],
+      "authorAffiliations": [],
+      "affiliations": [],
+      "abstract": "We have measured nuclear gamma-ray line production cross sections in interactions of highly accelerated proton beams with various target nuclei abundant in astrophysical sites. The experiments were carried out at the 200-MV Separated Sector Cyclotron (SSC) of iThemba LABS (near Cape Town, in South Africa) using a high-energy resolution and high efficiency detection system for registering the emitted gamma-ray photons. We report and discuss in this paper the collected experimental data sets for various gamma-ray lines produced in bombarding natMg, natSi and 56Fe targets with proton beams of incident energies of Ep = 66, 80, 95, 110 and 125 MeV. After describing the experimental set up and the data analysis method used, we report and discuss our total experimental cross section results in comparisons to previous counterparts from the literature, to a semi-empirical compilation and to the predictions of nuclear reaction theory via performed TALYS code calculations. Significantly improved agreements between theory and experiment are point out when using our modified optical model potential and Bêta (lambda) level deformation parameters instead of the default input parameters built in TALYS. Finally, we put into perspective the applications of our results in nuclear physics and astrophysics with drawing relevant conclusions. gammaKeywords: Proton-induced nuclear reactions; gamma-ray production cross sections; gamma-ray spectrometry; gamma-ray spectroscopy; Astrophysical implications",
+      "venue": "arXiv",
+      "published": "2026-07-02T14:10:31Z",
+      "updated": "2026-07-02T14:10:31Z",
+      "url": "http://arxiv.org/abs/2607.02202v1",
+      "pdfUrl": "https://arxiv.org/pdf/2607.02202v1",
+      "categories": [
+        "nucl-ex"
+      ],
+      "collectedAt": "2026-07-03T21:33:11.362Z",
+      "firstSeenAt": "2026-07-03T21:33:11.362Z",
+      "lastSeenAt": "2026-07-03T21:33:11.362Z",
+      "collectionType": "daily-latest",
+      "matchedQuery": "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)",
+      "collectionTypes": [
+        "daily-latest"
+      ],
+      "matchedQueries": [
+        "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)"
+      ],
+      "targetThemes": [],
+      "conferenceVenues": [],
+      "conferenceYears": [],
+      "recommendationTrack": "hardware-primary",
+      "recommendationLabel": "硬件体系结构主线",
+      "recommendationScore": 157,
+      "relevanceReason": "命中 AI 处理器、体系结构、量化、训推系统或内存/缓存优化主题",
+      "pdfStatus": "remote",
+      "workflow": {
+        "digestStatus": "pending",
+        "emailStatus": "waiting-digest",
+        "digestError": "命令行启用了 --no-ai",
+        "harnessVersion": "paper-reader-v1",
+        "collectStatus": "collected",
+        "pdfStatus": "remote"
+      },
+      "digest": {
+        "summaryZh": "AI 摘要未生成。原始摘要要点：We have measured nuclear gamma-ray line production cross sections in interactions of highly accelerated proton beams with various target nuclei abundant in astr...",
+        "motivationZh": "命令行启用了 --no-ai",
+        "methodZh": "请配置 AI 后重新运行，以生成方法提炼。",
+        "experimentsZh": "来源元数据未披露完整实验设置或结果。",
+        "affiliationsZh": "未在 DBLP/arXiv 元数据中提供。",
+        "tags": [
+          "nucl-ex"
+        ],
+        "importance": 3,
+        "researchFitZh": "AI harness 尚未完成分析，无法判断与用户研究方向的具体关系。",
+        "hardwareRelevance": 1,
+        "algorithmRelevance": 1,
+        "systemRelevance": 1,
+        "readPriority": "archive",
+        "whyReadZh": "需要完成 motivation、method 和实验结果分析后再判断是否值得深读。",
+        "limitationsZh": "命令行启用了 --no-ai",
+        "motivationDetail": {
+          "problemZh": "harness 未完成分析。",
+          "gapZh": "harness 未完成分析。",
+          "whyImportantZh": "harness 未完成分析。",
+          "userRelevanceZh": "harness 未完成分析。",
+          "evidence": "not analyzed"
+        },
+        "methodDetail": {
+          "coreIdeaZh": "harness 未完成分析。",
+          "componentsZh": [
+            "未分析"
+          ],
+          "hardwareSystemDetailZh": "harness 未完成分析。",
+          "noveltyZh": "harness 未完成分析。",
+          "evidence": "not analyzed"
+        },
+        "experimentDetail": {
+          "setupZh": "harness 未完成分析。",
+          "baselinesZh": "harness 未完成分析。",
+          "metricsZh": [
+            "未分析"
+          ],
+          "mainResultsZh": "harness 未完成分析。",
+          "limitationsZh": "harness 未完成分析。",
+          "evidence": "not analyzed"
+        },
+        "evidence": {
+          "usedSources": [
+            "metadata"
+          ],
+          "affiliationEvidence": "",
+          "experimentEvidence": "",
+          "missingFields": [
+            "motivation",
+            "method",
+            "experiments"
+          ]
+        },
+        "confidence": {
+          "summary": 0.2,
+          "motivation": 0,
+          "method": 0,
+          "experiments": 0,
+          "affiliations": 0
+        }
+      }
+    },
+    {
+      "id": "arxiv:2607.02113",
+      "source": "arXiv",
+      "title": "Faster Cache-Efficient Pattern Matching for Deterministic Wheeler Pangenome Graphs",
+      "authors": [
+        "Riccardo Maso",
+        "Nicola Prezza",
+        "Carlo Tosoni"
+      ],
+      "authorAffiliations": [],
+      "affiliations": [],
+      "abstract": "Pattern matching on strings is regarded as one of the core operations in computer science. Although researchers proposed several solutions to this problem, some of the most elegant and widely used approaches are based on the renowned Burrows-Wheeler transform (BWT). The success of the BWT lies in its pattern matching algorithm known as backward search, which is not only near-optimal in the RAM model, but also runs directly on a compressed representation of the input string. More recently, the backward search has been generalized to Wheeler deterministic finite automata (DFAs), a subclass of standard DFAs, without losing its near-optimal time efficiency. Similarly to the case of strings, this pattern matching algorithm for Wheeler DFAs has found applications in bioinformatics, where researchers have shown that specific pangenome graphs of human chromosomes can be transformed into Wheeler DFAs and consequently indexed using this strategy. However, this BWT-based index on Wheeler DFAs inherited a significant drawback from the original backward search, namely the high number of I/O operations triggered during the algorithm execution, which are in the worst-case lower-bounded by the length of the pattern. In this paper, we address this limitation by proposing the first cache-friendly algorithm specifically designed for Wheeler DFAs. Our new data structure reduces the number of I/O operations by employing a strategy analogous to the suffix array: it interleaves a binary search with fast sequential scans of the automaton. We empirically validate this new indexing strategy by running our algorithm on real-world Wheeler pangenome graphs. We show that while our data structure can use up to 15 times the space required by the backward search, it can also be 500 times faster and able to process a single character of the pattern in less than 3 ns.",
+      "venue": "arXiv",
+      "published": "2026-07-02T12:46:07Z",
+      "updated": "2026-07-02T12:46:07Z",
+      "url": "http://arxiv.org/abs/2607.02113v1",
+      "pdfUrl": "https://arxiv.org/pdf/2607.02113v1",
+      "categories": [
+        "cs.DS"
+      ],
+      "collectedAt": "2026-07-03T21:33:11.362Z",
+      "firstSeenAt": "2026-07-03T21:33:11.362Z",
+      "lastSeenAt": "2026-07-03T21:33:11.362Z",
+      "collectionType": "daily-latest",
+      "matchedQuery": "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)",
+      "collectionTypes": [
+        "daily-latest"
+      ],
+      "matchedQueries": [
+        "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)"
+      ],
+      "targetThemes": [],
+      "conferenceVenues": [],
+      "conferenceYears": [],
+      "recommendationTrack": "hardware-primary",
+      "recommendationLabel": "硬件体系结构主线",
+      "recommendationScore": 151,
+      "relevanceReason": "命中 AI 处理器、体系结构、量化、训推系统或内存/缓存优化主题",
+      "pdfStatus": "remote",
+      "workflow": {
+        "digestStatus": "pending",
+        "emailStatus": "waiting-digest",
+        "digestError": "命令行启用了 --no-ai",
+        "harnessVersion": "paper-reader-v1",
+        "collectStatus": "collected",
+        "pdfStatus": "remote"
+      },
+      "digest": {
+        "summaryZh": "AI 摘要未生成。原始摘要要点：Pattern matching on strings is regarded as one of the core operations in computer science. Although researchers proposed several solutions to this problem, some...",
+        "motivationZh": "命令行启用了 --no-ai",
+        "methodZh": "请配置 AI 后重新运行，以生成方法提炼。",
+        "experimentsZh": "来源元数据未披露完整实验设置或结果。",
+        "affiliationsZh": "未在 DBLP/arXiv 元数据中提供。",
+        "tags": [
+          "cs.DS"
+        ],
+        "importance": 3,
+        "researchFitZh": "AI harness 尚未完成分析，无法判断与用户研究方向的具体关系。",
+        "hardwareRelevance": 1,
+        "algorithmRelevance": 1,
+        "systemRelevance": 1,
+        "readPriority": "archive",
+        "whyReadZh": "需要完成 motivation、method 和实验结果分析后再判断是否值得深读。",
+        "limitationsZh": "命令行启用了 --no-ai",
+        "motivationDetail": {
+          "problemZh": "harness 未完成分析。",
+          "gapZh": "harness 未完成分析。",
+          "whyImportantZh": "harness 未完成分析。",
+          "userRelevanceZh": "harness 未完成分析。",
+          "evidence": "not analyzed"
+        },
+        "methodDetail": {
+          "coreIdeaZh": "harness 未完成分析。",
+          "componentsZh": [
+            "未分析"
+          ],
+          "hardwareSystemDetailZh": "harness 未完成分析。",
+          "noveltyZh": "harness 未完成分析。",
+          "evidence": "not analyzed"
+        },
+        "experimentDetail": {
+          "setupZh": "harness 未完成分析。",
+          "baselinesZh": "harness 未完成分析。",
+          "metricsZh": [
+            "未分析"
+          ],
+          "mainResultsZh": "harness 未完成分析。",
+          "limitationsZh": "harness 未完成分析。",
+          "evidence": "not analyzed"
+        },
+        "evidence": {
+          "usedSources": [
+            "metadata"
+          ],
+          "affiliationEvidence": "",
+          "experimentEvidence": "",
+          "missingFields": [
+            "motivation",
+            "method",
+            "experiments"
+          ]
+        },
+        "confidence": {
+          "summary": 0.2,
+          "motivation": 0,
+          "method": 0,
+          "experiments": 0,
+          "affiliations": 0
+        }
+      }
+    },
+    {
+      "id": "arxiv:2607.01362",
+      "source": "arXiv",
+      "title": "Enerzyme: A Framework for Efficient Training of Reactive Neural Network Potentials for Enzyme Catalysis with Application to Methyltransferases",
+      "authors": [
+        "Weiliang Luo",
+        "Heather J. Kulik"
+      ],
+      "authorAffiliations": [],
+      "affiliations": [],
+      "abstract": "Quantum mechanical (QM) cluster models provide an effective framework for mechanistic studies of enzymatic reactions but remain computationally demanding. Neural network potentials (NNPs) offer a promising route to reduce this cost, but enzymes present challenges beyond small molecules, including large system sizes, implicit-solvent environments, substantial polarization, and charge transfer. Here, we present an integrated software framework for efficient NNP training for mechanistic studies of enzymes, demonstrated on QM cluster models of S-adenosyl-L-methionine-dependent methyltransferases (MTases). Our Enerzyme code introduces modular electrostatics-aware NNP architectures and combines automated QM-cluster construction with reactive dataset generation. The Enerzymette subpackage automates reaction pathway exploration at both NNP and DFT levels. We show that iterative flexible scans and nudged elastic band calculations impose stricter requirements on NNPs than conventional dataset metrics. Nevertheless, NNPs trained on fewer than 1,000 system-specific datapoints reproduce reaction energetics and transition-state structures for MTase clusters containing up to 545 atoms with near-chemical accuracy. Direct supervision of atomic charges and consistent dielectric screening substantially improve simulation stability and accuracy, while multitask-learned atomic charges capture charge transfer and polarization trends and provide chemically meaningful descriptors of reactivity. Finally, transferability across chemically diverse catechol O-methyltransferase substrates indicates that NNPs learn generalizable reactivity patterns as training data expand across multiple enzymes. Together, these results establish a foundation for accelerating enzyme mechanistic studies and guide future NNP development for biomolecular reactivity.",
+      "venue": "arXiv",
+      "published": "2026-07-01T18:24:10Z",
+      "updated": "2026-07-01T18:24:10Z",
+      "url": "http://arxiv.org/abs/2607.01362v1",
+      "pdfUrl": "https://arxiv.org/pdf/2607.01362v1",
+      "categories": [
+        "physics.chem-ph",
+        "cs.LG",
+        "q-bio.BM"
+      ],
+      "collectedAt": "2026-07-03T21:33:11.362Z",
+      "firstSeenAt": "2026-07-03T21:33:11.362Z",
+      "lastSeenAt": "2026-07-03T21:33:11.362Z",
+      "collectionType": "daily-latest",
+      "matchedQuery": "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)",
+      "collectionTypes": [
+        "daily-latest"
+      ],
+      "matchedQueries": [
+        "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)"
+      ],
+      "targetThemes": [],
+      "conferenceVenues": [],
+      "conferenceYears": [],
+      "recommendationTrack": "hardware-primary",
+      "recommendationLabel": "硬件体系结构主线",
+      "recommendationScore": 151,
+      "relevanceReason": "命中 AI 处理器、体系结构、量化、训推系统或内存/缓存优化主题",
+      "pdfStatus": "remote",
+      "workflow": {
+        "digestStatus": "pending",
+        "emailStatus": "waiting-digest",
+        "digestError": "命令行启用了 --no-ai",
+        "harnessVersion": "paper-reader-v1",
+        "collectStatus": "collected",
+        "pdfStatus": "remote"
+      },
+      "digest": {
+        "summaryZh": "AI 摘要未生成。原始摘要要点：Quantum mechanical (QM) cluster models provide an effective framework for mechanistic studies of enzymatic reactions but remain computationally demanding. Neura...",
+        "motivationZh": "命令行启用了 --no-ai",
+        "methodZh": "请配置 AI 后重新运行，以生成方法提炼。",
+        "experimentsZh": "来源元数据未披露完整实验设置或结果。",
+        "affiliationsZh": "未在 DBLP/arXiv 元数据中提供。",
+        "tags": [
+          "physics.chem-ph",
+          "cs.LG",
+          "q-bio.BM"
+        ],
+        "importance": 3,
+        "researchFitZh": "AI harness 尚未完成分析，无法判断与用户研究方向的具体关系。",
+        "hardwareRelevance": 1,
+        "algorithmRelevance": 1,
+        "systemRelevance": 1,
+        "readPriority": "archive",
+        "whyReadZh": "需要完成 motivation、method 和实验结果分析后再判断是否值得深读。",
+        "limitationsZh": "命令行启用了 --no-ai",
+        "motivationDetail": {
+          "problemZh": "harness 未完成分析。",
+          "gapZh": "harness 未完成分析。",
+          "whyImportantZh": "harness 未完成分析。",
+          "userRelevanceZh": "harness 未完成分析。",
+          "evidence": "not analyzed"
+        },
+        "methodDetail": {
+          "coreIdeaZh": "harness 未完成分析。",
+          "componentsZh": [
+            "未分析"
+          ],
+          "hardwareSystemDetailZh": "harness 未完成分析。",
+          "noveltyZh": "harness 未完成分析。",
+          "evidence": "not analyzed"
+        },
+        "experimentDetail": {
+          "setupZh": "harness 未完成分析。",
+          "baselinesZh": "harness 未完成分析。",
+          "metricsZh": [
+            "未分析"
+          ],
+          "mainResultsZh": "harness 未完成分析。",
+          "limitationsZh": "harness 未完成分析。",
+          "evidence": "not analyzed"
+        },
+        "evidence": {
+          "usedSources": [
+            "metadata"
+          ],
+          "affiliationEvidence": "",
+          "experimentEvidence": "",
+          "missingFields": [
+            "motivation",
+            "method",
+            "experiments"
+          ]
+        },
+        "confidence": {
+          "summary": 0.2,
+          "motivation": 0,
+          "method": 0,
+          "experiments": 0,
+          "affiliations": 0
+        }
+      }
+    },
+    {
+      "id": "arxiv:2607.01941",
+      "source": "arXiv",
+      "title": "Colour evolution in the radio afterglow of GRB 241025A",
+      "authors": [
+        "S. Giarratana",
+        "O. S. Salafia",
+        "L. Nava",
+        "G. Ghirlanda",
+        "M. Giroletti",
+        "S. Antier",
+        "M. Pillas",
+        "T. Hussenot-Desenonges",
+        "A. Iskandar",
+        "M. Tanasan",
+        "G. Oganesyan",
+        "N. Di Lalla",
+        "N. Omodei"
+      ],
+      "authorAffiliations": [],
+      "affiliations": [],
+      "abstract": "We present the observing campaign of the afterglow of GRB241025A, a gamma-ray burst (GRB) whose prompt emission has been simultaneously detected by Swift, Einstein Probe, Fermi/GBM, SVOM, Konus-Wind and VZLUSAT-2 3U CubeSat. Our multi-wavelength campaign comprises radio, near-infrared, Optical and X-ray observations. The afterglow was clearly detected in all bands. We performed a semi-empirical fit of the data, showing that the afterglow behaviour can be reasonably reproduced by a single component, i.e. an ultra-relativistic shock. However, the results from the semi-empirical fit are inconsistent with the predicted evolution from the standard afterglow model in the slow cooling regime. Specifically, we found that at early times the synchrotron self-absorption frequency $ν_a$ should be at higher frequencies with respect to the ones sampled by our campaign, in order to explain the observed colour evolution in radio, namely the spectral evolution in time. To reconcile the prediction from the standard model with the observed data set, we fit the observations with a semi-analytical model, including a multiplicative factor $τ_{enh}$ to the optical depth which, in turn, artificially increases $ν_a$. We found that the radio colour evolution, together with the near-infrared, optical and X-ray emission, can be described reasonably well by a forward shock from a structured jet, provided that the optical depth in the shocked material is enhanced by a factor $τ_{enh}=500$. We suggest that such enhancement in the optical depth can result from a population of cold electrons in the downstream material, i.e. electrons that were not accelerated by Fermi I process at the shock front, in agreement with the theoretical expectations previously reported in the literature. Overall, our work underscores the importance of systematic, multi-frequency, multi-epoch radio follow-ups of these extreme events.",
+      "venue": "arXiv",
+      "published": "2026-07-02T09:33:50Z",
+      "updated": "2026-07-02T09:33:50Z",
+      "url": "http://arxiv.org/abs/2607.01941v1",
+      "pdfUrl": "https://arxiv.org/pdf/2607.01941v1",
+      "categories": [
+        "astro-ph.HE"
+      ],
+      "collectedAt": "2026-07-03T21:33:11.362Z",
+      "firstSeenAt": "2026-07-03T21:33:11.362Z",
+      "lastSeenAt": "2026-07-03T21:33:11.362Z",
+      "collectionType": "daily-latest",
+      "matchedQuery": "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)",
+      "collectionTypes": [
+        "daily-latest"
+      ],
+      "matchedQueries": [
+        "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)"
+      ],
+      "targetThemes": [],
+      "conferenceVenues": [],
+      "conferenceYears": [],
+      "recommendationTrack": "hardware-primary",
+      "recommendationLabel": "硬件体系结构主线",
+      "recommendationScore": 141,
+      "relevanceReason": "命中 AI 处理器、体系结构、量化、训推系统或内存/缓存优化主题",
+      "pdfStatus": "remote",
+      "workflow": {
+        "digestStatus": "pending",
+        "emailStatus": "waiting-digest",
+        "digestError": "命令行启用了 --no-ai",
+        "harnessVersion": "paper-reader-v1",
+        "collectStatus": "collected",
+        "pdfStatus": "remote"
+      },
+      "digest": {
+        "summaryZh": "AI 摘要未生成。原始摘要要点：We present the observing campaign of the afterglow of GRB241025A, a gamma-ray burst (GRB) whose prompt emission has been simultaneously detected by Swift, Einst...",
+        "motivationZh": "命令行启用了 --no-ai",
+        "methodZh": "请配置 AI 后重新运行，以生成方法提炼。",
+        "experimentsZh": "来源元数据未披露完整实验设置或结果。",
+        "affiliationsZh": "未在 DBLP/arXiv 元数据中提供。",
+        "tags": [
+          "astro-ph.HE"
+        ],
+        "importance": 3,
+        "researchFitZh": "AI harness 尚未完成分析，无法判断与用户研究方向的具体关系。",
+        "hardwareRelevance": 1,
+        "algorithmRelevance": 1,
+        "systemRelevance": 1,
+        "readPriority": "archive",
+        "whyReadZh": "需要完成 motivation、method 和实验结果分析后再判断是否值得深读。",
+        "limitationsZh": "命令行启用了 --no-ai",
+        "motivationDetail": {
+          "problemZh": "harness 未完成分析。",
+          "gapZh": "harness 未完成分析。",
+          "whyImportantZh": "harness 未完成分析。",
+          "userRelevanceZh": "harness 未完成分析。",
+          "evidence": "not analyzed"
+        },
+        "methodDetail": {
+          "coreIdeaZh": "harness 未完成分析。",
+          "componentsZh": [
+            "未分析"
+          ],
+          "hardwareSystemDetailZh": "harness 未完成分析。",
+          "noveltyZh": "harness 未完成分析。",
+          "evidence": "not analyzed"
+        },
+        "experimentDetail": {
+          "setupZh": "harness 未完成分析。",
+          "baselinesZh": "harness 未完成分析。",
+          "metricsZh": [
+            "未分析"
+          ],
+          "mainResultsZh": "harness 未完成分析。",
+          "limitationsZh": "harness 未完成分析。",
+          "evidence": "not analyzed"
+        },
+        "evidence": {
+          "usedSources": [
+            "metadata"
+          ],
+          "affiliationEvidence": "",
+          "experimentEvidence": "",
+          "missingFields": [
+            "motivation",
+            "method",
+            "experiments"
+          ]
+        },
+        "confidence": {
+          "summary": 0.2,
+          "motivation": 0,
+          "method": 0,
+          "experiments": 0,
+          "affiliations": 0
+        }
+      }
+    },
+    {
+      "id": "arxiv:2607.02502",
+      "source": "arXiv",
+      "title": "DemoPSD: Disagreement-Modulated Policy Self-Distillation",
+      "authors": [
+        "Yunhe Li",
+        "Hao Shi",
+        "Wenhao Liu",
+        "Mengzhe Ruan",
+        "Hanxu Hou",
+        "Zhongxiang Dai",
+        "Shuang Qiu",
+        "Linqi Song"
+      ],
+      "authorAffiliations": [],
+      "affiliations": [],
+      "abstract": "On-policy self-distillation (OPSD) has emerged as a practical method for training large language models (LLMs) to reason, where a single model acts as both the teacher and the student with different levels of information access. However, recent studies have found that the teacher's dense token-level supervision, conditioned on privileged information, can lead to overfitting to in-domain patterns, suppress exploration, and hurt cross-domain generalization, while also introducing a more fundamental issue: *privileged information leakage*, where the student encodes answer-dependent shortcuts that are unavailable at test time. We introduce **DemoPSD**, a novel framework that resolves such problems through the idea of *selective adoption of teacher guidance*. Instead of fitting the full teacher distribution, DemoPSD steers the student toward a *reverse-KL barycenter target*, a weighted geometric combination of the teacher and student distributions, that naturally balances learning from the teacher with preserving the student's own reasoning capacity. We measure the difference between their distributions and use such a discrepancy to adaptively control the blending at each token position. We provably show that DemoPSD achieves **(1)** *leakage attenuation*, i.e., effective mitigation of privileged information leakage; and **(2)** *exploration preservation*, i.e., preservation of exploration capacity under dense token-level distillation. Extensive experiments on SciKnowEval across four scientific fields show that DemoPSD outperforms both GRPO and SDPO while maintaining higher training entropy and robustly generalizing to out-of-distribution GPQA benchmarks.",
+      "venue": "arXiv",
+      "published": "2026-07-02T17:58:29Z",
+      "updated": "2026-07-02T17:58:29Z",
+      "url": "http://arxiv.org/abs/2607.02502v1",
+      "pdfUrl": "https://arxiv.org/pdf/2607.02502v1",
+      "categories": [
+        "cs.LG",
+        "cs.AI"
+      ],
+      "collectedAt": "2026-07-03T21:33:13.223Z",
+      "firstSeenAt": "2026-07-03T21:33:13.223Z",
+      "lastSeenAt": "2026-07-03T21:33:13.223Z",
+      "collectionType": "daily-latest",
+      "matchedQuery": "(all:agent OR all:agents OR all:agentic OR all:reasoning OR all:post-training OR all:alignment OR all:multimodal OR all:world-model) AND (all:LLM OR all:foundation OR all:language)",
+      "collectionTypes": [
+        "daily-latest"
+      ],
+      "matchedQueries": [
+        "(all:agent OR all:agents OR all:agentic OR all:reasoning OR all:post-training OR all:alignment OR all:multimodal OR all:world-model) AND (all:LLM OR all:foundation OR all:language)"
+      ],
+      "targetThemes": [],
+      "conferenceVenues": [],
+      "conferenceYears": [],
+      "recommendationTrack": "algorithm-trend",
+      "recommendationLabel": "算法趋势观察",
+      "recommendationScore": 37.2,
+      "relevanceReason": "命中 LLM/Agent/多模态/后训练等算法趋势主题",
+      "pdfStatus": "remote",
+      "workflow": {
+        "digestStatus": "pending",
+        "emailStatus": "waiting-digest",
+        "digestError": "命令行启用了 --no-ai",
+        "harnessVersion": "paper-reader-v1",
+        "collectStatus": "collected",
+        "pdfStatus": "remote"
+      },
+      "digest": {
+        "summaryZh": "AI 摘要未生成。原始摘要要点：On-policy self-distillation (OPSD) has emerged as a practical method for training large language models (LLMs) to reason, where a single model acts as both the ...",
+        "motivationZh": "命令行启用了 --no-ai",
+        "methodZh": "请配置 AI 后重新运行，以生成方法提炼。",
+        "experimentsZh": "来源元数据未披露完整实验设置或结果。",
+        "affiliationsZh": "未在 DBLP/arXiv 元数据中提供。",
+        "tags": [
+          "cs.LG",
           "cs.AI"
         ],
         "importance": 3,
@@ -1160,31 +984,38 @@
       }
     },
     {
-      "id": "arxiv:2607.01223",
+      "id": "arxiv:2607.02517",
       "source": "arXiv",
-      "title": "Theoria: Rewrite-Acceptability Verification over Informal Reasoning States",
+      "title": "WorldDirector: Building Controllable World Simulators with Persistent Dynamic Memory",
       "authors": [
-        "Ben Slivinski",
-        "Michael Saldivar"
+        "Hanlin Wang",
+        "Hao Ouyang",
+        "Qiuyu Wang",
+        "Wen Wang",
+        "Qingyan Bai",
+        "Ka Leong Cheng",
+        "Yue Yu",
+        "Yixuan Li",
+        "Yihao Meng",
+        "Zichen Liu",
+        "Yanhong Zeng",
+        "Yujun Shen",
+        "Qifeng Chen"
       ],
       "authorAffiliations": [],
       "affiliations": [],
-      "abstract": "When should an AI system's answer be trusted? Formal proof assistants offer certainty but cannot reach most of the problem distribution; scalar LLM judges offer coverage but produce opaque scores that cannot be audited after the fact and are subject to the same coherence issues as any LLM. We present Theoria, a verification architecture that closes this gap. A candidate solution is rewritten into a sequence of typed state transitions, each licensed by an explicit justification, whether that be a citation, computation, or problem-given fact, and every transition is independently auditable. The foundational invariant is completeness of change: every difference between consecutive proof states must be accounted for, so hidden premises surface as unlicensed mutations rather than passing silently. On HLE-Verified Gold (185 text-only expert problems), Theoria certifies 105 at 91.4% strict precision (Wilson 95% CI [84.5%, 95.4%]). Every certification produces a human readable proof trace in which each step can be independently challenged. Holistic LLM judges achieve comparable precision at matched coverage but fail on different problems (Jaccard 0.14-0.36), making the approaches complementary. On 95 adversarial poisoned proofs across 15 domains, structured judges catch 94.7% versus 83.2% for holistic judging (p= 0.0017). The overall 11.5 pp gap concentrates in hidden premises (90.6% vs. 62.5%, a 28 pp difference) and fabricated citations (100% vs. 90%), the error classes where the formal analysis predicts an advantage; performance is identical on arithmetic and theorem-misapplication errors, where no advantage is predicted. On GPQA Diamond (n= 65), certified precision is 97.1% (Wilson CI [85.1%, 99.5%]).",
+      "abstract": "We present WorldDirector, a highly controllable video world model framework designed for persistent dynamic object memory and unrestricted viewpoint exploration. Unlike existing world models that entangle physical dynamics with pixel rendering and rely on continuous visual observation to sustain motion, our framework explicitly decouples semantic motion orchestration from visual generation. By leveraging an LLM to coordinate 3D trajectories with camera movements and subsequently employing these orchestrated trajectories as control signals for video generation, our approach ensures strict physical logic and appearance stability, successfully preserving the exact visual identities of dynamic entities even when they re-enter the scene after prolonged periods out of view. Experimental results demonstrate that our method supports the synthesis of complex and extended events with unprecedented controllability and persistent dynamic object memory. Project Page: https://worlddirector.github.io/",
       "venue": "arXiv",
-      "published": "2026-07-01T17:56:42Z",
-      "updated": "2026-07-01T17:56:42Z",
-      "url": "http://arxiv.org/abs/2607.01223v1",
-      "pdfUrl": "https://arxiv.org/pdf/2607.01223v1",
+      "published": "2026-07-02T17:59:59Z",
+      "updated": "2026-07-02T17:59:59Z",
+      "url": "http://arxiv.org/abs/2607.02517v1",
+      "pdfUrl": "https://arxiv.org/pdf/2607.02517v1",
       "categories": [
-        "cs.AI",
-        "cs.CL",
-        "cs.LG",
-        "cs.LO",
-        "cs.SE"
+        "cs.CV"
       ],
-      "collectedAt": "2026-07-02T21:34:47.628Z",
-      "firstSeenAt": "2026-07-02T21:34:47.628Z",
-      "lastSeenAt": "2026-07-02T21:34:47.628Z",
+      "collectedAt": "2026-07-03T21:33:13.222Z",
+      "firstSeenAt": "2026-07-03T21:33:13.222Z",
+      "lastSeenAt": "2026-07-03T21:33:13.222Z",
       "collectionType": "daily-latest",
       "matchedQuery": "(all:agent OR all:agents OR all:agentic OR all:reasoning OR all:post-training OR all:alignment OR all:multimodal OR all:world-model) AND (all:LLM OR all:foundation OR all:language)",
       "collectionTypes": [
@@ -1198,7 +1029,7 @@
       "conferenceYears": [],
       "recommendationTrack": "algorithm-trend",
       "recommendationLabel": "算法趋势观察",
-      "recommendationScore": 31,
+      "recommendationScore": 36.6,
       "relevanceReason": "命中 LLM/Agent/多模态/后训练等算法趋势主题",
       "pdfStatus": "remote",
       "workflow": {
@@ -1210,17 +1041,13 @@
         "pdfStatus": "remote"
       },
       "digest": {
-        "summaryZh": "AI 摘要未生成。原始摘要要点：When should an AI system's answer be trusted? Formal proof assistants offer certainty but cannot reach most of the problem distribution; scalar LLM judges offer...",
+        "summaryZh": "AI 摘要未生成。原始摘要要点：We present WorldDirector, a highly controllable video world model framework designed for persistent dynamic object memory and unrestricted viewpoint exploration...",
         "motivationZh": "命令行启用了 --no-ai",
         "methodZh": "请配置 AI 后重新运行，以生成方法提炼。",
         "experimentsZh": "来源元数据未披露完整实验设置或结果。",
         "affiliationsZh": "未在 DBLP/arXiv 元数据中提供。",
         "tags": [
-          "cs.AI",
-          "cs.CL",
-          "cs.LG",
-          "cs.LO",
-          "cs.SE"
+          "cs.CV"
         ],
         "importance": 3,
         "researchFitZh": "AI harness 尚未完成分析，无法判断与用户研究方向的具体关系。",
