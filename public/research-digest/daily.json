@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-07-14T21:20:39.122Z",
-  "digestDate": "2026-07-15",
+  "generatedAt": "2026-07-15T21:20:37.665Z",
+  "digestDate": "2026-07-16",
   "kind": "daily-new",
   "timezone": "Asia/Shanghai",
   "siteUrl": "https://YouthLiuYS.github.io/PaperDigestAgent/",
@@ -126,7 +126,7 @@
     "dailyCandidates": 8,
     "conferenceCandidates": 0,
     "backfillCandidates": 0,
-    "rawCandidates": 63,
+    "rawCandidates": 62,
     "newlyAdded": 8,
     "pendingDigest": 8,
     "pendingEmail": 0,
@@ -141,35 +141,36 @@
   },
   "papers": [
     {
-      "id": "arxiv:2607.11579",
+      "id": "arxiv:2607.12550",
       "source": "arXiv",
-      "title": "MemExchange: Cloud-Scale Memory Trading",
+      "title": "A JoLT for the KV Cache: Near-Lossless KV Cache Compression via Joint Tucker and JL-Residual Allocation for LLMs",
       "authors": [
-        "AmirHossein Seyri",
-        "Abhisek Pan",
-        "Balajee Vamanan"
+        "Rahul Krishnan",
+        "Volker Schulz"
       ],
       "authorAffiliations": [],
       "affiliations": [],
-      "abstract": "To handle unpredictable workloads, cloud providers typically over-provision memory to meet peak demand, resulting in substantial underutilization across datacenter clusters. At the same time, memory-constrained tenants may suffer elevated cache miss rates, even when idle capacity remains stranded elsewhere in the infrastructure. MemExchange is a cluster-wide, multi-tenant memory management system that dynamically right-sizes in-memory caching tenants according to workload demand. Leveraging marginal-utility-based allocation derived from online Miss Ratio Curve (MRC) estimation, MemExchange redistributes idle memory between tenants across physical nodes using RDMA. This approach transforms the dedicated caching memory scattered across servers into a logically aggregated pool, enabling cross-node memory exchange without centralized coordination or forced tenant co-location. To support efficient remote access, we design the MemExchange Tracker Communication (MTC) protocol, an application-layer mechanism that coordinates memory reallocation and enables one-sided RDMA operations without involving remote CPUs. We implement MemExchange in Memcached and evaluate it through microbenchmarks, medium and rack-scale deployments of up to 100 CloudLab servers. Our results show up to 2.3x lower remote-access overhead compared to TCP-based designs, a 13% increase in cluster-wide memory utilization at rack scale, and up to 63% reduction in miss rate for memory-constrained tenants under skewed workloads.",
+      "abstract": "The key-value (KV) cache has become the dominant memory cost of transformer inference. It grows with batch size, context length, and depth, and at long context it, rather than the model weights, sets the ceiling on throughput. Two families of methods reduce it. Low-rank methods factor two-dimensional slices of the cache, either per-head matrices or cross-layer feature blocks, and quantization methods lower the bit-width of every entry. Neither family exploits the fact that the cache at a layer is naturally a third-order tensor whose three axes, the heads, the tokens, and the features, carry very different amounts of redundancy. We take this tensor view directly. Our method, JoLT, applies a partial Tucker decomposition that compresses only the token and feature axes while leaving the head and layer axes intact, and then restores the energy that truncation discards with a Johnson-Lindenstrauss (JL) rotated low-bit residual. A single Lagrangian dual allocates the Tucker ranks and the residual bit-widths together, per layer group and separately for keys and values, under one byte budget. The result is a near-lossless 2-3x compression: perplexity, GSM8K accuracy, and RULER needle-in-a-haystack retrieval all stay at or within statistical noise of the uncompressed baseline on both a grouped-query-attention model (Mistral-7B-v0.3) and a multi-head-attention model (LLaMA-2-13B). At 2x, JoLT reconstructs the cache to relative Frobenius error 0.009 (K) and 0.006 (V) on both architectures, roughly an order of magnitude below cross-layer SVD and 4-bit quantization. A randomized-SVD variant, FlashJoLT, delivers a 5-13x compression-time speedup at matched quality.",
       "venue": "arXiv",
-      "published": "2026-07-13T13:59:59Z",
-      "updated": "2026-07-13T13:59:59Z",
-      "url": "http://arxiv.org/abs/2607.11579v1",
-      "pdfUrl": "https://arxiv.org/pdf/2607.11579v1",
+      "published": "2026-07-14T09:23:20Z",
+      "updated": "2026-07-14T09:23:20Z",
+      "url": "http://arxiv.org/abs/2607.12550v1",
+      "pdfUrl": "https://arxiv.org/pdf/2607.12550v1",
       "categories": [
-        "cs.DC"
+        "cs.LG",
+        "cs.CL",
+        "math.OC"
       ],
-      "collectedAt": "2026-07-14T21:16:10.451Z",
-      "firstSeenAt": "2026-07-14T21:16:10.451Z",
-      "lastSeenAt": "2026-07-14T21:16:10.451Z",
+      "collectedAt": "2026-07-15T21:16:04.525Z",
+      "firstSeenAt": "2026-07-15T21:16:04.525Z",
+      "lastSeenAt": "2026-07-15T21:16:04.525Z",
       "collectionType": "daily-latest",
-      "matchedQuery": "(cat:cs.AR OR cat:cs.DC OR cat:cs.PF) AND (all:LLM OR all:transformer OR all:foundation OR all:language) AND (all:accelerator OR all:processor OR all:architecture OR all:hardware OR all:system OR all:serving OR all:training OR all:inference OR all:cache)",
+      "matchedQuery": "(all:quantization OR all:compression OR all:pruning OR all:sparsity OR all:low-bit) AND (all:LLM OR all:transformer OR all:language) AND (all:hardware OR all:accelerator OR all:inference OR all:serving OR all:processor)",
       "collectionTypes": [
         "daily-latest"
       ],
       "matchedQueries": [
-        "(cat:cs.AR OR cat:cs.DC OR cat:cs.PF) AND (all:LLM OR all:transformer OR all:foundation OR all:language) AND (all:accelerator OR all:processor OR all:architecture OR all:hardware OR all:system OR all:serving OR all:training OR all:inference OR all:cache)",
+        "(all:quantization OR all:compression OR all:pruning OR all:sparsity OR all:low-bit) AND (all:LLM OR all:transformer OR all:language) AND (all:hardware OR all:accelerator OR all:inference OR all:serving OR all:processor)",
         "(all:prefill OR all:decoding OR all:KV OR all:cache OR all:attention) AND (all:accelerator OR all:kernel OR all:compiler OR all:serving OR all:memory) AND (all:LLM OR all:transformer)",
         "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)"
       ],
@@ -177,13 +178,15 @@
       "conferenceVenues": [],
       "conferenceYears": [],
       "digest": {
-        "summaryZh": "AI 摘要未生成。原始摘要要点：To handle unpredictable workloads, cloud providers typically over-provision memory to meet peak demand, resulting in substantial underutilization across datacen...",
+        "summaryZh": "AI 摘要未生成。原始摘要要点：The key-value (KV) cache has become the dominant memory cost of transformer inference. It grows with batch size, context length, and depth, and at long context ...",
         "motivationZh": "命令行启用了 --no-ai",
         "methodZh": "请配置 AI 后重新运行，以生成方法提炼。",
         "experimentsZh": "来源元数据未披露完整实验设置或结果。",
         "affiliationsZh": "未在 DBLP/arXiv 元数据中提供。",
         "tags": [
-          "cs.DC"
+          "cs.LG",
+          "cs.CL",
+          "math.OC"
         ],
         "importance": 3,
         "researchFitZh": "AI harness 尚未完成分析，无法判断与用户研究方向的具体关系。",
@@ -241,7 +244,7 @@
       },
       "recommendationTrack": "hardware-primary",
       "recommendationLabel": "硬件体系结构主线",
-      "recommendationScore": 175,
+      "recommendationScore": 219,
       "relevanceReason": "命中 AI 处理器、体系结构、量化、训推系统或内存/缓存优化主题",
       "pdfStatus": "remote",
       "workflow": {
@@ -254,26 +257,71 @@
       }
     },
     {
-      "id": "arxiv:2607.11586",
+      "id": "arxiv:2607.12281",
       "source": "arXiv",
-      "title": "HCRMap: Pressure-Aware Hot-Expert Residency Mapping for 3.5D MoE Chiplet Inference",
+      "title": "SlimPer: Make Personalization Model Slim and Smart",
       "authors": [
-        "Yongqin Zhang"
+        "Siqi Wang",
+        "Xianjie Chen",
+        "Shaofeng Deng",
+        "Albert Chen",
+        "Romil Shah",
+        "Jiawei Huang",
+        "Zhaoqin Wang",
+        "Zhang Zhang",
+        "Yiqun Liu",
+        "Meilei Jiang",
+        "Anish Dubey",
+        "Moyan Mei",
+        "Tongxin Wang",
+        "Nathan Berrebbi",
+        "Misael Manjarres",
+        "Armand Sauzay",
+        "Shardul Kothapalli",
+        "Aryaman Vinchhi",
+        "Kevin Johnstone",
+        "Juheon Lee",
+        "Gufan Yin",
+        "Ziheng Huang",
+        "Justin Lin",
+        "Mert Terzihan",
+        "Yilin Qi",
+        "Cynthia Yang",
+        "Colin Peppler",
+        "Qi Ding",
+        "Ruohan Sun",
+        "Ge Song",
+        "Litao Deng",
+        "Parichay Kapoor",
+        "Matt Ma",
+        "Huihui Cheng",
+        "Jiyuan Zhang",
+        "Yanli Zhao",
+        "Yiping Han",
+        "Fangqiu Han",
+        "Ning Yao",
+        "Arun Singh",
+        "Jordan Edwards",
+        "Zhengyu Su",
+        "Abhishek Kumar",
+        "Guangdeng Liao",
+        "Ankit Asthana"
       ],
       "authorAffiliations": [],
       "affiliations": [],
-      "abstract": "Mixture-of-Experts (MoE) large language models (LLM) activate only a small number of experts during inference, but token routing introduces persistent expert hotness skew: a small set of hot experts continuously receives most tokens, while the remaining experts are lightly loaded. On 3.5D multi-chiplet systems, this skew not only causes compute imbalance but also amplifies pressure on communication, memory bandwidth, I/O, and execution queues. Therefore, the core problem is not simply to reduce token movement, but to dynamically place and reuse hot expert replicas across different memory tiers. This paper proposes HCRMap, a hot expert residency mapping framework for pressure-aware expert replica management in 3.5D MoE inference. Based on expert hotness, weight loading cost, migration overhead, and runtime resource pressure, HCRMap dynamically determines which experts should be promoted, retained, demoted, or evicted. It then maps routed token groups to suitable resident replicas, thereby jointly mitigating communication, memory, and queue bottlenecks. Experimental results show that HCRMap reduces end-to-end latency by 43.6% and 43.0% over Hydra in the prefill and decode stages, respectively; by 34.5% and 33.1% over MoEntwine; and by 46.7% and 46.0% over PIMoE.",
+      "abstract": "Transformer-style architectures are increasingly adopted for industrial recommendation systems, yet they inherit a design premise misaligned with the task: generative models rely on per-token autoregressive prediction, which justifies maintaining large intermediate tensors that scale with sequence length. In contrast, recommendation systems produce a single set of relevance scores for each <user, item> pair without token-level supervision. Leveraging this observation, we propose SlimPer, which reformulates personalized ranking as iterative refinement of a compact, unified <user, item> knowledge base. At each layer, the model selectively queries raw multi-modal user-side tokens, computes explicit relevance matching scores, and refines the knowledge base, all in O(N) per-layer cost with a fixed-size intermediate representation. As a result, model depth is decoupled from user history length, enabling deeper relevance understanding without proportional growth in compute or memory; request-only optimization further trims memory by sharing a single copy of user-side tokens across all candidate items. SlimPer unifies sparse, dense, and sequence features within a single backbone and provides inherent interpretability through its attention mechanism. Deployed on Instagram Reels and Feed, SlimPer yields measurable improvements in user engagement while streamlining the overall system and enabling effective modeling of 10k+ fine-grained user history events.",
       "venue": "arXiv",
-      "published": "2026-07-13T14:05:55Z",
-      "updated": "2026-07-13T14:05:55Z",
-      "url": "http://arxiv.org/abs/2607.11586v1",
-      "pdfUrl": "https://arxiv.org/pdf/2607.11586v1",
+      "published": "2026-07-14T02:31:32Z",
+      "updated": "2026-07-14T02:31:32Z",
+      "url": "http://arxiv.org/abs/2607.12281v1",
+      "pdfUrl": "https://arxiv.org/pdf/2607.12281v1",
       "categories": [
-        "cs.AI"
+        "cs.IR",
+        "cs.LG"
       ],
-      "collectedAt": "2026-07-14T21:16:13.861Z",
-      "firstSeenAt": "2026-07-14T21:16:13.861Z",
-      "lastSeenAt": "2026-07-14T21:16:13.861Z",
+      "collectedAt": "2026-07-15T21:16:06.254Z",
+      "firstSeenAt": "2026-07-15T21:16:06.254Z",
+      "lastSeenAt": "2026-07-15T21:16:06.254Z",
       "collectionType": "daily-latest",
       "matchedQuery": "(all:prefill OR all:decoding OR all:KV OR all:cache OR all:attention) AND (all:accelerator OR all:kernel OR all:compiler OR all:serving OR all:memory) AND (all:LLM OR all:transformer)",
       "collectionTypes": [
@@ -287,13 +335,14 @@
       "conferenceVenues": [],
       "conferenceYears": [],
       "digest": {
-        "summaryZh": "AI 摘要未生成。原始摘要要点：Mixture-of-Experts (MoE) large language models (LLM) activate only a small number of experts during inference, but token routing introduces persistent expert ho...",
+        "summaryZh": "AI 摘要未生成。原始摘要要点：Transformer-style architectures are increasingly adopted for industrial recommendation systems, yet they inherit a design premise misaligned with the task: gene...",
         "motivationZh": "命令行启用了 --no-ai",
         "methodZh": "请配置 AI 后重新运行，以生成方法提炼。",
         "experimentsZh": "来源元数据未披露完整实验设置或结果。",
         "affiliationsZh": "未在 DBLP/arXiv 元数据中提供。",
         "tags": [
-          "cs.AI"
+          "cs.IR",
+          "cs.LG"
         ],
         "importance": 3,
         "researchFitZh": "AI harness 尚未完成分析，无法判断与用户研究方向的具体关系。",
@@ -351,7 +400,7 @@
       },
       "recommendationTrack": "hardware-primary",
       "recommendationLabel": "硬件体系结构主线",
-      "recommendationScore": 156,
+      "recommendationScore": 161,
       "relevanceReason": "命中 AI 处理器、体系结构、量化、训推系统或内存/缓存优化主题",
       "pdfStatus": "remote",
       "workflow": {
@@ -364,27 +413,29 @@
       }
     },
     {
-      "id": "arxiv:2607.11127",
+      "id": "arxiv:2607.12216",
       "source": "arXiv",
-      "title": "Do LLMs Fabricate Legal Citations? A Bilingual Benchmark on Saudi Data Protection Law and the GDPR",
+      "title": "RCWT: Measuring Task-Budget Displacement from Coordination Content in LLM Calls",
       "authors": [
-        "Noura Suliman Alrajeh"
+        "Brenda Lelis",
+        "Rodrigo Cabral-Carvalho"
       ],
       "authorAffiliations": [],
       "affiliations": [],
-      "abstract": "Organizations and regulators increasingly consult large language models (LLMs) for regulatory-compliance questions, yet a wrong statutory citation can silently propagate into legal advice, compliance documentation, and policy decisions. We introduce a bilingual benchmark of 120 questions probing whether freely accessible LLMs fabricate article citations for two data-protection instruments: the EU General Data Protection Regulation (GDPR) and the Saudi Personal Data Protection Law (PDPL). The benchmark pairs direct citation retrieval questions with false premise verification probes and deliberately unanswerable \"trap\" questions -- including questions about a repealed article and about deadlines that exist only in implementing regulations, not in the law itself. Every question is posed in both Arabic and English, and all scoring is fully automatic against a manually verified gold reference. Evaluating three freely accessible models (Gemini 2.5 Flash, GPT-OSS-120B, Nemotron-3-Super-120B), we find a dramatic jurisdiction gap: near-ceiling citation accuracy on the GDPR (94-100% on direct retrieval) against majority fabrication on the Saudi PDPL (60-77%), invariant to query language; the highest fabrication rates (67%) arise from statute-vs-regulations confusion, and 91% of fabricated citations are asserted with confidence >= 0.8. Fabrication tracks the jurisdiction of the law, not the language of the query, and model confidence provides no protection -- indicating that verbatim-verification safeguards, rather than model self confidence, must gate any institutional reliance on LLMs for compliance screening.",
+      "abstract": "Multi-agent and memory-augmented LLM systems often place coordination content, shared state, prior discussion, tool outputs, summaries, and role instructions, inside the same finite prompt used for the current task. This creates a practical allocation problem: every token spent on coordination is unavailable to task instructions or evidence when a call is assembled under a fixed context budget. We introduce the Roundtable Context Window Test (RCWT), a controlled protocol for measuring this task-budget displacement effect. RCWT varies coordination content while controlling total budget, position order, task family, and scoring. In the main context-dependent recall task at $W=4096$, three commercial models remain near baseline through moderate overhead and then degrade sharply once residual reference evidence falls to a few hundred tokens. Window-scaling summaries are consistent with a task-specific residual-budget interpretation rather than a fixed percentage threshold, but we treat this as descriptive evidence rather than a universal law. To test whether the fixed-budget cliff persists when task evidence remains intact, we add an intact-task ablation: the full task/reference block is kept present while coordination tokens increase by expanding total prompt length. In that setting, all tested calls return every scored field correctly across GPT-4.1-mini, Claude Haiku 4.5, and Gemini 2.5 Flash up to a 95\\% coordination ratio. This ablation narrows the claim: the main RCWT cliff is best read as task-budget displacement, not as proof that coordination volume alone causes semantic interference in the original open-ended task. RCWT is therefore a measurement primitive for context-allocation budgeting, not a complete theory of multi-agent benefit or session-level coordination.",
       "venue": "arXiv",
-      "published": "2026-07-13T06:03:54Z",
-      "updated": "2026-07-13T06:03:54Z",
-      "url": "http://arxiv.org/abs/2607.11127v1",
-      "pdfUrl": "https://arxiv.org/pdf/2607.11127v1",
+      "published": "2026-07-13T23:31:44Z",
+      "updated": "2026-07-13T23:31:44Z",
+      "url": "http://arxiv.org/abs/2607.12216v1",
+      "pdfUrl": "https://arxiv.org/pdf/2607.12216v1",
       "categories": [
         "cs.CL",
-        "cs.CY"
+        "cs.AI",
+        "cs.MA"
       ],
-      "collectedAt": "2026-07-14T21:16:15.741Z",
-      "firstSeenAt": "2026-07-14T21:16:15.741Z",
-      "lastSeenAt": "2026-07-14T21:16:15.741Z",
+      "collectedAt": "2026-07-15T21:16:08.261Z",
+      "firstSeenAt": "2026-07-15T21:16:08.261Z",
+      "lastSeenAt": "2026-07-15T21:16:08.261Z",
       "collectionType": "daily-latest",
       "matchedQuery": "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)",
       "collectionTypes": [
@@ -398,7 +449,7 @@
       "conferenceYears": [],
       "recommendationTrack": "hardware-primary",
       "recommendationLabel": "硬件体系结构主线",
-      "recommendationScore": 154,
+      "recommendationScore": 151.5,
       "relevanceReason": "命中 AI 处理器、体系结构、量化、训推系统或内存/缓存优化主题",
       "pdfStatus": "remote",
       "workflow": {
@@ -410,14 +461,15 @@
         "pdfStatus": "remote"
       },
       "digest": {
-        "summaryZh": "AI 摘要未生成。原始摘要要点：Organizations and regulators increasingly consult large language models (LLMs) for regulatory-compliance questions, yet a wrong statutory citation can silently ...",
+        "summaryZh": "AI 摘要未生成。原始摘要要点：Multi-agent and memory-augmented LLM systems often place coordination content, shared state, prior discussion, tool outputs, summaries, and role instructions, i...",
         "motivationZh": "命令行启用了 --no-ai",
         "methodZh": "请配置 AI 后重新运行，以生成方法提炼。",
         "experimentsZh": "来源元数据未披露完整实验设置或结果。",
         "affiliationsZh": "未在 DBLP/arXiv 元数据中提供。",
         "tags": [
           "cs.CL",
-          "cs.CY"
+          "cs.AI",
+          "cs.MA"
         ],
         "importance": 3,
         "researchFitZh": "AI harness 尚未完成分析，无法判断与用户研究方向的具体关系。",
@@ -475,143 +527,29 @@
       }
     },
     {
-      "id": "arxiv:2607.11026",
+      "id": "arxiv:2607.12380",
       "source": "arXiv",
-      "title": "Dimensionality in Satisfaction Ratings",
+      "title": "SinAE: A Single-Architecture Flow-Matching Autoencoder for Cross-Domain Atomic Systems",
       "authors": [
-        "Andrew Hong",
-        "Jason Potteiger"
+        "Yuxuan Ren",
+        "Fan Yang",
+        "Jianhua Yao",
+        "Yatao Bian"
       ],
       "authorAffiliations": [],
       "affiliations": [],
-      "abstract": "We used a large language model (GPT-4.1) to annotate the text of about 9,000 support conversations at a global consumer-goods firm, decomposing customer-care satisfaction into component axes (overall, agent, outcome, product, and customer effort), and validated the LLM annotations against the satisfaction ratings customers gave themselves. Four of five axes track self-reported satisfaction closely (overall, agent, and outcome near an unadjusted 0.65; effort -0.54), while product satisfaction is weak against the available proxy. The unadjusted correlation also understates the alignment: the disagreements concentrate in a small, readable tail of divergent sessions rather than in general drift, and the overall correlation rises to 0.811 when only the severe divergences are excluded and to 0.914 when the full divergent tail is excluded. The axes are also highly collinear, and adding them to the overall score does not improve prediction of the customer's rating, the decomposition's value is not incremental prediction but attribution and coverage. And, with greater coverage the picture of the data changes. Read on every contact rather than the few that return a survey, satisfaction is markedly lower than the survey reports (a full-census 2.91 against the surveyed 3.62 on a five-point scale). The promise of decomposed satisfaction as a methodology is the ability to identify more nuanced drivers of customer experience in conversational data.",
+      "abstract": "Small molecules, crystals, and proteins all reduce to atoms in 3D space, yet their generative pipelines remain fragmented across domains, each with its Small molecules, crystals, and proteins all reduce to atoms in 3D space, yet their generative pipelines remain fragmented across domains, each with its own graph, equivariant, or frame-based architecture. Cross-domain training would mitigate per-domain data scarcity, but direct generation in 3D coordinate space cannot easily handle the heterogeneous structural priors of all three domains, and no prior latent autoencoder is simultaneously lossless and architecturally general across all three. We introduce SinAE, a single-architecture flow-matching autoencoder for molecules, crystals, and proteins, with vanilla Transformer encoder and decoder and no equivariant, graph, or domain-specific operators. Rather than requiring the encoder to capture fine-grained geometry, SinAE shifts the reconstruction burden into an iterative flow-matching decoder, achieving near-lossless reconstruction across domains and reducing reconstruction errors by orders of magnitude relative to prior latent baselines. The same per-token latent supports a standard Diffusion Transformer prior that reaches strong performance on molecular, crystal, and protein generation benchmarks. Joint molecule--crystal training strictly improves both domains, providing direct evidence of cross-domain transfer through a shared atomic latent. Code is available at https://github.com/BlueWhaleLab/SinAE .",
       "venue": "arXiv",
-      "published": "2026-07-13T02:45:35Z",
-      "updated": "2026-07-13T02:45:35Z",
-      "url": "http://arxiv.org/abs/2607.11026v1",
-      "pdfUrl": "https://arxiv.org/pdf/2607.11026v1",
-      "categories": [
-        "cs.CL"
-      ],
-      "collectedAt": "2026-07-14T21:16:15.741Z",
-      "firstSeenAt": "2026-07-14T21:16:15.741Z",
-      "lastSeenAt": "2026-07-14T21:16:15.741Z",
-      "collectionType": "daily-latest",
-      "matchedQuery": "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)",
-      "collectionTypes": [
-        "daily-latest"
-      ],
-      "matchedQueries": [
-        "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)"
-      ],
-      "targetThemes": [],
-      "conferenceVenues": [],
-      "conferenceYears": [],
-      "recommendationTrack": "hardware-primary",
-      "recommendationLabel": "硬件体系结构主线",
-      "recommendationScore": 153.25,
-      "relevanceReason": "命中 AI 处理器、体系结构、量化、训推系统或内存/缓存优化主题",
-      "pdfStatus": "remote",
-      "workflow": {
-        "digestStatus": "pending",
-        "emailStatus": "waiting-digest",
-        "digestError": "命令行启用了 --no-ai",
-        "harnessVersion": "paper-reader-v1",
-        "collectStatus": "collected",
-        "pdfStatus": "remote"
-      },
-      "digest": {
-        "summaryZh": "AI 摘要未生成。原始摘要要点：We used a large language model (GPT-4.1) to annotate the text of about 9,000 support conversations at a global consumer-goods firm, decomposing customer-care sa...",
-        "motivationZh": "命令行启用了 --no-ai",
-        "methodZh": "请配置 AI 后重新运行，以生成方法提炼。",
-        "experimentsZh": "来源元数据未披露完整实验设置或结果。",
-        "affiliationsZh": "未在 DBLP/arXiv 元数据中提供。",
-        "tags": [
-          "cs.CL"
-        ],
-        "importance": 3,
-        "researchFitZh": "AI harness 尚未完成分析，无法判断与用户研究方向的具体关系。",
-        "hardwareRelevance": 1,
-        "algorithmRelevance": 1,
-        "systemRelevance": 1,
-        "readPriority": "archive",
-        "whyReadZh": "需要完成 motivation、method 和实验结果分析后再判断是否值得深读。",
-        "limitationsZh": "命令行启用了 --no-ai",
-        "motivationDetail": {
-          "problemZh": "harness 未完成分析。",
-          "gapZh": "harness 未完成分析。",
-          "whyImportantZh": "harness 未完成分析。",
-          "userRelevanceZh": "harness 未完成分析。",
-          "evidence": "not analyzed"
-        },
-        "methodDetail": {
-          "coreIdeaZh": "harness 未完成分析。",
-          "componentsZh": [
-            "未分析"
-          ],
-          "hardwareSystemDetailZh": "harness 未完成分析。",
-          "noveltyZh": "harness 未完成分析。",
-          "evidence": "not analyzed"
-        },
-        "experimentDetail": {
-          "setupZh": "harness 未完成分析。",
-          "baselinesZh": "harness 未完成分析。",
-          "metricsZh": [
-            "未分析"
-          ],
-          "mainResultsZh": "harness 未完成分析。",
-          "limitationsZh": "harness 未完成分析。",
-          "evidence": "not analyzed"
-        },
-        "evidence": {
-          "usedSources": [
-            "metadata"
-          ],
-          "affiliationEvidence": "",
-          "experimentEvidence": "",
-          "missingFields": [
-            "motivation",
-            "method",
-            "experiments"
-          ]
-        },
-        "confidence": {
-          "summary": 0.2,
-          "motivation": 0,
-          "method": 0,
-          "experiments": 0,
-          "affiliations": 0
-        }
-      }
-    },
-    {
-      "id": "arxiv:2607.11126",
-      "source": "arXiv",
-      "title": "ToolAtlas: Learning Once, Reusing Everywhere with Tool-Side Memory",
-      "authors": [
-        "Yue Fang",
-        "Zhibang Yang",
-        "Fangkai Yang",
-        "Xiaoting Qin",
-        "Liqun Li",
-        "Qingwei Lin",
-        "Saravan Rajmohan",
-        "Dongmei Zhang"
-      ],
-      "authorAffiliations": [],
-      "affiliations": [],
-      "abstract": "Large language model (LLM) agents increasingly rely on external tools served by shared providers and accessed by heterogeneous downstream agents. Existing approaches improve tool use on the agent side through parameter updates, prompt refinement, or agent-side memory, making tool knowledge difficult to share and limited to behaviors observed in past tasks. We argue that reusable tool knowledge should instead be maintained by the tool provider. We introduce ToolAtlas, a graph-based framework that builds a persistent provider-side tool memory of tool capabilities, failure boundaries, and cross-tool compositions through execution-verified probing. At inference time, agents query the tool memory via adaptive graph traversal. Across two MCP-based benchmarks spanning eight services, ToolAtlas outperforms existing tool-side optimization and agent-side memory baselines by up to 21.61% in pass@1 and 18.61% in pass@4. The same tool memory also transfers across environment instances and agent frameworks without retraining or task-time exploration, yielding up to 24.16%/16.22% and 17.49%/14.27% relative gains in pass@1/pass@4, respectively. Ablation studies show that these gains arise from combining tool-centered memory organization with capability-guided execution probing. These results establish provider-side tool memory as an effective and reusable paradigm for tool servers. Our code is in: https://github.com/PuppyKnightUniversity/ToolAtlas.",
-      "venue": "arXiv",
-      "published": "2026-07-13T06:01:41Z",
-      "updated": "2026-07-13T06:01:41Z",
-      "url": "http://arxiv.org/abs/2607.11126v1",
-      "pdfUrl": "https://arxiv.org/pdf/2607.11126v1",
+      "published": "2026-07-14T05:53:05Z",
+      "updated": "2026-07-14T05:53:05Z",
+      "url": "http://arxiv.org/abs/2607.12380v1",
+      "pdfUrl": "https://arxiv.org/pdf/2607.12380v1",
       "categories": [
         "cs.LG"
       ],
-      "collectedAt": "2026-07-14T21:16:15.741Z",
-      "firstSeenAt": "2026-07-14T21:16:15.741Z",
-      "lastSeenAt": "2026-07-14T21:16:15.741Z",
+      "collectedAt": "2026-07-15T21:16:08.261Z",
+      "firstSeenAt": "2026-07-15T21:16:08.261Z",
+      "lastSeenAt": "2026-07-15T21:16:08.261Z",
       "collectionType": "daily-latest",
       "matchedQuery": "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)",
       "collectionTypes": [
@@ -625,7 +563,7 @@
       "conferenceYears": [],
       "recommendationTrack": "hardware-primary",
       "recommendationLabel": "硬件体系结构主线",
-      "recommendationScore": 152.5,
+      "recommendationScore": 149.5,
       "relevanceReason": "命中 AI 处理器、体系结构、量化、训推系统或内存/缓存优化主题",
       "pdfStatus": "remote",
       "workflow": {
@@ -637,7 +575,7 @@
         "pdfStatus": "remote"
       },
       "digest": {
-        "summaryZh": "AI 摘要未生成。原始摘要要点：Large language model (LLM) agents increasingly rely on external tools served by shared providers and accessed by heterogeneous downstream agents. Existing appro...",
+        "summaryZh": "AI 摘要未生成。原始摘要要点：Small molecules, crystals, and proteins all reduce to atoms in 3D space, yet their generative pipelines remain fragmented across domains, each with its Small mo...",
         "motivationZh": "命令行启用了 --no-ai",
         "methodZh": "请配置 AI 后重新运行，以生成方法提炼。",
         "experimentsZh": "来源元数据未披露完整实验设置或结果。",
@@ -701,29 +639,30 @@
       }
     },
     {
-      "id": "arxiv:2607.11098",
+      "id": "arxiv:2607.12780",
       "source": "arXiv",
-      "title": "AgentCheck: A Reproduce-Intervene-Mitigate Workbench for LLM Agents over MCP",
+      "title": "When Close Enough Is Not Enough: Autoregressive Drift in Quantum Circuit Synthesis",
       "authors": [
-        "Aritra Mazumder",
-        "Nusrat jahan Lia"
+        "Mehdi Saeedi",
+        "Eddie Richter",
+        "Paul Hartke"
       ],
       "authorAffiliations": [],
       "affiliations": [],
-      "abstract": "Tool-using LLM agents are mostly evaluated assuming all tools work. When a tool times out, returns a week-stale value, or has its description poisoned in deployment, the developer needs a controlled way to reproduce the failure, test a fix, and confirm the fix worked before deployment. We present AgentCheck, an open-source web workbench that turns an MCP server into an intervention surface. AgentCheck runs an agent against its real tools and records every tool response, then re-runs the agent with the response perturbed by a fault (12 types) injector. Matching tool calls are replayed from cache, and later tool calls go live after the agent diverges. This yields a reproduce-intervene-confirm loop: the developer toggles a mitigation, re-runs against the identical fault, and sees if the failure goes away. Scoring has two parts: deterministic pass/fail rules, plus an LLM judge for interpretive labels, validated against human annotations. Across five agents, the best passes 105/120 scenarios and the weakest only 77. The failures are usually silent, confident use of incorrect tool outputs rather than crashes. On the weakest agent, a retry mitigation raises success on timeout error faults from as few as 30% of cases to 100%, whereas stale-data faults remain near 3-4 of 10 regardless of the mitigation. AgentCheck makes these failure modes reproducible, comparable, and verifiable before deployment.",
+      "abstract": "Quantum circuit optimization for fault-tolerant computing requires exact functional equivalence while minimizing expensive non-Clifford resources such as T gates. We study this problem using a compact 44.8M-parameter encoder-decoder transformer with structured circuit tokenization, evaluating on parameterized circuits (2-6 qubits) and Clifford+T circuits (3-6 qubits). On parameterized circuits, a hybrid approach -- structure from the transformer, angles from classical optimization -- achieves median fidelity 1.000 on 3-6 qubit circuits. On Clifford+T circuits, where all gates are discrete and no post-processing is possible, the model learns valid syntax and accurate T-Count statistics, yet exact equivalence degrades sharply with target length -- from 88% on circuits with <=9 gates to near zero beyond 26 gates. We trace this failure to autoregressive drift: early-token divergence cascading irrecoverably through left-to-right decoding. Two levers partially mitigate the drift: inference-time strategies that generate multiple candidates and select via equivalence verification raise exact-match rates from 7% to 22.5%, while scaling training data by 2.5x pushes them to 39.5%. Yet the degradation with target length persists -- even with more data, exact equivalence drops from 94% on short circuits to under 4% beyond 26 gates. The contrast between settings is our central finding: when approximate outputs can be rescued by post-processing, the transformer succeeds; when exact discrete correctness is required, autoregressive drift limits reliability, with both inference-time search and data scaling as effective levers while training-side fine-tuning and model-level diversification are not.",
       "venue": "arXiv",
-      "published": "2026-07-13T05:14:12Z",
-      "updated": "2026-07-13T05:14:12Z",
-      "url": "http://arxiv.org/abs/2607.11098v1",
-      "pdfUrl": "https://arxiv.org/pdf/2607.11098v1",
+      "published": "2026-07-14T13:56:39Z",
+      "updated": "2026-07-14T13:56:39Z",
+      "url": "http://arxiv.org/abs/2607.12780v1",
+      "pdfUrl": "https://arxiv.org/pdf/2607.12780v1",
       "categories": [
-        "cs.SE",
+        "quant-ph",
         "cs.AI",
-        "cs.CL"
+        "cs.ET"
       ],
-      "collectedAt": "2026-07-14T21:16:15.741Z",
-      "firstSeenAt": "2026-07-14T21:16:15.741Z",
-      "lastSeenAt": "2026-07-14T21:16:15.741Z",
+      "collectedAt": "2026-07-15T21:16:08.261Z",
+      "firstSeenAt": "2026-07-15T21:16:08.261Z",
+      "lastSeenAt": "2026-07-15T21:16:08.261Z",
       "collectionType": "daily-latest",
       "matchedQuery": "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)",
       "collectionTypes": [
@@ -737,7 +676,7 @@
       "conferenceYears": [],
       "recommendationTrack": "hardware-primary",
       "recommendationLabel": "硬件体系结构主线",
-      "recommendationScore": 151.5,
+      "recommendationScore": 149,
       "relevanceReason": "命中 AI 处理器、体系结构、量化、训推系统或内存/缓存优化主题",
       "pdfStatus": "remote",
       "workflow": {
@@ -749,15 +688,15 @@
         "pdfStatus": "remote"
       },
       "digest": {
-        "summaryZh": "AI 摘要未生成。原始摘要要点：Tool-using LLM agents are mostly evaluated assuming all tools work. When a tool times out, returns a week-stale value, or has its description poisoned in deploy...",
+        "summaryZh": "AI 摘要未生成。原始摘要要点：Quantum circuit optimization for fault-tolerant computing requires exact functional equivalence while minimizing expensive non-Clifford resources such as T gate...",
         "motivationZh": "命令行启用了 --no-ai",
         "methodZh": "请配置 AI 后重新运行，以生成方法提炼。",
         "experimentsZh": "来源元数据未披露完整实验设置或结果。",
         "affiliationsZh": "未在 DBLP/arXiv 元数据中提供。",
         "tags": [
-          "cs.SE",
+          "quant-ph",
           "cs.AI",
-          "cs.CL"
+          "cs.ET"
         ],
         "importance": 3,
         "researchFitZh": "AI harness 尚未完成分析，无法判断与用户研究方向的具体关系。",
@@ -815,34 +754,254 @@
       }
     },
     {
-      "id": "arxiv:2607.11862",
+      "id": "arxiv:2607.12969",
       "source": "arXiv",
-      "title": "Evidence-Backed Video Question Answering",
+      "title": "Low-Precision Rank Compensation for Matrices and Tensor Trains",
       "authors": [
-        "Shijie Wang",
-        "Honglu Zhou",
-        "Ziyang Wang",
-        "Ran Xu",
-        "Caiming Xiong",
-        "Silvio Savarese",
-        "Chen Sun",
-        "Juan Carlos Niebles"
+        "Ibrahim El Mountasser",
+        "Khalide Jbilou"
       ],
       "authorAffiliations": [],
       "affiliations": [],
-      "abstract": "Current Video Large Language Models (Video LLMs) excel in question answering (QA) but largely operate as black boxes, providing textual answers without verifiable visual grounding. Existing explainability efforts rely on textual rationales or sparse bounding boxes, which struggle to capture complex video dynamics such as occlusions and non-rigid deformations. We propose Evidence-Backed Video Question Answering (E-VQA), a novel task requiring models to jointly output a semantic answer and precise spatio-temporal evidence: temporal segments and dense, tracked object segmentation masklets. To support this, we introduce ST-Evidence, the first human-verified benchmark for both discriminative and generative pixel-level grounding. Evaluations of state-of-the-art models reveal a critical decoupling between QA accuracy and true visual perception that scaling alone fails to bridge. To address this, we develop scalable, automated generation pipelines to create ST-Evidence-Instruct, a 160k-scale dataset bridging high-level reasoning with fine-grained grounding. Fine-tuning grounded Video LLMs on this data yields substantial gains over the corresponding size-matched UniPixel baselines (e.g., +27.2 t-mean and +13.8 J&F on a 7B model), establishing a robust baseline for explainable, evidence-backed video understanding. Code and data are available at https://github.com/SalesforceAIResearch/EVQA.",
+      "abstract": "Lower numerical precision reduces storage and memory traffic but raises the perturbation floor. We study rank compensation: reinvesting saved memory in a larger approximation rank. For matrices, the singular-value error identity yields a directly testable sufficient condition requiring the additional singular component to offset the perturbation from storing the rank-augmented approximation in lower precision. On ten SuiteSparse matrices, all 100 truncation-dominated configurations (50 FP32 and 50 FP16) are certified non-increases and strict accuracy wins, with mean error ratio $0.963$ and storage ratios $58.8\\%$ and $29.4\\%$ relative to the FP64 baseline. FP16 failures occur only in tail-rank stress tests near the perturbation floor. At the largest resident matrix-application batch, compensated FP32 and FP16 achieve geometric-mean A100 speedups of $1.28\\times$ and $2.12\\times$; neither accelerates the smallest batch. For Tensor-Train (TT) approximation, we give a conditional a posteriori extension based on the measured truncation gain and rounded-core perturbation. Across three-way and six-way synthetic tests, FP32 and FP16 achieve combined accuracy-memory wins in 10 of 20 and 14 of 20 trials. On public hyperspectral tensors and FROSTT top-active subtensors, the corresponding counts are 44 of 60 and 54 of 60; four FP16 Salinas-A tail-stress cases fail. No certified TT case exceeds the FP64 error beyond numerical tolerance. Reconstruction of six public tensors yields geometric-mean compensated speedups of $1.38\\times$ (FP32) and $1.94\\times$ (FP16). Timings cover resident downstream kernels, not factorization, transfers, or end-to-end acceleration.",
       "venue": "arXiv",
-      "published": "2026-07-13T17:49:10Z",
-      "updated": "2026-07-13T17:49:10Z",
-      "url": "http://arxiv.org/abs/2607.11862v1",
-      "pdfUrl": "https://arxiv.org/pdf/2607.11862v1",
+      "published": "2026-07-14T17:11:16Z",
+      "updated": "2026-07-14T17:11:16Z",
+      "url": "http://arxiv.org/abs/2607.12969v1",
+      "pdfUrl": "https://arxiv.org/pdf/2607.12969v1",
       "categories": [
-        "cs.CV",
-        "cs.AI"
+        "math.NA"
       ],
-      "collectedAt": "2026-07-14T21:16:17.606Z",
-      "firstSeenAt": "2026-07-14T21:16:17.606Z",
-      "lastSeenAt": "2026-07-14T21:16:17.606Z",
+      "collectedAt": "2026-07-15T21:16:08.261Z",
+      "firstSeenAt": "2026-07-15T21:16:08.261Z",
+      "lastSeenAt": "2026-07-15T21:16:08.261Z",
+      "collectionType": "daily-latest",
+      "matchedQuery": "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)",
+      "collectionTypes": [
+        "daily-latest"
+      ],
+      "matchedQueries": [
+        "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)"
+      ],
+      "targetThemes": [],
+      "conferenceVenues": [],
+      "conferenceYears": [],
+      "recommendationTrack": "hardware-primary",
+      "recommendationLabel": "硬件体系结构主线",
+      "recommendationScore": 147,
+      "relevanceReason": "命中 AI 处理器、体系结构、量化、训推系统或内存/缓存优化主题",
+      "pdfStatus": "remote",
+      "workflow": {
+        "digestStatus": "pending",
+        "emailStatus": "waiting-digest",
+        "digestError": "命令行启用了 --no-ai",
+        "harnessVersion": "paper-reader-v1",
+        "collectStatus": "collected",
+        "pdfStatus": "remote"
+      },
+      "digest": {
+        "summaryZh": "AI 摘要未生成。原始摘要要点：Lower numerical precision reduces storage and memory traffic but raises the perturbation floor. We study rank compensation: reinvesting saved memory in a larger...",
+        "motivationZh": "命令行启用了 --no-ai",
+        "methodZh": "请配置 AI 后重新运行，以生成方法提炼。",
+        "experimentsZh": "来源元数据未披露完整实验设置或结果。",
+        "affiliationsZh": "未在 DBLP/arXiv 元数据中提供。",
+        "tags": [
+          "math.NA"
+        ],
+        "importance": 3,
+        "researchFitZh": "AI harness 尚未完成分析，无法判断与用户研究方向的具体关系。",
+        "hardwareRelevance": 1,
+        "algorithmRelevance": 1,
+        "systemRelevance": 1,
+        "readPriority": "archive",
+        "whyReadZh": "需要完成 motivation、method 和实验结果分析后再判断是否值得深读。",
+        "limitationsZh": "命令行启用了 --no-ai",
+        "motivationDetail": {
+          "problemZh": "harness 未完成分析。",
+          "gapZh": "harness 未完成分析。",
+          "whyImportantZh": "harness 未完成分析。",
+          "userRelevanceZh": "harness 未完成分析。",
+          "evidence": "not analyzed"
+        },
+        "methodDetail": {
+          "coreIdeaZh": "harness 未完成分析。",
+          "componentsZh": [
+            "未分析"
+          ],
+          "hardwareSystemDetailZh": "harness 未完成分析。",
+          "noveltyZh": "harness 未完成分析。",
+          "evidence": "not analyzed"
+        },
+        "experimentDetail": {
+          "setupZh": "harness 未完成分析。",
+          "baselinesZh": "harness 未完成分析。",
+          "metricsZh": [
+            "未分析"
+          ],
+          "mainResultsZh": "harness 未完成分析。",
+          "limitationsZh": "harness 未完成分析。",
+          "evidence": "not analyzed"
+        },
+        "evidence": {
+          "usedSources": [
+            "metadata"
+          ],
+          "affiliationEvidence": "",
+          "experimentEvidence": "",
+          "missingFields": [
+            "motivation",
+            "method",
+            "experiments"
+          ]
+        },
+        "confidence": {
+          "summary": 0.2,
+          "motivation": 0,
+          "method": 0,
+          "experiments": 0,
+          "affiliations": 0
+        }
+      }
+    },
+    {
+      "id": "arxiv:2607.12992",
+      "source": "arXiv",
+      "title": "ChunkFlow: Towards Continuity-Consistent Chunked Policy Learning",
+      "authors": [
+        "Zhao Yang",
+        "Yinan Shi",
+        "Mingyuan Yao",
+        "Wenyao Xue",
+        "Yawei Jueluo",
+        "Longjun Liu"
+      ],
+      "authorAffiliations": [],
+      "affiliations": [],
+      "abstract": "Vision-language action (VLA) models increasingly adopt chunked action heads to satisfy real-time constraints; however, this introduces boundary jitter: overlapping regions between consecutive chunks often yield inconsistent predictions, degrading temporal coherence and the task success rate. Existing methods, such as inference-time blending, merely reweight mismatched proposals without correcting underlying errors, leading to residual accumulation under biased or noisy histories. We propose ChunkFlow, a seam-aware training-and-execution framework for chunked policies that aligns chunk structure with boundary execution. It partitions each chunk into frozen, editable, and future zones, applies deterministic overlap blending at execution, and trains raw predictions with seam and first- and second-order continuity losses. History corruption and scheduled sampling improve robustness to executed-history errors, while an AWAC fine-tuning stage adapts the policy without removing these structural regularizers. Under mild smoothness assumptions, pre-blending seam discrepancies provably decay with increasing overlap. Experiments on CALVIN, LIBERO, and real robots show an improved success-stability trade-off with low-latency inference. Project page: https://cytoderm-ai.github.io/chunkflow.",
+      "venue": "arXiv",
+      "published": "2026-07-14T17:43:25Z",
+      "updated": "2026-07-14T17:43:25Z",
+      "url": "http://arxiv.org/abs/2607.12992v1",
+      "pdfUrl": "https://arxiv.org/pdf/2607.12992v1",
+      "categories": [
+        "cs.RO"
+      ],
+      "collectedAt": "2026-07-15T21:16:09.989Z",
+      "firstSeenAt": "2026-07-15T21:16:09.989Z",
+      "lastSeenAt": "2026-07-15T21:16:09.989Z",
+      "collectionType": "daily-latest",
+      "matchedQuery": "(all:agent OR all:agents OR all:agentic OR all:reasoning OR all:post-training OR all:alignment OR all:multimodal OR all:world-model) AND (all:LLM OR all:foundation OR all:language)",
+      "collectionTypes": [
+        "daily-latest"
+      ],
+      "matchedQueries": [
+        "(all:agent OR all:agents OR all:agentic OR all:reasoning OR all:post-training OR all:alignment OR all:multimodal OR all:world-model) AND (all:LLM OR all:foundation OR all:language)"
+      ],
+      "targetThemes": [],
+      "conferenceVenues": [],
+      "conferenceYears": [],
+      "recommendationTrack": "algorithm-trend",
+      "recommendationLabel": "算法趋势观察",
+      "recommendationScore": 38.3,
+      "relevanceReason": "命中 LLM/Agent/多模态/后训练等算法趋势主题",
+      "pdfStatus": "remote",
+      "workflow": {
+        "digestStatus": "pending",
+        "emailStatus": "waiting-digest",
+        "digestError": "命令行启用了 --no-ai",
+        "harnessVersion": "paper-reader-v1",
+        "collectStatus": "collected",
+        "pdfStatus": "remote"
+      },
+      "digest": {
+        "summaryZh": "AI 摘要未生成。原始摘要要点：Vision-language action (VLA) models increasingly adopt chunked action heads to satisfy real-time constraints; however, this introduces boundary jitter: overlapp...",
+        "motivationZh": "命令行启用了 --no-ai",
+        "methodZh": "请配置 AI 后重新运行，以生成方法提炼。",
+        "experimentsZh": "来源元数据未披露完整实验设置或结果。",
+        "affiliationsZh": "未在 DBLP/arXiv 元数据中提供。",
+        "tags": [
+          "cs.RO"
+        ],
+        "importance": 3,
+        "researchFitZh": "AI harness 尚未完成分析，无法判断与用户研究方向的具体关系。",
+        "hardwareRelevance": 1,
+        "algorithmRelevance": 1,
+        "systemRelevance": 1,
+        "readPriority": "archive",
+        "whyReadZh": "需要完成 motivation、method 和实验结果分析后再判断是否值得深读。",
+        "limitationsZh": "命令行启用了 --no-ai",
+        "motivationDetail": {
+          "problemZh": "harness 未完成分析。",
+          "gapZh": "harness 未完成分析。",
+          "whyImportantZh": "harness 未完成分析。",
+          "userRelevanceZh": "harness 未完成分析。",
+          "evidence": "not analyzed"
+        },
+        "methodDetail": {
+          "coreIdeaZh": "harness 未完成分析。",
+          "componentsZh": [
+            "未分析"
+          ],
+          "hardwareSystemDetailZh": "harness 未完成分析。",
+          "noveltyZh": "harness 未完成分析。",
+          "evidence": "not analyzed"
+        },
+        "experimentDetail": {
+          "setupZh": "harness 未完成分析。",
+          "baselinesZh": "harness 未完成分析。",
+          "metricsZh": [
+            "未分析"
+          ],
+          "mainResultsZh": "harness 未完成分析。",
+          "limitationsZh": "harness 未完成分析。",
+          "evidence": "not analyzed"
+        },
+        "evidence": {
+          "usedSources": [
+            "metadata"
+          ],
+          "affiliationEvidence": "",
+          "experimentEvidence": "",
+          "missingFields": [
+            "motivation",
+            "method",
+            "experiments"
+          ]
+        },
+        "confidence": {
+          "summary": 0.2,
+          "motivation": 0,
+          "method": 0,
+          "experiments": 0,
+          "affiliations": 0
+        }
+      }
+    },
+    {
+      "id": "arxiv:2607.12982",
+      "source": "arXiv",
+      "title": "FormalAnalyticGeo: A Neural-Symbolic Based Framework for Multimodal Analytic Geometry Problem Generation",
+      "authors": [
+        "Ruoran Xu",
+        "Wending Gao",
+        "Qiufeng Wang"
+      ],
+      "authorAffiliations": [],
+      "affiliations": [],
+      "abstract": "Math reasoning has achieved significant progress with the rapid advancement of Multimodal Large Language Models (MLLMs), however analytic geometry remains largely underexplored, primarily due to the scarcity of annotated samples. Existing diagram generation approaches struggle with analytic geometry: template methods cannot handle constraint-driven layouts, and generative models lack the geometric precision to render annotated conic curves correctly. We present FormalAnalyticGeo, a scalable framework for fully automatic generation of multimodal analytic geometry problems. Leveraging the rigor of formal languages, we design the framework around CDL (Condition Description Language), a formal intermediate representation that bridges free-form problem text with precise diagram rendering via a Signed Distance Field (SDF) engine. The framework employs four specialized LLM components in sequence: a Generator that produces diverse analytic geometry problems, a Formalizer that converts each problem into CDL for SDF-based rendering, a Measurer that extracts ground-truth answers through vision-based measurement on the rendered diagrams, and a Quality Verifier that checks outputs at three stages. Structured feedback from the Quality Verifier drives automatic retry, forming a closed loop that eliminates any need for human annotation. Applying FormalAnalyticGeo at scale yields AnalyticGeo7K, a dataset of over 7K verified multimodal problems, each with aligned text, diagram, formal annotation, and ground truth.Experiments show that the generated problems achieve a median ground-truth relative error of 0.70\\%, with 82.3\\% of answers falling within 5\\% of the exact symbolic solution. Our framework and dataset will be publicly released.",
+      "venue": "arXiv",
+      "published": "2026-07-14T17:24:57Z",
+      "updated": "2026-07-14T17:24:57Z",
+      "url": "http://arxiv.org/abs/2607.12982v1",
+      "pdfUrl": "https://arxiv.org/pdf/2607.12982v1",
+      "categories": [
+        "cs.AI",
+        "cs.MA",
+        "cs.SC"
+      ],
+      "collectedAt": "2026-07-15T21:16:09.989Z",
+      "firstSeenAt": "2026-07-15T21:16:09.989Z",
+      "lastSeenAt": "2026-07-15T21:16:09.989Z",
       "collectionType": "daily-latest",
       "matchedQuery": "(all:agent OR all:agents OR all:agentic OR all:reasoning OR all:post-training OR all:alignment OR all:multimodal OR all:world-model) AND (all:LLM OR all:foundation OR all:language)",
       "collectionTypes": [
@@ -868,135 +1027,15 @@
         "pdfStatus": "remote"
       },
       "digest": {
-        "summaryZh": "AI 摘要未生成。原始摘要要点：Current Video Large Language Models (Video LLMs) excel in question answering (QA) but largely operate as black boxes, providing textual answers without verifiab...",
+        "summaryZh": "AI 摘要未生成。原始摘要要点：Math reasoning has achieved significant progress with the rapid advancement of Multimodal Large Language Models (MLLMs), however analytic geometry remains large...",
         "motivationZh": "命令行启用了 --no-ai",
         "methodZh": "请配置 AI 后重新运行，以生成方法提炼。",
         "experimentsZh": "来源元数据未披露完整实验设置或结果。",
         "affiliationsZh": "未在 DBLP/arXiv 元数据中提供。",
         "tags": [
-          "cs.CV",
-          "cs.AI"
-        ],
-        "importance": 3,
-        "researchFitZh": "AI harness 尚未完成分析，无法判断与用户研究方向的具体关系。",
-        "hardwareRelevance": 1,
-        "algorithmRelevance": 1,
-        "systemRelevance": 1,
-        "readPriority": "archive",
-        "whyReadZh": "需要完成 motivation、method 和实验结果分析后再判断是否值得深读。",
-        "limitationsZh": "命令行启用了 --no-ai",
-        "motivationDetail": {
-          "problemZh": "harness 未完成分析。",
-          "gapZh": "harness 未完成分析。",
-          "whyImportantZh": "harness 未完成分析。",
-          "userRelevanceZh": "harness 未完成分析。",
-          "evidence": "not analyzed"
-        },
-        "methodDetail": {
-          "coreIdeaZh": "harness 未完成分析。",
-          "componentsZh": [
-            "未分析"
-          ],
-          "hardwareSystemDetailZh": "harness 未完成分析。",
-          "noveltyZh": "harness 未完成分析。",
-          "evidence": "not analyzed"
-        },
-        "experimentDetail": {
-          "setupZh": "harness 未完成分析。",
-          "baselinesZh": "harness 未完成分析。",
-          "metricsZh": [
-            "未分析"
-          ],
-          "mainResultsZh": "harness 未完成分析。",
-          "limitationsZh": "harness 未完成分析。",
-          "evidence": "not analyzed"
-        },
-        "evidence": {
-          "usedSources": [
-            "metadata"
-          ],
-          "affiliationEvidence": "",
-          "experimentEvidence": "",
-          "missingFields": [
-            "motivation",
-            "method",
-            "experiments"
-          ]
-        },
-        "confidence": {
-          "summary": 0.2,
-          "motivation": 0,
-          "method": 0,
-          "experiments": 0,
-          "affiliations": 0
-        }
-      }
-    },
-    {
-      "id": "arxiv:2607.11849",
-      "source": "arXiv",
-      "title": "AdvancedMathBench: A Benchmark Suite for Advanced Mathematical Proof Generation and Verification",
-      "authors": [
-        "Lingkai Kong",
-        "Zijian Wu",
-        "Yuzhe Gu",
-        "Haiteng Zhao",
-        "Wenyong Huang",
-        "Shuang Sun",
-        "Zhicheng Xiong",
-        "Xiaotian Zhang",
-        "Shuya Zhao",
-        "Yan Wang",
-        "Disheng Xu",
-        "Wenwei Zhang",
-        "Kai Chen"
-      ],
-      "authorAffiliations": [],
-      "affiliations": [],
-      "abstract": "Large language models (LLMs) have achieved remarkable performance on high-school and olympiad-style mathematics, yet their capabilities on advanced mathematics remain poorly understood. Existing benchmarks, however, fall short in both scope and evaluation granularity: they provide limited disciplinary coverage and often rely on final-answer correctness or coarse judgments, leaving the validity of the reasoning process inadequately assessed. To bridge this gap, we introduce AdvancedMathBench, a benchmark suite designed to evaluate advanced mathematical reasoning capabilities. Its core proof-generation benchmark, ProverBench, contains 296 problems spanning undergraduate and doctoral qualifying-exam levels. To provide reliable evaluation of the proofs, we develop a dedicated automatic verification pipeline trained on large-scale expert annotations to produce both correctness verdicts and fine-grained assessments of proof errors, which exhibits strong agreement with human experts on held-out proof trajectories. We further introduce VerifierBench, consisting of 888 model-generated proof trajectories paired with expert ground truth, to evaluate whether models can correctly judge proof validity and provide sound verification rationales. Experiments show that AdvancedMathBench remains challenging for frontier models. On proof generation, the best-performing model, GPT-5.5-xhigh, achieves only 75.8 and 66.1 on the UGD and QE splits, respectively, indicating substantial room for improvement on advanced mathematical proof construction. On proof verification, the best model attains a Balanced F1 of only 65.1, and models generally exhibit low true negative rates, suggesting that critical error detection remains a major bottleneck.",
-      "venue": "arXiv",
-      "published": "2026-07-13T17:38:22Z",
-      "updated": "2026-07-13T17:38:22Z",
-      "url": "http://arxiv.org/abs/2607.11849v1",
-      "pdfUrl": "https://arxiv.org/pdf/2607.11849v1",
-      "categories": [
-        "cs.CL"
-      ],
-      "collectedAt": "2026-07-14T21:16:17.606Z",
-      "firstSeenAt": "2026-07-14T21:16:17.606Z",
-      "lastSeenAt": "2026-07-14T21:16:17.606Z",
-      "collectionType": "daily-latest",
-      "matchedQuery": "(all:agent OR all:agents OR all:agentic OR all:reasoning OR all:post-training OR all:alignment OR all:multimodal OR all:world-model) AND (all:LLM OR all:foundation OR all:language)",
-      "collectionTypes": [
-        "daily-latest"
-      ],
-      "matchedQueries": [
-        "(all:agent OR all:agents OR all:agentic OR all:reasoning OR all:post-training OR all:alignment OR all:multimodal OR all:world-model) AND (all:LLM OR all:foundation OR all:language)"
-      ],
-      "targetThemes": [],
-      "conferenceVenues": [],
-      "conferenceYears": [],
-      "recommendationTrack": "algorithm-trend",
-      "recommendationLabel": "算法趋势观察",
-      "recommendationScore": 37.2,
-      "relevanceReason": "命中 LLM/Agent/多模态/后训练等算法趋势主题",
-      "pdfStatus": "remote",
-      "workflow": {
-        "digestStatus": "pending",
-        "emailStatus": "waiting-digest",
-        "digestError": "命令行启用了 --no-ai",
-        "harnessVersion": "paper-reader-v1",
-        "collectStatus": "collected",
-        "pdfStatus": "remote"
-      },
-      "digest": {
-        "summaryZh": "AI 摘要未生成。原始摘要要点：Large language models (LLMs) have achieved remarkable performance on high-school and olympiad-style mathematics, yet their capabilities on advanced mathematics ...",
-        "motivationZh": "命令行启用了 --no-ai",
-        "methodZh": "请配置 AI 后重新运行，以生成方法提炼。",
-        "experimentsZh": "来源元数据未披露完整实验设置或结果。",
-        "affiliationsZh": "未在 DBLP/arXiv 元数据中提供。",
-        "tags": [
-          "cs.CL"
+          "cs.AI",
+          "cs.MA",
+          "cs.SC"
         ],
         "importance": 3,
         "researchFitZh": "AI harness 尚未完成分析，无法判断与用户研究方向的具体关系。",
