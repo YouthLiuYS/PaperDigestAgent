@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-08-02T21:16:41.746Z",
-  "digestDate": "2026-08-03",
+  "generatedAt": "2026-08-03T21:35:41.793Z",
+  "digestDate": "2026-08-04",
   "kind": "daily-new",
   "timezone": "Asia/Shanghai",
   "siteUrl": "https://YouthLiuYS.github.io/PaperDigestAgent/",
@@ -126,7 +126,7 @@
     "dailyCandidates": 8,
     "conferenceCandidates": 0,
     "backfillCandidates": 0,
-    "rawCandidates": 52,
+    "rawCandidates": 60,
     "newlyAdded": 8,
     "pendingDigest": 8,
     "pendingEmail": 0,
@@ -141,145 +141,32 @@
   },
   "papers": [
     {
-      "id": "arxiv:2607.28144",
+      "id": "arxiv:2607.29575",
       "source": "arXiv",
-      "title": "ReGenVC: End-to-End Real-Time Generative Video Coding at Ultra-Low Bitrate",
+      "title": "SLIM: Saturation-Aware Lightweight Performance Modeling for LLM Serving",
       "authors": [
-        "Zheyuan Zhang",
-        "Johnson Wu"
+        "Pol G. Recasens",
+        "Ferran Agullo",
+        "Yue Zhu",
+        "Chen Wang",
+        "Jordi Torres",
+        "Josep Ll. Berral"
       ],
       "authorAffiliations": [],
       "affiliations": [],
-      "abstract": "We present ReGenVC, an end-to-end generative video codec that compresses talking-head video to an ultra-low bitrate and decodes it in real time. The encoder reduces a source clip to a compact bitstream -- a neurally compressed first frame, per-frame pose keypoints, and metadata -- totaling about 26 kB for a 77-frame sequence. The decoder is a four-step distilled diffusion transformer that reconstructs the video conditioned on the transmitted pose and reference frame. Compared with x264/x265, ReGenVC reduces the bitrate to roughly one tenth of that required by traditional codecs (about 26 kB vs. 250--280 kB for essentially artifact-free reconstruction); at a matched ultra-low bitrate, conventional codecs collapse into blocking artifacts while ReGenVC stays sharp by exploiting a strong generative prior. The central obstacle to deploying such a codec is decoder latency: multi-step sampling with transformer and VAE components is too slow for interactive use. We make the decoder real-time through four-step distillation and three model-preserving system techniques: (i) eight-GPU unified sequence parallelism (Ulysses & Ring), (ii) a spatially-split VAE, and (iii) a three-stage overlapped pipeline; an analytical timing model characterizes the real-time feasibility region. On an 8-GPU node, the system sustains 24 fps output (972 ms per 25-frame window, within the 1000 ms budget), enabling a live browser stream without observed frame underruns. A hybrid CPU-GPU deployment further runs the encoder on the CPU at 24 fps and offloads the decoder-side one-shot conditioning encoders to the CPU, reducing the per-GPU memory peak from 21.1 GB to about 7.7 GB. To our knowledge, ReGenVC is the first end-to-end generative video codec to combine ultra-low-bitrate encoding with real-time decoding on an 8-GPU system.",
+      "abstract": "Large language model (LLM) serving commonly increases batch size to improve throughput, but performance eventually reaches a deployment-dependent plateau beyond which larger batches provide marginal gains while increasing latency and GPU memory consumption. Previous studies have attributed this behavior to HBM/DRAM bandwidth limitations, but the underlying causes have primarily been supported by conceptual arguments or high-level performance observations. As our first contribution, we present a detailed GPU characterization using hardware profiling techniques, demonstrating that throughput saturation originates in the attention kernels during the decode phase. Specifically, we show that their nearly constant arithmetic intensity as active-context lengths increases -not merely larger batch sizes- drives DRAM-bandwidth saturation, while the achieved compute throughput remains far below the hardware limit. Building on this analysis, we present the Batching Configuration Advisor (BCA), which selects the highest-throughput batching configuration satisfying a target latency constraint and identifies up to 55 GB of GPU memory allocation that can be avoided for the evaluated OPT models with minimal throughput loss. To enable these recommendations, we introduce SLIM (Saturation-Aware Lightweight Performance Model), a semi-analytical model that predicts LLM inference throughput and latency from analytical formulations of Transformer computation and memory traffic. Across the evaluated scenarios, SLIM outperforms representative performance-modeling baselines while successfully generalizing to previously unseen operating conditions.",
       "venue": "arXiv",
-      "published": "2026-07-30T12:52:51Z",
-      "updated": "2026-07-30T12:52:51Z",
-      "url": "http://arxiv.org/abs/2607.28144v1",
-      "pdfUrl": "https://arxiv.org/pdf/2607.28144v1",
+      "published": "2026-07-31T16:02:31Z",
+      "updated": "2026-07-31T16:02:31Z",
+      "url": "http://arxiv.org/abs/2607.29575v1",
+      "pdfUrl": "https://arxiv.org/pdf/2607.29575v1",
       "categories": [
-        "eess.IV",
-        "cs.CV"
+        "cs.DC",
+        "cs.PF"
       ],
-      "collectedAt": "2026-08-02T21:11:23.683Z",
-      "firstSeenAt": "2026-08-02T21:11:23.683Z",
-      "lastSeenAt": "2026-08-02T21:11:23.683Z",
-      "collectionType": "daily-latest",
-      "matchedQuery": "(all:prefill OR all:decoding OR all:KV OR all:cache OR all:attention) AND (all:accelerator OR all:kernel OR all:compiler OR all:serving OR all:memory) AND (all:LLM OR all:transformer)",
-      "collectionTypes": [
-        "daily-latest"
-      ],
-      "matchedQueries": [
-        "(all:prefill OR all:decoding OR all:KV OR all:cache OR all:attention) AND (all:accelerator OR all:kernel OR all:compiler OR all:serving OR all:memory) AND (all:LLM OR all:transformer)",
-        "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)"
-      ],
-      "targetThemes": [],
-      "conferenceVenues": [],
-      "conferenceYears": [],
-      "digest": {
-        "summaryZh": "AI 摘要未生成。原始摘要要点：We present ReGenVC, an end-to-end generative video codec that compresses talking-head video to an ultra-low bitrate and decodes it in real time. The encoder red...",
-        "motivationZh": "命令行启用了 --no-ai",
-        "methodZh": "请配置 AI 后重新运行，以生成方法提炼。",
-        "experimentsZh": "来源元数据未披露完整实验设置或结果。",
-        "affiliationsZh": "未在 DBLP/arXiv 元数据中提供。",
-        "tags": [
-          "eess.IV",
-          "cs.CV"
-        ],
-        "importance": 3,
-        "researchFitZh": "AI harness 尚未完成分析，无法判断与用户研究方向的具体关系。",
-        "hardwareRelevance": 1,
-        "algorithmRelevance": 1,
-        "systemRelevance": 1,
-        "readPriority": "archive",
-        "whyReadZh": "需要完成 motivation、method 和实验结果分析后再判断是否值得深读。",
-        "limitationsZh": "命令行启用了 --no-ai",
-        "motivationDetail": {
-          "problemZh": "harness 未完成分析。",
-          "gapZh": "harness 未完成分析。",
-          "whyImportantZh": "harness 未完成分析。",
-          "userRelevanceZh": "harness 未完成分析。",
-          "evidence": "not analyzed"
-        },
-        "methodDetail": {
-          "coreIdeaZh": "harness 未完成分析。",
-          "componentsZh": [
-            "未分析"
-          ],
-          "hardwareSystemDetailZh": "harness 未完成分析。",
-          "noveltyZh": "harness 未完成分析。",
-          "evidence": "not analyzed"
-        },
-        "experimentDetail": {
-          "setupZh": "harness 未完成分析。",
-          "baselinesZh": "harness 未完成分析。",
-          "metricsZh": [
-            "未分析"
-          ],
-          "mainResultsZh": "harness 未完成分析。",
-          "limitationsZh": "harness 未完成分析。",
-          "evidence": "not analyzed"
-        },
-        "evidence": {
-          "usedSources": [
-            "metadata"
-          ],
-          "affiliationEvidence": "",
-          "experimentEvidence": "",
-          "missingFields": [
-            "motivation",
-            "method",
-            "experiments"
-          ]
-        },
-        "confidence": {
-          "summary": 0.2,
-          "motivation": 0,
-          "method": 0,
-          "experiments": 0,
-          "affiliations": 0
-        }
-      },
-      "recommendationTrack": "hardware-primary",
-      "recommendationLabel": "硬件体系结构主线",
-      "recommendationScore": 195.5,
-      "relevanceReason": "命中 AI 处理器、体系结构、量化、训推系统或内存/缓存优化主题",
-      "pdfStatus": "remote",
-      "workflow": {
-        "digestStatus": "pending",
-        "emailStatus": "waiting-digest",
-        "digestError": "命令行启用了 --no-ai",
-        "harnessVersion": "paper-reader-v1",
-        "collectStatus": "collected",
-        "pdfStatus": "remote"
-      }
-    },
-    {
-      "id": "arxiv:2607.27844",
-      "source": "arXiv",
-      "title": "Nanoparticle Networks for Neuromorphic Computing",
-      "authors": [
-        "Jonas Mensing",
-        "Wilfred G. van der Wiel",
-        "Andreas Heuer"
-      ],
-      "authorAffiliations": [],
-      "affiliations": [],
-      "abstract": "Physical computing leverages complex dynamical systems for energy-efficient data processing. In this work, we present a neuromorphic architecture based on metallic nanoparticles interconnected by molecular junctions on a $\\text{SiO}_2$/Si substrate. We demonstrate that surrounding static control electrodes transform this nanoparticle network from a passive reservoir into a tunable nonlinear dynamical system. By analyzing how these electrodes route simple one-dimensional voltage inputs into multidimensional signal responses, we establish three core design rules to maximize computational performance. First, operating near the system's cutoff frequency achieves an optimal balance between nonlinear charge tunneling and linear capacitive memory. Second, tuning the underlying $\\text{SiO}_2$ thickness sets the electrostatic screening length and dictates the memory type. Thick oxide layers reduce the screening length, causing networks larger than this length to transition into a persistent, non-volatile-like regime. Conversely, networks smaller than the screening length exhibit only fading memory. Third, introducing structural disorder via heterogeneous molecular junctions overcomes inherent limits on expressivity. While a network's computational expressivity scales with its physical size, it is ultimately capped by the screening length. Breaking internal spatial symmetries with localized disorder bypasses this saturation, allowing control voltages to independently manipulate specific signal amplitudes and phases, universally maximizing performance for dynamic neuromorphic applications.",
-      "venue": "arXiv",
-      "published": "2026-07-30T08:24:23Z",
-      "updated": "2026-07-30T08:24:23Z",
-      "url": "http://arxiv.org/abs/2607.27844v1",
-      "pdfUrl": "https://arxiv.org/pdf/2607.27844v1",
-      "categories": [
-        "cs.ET",
-        "cond-mat.mes-hall",
-        "cs.AR",
-        "cs.LG",
-        "cs.NE"
-      ],
-      "collectedAt": "2026-08-02T21:11:20.224Z",
-      "firstSeenAt": "2026-08-02T21:11:20.224Z",
-      "lastSeenAt": "2026-08-02T21:11:20.224Z",
+      "collectedAt": "2026-08-03T21:31:03.233Z",
+      "firstSeenAt": "2026-08-03T21:31:03.233Z",
+      "lastSeenAt": "2026-08-03T21:31:03.233Z",
       "collectionType": "daily-latest",
       "matchedQuery": "(cat:cs.AR OR cat:cs.DC OR cat:cs.PF) AND (all:LLM OR all:transformer OR all:foundation OR all:language) AND (all:accelerator OR all:processor OR all:architecture OR all:hardware OR all:system OR all:serving OR all:training OR all:inference OR all:cache)",
       "collectionTypes": [
@@ -287,23 +174,21 @@
       ],
       "matchedQueries": [
         "(cat:cs.AR OR cat:cs.DC OR cat:cs.PF) AND (all:LLM OR all:transformer OR all:foundation OR all:language) AND (all:accelerator OR all:processor OR all:architecture OR all:hardware OR all:system OR all:serving OR all:training OR all:inference OR all:cache)",
+        "(all:prefill OR all:decoding OR all:KV OR all:cache OR all:attention) AND (all:accelerator OR all:kernel OR all:compiler OR all:serving OR all:memory) AND (all:LLM OR all:transformer)",
         "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)"
       ],
       "targetThemes": [],
       "conferenceVenues": [],
       "conferenceYears": [],
       "digest": {
-        "summaryZh": "AI 摘要未生成。原始摘要要点：Physical computing leverages complex dynamical systems for energy-efficient data processing. In this work, we present a neuromorphic architecture based on metal...",
+        "summaryZh": "AI 摘要未生成。原始摘要要点：Large language model (LLM) serving commonly increases batch size to improve throughput, but performance eventually reaches a deployment-dependent plateau beyond...",
         "motivationZh": "命令行启用了 --no-ai",
         "methodZh": "请配置 AI 后重新运行，以生成方法提炼。",
         "experimentsZh": "来源元数据未披露完整实验设置或结果。",
         "affiliationsZh": "未在 DBLP/arXiv 元数据中提供。",
         "tags": [
-          "cs.ET",
-          "cond-mat.mes-hall",
-          "cs.AR",
-          "cs.LG",
-          "cs.NE"
+          "cs.DC",
+          "cs.PF"
         ],
         "importance": 3,
         "researchFitZh": "AI harness 尚未完成分析，无法判断与用户研究方向的具体关系。",
@@ -361,7 +246,7 @@
       },
       "recommendationTrack": "hardware-primary",
       "recommendationLabel": "硬件体系结构主线",
-      "recommendationScore": 177,
+      "recommendationScore": 200,
       "relevanceReason": "命中 AI 处理器、体系结构、量化、训推系统或内存/缓存优化主题",
       "pdfStatus": "remote",
       "workflow": {
@@ -374,48 +259,58 @@
       }
     },
     {
-      "id": "arxiv:2607.28263",
+      "id": "arxiv:2607.28979",
       "source": "arXiv",
-      "title": "Understanding Is Done Early: A Depth Division of Labor in Large Language Models and Its Use for Unbounded-Context Memory",
+      "title": "Mixture-of-Translators: Translating KV Caches Across Heterogeneous Large Language Models",
       "authors": [
-        "Hanzuo Liu",
-        "Xuan Qi",
-        "Chunyu Liu",
-        "Haotian Zhong",
-        "Yulong Wang",
-        "Rayying",
-        "Key",
-        "Alex Lamb",
-        "Mingyu Gao"
+        "Jin-woo Lee",
+        "Minkyung Song",
+        "Junghyun Oh",
+        "Seunghoon Han",
+        "Soyoung Park",
+        "Gwangseon Jang",
+        "Sungsu Lim"
       ],
       "authorAffiliations": [],
       "affiliations": [],
-      "abstract": "Transformer depth is not used uniformly: lower and middle layers build semantic representations, while upper layers increasingly specialize them for prediction. We turn this division of labor into CoMem (Comprehension Memory), which writes each context chunk only through an intermediate layer, retrieves a fixed number of cached residual states, and recomputes the query-conditioned upper layers over the resulting pack. For a fixed retrieval budget, model-side read compute and memory are independent of stored-context length. We evaluate a continued-trained Qwen3-8B base LM under a unified chat-template-free protocol. The backbone is frozen; the flagship trains only a rank-32 self-distillation LoRA on plain PG19, and we report an adapter-free arm separately. CoMem reaches 97.05 on RULER and 38.27 on LoCoMo versus 34.59 for full-context KV-Direct; the dialogue-memory advantage survives conversation-cluster resampling and an independent judge. Results on additional long-context and long-document tasks expose both the benefits of bounded retrieval and its in-window compression tax. Controlled depth sweeps show that deeper caching lowers per-query recomputation but incurs a fidelity loss that self-distillation substantially repairs. In a separate adapter-free efficiency control on an NVIDIA H20 at 128k, CoMem uses 18.26 GB rather than 89.36 GB and achieves a 7.83x prefill speedup. These results show that long-context memory can be organized along the layer axis, not only the token axis.",
+      "abstract": "Heterogeneous Large Language Model (LLM) systems increasingly rely on shared contexts, retrieved evidence, and multi-agent dialogue histories, yet their internal key-value (KV) caches remain model-specific and cannot be reused across architectures. Consequently, each model must repeatedly prefill or store caches for the same context, limiting the scalability of multi-model reasoning and long-context generation. We propose Mixture-of-Translators(MoT), a cache translation framework that maps context KV caches from a source LLM into the cache space of a target LLM. Unlike prior approaches that depend on a single projection path or global shared latent space, MoT uses multiple translator modules to capture diverse source--target mappings. To further reduce residual translation error, we introduce a Context Correction Loss that aligns the replayed target trajectory with the native target trajectory. We reveal two competing failure modes in cache translation: propagated translation shift from early injection and last-state shift from late injection. MoT addresses them through translator mixtures and target-side correction. Across homogeneous and heterogeneous translations among Qwen2.5, GPT-2, and OPT models, MoT preserves downstream QA performance, including Qwen2.5-7B-scale translation with 51.0% average closed-set QA accuracy and 0.43 average extractive QA F1. In practical case studies, MoT enables quality-preserving memory reuse for multi-agent reasoning and retains 96.3% of direct-context quality in long-context cache-augmented generation, demonstrating scalable KV cache reuse across heterogeneous LLMs.",
       "venue": "arXiv",
-      "published": "2026-07-30T14:19:11Z",
-      "updated": "2026-07-30T14:19:11Z",
-      "url": "http://arxiv.org/abs/2607.28263v1",
-      "pdfUrl": "https://arxiv.org/pdf/2607.28263v1",
+      "published": "2026-07-31T03:07:31Z",
+      "updated": "2026-07-31T03:07:31Z",
+      "url": "http://arxiv.org/abs/2607.28979v1",
+      "pdfUrl": "https://arxiv.org/pdf/2607.28979v1",
       "categories": [
         "cs.CL"
       ],
-      "collectedAt": "2026-08-02T21:11:23.682Z",
-      "firstSeenAt": "2026-08-02T21:11:23.682Z",
-      "lastSeenAt": "2026-08-02T21:11:23.682Z",
+      "collectedAt": "2026-08-03T21:31:09.117Z",
+      "firstSeenAt": "2026-08-03T21:31:09.117Z",
+      "lastSeenAt": "2026-08-03T21:31:09.117Z",
       "collectionType": "daily-latest",
-      "matchedQuery": "(all:prefill OR all:decoding OR all:KV OR all:cache OR all:attention) AND (all:accelerator OR all:kernel OR all:compiler OR all:serving OR all:memory) AND (all:LLM OR all:transformer)",
+      "matchedQuery": "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)",
       "collectionTypes": [
         "daily-latest"
       ],
       "matchedQueries": [
-        "(all:prefill OR all:decoding OR all:KV OR all:cache OR all:attention) AND (all:accelerator OR all:kernel OR all:compiler OR all:serving OR all:memory) AND (all:LLM OR all:transformer)",
         "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)"
       ],
       "targetThemes": [],
       "conferenceVenues": [],
       "conferenceYears": [],
+      "recommendationTrack": "hardware-primary",
+      "recommendationLabel": "硬件体系结构主线",
+      "recommendationScore": 169.25,
+      "relevanceReason": "命中 AI 处理器、体系结构、量化、训推系统或内存/缓存优化主题",
+      "pdfStatus": "remote",
+      "workflow": {
+        "digestStatus": "pending",
+        "emailStatus": "waiting-digest",
+        "digestError": "命令行启用了 --no-ai",
+        "harnessVersion": "paper-reader-v1",
+        "collectStatus": "collected",
+        "pdfStatus": "remote"
+      },
       "digest": {
-        "summaryZh": "AI 摘要未生成。原始摘要要点：Transformer depth is not used uniformly: lower and middle layers build semantic representations, while upper layers increasingly specialize them for prediction....",
+        "summaryZh": "AI 摘要未生成。原始摘要要点：Heterogeneous Large Language Model (LLM) systems increasingly rely on shared contexts, retrieved evidence, and multi-agent dialogue histories, yet their interna...",
         "motivationZh": "命令行启用了 --no-ai",
         "methodZh": "请配置 AI 后重新运行，以生成方法提炼。",
         "experimentsZh": "来源元数据未披露完整实验设置或结果。",
@@ -476,10 +371,53 @@
           "experiments": 0,
           "affiliations": 0
         }
-      },
+      }
+    },
+    {
+      "id": "arxiv:2607.29172",
+      "source": "arXiv",
+      "title": "CLIFT: Turning Gemini Robotics On-Device into Humanoid Specialists via Non-Invasive Closed-Loop Iterative Fine-Tuning",
+      "authors": [
+        "Yuxin Chen",
+        "Hari Srikanth",
+        "Nathan Jew",
+        "Menglin Wu",
+        "Pengcheng Wang",
+        "Junli Ren",
+        "Masayoshi Tomizuka",
+        "Peng Xu",
+        "Jinyu Xie",
+        "Thomas Tian"
+      ],
+      "authorAffiliations": [],
+      "affiliations": [],
+      "abstract": "While robot foundation models are growing increasingly capable, the strongest models are typically trained on proprietary data and remain closed-source, limiting downstream users' ability to adapt them to new tasks, embodiments, and deployment settings. Following the LLM community, an emerging access paradigm for closed-weight robot foundation models is the managed supervised fine-tuning (SFT) API, where users submit training data and receive a tuned policy without access to model weights, gradients, or training internals. While such APIs let downstream users leverage powerful proprietary foundation models, they restrict policy improvement to pure imitation, ruling out reinforcement learning and other closed-loop methods that rely on internal training signals. This limitation is particularly acute for agile, contact-rich humanoid manipulation, where the gap between policy outputs and deployed behavior is large due to novel states, action tracking dynamics, latency, and controller-specific failure modes. We study how effective this managed-API regime is for humanoid adaptation, and how closed-loop improvement can be realized within it to push policies toward task mastery. We conduct one of the first empirical studies of managed-API adaptation on a real humanoid, instantiated on Gemini Robotics On-Device (GROD). We find that direct SFT through the API substantially outperforms a leading open-weight VLA trained on the same demonstrations, yet still falls short of deployment-level mastery on agile, contact-rich tasks. To close this gap, we introduce CLIFT: Closed-Loop Iterative Fine-Tuning, which turns deployment-time reward feedback into API-compatible supervised data and enables closed-loop policy improvement without accessing weights, gradients, likelihoods, or losses-pushing GROD to near-perfect success after two flywheel cycles, all without \"opening the model box.\"",
+      "venue": "arXiv",
+      "published": "2026-07-31T08:50:25Z",
+      "updated": "2026-07-31T08:50:25Z",
+      "url": "http://arxiv.org/abs/2607.29172v1",
+      "pdfUrl": "https://arxiv.org/pdf/2607.29172v1",
+      "categories": [
+        "cs.RO",
+        "cs.AI"
+      ],
+      "collectedAt": "2026-08-03T21:31:09.117Z",
+      "firstSeenAt": "2026-08-03T21:31:09.117Z",
+      "lastSeenAt": "2026-08-03T21:31:09.117Z",
+      "collectionType": "daily-latest",
+      "matchedQuery": "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)",
+      "collectionTypes": [
+        "daily-latest"
+      ],
+      "matchedQueries": [
+        "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)"
+      ],
+      "targetThemes": [],
+      "conferenceVenues": [],
+      "conferenceYears": [],
       "recommendationTrack": "hardware-primary",
       "recommendationLabel": "硬件体系结构主线",
-      "recommendationScore": 166,
+      "recommendationScore": 167.5,
       "relevanceReason": "命中 AI 处理器、体系结构、量化、训推系统或内存/缓存优化主题",
       "pdfStatus": "remote",
       "workflow": {
@@ -489,6 +427,70 @@
         "harnessVersion": "paper-reader-v1",
         "collectStatus": "collected",
         "pdfStatus": "remote"
+      },
+      "digest": {
+        "summaryZh": "AI 摘要未生成。原始摘要要点：While robot foundation models are growing increasingly capable, the strongest models are typically trained on proprietary data and remain closed-source, limitin...",
+        "motivationZh": "命令行启用了 --no-ai",
+        "methodZh": "请配置 AI 后重新运行，以生成方法提炼。",
+        "experimentsZh": "来源元数据未披露完整实验设置或结果。",
+        "affiliationsZh": "未在 DBLP/arXiv 元数据中提供。",
+        "tags": [
+          "cs.RO",
+          "cs.AI"
+        ],
+        "importance": 3,
+        "researchFitZh": "AI harness 尚未完成分析，无法判断与用户研究方向的具体关系。",
+        "hardwareRelevance": 1,
+        "algorithmRelevance": 1,
+        "systemRelevance": 1,
+        "readPriority": "archive",
+        "whyReadZh": "需要完成 motivation、method 和实验结果分析后再判断是否值得深读。",
+        "limitationsZh": "命令行启用了 --no-ai",
+        "motivationDetail": {
+          "problemZh": "harness 未完成分析。",
+          "gapZh": "harness 未完成分析。",
+          "whyImportantZh": "harness 未完成分析。",
+          "userRelevanceZh": "harness 未完成分析。",
+          "evidence": "not analyzed"
+        },
+        "methodDetail": {
+          "coreIdeaZh": "harness 未完成分析。",
+          "componentsZh": [
+            "未分析"
+          ],
+          "hardwareSystemDetailZh": "harness 未完成分析。",
+          "noveltyZh": "harness 未完成分析。",
+          "evidence": "not analyzed"
+        },
+        "experimentDetail": {
+          "setupZh": "harness 未完成分析。",
+          "baselinesZh": "harness 未完成分析。",
+          "metricsZh": [
+            "未分析"
+          ],
+          "mainResultsZh": "harness 未完成分析。",
+          "limitationsZh": "harness 未完成分析。",
+          "evidence": "not analyzed"
+        },
+        "evidence": {
+          "usedSources": [
+            "metadata"
+          ],
+          "affiliationEvidence": "",
+          "experimentEvidence": "",
+          "missingFields": [
+            "motivation",
+            "method",
+            "experiments"
+          ]
+        },
+        "confidence": {
+          "summary": 0.2,
+          "motivation": 0,
+          "method": 0,
+          "experiments": 0,
+          "affiliations": 0
+        }
       }
     },
     {
@@ -526,9 +528,9 @@
         "physics.app-ph",
         "physics.chem-ph"
       ],
-      "collectedAt": "2026-08-02T21:11:25.382Z",
-      "firstSeenAt": "2026-08-02T21:11:25.382Z",
-      "lastSeenAt": "2026-08-02T21:11:25.382Z",
+      "collectedAt": "2026-08-03T21:31:09.117Z",
+      "firstSeenAt": "2026-08-03T21:31:09.117Z",
+      "lastSeenAt": "2026-08-03T21:31:09.117Z",
       "collectionType": "daily-latest",
       "matchedQuery": "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)",
       "collectionTypes": [
@@ -621,32 +623,34 @@
       }
     },
     {
-      "id": "arxiv:2607.27886",
+      "id": "arxiv:2607.28795",
       "source": "arXiv",
-      "title": "Don't Trust the AI Ecosystem: Analyzing Privacy Leakage in Compromised Open-Source Components",
+      "title": "High-rate qLDPC processors",
       "authors": [
-        "Jin-Seong Kim",
-        "Han-Ju Lee",
-        "Seok-Won Hong",
-        "Takeshi Takahashi",
-        "Chansu Han",
-        "Tomohiro Morikawa",
-        "Seok-Hwan Choi"
+        "Aditya Bhardwaj",
+        "Muzhou Ma",
+        "Nadine Meister",
+        "Robbie King",
+        "Dolev Bluvstein",
+        "John Preskill",
+        "Madelyn Cain",
+        "Qian Xu",
+        "Hsin-Yuan Huang"
       ],
       "authorAffiliations": [],
       "affiliations": [],
-      "abstract": "Existing model inversion (MI) attacks predominantly rely on post-training optimization to recover private data from model outputs. However, these methods are fundamentally constrained by the target model's generalization bottleneck, often yielding generic features rather than specific identities, particularly on high-dimensional datasets. In this paper, we introduce GradLock, a novel training-time injection attack that stealthily injects sensitive training data directly into the model parameters. Operating within a compromised supply chain context, GradLock leverages stateless deterministic indexing to establish isolated data vaults and employs dynamic gradient locking to prevent payload degradation during the optimization process. This mechanism allows the adversary to extract pixel-perfect data from the final model without retaining access to the training environment. Extensive experiments on MNIST, Imagenette, and CelebA demonstrate that GradLock achieves near-lossless reconstruction (SSIM ~ 1.0) and instant extraction (< 1.0s). Compared to existing training-time injection methods, our approach exhibits superior robustness against standard deployment optimizations, including quantization, pruning, and fine-tuning. Furthermore, a user deployment study reveals that 93.3% of participants failed to detect the malicious logic, highlighting a severe blind spot in the security of modern AI supply chains.",
+      "abstract": "Despite significant progress on quantum low-density parity-check (qLDPC) codes, building qLDPC processors that are high-rate, high-throughput, hardware-friendly, and fast-to-decode remains a challenge. We introduce mitten codes, a family of qLDPC processor codes of encoding rate $20\\%$ and check weight $9$, based on non-abelian groups. Their non-abelian structure evades distance bounds constraining abelian counterparts, allowing mitten codes to reach distance $18$ and beyond with just a few hundred data qubits. The logical operators of a mitten code are related by the group action, yielding a modular, low-overhead logical toolkit: full Clifford operations follow from bridging two reusable seed surgery gadgets or from a single fixed extractor. Furthermore, qLDPC processors based on mitten codes support high-rate surgery that executes many logical measurements in parallel, and parallel magic-state injection into all logical qubits at once. Under circuit-level noise, with our fast decoder, the $[\\![300,60,14]\\!]$ mitten code achieves, without extrapolation, a block logical error rate of ${\\sim}10^{-11}$ per round at $0.1\\%$ physical error rate (PER), while the $[\\![ 975,195,\\leq 24 ]\\!]$ code reaches ${\\sim}10^{-8}$ at $0.4\\%$ PER. Decoding $15$ billion surgery experiments on the $[\\![540,108,18]\\!]$ code at $0.1\\%$ PER, we observe only two logical failures, demonstrating a qLDPC processor capable of running ${\\sim}10^{10}$ logical operations. Our decoder is compatible with sub-millisecond average latency per logical cycle, sufficient for real-time decoding on neutral atom hardware. Discovered by an end-to-end design pipeline built on sQetch, a distance estimator orders of magnitude faster than existing tools, and mapping efficiently onto near-term neutral atom and superconducting hardware, mitten codes open a practical path toward fault-tolerant quantum computation.",
       "venue": "arXiv",
-      "published": "2026-07-30T09:02:02Z",
-      "updated": "2026-07-30T09:02:02Z",
-      "url": "http://arxiv.org/abs/2607.27886v1",
-      "pdfUrl": "https://arxiv.org/pdf/2607.27886v1",
+      "published": "2026-07-30T19:43:04Z",
+      "updated": "2026-07-30T19:43:04Z",
+      "url": "http://arxiv.org/abs/2607.28795v1",
+      "pdfUrl": "https://arxiv.org/pdf/2607.28795v1",
       "categories": [
-        "cs.CR"
+        "quant-ph"
       ],
-      "collectedAt": "2026-08-02T21:11:25.382Z",
-      "firstSeenAt": "2026-08-02T21:11:25.382Z",
-      "lastSeenAt": "2026-08-02T21:11:25.382Z",
+      "collectedAt": "2026-08-03T21:31:09.117Z",
+      "firstSeenAt": "2026-08-03T21:31:09.117Z",
+      "lastSeenAt": "2026-08-03T21:31:09.117Z",
       "collectionType": "daily-latest",
       "matchedQuery": "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)",
       "collectionTypes": [
@@ -660,7 +664,7 @@
       "conferenceYears": [],
       "recommendationTrack": "hardware-primary",
       "recommendationLabel": "硬件体系结构主线",
-      "recommendationScore": 162,
+      "recommendationScore": 159,
       "relevanceReason": "命中 AI 处理器、体系结构、量化、训推系统或内存/缓存优化主题",
       "pdfStatus": "remote",
       "workflow": {
@@ -672,13 +676,13 @@
         "pdfStatus": "remote"
       },
       "digest": {
-        "summaryZh": "AI 摘要未生成。原始摘要要点：Existing model inversion (MI) attacks predominantly rely on post-training optimization to recover private data from model outputs. However, these methods are fu...",
+        "summaryZh": "AI 摘要未生成。原始摘要要点：Despite significant progress on quantum low-density parity-check (qLDPC) codes, building qLDPC processors that are high-rate, high-throughput, hardware-friendly...",
         "motivationZh": "命令行启用了 --no-ai",
         "methodZh": "请配置 AI 后重新运行，以生成方法提炼。",
         "experimentsZh": "来源元数据未披露完整实验设置或结果。",
         "affiliationsZh": "未在 DBLP/arXiv 元数据中提供。",
         "tags": [
-          "cs.CR"
+          "quant-ph"
         ],
         "importance": 3,
         "researchFitZh": "AI harness 尚未完成分析，无法判断与用户研究方向的具体关系。",
@@ -736,26 +740,34 @@
       }
     },
     {
-      "id": "arxiv:2607.27803",
+      "id": "arxiv:2607.28263",
       "source": "arXiv",
-      "title": "Finite-temperature bulk moduli from an EOS-based Grüneisen function",
+      "title": "Understanding Is Done Early: A Depth Division of Labor in Large Language Models and Its Use for Unbounded-Context Memory",
       "authors": [
-        "Çetin Kılıç"
+        "Hanzuo Liu",
+        "Xuan Qi",
+        "Chunyu Liu",
+        "Haotian Zhong",
+        "Yulong Wang",
+        "Rayying",
+        "Key",
+        "Alex Lamb",
+        "Mingyu Gao"
       ],
       "authorAffiliations": [],
       "affiliations": [],
-      "abstract": "An equation-of-state (EOS)-based construction of the Grüneisen function is developed and assessed through predictions of finite-temperature bulk moduli. In this approach, the volume dependence of the Grüneisen function is expressed analytically in terms of static EOS information, anchored by Debye temperatures obtained from elastic data sampled near equilibrium, and constrained by the infinite-compression limit. The resulting form requires as material-specific input only static energy-volume data and near-equilibrium elastic properties, with no parameters adjusted to thermal data. Within a Mie--Grüneisen--Debye framework, the approach is examined for diamond, magnesium oxide, silicon, and sodium chloride, chosen to span a broad range of stiffness, using machine-learning interatomic potentials from the Universal Models for Atoms (UMA) and Universal Point Edge Transformer (UPET) families, together with a dispersion-corrected variant of UMA. The calculated bulk moduli reproduce the expected experimental softening trends and capture the overall scale of the bulk-modulus temperature derivatives, although the level of quantitative agreement depends on the material, the underlying interatomic potential, and the selected analytic EOS form. These results show that an EOS-based construction of the Grüneisen function can capture the leading thermal-softening behavior of bulk moduli without fitting to thermal data. The observed sensitivity to the underlying static description further suggests that the framework may help identify deficiencies relevant to thermoelastic transferability and thereby inform future training and validation strategies for universal machine-learning interatomic potentials.",
+      "abstract": "Transformer depth is not used uniformly: lower and middle layers build semantic representations, while upper layers increasingly specialize them for prediction. We turn this division of labor into CoMem (Comprehension Memory), which writes each context chunk only through an intermediate layer, retrieves a fixed number of cached residual states, and recomputes the query-conditioned upper layers over the resulting pack. For a fixed retrieval budget, model-side read compute and memory are independent of stored-context length. We evaluate a continued-trained Qwen3-8B base LM under a unified chat-template-free protocol. The backbone is frozen; the flagship trains only a rank-32 self-distillation LoRA on plain PG19, and we report an adapter-free arm separately. CoMem reaches 97.05 on RULER and 38.27 on LoCoMo versus 34.59 for full-context KV-Direct; the dialogue-memory advantage survives conversation-cluster resampling and an independent judge. Results on additional long-context and long-document tasks expose both the benefits of bounded retrieval and its in-window compression tax. Controlled depth sweeps show that deeper caching lowers per-query recomputation but incurs a fidelity loss that self-distillation substantially repairs. In a separate adapter-free efficiency control on an NVIDIA H20 at 128k, CoMem uses 18.26 GB rather than 89.36 GB and achieves a 7.83x prefill speedup. These results show that long-context memory can be organized along the layer axis, not only the token axis.",
       "venue": "arXiv",
-      "published": "2026-07-30T07:43:20Z",
-      "updated": "2026-07-30T07:43:20Z",
-      "url": "http://arxiv.org/abs/2607.27803v1",
-      "pdfUrl": "https://arxiv.org/pdf/2607.27803v1",
+      "published": "2026-07-30T14:19:11Z",
+      "updated": "2026-07-30T14:19:11Z",
+      "url": "http://arxiv.org/abs/2607.28263v1",
+      "pdfUrl": "https://arxiv.org/pdf/2607.28263v1",
       "categories": [
-        "cond-mat.mtrl-sci"
+        "cs.CL"
       ],
-      "collectedAt": "2026-08-02T21:11:25.382Z",
-      "firstSeenAt": "2026-08-02T21:11:25.382Z",
-      "lastSeenAt": "2026-08-02T21:11:25.382Z",
+      "collectedAt": "2026-08-03T21:31:09.117Z",
+      "firstSeenAt": "2026-08-03T21:31:09.117Z",
+      "lastSeenAt": "2026-08-03T21:31:09.117Z",
       "collectionType": "daily-latest",
       "matchedQuery": "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)",
       "collectionTypes": [
@@ -769,7 +781,7 @@
       "conferenceYears": [],
       "recommendationTrack": "hardware-primary",
       "recommendationLabel": "硬件体系结构主线",
-      "recommendationScore": 161,
+      "recommendationScore": 154,
       "relevanceReason": "命中 AI 处理器、体系结构、量化、训推系统或内存/缓存优化主题",
       "pdfStatus": "remote",
       "workflow": {
@@ -781,13 +793,13 @@
         "pdfStatus": "remote"
       },
       "digest": {
-        "summaryZh": "AI 摘要未生成。原始摘要要点：An equation-of-state (EOS)-based construction of the Grüneisen function is developed and assessed through predictions of finite-temperature bulk moduli. In this...",
+        "summaryZh": "AI 摘要未生成。原始摘要要点：Transformer depth is not used uniformly: lower and middle layers build semantic representations, while upper layers increasingly specialize them for prediction....",
         "motivationZh": "命令行启用了 --no-ai",
         "methodZh": "请配置 AI 后重新运行，以生成方法提炼。",
         "experimentsZh": "来源元数据未披露完整实验设置或结果。",
         "affiliationsZh": "未在 DBLP/arXiv 元数据中提供。",
         "tags": [
-          "cond-mat.mtrl-sci"
+          "cs.CL"
         ],
         "importance": 3,
         "researchFitZh": "AI harness 尚未完成分析，无法判断与用户研究方向的具体关系。",
@@ -845,41 +857,33 @@
       }
     },
     {
-      "id": "arxiv:2607.28625",
+      "id": "arxiv:2607.29613",
       "source": "arXiv",
-      "title": "ACE-Data-0: Human-Centric Ambient Capture as Embodied Data Engine",
+      "title": "WCM: A World Critic Model for Vision-Language-Action Reinforcement Learning",
       "authors": [
-        "Yukang Cao",
-        "Haozhe Xie",
-        "Beichen Wen",
-        "Runmao Yao",
-        "Yinghao Liu",
-        "Yue Huang",
-        "Zhichao Liao",
-        "Yunxiang Wang",
-        "Haiheng Liu",
-        "Xingshun Tian",
-        "Dawei Su",
-        "Long Zhuo",
-        "Dacheng Tao",
-        "Xiaogang Wang",
-        "Liang Pan",
-        "Ziwei Liu"
+        "Senyu Fei",
+        "Xiaopeng Yu",
+        "Siyin Wang",
+        "Xianzhong Zhao",
+        "Jingjing Gong",
+        "Xipeng Qiu"
       ],
       "authorAffiliations": [],
       "affiliations": [],
-      "abstract": "Embodied intelligence faces a fundamental data bottleneck. Models must capture how first-person perception, whole-body motion, dexterous manipulation, object state, sound, and touch evolve together as humans pursue goals over time. Existing datasets fragment this experience across viewpoints, modalities, or spatial scales, leaving the full perception-action loop only partially observed. We introduce the Ambient Capture Engine (ACE), a human-centric data engine that transforms real home environments into spatially calibrated, temporally synchronized recording studios. ACE operates at two complementary scales: a table-scale configuration resolves hand-object manipulation, while a room-scale configuration captures whole-body motion, locomotion, and interactions across a furnished home. ACE records egocentric and multi-view exocentric video, full-body and articulated hand motion, object geometry and 6-DoF trajectories, audio, and tactile signals as a unified multisensory stream. Using ACE, we build ACE-Data-0, comprising 150 hours and 17M video frames across 200 task categories, performed by 50 participants in 2 environments, for a total of 75,000 interaction episodes. The dataset spans atomic manipulation, long-horizon chains of household activities, and human-scene interaction, while preserving natural behavioral variation through goal-level rather than step-by-step instructions. We further introduce a hierarchical benchmark that progresses from signals to scene components and then to interactions. Evaluations of state-of-the-art methods expose substantial gaps under contact, occlusion, egomotion, and long temporal horizons. ACE-Data-0 provides synchronized human demonstrations with aligned perceptual, kinematic, and contact supervision, offering a scalable foundation for imitation learning, world models, vision-language-action systems, and embodied AI.",
+      "abstract": "Reinforcement learning (RL) post-training of Vision-Language-Action (VLA) models has shown strong promise for robotic manipulation. Among RL methods, critic-based approaches rely on a value estimator that predominantly operates on single-frame observations or single-frame VLM backbone latents, which is a fundamental mismatch with the partially observable nature of robot control. A naive approach to incorporate observation history into the critic incurs exponential complexity with high-dimensional visual space, and still fails because pure scalar-return regression provides insufficient supervision for learning cross-temporal dynamics. We identify the root cause as a state approximation problem: without an explicit world modeling objective, the critic's representation cannot capture the temporal structure needed for accurate value estimation. To address this, we propose the World Critic Model (WCM), built on a lightweight LeJEPA architecture; WCM jointly predicts future latent state and estimates values, such that the critic's representation is explicitly trained to capture temporal dynamics rather than merely regress scalar returns. WCM integrates seamlessly into both on-policy and off-policy training pipelines and is compatible with state-of-the-art VLA backbones including Pi0, Pi0.5, and OpenVLA-OFT. Extensive experiments on 149 tasks across four benchmarks demonstrate that WCM consistently achieves state-of-the-art performance in both in-distribution and out-of-distribution settings, with particularly strong generalization gains. We further validate WCM on seven real-world manipulation tasks using OpenVLA-OFT and Pi0.5 with off-policy RL, confirming stable deployment across diverse settings.",
       "venue": "arXiv",
-      "published": "2026-07-30T17:59:50Z",
-      "updated": "2026-07-30T17:59:50Z",
-      "url": "http://arxiv.org/abs/2607.28625v1",
-      "pdfUrl": "https://arxiv.org/pdf/2607.28625v1",
+      "published": "2026-07-31T16:48:45Z",
+      "updated": "2026-07-31T16:48:45Z",
+      "url": "http://arxiv.org/abs/2607.29613v1",
+      "pdfUrl": "https://arxiv.org/pdf/2607.29613v1",
       "categories": [
+        "cs.RO",
+        "cs.CL",
         "cs.CV"
       ],
-      "collectedAt": "2026-08-02T21:11:27.158Z",
-      "firstSeenAt": "2026-08-02T21:11:27.158Z",
-      "lastSeenAt": "2026-08-02T21:11:27.158Z",
+      "collectedAt": "2026-08-03T21:31:11.175Z",
+      "firstSeenAt": "2026-08-03T21:31:11.175Z",
+      "lastSeenAt": "2026-08-03T21:31:11.175Z",
       "collectionType": "daily-latest",
       "matchedQuery": "(all:agent OR all:agents OR all:agentic OR all:reasoning OR all:post-training OR all:alignment OR all:multimodal OR all:world-model) AND (all:LLM OR all:foundation OR all:language)",
       "collectionTypes": [
@@ -893,7 +897,7 @@
       "conferenceYears": [],
       "recommendationTrack": "algorithm-trend",
       "recommendationLabel": "算法趋势观察",
-      "recommendationScore": 41,
+      "recommendationScore": 50.400000000000006,
       "relevanceReason": "命中 LLM/Agent/多模态/后训练等算法趋势主题",
       "pdfStatus": "remote",
       "workflow": {
@@ -905,12 +909,14 @@
         "pdfStatus": "remote"
       },
       "digest": {
-        "summaryZh": "AI 摘要未生成。原始摘要要点：Embodied intelligence faces a fundamental data bottleneck. Models must capture how first-person perception, whole-body motion, dexterous manipulation, object st...",
+        "summaryZh": "AI 摘要未生成。原始摘要要点：Reinforcement learning (RL) post-training of Vision-Language-Action (VLA) models has shown strong promise for robotic manipulation. Among RL methods, critic-bas...",
         "motivationZh": "命令行启用了 --no-ai",
         "methodZh": "请配置 AI 后重新运行，以生成方法提炼。",
         "experimentsZh": "来源元数据未披露完整实验设置或结果。",
         "affiliationsZh": "未在 DBLP/arXiv 元数据中提供。",
         "tags": [
+          "cs.RO",
+          "cs.CL",
           "cs.CV"
         ],
         "importance": 3,
@@ -969,39 +975,30 @@
       }
     },
     {
-      "id": "arxiv:2607.28595",
+      "id": "arxiv:2607.29679",
       "source": "arXiv",
-      "title": "Beacon: Knowing When and How to Perform Agentic Visual Reasoning",
+      "title": "Scaling Properties of Text Conditioning in Visual Generation",
       "authors": [
-        "Qixun Wang",
-        "Yang Shi",
-        "Letian Cheng",
-        "Zhuoran Zhang",
-        "Yan He",
-        "Yuqi Tang",
-        "Qi Zhang",
-        "Xinlei Yu",
-        "Ruizhe Chen",
-        "Tianrun Xu",
-        "Yuanxing Zhang",
-        "Pengfei Wan",
-        "Haotian Wang",
-        "Xianghua Ying"
+        "Zilong Chen",
+        "Chaorui Deng",
+        "Kunchang Li",
+        "Hongyi Yuan",
+        "Haoqi Fan"
       ],
       "authorAffiliations": [],
       "affiliations": [],
-      "abstract": "The fundamental goal of agentic visual reasoning is to improve the success rate of multimodal large language models (MLLMs) on complex tasks, rather than merely equipping them with a sophisticated yet inefficient reasoning paradigm. In this work, we rethink agentic visual reasoning through two key dimensions of tool use: Mode Adaptiveness (MA) and Tool Effect (TE). Mode Adaptiveness characterizes whether an MLLM can recognize when tools are truly necessary and invoke them accordingly, thereby avoiding unnecessary computational overhead while improving performance on challenging problems that require tool assistance. Tool Effect characterizes the actual impact of tool use: tools should extend the model's capabilities on problems unsolvable through text-only reasoning, while avoiding additional errors on problems that the model can already solve without tools. We conduct a comprehensive analysis to quantify these two properties and empirically reveal that existing agentic visual reasoning models exhibit limited Mode Adaptiveness, while the gains produced by tool use on hard examples are largely offset by the harm introduced on easy examples that the models can already solve. Motivated by these observations, we propose Beacon, a novel agentic visual reasoning model that achieves stronger overall performance, improved Mode Adaptiveness, and genuine tool-induced performance gains. At the core of Beacon are the Necessity-Aware Adaptive Reward and the Hint-Guided Capability Expansion mechanism in the reinforcement learning stage, which respectively encourage adaptive tool invocation based on task necessity and strengthen the model's tool-use capability on the most challenging problems. Extensive experiments across diverse benchmarks demonstrate the strong overall performance of Beacon and its substantial improvements in both Mode Adaptiveness and Tool Effect.",
+      "abstract": "We study empirical scaling properties for text conditioning in visual generation. Such properties have rarely been measured because diffusion loss does not scale with the number of tokens in natural-language prompts. Surprisingly, we find that the converged diffusion loss scales with the amount of structured language in the prompt. To quantify structured language, we adapt two complementary measures: a white-box likelihood metric (GPG) and a black-box attribute metric (ED). Across controlled training runs, the converged diffusion loss decreases approximately linearly with GPG and follows a power law with ED. Guided by these scaling properties, we improve \\emph{diffusability} by constructing structured prompts with semantic and geometric annotations derived from images, and improve \\emph{promptability} by training a prompter through supervised fine-tuning, cold-start, and verifier-gated on-policy distillation. The resulting system outperforms all evaluated open-weight models on nearly every compositional, reasoning, and world-knowledge benchmark, while matching or surpassing the strongest closed-weight models on most evaluations.",
       "venue": "arXiv",
-      "published": "2026-07-30T17:46:55Z",
-      "updated": "2026-07-30T17:46:55Z",
-      "url": "http://arxiv.org/abs/2607.28595v1",
-      "pdfUrl": "https://arxiv.org/pdf/2607.28595v1",
+      "published": "2026-07-31T17:56:52Z",
+      "updated": "2026-07-31T17:56:52Z",
+      "url": "http://arxiv.org/abs/2607.29679v1",
+      "pdfUrl": "https://arxiv.org/pdf/2607.29679v1",
       "categories": [
         "cs.CV"
       ],
-      "collectedAt": "2026-08-02T21:11:27.159Z",
-      "firstSeenAt": "2026-08-02T21:11:27.159Z",
-      "lastSeenAt": "2026-08-02T21:11:27.159Z",
+      "collectedAt": "2026-08-03T21:31:11.174Z",
+      "firstSeenAt": "2026-08-03T21:31:11.174Z",
+      "lastSeenAt": "2026-08-03T21:31:11.174Z",
       "collectionType": "daily-latest",
       "matchedQuery": "(all:agent OR all:agents OR all:agentic OR all:reasoning OR all:post-training OR all:alignment OR all:multimodal OR all:world-model) AND (all:LLM OR all:foundation OR all:language)",
       "collectionTypes": [
@@ -1015,7 +1012,7 @@
       "conferenceYears": [],
       "recommendationTrack": "algorithm-trend",
       "recommendationLabel": "算法趋势观察",
-      "recommendationScore": 40.2,
+      "recommendationScore": 34.5,
       "relevanceReason": "命中 LLM/Agent/多模态/后训练等算法趋势主题",
       "pdfStatus": "remote",
       "workflow": {
@@ -1027,7 +1024,7 @@
         "pdfStatus": "remote"
       },
       "digest": {
-        "summaryZh": "AI 摘要未生成。原始摘要要点：The fundamental goal of agentic visual reasoning is to improve the success rate of multimodal large language models (MLLMs) on complex tasks, rather than merely...",
+        "summaryZh": "AI 摘要未生成。原始摘要要点：We study empirical scaling properties for text conditioning in visual generation. Such properties have rarely been measured because diffusion loss does not scal...",
         "motivationZh": "命令行启用了 --no-ai",
         "methodZh": "请配置 AI 后重新运行，以生成方法提炼。",
         "experimentsZh": "来源元数据未披露完整实验设置或结果。",
