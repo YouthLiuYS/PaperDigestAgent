@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-08-07T01:00:07.626Z",
-  "digestDate": "2026-08-07",
+  "generatedAt": "2026-08-07T21:05:32.457Z",
+  "digestDate": "2026-08-08",
   "kind": "daily-new",
   "timezone": "Asia/Shanghai",
   "siteUrl": "https://YouthLiuYS.github.io/PaperDigestAgent/",
@@ -126,7 +126,7 @@
     "dailyCandidates": 8,
     "conferenceCandidates": 0,
     "backfillCandidates": 0,
-    "rawCandidates": 57,
+    "rawCandidates": 67,
     "newlyAdded": 8,
     "pendingDigest": 8,
     "pendingEmail": 0,
@@ -141,36 +141,161 @@
   },
   "papers": [
     {
-      "id": "arxiv:2608.04169",
+      "id": "arxiv:2608.05483",
       "source": "arXiv",
-      "title": "On Design Principles for Efficient Heterogeneous DRAM-PIM-GPU Systems",
+      "title": "PLoRA: An NDP-Enhanced Pooled-Memory System for Cost-Efficient Multi-LoRA Serving",
       "authors": [
-        "Corey Lammie",
-        "Hadjer Benmeziane",
-        "William Andrew Simon",
-        "Irem Boybat"
+        "Zhongkai Yu",
+        "Ohm Rishabh Venkatachalam",
+        "Zheng Wang",
+        "Yikai Li",
+        "Yichen Lin",
+        "Zihao Yu",
+        "Yuke Wang",
+        "Liu Liu",
+        "Xulong Tang",
+        "Shuyi Pei",
+        "Yangwook Kang",
+        "Yufei Ding"
       ],
       "authorAffiliations": [],
       "affiliations": [],
-      "abstract": "Heterogeneous DRAM-based processing-in-memory (PIM)-GPU systems promise significant efficiency gains for decode-phase large language model (LLM) inference, particularly in long-output generation, yet current design practices overlook critical factors that determine real-world performance. Through systematic evaluation of diverse architectures and workloads (OPT-7B/70B, Mamba2-2.7B/70B), we reveal three fundamental design principles: (i) static power consumption (DRAM leakage, refresh, and GPU idle power) can dominate the efficiency calculus, causing dynamic-only models to overestimate tokens/s/W by up to 3.85X for realistic deployments (Mamba2-2.7B, batch size 1, 128 input tokens, and 2,048 output tokens); (ii) decoding performance is monotonically non-decreasing with channel count across all evaluated models and workloads, generally plateauing at high channel counts for low-batch workloads; under a fixed-capacity sweep, all models instead share a common near-optimal hierarchy configuration, with substantially larger misconfiguration penalties for attention-based models; (iii) workload mapping strategies provide bounded improvements (up to 14.0%/17.4% kernel-level latency/energy reduction, up to 5.6% end-to-end gain) and are not primary bottlenecks. Significant efficiency gains require system-wide co-optimization. These principles provide design-space guidance for architects designing the next generation of memory-accelerated LLM systems.",
+      "abstract": "Multi-LoRA serving is how one base model becomes thousands of specialized variants, one adapter per user, task, or agent, and the deployments can hold 1000-plus adapters. Serving them is hard because the workload inverts what GPUs provide: terabytes of memory against only tens of TFLOPS, and because every published system stages its adapters from CPU DRAM over PCIe, where each access pays a kernel stop and a host-run copy and capacity ends at the motherboard's DIMM slots. Meanwhile, memory-semantic fabrics such as CXL and NVLink are converging on pooled memory that an accelerator addresses with its own loads and stores, and near-data processing (NDP) can place compute beside the pooled data. How to serve multi-LoRA workloads on such hardware remains unexplored. This paper introduces PLoRA, an NDP-enhanced pooled-memory system for cost-efficient multi-LoRA serving. PLoRA keeps adapters and KV cache in the pool and returns only reduced results over the link, through a read-compute interface the GPU drives with its own loads and stores. Above this architecture, a GPU memory management system picks among four LoRA and two attention execution strategies for each adapter and caches the most performance-critical bytes in GPU memory, guided by a link-parameterized cost model. On one H100 serving 1000 adapters, PLoRA attains the lowest decode latency on every model and workload we measure, averaging 6.6x below a real-machine S-LoRA at under 3.4% added device area. The link itself stops mattering: throughput saturates at 32 GB/s on short contexts, a quarter of CXL 3.1, and the verdict survives scale: per-GPU demand falls from 7B to a modeled 1.2T deployment once adapter traffic shards with the tensor parallelism. The design runs unchanged from CXL-class to NVLink-class fabrics, and surplus bandwidth buys pooled capacity rather than speed.",
       "venue": "arXiv",
-      "published": "2026-08-04T19:26:54Z",
-      "updated": "2026-08-04T19:26:54Z",
-      "url": "http://arxiv.org/abs/2608.04169v1",
-      "pdfUrl": "https://arxiv.org/pdf/2608.04169v1",
+      "published": "2026-08-06T00:19:56Z",
+      "updated": "2026-08-06T00:19:56Z",
+      "url": "http://arxiv.org/abs/2608.05483v1",
+      "pdfUrl": "https://arxiv.org/pdf/2608.05483v1",
       "categories": [
         "cs.AR",
-        "cs.ET"
+        "cs.DC"
       ],
-      "collectedAt": "2026-08-07T00:55:22.050Z",
-      "firstSeenAt": "2026-08-07T00:55:22.050Z",
-      "lastSeenAt": "2026-08-07T00:55:22.050Z",
+      "collectedAt": "2026-08-07T21:01:08.471Z",
+      "firstSeenAt": "2026-08-07T21:01:08.471Z",
+      "lastSeenAt": "2026-08-07T21:01:08.471Z",
       "collectionType": "daily-latest",
-      "matchedQuery": "(all:prefill OR all:decoding OR all:KV OR all:cache OR all:attention) AND (all:accelerator OR all:kernel OR all:compiler OR all:serving OR all:memory) AND (all:LLM OR all:transformer)",
+      "matchedQuery": "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)",
       "collectionTypes": [
         "daily-latest"
       ],
       "matchedQueries": [
+        "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)"
+      ],
+      "targetThemes": [],
+      "conferenceVenues": [],
+      "conferenceYears": [],
+      "recommendationTrack": "hardware-primary",
+      "recommendationLabel": "硬件体系结构主线",
+      "recommendationScore": 225.5,
+      "relevanceReason": "命中 PNM/processing-near-memory、近数据计算、memory-side/CXL/HBM 或 AI 处理器体系结构主题",
+      "pdfStatus": "remote",
+      "workflow": {
+        "digestStatus": "pending",
+        "emailStatus": "waiting-digest",
+        "digestError": "命令行启用了 --no-ai",
+        "harnessVersion": "paper-reader-v1",
+        "collectStatus": "collected",
+        "pdfStatus": "remote"
+      },
+      "digest": {
+        "summaryZh": "AI 摘要未生成。原始摘要要点：Multi-LoRA serving is how one base model becomes thousands of specialized variants, one adapter per user, task, or agent, and the deployments can hold 1000-plus...",
+        "motivationZh": "命令行启用了 --no-ai",
+        "methodZh": "请配置 AI 后重新运行，以生成方法提炼。",
+        "experimentsZh": "来源元数据未披露完整实验设置或结果。",
+        "affiliationsZh": "未在 DBLP/arXiv 元数据中提供。",
+        "tags": [
+          "cs.AR",
+          "cs.DC"
+        ],
+        "importance": 3,
+        "researchFitZh": "AI harness 尚未完成分析，无法判断与用户研究方向的具体关系。",
+        "hardwareRelevance": 1,
+        "algorithmRelevance": 1,
+        "systemRelevance": 1,
+        "readPriority": "archive",
+        "whyReadZh": "需要完成 motivation、method 和实验结果分析后再判断是否值得深读。",
+        "limitationsZh": "命令行启用了 --no-ai",
+        "motivationDetail": {
+          "problemZh": "harness 未完成分析。",
+          "gapZh": "harness 未完成分析。",
+          "whyImportantZh": "harness 未完成分析。",
+          "userRelevanceZh": "harness 未完成分析。",
+          "evidence": "not analyzed"
+        },
+        "methodDetail": {
+          "coreIdeaZh": "harness 未完成分析。",
+          "componentsZh": [
+            "未分析"
+          ],
+          "hardwareSystemDetailZh": "harness 未完成分析。",
+          "noveltyZh": "harness 未完成分析。",
+          "evidence": "not analyzed"
+        },
+        "experimentDetail": {
+          "setupZh": "harness 未完成分析。",
+          "baselinesZh": "harness 未完成分析。",
+          "metricsZh": [
+            "未分析"
+          ],
+          "mainResultsZh": "harness 未完成分析。",
+          "limitationsZh": "harness 未完成分析。",
+          "evidence": "not analyzed"
+        },
+        "evidence": {
+          "usedSources": [
+            "metadata"
+          ],
+          "affiliationEvidence": "",
+          "experimentEvidence": "",
+          "missingFields": [
+            "motivation",
+            "method",
+            "experiments"
+          ]
+        },
+        "confidence": {
+          "summary": 0.2,
+          "motivation": 0,
+          "method": 0,
+          "experiments": 0,
+          "affiliations": 0
+        }
+      }
+    },
+    {
+      "id": "arxiv:2608.05303",
+      "source": "arXiv",
+      "title": "EdgeXpert: An Edge Device for Memory-Efficient LLM Inference with Mixture-of-Experts and Speculative Decoding",
+      "authors": [
+        "Sangwoo Ha",
+        "Hyunwoo Seo",
+        "Yurim Jo",
+        "Youngjin Moon",
+        "Hoi-Jun Yoo"
+      ],
+      "authorAffiliations": [],
+      "affiliations": [],
+      "abstract": "On-device deployment of Large Language Models (LLMs) has become essential for personalized edge applications. A primary bottleneck is external memory access (EMA) in feed-forward network (FFN) layers. Speculative decoding and mixture-of-experts (MoE) are promising solutions. Speculative decoding reduces the number of decoding stages by generating multiple tokens per stage, and MoE minimizes per-stage cost through sparse expert activation. However, there is an incompatibility when combining these two techniques. We propose EdgeXpert, a software-hardware co-designed LLM accelerator that resolves this incompatibility. In the prefill stage, the prompt-wise expert reuse reformulates routing as prompt-level expert reuse rather than independent per-token expert selection. It identifies important tokens using a lightweight encoder, constructs a shared expert set from them, and routes less important tokens with a reduced expert budget to lower expert EMA. In the decode stage, depth-aware expert coalescing exploits the contextual similarity and mutual exclusivity of same-depth candidate tokens. Rather than loading the union of all required channels, EdgeXpert loads only salient channels and applies computational calibration to recover accuracy without additional memory access. Synthesized in Samsung 28nm technology at 800 MHz, EdgeXpert achieves up to 56.3% latency reduction and 44.1% energy reduction compared to prior works, while maintaining near-baseline accuracy.",
+      "venue": "arXiv",
+      "published": "2026-08-05T18:03:47Z",
+      "updated": "2026-08-05T18:03:47Z",
+      "url": "http://arxiv.org/abs/2608.05303v1",
+      "pdfUrl": "https://arxiv.org/pdf/2608.05303v1",
+      "categories": [
+        "cs.AR",
+        "cs.CL",
+        "cs.LG"
+      ],
+      "collectedAt": "2026-08-07T21:00:45.519Z",
+      "firstSeenAt": "2026-08-07T21:00:45.520Z",
+      "lastSeenAt": "2026-08-07T21:00:45.520Z",
+      "collectionType": "daily-latest",
+      "matchedQuery": "(cat:cs.AR OR cat:cs.DC OR cat:cs.PF) AND (all:LLM OR all:transformer OR all:foundation OR all:language) AND (all:accelerator OR all:processor OR all:architecture OR all:hardware OR all:system OR all:serving OR all:training OR all:inference OR all:cache)",
+      "collectionTypes": [
+        "daily-latest"
+      ],
+      "matchedQueries": [
+        "(cat:cs.AR OR cat:cs.DC OR cat:cs.PF) AND (all:LLM OR all:transformer OR all:foundation OR all:language) AND (all:accelerator OR all:processor OR all:architecture OR all:hardware OR all:system OR all:serving OR all:training OR all:inference OR all:cache)",
         "(all:prefill OR all:decoding OR all:KV OR all:cache OR all:attention) AND (all:accelerator OR all:kernel OR all:compiler OR all:serving OR all:memory) AND (all:LLM OR all:transformer)",
         "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)"
       ],
@@ -178,14 +303,15 @@
       "conferenceVenues": [],
       "conferenceYears": [],
       "digest": {
-        "summaryZh": "AI 摘要未生成。原始摘要要点：Heterogeneous DRAM-based processing-in-memory (PIM)-GPU systems promise significant efficiency gains for decode-phase large language model (LLM) inference, part...",
+        "summaryZh": "AI 摘要未生成。原始摘要要点：On-device deployment of Large Language Models (LLMs) has become essential for personalized edge applications. A primary bottleneck is external memory access (EM...",
         "motivationZh": "命令行启用了 --no-ai",
         "methodZh": "请配置 AI 后重新运行，以生成方法提炼。",
         "experimentsZh": "来源元数据未披露完整实验设置或结果。",
         "affiliationsZh": "未在 DBLP/arXiv 元数据中提供。",
         "tags": [
           "cs.AR",
-          "cs.ET"
+          "cs.CL",
+          "cs.LG"
         ],
         "importance": 3,
         "researchFitZh": "AI harness 尚未完成分析，无法判断与用户研究方向的具体关系。",
@@ -243,7 +369,7 @@
       },
       "recommendationTrack": "hardware-primary",
       "recommendationLabel": "硬件体系结构主线",
-      "recommendationScore": 190,
+      "recommendationScore": 192,
       "relevanceReason": "命中 AI 处理器、体系结构、量化、训推系统或内存/缓存优化主题",
       "pdfStatus": "remote",
       "workflow": {
@@ -278,9 +404,9 @@
         "cs.AI",
         "cs.AR"
       ],
-      "collectedAt": "2026-08-07T00:55:18.195Z",
-      "firstSeenAt": "2026-08-07T00:55:18.195Z",
-      "lastSeenAt": "2026-08-07T00:55:18.195Z",
+      "collectedAt": "2026-08-07T21:00:45.520Z",
+      "firstSeenAt": "2026-08-07T21:00:45.520Z",
+      "lastSeenAt": "2026-08-07T21:00:45.520Z",
       "collectionType": "daily-latest",
       "matchedQuery": "(cat:cs.AR OR cat:cs.DC OR cat:cs.PF) AND (all:LLM OR all:transformer OR all:foundation OR all:language) AND (all:accelerator OR all:processor OR all:architecture OR all:hardware OR all:system OR all:serving OR all:training OR all:inference OR all:cache)",
       "collectionTypes": [
@@ -373,31 +499,139 @@
       }
     },
     {
-      "id": "arxiv:2608.04338",
+      "id": "arxiv:2608.05784",
       "source": "arXiv",
-      "title": "GPU-Resident CUDA Acceleration for OCUDU 5G PHY and O-RAN Fronthaul: Architecture and Preliminary Performance",
+      "title": "Activity Frames: Deterministic Screen-Activity Compilation for Agent Memory and Replay",
       "authors": [
-        "Matthew Pennybacker",
-        "Wan Liu",
-        "Andriy Kharchenko",
-        "Timothy OShea"
+        "Nossa Iyamu"
       ],
       "authorAffiliations": [],
       "affiliations": [],
-      "abstract": "This paper describes DeepSig's CUDA-based acceleration backend for the OCUDU physical layer and O-RAN fronthaul path, integrated through acceleration interfaces that are largely independent of the underlying acceleration mechanism. The design accelerates PDSCH, PUSCH, SRS, PRACH, split-8 lower-PHY transforms, and O-RAN fronthaul (O-FH) IQ compression/decompression while preserving existing factories, resource-grid interfaces, PRACH-buffer interfaces, and channel processors. CUDA-visible grids, device-side softbit buffers, stream events, pinned staging buffers, and managed-memory policies keep data resident on the accelerator when the platform and radio split permit it. On an NVIDIA DGX Spark platform with a GB10 GPU and ARM CPU host, representative measurements with CPU baselines pinned to high-capacity cores show up to 10.3x PUSCH speedup, 2.7x PDSCH speedup, 19.7x split-8 low-PHY RX speedup with slot-shaped batching and scattered mapped zero-copy, 91.4x O-FH BFP12 decompression speedup, and 28.8x PRACH detector speedup against the production CPU path, with CPU and GPU 10% BLER thresholds agreeing to within 0.064 dB in the tested PUSCH sweeps. The same resident pipeline provides an execution substrate for AI-RAN, allowing machine-learned channel estimation, neural receivers, and AI-native air-interface research to run beside standards-compliant baseband kernels.",
+      "abstract": "Computer-use agents pay full frontier inference to re-derive routines their user has already performed, because an agent's memory today records what the user said, not what the user did. We compile passively captured screen activity into agent memory with a deterministic, zero-model pipeline: it segments a local capture stream into typed activity frames, bounded episodes carrying application, site, timing, input volume, and evidence pointers back to the raw rows, with no model in the loop, so the output is byte-identical, cacheable, and mechanically auditable. On one professional's single-user corpus of 128,756 frames over 51 active days, the compiler reduces a day of raw capture to a prompt-ready context block 86x smaller in 68 ms, and an agent reading that block answers questions about the day at 98.4% accuracy (Wilson 95% CI 91.7-99.7%) against an independent oracle, versus 66-80% for an LLM summary of the same capture, a mid-tier model reading the block matching a frontier one. The same compiler doubles as a demand-side cost instrument. Read off passive, pre-delegation human activity rather than agent rollouts, it supplies two parameters that agent-cost models assume but, to our knowledge, have not measured: the Routine Overhead Ratio R and the routine recurrence h. We report first values of R, a modeled upper bound, at 60-343x, and a delegable recurrence of 9.0% in-sample and 7.7% out-of-sample, for a realistic all-fleet token ceiling near 8%; a compiled routine replays deterministically with the model out of the loop, demonstrated live at zero model tokens on a guard-matched hit. Schema, compiler, and evaluation harness are open.",
       "venue": "arXiv",
-      "published": "2026-08-05T01:29:17Z",
-      "updated": "2026-08-05T01:29:17Z",
-      "url": "http://arxiv.org/abs/2608.04338v1",
-      "pdfUrl": "https://arxiv.org/pdf/2608.04338v1",
+      "published": "2026-08-06T09:17:43Z",
+      "updated": "2026-08-06T09:17:43Z",
+      "url": "http://arxiv.org/abs/2608.05784v1",
+      "pdfUrl": "https://arxiv.org/pdf/2608.05784v1",
       "categories": [
-        "eess.SP",
-        "cs.DC",
-        "cs.NI"
+        "cs.AI"
       ],
-      "collectedAt": "2026-08-07T00:55:23.966Z",
-      "firstSeenAt": "2026-08-07T00:55:23.966Z",
-      "lastSeenAt": "2026-08-07T00:55:23.966Z",
+      "collectedAt": "2026-08-07T21:01:08.470Z",
+      "firstSeenAt": "2026-08-07T21:01:08.470Z",
+      "lastSeenAt": "2026-08-07T21:01:08.470Z",
+      "collectionType": "daily-latest",
+      "matchedQuery": "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)",
+      "collectionTypes": [
+        "daily-latest"
+      ],
+      "matchedQueries": [
+        "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)"
+      ],
+      "targetThemes": [],
+      "conferenceVenues": [],
+      "conferenceYears": [],
+      "recommendationTrack": "hardware-primary",
+      "recommendationLabel": "硬件体系结构主线",
+      "recommendationScore": 167.5,
+      "relevanceReason": "命中 AI 处理器、体系结构、量化、训推系统或内存/缓存优化主题",
+      "pdfStatus": "remote",
+      "workflow": {
+        "digestStatus": "pending",
+        "emailStatus": "waiting-digest",
+        "digestError": "命令行启用了 --no-ai",
+        "harnessVersion": "paper-reader-v1",
+        "collectStatus": "collected",
+        "pdfStatus": "remote"
+      },
+      "digest": {
+        "summaryZh": "AI 摘要未生成。原始摘要要点：Computer-use agents pay full frontier inference to re-derive routines their user has already performed, because an agent's memory today records what the user sa...",
+        "motivationZh": "命令行启用了 --no-ai",
+        "methodZh": "请配置 AI 后重新运行，以生成方法提炼。",
+        "experimentsZh": "来源元数据未披露完整实验设置或结果。",
+        "affiliationsZh": "未在 DBLP/arXiv 元数据中提供。",
+        "tags": [
+          "cs.AI"
+        ],
+        "importance": 3,
+        "researchFitZh": "AI harness 尚未完成分析，无法判断与用户研究方向的具体关系。",
+        "hardwareRelevance": 1,
+        "algorithmRelevance": 1,
+        "systemRelevance": 1,
+        "readPriority": "archive",
+        "whyReadZh": "需要完成 motivation、method 和实验结果分析后再判断是否值得深读。",
+        "limitationsZh": "命令行启用了 --no-ai",
+        "motivationDetail": {
+          "problemZh": "harness 未完成分析。",
+          "gapZh": "harness 未完成分析。",
+          "whyImportantZh": "harness 未完成分析。",
+          "userRelevanceZh": "harness 未完成分析。",
+          "evidence": "not analyzed"
+        },
+        "methodDetail": {
+          "coreIdeaZh": "harness 未完成分析。",
+          "componentsZh": [
+            "未分析"
+          ],
+          "hardwareSystemDetailZh": "harness 未完成分析。",
+          "noveltyZh": "harness 未完成分析。",
+          "evidence": "not analyzed"
+        },
+        "experimentDetail": {
+          "setupZh": "harness 未完成分析。",
+          "baselinesZh": "harness 未完成分析。",
+          "metricsZh": [
+            "未分析"
+          ],
+          "mainResultsZh": "harness 未完成分析。",
+          "limitationsZh": "harness 未完成分析。",
+          "evidence": "not analyzed"
+        },
+        "evidence": {
+          "usedSources": [
+            "metadata"
+          ],
+          "affiliationEvidence": "",
+          "experimentEvidence": "",
+          "missingFields": [
+            "motivation",
+            "method",
+            "experiments"
+          ]
+        },
+        "confidence": {
+          "summary": 0.2,
+          "motivation": 0,
+          "method": 0,
+          "experiments": 0,
+          "affiliations": 0
+        }
+      }
+    },
+    {
+      "id": "arxiv:2608.05944",
+      "source": "arXiv",
+      "title": "Operating Multi-Node Full Fine-Tuning on NVIDIA B300: A Field Report on Telemetry-Based Triage, Negative Results, and Operational Hardening",
+      "authors": [
+        "Seon Ho Kim",
+        "Ui Jeong Jeon",
+        "Su Hyeon Kim",
+        "Min Tae Hwang"
+      ],
+      "authorAffiliations": [],
+      "affiliations": [],
+      "abstract": "We report operational experience full-fine-tuning a 32.76B-parameter dense model (Qwen3-32B) on 16 x NVIDIA B300 (two nodes, FSDP / ZeRO-3) -- among the first published field accounts on this accelerator. We claim no new algorithm. The individual mechanisms we use are established practice; our contribution is the integrated field experience and a set of calibrated measurements on new hardware. Concretely we offer four practitioner artifacts. (1) A B300-calibrated power-draw triage table that distinguishes compute / communication / data-starvation / checkpoint-or-deadlock / idle by board wattage (utilization% reads 100% during an NCCL hang). (2) A set of honest negative results that dispel common optimization folklore at this scale: a controlled A/B in which per-step NFS reading matches a pretokenized local cache (~53k tok/s) because the corpus fits in page cache and the job is compute-bound; and a reconstruction of an earlier \"throughput collapse\" as NFS/CPU contention rather than a storage-medium limit. (3) Calibrated 4/8/16-GPU strong-scaling and GPU-hour numbers on B300 (near-linear, as expected in this regime; we report absolute values as reference data). (4) A worked failure case -- an epoch-end NCCL deadlock from per-rank token-packing imbalance -- together with a 2.7-second pre-run invariant gate and an external watcher that turn multi-hour silent failures into instant rejections. This deadlock and its remedy correspond to PyTorch's documented Join / equalize-to-minimum practice; we position our instantiation against that prior art and report the GPU-hours the failure cost and the gate saves. The transferable takeaway is operational, not algorithmic: for data-dependent data-parallel jobs, watch power rather than utilization, and verify invariants before launch -- a passing smoke test is not evidence of a safe full run.",
+      "venue": "arXiv",
+      "published": "2026-08-06T12:11:25Z",
+      "updated": "2026-08-06T12:11:25Z",
+      "url": "http://arxiv.org/abs/2608.05944v1",
+      "pdfUrl": "https://arxiv.org/pdf/2608.05944v1",
+      "categories": [
+        "cs.DC",
+        "cs.LG"
+      ],
+      "collectedAt": "2026-08-07T21:01:08.470Z",
+      "firstSeenAt": "2026-08-07T21:01:08.470Z",
+      "lastSeenAt": "2026-08-07T21:01:08.470Z",
       "collectionType": "daily-latest",
       "matchedQuery": "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)",
       "collectionTypes": [
@@ -423,15 +657,14 @@
         "pdfStatus": "remote"
       },
       "digest": {
-        "summaryZh": "AI 摘要未生成。原始摘要要点：This paper describes DeepSig's CUDA-based acceleration backend for the OCUDU physical layer and O-RAN fronthaul path, integrated through acceleration interfaces...",
+        "summaryZh": "AI 摘要未生成。原始摘要要点：We report operational experience full-fine-tuning a 32.76B-parameter dense model (Qwen3-32B) on 16 x NVIDIA B300 (two nodes, FSDP / ZeRO-3) -- among the first p...",
         "motivationZh": "命令行启用了 --no-ai",
         "methodZh": "请配置 AI 后重新运行，以生成方法提炼。",
         "experimentsZh": "来源元数据未披露完整实验设置或结果。",
         "affiliationsZh": "未在 DBLP/arXiv 元数据中提供。",
         "tags": [
-          "eess.SP",
           "cs.DC",
-          "cs.NI"
+          "cs.LG"
         ],
         "importance": 3,
         "researchFitZh": "AI harness 尚未完成分析，无法判断与用户研究方向的具体关系。",
@@ -489,29 +722,32 @@
       }
     },
     {
-      "id": "arxiv:2608.04235",
+      "id": "arxiv:2608.06108",
       "source": "arXiv",
-      "title": "Scale-CDA: A Scalable Prototype to Democratize AI-Assisted Cooperative Driving Automation (CDA) for Production Cars",
+      "title": "Evaluating Investment Logic in Large Language Models: A Real-World Benchmark Towards Personalzied Financial Agents",
       "authors": [
-        "Hao Zhou",
-        "Shengming Yuan",
-        "Yuhang Wang",
-        "Haibin Wen"
+        "Yuanhong Jiang",
+        "Jingjie Zou",
+        "Zhenghong Lin",
+        "Xusheng Yu",
+        "Qiqi Huang",
+        "Shuai Jia",
+        "Shijie Dai"
       ],
       "authorAffiliations": [],
       "affiliations": [],
-      "abstract": "This study presents Scale-CDA, an open-hardware/open-software tool-chain that democratizes a functional version of Generative-AI-assisted Cooperative Driving Automation (CDA). Built on the community-maintained OpenDBC interface (300+ car models) and Openpilot Level-2 ADAS, Scale-CDA achieves plug-and-play retrofitting with off-the-shelf parts that cost under US \\$1,000 (edge PC, webcam, CAN adapter, optional LTE/Wi-Fi radios). A lightweight Vehicle-to-Everything (V2X) stack using MQTT over Wi-Fi 6/LTE provides bidirectional connectivity. Field experiments in a 7.5 km test loop demonstrated mean round-trip latency of 5.25 ms and link speeds near 100 Mb/s, validating Wi-Fi 6 as a viable, low-cost medium for non-safety-critical CDA messaging . At the intelligence layer, an edge-deployed multimodal large-language model (MLLM) ingests synchronized vision, CAN, and V2X streams via a Model-Context-Protocol (MCP) bridge, then issues structured JSON advisories and motion primitives. A library of meta-action executors translates these high-level commands into verified Openpilot planner hooks, enabling lane changes, gap management, and emergency stops without altering the safety-certified core. In multi-vehicle road tests the full stack maintained end-to-end decision latencies below 60 ms, while preserving data privacy by keeping inference on-board. Collectively, Scale-CDA closes two critical gaps that have limited CDA R\\&D: (i) affordable, interoperable hardware for large-scale field trials, and (ii) a standardized interface that lets GenAI reason and act on everyday cars. By releasing the bills-of-materials, connectivity APIs, and GenAI bridges as open resources, this work offers transportation agencies and researchers a practical blueprint for democratizing cooperative autonomy, accelerating deployments that enhance traffic efficiency and safety.",
+      "abstract": "Investment competence is inherently personalized: the same market evidence can justify different actions for investors with different goals, horizons, portfolios, and risk boundaries. Yet financial LLMs are evaluated either by static question answering or by terminal profit and loss. The former omits agency; the latter cannot reveal whether a profitable action was grounded, profile-consistent, or merely lucky. We ask whether the community is using the wrong ruler for consequential agents. We introduce \\textsc{InvestLogicBench}, a process-native benchmark containing 201,247 documented decisions from 151 real-world investors. Each episode instantiates a \\textbf{P$\\rightarrow$E$\\rightarrow$R$\\rightarrow$D$\\rightarrow$O} trace: investor \\textit{Profile}, observable market \\textit{Events}, investment \\textit{Reasoning}, executable \\textit{Decision}, and delayed \\textit{Outcome}. The release includes profile construction, point-in-time event binding, structured logic, horizons, outcomes, and post-mortems, and supports comprehension, profile-conditioned generation, and end-to-end replay. Across four leading LLMs, logical plausibility remains near 4/5 while event grounding is only 0.8--2.8/5; return and process quality also disagree. These results expose polished but weakly grounded reasoning that outcome-only evaluation hides. We further argue that P$\\rightarrow$E$\\rightarrow$R$\\rightarrow$D$\\rightarrow$O should be a data-system interface, requiring versioned profiles, temporal provenance, inspectable retrieval, decision ledgers, and replayable outcomes. Finance is our stress test for a broader class of personalized, consequential agents.",
       "venue": "arXiv",
-      "published": "2026-08-04T21:25:23Z",
-      "updated": "2026-08-04T21:25:23Z",
-      "url": "http://arxiv.org/abs/2608.04235v1",
-      "pdfUrl": "https://arxiv.org/pdf/2608.04235v1",
+      "published": "2026-08-06T14:41:56Z",
+      "updated": "2026-08-06T14:41:56Z",
+      "url": "http://arxiv.org/abs/2608.06108v1",
+      "pdfUrl": "https://arxiv.org/pdf/2608.06108v1",
       "categories": [
-        "cs.ET"
+        "cs.AI"
       ],
-      "collectedAt": "2026-08-07T00:55:23.966Z",
-      "firstSeenAt": "2026-08-07T00:55:23.966Z",
-      "lastSeenAt": "2026-08-07T00:55:23.966Z",
+      "collectedAt": "2026-08-07T21:01:08.470Z",
+      "firstSeenAt": "2026-08-07T21:01:08.470Z",
+      "lastSeenAt": "2026-08-07T21:01:08.470Z",
       "collectionType": "daily-latest",
       "matchedQuery": "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)",
       "collectionTypes": [
@@ -525,7 +761,7 @@
       "conferenceYears": [],
       "recommendationTrack": "hardware-primary",
       "recommendationLabel": "硬件体系结构主线",
-      "recommendationScore": 163.25,
+      "recommendationScore": 153.25,
       "relevanceReason": "命中 AI 处理器、体系结构、量化、训推系统或内存/缓存优化主题",
       "pdfStatus": "remote",
       "workflow": {
@@ -537,13 +773,13 @@
         "pdfStatus": "remote"
       },
       "digest": {
-        "summaryZh": "AI 摘要未生成。原始摘要要点：This study presents Scale-CDA, an open-hardware/open-software tool-chain that democratizes a functional version of Generative-AI-assisted Cooperative Driving Au...",
+        "summaryZh": "AI 摘要未生成。原始摘要要点：Investment competence is inherently personalized: the same market evidence can justify different actions for investors with different goals, horizons, portfolio...",
         "motivationZh": "命令行启用了 --no-ai",
         "methodZh": "请配置 AI 后重新运行，以生成方法提炼。",
         "experimentsZh": "来源元数据未披露完整实验设置或结果。",
         "affiliationsZh": "未在 DBLP/arXiv 元数据中提供。",
         "tags": [
-          "cs.ET"
+          "cs.AI"
         ],
         "importance": 3,
         "researchFitZh": "AI harness 尚未完成分析，无法判断与用户研究方向的具体关系。",
@@ -601,260 +837,40 @@
       }
     },
     {
-      "id": "arxiv:2608.04390",
+      "id": "arxiv:2608.06374",
       "source": "arXiv",
-      "title": "EdgeLM: Edge Demonstrations for Language Models' Table Understanding",
+      "title": "DyPES-VLA: Learning Shared Dynamics Priors and Embodiment-Specific Control for Cross-Embodiment Manipulation",
       "authors": [
-        "Soroush Omidvartehrani",
-        "Mohammadamin Habibollah",
-        "Mohammadreza Daviran",
-        "Davood Rafiei"
+        "Junfeng Li",
+        "Junjie He",
+        "Zhide Zhong",
+        "Yangyang Zheng",
+        "Pingyue Sheng",
+        "Jiayu Dong",
+        "Ruixin Li",
+        "Haodong Yan",
+        "Jiaguan Zhu",
+        "Tianran Zhang",
+        "Runze Yu",
+        "Wen Chen",
+        "Liuqing Yang",
+        "Yuxiang Gao",
+        "Haoang Li"
       ],
       "authorAffiliations": [],
       "affiliations": [],
-      "abstract": "Large language models (LLMs) perform table-centric prediction through in-context learning, making demonstration selection critical to performance. Existing retrieval methods prioritize similarity to the query, but similar demonstrations often reinforce the model's likely prediction rather than reveal the distinctions needed for difficult decisions. We propose EdgeLM, a retrieval framework that instead selects edge evidence, demonstrations that are both relevant to the query and informative about the decision boundary. EdgeLM retrieves two complementary forms of edge evidence by selecting data edges, nearby examples with different ground-truth labels, and model edges, similar examples previously misclassified by the deployed model. EdgeLM requires neither model retraining nor task-specific engineering. Across five data wrangling tasks, fifteen datasets, and five open-weight and proprietary LLMs, EdgeLM consistently achieves the best or near-best performance in every setting, while ablations show that the two forms of edge evidence provide complementary benefits. Our code and datasets are publicly available at https://github.com/soroushomidvar/EdgeLM.",
+      "abstract": "Vision-Language-Action (VLA) models have become a powerful paradigm for robot manipulation, but training a single generalist policy for heterogeneous robot embodiments remains an open problem. Existing methods have two main limitations. First, they underuse dynamics priors shared across diverse visual and interaction data, limiting cross-embodiment transfer. Second, they require extensive manual preprocessing to convert embodiment-specific actions into a common format. To overcome these limitations, we propose DyPES-VLA, a cross-embodiment VLA that learns shared Dynamics Priors and Embodiment-Specific control. First, we learn shared dynamics priors by training the vision-language model (VLM) with a future-prediction objective on cross-embodiment data, driving the shared query representation to capture object motion, contact, and interaction-induced scene changes. Second, an embodiment-specific Mixture-of-Experts (MoE) action head translates these shared dynamics priors into executable controls directly in each embodiment's native action space, without manually pre-aligning heterogeneous actions into a common format. This head shares attention layers to capture common temporal action structures, while its embodiment-specific feed-forward experts resolve the unique kinematic constraints and control semantics of distinct embodiments. As a generalist policy, our \\ourmethod achieves state-of-the-art performance across simulation and real-world evaluations, reaching 98.0% success on LIBERO, 59.25% on RoboCasa-GR1, and 89.02% on RoboTwin~2.0.",
       "venue": "arXiv",
-      "published": "2026-08-05T02:45:24Z",
-      "updated": "2026-08-05T02:45:24Z",
-      "url": "http://arxiv.org/abs/2608.04390v1",
-      "pdfUrl": "https://arxiv.org/pdf/2608.04390v1",
+      "published": "2026-08-06T17:59:20Z",
+      "updated": "2026-08-06T17:59:20Z",
+      "url": "http://arxiv.org/abs/2608.06374v1",
+      "pdfUrl": "https://arxiv.org/pdf/2608.06374v1",
       "categories": [
-        "cs.CL",
-        "cs.DB"
+        "cs.RO"
       ],
-      "collectedAt": "2026-08-07T00:55:23.966Z",
-      "firstSeenAt": "2026-08-07T00:55:23.966Z",
-      "lastSeenAt": "2026-08-07T00:55:23.966Z",
-      "collectionType": "daily-latest",
-      "matchedQuery": "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)",
-      "collectionTypes": [
-        "daily-latest"
-      ],
-      "matchedQueries": [
-        "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)"
-      ],
-      "targetThemes": [],
-      "conferenceVenues": [],
-      "conferenceYears": [],
-      "recommendationTrack": "hardware-primary",
-      "recommendationLabel": "硬件体系结构主线",
-      "recommendationScore": 150,
-      "relevanceReason": "命中 AI 处理器、体系结构、量化、训推系统或内存/缓存优化主题",
-      "pdfStatus": "remote",
-      "workflow": {
-        "digestStatus": "pending",
-        "emailStatus": "waiting-digest",
-        "digestError": "命令行启用了 --no-ai",
-        "harnessVersion": "paper-reader-v1",
-        "collectStatus": "collected",
-        "pdfStatus": "remote"
-      },
-      "digest": {
-        "summaryZh": "AI 摘要未生成。原始摘要要点：Large language models (LLMs) perform table-centric prediction through in-context learning, making demonstration selection critical to performance. Existing retr...",
-        "motivationZh": "命令行启用了 --no-ai",
-        "methodZh": "请配置 AI 后重新运行，以生成方法提炼。",
-        "experimentsZh": "来源元数据未披露完整实验设置或结果。",
-        "affiliationsZh": "未在 DBLP/arXiv 元数据中提供。",
-        "tags": [
-          "cs.CL",
-          "cs.DB"
-        ],
-        "importance": 3,
-        "researchFitZh": "AI harness 尚未完成分析，无法判断与用户研究方向的具体关系。",
-        "hardwareRelevance": 1,
-        "algorithmRelevance": 1,
-        "systemRelevance": 1,
-        "readPriority": "archive",
-        "whyReadZh": "需要完成 motivation、method 和实验结果分析后再判断是否值得深读。",
-        "limitationsZh": "命令行启用了 --no-ai",
-        "motivationDetail": {
-          "problemZh": "harness 未完成分析。",
-          "gapZh": "harness 未完成分析。",
-          "whyImportantZh": "harness 未完成分析。",
-          "userRelevanceZh": "harness 未完成分析。",
-          "evidence": "not analyzed"
-        },
-        "methodDetail": {
-          "coreIdeaZh": "harness 未完成分析。",
-          "componentsZh": [
-            "未分析"
-          ],
-          "hardwareSystemDetailZh": "harness 未完成分析。",
-          "noveltyZh": "harness 未完成分析。",
-          "evidence": "not analyzed"
-        },
-        "experimentDetail": {
-          "setupZh": "harness 未完成分析。",
-          "baselinesZh": "harness 未完成分析。",
-          "metricsZh": [
-            "未分析"
-          ],
-          "mainResultsZh": "harness 未完成分析。",
-          "limitationsZh": "harness 未完成分析。",
-          "evidence": "not analyzed"
-        },
-        "evidence": {
-          "usedSources": [
-            "metadata"
-          ],
-          "affiliationEvidence": "",
-          "experimentEvidence": "",
-          "missingFields": [
-            "motivation",
-            "method",
-            "experiments"
-          ]
-        },
-        "confidence": {
-          "summary": 0.2,
-          "motivation": 0,
-          "method": 0,
-          "experiments": 0,
-          "affiliations": 0
-        }
-      }
-    },
-    {
-      "id": "arxiv:2608.04879",
-      "source": "arXiv",
-      "title": "Training Crossroads for Recurrent Vision Transformers: Recurrence, Neural ODEs, and Deep Supervision",
-      "authors": [
-        "Grzegorz Gruszczynski",
-        "Pawel Olszowiec",
-        "Michal Byra",
-        "Grzegorz Stefanski",
-        "Alberto Presta"
-      ],
-      "authorAffiliations": [],
-      "affiliations": [],
-      "abstract": "Vision Transformers (ViTs) achieve strong image-recognition performance, but their parameter count grows linearly with depth when each block is independently parameterized. Single-block recurrent ViTs (bViT) remove this growth by repeatedly applying one shared block. Rather than proposing a new architecture, we fix a bViT and provide a controlled empirical characterization of three training and inference regimes under a common CIFAR-100 protocol, asking: (i)~when does recurrence beat independently parameterized depth---at matched FLOPs or at matched parameter memory? (ii)~when a residual recurrent block is trained through an ODE solver, does solver order act as numerical refinement or as an architectural bias? and (iii)~what does robustness beyond the training horizon cost in nominal accuracy? We find that standard ViTs remain preferable when FLOPs are the primary constraint, whereas recurrent ViTs offer a better accuracy--parameter trade-off under memory constraints. Consistent with the standard view of residual networks as Euler discretizations of ODEs, the continuous-time analogue of a residual recurrent block is the state-subtracted vector field $\\dot{z}=F_θ(z)-z$; although known in principle, this distinction is easy to violate when the block is wrapped as a black-box vector field, and we qualify the cost at few accuracy points. Because the vector field is learned jointly with the solver, higher-order solvers act as a solver-induced architectural bias rather than a numerical-accuracy improvement, and their gains are not uniform. Finally, stage-wise deep supervision traces an accuracy--robustness frontier: it does not improve nominal accuracy, but degrades gracefully far beyond the training horizon, where naive recurrence collapses to near-random performance.",
-      "venue": "arXiv",
-      "published": "2026-08-05T14:06:50Z",
-      "updated": "2026-08-05T14:06:50Z",
-      "url": "http://arxiv.org/abs/2608.04879v1",
-      "pdfUrl": "https://arxiv.org/pdf/2608.04879v1",
-      "categories": [
-        "cs.LG",
-        "cs.CV"
-      ],
-      "collectedAt": "2026-08-07T00:55:23.966Z",
-      "firstSeenAt": "2026-08-07T00:55:23.966Z",
-      "lastSeenAt": "2026-08-07T00:55:23.966Z",
-      "collectionType": "daily-latest",
-      "matchedQuery": "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)",
-      "collectionTypes": [
-        "daily-latest"
-      ],
-      "matchedQueries": [
-        "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)"
-      ],
-      "targetThemes": [],
-      "conferenceVenues": [],
-      "conferenceYears": [],
-      "recommendationTrack": "hardware-primary",
-      "recommendationLabel": "硬件体系结构主线",
-      "recommendationScore": 149,
-      "relevanceReason": "命中 AI 处理器、体系结构、量化、训推系统或内存/缓存优化主题",
-      "pdfStatus": "remote",
-      "workflow": {
-        "digestStatus": "pending",
-        "emailStatus": "waiting-digest",
-        "digestError": "命令行启用了 --no-ai",
-        "harnessVersion": "paper-reader-v1",
-        "collectStatus": "collected",
-        "pdfStatus": "remote"
-      },
-      "digest": {
-        "summaryZh": "AI 摘要未生成。原始摘要要点：Vision Transformers (ViTs) achieve strong image-recognition performance, but their parameter count grows linearly with depth when each block is independently pa...",
-        "motivationZh": "命令行启用了 --no-ai",
-        "methodZh": "请配置 AI 后重新运行，以生成方法提炼。",
-        "experimentsZh": "来源元数据未披露完整实验设置或结果。",
-        "affiliationsZh": "未在 DBLP/arXiv 元数据中提供。",
-        "tags": [
-          "cs.LG",
-          "cs.CV"
-        ],
-        "importance": 3,
-        "researchFitZh": "AI harness 尚未完成分析，无法判断与用户研究方向的具体关系。",
-        "hardwareRelevance": 1,
-        "algorithmRelevance": 1,
-        "systemRelevance": 1,
-        "readPriority": "archive",
-        "whyReadZh": "需要完成 motivation、method 和实验结果分析后再判断是否值得深读。",
-        "limitationsZh": "命令行启用了 --no-ai",
-        "motivationDetail": {
-          "problemZh": "harness 未完成分析。",
-          "gapZh": "harness 未完成分析。",
-          "whyImportantZh": "harness 未完成分析。",
-          "userRelevanceZh": "harness 未完成分析。",
-          "evidence": "not analyzed"
-        },
-        "methodDetail": {
-          "coreIdeaZh": "harness 未完成分析。",
-          "componentsZh": [
-            "未分析"
-          ],
-          "hardwareSystemDetailZh": "harness 未完成分析。",
-          "noveltyZh": "harness 未完成分析。",
-          "evidence": "not analyzed"
-        },
-        "experimentDetail": {
-          "setupZh": "harness 未完成分析。",
-          "baselinesZh": "harness 未完成分析。",
-          "metricsZh": [
-            "未分析"
-          ],
-          "mainResultsZh": "harness 未完成分析。",
-          "limitationsZh": "harness 未完成分析。",
-          "evidence": "not analyzed"
-        },
-        "evidence": {
-          "usedSources": [
-            "metadata"
-          ],
-          "affiliationEvidence": "",
-          "experimentEvidence": "",
-          "missingFields": [
-            "motivation",
-            "method",
-            "experiments"
-          ]
-        },
-        "confidence": {
-          "summary": 0.2,
-          "motivation": 0,
-          "method": 0,
-          "experiments": 0,
-          "affiliations": 0
-        }
-      }
-    },
-    {
-      "id": "arxiv:2608.05124",
-      "source": "arXiv",
-      "title": "Chained Recursive Language Models for Multi-Iteration Reasoning",
-      "authors": [
-        "Purbesh Mitra",
-        "Sennur Ulukus"
-      ],
-      "authorAffiliations": [],
-      "affiliations": [],
-      "abstract": "Long context reasoning in large language models (LLMs) is usually constrained by the fact that a single inference trajectory has to simultaneously explore the context, store intermediate state, verify evidence, and produce the final answer. This becomes particularly difficult in tasks that require extraction, counting, ordering, or multi-hop reasoning, where an early mistake can propagate until the final response. In this work, we propose Chained Recursive Language Models (Chained RLM), an inference-time architecture, in which the same underlying model is called repeatedly as a sequence of fresh reasoning roots. Each root receives the original problem and context, but does not inherit the full conversational history. Instead, it receives a compact plain-text summary, a plain-text blackboard, and some durable task-specific artifacts written by predecessor roots. The motivation is to manage the context by chopping into partial tasks rather than one large inference response; in each staged computation, intermediate artifacts can be inspected, corrected, and extended by a later fresh inference by the same model. We describe the system model, handoff mechanism, artifact workspace, and evaluation protocol for this system. We study when fresh-context artifact continuation gives a measurable gain in accuracy over direct LLM answering even with recursive tool-calling.",
-      "venue": "arXiv",
-      "published": "2026-08-05T17:50:08Z",
-      "updated": "2026-08-05T17:50:08Z",
-      "url": "http://arxiv.org/abs/2608.05124v1",
-      "pdfUrl": "https://arxiv.org/pdf/2608.05124v1",
-      "categories": [
-        "cs.CL",
-        "cs.AI",
-        "cs.IT",
-        "cs.LG",
-        "eess.SP"
-      ],
-      "collectedAt": "2026-08-07T00:55:25.712Z",
-      "firstSeenAt": "2026-08-07T00:55:25.712Z",
-      "lastSeenAt": "2026-08-07T00:55:25.712Z",
+      "collectedAt": "2026-08-07T21:01:10.449Z",
+      "firstSeenAt": "2026-08-07T21:01:10.449Z",
+      "lastSeenAt": "2026-08-07T21:01:10.449Z",
       "collectionType": "daily-latest",
       "matchedQuery": "(all:agent OR all:agents OR all:agentic OR all:reasoning OR all:post-training OR all:alignment OR all:multimodal OR all:world-model) AND (all:LLM OR all:foundation OR all:language)",
       "collectionTypes": [
@@ -868,7 +884,7 @@
       "conferenceYears": [],
       "recommendationTrack": "algorithm-trend",
       "recommendationLabel": "算法趋势观察",
-      "recommendationScore": 38.2,
+      "recommendationScore": 45.5,
       "relevanceReason": "命中 LLM/Agent/多模态/后训练等算法趋势主题",
       "pdfStatus": "remote",
       "workflow": {
@@ -880,17 +896,13 @@
         "pdfStatus": "remote"
       },
       "digest": {
-        "summaryZh": "AI 摘要未生成。原始摘要要点：Long context reasoning in large language models (LLMs) is usually constrained by the fact that a single inference trajectory has to simultaneously explore the c...",
+        "summaryZh": "AI 摘要未生成。原始摘要要点：Vision-Language-Action (VLA) models have become a powerful paradigm for robot manipulation, but training a single generalist policy for heterogeneous robot embo...",
         "motivationZh": "命令行启用了 --no-ai",
         "methodZh": "请配置 AI 后重新运行，以生成方法提炼。",
         "experimentsZh": "来源元数据未披露完整实验设置或结果。",
         "affiliationsZh": "未在 DBLP/arXiv 元数据中提供。",
         "tags": [
-          "cs.CL",
-          "cs.AI",
-          "cs.IT",
-          "cs.LG",
-          "eess.SP"
+          "cs.RO"
         ],
         "importance": 3,
         "researchFitZh": "AI harness 尚未完成分析，无法判断与用户研究方向的具体关系。",
@@ -948,30 +960,39 @@
       }
     },
     {
-      "id": "arxiv:2608.05137",
+      "id": "arxiv:2608.06366",
       "source": "arXiv",
-      "title": "SmartMage: Dynamic Modality Orchestration for 3D Scene Understanding",
+      "title": "Tracing the Heart: An Evidence-Linked Pipeline for Heart-Failure Feature Engineering",
       "authors": [
-        "Yue Zhang",
-        "Yingzhao Jian",
-        "Yunqiu Xu",
-        "Xiaoxiao Sun",
-        "Hehe Fan"
+        "Soorya Ram Shimgekar",
+        "Michelle Hu",
+        "Dorisa Shehi",
+        "Daniel Kang",
+        "Roy Ka-Wei Lee",
+        "Koustuv Saha",
+        "Christian Poellabauer",
+        "Christopher Lee",
+        "Sajeev Singh",
+        "Piyum Zonooz",
+        "Navin Kumar",
+        "Zeeshan Ahmed",
+        "Priyadarshini Kachroo"
       ],
       "authorAffiliations": [],
       "affiliations": [],
-      "abstract": "Understanding 3D scenes is fundamental to embodied intelligence, requiring joint reasoning over heterogeneous information from multiple modalities, including visual and geometric cues. However, the relevance of these modalities often varies across queries. Existing Multimodal Large Language Models (MLLMs) typically rely on fixed modality combinations, overlooking query-dependent modality needs. Such a rigid design can introduce semantic noise from irrelevant modalities while underutilizing more informative ones, leading to wasted computation and diluted reasoning. To address these challenges, this paper proposes SmartMage, a unified MLLM that dynamically orchestrates heterogeneous modalities for semantic-aware 3D scene understanding. Specifically, SmartMage incorporates: (1) a Semantic-guided Modality Adaptive RouTng (SMART) module that selects task-relevant modalities using semantic priors, text-modality alignment, and modality quality; and (2) a Modality-Aware Gating Expert (MAGE) module that leverages modality priors to guide expert activation, fostering adaptive specialization in multimodal reasoning. Empirically, SmartMage achieves state-of-the-art performance across five 3D scene understanding benchmarks, and attains competitive results on RGB-only video understanding benchmarks. In our diagnostic benchmark ScanFacet, tasks are divided into fine-grained semantic categories, enabling analysis of modality combinations preferred by each semantic type. The observed modality-semantic patterns provide further evidence of SmartMage's effectiveness. Project page: https://yuecheong.github.io/SmartMage/.",
+      "abstract": "Electronic health record (EHR) feature engineering is a major bottleneck in clinical research and AI, accounting for 39-45% of data scientists' workload. This is especially pronounced in heart failure, which affects an estimated 6.7 million U.S. adults and requires integrating fragmented EHR data with disease-specific, guideline-based clinical reasoning. Existing rule-based and large language model (LLM)-based approaches offer only partial automation with limited maintainability and evidence traceability. We developed the Nimblemind Multi-Agent System (nMAS), an evidence-linked, rubric-grounded pipeline for automated heart-failure feature engineering, and evaluated it on 500 dummy patient records from nine EHR source tables. nMAS generated 132 structured and 70 rubric-scored aggregated features, verified for structural integrity, rubric compliance, and provenance, and audited by a restricted LLM. Adding the aggregated features improved held-out AUROC from 0.895 to 0.963 for HFrEF and 0.870 to 0.910 for HFpEF phenotyping, and an independent LLM-based rubric assessment of evidence support and methodological soundness scored the features at 81.5% of maximum points. These results demonstrate the feasibility of automated, auditable feature engineering for complex cardiovascular EHR data, though evaluation was limited to a single-institution cohort and external validation is needed.",
       "venue": "arXiv",
-      "published": "2026-08-05T17:56:35Z",
-      "updated": "2026-08-05T17:56:35Z",
-      "url": "http://arxiv.org/abs/2608.05137v1",
-      "pdfUrl": "https://arxiv.org/pdf/2608.05137v1",
+      "published": "2026-08-06T17:57:37Z",
+      "updated": "2026-08-06T17:57:37Z",
+      "url": "http://arxiv.org/abs/2608.06366v1",
+      "pdfUrl": "https://arxiv.org/pdf/2608.06366v1",
       "categories": [
-        "cs.CV"
+        "cs.AI",
+        "cs.LG"
       ],
-      "collectedAt": "2026-08-07T00:55:25.712Z",
-      "firstSeenAt": "2026-08-07T00:55:25.712Z",
-      "lastSeenAt": "2026-08-07T00:55:25.712Z",
+      "collectedAt": "2026-08-07T21:01:10.449Z",
+      "firstSeenAt": "2026-08-07T21:01:10.449Z",
+      "lastSeenAt": "2026-08-07T21:01:10.449Z",
       "collectionType": "daily-latest",
       "matchedQuery": "(all:agent OR all:agents OR all:agentic OR all:reasoning OR all:post-training OR all:alignment OR all:multimodal OR all:world-model) AND (all:LLM OR all:foundation OR all:language)",
       "collectionTypes": [
@@ -997,13 +1018,14 @@
         "pdfStatus": "remote"
       },
       "digest": {
-        "summaryZh": "AI 摘要未生成。原始摘要要点：Understanding 3D scenes is fundamental to embodied intelligence, requiring joint reasoning over heterogeneous information from multiple modalities, including vi...",
+        "summaryZh": "AI 摘要未生成。原始摘要要点：Electronic health record (EHR) feature engineering is a major bottleneck in clinical research and AI, accounting for 39-45% of data scientists' workload. This i...",
         "motivationZh": "命令行启用了 --no-ai",
         "methodZh": "请配置 AI 后重新运行，以生成方法提炼。",
         "experimentsZh": "来源元数据未披露完整实验设置或结果。",
         "affiliationsZh": "未在 DBLP/arXiv 元数据中提供。",
         "tags": [
-          "cs.CV"
+          "cs.AI",
+          "cs.LG"
         ],
         "importance": 3,
         "researchFitZh": "AI harness 尚未完成分析，无法判断与用户研究方向的具体关系。",
