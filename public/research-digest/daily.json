@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-08-23T20:45:48.581Z",
-  "digestDate": "2026-08-24",
+  "generatedAt": "2026-08-24T20:54:35.890Z",
+  "digestDate": "2026-08-25",
   "kind": "daily-new",
   "timezone": "Asia/Shanghai",
   "siteUrl": "https://YouthLiuYS.github.io/PaperDigestAgent/",
@@ -126,7 +126,7 @@
     "dailyCandidates": 8,
     "conferenceCandidates": 0,
     "backfillCandidates": 0,
-    "rawCandidates": 55,
+    "rawCandidates": 56,
     "newlyAdded": 8,
     "pendingDigest": 8,
     "pendingEmail": 0,
@@ -141,32 +141,151 @@
   },
   "papers": [
     {
-      "id": "arxiv:2608.19395",
+      "id": "arxiv:2608.20961",
       "source": "arXiv",
-      "title": "HYDRA: A Heterogeneous Chiplet DSE Framework for Serving Dynamic Hybrid LLM Workloads",
+      "title": "TreeWY: Speculative Verification for Gated DeltaNet Hybrids",
       "authors": [
-        "Jiahao Lin",
-        "Alish Kanani",
-        "Sangwan Lee",
-        "Jaehyun Park",
-        "Umit Ogras"
+        "Sneha Murthy Ghantasala"
       ],
       "authorAffiliations": [],
       "affiliations": [],
-      "abstract": "Hybrid Transformer-Mamba large language models (LLMs) enhance long-context efficiency, but their heterogeneous computation and communication patterns complicate efficient hardware acceleration. Chiplet-based architectures offer a scalable solution by integrating specialized compute and memory units. However, the design space spanning static architectural configurations and dynamic runtime policies is prohibitively large to explore exhaustively. To address this challenge, we present HYDRA, a comprehensive design space exploration framework for hybrid LLM serving on heterogeneous chiplet systems. HYDRA jointly explores chiplet composition, placement, inter-chiplet bandwidth provisioning, dynamic batching, and runtime scheduling. It integrates communication-aware placement, dynamic batching, elastic task scheduling, and a fast Markov-based performance estimator that captures multi-tenant runtime dynamics for efficient and accurate exploration. Across all workloads, HYDRA delivers 1.55x the throughput and 43.7 percent lower time-to-first-token on average, with throughput gains reaching up to 2.3x compared to state-of-the-art baselines. These results highlight that co-designing architecture and runtime policies is critical for efficient large-scale LLM serving on heterogeneous chiplet systems.",
+      "abstract": "Modern open models are hybrids: most layers are linear-attention (Gated DeltaNet, GDN) layers carrying a small fixed-size recurrent state instead of a growing key-value (KV) cache. This makes ordinary decoding memory-efficient, but hurts speculative decoding. To verify a batch of draft tokens and then roll back the rejected ones, today's systems snapshot the full recurrent state at every draft position for GDN layers, and those snapshots cannot be shared across branches of a draft tree, so a wide, high-acceptance tree becomes memory-infeasible. We remove the snapshots. Using a tree-structured WY transform of the gated delta rule, we compute every draft node's output with a single triangular solve and reconstruct only the one accepted state on commit, storing a small pseudo-value matrix instead of per-node states; the derivation depends only on the gated delta rule, not on any other architectural detail. In serving benchmarks on two scales of one hybrid model family (Qwen3.5 35B and 397B) this cuts speculative recurrent-state memory and KV-cache pressure at identical acceptance length, turning the freed HBM into higher throughput and much lower time-to-first-token (TTFT) wherever memory binds, and costing a few percent where it does not. For tree width the same memory buys affordability: a wider, higher-acceptance draft becomes possible, though not yet a throughput win.",
       "venue": "arXiv",
-      "published": "2026-08-19T19:26:21Z",
-      "updated": "2026-08-19T19:26:21Z",
-      "url": "http://arxiv.org/abs/2608.19395v1",
-      "pdfUrl": "https://arxiv.org/pdf/2608.19395v1",
+      "published": "2026-08-21T10:31:15Z",
+      "updated": "2026-08-21T10:31:15Z",
+      "url": "http://arxiv.org/abs/2608.20961v1",
+      "pdfUrl": "https://arxiv.org/pdf/2608.20961v1",
       "categories": [
-        "cs.AR",
         "cs.AI",
-        "cs.LG"
+        "cs.CL",
+        "cs.DC",
+        "cs.LG",
+        "cs.PF"
       ],
-      "collectedAt": "2026-08-23T20:41:05.560Z",
-      "firstSeenAt": "2026-08-23T20:41:05.560Z",
-      "lastSeenAt": "2026-08-23T20:41:05.560Z",
+      "collectedAt": "2026-08-24T20:49:55.185Z",
+      "firstSeenAt": "2026-08-24T20:49:55.185Z",
+      "lastSeenAt": "2026-08-24T20:49:55.185Z",
+      "collectionType": "daily-latest",
+      "matchedQuery": "(cat:cs.AR OR cat:cs.DC OR cat:cs.PF) AND (all:LLM OR all:transformer OR all:foundation OR all:language) AND (all:accelerator OR all:processor OR all:architecture OR all:hardware OR all:system OR all:serving OR all:training OR all:inference OR all:cache)",
+      "collectionTypes": [
+        "daily-latest"
+      ],
+      "matchedQueries": [
+        "(cat:cs.AR OR cat:cs.DC OR cat:cs.PF) AND (all:LLM OR all:transformer OR all:foundation OR all:language) AND (all:accelerator OR all:processor OR all:architecture OR all:hardware OR all:system OR all:serving OR all:training OR all:inference OR all:cache)",
+        "(all:prefill OR all:decoding OR all:KV OR all:cache OR all:attention) AND (all:accelerator OR all:kernel OR all:compiler OR all:serving OR all:memory) AND (all:LLM OR all:transformer)",
+        "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)"
+      ],
+      "targetThemes": [],
+      "conferenceVenues": [],
+      "conferenceYears": [],
+      "digest": {
+        "summaryZh": "AI 摘要未生成。原始摘要要点：Modern open models are hybrids: most layers are linear-attention (Gated DeltaNet, GDN) layers carrying a small fixed-size recurrent state instead of a growing k...",
+        "motivationZh": "命令行启用了 --no-ai",
+        "methodZh": "请配置 AI 后重新运行，以生成方法提炼。",
+        "experimentsZh": "来源元数据未披露完整实验设置或结果。",
+        "affiliationsZh": "未在 DBLP/arXiv 元数据中提供。",
+        "tags": [
+          "cs.AI",
+          "cs.CL",
+          "cs.DC",
+          "cs.LG",
+          "cs.PF"
+        ],
+        "importance": 3,
+        "researchFitZh": "AI harness 尚未完成分析，无法判断与用户研究方向的具体关系。",
+        "hardwareRelevance": 1,
+        "algorithmRelevance": 1,
+        "systemRelevance": 1,
+        "readPriority": "archive",
+        "whyReadZh": "需要完成 motivation、method 和实验结果分析后再判断是否值得深读。",
+        "limitationsZh": "命令行启用了 --no-ai",
+        "motivationDetail": {
+          "problemZh": "harness 未完成分析。",
+          "gapZh": "harness 未完成分析。",
+          "whyImportantZh": "harness 未完成分析。",
+          "userRelevanceZh": "harness 未完成分析。",
+          "evidence": "not analyzed"
+        },
+        "methodDetail": {
+          "coreIdeaZh": "harness 未完成分析。",
+          "componentsZh": [
+            "未分析"
+          ],
+          "hardwareSystemDetailZh": "harness 未完成分析。",
+          "noveltyZh": "harness 未完成分析。",
+          "evidence": "not analyzed"
+        },
+        "experimentDetail": {
+          "setupZh": "harness 未完成分析。",
+          "baselinesZh": "harness 未完成分析。",
+          "metricsZh": [
+            "未分析"
+          ],
+          "mainResultsZh": "harness 未完成分析。",
+          "limitationsZh": "harness 未完成分析。",
+          "evidence": "not analyzed"
+        },
+        "evidence": {
+          "usedSources": [
+            "metadata"
+          ],
+          "affiliationEvidence": "",
+          "experimentEvidence": "",
+          "missingFields": [
+            "motivation",
+            "method",
+            "experiments"
+          ]
+        },
+        "confidence": {
+          "summary": 0.2,
+          "motivation": 0,
+          "method": 0,
+          "experiments": 0,
+          "affiliations": 0
+        }
+      },
+      "recommendationTrack": "hardware-primary",
+      "recommendationLabel": "硬件体系结构主线",
+      "recommendationScore": 185,
+      "relevanceReason": "命中 AI 处理器、体系结构、量化、训推系统或内存/缓存优化主题",
+      "pdfStatus": "remote",
+      "workflow": {
+        "digestStatus": "pending",
+        "emailStatus": "waiting-digest",
+        "digestError": "命令行启用了 --no-ai",
+        "harnessVersion": "paper-reader-v1",
+        "collectStatus": "collected",
+        "pdfStatus": "remote"
+      }
+    },
+    {
+      "id": "arxiv:2608.20462",
+      "source": "arXiv",
+      "title": "To Scale Up or To Scale Out: Evaluating Space-Time Costs of Compiled Logical Circuits on Modular Superconducting Quantum Processors",
+      "authors": [
+        "Nikiforos Paraskevopoulos",
+        "Sebastian de Bone",
+        "Mick Christophersen",
+        "Simon Storz",
+        "A. Mert Bozkurt",
+        "Arno Bargerbos",
+        "Sebastian Feld"
+      ],
+      "authorAffiliations": [],
+      "affiliations": [],
+      "abstract": "Modular integration has emerged as the main pathway for scaling superconducting quantum processing units (QPUs) beyond the constraints of fabrication yield and physical footprint. Currently, two primary strategies lead this effort. Mirroring the \"Scaling Up\" and \"Scaling Out\" approaches in GPU architectures and AI infrastructures, these are: chiplet-based scaling, which preserves dense connectivity and high gate fidelity at the expense of engineering complexity, and distributed architectures, which decouple system scaling from monolithic QPU advancements at the expense of sparser connectivity and lower interconnect quality. To evaluate these approaches, we introduce a quantitative stress test measuring the execution cost of a dense workload of random logical entangling operations using a surface code scheme. Using a dedicated compiler, we compute the space-time cost as the number of network nodes increases, analysing this scaling behaviour across various surface code distances, Bell-state fidelities, and Bell-pair generation times. We find that distributed architectures incur an up to exponential space-time performance penalty compared to an effectively monolithic architecture across all simulations. Our results also show that as the network grows, this penalty manifests in two distinct scaling regimes: a noise-dominated regime constrained by insufficient Bell-state fidelity and generation rates, and a connectivity-dominated regime bottlenecked by lattice-surgery routing congestion.",
+      "venue": "arXiv",
+      "published": "2026-08-20T18:00:12Z",
+      "updated": "2026-08-20T18:00:12Z",
+      "url": "http://arxiv.org/abs/2608.20462v1",
+      "pdfUrl": "https://arxiv.org/pdf/2608.20462v1",
+      "categories": [
+        "quant-ph"
+      ],
+      "collectedAt": "2026-08-24T20:50:00.755Z",
+      "firstSeenAt": "2026-08-24T20:50:00.755Z",
+      "lastSeenAt": "2026-08-24T20:50:00.755Z",
       "collectionType": "daily-latest",
       "matchedQuery": "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)",
       "collectionTypes": [
@@ -180,7 +299,7 @@
       "conferenceYears": [],
       "recommendationTrack": "hardware-primary",
       "recommendationLabel": "硬件体系结构主线",
-      "recommendationScore": 172,
+      "recommendationScore": 161,
       "relevanceReason": "命中 AI 处理器、体系结构、量化、训推系统或内存/缓存优化主题",
       "pdfStatus": "remote",
       "workflow": {
@@ -192,15 +311,13 @@
         "pdfStatus": "remote"
       },
       "digest": {
-        "summaryZh": "AI 摘要未生成。原始摘要要点：Hybrid Transformer-Mamba large language models (LLMs) enhance long-context efficiency, but their heterogeneous computation and communication patterns complicate...",
+        "summaryZh": "AI 摘要未生成。原始摘要要点：Modular integration has emerged as the main pathway for scaling superconducting quantum processing units (QPUs) beyond the constraints of fabrication yield and ...",
         "motivationZh": "命令行启用了 --no-ai",
         "methodZh": "请配置 AI 后重新运行，以生成方法提炼。",
         "experimentsZh": "来源元数据未披露完整实验设置或结果。",
         "affiliationsZh": "未在 DBLP/arXiv 元数据中提供。",
         "tags": [
-          "cs.AR",
-          "cs.AI",
-          "cs.LG"
+          "quant-ph"
         ],
         "importance": 3,
         "researchFitZh": "AI harness 尚未完成分析，无法判断与用户研究方向的具体关系。",
@@ -277,9 +394,9 @@
       "categories": [
         "cs.AI"
       ],
-      "collectedAt": "2026-08-23T20:41:05.560Z",
-      "firstSeenAt": "2026-08-23T20:41:05.560Z",
-      "lastSeenAt": "2026-08-23T20:41:05.560Z",
+      "collectedAt": "2026-08-24T20:50:00.755Z",
+      "firstSeenAt": "2026-08-24T20:50:00.755Z",
+      "lastSeenAt": "2026-08-24T20:50:00.755Z",
       "collectionType": "daily-latest",
       "matchedQuery": "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)",
       "collectionTypes": [
@@ -391,9 +508,9 @@
         "cs.LG",
         "cs.CR"
       ],
-      "collectedAt": "2026-08-23T20:41:05.559Z",
-      "firstSeenAt": "2026-08-23T20:41:05.559Z",
-      "lastSeenAt": "2026-08-23T20:41:05.559Z",
+      "collectedAt": "2026-08-24T20:50:00.755Z",
+      "firstSeenAt": "2026-08-24T20:50:00.755Z",
+      "lastSeenAt": "2026-08-24T20:50:00.755Z",
       "collectionType": "daily-latest",
       "matchedQuery": "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)",
       "collectionTypes": [
@@ -502,9 +619,9 @@
       "categories": [
         "cs.CV"
       ],
-      "collectedAt": "2026-08-23T20:41:05.560Z",
-      "firstSeenAt": "2026-08-23T20:41:05.560Z",
-      "lastSeenAt": "2026-08-23T20:41:05.560Z",
+      "collectedAt": "2026-08-24T20:50:00.755Z",
+      "firstSeenAt": "2026-08-24T20:50:00.755Z",
+      "lastSeenAt": "2026-08-24T20:50:00.755Z",
       "collectionType": "daily-latest",
       "matchedQuery": "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)",
       "collectionTypes": [
@@ -612,9 +729,9 @@
       "categories": [
         "math.NA"
       ],
-      "collectedAt": "2026-08-23T20:41:05.559Z",
-      "firstSeenAt": "2026-08-23T20:41:05.559Z",
-      "lastSeenAt": "2026-08-23T20:41:05.559Z",
+      "collectedAt": "2026-08-24T20:50:00.755Z",
+      "firstSeenAt": "2026-08-24T20:50:00.755Z",
+      "lastSeenAt": "2026-08-24T20:50:00.755Z",
       "collectionType": "daily-latest",
       "matchedQuery": "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)",
       "collectionTypes": [
@@ -704,141 +821,36 @@
       }
     },
     {
-      "id": "arxiv:2608.20071",
+      "id": "arxiv:2608.21305",
       "source": "arXiv",
-      "title": "Singularity-Rank Signatures in Generalized Dirac Oscillators near a BTZ Horizon",
+      "title": "Re$^3$Cap: Retrieval-Guided Refinement for Image Captioning Enhancement via Reinforcement Learning",
       "authors": [
-        "João V. R. Alencar",
-        "Allan R. P. Moreira",
-        "João B. R. Silva",
-        "Abdullah Guvendi"
+        "Haonan Jia",
+        "Shichao Dong",
+        "Zenghui Sun",
+        "Jiawen Zheng",
+        "Ziqi Miao",
+        "Gege Shi",
+        "Qiuyu Zhao",
+        "Jinsong Lan",
+        "Xiaoyong Zhu",
+        "Bo Zheng"
       ],
       "authorAffiliations": [],
       "affiliations": [],
-      "abstract": "We study singular generalized Dirac-oscillator couplings in the near-horizon region of a nonextremal BTZ black hole. An effective covariant construction adapted to the stationary horizon congruence relates the two singular profiles to the proper acceleration and its radial gradient, whose leading near-horizon behaviors are $1/ρ$ and $1/ρ^2$. This motivates the family $\\mathcal{L}_p(ρ)=λ_0+β_p/ρ^p$, with $p=1,2$. The $p=1$ system has a regular singular point and is Fuchsian, whereas $p=2$ is the first irregular case; more generally, a leading $ρ^{-p}$ interaction with $p>1$ has Poincaré rank $p-1$. For $p=1$, a constant spinor transformation reduces the matrix-Coulomb system exactly to the Whittaker equation, while elimination in the original basis gives an equivalent confluent-Heun representation with an apparent finite singularity. For $p=2$, the local branches contain the essential factors $e^{\\pmβ_2/ρ}ρ^{-1/2}$, and their coefficient expansions exhibit generic factorial late-order growth. The finite-radius response $\\mathcal{Z}_p(Ω;ρ_0)=ψ_{2,p}(ρ_0)/ψ_{1,p}(ρ_0)$ obeys an exact Riccati equation whose large-damping expansion first becomes sensitive to the radial gradient of the interaction at order $γ^{-3}$. Even when the two couplings are matched at $ρ_0$, this response retains information about their different pole orders. The response functions provide local spinorial data for subsequent matching to the complete BTZ exterior.",
+      "abstract": "Reinforcement Learning (RL) has demonstrated significant gains in image captioning, yet it is still limited in encouraging Large Vision-Language Models (LVLMs) to explore novel reasoning strategies. This limitation leads to a performance gap between RL and Supervised Fine-Tuning (SFT). In this paper, we argue that multi-modal retrieval can serve as an effective reasoning signal for caption refinement. Based on this insight, we present the Retrieval-Guided Refinement for Image Captioning (Re$^3$Cap), a retrieval-guided reasoning strategy that enhances image captioning without requiring additional annotations. Instantiated by Caption Refinement Suggester (CRS) and Caption Quality Assessor (CQA), this strategy identifies hallucinations and omissions in image captions, leading to more accurate and detailed descriptions. Extensive experiments demonstrate the superiority of our method in image captioning, even compared with Supervised Fine-Tuning. Especially, Re$^3$Cap outperforms GRPO with an average improvement of 8.64% in relation reasoning on the COCO-LN500 benchmark.",
       "venue": "arXiv",
-      "published": "2026-08-20T14:04:22Z",
-      "updated": "2026-08-20T14:04:22Z",
-      "url": "http://arxiv.org/abs/2608.20071v1",
-      "pdfUrl": "https://arxiv.org/pdf/2608.20071v1",
+      "published": "2026-08-21T17:07:41Z",
+      "updated": "2026-08-21T17:07:41Z",
+      "url": "http://arxiv.org/abs/2608.21305v1",
+      "pdfUrl": "https://arxiv.org/pdf/2608.21305v1",
       "categories": [
-        "hep-th",
-        "gr-qc"
+        "cs.CV",
+        "cs.AI"
       ],
-      "collectedAt": "2026-08-23T20:41:05.559Z",
-      "firstSeenAt": "2026-08-23T20:41:05.559Z",
-      "lastSeenAt": "2026-08-23T20:41:05.559Z",
-      "collectionType": "daily-latest",
-      "matchedQuery": "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)",
-      "collectionTypes": [
-        "daily-latest"
-      ],
-      "matchedQueries": [
-        "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)"
-      ],
-      "targetThemes": [],
-      "conferenceVenues": [],
-      "conferenceYears": [],
-      "recommendationTrack": "hardware-primary",
-      "recommendationLabel": "硬件体系结构主线",
-      "recommendationScore": 141,
-      "relevanceReason": "命中 AI 处理器、体系结构、量化、训推系统或内存/缓存优化主题",
-      "pdfStatus": "remote",
-      "workflow": {
-        "digestStatus": "pending",
-        "emailStatus": "waiting-digest",
-        "digestError": "命令行启用了 --no-ai",
-        "harnessVersion": "paper-reader-v1",
-        "collectStatus": "collected",
-        "pdfStatus": "remote"
-      },
-      "digest": {
-        "summaryZh": "AI 摘要未生成。原始摘要要点：We study singular generalized Dirac-oscillator couplings in the near-horizon region of a nonextremal BTZ black hole. An effective covariant construction adapted...",
-        "motivationZh": "命令行启用了 --no-ai",
-        "methodZh": "请配置 AI 后重新运行，以生成方法提炼。",
-        "experimentsZh": "来源元数据未披露完整实验设置或结果。",
-        "affiliationsZh": "未在 DBLP/arXiv 元数据中提供。",
-        "tags": [
-          "hep-th",
-          "gr-qc"
-        ],
-        "importance": 3,
-        "researchFitZh": "AI harness 尚未完成分析，无法判断与用户研究方向的具体关系。",
-        "hardwareRelevance": 1,
-        "algorithmRelevance": 1,
-        "systemRelevance": 1,
-        "readPriority": "archive",
-        "whyReadZh": "需要完成 motivation、method 和实验结果分析后再判断是否值得深读。",
-        "limitationsZh": "命令行启用了 --no-ai",
-        "motivationDetail": {
-          "problemZh": "harness 未完成分析。",
-          "gapZh": "harness 未完成分析。",
-          "whyImportantZh": "harness 未完成分析。",
-          "userRelevanceZh": "harness 未完成分析。",
-          "evidence": "not analyzed"
-        },
-        "methodDetail": {
-          "coreIdeaZh": "harness 未完成分析。",
-          "componentsZh": [
-            "未分析"
-          ],
-          "hardwareSystemDetailZh": "harness 未完成分析。",
-          "noveltyZh": "harness 未完成分析。",
-          "evidence": "not analyzed"
-        },
-        "experimentDetail": {
-          "setupZh": "harness 未完成分析。",
-          "baselinesZh": "harness 未完成分析。",
-          "metricsZh": [
-            "未分析"
-          ],
-          "mainResultsZh": "harness 未完成分析。",
-          "limitationsZh": "harness 未完成分析。",
-          "evidence": "not analyzed"
-        },
-        "evidence": {
-          "usedSources": [
-            "metadata"
-          ],
-          "affiliationEvidence": "",
-          "experimentEvidence": "",
-          "missingFields": [
-            "motivation",
-            "method",
-            "experiments"
-          ]
-        },
-        "confidence": {
-          "summary": 0.2,
-          "motivation": 0,
-          "method": 0,
-          "experiments": 0,
-          "affiliations": 0
-        }
-      }
-    },
-    {
-      "id": "arxiv:2608.20338",
-      "source": "arXiv",
-      "title": "ConceptGuard: Benchmarking Context-Sensitive Unlearning in Large Language Models",
-      "authors": [
-        "Sahil Kale",
-        "Ian Harris"
-      ],
-      "authorAffiliations": [],
-      "affiliations": [],
-      "abstract": "Large Language Models (LLMs) increasingly require selective removal of harmful or sensitive knowledge, called unlearning, yet existing methods and benchmarks fail to evaluate this capability completely. Current approaches rely on disjoint forget and retain sets composed of independent facts, and measure success using simple and direct factual recall. This framing fails to capture a key requirement of unlearning, namely the ability to eliminate harmful behaviors while preserving benign and beneficial knowledge. We argue that effective unlearning must operate at the level of concepts, ensuring complete removal of unsafe applications while maintaining their correct and useful usage, thereby achieving conceptually meaningful and complete unlearning. To better evaluate unlearning techniques from such a practical viewpoint, we introduce the notion of dual-use concepts: concepts that can be used in both harmful and benign contexts. Building on these concepts, we construct a benchmark called ConceptGuard where forget and retain sets are explicitly complementary in concept usage. Our benchmark uniquely enables unlearning to be explored and gauged at the level of concepts, instead of sparse facts, and evaluation is intent-sensitive with the goal of maximizing contextual separation to promote safer behavior. We demonstrate that current unlearning techniques perform poorly under this setting, showing weak contextual separation alongside poor performance in ROUGE and concept-level metrics. Our results reveal strong forgetting-utility trade-offs, limited gains in contextual sensitivity, and poor consistency in concept-level control across methods, and provide ideas for unlearning approaches that better align with real-world safety requirements. Our dataset is publicly available.",
-      "venue": "arXiv",
-      "published": "2026-08-20T17:59:57Z",
-      "updated": "2026-08-20T17:59:57Z",
-      "url": "http://arxiv.org/abs/2608.20338v1",
-      "pdfUrl": "https://arxiv.org/pdf/2608.20338v1",
-      "categories": [
-        "cs.CL"
-      ],
-      "collectedAt": "2026-08-23T20:41:07.336Z",
-      "firstSeenAt": "2026-08-23T20:41:07.336Z",
-      "lastSeenAt": "2026-08-23T20:41:07.336Z",
+      "collectedAt": "2026-08-24T20:50:02.487Z",
+      "firstSeenAt": "2026-08-24T20:50:02.487Z",
+      "lastSeenAt": "2026-08-24T20:50:02.487Z",
       "collectionType": "daily-latest",
       "matchedQuery": "(all:agent OR all:agents OR all:agentic OR all:reasoning OR all:post-training OR all:alignment OR all:multimodal OR all:world-model) AND (all:LLM OR all:foundation OR all:language)",
       "collectionTypes": [
@@ -852,7 +864,7 @@
       "conferenceYears": [],
       "recommendationTrack": "algorithm-trend",
       "recommendationLabel": "算法趋势观察",
-      "recommendationScore": 39.2,
+      "recommendationScore": 38.6,
       "relevanceReason": "命中 LLM/Agent/多模态/后训练等算法趋势主题",
       "pdfStatus": "remote",
       "workflow": {
@@ -864,13 +876,14 @@
         "pdfStatus": "remote"
       },
       "digest": {
-        "summaryZh": "AI 摘要未生成。原始摘要要点：Large Language Models (LLMs) increasingly require selective removal of harmful or sensitive knowledge, called unlearning, yet existing methods and benchmarks fa...",
+        "summaryZh": "AI 摘要未生成。原始摘要要点：Reinforcement Learning (RL) has demonstrated significant gains in image captioning, yet it is still limited in encouraging Large Vision-Language Models (LVLMs) ...",
         "motivationZh": "命令行启用了 --no-ai",
         "methodZh": "请配置 AI 后重新运行，以生成方法提炼。",
         "experimentsZh": "来源元数据未披露完整实验设置或结果。",
         "affiliationsZh": "未在 DBLP/arXiv 元数据中提供。",
         "tags": [
-          "cs.CL"
+          "cs.CV",
+          "cs.AI"
         ],
         "importance": 3,
         "researchFitZh": "AI harness 尚未完成分析，无法判断与用户研究方向的具体关系。",
@@ -928,31 +941,33 @@
       }
     },
     {
-      "id": "arxiv:2608.20320",
+      "id": "arxiv:2608.21325",
       "source": "arXiv",
-      "title": "An Agentic Approach for Active Data Collection, Travel Behavior Modeling, and Weather-Sensitive Demand Prediction",
+      "title": "Move by Move: Measuring and Steering How LLMs Conduct Psychotherapy",
       "authors": [
-        "Narges Ahmadi",
-        "Yubo Jiao",
-        "Jônatas Augusto Manzolli",
-        "Jiangbo Yu",
-        "Luis Miranda-Moreno"
+        "Afonso Baldo",
+        "Hugo Pitorro",
+        "Areti Vassilopoulos",
+        "Anabela C. Areias",
+        "Maya D'Eon",
+        "Fabíola Costa",
+        "Ricardo Rei",
+        "Nuno M. Guerreiro"
       ],
       "authorAffiliations": [],
       "affiliations": [],
-      "abstract": "Travel behavior research increasingly combines digital data collection with predictive modeling, yet these stages are often developed and evaluated separately. This study proposes a three-agent workflow integrating conversational data collection, structured data processing, and behavioral prediction. A chatbot-administered, image-augmented stated-preference survey collected mode choices from student commuters across five predefined weather scenarios, yielding 454 respondent-scenario observations. Weather-related associations were analyzed using a multinomial logit model, while logistic regression and random forest provided machine-learning benchmarks. Nine locally deployed large language models (LLMs), ranging from 2 to 35 billion parameters, were evaluated across four zero-shot prompt-and-context conditions and extended through persona, few-shot, and vision-based configurations. Random forest achieved 69.6% five-class accuracy, while the best text-only zero-shot LLM reached 69.9% without task-specific fitting. Habitual travel information produced the most consistent gains, Expert framing generally outperformed Role-Play, and persona information was most useful when habitual travel information was unavailable. Few-shot prompting improved prediction for several models, with gains stabilizing after a small number of examples. Using the same weather images shown to respondents, the best vision-based configuration reached 71.5% five-class accuracy, indicating that visual context may provide additional predictive information for selected models. Overall, the study shows how conversational surveys, structured data processing, conventional behavioral modeling, machine learning, and multimodal LLM prediction can be coordinated within an auditable multi-agent workflow.",
+      "abstract": "Users increasingly turn to large language models for emotional support, yet little is known about how these models actually conduct a psychotherapy interaction. We introduce an ontology of ten therapeutic moves: compact, function-based categories grounded in the MULTI-60 inventory, validated through an annotation campaign with five licensed psychologists, and scaled with a judge-based approach that matches expert agreement. Applying it to real counseling transcripts and model-led sessions, we compare the move distributions between human clinicians and a panel of frontier models. Models over-use inquiry at up to three times the human rate, neglect psychoeducation, and are strongly context-anchored: they carry forward strategies initiated by a human clinician but rarely initiate them themselves. Exposing the ontology as a set of tools roughly halves the mean deviation from the human move distribution and improves turn-level alignment with human therapist by 7-9 percentage points, without any fine-tuning.",
       "venue": "arXiv",
-      "published": "2026-08-20T17:57:42Z",
-      "updated": "2026-08-20T17:57:42Z",
-      "url": "http://arxiv.org/abs/2608.20320v1",
-      "pdfUrl": "https://arxiv.org/pdf/2608.20320v1",
+      "published": "2026-08-21T17:32:38Z",
+      "updated": "2026-08-21T17:32:38Z",
+      "url": "http://arxiv.org/abs/2608.21325v1",
+      "pdfUrl": "https://arxiv.org/pdf/2608.21325v1",
       "categories": [
-        "cs.AI",
         "cs.CL"
       ],
-      "collectedAt": "2026-08-23T20:41:07.336Z",
-      "firstSeenAt": "2026-08-23T20:41:07.336Z",
-      "lastSeenAt": "2026-08-23T20:41:07.336Z",
+      "collectedAt": "2026-08-24T20:50:02.487Z",
+      "firstSeenAt": "2026-08-24T20:50:02.487Z",
+      "lastSeenAt": "2026-08-24T20:50:02.487Z",
       "collectionType": "daily-latest",
       "matchedQuery": "(all:agent OR all:agents OR all:agentic OR all:reasoning OR all:post-training OR all:alignment OR all:multimodal OR all:world-model) AND (all:LLM OR all:foundation OR all:language)",
       "collectionTypes": [
@@ -978,13 +993,12 @@
         "pdfStatus": "remote"
       },
       "digest": {
-        "summaryZh": "AI 摘要未生成。原始摘要要点：Travel behavior research increasingly combines digital data collection with predictive modeling, yet these stages are often developed and evaluated separately. ...",
+        "summaryZh": "AI 摘要未生成。原始摘要要点：Users increasingly turn to large language models for emotional support, yet little is known about how these models actually conduct a psychotherapy interaction....",
         "motivationZh": "命令行启用了 --no-ai",
         "methodZh": "请配置 AI 后重新运行，以生成方法提炼。",
         "experimentsZh": "来源元数据未披露完整实验设置或结果。",
         "affiliationsZh": "未在 DBLP/arXiv 元数据中提供。",
         "tags": [
-          "cs.AI",
           "cs.CL"
         ],
         "importance": 3,
