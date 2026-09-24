@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-09-23T23:06:01.883Z",
-  "digestDate": "2026-09-24",
+  "generatedAt": "2026-09-24T23:18:26.160Z",
+  "digestDate": "2026-09-25",
   "kind": "daily-new",
   "timezone": "Asia/Shanghai",
   "siteUrl": "https://YouthLiuYS.github.io/PaperDigestAgent/",
@@ -126,7 +126,7 @@
     "dailyCandidates": 8,
     "conferenceCandidates": 0,
     "backfillCandidates": 0,
-    "rawCandidates": 32,
+    "rawCandidates": 33,
     "newlyAdded": 8,
     "pendingDigest": 8,
     "pendingEmail": 0,
@@ -141,30 +141,29 @@
   },
   "papers": [
     {
-      "id": "arxiv:2609.26763",
+      "id": "arxiv:2609.28358",
       "source": "arXiv",
-      "title": "SARA: SLO-Aware Resource Allocation for Disaggregated Agentic LLM Services",
+      "title": "MicroQonv: Reshaping Convolution Tensors for Efficient Microscaling in Training and Inference",
       "authors": [
-        "Shicong Liu",
-        "Xianghao Yu",
-        "Zhen Gao",
-        "Jun Zhang"
+        "Romain Facq",
+        "Sami Ben Ali",
+        "Olivier Sentieys"
       ],
       "authorAffiliations": [],
       "affiliations": [],
-      "abstract": "Recent advances in large language models (LLMs) are driving the emergence of multi-modal and agentic services for mobile users through cloud and edge infrastructures, where long-context workloads pose daunting challenges for inference latency. Existing disaggregated LLM serving systems largely rely on hardware profiling, configuration enumeration, or heuristic scheduling, offering limited analytical guidance for cost-efficient resource allocation. In this paper, we propose SARA, a Service level objectives (SLOs)-Aware Resource Allocation framework for disaggregated agentic LLM serving systems, which maximizes goodput under a deployment cost constraint and a series of quantile-based SLO constraints. By capitalizing on queuing theory, we first model the prefill, KV cache transfer, and decode stages as an M/G/k queue, an M/G/1 queue, and a generalized birth-death process, respectively. The analysis reveals that the prefill and decode stages are dominantly limited by computational capacity and high-bandwidth memory (HBM) resources, respectively. With these mathematical models, we further derive tractable tail behaviors of different stage-wise service level metrics for both light- and heavy-tailed workloads. These characterizations explicitly map workload, model architecture, and hardware parameters to stage-wise SLO constraints and minimum resource requirements. Finally, we develop an effective resource allocation framework to maximize system goodput under limited cost budgets. Simulation and hardware results demonstrate that the proposed framework accurately predicts the stage-wise SLO with mean errors below 5%, and improves system goodput by 26.6% on average over state-of-the-art baseline methods under the same deployment cost.",
+      "abstract": "Microscaling quantization techniques are increasingly used to represent neural network parameters with 8 bits or fewer while preserving near-full precision accuracy. However, applying these methods efficiently in convolutional layers is not straightforward. A naive approach transfers full-precision weights and activations to processing units and quantizes each tensor twice, resulting in much more memory movement than expected. Additional overhead comes from the activation tensors, whose sizes grow substantially because of the im2col transformation applied before quantization. We propose MicroQonv, a way to combine microscaling with convolutional layers' forward and backward operations by quantizing each tensor only once and quantizing the activation tensor before applying a modified version of im2col: channel-batch-first im2col. MicroQonv reduces the quantization cost by a factor of $\\times2$ for weights and gradients, and by up to $\\times9$ for activations, at a negligible accuracy cost. It reduces memory movement and storage by up to $\\times7.53$ compared to their full-precision counterparts. This way, MicroQonv reduces microscaling-quantized activation memory movement by $\\times3.5$ for state-of-the-art object detection models YOLOV8nano and $\\times2.2$ for YOLOV26nano. It also enables 4-bit microscaling in a quantized latent replay strategy for continual learning at the edge, improving accuracy by +5.7% to +11%.",
       "venue": "arXiv",
-      "published": "2026-09-22T17:42:35Z",
-      "updated": "2026-09-22T17:42:35Z",
-      "url": "http://arxiv.org/abs/2609.26763v1",
-      "pdfUrl": "https://arxiv.org/pdf/2609.26763v1",
+      "published": "2026-09-23T16:30:48Z",
+      "updated": "2026-09-23T16:30:48Z",
+      "url": "http://arxiv.org/abs/2609.28358v1",
+      "pdfUrl": "https://arxiv.org/pdf/2609.28358v1",
       "categories": [
-        "cs.PF",
-        "cs.DC"
+        "cs.AR",
+        "cs.AI"
       ],
-      "collectedAt": "2026-09-23T22:58:01.230Z",
-      "firstSeenAt": "2026-09-23T22:58:01.230Z",
-      "lastSeenAt": "2026-09-23T22:58:01.230Z",
+      "collectedAt": "2026-09-24T23:13:51.655Z",
+      "firstSeenAt": "2026-09-24T23:13:51.655Z",
+      "lastSeenAt": "2026-09-24T23:13:51.655Z",
       "collectionType": "daily-latest",
       "matchedQuery": "(cat:cs.AR OR cat:cs.DC OR cat:cs.PF) AND (all:LLM OR all:transformer OR all:foundation OR all:language) AND (all:accelerator OR all:processor OR all:architecture OR all:hardware OR all:system OR all:serving OR all:training OR all:inference OR all:cache)",
       "collectionTypes": [
@@ -172,21 +171,135 @@
       ],
       "matchedQueries": [
         "(cat:cs.AR OR cat:cs.DC OR cat:cs.PF) AND (all:LLM OR all:transformer OR all:foundation OR all:language) AND (all:accelerator OR all:processor OR all:architecture OR all:hardware OR all:system OR all:serving OR all:training OR all:inference OR all:cache)",
-        "(all:prefill OR all:decoding OR all:KV OR all:cache OR all:attention) AND (all:accelerator OR all:kernel OR all:compiler OR all:serving OR all:memory) AND (all:LLM OR all:transformer)",
-        "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)",
-        "(all:agent OR all:agents OR all:agentic OR all:reasoning OR all:post-training OR all:alignment OR all:multimodal OR all:world-model) AND (all:LLM OR all:foundation OR all:language)"
+        "(all:quantization OR all:compression OR all:pruning OR all:sparsity OR all:low-bit) AND (all:LLM OR all:transformer OR all:language) AND (all:hardware OR all:accelerator OR all:inference OR all:serving OR all:processor)",
+        "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)"
       ],
       "targetThemes": [],
       "conferenceVenues": [],
       "conferenceYears": [],
       "digest": {
-        "summaryZh": "AI 摘要未生成。原始摘要要点：Recent advances in large language models (LLMs) are driving the emergence of multi-modal and agentic services for mobile users through cloud and edge infrastruc...",
+        "summaryZh": "AI 摘要未生成。原始摘要要点：Microscaling quantization techniques are increasingly used to represent neural network parameters with 8 bits or fewer while preserving near-full precision accu...",
         "motivationZh": "命令行启用了 --no-ai",
         "methodZh": "请配置 AI 后重新运行，以生成方法提炼。",
         "experimentsZh": "来源元数据未披露完整实验设置或结果。",
         "affiliationsZh": "未在 DBLP/arXiv 元数据中提供。",
         "tags": [
-          "cs.PF",
+          "cs.AR",
+          "cs.AI"
+        ],
+        "importance": 3,
+        "researchFitZh": "AI harness 尚未完成分析，无法判断与用户研究方向的具体关系。",
+        "hardwareRelevance": 1,
+        "algorithmRelevance": 1,
+        "systemRelevance": 1,
+        "readPriority": "archive",
+        "whyReadZh": "需要完成 motivation、method 和实验结果分析后再判断是否值得深读。",
+        "limitationsZh": "命令行启用了 --no-ai",
+        "motivationDetail": {
+          "problemZh": "harness 未完成分析。",
+          "gapZh": "harness 未完成分析。",
+          "whyImportantZh": "harness 未完成分析。",
+          "userRelevanceZh": "harness 未完成分析。",
+          "evidence": "not analyzed"
+        },
+        "methodDetail": {
+          "coreIdeaZh": "harness 未完成分析。",
+          "componentsZh": [
+            "未分析"
+          ],
+          "hardwareSystemDetailZh": "harness 未完成分析。",
+          "noveltyZh": "harness 未完成分析。",
+          "evidence": "not analyzed"
+        },
+        "experimentDetail": {
+          "setupZh": "harness 未完成分析。",
+          "baselinesZh": "harness 未完成分析。",
+          "metricsZh": [
+            "未分析"
+          ],
+          "mainResultsZh": "harness 未完成分析。",
+          "limitationsZh": "harness 未完成分析。",
+          "evidence": "not analyzed"
+        },
+        "evidence": {
+          "usedSources": [
+            "metadata"
+          ],
+          "affiliationEvidence": "",
+          "experimentEvidence": "",
+          "missingFields": [
+            "motivation",
+            "method",
+            "experiments"
+          ]
+        },
+        "confidence": {
+          "summary": 0.2,
+          "motivation": 0,
+          "method": 0,
+          "experiments": 0,
+          "affiliations": 0
+        }
+      },
+      "recommendationTrack": "hardware-primary",
+      "recommendationLabel": "硬件体系结构主线",
+      "recommendationScore": 191,
+      "relevanceReason": "命中 AI 处理器、体系结构、量化、训推系统或内存/缓存优化主题",
+      "pdfStatus": "remote",
+      "workflow": {
+        "digestStatus": "pending",
+        "emailStatus": "waiting-digest",
+        "digestError": "命令行启用了 --no-ai",
+        "harnessVersion": "paper-reader-v1",
+        "collectStatus": "collected",
+        "pdfStatus": "remote"
+      }
+    },
+    {
+      "id": "arxiv:2609.27189",
+      "source": "arXiv",
+      "title": "ZOCheck: CPU-Shadow Checkpointing for Zeroth-Order LLM Fine-Tuning",
+      "authors": [
+        "Minqiu Sun",
+        "Xin Huang",
+        "Luanzheng Guo",
+        "Nathan R. Tallent",
+        "Kento Sato",
+        "Dong Dai"
+      ],
+      "authorAffiliations": [],
+      "affiliations": [],
+      "abstract": "Zeroth-order (ZO) optimization is an attractive option for memory-efficient LLM fine-tuning, but its fault tolerance remains underexplored. Unlike first-order training, ZO progress can be represented by lightweight seed-and-scalar step logs, yet naive log-only recovery still incurs replay cost that grows with training progress, and shortcut replay does not preserve the executed floating-point trajectory. We present ZOCheck, a fault-tolerant ZO training system that exploits this replayable structure through a CPU shadow process that continuously replays logged updates, materializes consistent recovery images off the GPU critical path, and persists them asynchronously. ZOCheck therefore combines non-blocking checkpointing during training with fast recovery from a near-current state. We also develop a cost model for choosing the snapshot policy under realistic failure rates. Experiments show that ZOCheck reduces checkpoint overhead by up to 219.7x and recovery latency by 1.55x on average compared with asynchronous full-state checkpointing, translating into up to 21.3x lower end-to-end wasted time across the evaluated failure rates, while preserving exact recovery behavior.",
+      "venue": "arXiv",
+      "published": "2026-09-23T00:52:21Z",
+      "updated": "2026-09-23T00:52:21Z",
+      "url": "http://arxiv.org/abs/2609.27189v1",
+      "pdfUrl": "https://arxiv.org/pdf/2609.27189v1",
+      "categories": [
+        "cs.DC"
+      ],
+      "collectedAt": "2026-09-24T23:13:51.656Z",
+      "firstSeenAt": "2026-09-24T23:13:51.656Z",
+      "lastSeenAt": "2026-09-24T23:13:51.656Z",
+      "collectionType": "daily-latest",
+      "matchedQuery": "(cat:cs.AR OR cat:cs.DC OR cat:cs.PF) AND (all:LLM OR all:transformer OR all:foundation OR all:language) AND (all:accelerator OR all:processor OR all:architecture OR all:hardware OR all:system OR all:serving OR all:training OR all:inference OR all:cache)",
+      "collectionTypes": [
+        "daily-latest"
+      ],
+      "matchedQueries": [
+        "(cat:cs.AR OR cat:cs.DC OR cat:cs.PF) AND (all:LLM OR all:transformer OR all:foundation OR all:language) AND (all:accelerator OR all:processor OR all:architecture OR all:hardware OR all:system OR all:serving OR all:training OR all:inference OR all:cache)",
+        "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)"
+      ],
+      "targetThemes": [],
+      "conferenceVenues": [],
+      "conferenceYears": [],
+      "digest": {
+        "summaryZh": "AI 摘要未生成。原始摘要要点：Zeroth-order (ZO) optimization is an attractive option for memory-efficient LLM fine-tuning, but its fault tolerance remains underexplored. Unlike first-order t...",
+        "motivationZh": "命令行启用了 --no-ai",
+        "methodZh": "请配置 AI 后重新运行，以生成方法提炼。",
+        "experimentsZh": "来源元数据未披露完整实验设置或结果。",
+        "affiliationsZh": "未在 DBLP/arXiv 元数据中提供。",
+        "tags": [
           "cs.DC"
         ],
         "importance": 3,
@@ -245,7 +358,7 @@
       },
       "recommendationTrack": "hardware-primary",
       "recommendationLabel": "硬件体系结构主线",
-      "recommendationScore": 214.5,
+      "recommendationScore": 171,
       "relevanceReason": "命中 AI 处理器、体系结构、量化、训推系统或内存/缓存优化主题",
       "pdfStatus": "remote",
       "workflow": {
@@ -258,143 +371,33 @@
       }
     },
     {
-      "id": "arxiv:2609.25782",
+      "id": "arxiv:2609.28286",
       "source": "arXiv",
-      "title": "Hot-Cold Tiering of HBM and High Bandwidth Flash for Agentic LLM Serving",
+      "title": "PBLH Estimation from Satellite Radiances via a Dual-Encoder Transformer",
       "authors": [
-        "Jongjin Baek",
-        "Won Ji",
-        "Seungjae Yoo",
-        "Joo-Young Kim"
+        "Lorenzo Innocenti",
+        "Luca Catalano",
+        "Edoardo Arnaudo",
+        "Claudio Rossi",
+        "Salvatore Larosa",
+        "Domenico Cimini",
+        "Paolo Garza"
       ],
       "authorAffiliations": [],
       "affiliations": [],
-      "abstract": "Large language model (LLM) serving is increasingly agentic, with multi-turn sessions that idle between actions yet must retain their full context. Limited GPU memory capacity forces inactive KV states to be evicted, so resuming a session incurs either costly recomputation or slow interconnect transfers. To address this, high bandwidth flash (HBF)-an on-package 3D-NAND memory offering orders-of-magnitude greater capacity than high bandwidth memory (HBM) at comparable read bandwidth-has emerged as a strong candidate. However, its high read energy and limited write endurance make it impractical to serve all KV traffic. Fortunately, our analysis shows that agentic KV states exhibit distinct access patterns: a small hot set is read for every decoding step, while a large cold pool is read only when a paused session resumes. Exploiting this, we place the hot set in HBM and the cold pool in HBF, forming a hot-cold KV hierarchy within the GPU memory tier. On agentic workloads with Qwen3-Coder-30B-A3B, our design delivers 14 ms time-between-tokens (TBT) and adds only $\\approx$0.1 ms of resume latency on top of prefill, while hosting $24\\times$ more concurrent sessions per GPU. By confining HBM to the hot set, our design also cuts read power by 7.6 kW per 8-GPU node relative to serving all KV from flash-establishing HBF as a cold-tier complement to HBM rather than its replacement.",
+      "abstract": "Estimating the Planetary Boundary Layer Height (PBLH) from satellite observations is a challenging regression problem due to the indirect relationship between top-of-atmosphere radiances and near-surface atmospheric structure. Progress has been limited both by the lack of architectures capable of handling the multimodal, spatially incomplete nature of satellite overpasses, and by the scarcity of suitable datasets. In this paper, we build upon the large-scale dataset pairing MetOp radiances with ERA5 PBLH labels that we introduced in our previous work, making three contributions. First, we establish a benchmark across eight approaches spanning pixel-wise regression, swath-wise sequence models, and convolutional and Transformer models operating on the full orbital passage. Second, we quantify what the resulting model actually relies on, using grouped Shapley decomposition over the input blocks. Third, we present the best-performing architecture found: a dual-encoder Transformer whose masked-input handling lets it operate in all weather conditions. The proposed model achieves MAE = 155.8 m on the held-out global test set, outperforming all baselines on every evaluation subset. On 30 out-of-distribution granules acquired on two days overlapping the TEAMx observational campaign, it achieves MAE = 165.3 m, outperforming a pixel-wise baseline trained on the same data (MAE = 197 m).",
       "venue": "arXiv",
-      "published": "2026-09-22T07:18:00Z",
-      "updated": "2026-09-22T07:18:00Z",
-      "url": "http://arxiv.org/abs/2609.25782v1",
-      "pdfUrl": "https://arxiv.org/pdf/2609.25782v1",
+      "published": "2026-09-23T15:33:02Z",
+      "updated": "2026-09-23T15:33:02Z",
+      "url": "http://arxiv.org/abs/2609.28286v1",
+      "pdfUrl": "https://arxiv.org/pdf/2609.28286v1",
       "categories": [
-        "cs.AR"
+        "cs.CV",
+        "cs.LG"
       ],
-      "collectedAt": "2026-09-23T22:58:01.231Z",
-      "firstSeenAt": "2026-09-23T22:58:01.231Z",
-      "lastSeenAt": "2026-09-23T22:58:01.231Z",
-      "collectionType": "daily-latest",
-      "matchedQuery": "(cat:cs.AR OR cat:cs.DC OR cat:cs.PF) AND (all:LLM OR all:transformer OR all:foundation OR all:language) AND (all:accelerator OR all:processor OR all:architecture OR all:hardware OR all:system OR all:serving OR all:training OR all:inference OR all:cache)",
-      "collectionTypes": [
-        "daily-latest"
-      ],
-      "matchedQueries": [
-        "(cat:cs.AR OR cat:cs.DC OR cat:cs.PF) AND (all:LLM OR all:transformer OR all:foundation OR all:language) AND (all:accelerator OR all:processor OR all:architecture OR all:hardware OR all:system OR all:serving OR all:training OR all:inference OR all:cache)",
-        "(all:prefill OR all:decoding OR all:KV OR all:cache OR all:attention) AND (all:accelerator OR all:kernel OR all:compiler OR all:serving OR all:memory) AND (all:LLM OR all:transformer)",
-        "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)"
-      ],
-      "targetThemes": [],
-      "conferenceVenues": [],
-      "conferenceYears": [],
-      "digest": {
-        "summaryZh": "AI 摘要未生成。原始摘要要点：Large language model (LLM) serving is increasingly agentic, with multi-turn sessions that idle between actions yet must retain their full context. Limited GPU m...",
-        "motivationZh": "命令行启用了 --no-ai",
-        "methodZh": "请配置 AI 后重新运行，以生成方法提炼。",
-        "experimentsZh": "来源元数据未披露完整实验设置或结果。",
-        "affiliationsZh": "未在 DBLP/arXiv 元数据中提供。",
-        "tags": [
-          "cs.AR"
-        ],
-        "importance": 3,
-        "researchFitZh": "AI harness 尚未完成分析，无法判断与用户研究方向的具体关系。",
-        "hardwareRelevance": 1,
-        "algorithmRelevance": 1,
-        "systemRelevance": 1,
-        "readPriority": "archive",
-        "whyReadZh": "需要完成 motivation、method 和实验结果分析后再判断是否值得深读。",
-        "limitationsZh": "命令行启用了 --no-ai",
-        "motivationDetail": {
-          "problemZh": "harness 未完成分析。",
-          "gapZh": "harness 未完成分析。",
-          "whyImportantZh": "harness 未完成分析。",
-          "userRelevanceZh": "harness 未完成分析。",
-          "evidence": "not analyzed"
-        },
-        "methodDetail": {
-          "coreIdeaZh": "harness 未完成分析。",
-          "componentsZh": [
-            "未分析"
-          ],
-          "hardwareSystemDetailZh": "harness 未完成分析。",
-          "noveltyZh": "harness 未完成分析。",
-          "evidence": "not analyzed"
-        },
-        "experimentDetail": {
-          "setupZh": "harness 未完成分析。",
-          "baselinesZh": "harness 未完成分析。",
-          "metricsZh": [
-            "未分析"
-          ],
-          "mainResultsZh": "harness 未完成分析。",
-          "limitationsZh": "harness 未完成分析。",
-          "evidence": "not analyzed"
-        },
-        "evidence": {
-          "usedSources": [
-            "metadata"
-          ],
-          "affiliationEvidence": "",
-          "experimentEvidence": "",
-          "missingFields": [
-            "motivation",
-            "method",
-            "experiments"
-          ]
-        },
-        "confidence": {
-          "summary": 0.2,
-          "motivation": 0,
-          "method": 0,
-          "experiments": 0,
-          "affiliations": 0
-        }
-      },
-      "recommendationTrack": "hardware-primary",
-      "recommendationLabel": "硬件体系结构主线",
-      "recommendationScore": 208.25,
-      "relevanceReason": "命中 AI 处理器、体系结构、量化、训推系统或内存/缓存优化主题",
-      "pdfStatus": "remote",
-      "workflow": {
-        "digestStatus": "pending",
-        "emailStatus": "waiting-digest",
-        "digestError": "命令行启用了 --no-ai",
-        "harnessVersion": "paper-reader-v1",
-        "collectStatus": "collected",
-        "pdfStatus": "remote"
-      }
-    },
-    {
-      "id": "arxiv:2609.26551",
-      "source": "arXiv",
-      "title": "Toki: Profiling HBM Performance on FPGA Systems with RISC-V Soft Cores and PCIe Host DMA Traffic",
-      "authors": [
-        "Andrea Galimberti",
-        "Andrea Motta",
-        "Gianni Antichi",
-        "Davide Zoni"
-      ],
-      "authorAffiliations": [],
-      "affiliations": [],
-      "abstract": "Programmable RISC-V soft cores are becoming more widespread in data-center scenarios, making it crucial to design efficient systems that deploy them on FPGA chips with HBM memory. Toki, released as open source, is the first hardware-software framework that enables profiling the performance of HBM on FPGA accelerator cards by jointly considering (i) the execution of workloads on RISC-V soft cores instantiated on the FPGA and (ii) the injection of memory traffic from the host system via DMA over PCIe, providing insights that cannot be obtained with synthetic traffic generators alone. Extensive experiments target an AMD Alveo U55C card, deploying up to 60 RISC-V compute cores and stressing its HBM2 memory through real-world applications and microbenchmarks with user-defined access patterns. Results showcase how Toki can effectively profile the impact on HBM performance of the compute cores' organization, the workload's memory access patterns, data locality, contention over the memory controllers, and host traffic.",
-      "venue": "arXiv",
-      "published": "2026-09-22T15:06:43Z",
-      "updated": "2026-09-22T15:06:43Z",
-      "url": "http://arxiv.org/abs/2609.26551v1",
-      "pdfUrl": "https://arxiv.org/pdf/2609.26551v1",
-      "categories": [
-        "cs.AR"
-      ],
-      "collectedAt": "2026-09-23T22:58:06.670Z",
-      "firstSeenAt": "2026-09-23T22:58:06.670Z",
-      "lastSeenAt": "2026-09-23T22:58:06.670Z",
+      "collectedAt": "2026-09-24T23:13:57.012Z",
+      "firstSeenAt": "2026-09-24T23:13:57.012Z",
+      "lastSeenAt": "2026-09-24T23:13:57.012Z",
       "collectionType": "daily-latest",
       "matchedQuery": "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)",
       "collectionTypes": [
@@ -408,7 +411,7 @@
       "conferenceYears": [],
       "recommendationTrack": "hardware-primary",
       "recommendationLabel": "硬件体系结构主线",
-      "recommendationScore": 161,
+      "recommendationScore": 162.75,
       "relevanceReason": "命中 AI 处理器、体系结构、量化、训推系统或内存/缓存优化主题",
       "pdfStatus": "remote",
       "workflow": {
@@ -420,13 +423,14 @@
         "pdfStatus": "remote"
       },
       "digest": {
-        "summaryZh": "AI 摘要未生成。原始摘要要点：Programmable RISC-V soft cores are becoming more widespread in data-center scenarios, making it crucial to design efficient systems that deploy them on FPGA chi...",
+        "summaryZh": "AI 摘要未生成。原始摘要要点：Estimating the Planetary Boundary Layer Height (PBLH) from satellite observations is a challenging regression problem due to the indirect relationship between t...",
         "motivationZh": "命令行启用了 --no-ai",
         "methodZh": "请配置 AI 后重新运行，以生成方法提炼。",
         "experimentsZh": "来源元数据未披露完整实验设置或结果。",
         "affiliationsZh": "未在 DBLP/arXiv 元数据中提供。",
         "tags": [
-          "cs.AR"
+          "cs.CV",
+          "cs.LG"
         ],
         "importance": 3,
         "researchFitZh": "AI harness 尚未完成分析，无法判断与用户研究方向的具体关系。",
@@ -484,253 +488,30 @@
       }
     },
     {
-      "id": "arxiv:2609.25713",
+      "id": "arxiv:2609.27741",
       "source": "arXiv",
-      "title": "CFD-Machine Learning Driven Pod Optimization and Staged Pressure-Area Management for Supersonic Evacuated Tube Transport",
+      "title": "Limiting-Kernel Q($λ$): Bridging Short and Long Horizons",
       "authors": [
-        "Jaydip Patel",
-        "Dhwanil Shukla"
+        "Tolga Ok",
+        "Arman Sharifi Kolarijani",
+        "Peyman Mohajerin Esfahani",
+        "Mohamad Amin Sharifi Kolarijani"
       ],
       "authorAffiliations": [],
       "affiliations": [],
-      "abstract": "This study investigates the aerodynamic feasibility of high-speed evacuated tube transport (ETT) using an integrated CFD-machine learning framework for pod geometry optimization and a staged converging-diverging (CD) tube concept for supersonic operation. The pod geometry is parameterized using composite cubic Bezier curves with seven design variables. Latin Hypercube Sampling is used to generate 200 configurations across subsonic and supersonic regimes, which are evaluated using two-dimensional axisymmetric ANSYS Fluent simulations validated against published compressible-flow data. The resulting CFD dataset is used to train surrogate models for rapid drag prediction. XGBoost provides the best overall performance, achieving a test R^2 of 0.9524, and is coupled with Differential Evolution and Particle Swarm Optimization to identify low-drag geometries that are subsequently verified using CFD. The study further examines a staged CD tube architecture combining controlled area variation with gradual pressure reduction to mitigate choking during supersonic acceleration. In the idealized axisymmetric simulations, the proposed strategy enables transition from atmospheric entry at Mach 1.6 to near-vacuum cruise at Mach 2.5 and a blockage ratio of 0.50 without forming a choked annular flow region. Total drag decreases from 68,913.7 N under atmospheric supersonic conditions to 120.5 N in the final near-vacuum stage, associated with a transition from wave-drag-dominated to viscous-shear-dominated resistance. The results demonstrate the potential of combined pod-shape optimization and staged pressure-area management for reducing aerodynamic resistance in supersonic ETT systems.",
+      "abstract": "In value-based reinforcement learning, improving the accuracy of policy evaluation has been shown to improve downstream policy optimization performance. The widely adopted family of approximations relying on $n$-step truncation yields computationally efficient value estimators but is inherently limited to a short evaluation horizon. In contrast, methods that exploit the global structure of the transition dynamics can accelerate policy evaluation, but their memory and computational requirements often limit scalability to large or continuous state spaces. To reconcile these limitations, we introduce Limiting-Kernel Q($λ$) (LKQL), an off-policy value estimator that combines $n$-step truncation with a long-horizon approximation based on the limiting kernel (LK). LKQL has the same order of complexity as $n$-step estimators and integrates directly into both on- and off-policy actor-critic algorithms. We prove that, under aperiodicity and in the near-on-policy regime, the operator underlying LKQL improves the policy evaluation convergence rate over its truncated counterpart for sufficiently large $n$, and that LKQL itself converges almost surely to the optimal values in finite Markov decision processes (MDPs) under a fixed behavior policy. On the MuJoCo continuous-control benchmark, we show that LKQL improves over $n$-step baselines in most settings, particularly on long-horizon tasks.",
       "venue": "arXiv",
-      "published": "2026-09-22T05:39:12Z",
-      "updated": "2026-09-22T05:39:12Z",
-      "url": "http://arxiv.org/abs/2609.25713v1",
-      "pdfUrl": "https://arxiv.org/pdf/2609.25713v1",
-      "categories": [
-        "physics.flu-dyn"
-      ],
-      "collectedAt": "2026-09-23T22:58:06.670Z",
-      "firstSeenAt": "2026-09-23T22:58:06.670Z",
-      "lastSeenAt": "2026-09-23T22:58:06.670Z",
-      "collectionType": "daily-latest",
-      "matchedQuery": "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)",
-      "collectionTypes": [
-        "daily-latest"
-      ],
-      "matchedQueries": [
-        "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)"
-      ],
-      "targetThemes": [],
-      "conferenceVenues": [],
-      "conferenceYears": [],
-      "recommendationTrack": "hardware-primary",
-      "recommendationLabel": "硬件体系结构主线",
-      "recommendationScore": 149,
-      "relevanceReason": "命中 AI 处理器、体系结构、量化、训推系统或内存/缓存优化主题",
-      "pdfStatus": "remote",
-      "workflow": {
-        "digestStatus": "pending",
-        "emailStatus": "waiting-digest",
-        "digestError": "命令行启用了 --no-ai",
-        "harnessVersion": "paper-reader-v1",
-        "collectStatus": "collected",
-        "pdfStatus": "remote"
-      },
-      "digest": {
-        "summaryZh": "AI 摘要未生成。原始摘要要点：This study investigates the aerodynamic feasibility of high-speed evacuated tube transport (ETT) using an integrated CFD-machine learning framework for pod geom...",
-        "motivationZh": "命令行启用了 --no-ai",
-        "methodZh": "请配置 AI 后重新运行，以生成方法提炼。",
-        "experimentsZh": "来源元数据未披露完整实验设置或结果。",
-        "affiliationsZh": "未在 DBLP/arXiv 元数据中提供。",
-        "tags": [
-          "physics.flu-dyn"
-        ],
-        "importance": 3,
-        "researchFitZh": "AI harness 尚未完成分析，无法判断与用户研究方向的具体关系。",
-        "hardwareRelevance": 1,
-        "algorithmRelevance": 1,
-        "systemRelevance": 1,
-        "readPriority": "archive",
-        "whyReadZh": "需要完成 motivation、method 和实验结果分析后再判断是否值得深读。",
-        "limitationsZh": "命令行启用了 --no-ai",
-        "motivationDetail": {
-          "problemZh": "harness 未完成分析。",
-          "gapZh": "harness 未完成分析。",
-          "whyImportantZh": "harness 未完成分析。",
-          "userRelevanceZh": "harness 未完成分析。",
-          "evidence": "not analyzed"
-        },
-        "methodDetail": {
-          "coreIdeaZh": "harness 未完成分析。",
-          "componentsZh": [
-            "未分析"
-          ],
-          "hardwareSystemDetailZh": "harness 未完成分析。",
-          "noveltyZh": "harness 未完成分析。",
-          "evidence": "not analyzed"
-        },
-        "experimentDetail": {
-          "setupZh": "harness 未完成分析。",
-          "baselinesZh": "harness 未完成分析。",
-          "metricsZh": [
-            "未分析"
-          ],
-          "mainResultsZh": "harness 未完成分析。",
-          "limitationsZh": "harness 未完成分析。",
-          "evidence": "not analyzed"
-        },
-        "evidence": {
-          "usedSources": [
-            "metadata"
-          ],
-          "affiliationEvidence": "",
-          "experimentEvidence": "",
-          "missingFields": [
-            "motivation",
-            "method",
-            "experiments"
-          ]
-        },
-        "confidence": {
-          "summary": 0.2,
-          "motivation": 0,
-          "method": 0,
-          "experiments": 0,
-          "affiliations": 0
-        }
-      }
-    },
-    {
-      "id": "arxiv:2609.26733",
-      "source": "arXiv",
-      "title": "Evaluating the Semantic-to-Geometric Gap in Adversarial Defenses Against Vision-Language Model-Based Plagiarism",
-      "authors": [
-        "Christopher Burger",
-        "Christina Trotter",
-        "Joseph Carlisle",
-        "Charles Walter"
-      ],
-      "authorAffiliations": [],
-      "affiliations": [],
-      "abstract": "The rapidly advancing capabilities of vision-language models (VLMs) present a systemic challenge to academic integrity. VLMs now allow students to bypass meaningful engagement by capturing and submitting graphical problems as singular images, a practice we define as trivial plagiarism. To provide educators with actionable data on VLM limitations, we investigate the efficacy of heuristic adversarial image transformations designed to degrade model performance while remaining human-interpretable. Through a two-phase evaluation of introductory assessments, we manually assess baseline VLM performance on circuit diagrams, followed by an automated large-scale evaluation of topological structures (logic gates) and coordinate geometry (Karnaugh maps). We find that while highly capable VLMs can exhibit appreciable robustness, all models suffer vulnerability to adversarial perturbations. We conclude that while visual perturbations act as a viable near-term stopgap, long-term assessment security requires educators to reapproach assessment design given continually increasing VLM performance.",
-      "venue": "arXiv",
-      "published": "2026-09-22T17:23:26Z",
-      "updated": "2026-09-22T17:23:26Z",
-      "url": "http://arxiv.org/abs/2609.26733v1",
-      "pdfUrl": "https://arxiv.org/pdf/2609.26733v1",
-      "categories": [
-        "cs.CV"
-      ],
-      "collectedAt": "2026-09-23T22:58:06.670Z",
-      "firstSeenAt": "2026-09-23T22:58:06.670Z",
-      "lastSeenAt": "2026-09-23T22:58:06.670Z",
-      "collectionType": "daily-latest",
-      "matchedQuery": "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)",
-      "collectionTypes": [
-        "daily-latest"
-      ],
-      "matchedQueries": [
-        "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)"
-      ],
-      "targetThemes": [],
-      "conferenceVenues": [],
-      "conferenceYears": [],
-      "recommendationTrack": "hardware-primary",
-      "recommendationLabel": "硬件体系结构主线",
-      "recommendationScore": 148,
-      "relevanceReason": "命中 AI 处理器、体系结构、量化、训推系统或内存/缓存优化主题",
-      "pdfStatus": "remote",
-      "workflow": {
-        "digestStatus": "pending",
-        "emailStatus": "waiting-digest",
-        "digestError": "命令行启用了 --no-ai",
-        "harnessVersion": "paper-reader-v1",
-        "collectStatus": "collected",
-        "pdfStatus": "remote"
-      },
-      "digest": {
-        "summaryZh": "AI 摘要未生成。原始摘要要点：The rapidly advancing capabilities of vision-language models (VLMs) present a systemic challenge to academic integrity. VLMs now allow students to bypass meanin...",
-        "motivationZh": "命令行启用了 --no-ai",
-        "methodZh": "请配置 AI 后重新运行，以生成方法提炼。",
-        "experimentsZh": "来源元数据未披露完整实验设置或结果。",
-        "affiliationsZh": "未在 DBLP/arXiv 元数据中提供。",
-        "tags": [
-          "cs.CV"
-        ],
-        "importance": 3,
-        "researchFitZh": "AI harness 尚未完成分析，无法判断与用户研究方向的具体关系。",
-        "hardwareRelevance": 1,
-        "algorithmRelevance": 1,
-        "systemRelevance": 1,
-        "readPriority": "archive",
-        "whyReadZh": "需要完成 motivation、method 和实验结果分析后再判断是否值得深读。",
-        "limitationsZh": "命令行启用了 --no-ai",
-        "motivationDetail": {
-          "problemZh": "harness 未完成分析。",
-          "gapZh": "harness 未完成分析。",
-          "whyImportantZh": "harness 未完成分析。",
-          "userRelevanceZh": "harness 未完成分析。",
-          "evidence": "not analyzed"
-        },
-        "methodDetail": {
-          "coreIdeaZh": "harness 未完成分析。",
-          "componentsZh": [
-            "未分析"
-          ],
-          "hardwareSystemDetailZh": "harness 未完成分析。",
-          "noveltyZh": "harness 未完成分析。",
-          "evidence": "not analyzed"
-        },
-        "experimentDetail": {
-          "setupZh": "harness 未完成分析。",
-          "baselinesZh": "harness 未完成分析。",
-          "metricsZh": [
-            "未分析"
-          ],
-          "mainResultsZh": "harness 未完成分析。",
-          "limitationsZh": "harness 未完成分析。",
-          "evidence": "not analyzed"
-        },
-        "evidence": {
-          "usedSources": [
-            "metadata"
-          ],
-          "affiliationEvidence": "",
-          "experimentEvidence": "",
-          "missingFields": [
-            "motivation",
-            "method",
-            "experiments"
-          ]
-        },
-        "confidence": {
-          "summary": 0.2,
-          "motivation": 0,
-          "method": 0,
-          "experiments": 0,
-          "affiliations": 0
-        }
-      }
-    },
-    {
-      "id": "arxiv:2609.26679",
-      "source": "arXiv",
-      "title": "A Spectral Theory of Grokking: Weight Decay induces Feature Learning",
-      "authors": [
-        "Lenz Pracher",
-        "Pascal de Jong",
-        "Oskar Lieshaus",
-        "Alan Jeffares",
-        "Steffen Rulands"
-      ],
-      "authorAffiliations": [],
-      "affiliations": [],
-      "abstract": "In grokking an early fit to the training data separates from a much later improvement in generalization. During this delay, training can move from a fixed neural tangent kernel (NTK) regime to one in which task-relevant kernel eigendirections continue to evolve. We provide a quantitative theory for how this transition from lazy to rich learning can produce delayed generalization. For homogeneous networks trained with squared loss and $L_2$ weight decay, we show that a finite residual remains after memorization, with larger residual fractions in target components associated with smaller NTK eigenvalues. These residuals feed back into the dynamics of the NTK itself, and projecting the resulting dynamics onto task-relevant spectral directions yields a reduced system in which residual-driven kernel growth competes with weight decay. This system predicts that the grokking timescale is controlled by the product of learning rate and weight decay, that feature learning slows logarithmically near a critical decay above which task-aligned NTK structure can no longer support generalization, and that stronger decay can prevent fitting altogether. We test these predictions in modular addition. In a homogeneous MLP, task-aligned Fourier structure continues to emerge in the NTK after training accuracy has saturated, and an 84$\\times$90-grid of trained networks across varying learning rate and weight decay recovers the predicted phase geometry and inverse-product scaling of the generalization time with learning rate and weight decay. A one-block Transformer shows similar macroscopic phase structure in a 42$\\times$45-grid, as well as the same transition-time scaling despite violating exact homogeneity. Together, these results provide a mechanistic derivation connecting post-fit feature learning to both the onset of generalization and its phase structure in the learning rate and weight decay plane.",
-      "venue": "arXiv",
-      "published": "2026-09-22T16:38:16Z",
-      "updated": "2026-09-22T16:38:16Z",
-      "url": "http://arxiv.org/abs/2609.26679v1",
-      "pdfUrl": "https://arxiv.org/pdf/2609.26679v1",
+      "published": "2026-09-23T11:56:46Z",
+      "updated": "2026-09-23T11:56:46Z",
+      "url": "http://arxiv.org/abs/2609.27741v1",
+      "pdfUrl": "https://arxiv.org/pdf/2609.27741v1",
       "categories": [
         "cs.LG",
-        "cs.AI"
+        "math.OC"
       ],
-      "collectedAt": "2026-09-23T22:58:06.670Z",
-      "firstSeenAt": "2026-09-23T22:58:06.670Z",
-      "lastSeenAt": "2026-09-23T22:58:06.670Z",
+      "collectedAt": "2026-09-24T23:13:57.012Z",
+      "firstSeenAt": "2026-09-24T23:13:57.012Z",
+      "lastSeenAt": "2026-09-24T23:13:57.012Z",
       "collectionType": "daily-latest",
       "matchedQuery": "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)",
       "collectionTypes": [
@@ -744,7 +525,7 @@
       "conferenceYears": [],
       "recommendationTrack": "hardware-primary",
       "recommendationLabel": "硬件体系结构主线",
-      "recommendationScore": 147,
+      "recommendationScore": 147.75,
       "relevanceReason": "命中 AI 处理器、体系结构、量化、训推系统或内存/缓存优化主题",
       "pdfStatus": "remote",
       "workflow": {
@@ -756,14 +537,14 @@
         "pdfStatus": "remote"
       },
       "digest": {
-        "summaryZh": "AI 摘要未生成。原始摘要要点：In grokking an early fit to the training data separates from a much later improvement in generalization. During this delay, training can move from a fixed neura...",
+        "summaryZh": "AI 摘要未生成。原始摘要要点：In value-based reinforcement learning, improving the accuracy of policy evaluation has been shown to improve downstream policy optimization performance. The wid...",
         "motivationZh": "命令行启用了 --no-ai",
         "methodZh": "请配置 AI 后重新运行，以生成方法提炼。",
         "experimentsZh": "来源元数据未披露完整实验设置或结果。",
         "affiliationsZh": "未在 DBLP/arXiv 元数据中提供。",
         "tags": [
           "cs.LG",
-          "cs.AI"
+          "math.OC"
         ],
         "importance": 3,
         "researchFitZh": "AI harness 尚未完成分析，无法判断与用户研究方向的具体关系。",
@@ -821,31 +602,262 @@
       }
     },
     {
-      "id": "arxiv:2609.26704",
+      "id": "arxiv:2609.27083",
       "source": "arXiv",
-      "title": "Beyond Repeated Sampling: Learning Search Policies for LLM Reasoning",
+      "title": "AI-Enabled Wireless Propagation Modeling and Radio Environment Maps for 5G Aerial Wireless Networks",
       "authors": [
-        "Ismail Labiad",
-        "Matthieu Kowalski",
-        "Marc Schoenauer",
-        "Rémi Munos",
-        "Julia Kempe"
+        "Gautham Reddy",
+        "Kürşat Tekbıyık",
+        "Bryton Petersen",
+        "Antoine Lesage-Landry",
+        "Gunes Karabulut Kurt",
+        "Ismail Güvenç"
       ],
       "authorAffiliations": [],
       "affiliations": [],
-      "abstract": "Large language models increasingly tackle hard reasoning problems by spending more test-time compute, yet the dominant strategy remains naive repeated sampling: draw many independent solutions and hope one is correct. Because such sampling explores only through local decoding noise, it tends to produce many near duplicate attempts rather than genuinely different ideas. We ask whether exploration can instead be steered at a semantic level, by first sampling problem specific concepts, hints, or strategies and then conditioning answer generation on them. We refine this into a simple, more exploratory procedure that emits many diverse concepts in a single trajectory, and evaluate it on hard problems where repeated sampling struggles. We then go a step further and make concept generation trainable: a small concept generator is optimized with reinforcement learning so that its concepts maximize the downstream success of a larger, frozen answer generator. On hard mathematical reasoning problems, the trained concept generator substantially improves the answer generator's pass@k over naive repeated sampling at the same answer generation allocation, surpasses concepts drawn from much larger untuned models, and transfers to answer generators it was never trained against, including a model from a different family. A small model can thus be trained into an effective, reusable search policy for a much larger one.",
+      "abstract": "With the gaining prominence of aerial mobility applications, their success depends on the seamless integration of terrestrial and non-terrestrial network connectivity. However, providing reliable connectivity from terrestrial telecommunication networks remains challenging due to multi-cell interference from base stations (BSs) under line-of-sight (LoS) conditions to unmanned aerial vehicles (UAVs), coverage holes caused by antenna sidelobe degradation, localized multipath fading effects, and the high-speed dynamics of aerial users. To model such complexities, often exacerbated by sparse real-world data, this work proposes a dual-stage radio environment map (REM) framework. Our approach physically decouples the channel modeling, where a spatial Transformer first anchors the deterministic, large-scale path loss geometry, while a gated recurrent unit (GRU) subsequently extrapolates the stochastic, localized fast- fading deviations. By reformulating 3D spatial interpolation as a 1D radial sequence prediction task, the framework inherently aligns with the physics of propagation. We evaluate the proposed framework against state-of-the-art baselines, including 3D Kriging, UNet, Mamba, and Inception, using empirical 5G datasets. The results demonstrate improved intra-site generalization across diverse altitudes, user dynamics, and reference signal received power (RSRP) datasets, achieving signal-strength predictions with errors near 3 dB and REM spatial-similarity indices exceeding 0.75. Finally, we examine the influence of REMs and channel rank conditions on UAV channel quality, underscoring the necessity of reliable channel modeling for robust aerial connectivity.",
       "venue": "arXiv",
-      "published": "2026-09-22T16:56:53Z",
-      "updated": "2026-09-22T16:56:53Z",
-      "url": "http://arxiv.org/abs/2609.26704v1",
-      "pdfUrl": "https://arxiv.org/pdf/2609.26704v1",
+      "published": "2026-09-22T21:32:02Z",
+      "updated": "2026-09-22T21:32:02Z",
+      "url": "http://arxiv.org/abs/2609.27083v1",
+      "pdfUrl": "https://arxiv.org/pdf/2609.27083v1",
       "categories": [
-        "cs.CL",
-        "cs.AI"
+        "eess.SP"
       ],
-      "collectedAt": "2026-09-23T22:58:08.563Z",
-      "firstSeenAt": "2026-09-23T22:58:08.563Z",
-      "lastSeenAt": "2026-09-23T22:58:08.563Z",
+      "collectedAt": "2026-09-24T23:13:57.013Z",
+      "firstSeenAt": "2026-09-24T23:13:57.013Z",
+      "lastSeenAt": "2026-09-24T23:13:57.013Z",
+      "collectionType": "daily-latest",
+      "matchedQuery": "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)",
+      "collectionTypes": [
+        "daily-latest"
+      ],
+      "matchedQueries": [
+        "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)"
+      ],
+      "targetThemes": [],
+      "conferenceVenues": [],
+      "conferenceYears": [],
+      "recommendationTrack": "hardware-primary",
+      "recommendationLabel": "硬件体系结构主线",
+      "recommendationScore": 145,
+      "relevanceReason": "命中 AI 处理器、体系结构、量化、训推系统或内存/缓存优化主题",
+      "pdfStatus": "remote",
+      "workflow": {
+        "digestStatus": "pending",
+        "emailStatus": "waiting-digest",
+        "digestError": "命令行启用了 --no-ai",
+        "harnessVersion": "paper-reader-v1",
+        "collectStatus": "collected",
+        "pdfStatus": "remote"
+      },
+      "digest": {
+        "summaryZh": "AI 摘要未生成。原始摘要要点：With the gaining prominence of aerial mobility applications, their success depends on the seamless integration of terrestrial and non-terrestrial network connec...",
+        "motivationZh": "命令行启用了 --no-ai",
+        "methodZh": "请配置 AI 后重新运行，以生成方法提炼。",
+        "experimentsZh": "来源元数据未披露完整实验设置或结果。",
+        "affiliationsZh": "未在 DBLP/arXiv 元数据中提供。",
+        "tags": [
+          "eess.SP"
+        ],
+        "importance": 3,
+        "researchFitZh": "AI harness 尚未完成分析，无法判断与用户研究方向的具体关系。",
+        "hardwareRelevance": 1,
+        "algorithmRelevance": 1,
+        "systemRelevance": 1,
+        "readPriority": "archive",
+        "whyReadZh": "需要完成 motivation、method 和实验结果分析后再判断是否值得深读。",
+        "limitationsZh": "命令行启用了 --no-ai",
+        "motivationDetail": {
+          "problemZh": "harness 未完成分析。",
+          "gapZh": "harness 未完成分析。",
+          "whyImportantZh": "harness 未完成分析。",
+          "userRelevanceZh": "harness 未完成分析。",
+          "evidence": "not analyzed"
+        },
+        "methodDetail": {
+          "coreIdeaZh": "harness 未完成分析。",
+          "componentsZh": [
+            "未分析"
+          ],
+          "hardwareSystemDetailZh": "harness 未完成分析。",
+          "noveltyZh": "harness 未完成分析。",
+          "evidence": "not analyzed"
+        },
+        "experimentDetail": {
+          "setupZh": "harness 未完成分析。",
+          "baselinesZh": "harness 未完成分析。",
+          "metricsZh": [
+            "未分析"
+          ],
+          "mainResultsZh": "harness 未完成分析。",
+          "limitationsZh": "harness 未完成分析。",
+          "evidence": "not analyzed"
+        },
+        "evidence": {
+          "usedSources": [
+            "metadata"
+          ],
+          "affiliationEvidence": "",
+          "experimentEvidence": "",
+          "missingFields": [
+            "motivation",
+            "method",
+            "experiments"
+          ]
+        },
+        "confidence": {
+          "summary": 0.2,
+          "motivation": 0,
+          "method": 0,
+          "experiments": 0,
+          "affiliations": 0
+        }
+      }
+    },
+    {
+      "id": "arxiv:2609.27676",
+      "source": "arXiv",
+      "title": "A ready-to-deploy MLOps software platform for satellite and NEO detection at meter-class ground-based observatories",
+      "authors": [
+        "Rafael Carrillo Navarro",
+        "Pablo García-Martín",
+        "René Duffard",
+        "Juan Luis Orellana Montes de Oca",
+        "Oscar Ortega Ríos"
+      ],
+      "authorAffiliations": [],
+      "affiliations": [],
+      "abstract": "Ground-based astronomical observations frequently contain streaks produced by artificial satellites, space debris, and potentially Near-Earth Objects (NEOs). While machine-learning models can reliably detect these features, their practical adoption in observatory operations is often limited by the lack of integrated tools for visual inspection, validation, workflow management, and structured data storage. This paper presents the StreakMind Workbench, a framework that applies MLOps practices to bridge research-oriented machine-learning pipelines with routine observatory operations. Rather than introducing new detection algorithms, the Workbench addresses a software-engineering challenge in astronomical computing: maintaining a single authoritative source of scientific processing code while providing astronomers with an operational environment for workflow execution and result inspection. Integrated with the reference StreakMind AI model of Carrillo et al. (2026) and implemented in Python using PyQt5, the Workbench supports the complete workflow from FITS ingestion to database storage, including inference, result inspection, database exploration, training management, and Minor Planet Center formatted observations. Validation on 273 images from La Sagra Observatory demonstrates successful end-to-end workflows while maintaining consistency with the underlying StreakMind scientific code. The platform facilitates operational use of a research ML pipeline in meter-class observatories and moderate-scale campaigns, supporting Space Situational Awareness and planetary defence.",
+      "venue": "arXiv",
+      "published": "2026-09-23T10:47:14Z",
+      "updated": "2026-09-23T10:47:14Z",
+      "url": "http://arxiv.org/abs/2609.27676v1",
+      "pdfUrl": "https://arxiv.org/pdf/2609.27676v1",
+      "categories": [
+        "astro-ph.IM",
+        "cs.SE"
+      ],
+      "collectedAt": "2026-09-24T23:13:57.013Z",
+      "firstSeenAt": "2026-09-24T23:13:57.013Z",
+      "lastSeenAt": "2026-09-24T23:13:57.013Z",
+      "collectionType": "daily-latest",
+      "matchedQuery": "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)",
+      "collectionTypes": [
+        "daily-latest"
+      ],
+      "matchedQueries": [
+        "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)"
+      ],
+      "targetThemes": [],
+      "conferenceVenues": [],
+      "conferenceYears": [],
+      "recommendationTrack": "hardware-primary",
+      "recommendationLabel": "硬件体系结构主线",
+      "recommendationScore": 141,
+      "relevanceReason": "命中 AI 处理器、体系结构、量化、训推系统或内存/缓存优化主题",
+      "pdfStatus": "remote",
+      "workflow": {
+        "digestStatus": "pending",
+        "emailStatus": "waiting-digest",
+        "digestError": "命令行启用了 --no-ai",
+        "harnessVersion": "paper-reader-v1",
+        "collectStatus": "collected",
+        "pdfStatus": "remote"
+      },
+      "digest": {
+        "summaryZh": "AI 摘要未生成。原始摘要要点：Ground-based astronomical observations frequently contain streaks produced by artificial satellites, space debris, and potentially Near-Earth Objects (NEOs). Wh...",
+        "motivationZh": "命令行启用了 --no-ai",
+        "methodZh": "请配置 AI 后重新运行，以生成方法提炼。",
+        "experimentsZh": "来源元数据未披露完整实验设置或结果。",
+        "affiliationsZh": "未在 DBLP/arXiv 元数据中提供。",
+        "tags": [
+          "astro-ph.IM",
+          "cs.SE"
+        ],
+        "importance": 3,
+        "researchFitZh": "AI harness 尚未完成分析，无法判断与用户研究方向的具体关系。",
+        "hardwareRelevance": 1,
+        "algorithmRelevance": 1,
+        "systemRelevance": 1,
+        "readPriority": "archive",
+        "whyReadZh": "需要完成 motivation、method 和实验结果分析后再判断是否值得深读。",
+        "limitationsZh": "命令行启用了 --no-ai",
+        "motivationDetail": {
+          "problemZh": "harness 未完成分析。",
+          "gapZh": "harness 未完成分析。",
+          "whyImportantZh": "harness 未完成分析。",
+          "userRelevanceZh": "harness 未完成分析。",
+          "evidence": "not analyzed"
+        },
+        "methodDetail": {
+          "coreIdeaZh": "harness 未完成分析。",
+          "componentsZh": [
+            "未分析"
+          ],
+          "hardwareSystemDetailZh": "harness 未完成分析。",
+          "noveltyZh": "harness 未完成分析。",
+          "evidence": "not analyzed"
+        },
+        "experimentDetail": {
+          "setupZh": "harness 未完成分析。",
+          "baselinesZh": "harness 未完成分析。",
+          "metricsZh": [
+            "未分析"
+          ],
+          "mainResultsZh": "harness 未完成分析。",
+          "limitationsZh": "harness 未完成分析。",
+          "evidence": "not analyzed"
+        },
+        "evidence": {
+          "usedSources": [
+            "metadata"
+          ],
+          "affiliationEvidence": "",
+          "experimentEvidence": "",
+          "missingFields": [
+            "motivation",
+            "method",
+            "experiments"
+          ]
+        },
+        "confidence": {
+          "summary": 0.2,
+          "motivation": 0,
+          "method": 0,
+          "experiments": 0,
+          "affiliations": 0
+        }
+      }
+    },
+    {
+      "id": "arxiv:2609.28431",
+      "source": "arXiv",
+      "title": "LiMA: Bridging Long-term Imagination to Real-time Dexterous Manipulation via Asynchronous Diffusion",
+      "authors": [
+        "Ning Chen",
+        "Yankai Fu",
+        "Junkai Zhao",
+        "Qianpu Sun",
+        "Guocai Yao",
+        "Pengwei Wang",
+        "Zhongyuan Wang",
+        "Shanghang Zhang"
+      ],
+      "authorAffiliations": [],
+      "affiliations": [],
+      "abstract": "Dexterous manipulation demands long-term foresight and rapid reactive control. Vision-Language-Action (VLA) models, while proficient in high-level reasoning, often lack a fine-grained understanding of physical dynamics and spatial perception. Conversely, World-Action Models (WAMs) typically suffer from high inference latency due to iterative generation. These deficiencies result in a critical temporal misalignment where the model's intent fails to adapt to rapid physical contact changes. To overcome this fundamental bottleneck, we propose LiMA, an asynchronous dual-system generative framework that systematically decouples intent planning from reactive execution. LiMA organizes computation into a multi-scale hierarchy: a slow system handles sparse long-horizon spatiotemporal intent generation, while a fast system focuses on dense high-frequency motion refinement. To align sparse intent predictions with dense action trajectories, we introduce a Latent Schrödinger Bridge Coupling mechanism that formulates refinement as an entropy-regularized probabilistic transport process. LiMA reduces inference latency by 45.8% compared with Cosmos-Policy via asynchronous decoupling. Evaluated across six bimanual dexterous manipulation tasks spanning multiple horizons, LiMA achieves an overall success rate of 70.8% and an average subtask success rate of 78.9%, while maintaining performance in unseen scenarios. The project website is available at https://ccdcs.github.io/LiMA_repo/",
+      "venue": "arXiv",
+      "published": "2026-09-23T17:31:52Z",
+      "updated": "2026-09-23T17:31:52Z",
+      "url": "http://arxiv.org/abs/2609.28431v1",
+      "pdfUrl": "https://arxiv.org/pdf/2609.28431v1",
+      "categories": [
+        "cs.RO"
+      ],
+      "collectedAt": "2026-09-24T23:13:58.950Z",
+      "firstSeenAt": "2026-09-24T23:13:58.950Z",
+      "lastSeenAt": "2026-09-24T23:13:58.950Z",
       "collectionType": "daily-latest",
       "matchedQuery": "(all:agent OR all:agents OR all:agentic OR all:reasoning OR all:post-training OR all:alignment OR all:multimodal OR all:world-model) AND (all:LLM OR all:foundation OR all:language)",
       "collectionTypes": [
@@ -859,7 +871,7 @@
       "conferenceYears": [],
       "recommendationTrack": "algorithm-trend",
       "recommendationLabel": "算法趋势观察",
-      "recommendationScore": 40.2,
+      "recommendationScore": 44.3,
       "relevanceReason": "命中 LLM/Agent/多模态/后训练等算法趋势主题",
       "pdfStatus": "remote",
       "workflow": {
@@ -871,131 +883,134 @@
         "pdfStatus": "remote"
       },
       "digest": {
-        "summaryZh": "AI 摘要未生成。原始摘要要点：Large language models increasingly tackle hard reasoning problems by spending more test-time compute, yet the dominant strategy remains naive repeated sampling:...",
+        "summaryZh": "AI 摘要未生成。原始摘要要点：Dexterous manipulation demands long-term foresight and rapid reactive control. Vision-Language-Action (VLA) models, while proficient in high-level reasoning, of...",
+        "motivationZh": "命令行启用了 --no-ai",
+        "methodZh": "请配置 AI 后重新运行，以生成方法提炼。",
+        "experimentsZh": "来源元数据未披露完整实验设置或结果。",
+        "affiliationsZh": "未在 DBLP/arXiv 元数据中提供。",
+        "tags": [
+          "cs.RO"
+        ],
+        "importance": 3,
+        "researchFitZh": "AI harness 尚未完成分析，无法判断与用户研究方向的具体关系。",
+        "hardwareRelevance": 1,
+        "algorithmRelevance": 1,
+        "systemRelevance": 1,
+        "readPriority": "archive",
+        "whyReadZh": "需要完成 motivation、method 和实验结果分析后再判断是否值得深读。",
+        "limitationsZh": "命令行启用了 --no-ai",
+        "motivationDetail": {
+          "problemZh": "harness 未完成分析。",
+          "gapZh": "harness 未完成分析。",
+          "whyImportantZh": "harness 未完成分析。",
+          "userRelevanceZh": "harness 未完成分析。",
+          "evidence": "not analyzed"
+        },
+        "methodDetail": {
+          "coreIdeaZh": "harness 未完成分析。",
+          "componentsZh": [
+            "未分析"
+          ],
+          "hardwareSystemDetailZh": "harness 未完成分析。",
+          "noveltyZh": "harness 未完成分析。",
+          "evidence": "not analyzed"
+        },
+        "experimentDetail": {
+          "setupZh": "harness 未完成分析。",
+          "baselinesZh": "harness 未完成分析。",
+          "metricsZh": [
+            "未分析"
+          ],
+          "mainResultsZh": "harness 未完成分析。",
+          "limitationsZh": "harness 未完成分析。",
+          "evidence": "not analyzed"
+        },
+        "evidence": {
+          "usedSources": [
+            "metadata"
+          ],
+          "affiliationEvidence": "",
+          "experimentEvidence": "",
+          "missingFields": [
+            "motivation",
+            "method",
+            "experiments"
+          ]
+        },
+        "confidence": {
+          "summary": 0.2,
+          "motivation": 0,
+          "method": 0,
+          "experiments": 0,
+          "affiliations": 0
+        }
+      }
+    },
+    {
+      "id": "arxiv:2609.28416",
+      "source": "arXiv",
+      "title": "Agent-Editing World Model: Rethinking World Modeling for LLM Agents",
+      "authors": [
+        "Shuang Sun",
+        "Guoxin Chen",
+        "Fanzhe Meng",
+        "Jia Deng",
+        "Huatong Song",
+        "Jinhao Jiang",
+        "Wayne Xin Zhao",
+        "Hongteng Xu",
+        "Ji-Rong Wen"
+      ],
+      "authorAffiliations": [],
+      "affiliations": [],
+      "abstract": "Recent advances in large language models (LLMs) have enabled agents to tackle long-horizon tasks across diverse environments. To further improve agent performance, existing language world models typically predict environment observations, yet reconstructing high-entropy, execution-dependent tool responses offers limited value when real feedback is available. Meanwhile, agents suffer from \\emph{task-state contamination}, where unsupported assumptions and outdated plans persist in history and distort subsequent decisions. We propose the \\textbf{Agent-Editing World Model (AEWM)}, which models how reasoning and actions shape future task progress rather than simulating tool responses. AEWM combines \\textbf{Action Judge} to distinguish \\textsc{Critical}, \\textsc{Exploratory}, and \\textsc{Noisy} decisions with \\textbf{State Revision} to edit noisy reasoning--action continuations from the same observed history. \\textbf{EditAct} integrates these capabilities with real execution, directly changing the state underlying subsequent decisions rather than merely providing critiques. We train AEWM across Search, Terminal, and Software Engineering through mid-training and supervised fine-tuning. AEWM achieves 70.5\\% macro-F1 on our Action Judge benchmark, exceeding the strongest frontier baseline by 10.6 points. Across six benchmarks and three agent backbones, EditAct improves average scores by 3.2--6.7 points over the strongest baseline. Furthermore, rejection sampling fine-tuning on verified EditAct trajectories, termed \\textbf{AEWM-RFT}, improves over Self-RFT by 2.2--2.6 points across three domains without online AEWM guidance.",
+      "venue": "arXiv",
+      "published": "2026-09-23T17:18:26Z",
+      "updated": "2026-09-23T17:18:26Z",
+      "url": "http://arxiv.org/abs/2609.28416v1",
+      "pdfUrl": "https://arxiv.org/pdf/2609.28416v1",
+      "categories": [
+        "cs.CL",
+        "cs.AI",
+        "cs.LG"
+      ],
+      "collectedAt": "2026-09-24T23:13:58.950Z",
+      "firstSeenAt": "2026-09-24T23:13:58.950Z",
+      "lastSeenAt": "2026-09-24T23:13:58.950Z",
+      "collectionType": "daily-latest",
+      "matchedQuery": "(all:agent OR all:agents OR all:agentic OR all:reasoning OR all:post-training OR all:alignment OR all:multimodal OR all:world-model) AND (all:LLM OR all:foundation OR all:language)",
+      "collectionTypes": [
+        "daily-latest"
+      ],
+      "matchedQueries": [
+        "(all:agent OR all:agents OR all:agentic OR all:reasoning OR all:post-training OR all:alignment OR all:multimodal OR all:world-model) AND (all:LLM OR all:foundation OR all:language)"
+      ],
+      "targetThemes": [],
+      "conferenceVenues": [],
+      "conferenceYears": [],
+      "recommendationTrack": "algorithm-trend",
+      "recommendationLabel": "算法趋势观察",
+      "recommendationScore": 41.8,
+      "relevanceReason": "命中 LLM/Agent/多模态/后训练等算法趋势主题",
+      "pdfStatus": "remote",
+      "workflow": {
+        "digestStatus": "pending",
+        "emailStatus": "waiting-digest",
+        "digestError": "命令行启用了 --no-ai",
+        "harnessVersion": "paper-reader-v1",
+        "collectStatus": "collected",
+        "pdfStatus": "remote"
+      },
+      "digest": {
+        "summaryZh": "AI 摘要未生成。原始摘要要点：Recent advances in large language models (LLMs) have enabled agents to tackle long-horizon tasks across diverse environments. To further improve agent performan...",
         "motivationZh": "命令行启用了 --no-ai",
         "methodZh": "请配置 AI 后重新运行，以生成方法提炼。",
         "experimentsZh": "来源元数据未披露完整实验设置或结果。",
         "affiliationsZh": "未在 DBLP/arXiv 元数据中提供。",
         "tags": [
           "cs.CL",
-          "cs.AI"
-        ],
-        "importance": 3,
-        "researchFitZh": "AI harness 尚未完成分析，无法判断与用户研究方向的具体关系。",
-        "hardwareRelevance": 1,
-        "algorithmRelevance": 1,
-        "systemRelevance": 1,
-        "readPriority": "archive",
-        "whyReadZh": "需要完成 motivation、method 和实验结果分析后再判断是否值得深读。",
-        "limitationsZh": "命令行启用了 --no-ai",
-        "motivationDetail": {
-          "problemZh": "harness 未完成分析。",
-          "gapZh": "harness 未完成分析。",
-          "whyImportantZh": "harness 未完成分析。",
-          "userRelevanceZh": "harness 未完成分析。",
-          "evidence": "not analyzed"
-        },
-        "methodDetail": {
-          "coreIdeaZh": "harness 未完成分析。",
-          "componentsZh": [
-            "未分析"
-          ],
-          "hardwareSystemDetailZh": "harness 未完成分析。",
-          "noveltyZh": "harness 未完成分析。",
-          "evidence": "not analyzed"
-        },
-        "experimentDetail": {
-          "setupZh": "harness 未完成分析。",
-          "baselinesZh": "harness 未完成分析。",
-          "metricsZh": [
-            "未分析"
-          ],
-          "mainResultsZh": "harness 未完成分析。",
-          "limitationsZh": "harness 未完成分析。",
-          "evidence": "not analyzed"
-        },
-        "evidence": {
-          "usedSources": [
-            "metadata"
-          ],
-          "affiliationEvidence": "",
-          "experimentEvidence": "",
-          "missingFields": [
-            "motivation",
-            "method",
-            "experiments"
-          ]
-        },
-        "confidence": {
-          "summary": 0.2,
-          "motivation": 0,
-          "method": 0,
-          "experiments": 0,
-          "affiliations": 0
-        }
-      }
-    },
-    {
-      "id": "arxiv:2609.26760",
-      "source": "arXiv",
-      "title": "Grow the Harness, Not the Context: From Strategy-Free Scaffolds to Reusable Specialist Agents",
-      "authors": [
-        "Laizhen Li",
-        "Jiarui Li",
-        "Juanjuan Zhao",
-        "Kejiang Ye",
-        "Ye Li",
-        "Cheng-zhong Xu",
-        "Xitong Gao"
-      ],
-      "authorAffiliations": [],
-      "affiliations": [],
-      "abstract": "Large language model (LLM) agents often handle streams of related tasks, yet standard harnesses repeatedly ask the model to reconstruct the same control decisions inside each task's context. We study whether task feedback can instead turn recurring control into reusable executable code, while reserving LLM calls for task-specific semantic reasoning. We introduce Growing Harness, a failure-guided training paradigm that learns the agent harness itself from a strategy-free scaffold that exposes fixed model and tool interfaces but encodes no task-solving controller. Function-level execution traces localize each failure to a bounded code surface, an optimizer repairs a window of failures jointly, and a success-first held-out gate rolls back repair sequences that harm prior capability. Accepted edits accumulate in one shared harness, allowing its control structure to emerge from task feedback. Across BrowseComp-Plus and WebArena-Verified with three deployment models from 4B to 120B parameters, Growing Harness achieves the highest mean success in five of six benchmark-model settings and trails the best mean by 0.7 pp. in the sixth. Relative to a Tool-Calling agent, it reduces LLM calls by 76.0-91.8% and deployed-agent inference cost by 74.4-98.6%. On WebArena-Verified, its success remains 44.7-45.3% across model scales, whereas Tool-Calling falls to 6.7% with the 4B model. Ablations show that trace-local edits, joint repair, and gate-based rollback each improve final success. These results show that persistent program growth can move recurring control out of model context and into low-cost code, yielding reusable specialist agents that remain effective with smaller deployment models.",
-      "venue": "arXiv",
-      "published": "2026-09-22T17:40:45Z",
-      "updated": "2026-09-22T17:40:45Z",
-      "url": "http://arxiv.org/abs/2609.26760v1",
-      "pdfUrl": "https://arxiv.org/pdf/2609.26760v1",
-      "categories": [
-        "cs.AI",
-        "cs.SE"
-      ],
-      "collectedAt": "2026-09-23T22:58:08.563Z",
-      "firstSeenAt": "2026-09-23T22:58:08.563Z",
-      "lastSeenAt": "2026-09-23T22:58:08.563Z",
-      "collectionType": "daily-latest",
-      "matchedQuery": "(all:agent OR all:agents OR all:agentic OR all:reasoning OR all:post-training OR all:alignment OR all:multimodal OR all:world-model) AND (all:LLM OR all:foundation OR all:language)",
-      "collectionTypes": [
-        "daily-latest"
-      ],
-      "matchedQueries": [
-        "(all:agent OR all:agents OR all:agentic OR all:reasoning OR all:post-training OR all:alignment OR all:multimodal OR all:world-model) AND (all:LLM OR all:foundation OR all:language)"
-      ],
-      "targetThemes": [],
-      "conferenceVenues": [],
-      "conferenceYears": [],
-      "recommendationTrack": "algorithm-trend",
-      "recommendationLabel": "算法趋势观察",
-      "recommendationScore": 37.2,
-      "relevanceReason": "命中 LLM/Agent/多模态/后训练等算法趋势主题",
-      "pdfStatus": "remote",
-      "workflow": {
-        "digestStatus": "pending",
-        "emailStatus": "waiting-digest",
-        "digestError": "命令行启用了 --no-ai",
-        "harnessVersion": "paper-reader-v1",
-        "collectStatus": "collected",
-        "pdfStatus": "remote"
-      },
-      "digest": {
-        "summaryZh": "AI 摘要未生成。原始摘要要点：Large language model (LLM) agents often handle streams of related tasks, yet standard harnesses repeatedly ask the model to reconstruct the same control decisio...",
-        "motivationZh": "命令行启用了 --no-ai",
-        "methodZh": "请配置 AI 后重新运行，以生成方法提炼。",
-        "experimentsZh": "来源元数据未披露完整实验设置或结果。",
-        "affiliationsZh": "未在 DBLP/arXiv 元数据中提供。",
-        "tags": [
           "cs.AI",
-          "cs.SE"
+          "cs.LG"
         ],
         "importance": 3,
         "researchFitZh": "AI harness 尚未完成分析，无法判断与用户研究方向的具体关系。",
