@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-10-01T23:59:39.402Z",
-  "digestDate": "2026-10-02",
+  "generatedAt": "2026-10-02T23:53:58.453Z",
+  "digestDate": "2026-10-03",
   "kind": "daily-new",
   "timezone": "Asia/Shanghai",
   "siteUrl": "https://YouthLiuYS.github.io/PaperDigestAgent/",
@@ -126,7 +126,7 @@
     "dailyCandidates": 8,
     "conferenceCandidates": 0,
     "backfillCandidates": 0,
-    "rawCandidates": 35,
+    "rawCandidates": 38,
     "newlyAdded": 8,
     "pendingDigest": 8,
     "pendingEmail": 0,
@@ -141,154 +141,29 @@
   },
   "papers": [
     {
-      "id": "arxiv:2609.39131",
+      "id": "arxiv:2610.00586",
       "source": "arXiv",
-      "title": "Characterizing High Bandwidth Flash for LLM Serving",
+      "title": "Right In-Place (RiP) Convolution: A Simple, General, and Near-Optimal Strategy for Memory-Efficient CNN Inference",
       "authors": [
-        "Zack Yu",
-        "Chloe Wong",
-        "Coleman Hooper",
-        "Minjae Lee",
-        "Wonjun Kang",
-        "Youngjin Cho",
-        "Michael W. Mahoney",
-        "Yakun Sophia Shao",
-        "Kurt Keutzer",
-        "Amir Gholami"
+        "Opegbemi Matthias Busoye",
+        "Tolulope Matthew Busoye",
+        "Eghonghon-aye Eigbe"
       ],
       "authorAffiliations": [],
       "affiliations": [],
-      "abstract": "Large language model (LLM) serving requires substantial memory to store model weights and KV caches. As models grow larger and contexts become longer, memory capacity and bandwidth increasingly become bottlenecks for serving performance. Agentic workloads compound this pressure through repeated interactions over growing contexts, making it increasingly important to retain KV state for reuse. High-bandwidth flash (HBF) offers a way to expand accelerator memory capacity for large language model (LLM) serving, but its access costs and limited write endurance complicate its use. We evaluate HBF for high-throughput agentic serving across system design and scheduling choices to understand when additional capacity improves serving performance and energy efficiency. We introduce an HBM-HBF-host hierarchical storage system and buffered cache-aware scheduling, and use trace-driven simulations to analyze their effects on performance, energy consumption, and HBF write lifetime. Across the evaluated workloads, the fastest HBF-augmented systems reduce completion time by 36.1-87.0% relative to HBM-only systems. Modeled energy savings reach 55.8%, although HBF increases energy consumption on some light workloads. Buffered cache-aware scheduling extends estimated HBF write lifetime from 4.77 to 14.82 years in the evaluated configuration. These results demonstrate the importance of coordinating data placement and scheduling to improve serving efficiency while sustaining a practical HBF write lifetime.",
+      "abstract": "Activation memory, not compute, limits CNN inference on constrained hardware such as microcontrollers. Direct in-place convolution removes the dual-buffer cost, but the memory-optimal formulation of Gural and Murmann assumes valid padding, unit stride, unit dilation, and odd square kernels, and needs a non-sequential traversal costing $2\\times$ inference time in transposes. We identify two regimes in which their published closed form does not hold: (1) an under-allocation of exactly $(k-1)C_{in} \\bmod (C_{out}-C_{in})$ scalars, active on every convolutional layer of their own deployed network and manifesting as a silent corruption of still-live input; (2) an unbounded overestimate, up to $2{,}432\\times$, once the critical leg leaves the output grid. We correct both and generalize to arbitrary stride, dilation, padding, and rectangular kernels. We then propose Right In-Place (RiP) convolution, a bit-identical operation in which every layer reads its input right-aligned in a shared workspace and writes its output left-aligned from index zero. The debt is piecewise affine in the output pixel index, so evaluating its breakpoints in $O(1)$ yields the minimum safe gap without enumerating the output grid, with row-major access preserved. Across $10{,}000$ random layers RiP produced no corruption, and across 84 convolutional layers from 25 architectures it matches the herringbone workspace exactly on 58 and within 5% on 81, using 24.8% less memory than dual buffering on average. Written into TinyEngine's kernels and deployed to a Raspberry Pi Pico 1 and Pico 2, it cuts peak activation memory across eleven MCUNet models by 12.5 to 33.3% at unchanged cycle counts and bit-identical outputs, raising the number of models that fit the Pico 1's 256 KB SRAM from six to nine.",
       "venue": "arXiv",
-      "published": "2026-09-30T07:02:56Z",
-      "updated": "2026-09-30T07:02:56Z",
-      "url": "http://arxiv.org/abs/2609.39131v1",
-      "pdfUrl": "https://arxiv.org/pdf/2609.39131v1",
+      "published": "2026-09-30T18:51:30Z",
+      "updated": "2026-09-30T18:51:30Z",
+      "url": "http://arxiv.org/abs/2610.00586v1",
+      "pdfUrl": "https://arxiv.org/pdf/2610.00586v1",
       "categories": [
         "cs.LG",
-        "cs.AR",
-        "cs.DC"
+        "cs.CV"
       ],
-      "collectedAt": "2026-10-01T23:54:50.851Z",
-      "firstSeenAt": "2026-10-01T23:54:50.851Z",
-      "lastSeenAt": "2026-10-01T23:54:50.851Z",
-      "collectionType": "daily-latest",
-      "matchedQuery": "(cat:cs.AR OR cat:cs.DC OR cat:cs.PF) AND (all:LLM OR all:transformer OR all:foundation OR all:language) AND (all:accelerator OR all:processor OR all:architecture OR all:hardware OR all:system OR all:serving OR all:training OR all:inference OR all:cache)",
-      "collectionTypes": [
-        "daily-latest"
-      ],
-      "matchedQueries": [
-        "(cat:cs.AR OR cat:cs.DC OR cat:cs.PF) AND (all:LLM OR all:transformer OR all:foundation OR all:language) AND (all:accelerator OR all:processor OR all:architecture OR all:hardware OR all:system OR all:serving OR all:training OR all:inference OR all:cache)",
-        "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)"
-      ],
-      "targetThemes": [],
-      "conferenceVenues": [],
-      "conferenceYears": [],
-      "digest": {
-        "summaryZh": "AI 摘要未生成。原始摘要要点：Large language model (LLM) serving requires substantial memory to store model weights and KV caches. As models grow larger and contexts become longer, memory ca...",
-        "motivationZh": "命令行启用了 --no-ai",
-        "methodZh": "请配置 AI 后重新运行，以生成方法提炼。",
-        "experimentsZh": "来源元数据未披露完整实验设置或结果。",
-        "affiliationsZh": "未在 DBLP/arXiv 元数据中提供。",
-        "tags": [
-          "cs.LG",
-          "cs.AR",
-          "cs.DC"
-        ],
-        "importance": 3,
-        "researchFitZh": "AI harness 尚未完成分析，无法判断与用户研究方向的具体关系。",
-        "hardwareRelevance": 1,
-        "algorithmRelevance": 1,
-        "systemRelevance": 1,
-        "readPriority": "archive",
-        "whyReadZh": "需要完成 motivation、method 和实验结果分析后再判断是否值得深读。",
-        "limitationsZh": "命令行启用了 --no-ai",
-        "motivationDetail": {
-          "problemZh": "harness 未完成分析。",
-          "gapZh": "harness 未完成分析。",
-          "whyImportantZh": "harness 未完成分析。",
-          "userRelevanceZh": "harness 未完成分析。",
-          "evidence": "not analyzed"
-        },
-        "methodDetail": {
-          "coreIdeaZh": "harness 未完成分析。",
-          "componentsZh": [
-            "未分析"
-          ],
-          "hardwareSystemDetailZh": "harness 未完成分析。",
-          "noveltyZh": "harness 未完成分析。",
-          "evidence": "not analyzed"
-        },
-        "experimentDetail": {
-          "setupZh": "harness 未完成分析。",
-          "baselinesZh": "harness 未完成分析。",
-          "metricsZh": [
-            "未分析"
-          ],
-          "mainResultsZh": "harness 未完成分析。",
-          "limitationsZh": "harness 未完成分析。",
-          "evidence": "not analyzed"
-        },
-        "evidence": {
-          "usedSources": [
-            "metadata"
-          ],
-          "affiliationEvidence": "",
-          "experimentEvidence": "",
-          "missingFields": [
-            "motivation",
-            "method",
-            "experiments"
-          ]
-        },
-        "confidence": {
-          "summary": 0.2,
-          "motivation": 0,
-          "method": 0,
-          "experiments": 0,
-          "affiliations": 0
-        }
-      },
-      "recommendationTrack": "hardware-primary",
-      "recommendationLabel": "硬件体系结构主线",
-      "recommendationScore": 194.25,
-      "relevanceReason": "命中 AI 处理器、体系结构、量化、训推系统或内存/缓存优化主题",
-      "pdfStatus": "remote",
-      "workflow": {
-        "digestStatus": "pending",
-        "emailStatus": "waiting-digest",
-        "digestError": "命令行启用了 --no-ai",
-        "harnessVersion": "paper-reader-v1",
-        "collectStatus": "collected",
-        "pdfStatus": "remote"
-      }
-    },
-    {
-      "id": "arxiv:2609.38477",
-      "source": "arXiv",
-      "title": "Security-Enhanced Seed-Based Weight Quantization for Large Language Models",
-      "authors": [
-        "Qiuyu Ren",
-        "Sudipta Paria",
-        "Aritra Dasgupta",
-        "Swarup Bhunia"
-      ],
-      "authorAffiliations": [],
-      "affiliations": [],
-      "abstract": "Large language models (LLMs) incur substantial storage, memory-bandwidth and energy costs, motivating compact weight representations. Existing seed-based compression methods reconstruct weights from compact pseudo-random representations but do not explicitly account for the non-uniform sensitivity of model weights. We introduce Seed-Q, a security-enhanced sensitivity-aware seed-based weight compression framework that uses lightweight Linear Feedback Shift Register (LFSR)-based weight generation with non-uniform bit allocation. Our approach assigns larger representation budgets to sensitive weights while aggressively compressing less sensitive regions. Importantly, this non-uniform allocation requires no side-information: the decoder deterministically reconstructs the bit-allocation schedule, with no rung depending on the decoded weights, eliminating the need to store per-block metadata or use calibration data while preserving the baseline coding rate. Experiments across diverse LLMs show that Seed-Q matches 4-bit perplexity of SeedLM with fewer bits, while at the same 4 bits/weight it reduces both perplexity degradation and zero-shot accuracy loss relative to SeedLM. We also show that Seed-Q simultaneously achieves high security against bit-flip attacks on model parameters, as bit corruption affects multiple reconstructed weights, greatly amplifying its impact and making it easier to detect. We further implement Seed-Q in an ASIC-based accelerator and demonstrate modest hardware overhead compared to prior seed-based approaches.",
-      "venue": "arXiv",
-      "published": "2026-09-29T20:07:04Z",
-      "updated": "2026-09-29T20:07:04Z",
-      "url": "http://arxiv.org/abs/2609.38477v1",
-      "pdfUrl": "https://arxiv.org/pdf/2609.38477v1",
-      "categories": [
-        "cs.CR",
-        "cs.AI",
-        "cs.LG"
-      ],
-      "collectedAt": "2026-10-01T23:54:56.723Z",
-      "firstSeenAt": "2026-10-01T23:54:56.723Z",
-      "lastSeenAt": "2026-10-01T23:54:56.723Z",
+      "collectedAt": "2026-10-02T23:49:13.223Z",
+      "firstSeenAt": "2026-10-02T23:49:13.223Z",
+      "lastSeenAt": "2026-10-02T23:49:13.223Z",
       "collectionType": "daily-latest",
       "matchedQuery": "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)",
       "collectionTypes": [
@@ -302,7 +177,7 @@
       "conferenceYears": [],
       "recommendationTrack": "hardware-primary",
       "recommendationLabel": "硬件体系结构主线",
-      "recommendationScore": 188,
+      "recommendationScore": 187,
       "relevanceReason": "命中 AI 处理器、体系结构、量化、训推系统或内存/缓存优化主题",
       "pdfStatus": "remote",
       "workflow": {
@@ -314,15 +189,14 @@
         "pdfStatus": "remote"
       },
       "digest": {
-        "summaryZh": "AI 摘要未生成。原始摘要要点：Large language models (LLMs) incur substantial storage, memory-bandwidth and energy costs, motivating compact weight representations. Existing seed-based compre...",
+        "summaryZh": "AI 摘要未生成。原始摘要要点：Activation memory, not compute, limits CNN inference on constrained hardware such as microcontrollers. Direct in-place convolution removes the dual-buffer cost,...",
         "motivationZh": "命令行启用了 --no-ai",
         "methodZh": "请配置 AI 后重新运行，以生成方法提炼。",
         "experimentsZh": "来源元数据未披露完整实验设置或结果。",
         "affiliationsZh": "未在 DBLP/arXiv 元数据中提供。",
         "tags": [
-          "cs.CR",
-          "cs.AI",
-          "cs.LG"
+          "cs.LG",
+          "cs.CV"
         ],
         "importance": 3,
         "researchFitZh": "AI harness 尚未完成分析，无法判断与用户研究方向的具体关系。",
@@ -380,31 +254,27 @@
       }
     },
     {
-      "id": "arxiv:2609.38830",
+      "id": "arxiv:2610.00872",
       "source": "arXiv",
-      "title": "SparLeak: Privacy Leakage from Sparse Attention in LLM Inference on Shared GPUs",
+      "title": "MemFit: Efficient Long-Term Agentic Memory",
       "authors": [
-        "Fahao Chen",
-        "Linkang Du",
-        "Jinhao Zhou",
-        "Peng Li",
-        "Zhou Su"
+        "Mitchell Piehl",
+        "Muchao Ye"
       ],
       "authorAffiliations": [],
       "affiliations": [],
-      "abstract": "Sparse attention is widely used to accelerate long-context inference in modern large language models (LLMs), but its input-dependent execution behavior introduces previously unexplored privacy risks. We identify a new GPU micro-architectural side channel, termed Sparsity-Induced Memory Access (SIMA), which arises from secret-dependent key-value cache access patterns induced by sparse attention. Based on this observation, we present SparLeak, a phase-aware side-channel attack that extracts SIMA traces during LLM inference and enables two practical privacy extractions: query attribute inference from prefill-phase traces and autoregressive response reconstruction from decoding-phase traces. By reconstructing approximate token-level sparsity profiles from page-level observations and applying profiling-based learning, SparLeak accurately recovers sensitive information, including user-query attributes and private LLM response content. Extensive evaluation across three LLM architectures, three sparse attention mechanisms, and three privacy-sensitive datasets shows that SparLeak achieves average attack success rates of 90.9% for attribute inference and 87.3% for response reconstruction under real-world LLM serving settings, highlighting the significance to account for SIMA leakage when deploying sparse-attention-based LLM systems. We provide anonymized SIMA traces, trained attack models, evaluation scripts, and documentation as artifacts at https://anonymous.4open.science/r/Janus_artifacts/.",
+      "abstract": "Long-term memory systems for large language models (LLMs) have gained popularity for extending reasoning capabilities across applications. Current memory systems rely on LLM agents to organize and consolidate memory, resulting in costly, inefficient write operations. To address this limitation, we propose MemFit, a long-term memory system for conversational agents that reduces the cost and latency of memory operations. Unlike existing systems that rely on expensive LLM calls for memory construction or discard surface-level details through compression, MemFit stores each turn verbatim in an append-only store with near-instantaneous, LLM-free insertion, indexing turns with segment summaries rather than replacing them. Additionally, MemFit uses an LLM-free, multi-path retrieval strategy that combines lexical and semantic signals with cross-encoder reranking over caption- augmented episodes in both textual and multimodal settings. Empirical results on three widely used benchmarks, LoCoMo, MemGallery, and LongMemEval-S, show that MemFit achieves state-of-the-art performance while reducing memory construction time and cost several-fold, providing a scalable and efficient solution for persistent agentic memory.",
       "venue": "arXiv",
-      "published": "2026-09-30T02:52:28Z",
-      "updated": "2026-09-30T02:52:28Z",
-      "url": "http://arxiv.org/abs/2609.38830v1",
-      "pdfUrl": "https://arxiv.org/pdf/2609.38830v1",
+      "published": "2026-10-01T00:44:33Z",
+      "updated": "2026-10-01T00:44:33Z",
+      "url": "http://arxiv.org/abs/2610.00872v1",
+      "pdfUrl": "https://arxiv.org/pdf/2610.00872v1",
       "categories": [
-        "cs.LG",
-        "cs.CR"
+        "cs.AI"
       ],
-      "collectedAt": "2026-10-01T23:54:56.723Z",
-      "firstSeenAt": "2026-10-01T23:54:56.723Z",
-      "lastSeenAt": "2026-10-01T23:54:56.723Z",
+      "collectedAt": "2026-10-02T23:49:13.223Z",
+      "firstSeenAt": "2026-10-02T23:49:13.223Z",
+      "lastSeenAt": "2026-10-02T23:49:13.223Z",
       "collectionType": "daily-latest",
       "matchedQuery": "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)",
       "collectionTypes": [
@@ -418,7 +288,7 @@
       "conferenceYears": [],
       "recommendationTrack": "hardware-primary",
       "recommendationLabel": "硬件体系结构主线",
-      "recommendationScore": 180,
+      "recommendationScore": 168.75,
       "relevanceReason": "命中 AI 处理器、体系结构、量化、训推系统或内存/缓存优化主题",
       "pdfStatus": "remote",
       "workflow": {
@@ -430,14 +300,13 @@
         "pdfStatus": "remote"
       },
       "digest": {
-        "summaryZh": "AI 摘要未生成。原始摘要要点：Sparse attention is widely used to accelerate long-context inference in modern large language models (LLMs), but its input-dependent execution behavior introduc...",
+        "summaryZh": "AI 摘要未生成。原始摘要要点：Long-term memory systems for large language models (LLMs) have gained popularity for extending reasoning capabilities across applications. Current memory system...",
         "motivationZh": "命令行启用了 --no-ai",
         "methodZh": "请配置 AI 后重新运行，以生成方法提炼。",
         "experimentsZh": "来源元数据未披露完整实验设置或结果。",
         "affiliationsZh": "未在 DBLP/arXiv 元数据中提供。",
         "tags": [
-          "cs.LG",
-          "cs.CR"
+          "cs.AI"
         ],
         "importance": 3,
         "researchFitZh": "AI harness 尚未完成分析，无法判断与用户研究方向的具体关系。",
@@ -495,32 +364,143 @@
       }
     },
     {
-      "id": "arxiv:2609.39279",
+      "id": "arxiv:2610.01125",
       "source": "arXiv",
-      "title": "Faithful Dual-constrained Erasure for Robust LLM Safety Alignment",
+      "title": "Multivariate Quantum Signal Processing",
       "authors": [
-        "Jiaqing Li",
-        "Shide Zhou",
-        "Zhibo Zhang",
-        "Yuxi Li",
-        "Tianlong Yu",
-        "Kailong Wang"
+        "Guang Hao Low"
       ],
       "authorAffiliations": [],
       "affiliations": [],
-      "abstract": "Machine unlearning has emerged as a crucial mechanism for removing hazardous knowledge and enforcing safety alignment in Large Language Models (LLMs). However, recent studies reveal a persistent security risk: unlearned models remain highly vulnerable to retraining attacks, where suppressed malicious behaviors rapidly resurface after benign fine-tuning. In this work, we investigate the optimization dynamics of unlearning and identify that this vulnerability stems from shallow alignment. Rather than effectively erasing target knowledge, models often exploit a shortcut by activating previously dormant parameters to act as spurious suppressors, forming a fragile inhibitory shell over intact malicious representations. To address this issue and enforce authentic memory deletion, we propose FDCU, a novel dual-constrained subspace projection framework. FDCU restricts parameter updates through a highly scalable, element-wise dual-masking rule: it preserves general knowledge manifolds via Fisher Information and strictly prohibits the abnormal activation of spurious suppressors via the Principle of Minimal Functional Intervention (PMFI). By reliably blocking the model's ability to superficially hide knowledge, FDCU promotes the authentic dismantling of target representations. Extensive experiments across specific knowledge erasure and safe output control tasks demonstrate that FDCU achieves state-of-the-art robustness against retraining attacks while maintaining near-lossless general utility, ensuring durable safety for LLMs.",
+      "abstract": "We develop Multivariate Quantum Signal Processing for designing matrix-valued transformations of multiple noncommuting nonnormal block-encoded matrices. Our framework equips quantum transducers with the analytic structure of multiport Infinite-Impulse-Response (IIR) filters and establishes a transfer-function methodology for designing quantum query algorithms. Efficiently computable analytic bounds that hold uniformly across the oracle promise yield efficient quantum circuits with logarithmic error dependence and near-unity success probability, paralleling the approximation-theoretic guarantees of univariate QSP/QSVT. We provide a complete characterization of achievable transfer functions and a principled library of analytic IIR components. Our modular designs greatly improve or resolve the per-oracle query complexity of open multi-oracle problems: (1) Hamiltonian simulation under $H=\\sum_j H_j$ with weighted quasinorm cost $\\approx t\\langle\\vecλ,\\vec C\\rangle_{1/2}+\\mathcal{O}(\\|\\vec C\\|_1\\log(1/ε))$ for block-encoding normalizations $\\vecλ$ and costs $\\vec C$; (2) sparse simulation with optimal time--norm $Θ(\\sqrt{d}\\|H\\|_{\\rm 1\\to2}t)$ and additive error dependence; (3) solving linear systems and (4) differential equations under minimal matrix assumptions with optimal weighted state-preparation and multi-term cost; (5) ground-state preparation and energy estimation; (6) generalized eigenvalue problems. We apply these to exactly simulate downfolded Hamiltonians with leading cost $t\\langle\\vecλ_{\\rm eff},\\vec C_{\\rm eff}\\rangle_{1/2}$ further reduced by fractional dynamic correlation energy contributions from coarse-grained Hamiltonians, and show similar classical-data-input-reduction results for multiscale graph classification via Kron reduction. We also show the online generalization with anisotropic Kalman filtering of streaming quantum data.",
       "venue": "arXiv",
-      "published": "2026-09-30T08:29:43Z",
-      "updated": "2026-09-30T08:29:43Z",
-      "url": "http://arxiv.org/abs/2609.39279v1",
-      "pdfUrl": "https://arxiv.org/pdf/2609.39279v1",
+      "published": "2026-10-01T06:09:01Z",
+      "updated": "2026-10-01T06:09:01Z",
+      "url": "http://arxiv.org/abs/2610.01125v1",
+      "pdfUrl": "https://arxiv.org/pdf/2610.01125v1",
+      "categories": [
+        "quant-ph"
+      ],
+      "collectedAt": "2026-10-02T23:49:13.222Z",
+      "firstSeenAt": "2026-10-02T23:49:13.222Z",
+      "lastSeenAt": "2026-10-02T23:49:13.222Z",
+      "collectionType": "daily-latest",
+      "matchedQuery": "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)",
+      "collectionTypes": [
+        "daily-latest"
+      ],
+      "matchedQueries": [
+        "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)"
+      ],
+      "targetThemes": [],
+      "conferenceVenues": [],
+      "conferenceYears": [],
+      "recommendationTrack": "hardware-primary",
+      "recommendationLabel": "硬件体系结构主线",
+      "recommendationScore": 157,
+      "relevanceReason": "命中 AI 处理器、体系结构、量化、训推系统或内存/缓存优化主题",
+      "pdfStatus": "remote",
+      "workflow": {
+        "digestStatus": "pending",
+        "emailStatus": "waiting-digest",
+        "digestError": "命令行启用了 --no-ai",
+        "harnessVersion": "paper-reader-v1",
+        "collectStatus": "collected",
+        "pdfStatus": "remote"
+      },
+      "digest": {
+        "summaryZh": "AI 摘要未生成。原始摘要要点：We develop Multivariate Quantum Signal Processing for designing matrix-valued transformations of multiple noncommuting nonnormal block-encoded matrices. Our fra...",
+        "motivationZh": "命令行启用了 --no-ai",
+        "methodZh": "请配置 AI 后重新运行，以生成方法提炼。",
+        "experimentsZh": "来源元数据未披露完整实验设置或结果。",
+        "affiliationsZh": "未在 DBLP/arXiv 元数据中提供。",
+        "tags": [
+          "quant-ph"
+        ],
+        "importance": 3,
+        "researchFitZh": "AI harness 尚未完成分析，无法判断与用户研究方向的具体关系。",
+        "hardwareRelevance": 1,
+        "algorithmRelevance": 1,
+        "systemRelevance": 1,
+        "readPriority": "archive",
+        "whyReadZh": "需要完成 motivation、method 和实验结果分析后再判断是否值得深读。",
+        "limitationsZh": "命令行启用了 --no-ai",
+        "motivationDetail": {
+          "problemZh": "harness 未完成分析。",
+          "gapZh": "harness 未完成分析。",
+          "whyImportantZh": "harness 未完成分析。",
+          "userRelevanceZh": "harness 未完成分析。",
+          "evidence": "not analyzed"
+        },
+        "methodDetail": {
+          "coreIdeaZh": "harness 未完成分析。",
+          "componentsZh": [
+            "未分析"
+          ],
+          "hardwareSystemDetailZh": "harness 未完成分析。",
+          "noveltyZh": "harness 未完成分析。",
+          "evidence": "not analyzed"
+        },
+        "experimentDetail": {
+          "setupZh": "harness 未完成分析。",
+          "baselinesZh": "harness 未完成分析。",
+          "metricsZh": [
+            "未分析"
+          ],
+          "mainResultsZh": "harness 未完成分析。",
+          "limitationsZh": "harness 未完成分析。",
+          "evidence": "not analyzed"
+        },
+        "evidence": {
+          "usedSources": [
+            "metadata"
+          ],
+          "affiliationEvidence": "",
+          "experimentEvidence": "",
+          "missingFields": [
+            "motivation",
+            "method",
+            "experiments"
+          ]
+        },
+        "confidence": {
+          "summary": 0.2,
+          "motivation": 0,
+          "method": 0,
+          "experiments": 0,
+          "affiliations": 0
+        }
+      }
+    },
+    {
+      "id": "arxiv:2610.01349",
+      "source": "arXiv",
+      "title": "PACE: Provenance-Aware Capability Enforcement for Tool-Using LLM Agents",
+      "authors": [
+        "Fengpeng Li",
+        "Qizhou Wang",
+        "Yuke Hu",
+        "Kemou Li",
+        "Jun Liu",
+        "Haiwei Wu",
+        "Jiantao Zhou",
+        "Di Wang"
+      ],
+      "authorAffiliations": [],
+      "affiliations": [],
+      "abstract": "Tool-using large language model (LLM) agents turn generated text into real side effects, so poisoned tool metadata, retrieved pages, memory, and reusable skills can steer the next call. Vetting an artifact before admission does not settle this. A safe variant and a leaking variant can produce the same admission evidence, and a sound gate then cannot relax that site for either. We make that condition precise, which leaves the last boundary a deployment can still act on. We present Provenance-Aware Capability Enforcement (PACE), which mediates every tool call immediately before it executes. Path confinement proposes an executable cut of represented influence paths, while capability and effect verification checks schema-defined effects against authority compiled from the authenticated request. We distinguish the certified execution contract from the evaluated configuration, which can restore an authorized call after a proposed block or apply a declared repair. Confinement requires the final action to preserve the certified cut. On eight executable agent-security benchmarks with three target-model families, the evaluated configuration gives strictly lowest attack success in 62 of 79 eligible attack columns and ties in 14; full-benchmark native utility loses at most three points relative to the undefended agent. A complete ablation over 1167 paired cases attributes most security gains to effect verification and refusal control to boundary adaptation. A reduced-scale adaptive search succeeds on 0/30 out-of-authority targets against the defense.",
+      "venue": "arXiv",
+      "published": "2026-10-01T09:18:05Z",
+      "updated": "2026-10-01T09:18:05Z",
+      "url": "http://arxiv.org/abs/2610.01349v1",
+      "pdfUrl": "https://arxiv.org/pdf/2610.01349v1",
       "categories": [
         "cs.CR",
         "cs.AI"
       ],
-      "collectedAt": "2026-10-01T23:54:56.723Z",
-      "firstSeenAt": "2026-10-01T23:54:56.723Z",
-      "lastSeenAt": "2026-10-01T23:54:56.723Z",
+      "collectedAt": "2026-10-02T23:49:13.222Z",
+      "firstSeenAt": "2026-10-02T23:49:13.222Z",
+      "lastSeenAt": "2026-10-02T23:49:13.222Z",
       "collectionType": "daily-latest",
       "matchedQuery": "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)",
       "collectionTypes": [
@@ -534,7 +514,7 @@
       "conferenceYears": [],
       "recommendationTrack": "hardware-primary",
       "recommendationLabel": "硬件体系结构主线",
-      "recommendationScore": 159.25,
+      "recommendationScore": 152.5,
       "relevanceReason": "命中 AI 处理器、体系结构、量化、训推系统或内存/缓存优化主题",
       "pdfStatus": "remote",
       "workflow": {
@@ -546,7 +526,7 @@
         "pdfStatus": "remote"
       },
       "digest": {
-        "summaryZh": "AI 摘要未生成。原始摘要要点：Machine unlearning has emerged as a crucial mechanism for removing hazardous knowledge and enforcing safety alignment in Large Language Models (LLMs). However, ...",
+        "summaryZh": "AI 摘要未生成。原始摘要要点：Tool-using large language model (LLM) agents turn generated text into real side effects, so poisoned tool metadata, retrieved pages, memory, and reusable skills...",
         "motivationZh": "命令行启用了 --no-ai",
         "methodZh": "请配置 AI 后重新运行，以生成方法提炼。",
         "experimentsZh": "来源元数据未披露完整实验设置或结果。",
@@ -554,6 +534,120 @@
         "tags": [
           "cs.CR",
           "cs.AI"
+        ],
+        "importance": 3,
+        "researchFitZh": "AI harness 尚未完成分析，无法判断与用户研究方向的具体关系。",
+        "hardwareRelevance": 1,
+        "algorithmRelevance": 1,
+        "systemRelevance": 1,
+        "readPriority": "archive",
+        "whyReadZh": "需要完成 motivation、method 和实验结果分析后再判断是否值得深读。",
+        "limitationsZh": "命令行启用了 --no-ai",
+        "motivationDetail": {
+          "problemZh": "harness 未完成分析。",
+          "gapZh": "harness 未完成分析。",
+          "whyImportantZh": "harness 未完成分析。",
+          "userRelevanceZh": "harness 未完成分析。",
+          "evidence": "not analyzed"
+        },
+        "methodDetail": {
+          "coreIdeaZh": "harness 未完成分析。",
+          "componentsZh": [
+            "未分析"
+          ],
+          "hardwareSystemDetailZh": "harness 未完成分析。",
+          "noveltyZh": "harness 未完成分析。",
+          "evidence": "not analyzed"
+        },
+        "experimentDetail": {
+          "setupZh": "harness 未完成分析。",
+          "baselinesZh": "harness 未完成分析。",
+          "metricsZh": [
+            "未分析"
+          ],
+          "mainResultsZh": "harness 未完成分析。",
+          "limitationsZh": "harness 未完成分析。",
+          "evidence": "not analyzed"
+        },
+        "evidence": {
+          "usedSources": [
+            "metadata"
+          ],
+          "affiliationEvidence": "",
+          "experimentEvidence": "",
+          "missingFields": [
+            "motivation",
+            "method",
+            "experiments"
+          ]
+        },
+        "confidence": {
+          "summary": 0.2,
+          "motivation": 0,
+          "method": 0,
+          "experiments": 0,
+          "affiliations": 0
+        }
+      }
+    },
+    {
+      "id": "arxiv:2610.01592",
+      "source": "arXiv",
+      "title": "Which LLM to pick? Online Active Model Selection for Large Language Models",
+      "authors": [
+        "Alessandro Turrin",
+        "Patrik Okanovic",
+        "Torsten Hoefler",
+        "Nezihe Merve Gürel"
+      ],
+      "authorAffiliations": [],
+      "affiliations": [],
+      "abstract": "Large Language Models (LLMs) are increasingly applied to process streaming data, with practitioners relying on benchmarks to select the best model even though these signals only approximate real performance. While oracle annotations can provide reliable feedback, they are often costly and difficult to obtain at scale. To address this challenge, we propose ONLINE LLM PICKER, the first framework for active model selection for LLMs in online settings. Given an arbitrary stream of queries and a limited annotation budget, ONLINE LLM PICKER selects the most informative prompts for annotation to identify the best LLM among candidate models. Across multiple tasks including 10 datasets, for over 130 language models, we show that ONLINE LLM PICKER saves annotation cost by up to 71.67% while reliably identifying the best or near-best model for the stream. We also show that using the returned model for sequential generation on unannotated prompts across the stream reduces regret by up to a factor of 2.51x, indicating that ONLINE LLM PICKER can identify the best or near-best model well before processing all streaming prompts.",
+      "venue": "arXiv",
+      "published": "2026-10-01T12:43:21Z",
+      "updated": "2026-10-01T12:43:21Z",
+      "url": "http://arxiv.org/abs/2610.01592v1",
+      "pdfUrl": "https://arxiv.org/pdf/2610.01592v1",
+      "categories": [
+        "cs.CL",
+        "cs.LG"
+      ],
+      "collectedAt": "2026-10-02T23:49:13.222Z",
+      "firstSeenAt": "2026-10-02T23:49:13.222Z",
+      "lastSeenAt": "2026-10-02T23:49:13.222Z",
+      "collectionType": "daily-latest",
+      "matchedQuery": "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)",
+      "collectionTypes": [
+        "daily-latest"
+      ],
+      "matchedQueries": [
+        "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)"
+      ],
+      "targetThemes": [],
+      "conferenceVenues": [],
+      "conferenceYears": [],
+      "recommendationTrack": "hardware-primary",
+      "recommendationLabel": "硬件体系结构主线",
+      "recommendationScore": 150,
+      "relevanceReason": "命中 AI 处理器、体系结构、量化、训推系统或内存/缓存优化主题",
+      "pdfStatus": "remote",
+      "workflow": {
+        "digestStatus": "pending",
+        "emailStatus": "waiting-digest",
+        "digestError": "命令行启用了 --no-ai",
+        "harnessVersion": "paper-reader-v1",
+        "collectStatus": "collected",
+        "pdfStatus": "remote"
+      },
+      "digest": {
+        "summaryZh": "AI 摘要未生成。原始摘要要点：Large Language Models (LLMs) are increasingly applied to process streaming data, with practitioners relying on benchmarks to select the best model even though t...",
+        "motivationZh": "命令行启用了 --no-ai",
+        "methodZh": "请配置 AI 后重新运行，以生成方法提炼。",
+        "experimentsZh": "来源元数据未披露完整实验设置或结果。",
+        "affiliationsZh": "未在 DBLP/arXiv 元数据中提供。",
+        "tags": [
+          "cs.CL",
+          "cs.LG"
         ],
         "importance": 3,
         "researchFitZh": "AI harness 尚未完成分析，无法判断与用户研究方向的具体关系。",
@@ -636,9 +730,9 @@
       "categories": [
         "cs.LG"
       ],
-      "collectedAt": "2026-10-01T23:54:56.723Z",
-      "firstSeenAt": "2026-10-01T23:54:56.723Z",
-      "lastSeenAt": "2026-10-01T23:54:56.723Z",
+      "collectedAt": "2026-10-02T23:49:13.223Z",
+      "firstSeenAt": "2026-10-02T23:49:13.223Z",
+      "lastSeenAt": "2026-10-02T23:49:13.223Z",
       "collectionType": "daily-latest",
       "matchedQuery": "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)",
       "collectionTypes": [
@@ -728,45 +822,47 @@
       }
     },
     {
-      "id": "arxiv:2609.39190",
+      "id": "arxiv:2610.02196",
       "source": "arXiv",
-      "title": "Dynamics to decision: A mathematical theory of Lyapunov spectra and decision boundaries in deep classifiers",
+      "title": "InterEvolve: Test-Time Evolution of Reward Programs for Humanoid Loco-Manipulation",
       "authors": [
-        "Shirin Panahi",
-        "Amirhossein Nazerian",
-        "Ali Pezeshki"
+        "Zhuo Lin",
+        "Sirui Xu",
+        "Liuyu Bian",
+        "Yu-Xiong Wang",
+        "Liang-Yan Gui"
       ],
       "authorAffiliations": [],
       "affiliations": [],
-      "abstract": "A deep classifier is defined not only by the decision it produces, but also by the sequence of transformations through which that decision is formed. Treating this evolution as a dynamical system across layers provides a natural framework for asking how decision geometry emerges through depth and how far back we can trace a boundary's dynamical signature. We model a feed-forward classifier as a finite, nonautonomous discrete dynamical system, with layers playing the role of discrete time steps. We study the Finite-Time Maximum Lyapunov Exponent (FTMLE) of the data samples' dynamical trajectory through depths of the classifier. The FTMLE measures the rate of convergence/divergence of nearby trajectories. We move the observation endpoint backward from probabilities to logits and then to hidden representations. For Gaussian classes, we prove that probability-level FTMLE carries a clear geometric signature of the decision boundary, with its dominant direction aligned with the boundary normal. Moving one step backward to the logits, we prove this relationship is no longer universal but depends critically on how the classifier is trained, particularly on the choice of loss function. Moving further backward to the hidden representation, the connection becomes more conditional: boundary-related FTMLE can persist, but only under identifiable structural conditions. We propose geometry-aware fine-tuning for restructuring the classifier's hidden FTMLE, and propose conditions for guaranteed concentration of high hidden FTMLE near the decision boundary. Through our numerical results, we show the generality and validity of our theoretical results. Understanding the evolution of data samples as traveling through the layers of classifier provides a principled foundation for identifying where boundary-relevant sensitivity emerges and for developing layer-aware regularization strategies.",
+      "abstract": "We study test-time evolution for humanoid loco-manipulation: solving tasks that a controller was never trained for by repurposing its existing skills, improving from its own attempts, and retaining what it learns, without retraining. Our key insight is that a broad controller already holds much of the competence a new task needs, and that this competence becomes accessible through an interface between planning and control that is expressive enough to specify contact-rich, multi-stage interactions, yet executable and measurable enough that execution feedback can guide planning from experience. InterEvolve realizes this interface with two components. First, we develop an object-aware forward-backward (FB) behavioral foundation model, whose object residuals on a frozen body prior turn a new reward about the body or objects into loco-manipulation behavior at test time. Second, we specify tasks as reward programs: staged rewards with completion conditions and tunable constants. A large language model (LLM) agent revises the program structure in context, drawing on execution feedback and a skill library of verified programs, while a numerical optimizer tunes its constants. With every candidate verified across parallel simulation scenarios, the program explores new ways to induce, repurpose, and compose the controller's existing motor competence for the task at hand, and thus improves over iterations. Experiments show that human-designed rewards leave much of the FB model's loco-manipulation competence untapped, whereas the programs InterEvolve evolves release it, sometimes through novel strategies. It further produces behaviors for diverse tasks, complex scenes, and long-horizon compositions in simulation, and evolved skills run autonomously on a physical Unitree G1 from egocentric onboard perception.",
       "venue": "arXiv",
-      "published": "2026-09-30T07:43:15Z",
-      "updated": "2026-09-30T07:43:15Z",
-      "url": "http://arxiv.org/abs/2609.39190v1",
-      "pdfUrl": "https://arxiv.org/pdf/2609.39190v1",
+      "published": "2026-10-01T17:59:40Z",
+      "updated": "2026-10-01T17:59:40Z",
+      "url": "http://arxiv.org/abs/2610.02196v1",
+      "pdfUrl": "https://arxiv.org/pdf/2610.02196v1",
       "categories": [
-        "cs.LG",
-        "eess.SY",
-        "math.DS"
+        "cs.RO",
+        "cs.CV",
+        "cs.GR"
       ],
-      "collectedAt": "2026-10-01T23:54:56.723Z",
-      "firstSeenAt": "2026-10-01T23:54:56.723Z",
-      "lastSeenAt": "2026-10-01T23:54:56.723Z",
+      "collectedAt": "2026-10-02T23:49:15.113Z",
+      "firstSeenAt": "2026-10-02T23:49:15.113Z",
+      "lastSeenAt": "2026-10-02T23:49:15.113Z",
       "collectionType": "daily-latest",
-      "matchedQuery": "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)",
+      "matchedQuery": "(all:agent OR all:agents OR all:agentic OR all:reasoning OR all:post-training OR all:alignment OR all:multimodal OR all:world-model) AND (all:LLM OR all:foundation OR all:language)",
       "collectionTypes": [
         "daily-latest"
       ],
       "matchedQueries": [
-        "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)"
+        "(all:agent OR all:agents OR all:agentic OR all:reasoning OR all:post-training OR all:alignment OR all:multimodal OR all:world-model) AND (all:LLM OR all:foundation OR all:language)"
       ],
       "targetThemes": [],
       "conferenceVenues": [],
       "conferenceYears": [],
-      "recommendationTrack": "hardware-primary",
-      "recommendationLabel": "硬件体系结构主线",
-      "recommendationScore": 143,
-      "relevanceReason": "命中 AI 处理器、体系结构、量化、训推系统或内存/缓存优化主题",
+      "recommendationTrack": "algorithm-trend",
+      "recommendationLabel": "算法趋势观察",
+      "recommendationScore": 40.400000000000006,
+      "relevanceReason": "命中 LLM/Agent/多模态/后训练等算法趋势主题",
       "pdfStatus": "remote",
       "workflow": {
         "digestStatus": "pending",
@@ -777,15 +873,15 @@
         "pdfStatus": "remote"
       },
       "digest": {
-        "summaryZh": "AI 摘要未生成。原始摘要要点：A deep classifier is defined not only by the decision it produces, but also by the sequence of transformations through which that decision is formed. Treating t...",
+        "summaryZh": "AI 摘要未生成。原始摘要要点：We study test-time evolution for humanoid loco-manipulation: solving tasks that a controller was never trained for by repurposing its existing skills, improving...",
         "motivationZh": "命令行启用了 --no-ai",
         "methodZh": "请配置 AI 后重新运行，以生成方法提炼。",
         "experimentsZh": "来源元数据未披露完整实验设置或结果。",
         "affiliationsZh": "未在 DBLP/arXiv 元数据中提供。",
         "tags": [
-          "cs.LG",
-          "eess.SY",
-          "math.DS"
+          "cs.RO",
+          "cs.CV",
+          "cs.GR"
         ],
         "importance": 3,
         "researchFitZh": "AI harness 尚未完成分析，无法判断与用户研究方向的具体关系。",
@@ -843,33 +939,35 @@
       }
     },
     {
-      "id": "arxiv:2609.40325",
+      "id": "arxiv:2610.02191",
       "source": "arXiv",
-      "title": "WorldAuditBench: Interactive 3D World Auditing with Multimodal Agents",
+      "title": "The Missing Primitive: Diagnosing and Repairing Mathematical Reasoning in Large Language Models",
       "authors": [
-        "Ziyan Jiang",
-        "Jingbo Yang",
-        "Jiabao Ji",
-        "Yujian Liu",
-        "Qiucheng Wu",
-        "Tommi Jaakkola",
-        "Yang Zhang",
-        "Shiyu Chang"
+        "Shuo Xing",
+        "Zilin Dai",
+        "Chengyuan Qian",
+        "Fangzhou Lin",
+        "Wenjing Chen",
+        "Ping He",
+        "Pan Lu",
+        "Alvaro Velasquez",
+        "Mohit Bansal",
+        "Zhengzhong Tu"
       ],
       "authorAffiliations": [],
       "affiliations": [],
-      "abstract": "As interactive 3D worlds are increasingly used to study intelligent behavior, it becomes important to develop efficient pipelines for identifying anomalies in these simulated environments, such as floating objects, traversable walls, or objects inconsistent with the surrounding scene. Multimodal AI systems, including vision-language models (VLMs) and vision-language-action models (VLAs), have shown potential for automating this task. However, 3D world auditing is complex, requiring the close coupling of two distinct capabilities: action, to navigate the 3D world and search for anomalies systematically and efficiently; and visual reasoning, to understand the environment and identify anomalies from multimodal observations. It remains largely unexplored whether multimodal agents can effectively couple these two capabilities, using visual reasoning to identify potential anomalies while taking actions to validate them. In this paper, we introduce WorldAuditBench, a benchmark for 3D world auditing comprising 213 anomaly tasks across 13 environments built with Unreal Engine 5 and Three.js, spanning five anomaly families. We evaluate five frontier models under a fixed exploration budget using two auditing paradigms: VLA-based exploration followed by VLM-based anomaly identification, and an end-to-end VLM agent in which visual reasoning directly guides action selection. Across the evaluated models and two paradigms, success rates range from 6.6% to 42.3%, substantially below human performance (83.4%). Through the task of world auditing, WorldAuditBench provides a testbed for studying how multimodal agents couple action and visual reasoning in interactive 3D environments, while highlighting current limitations in their ability to gather and interpret evidence during exploration.",
+      "abstract": "While Large Language Models (LLMs) have demonstrated striking capabilities on frontier mathematical problems, it remains unclear whether they possess the structural mathematical understanding underlying their solutions. In this paper, we take a first step toward systematically studying mathematical understanding in LLMs, from diagnosing its distinct capabilities to leveraging these findings to improve post-training. First, we introduce the notion of Mathematical Primitive to probe structural mathematical understanding and propose \\hlei{}, a novel benchmark that evaluates mathematical reasoning along four distinct dimensions: Discovery, Generation, Digestion, and Execution. Second, our systematic diagnosis shows that solution accuracy masks distinct capability profiles, primitives unlock substantial latent execution capacity, and Discovery is the dominant bottleneck in mathematical reasoning. Our post-training analysis further shows that discovery-limited failures are particularly amenable to repair. Finally, building on these findings, we introduce \\abs{}, a primitive-privileged self-distillation framework that selectively transfers primitive-guided reasoning into the student model. Extensive experiments demonstrate that \\abs{} consistently improves mathematical reasoning over baselines across model scales and challenging benchmarks.",
       "venue": "arXiv",
-      "published": "2026-09-30T17:55:29Z",
-      "updated": "2026-09-30T17:55:29Z",
-      "url": "http://arxiv.org/abs/2609.40325v1",
-      "pdfUrl": "https://arxiv.org/pdf/2609.40325v1",
+      "published": "2026-10-01T17:59:32Z",
+      "updated": "2026-10-01T17:59:32Z",
+      "url": "http://arxiv.org/abs/2610.02191v1",
+      "pdfUrl": "https://arxiv.org/pdf/2610.02191v1",
       "categories": [
-        "cs.AI"
+        "cs.LG"
       ],
-      "collectedAt": "2026-10-01T23:54:58.508Z",
-      "firstSeenAt": "2026-10-01T23:54:58.508Z",
-      "lastSeenAt": "2026-10-01T23:54:58.508Z",
+      "collectedAt": "2026-10-02T23:49:15.114Z",
+      "firstSeenAt": "2026-10-02T23:49:15.114Z",
+      "lastSeenAt": "2026-10-02T23:49:15.114Z",
       "collectionType": "daily-latest",
       "matchedQuery": "(all:agent OR all:agents OR all:agentic OR all:reasoning OR all:post-training OR all:alignment OR all:multimodal OR all:world-model) AND (all:LLM OR all:foundation OR all:language)",
       "collectionTypes": [
@@ -883,7 +981,7 @@
       "conferenceYears": [],
       "recommendationTrack": "algorithm-trend",
       "recommendationLabel": "算法趋势观察",
-      "recommendationScore": 45,
+      "recommendationScore": 37.2,
       "relevanceReason": "命中 LLM/Agent/多模态/后训练等算法趋势主题",
       "pdfStatus": "remote",
       "workflow": {
@@ -895,133 +993,13 @@
         "pdfStatus": "remote"
       },
       "digest": {
-        "summaryZh": "AI 摘要未生成。原始摘要要点：As interactive 3D worlds are increasingly used to study intelligent behavior, it becomes important to develop efficient pipelines for identifying anomalies in t...",
+        "summaryZh": "AI 摘要未生成。原始摘要要点：While Large Language Models (LLMs) have demonstrated striking capabilities on frontier mathematical problems, it remains unclear whether they possess the struct...",
         "motivationZh": "命令行启用了 --no-ai",
         "methodZh": "请配置 AI 后重新运行，以生成方法提炼。",
         "experimentsZh": "来源元数据未披露完整实验设置或结果。",
         "affiliationsZh": "未在 DBLP/arXiv 元数据中提供。",
         "tags": [
-          "cs.AI"
-        ],
-        "importance": 3,
-        "researchFitZh": "AI harness 尚未完成分析，无法判断与用户研究方向的具体关系。",
-        "hardwareRelevance": 1,
-        "algorithmRelevance": 1,
-        "systemRelevance": 1,
-        "readPriority": "archive",
-        "whyReadZh": "需要完成 motivation、method 和实验结果分析后再判断是否值得深读。",
-        "limitationsZh": "命令行启用了 --no-ai",
-        "motivationDetail": {
-          "problemZh": "harness 未完成分析。",
-          "gapZh": "harness 未完成分析。",
-          "whyImportantZh": "harness 未完成分析。",
-          "userRelevanceZh": "harness 未完成分析。",
-          "evidence": "not analyzed"
-        },
-        "methodDetail": {
-          "coreIdeaZh": "harness 未完成分析。",
-          "componentsZh": [
-            "未分析"
-          ],
-          "hardwareSystemDetailZh": "harness 未完成分析。",
-          "noveltyZh": "harness 未完成分析。",
-          "evidence": "not analyzed"
-        },
-        "experimentDetail": {
-          "setupZh": "harness 未完成分析。",
-          "baselinesZh": "harness 未完成分析。",
-          "metricsZh": [
-            "未分析"
-          ],
-          "mainResultsZh": "harness 未完成分析。",
-          "limitationsZh": "harness 未完成分析。",
-          "evidence": "not analyzed"
-        },
-        "evidence": {
-          "usedSources": [
-            "metadata"
-          ],
-          "affiliationEvidence": "",
-          "experimentEvidence": "",
-          "missingFields": [
-            "motivation",
-            "method",
-            "experiments"
-          ]
-        },
-        "confidence": {
-          "summary": 0.2,
-          "motivation": 0,
-          "method": 0,
-          "experiments": 0,
-          "affiliations": 0
-        }
-      }
-    },
-    {
-      "id": "arxiv:2609.40360",
-      "source": "arXiv",
-      "title": "Semifactual Credit-Augmented Policy Optimization",
-      "authors": [
-        "Junshu Pan",
-        "Zhizhang Fu",
-        "Shulin Huang",
-        "Yiran Ding",
-        "Zifan Cheng",
-        "Wenqi Shao",
-        "Qiaosheng Zhang",
-        "Yue Zhang"
-      ],
-      "authorAffiliations": [],
-      "affiliations": [],
-      "abstract": "Reinforcement learning with verifiable rewards (RLVR) has improved the reasoning capabilities of large language models (LLMs), yet their predictions remain sensitive to task-irrelevant prompt features. We investigate this sensitivity through semifactual prompt interventions that preserve the underlying problem and its answer. Our analysis reveals substantial variation in token-level sensitivity and shows that suppressing high-drift token candidates during decoding improves reasoning accuracy without updating model weights. These findings highlight a limitation of Group Relative Policy Optimization (GRPO), which assigns the same outcome-derived advantage to every response token and may reinforce potential spurious dependence alongside useful reasoning. Motivated by this observation, we introduce Semifactual Credit-Augmented Policy Optimization (SCAPO), a causally inspired variant of GRPO that incorporates semifactual stability into token-level credit assignment. SCAPO measures token probability drift for fixed responses under semifactual interventions and uses normalized stability scores to reduce advantages for relatively unstable tokens during early training, while granting no additional credit for stability alone. On Qwen3-4B-Base and Qwen3-1.7B-Base, SCAPO improves AIME 2024-2026 accuracy over GRPO by 5.63 and 4.17 percentage points, respectively. At both model scales, SCAPO achieves the best results on most evaluated mathematics benchmarks and all evaluated out-of-distribution benchmarks among the compared methods. These results suggest that semifactual stability provides an effective training signal for improving reasoning and generalization through finer-grained credit assignment in RLVR. The code is available at https://github.com/DtYXs/SCAPO.",
-      "venue": "arXiv",
-      "published": "2026-09-30T17:59:56Z",
-      "updated": "2026-09-30T17:59:56Z",
-      "url": "http://arxiv.org/abs/2609.40360v1",
-      "pdfUrl": "https://arxiv.org/pdf/2609.40360v1",
-      "categories": [
-        "cs.LG",
-        "cs.AI",
-        "cs.CL"
-      ],
-      "collectedAt": "2026-10-01T23:54:58.507Z",
-      "firstSeenAt": "2026-10-01T23:54:58.507Z",
-      "lastSeenAt": "2026-10-01T23:54:58.507Z",
-      "collectionType": "daily-latest",
-      "matchedQuery": "(all:agent OR all:agents OR all:agentic OR all:reasoning OR all:post-training OR all:alignment OR all:multimodal OR all:world-model) AND (all:LLM OR all:foundation OR all:language)",
-      "collectionTypes": [
-        "daily-latest"
-      ],
-      "matchedQueries": [
-        "(all:agent OR all:agents OR all:agentic OR all:reasoning OR all:post-training OR all:alignment OR all:multimodal OR all:world-model) AND (all:LLM OR all:foundation OR all:language)"
-      ],
-      "targetThemes": [],
-      "conferenceVenues": [],
-      "conferenceYears": [],
-      "recommendationTrack": "algorithm-trend",
-      "recommendationLabel": "算法趋势观察",
-      "recommendationScore": 40.2,
-      "relevanceReason": "命中 LLM/Agent/多模态/后训练等算法趋势主题",
-      "pdfStatus": "remote",
-      "workflow": {
-        "digestStatus": "pending",
-        "emailStatus": "waiting-digest",
-        "digestError": "命令行启用了 --no-ai",
-        "harnessVersion": "paper-reader-v1",
-        "collectStatus": "collected",
-        "pdfStatus": "remote"
-      },
-      "digest": {
-        "summaryZh": "AI 摘要未生成。原始摘要要点：Reinforcement learning with verifiable rewards (RLVR) has improved the reasoning capabilities of large language models (LLMs), yet their predictions remain sens...",
-        "motivationZh": "命令行启用了 --no-ai",
-        "methodZh": "请配置 AI 后重新运行，以生成方法提炼。",
-        "experimentsZh": "来源元数据未披露完整实验设置或结果。",
-        "affiliationsZh": "未在 DBLP/arXiv 元数据中提供。",
-        "tags": [
-          "cs.LG",
-          "cs.AI",
-          "cs.CL"
+          "cs.LG"
         ],
         "importance": 3,
         "researchFitZh": "AI harness 尚未完成分析，无法判断与用户研究方向的具体关系。",
