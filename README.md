@@ -630,7 +630,7 @@ public/research-digest/pdfs/
 
 ```text
 04:20 中国时间  GitHub Actions 采集论文，提交 daily.json
-08:35 中国时间  ChatGPT Work 云端定时任务读取队列和 harness，生成中文摘要
+08:30 中国时间  ChatGPT Work 云端定时任务读取队列和 harness，生成中文摘要
 摘要提交后       Deliver Cloud Paper Digest 校验摘要、发送网易 SMTP 邮件、保存已发送状态
 09:15 中国时间  Actions 兜底检查尚未发送的合格摘要
 ```
