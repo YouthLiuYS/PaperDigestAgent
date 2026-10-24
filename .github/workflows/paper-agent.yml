@@ -3,7 +3,7 @@ name: Paper Collection Agent
 on:
   schedule:
     # 20:20 UTC = 04:20 Asia/Shanghai on the next calendar day.
-    # The early cloud collection gives GitHub Actions delay enough buffer before local Codex wakes at 09:10.
+    # Leave enough buffer for the hosted digest task at 08:35 Asia/Shanghai.
     - cron: "20 20 * * *"
   workflow_dispatch:
     inputs:
@@ -26,7 +26,7 @@ concurrency:
 
 jobs:
   digest:
-    name: Collect papers for local Codex
+    name: Collect papers for the hosted digest task
     runs-on: ubuntu-latest
     timeout-minutes: 45
     env:
@@ -64,6 +64,7 @@ jobs:
         run: |
           node --check scripts/paper-agent.mjs
           node --check scripts/validate-digest-harness.mjs
+          npm run test:cloud
 
       - name: Run paper collection agent
         id: agent

@@ -1290,7 +1290,7 @@ async function sendDailyDigestEmail(config, dailyDigest, historyDigest) {
     await writeDigest(config.dailyOutputPath, failedDailyDigest);
     throw new Error(`Email failed: ${formatError(error)}`);
   }
-  console.log(`Email sent to ${config.email.to.join(", ")}.`);
+  console.log(`Email accepted for ${config.email.to.length} configured recipient(s).`);
 
   if (readyPapers.length === 0) {
     return;
@@ -1399,8 +1399,9 @@ async function sendSmtpMail(email, message) {
   await smtpCommand(socket, reader, "DATA", [354]);
   socket.write(formatMimeMessage(email, message));
   await reader.expect([250]);
-  await smtpCommand(socket, reader, "QUIT", [221]);
-  socket.end();
+  // DATA's 250 response is the delivery acknowledgement. A disconnect during QUIT
+  // must not turn an accepted message into a failed item that gets sent again.
+  socket.end("QUIT\r\n");
 }
 
 function formatMimeMessage(email, message) {
@@ -1425,12 +1426,16 @@ function createSmtpReader(socket) {
     buffer += chunk.toString("utf8");
     flush();
   });
-  socket.on("error", (error) => {
+  socket.setTimeout(30_000, () => socket.destroy(new Error("SMTP response timed out after 30 seconds.")));
+  socket.on("error", rejectWaiters);
+  socket.on("close", () => rejectWaiters(new Error("SMTP connection closed before its response.")));
+
+  function rejectWaiters(error) {
     rejected = true;
     while (waiters.length) {
       waiters.shift().reject(error);
     }
-  });
+  }
 
   function flush() {
     if (rejected) {
@@ -1770,7 +1775,10 @@ function deepMerge(target, source) {
 
 function getDailyPapersForDate(digest, digestDate) {
   if (digest?.digestDate && digest.digestDate !== digestDate) {
-    return [];
+    // Keep an unfinished delivery queue across dates; a cloud failure must not
+    // discard papers that have never reached the reader's mailbox.
+    return (Array.isArray(digest.papers) ? digest.papers : [])
+      .filter((paper) => !paper.pushedAt && !paper.emailSentAt);
   }
   return Array.isArray(digest?.papers) ? digest.papers : [];
 }

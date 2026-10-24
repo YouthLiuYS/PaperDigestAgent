@@ -1,0 +1,89 @@
+name: Deliver Cloud Paper Digest
+
+on:
+  push:
+    branches: [main]
+    paths: [data/cloud-digest-updates.json]
+  schedule:
+    # Fallback delivery at 09:15 Asia/Shanghai; normal delivery starts on cloud digest commit.
+    - cron: "15 1 * * *"
+  workflow_dispatch:
+    inputs:
+      send_email:
+        description: "Send validated, unpushed papers using the configured mailbox"
+        type: boolean
+        default: true
+
+permissions:
+  contents: write
+  actions: write
+
+concurrency:
+  # Serialize collection and delivery so that both JSON libraries stay consistent.
+  group: paper-digest-agent
+  cancel-in-progress: false
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+  TZ: Asia/Shanghai
+
+jobs:
+  deliver:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout latest queue and cloud updates
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Check the cloud delivery integration
+        run: npm run test:cloud
+
+      - name: Validate and apply cloud digests
+        run: node scripts/cloud-digest.mjs apply
+
+      - name: Check eligible papers before delivery
+        id: ready
+        run: node scripts/cloud-digest.mjs ready
+
+      - name: Send the daily digest from the existing mailbox
+        if: steps.ready.outputs.ready_count != '0' && (github.event_name != 'workflow_dispatch' || inputs.send_email)
+        env:
+          PAPER_AGENT_EMAIL_ENABLED: "true"
+          PAPER_AGENT_SMTP_HOST: ${{ secrets.PAPER_AGENT_SMTP_HOST }}
+          PAPER_AGENT_SMTP_PORT: ${{ secrets.PAPER_AGENT_SMTP_PORT }}
+          PAPER_AGENT_SMTP_SECURE: ${{ secrets.PAPER_AGENT_SMTP_SECURE }}
+          PAPER_AGENT_SMTP_STARTTLS: ${{ secrets.PAPER_AGENT_SMTP_STARTTLS }}
+          PAPER_AGENT_SMTP_USER: ${{ secrets.PAPER_AGENT_SMTP_USER }}
+          PAPER_AGENT_SMTP_PASS: ${{ secrets.PAPER_AGENT_SMTP_PASS }}
+          PAPER_AGENT_MAIL_FROM: ${{ secrets.PAPER_AGENT_MAIL_FROM }}
+          PAPER_AGENT_MAIL_TO: ${{ secrets.PAPER_AGENT_MAIL_TO }}
+          PAPER_AGENT_SITE_URL: ${{ vars.PAPER_AGENT_SITE_URL || format('https://{0}.github.io/{1}/', github.repository_owner, github.event.repository.name) }}
+        run: |
+          node scripts/cloud-digest.mjs ready --require-smtp
+          npm run papers:email
+
+      - name: Persist validated digests and delivery state
+        if: always()
+        run: |
+          git config user.name "paper-digest-agent[bot]"
+          git config user.email "paper-digest-agent[bot]@users.noreply.github.com"
+          git add public/research-digest/daily.json public/research-digest/papers.json
+          if ! git diff --cached --quiet; then
+            git commit -m "Update cloud paper digest delivery"
+            git pull --rebase origin main
+            git push origin HEAD:main
+          fi
+
+      - name: Publish the updated reader
+        if: success() && steps.ready.outputs.ready_count != '0' && (github.event_name != 'workflow_dispatch' || inputs.send_email)
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run pages.yml --ref main

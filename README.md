@@ -1,6 +1,6 @@
 # Paper Digest Agent
 
-Paper Digest Agent 是一个本地论文速递工具，用来每天搜集 arXiv / DBLP 论文，生成中文摘要，并通过本地静态阅读站和邮件推送给你。
+Paper Digest Agent 每天搜集 arXiv / DBLP 论文、生成中文摘要并发送邮件，支持全云端接力和本地运行。全云端配置见第 16 节。
 
 当前默认研究方向是：
 
@@ -623,3 +623,43 @@ public/research-digest/pdfs/
 ```
 
 项目的 `.gitignore` 已经默认忽略它们。`.env.local` 里如果曾经写过真实 API key 或邮箱授权码，公开分享项目后建议轮换一次密钥。
+
+## 16. 全云端每日自动化
+
+全云端流程不需要本机开机、Codex CLI、本地 cron 或模型 API key：
+
+```text
+04:20 中国时间  GitHub Actions 采集论文，提交 daily.json
+08:35 中国时间  ChatGPT Work 云端定时任务读取队列和 harness，生成中文摘要
+摘要提交后       Deliver Cloud Paper Digest 校验摘要、发送网易 SMTP 邮件、保存已发送状态
+09:15 中国时间  Actions 兜底检查尚未发送的合格摘要
+```
+
+云端定时任务的持久指令保存在 `harness/cloud-daily-task.md`。任务通过已连接的 GitHub 插件读论文队列，仅写入 `data/cloud-digest-updates.json`；不需要访问本机目录，也不接触 SMTP 密钥。摘要包括全部 harness 字段，并明确标注缺失证据。没有待处理论文时，不提交空摘要、不发送空邮件。
+
+`.github/workflows/paper-delivery.yml` 在摘要提交后启动，使用 `scripts/cloud-digest.mjs` 对照最新队列验证和合并。旧日期、已完成和已发送论文会跳过；未知 id、重复 id、摘要不合格或历史中已发送的论文会阻止错误投递。每日采集保留跨天尚未发送的论文。SMTP 返回接受消息后，原邮件脚本才写入 `emailSentAt/pushedAt` 并更新历史库，随后发布阅读站。
+
+邮箱连接信息保存在该仓库的 GitHub Actions Secrets：
+
+```text
+PAPER_AGENT_SMTP_HOST
+PAPER_AGENT_SMTP_PORT
+PAPER_AGENT_SMTP_SECURE
+PAPER_AGENT_SMTP_STARTTLS
+PAPER_AGENT_SMTP_USER
+PAPER_AGENT_SMTP_PASS
+PAPER_AGENT_MAIL_FROM
+PAPER_AGENT_MAIL_TO
+```
+
+发信沿用原 SMTP 邮箱和收件人。密钥不提交到仓库、不放入定时任务提示词，也不复制到 Codex 环境的文件系统。仓库变量 `PAPER_AGENT_SITE_URL` 可覆盖默认 GitHub Pages 地址。
+
+部署验证：
+
+```bash
+npm run test:cloud
+npm run cloud:ready
+gh workflow run paper-delivery.yml -f send_email=false
+```
+
+`send_email=false` 仅验证和应用摘要，不发送邮件。真实投递是否成功，以 `Deliver Cloud Paper Digest` 的结果和 `daily.json` 的发送时间戳为准；单纯保存摘要不代表邮件已发送。云端链路验证成功后，应暂停旧的本地摘要自动化和 09:15 cron，避免两套流程并行。
