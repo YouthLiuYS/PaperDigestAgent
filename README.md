@@ -142,7 +142,7 @@ npm run papers:collect:conference
 npm run papers:collect
 ```
 
-注意：DBLP 偶尔会慢或返回 `fetch failed`。这不会破坏已有数据，脚本会保留成功采集到的结果。
+DBLP 使用官方公开 SPARQL 元数据接口，避免将搜索网页的机器人验证页误当成 JSON。脚本限制请求频率、重试暂时性错误，并把采集健康状态保存在 `daily.json` 的 `sourceHealth` 中。
 
 ## 5. 首次试跑
 
@@ -560,7 +560,7 @@ arXiv 偶尔限流或维护。稍后重试即可。
 
 ### DBLP fetch failed
 
-DBLP 搜索接口偶尔较慢。脚本会跳过失败查询，并保留已有数据。首次验证建议先跑：
+原搜索接口可能返回 HTTP 202 HTML 验证页。采集已改用 [DBLP 官方公开 SPARQL 接口](https://blog.dblp.org/2024/09/09/introducing-our-public-sparql-query-service/)，保留论文 key、DOI、年份、会议和作者顺序。每次请求有超时，429/暂时性服务器错误有有界重试；连续三次查询失败后停止本轮 DBLP 查询，保留成功采集的数据并明确标记失败。首次验证建议先跑 `npm run sources:check`，它只读取真实元数据，不修改队列或发送邮件。
 
 ```bash
 npm run papers:collect:daily
@@ -639,6 +639,10 @@ public/research-digest/pdfs/
 
 `.github/workflows/paper-delivery.yml` 在摘要提交后启动，使用 `scripts/cloud-digest.mjs` 对照最新队列验证和合并。旧日期、已完成和已发送论文会跳过；未知 id、重复 id、摘要不合格或历史中已发送的论文会阻止错误投递。每日采集保留跨天尚未发送的论文。SMTP 返回接受消息后，原邮件脚本才写入 `emailSentAt/pushedAt` 并更新历史库，随后发布阅读站。
 
+若队列仍有待生成或失败的摘要，兜底投递会明确失败并提示检查云端摘要任务，不再以成功的空操作掩盖缺失日报。当天队列为空或论文已全部发送时仍正常跳过，避免重复邮件。
+
+云端摘要任务保持启用，重复计划使用中国标准时间。GitHub 插件设置为“自动审核低风险操作”，使公开论文摘要的正常提交能在新运行会话中自动审核；涉及敏感信息的操作仍保留审核。会话内一次性允许不等同于跨会话权限。定时任务仅执行论文流程，不创建、修改或暂停定时任务。
+
 邮箱连接信息保存在该仓库的 GitHub Actions Secrets：
 
 ```text
@@ -658,7 +662,9 @@ PAPER_AGENT_MAIL_TO
 
 ```bash
 npm run test:cloud
+npm run sources:check
 npm run cloud:ready
+gh workflow run paper-agent.yml -f source_check_only=true
 gh workflow run paper-delivery.yml -f send_email=false
 ```
 

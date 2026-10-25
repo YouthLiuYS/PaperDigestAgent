@@ -67,7 +67,7 @@ export function mergeCloudDigests(daily, updates, checkedAt = new Date().toISOSt
   };
 }
 
-export function readyPapersForCloudEmail(daily, history = { papers: [] }) {
+export function readyPapersForCloudEmail(daily, history = { papers: [] }, { requireComplete = false } = {}) {
   if (!Array.isArray(daily.papers) || !Array.isArray(history.papers)) {
     throw new Error("Daily queue and history must contain papers arrays.");
   }
@@ -85,6 +85,11 @@ export function readyPapersForCloudEmail(daily, history = { papers: [] }) {
       throw new Error(`Refusing invalid ready digest ${paper.id}: ${validation.issues.join("; ")}`);
     }
   }
+  const waiting = daily.papers.filter((paper) => isUnpushedPaper(paper)
+    && paper.workflow?.digestStatus !== "ready");
+  if (requireComplete && waiting.length > 0) {
+    throw new Error(`Cloud email blocked: ${waiting.length} paper(s) still need validated cloud digests: ${waiting.map((paper) => paper.id).join(", ")}. Check the hosted task and GitHub approval status.`);
+  }
   return ready;
 }
 
@@ -99,7 +104,9 @@ async function main() {
     }
     console.log(`Cloud digests: ${result.applied} applied, ${result.skipped} skipped.`);
   } else if (command === "ready") {
-    const ready = readyPapersForCloudEmail(daily, await readJson("public/research-digest/papers.json"));
+    const ready = readyPapersForCloudEmail(daily, await readJson("public/research-digest/papers.json"), {
+      requireComplete: process.argv.includes("--require-complete")
+    });
     console.log(`Validated papers ready for cloud email: ${ready.length}.`);
     if (process.env.GITHUB_OUTPUT) {
       await fs.appendFile(process.env.GITHUB_OUTPUT, `ready_count=${ready.length}\n`);
@@ -113,7 +120,7 @@ async function main() {
       }
     }
   } else {
-    throw new Error("Usage: node scripts/cloud-digest.mjs apply|ready [--require-smtp]");
+    throw new Error("Usage: node scripts/cloud-digest.mjs apply|ready [--require-smtp] [--require-complete]");
   }
 }
 

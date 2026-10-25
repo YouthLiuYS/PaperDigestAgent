@@ -62,3 +62,13 @@ test("email gate checks harness content and sent history instead of trusting rea
   }), /already present in sent history/);
   assert.equal(readyPapersForCloudEmail({ papers: [pending("a"), validPaper("b")] }).length, 1);
 });
+
+test("scheduled delivery reports pending summaries as a failure while keeping empty and sent queues as valid no-ops", () => {
+  assert.throws(() => readyPapersForCloudEmail({ papers: [pending("a"), validPaper("b")] }, { papers: [] }, {
+    requireComplete: true
+  }), /1 paper\(s\) still need validated cloud digests: a/);
+  assert.deepEqual(readyPapersForCloudEmail({ papers: [] }, { papers: [] }, { requireComplete: true }), []);
+  assert.deepEqual(readyPapersForCloudEmail({ papers: [{ ...validPaper("sent"), emailSentAt: "sent" }] }, {
+    papers: []
+  }, { requireComplete: true }), []);
+});

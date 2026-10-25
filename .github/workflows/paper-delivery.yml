@@ -51,7 +51,7 @@ jobs:
 
       - name: Check eligible papers before delivery
         id: ready
-        run: node scripts/cloud-digest.mjs ready
+        run: node scripts/cloud-digest.mjs ready --require-complete
 
       - name: Send the daily digest from the existing mailbox
         if: steps.ready.outputs.ready_count != '0' && (github.event_name != 'workflow_dispatch' || inputs.send_email)
@@ -67,7 +67,7 @@ jobs:
           PAPER_AGENT_MAIL_TO: ${{ secrets.PAPER_AGENT_MAIL_TO }}
           PAPER_AGENT_SITE_URL: ${{ vars.PAPER_AGENT_SITE_URL || format('https://{0}.github.io/{1}/', github.repository_owner, github.event.repository.name) }}
         run: |
-          node scripts/cloud-digest.mjs ready --require-smtp
+          node scripts/cloud-digest.mjs ready --require-smtp --require-complete
           npm run papers:email
 
       - name: Persist validated digests and delivery state

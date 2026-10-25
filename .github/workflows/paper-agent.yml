@@ -16,6 +16,10 @@ on:
           - daily
           - conference
           - all
+      source_check_only:
+        description: "Check the live DBLP metadata interface without changing the queue or sending email"
+        type: boolean
+        default: false
 
 permissions:
   contents: write
@@ -25,7 +29,22 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
+  source-check:
+    if: github.event_name == 'workflow_dispatch' && inputs.source_check_only
+    permissions:
+      contents: read
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Verify the live DBLP metadata interface
+        run: npm run sources:check
+
   digest:
+    if: github.event_name != 'workflow_dispatch' || !inputs.source_check_only
     name: Collect papers for the hosted digest task
     runs-on: ubuntu-latest
     timeout-minutes: 45
@@ -63,6 +82,7 @@ jobs:
       - name: Validate scripts
         run: |
           node --check scripts/paper-agent.mjs
+          node --check scripts/dblp-source.mjs
           node --check scripts/validate-digest-harness.mjs
           npm run test:cloud
 

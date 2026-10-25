@@ -47,7 +47,8 @@ async function runDelivery(t, closeBeforeData) {
   const dailyPath = path.join(temp, "daily.json");
   const historyPath = path.join(temp, "history.json");
   const configPath = path.join(temp, "config.json");
-  await fs.writeFile(dailyPath, JSON.stringify({ digestDate: "2026-10-24", papers: [validPaper()] }));
+  await fs.writeFile(dailyPath, JSON.stringify({ digestDate: "2026-10-24", papers: [validPaper()],
+    sourceHealth: { dblp: { status: "healthy", successfulQueries: 1 } } }));
   await fs.writeFile(historyPath, JSON.stringify({ papers: [] }));
   await fs.writeFile(configPath, JSON.stringify({ email: {
     enabled: true, host: "127.0.0.1", port: server.address().port, secure: false,
@@ -71,6 +72,7 @@ test("records a DATA acknowledgement even if the SMTP peer closes without replyi
   assert.equal(result.code, 0, result.output);
   assert.ok(result.daily.papers[0].emailSentAt);
   assert.equal(result.history.papers.length, 1);
+  assert.equal(result.daily.sourceHealth.dblp.status, "healthy");
   assert.doesNotMatch(result.output, /recipient@example\.invalid/);
 });
 
@@ -79,6 +81,7 @@ test("a disconnect before message acceptance fails without marking or archiving 
   assert.equal(result.code, 1, result.output);
   assert.equal(result.daily.papers[0].emailSentAt, undefined);
   assert.equal(result.history.papers.length, 0);
+  assert.equal(result.daily.sourceHealth.dblp.successfulQueries, 1);
   assert.match(result.output, /SMTP connection closed/);
 });
 

@@ -6,6 +6,7 @@ import net from "node:net";
 import path from "node:path";
 import tls from "node:tls";
 import { fileURLToPath } from "node:url";
+import { DblpSource } from "./dblp-source.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const repoRoot = path.resolve(__dirname, "..");
@@ -364,7 +365,8 @@ async function run(config) {
     conferenceCount: dailyDigest.stats?.conferenceCandidates ?? 0,
     backfillCount: dailyDigest.stats?.backfillCandidates ?? 0,
     rawCandidates: dailyDigest.stats?.rawCandidates ?? dailyDigest.stats?.collected ?? 0,
-    newlyAdded: dailyDigest.stats?.newlyAdded ?? 0
+    newlyAdded: dailyDigest.stats?.newlyAdded ?? 0,
+    sourceHealth: dailyDigest.sourceHealth
   });
 
   if (cli.emailOnly) {
@@ -394,7 +396,8 @@ async function run(config) {
       conferenceCount: collection.conference.length,
       backfillCount: collection.backfill.length,
       rawCandidates: collection.rawCandidates,
-      newlyAdded: enrichedNew.length
+      newlyAdded: enrichedNew.length,
+      sourceHealth: collection.sourceHealth
     });
 
     await writeDigest(config.dailyOutputPath, activeDailyDigest);
@@ -408,19 +411,24 @@ async function run(config) {
     await sendDailyDigestEmail(config, activeDailyDigest, historyDigest);
   }
 
+  if (!cli.emailOnly && activeDailyDigest.sourceHealth?.dblp?.status === "failed") {
+    throw new Error("DBLP collection failed. Successful arXiv results were saved; inspect daily.json sourceHealth before retrying.");
+  }
+
   console.log("Paper agent finished.");
 }
 
 async function collectPapers(config, knownIndex = null) {
+  const dblp = new DblpSource();
   const dailyPool = isDailyMode(config)
     ? dedupePapers([
       ...(await collectArxivPapers(config)),
-      ...(await collectDblpPapers(config))
+      ...(await collectDblpPapers(config, "daily-latest", dblp))
     ])
     : [];
 
   const conferencePool = isConferenceMode(config)
-    ? dedupePapers(await collectConferenceArchivePapers(config))
+    ? dedupePapers(await collectConferenceArchivePapers(config, dblp))
     : [];
 
   const daily = isDailyMode(config)
@@ -434,22 +442,27 @@ async function collectPapers(config, knownIndex = null) {
   const selected = dedupePapers([...daily, ...conference]);
   const backfill = config.backfillEnabled && isDailyMode(config) && selected.length < config.minNewPapers
     ? selectRecommendedPapers(
-      filterUnseenPapers(await collectBackfillPapers(config), knownIndex, selected),
+      filterUnseenPapers(await collectBackfillPapers(config, dblp), knownIndex, selected),
       Math.max(config.minNewPapers, config.dailyMaxPapers) - selected.length,
       config
     )
     : [];
 
+  console.log(`DBLP source health: ${JSON.stringify(dblp.health)}`);
+  if (["degraded", "failed"].includes(dblp.health.status) && process.env.GITHUB_ACTIONS) {
+    console.warn(`::warning title=DBLP collection ${dblp.health.status}::${dblp.health.lastError}`);
+  }
   return {
     daily,
     conference,
     backfill,
     rawCandidates: dailyPool.length + conferencePool.length,
+    sourceHealth: { dblp: dblp.health },
     candidates: sortPapersByDate(dedupePapers([...selected, ...backfill]))
   };
 }
 
-async function collectBackfillPapers(config) {
+async function collectBackfillPapers(config, dblp) {
   const backfillConfig = {
     ...config,
     daysBack: Math.max(config.daysBack, config.backfillDays),
@@ -458,7 +471,7 @@ async function collectBackfillPapers(config) {
   console.log(`Backfill enabled: expanding daily search to ${backfillConfig.daysBack} days and ${backfillConfig.maxPerQuery} results/query.`);
   return dedupePapers([
     ...(await collectArxivPapers(backfillConfig, "daily-backfill")),
-    ...(await collectDblpPapers(backfillConfig, "daily-backfill"))
+    ...(await collectDblpPapers(backfillConfig, "daily-backfill", dblp))
   ]);
 }
 
@@ -675,18 +688,17 @@ async function collectArxivPapers(config, collectionType = "daily-latest") {
   return papers;
 }
 
-async function collectDblpPapers(config, collectionType = "daily-latest") {
+async function collectDblpPapers(config, collectionType, source) {
   const papers = [];
 
-  for (const query of config.dblpQueries) {
+  for (const [index, query] of config.dblpQueries.entries()) {
+    if (source.unavailable) {
+      source.skipped += config.dblpQueries.length - index;
+      console.warn("DBLP source unavailable; skipping remaining queries for this run.");
+      break;
+    }
     try {
-      const params = new URLSearchParams({
-        q: query,
-        format: "json",
-        h: String(config.maxPerQuery)
-      });
-      const url = `https://dblp.org/search/publ/api?${params.toString()}`;
-      const json = await fetchJson(url);
+      const json = await source.search(query, { limit: config.maxPerQuery });
       papers.push(...parseDblpResults(json).map((paper) => tagPaper(paper, {
         collectionType,
         matchedQuery: query
@@ -694,28 +706,29 @@ async function collectDblpPapers(config, collectionType = "daily-latest") {
     } catch (error) {
       console.warn(`DBLP query skipped (${query}): ${formatError(error)}`);
     }
-
-    await sleep(250);
   }
 
   return papers;
 }
 
-async function collectConferenceArchivePapers(config) {
+async function collectConferenceArchivePapers(config, source) {
   const papers = [];
   const queries = buildConferenceQueries(config).slice(0, config.conferenceMaxQueries);
 
   console.log(`Conference archive queries: ${queries.length}`);
 
-  for (const query of queries) {
+  for (const [index, query] of queries.entries()) {
+    if (source.unavailable) {
+      source.skipped += queries.length - index;
+      console.warn("DBLP source unavailable; skipping remaining conference queries for this run.");
+      break;
+    }
     try {
-      const params = new URLSearchParams({
-        q: query.query,
-        format: "json",
-        h: String(config.conferenceMaxPerQuery)
+      const json = await source.search(query.theme, {
+        limit: config.conferenceMaxPerQuery,
+        venue: CONFERENCE_VENUE_ALIASES[query.venue] ?? [query.venue],
+        year: query.year
       });
-      const url = `https://dblp.org/search/publ/api?${params.toString()}`;
-      const json = await fetchJson(url);
       const queryPapers = parseDblpResults(json)
         .filter((paper) => matchesConferenceVenue(paper, query.venue))
         .map((paper) => tagPaper(paper, {
@@ -730,8 +743,6 @@ async function collectConferenceArchivePapers(config) {
     } catch (error) {
       console.warn(`Conference query skipped (${query.query}): ${formatError(error)}`);
     }
-
-    await sleep(350);
   }
 
   return papers;
@@ -1285,7 +1296,8 @@ async function sendDailyDigestEmail(config, dailyDigest, historyDigest) {
       conferenceCount: dailyDigest.stats?.conferenceCandidates ?? 0,
       backfillCount: dailyDigest.stats?.backfillCandidates ?? 0,
       rawCandidates: dailyDigest.stats?.rawCandidates ?? dailyDigest.stats?.collected ?? 0,
-      newlyAdded: dailyDigest.stats?.newlyAdded ?? 0
+      newlyAdded: dailyDigest.stats?.newlyAdded ?? 0,
+      sourceHealth: dailyDigest.sourceHealth
     });
     await writeDigest(config.dailyOutputPath, failedDailyDigest);
     throw new Error(`Email failed: ${formatError(error)}`);
@@ -1309,7 +1321,8 @@ async function sendDailyDigestEmail(config, dailyDigest, historyDigest) {
     conferenceCount: dailyDigest.stats?.conferenceCandidates ?? 0,
     backfillCount: dailyDigest.stats?.backfillCandidates ?? 0,
     rawCandidates: dailyDigest.stats?.rawCandidates ?? dailyDigest.stats?.collected ?? 0,
-    newlyAdded: dailyDigest.stats?.newlyAdded ?? 0
+    newlyAdded: dailyDigest.stats?.newlyAdded ?? 0,
+    sourceHealth: dailyDigest.sourceHealth
   });
   const historyPapers = Array.isArray(historyDigest.papers) ? historyDigest.papers : [];
   const updatedHistoryDigest = buildHistoryDigest(config, historyDigest, [...pushedPapers, ...historyPapers]);
@@ -1496,21 +1509,11 @@ async function fetchText(url) {
   return response.text();
 }
 
-async function fetchJson(url) {
-  const response = await fetchWithRetry(url, {
-    headers: {
-      "Accept": "application/json",
-      "User-Agent": "SteelWebPaperAgent/1.0 (research digest; contact configured by user)"
-    }
-  });
-  return response.json();
-}
-
 async function fetchWithRetry(url, options, retries = 2) {
   let lastError;
   for (let attempt = 0; attempt <= retries; attempt += 1) {
     try {
-      const response = await fetch(url, options);
+      const response = await fetch(url, { ...options, signal: options.signal ?? AbortSignal.timeout(30_000) });
       if (!response.ok) {
         const retryAfter = Number.parseInt(response.headers.get("retry-after") ?? "", 10);
         const error = new Error(`${response.status} ${response.statusText}`);
@@ -1793,6 +1796,7 @@ function buildDailyDigest(config, papers, digestDate, runStats = {}) {
     siteUrl: config.siteUrl,
     historyPath: config.outputPath,
     sources: buildSources(config),
+    ...(runStats.sourceHealth ? { sourceHealth: runStats.sourceHealth } : {}),
     stats: {
       ...buildPaperStats(dailyPapers),
       current: dailyPapers.length,
