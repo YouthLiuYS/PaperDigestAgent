@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-10-26T02:32:37.592Z",
-  "digestDate": "2026-10-26",
+  "generatedAt": "2026-10-26T23:57:00.594Z",
+  "digestDate": "2026-10-27",
   "kind": "daily-new",
   "timezone": "Asia/Shanghai",
   "siteUrl": "https://YouthLiuYS.github.io/PaperDigestAgent/",
   "historyPath": "public/research-digest/papers.json",
   "sources": {
-    "collectionMode": "all",
+    "collectionMode": "daily",
     "arxivQueries": [
       "(cat:cs.AR OR cat:cs.DC OR cat:cs.PF) AND (all:LLM OR all:transformer OR all:foundation OR all:language) AND (all:accelerator OR all:processor OR all:architecture OR all:hardware OR all:system OR all:serving OR all:training OR all:inference OR all:cache)",
       "(all:quantization OR all:compression OR all:pruning OR all:sparsity OR all:low-bit) AND (all:LLM OR all:transformer OR all:language) AND (all:hardware OR all:accelerator OR all:inference OR all:serving OR all:processor)",
@@ -102,14 +102,14 @@
     ],
     "daysBack": 7,
     "maxPapers": 12,
-    "dailyMaxPapers": 12,
+    "dailyMaxPapers": 8,
     "dailyPrimaryMaxPapers": 6,
     "dailyTrendMaxPapers": 2,
     "minNewPapers": 5,
     "backfillEnabled": true,
     "backfillDays": 45,
     "backfillMaxPerQuery": 24,
-    "conferenceMaxPapers": 12,
+    "conferenceMaxPapers": 16,
     "pdfDownloadEnabled": false,
     "pdfDirectory": "public/research-digest/pdfs",
     "pdfMaxPerRun": 12
@@ -138,11 +138,11 @@
     "dailyCandidates": 8,
     "conferenceCandidates": 0,
     "backfillCandidates": 0,
-    "rawCandidates": 35,
+    "rawCandidates": 32,
     "newlyAdded": 8,
-    "pendingDigest": 0,
+    "pendingDigest": 8,
     "pendingEmail": 0,
-    "pushed": 8,
+    "pushed": 0,
     "failedDigest": 0,
     "failedEmail": 0,
     "pdfDownloaded": 0,
@@ -153,1032 +153,922 @@
   },
   "papers": [
     {
-      "id": "arxiv:2610.30480",
+      "id": "arxiv:2610.32638",
       "source": "arXiv",
-      "title": "FIGFLEX: A Mixed-Precision FP-INT GEMM Accelerator Co-Designed with Low-Bit LLM Quantization",
+      "title": "InferSlice: A Reference Architecture for SLO-driven LLM Inference over a Telco Wide-Area Network",
       "authors": [
-        "Faraz Tahmasebi",
-        "Haocheng Xu",
-        "Andrew Trauger",
-        "Yomal Perera",
-        "Zhenyu Tang",
-        "Nael Chowdhury",
-        "Sitao Huang"
+        "Juan Parra-Ullauri",
+        "Anthony Chiu",
+        "Hari Madhukumar",
+        "Zhaozhou Wu",
+        "Anderson Bravalheri",
+        "Alex Healing",
+        "Andy Corston-Petrie",
+        "Dimitra Simeonidou",
+        "Nektaria Efthymiou"
       ],
       "authorAffiliations": [],
       "affiliations": [],
-      "abstract": "Weight-only quantization keeps LLM activations in floating point and stores weights as low-bit integers, turning the dominant workload into floating-point-integer (FP-INT) general matrix multiplication. Recent quantizers reach a 2-3-bit average with mixed precision, but hardware has not kept pace: GPUs dequantize weights to FP16 before the tensor-core multiply-accumulate, and bit-parallel FP-INT accelerators run at a single weight precision, so fewer bits save memory but not computation. In this paper, we present FIGFLEX, an algorithm-hardware co-designed mixed-precision accelerator whose bit-parallel datapath scales throughput as precision falls. FIGFLEX contributes (1) a shift-add, radix-4 reformulation of FP-INT multiplication that fuses the multiply-accumulate into a unified, precision-flexible partial-product reduction and roughly halves the partial products, together with a novel INT3 optimization that reclaims the idle datapath radix-4 leaves at that precision; and (2) a mixed-precision quantizer that assigns each channel group its bit-width according to the error GPTQ cannot compensate, with a per-input-channel column scaling whose power-of-two normalization keeps the scaled activations out of the FP16 subnormal range, so that the quantized model maps directly onto FIGFLEX's datapath with the same accuracy as on a GPU. On LLaMA-2-7B, FIGFLEX attains 5.85 and 8.77 WikiText-2 perplexity at 3- and 2-bit average precision, lower than GPTQ, AWQ, SliM-LLM, AMQ, and QuIP# (without fine-tuning), while delivering 1.56x and 1.42x higher whole-chip throughput per area on the linear GEMMs of a 3-bit mixed-precision model than AxCore and FIGLUT, respectively.",
+      "abstract": "LLM inference is increasingly deployed as a core service for enterprise and interactive applications, but sovereignty, compliance, latency and resource-locality requirements can limit the suitability of centralised cloud deployments. Telco operators offer geographically distributed compute and network infrastructure for addressing these constraints. However, existing LLM serving frameworks are designed for tightly coupled data centres and provide limited support for coordinating geographically distributed and heterogeneous resources. We present InferSlice, a reference architecture for Service-Level Objective (SLO)-driven LLM inference over a telco infrastructure, integrating network slicing, GPU partitioning, elastic serving and observability. Led by BT in collaboration with the University of Bristol and NVIDIA, and realised on the JOINER UK national-scale wide-area network (WAN), InferSlice is evaluated on service differentiation across tiers, elastic scale-out, client-edge bandwidth as a bottleneck, and the reach of tensor, pipeline, data parallelism, and prefill/decode disaggregation over the WAN. Our results show that, on a general-purpose telco network, tiers yield distinct latency-throughput regimes, and weight streaming shortens scale-out time. Replication is placement-insensitive but memory-bound; pipeline parallelism tolerates near- and mid-cross-site hops, while tensor parallelism and disaggregation fail beyond a single subnet hop. We share practical insights from operating SLO-driven inference on a telco network, lessons learned and open questions, and hope to encourage further research on distributed and heterogeneous LLM inference systems.",
       "venue": "arXiv",
-      "published": "2026-10-21T21:59:47Z",
-      "updated": "2026-10-21T21:59:47Z",
-      "url": "http://arxiv.org/abs/2610.30480v1",
-      "pdfUrl": "https://arxiv.org/pdf/2610.30480v1",
+      "published": "2026-10-23T13:51:02Z",
+      "updated": "2026-10-23T13:51:02Z",
+      "url": "http://arxiv.org/abs/2610.32638v1",
+      "pdfUrl": "https://arxiv.org/pdf/2610.32638v1",
       "categories": [
-        "cs.AR",
-        "cs.LG"
+        "cs.DC",
+        "cs.AI"
       ],
-      "collectedAt": "2026-10-25T22:35:48.907Z",
-      "firstSeenAt": "2026-10-25T22:35:48.907Z",
-      "lastSeenAt": "2026-10-25T22:35:48.907Z",
+      "collectedAt": "2026-10-26T23:55:18.364Z",
+      "firstSeenAt": "2026-10-26T23:55:18.364Z",
+      "lastSeenAt": "2026-10-26T23:55:18.364Z",
       "collectionType": "daily-latest",
       "matchedQuery": "(cat:cs.AR OR cat:cs.DC OR cat:cs.PF) AND (all:LLM OR all:transformer OR all:foundation OR all:language) AND (all:accelerator OR all:processor OR all:architecture OR all:hardware OR all:system OR all:serving OR all:training OR all:inference OR all:cache)",
       "collectionTypes": [
         "daily-latest"
       ],
       "matchedQueries": [
-        "(cat:cs.AR OR cat:cs.DC OR cat:cs.PF) AND (all:LLM OR all:transformer OR all:foundation OR all:language) AND (all:accelerator OR all:processor OR all:architecture OR all:hardware OR all:system OR all:serving OR all:training OR all:inference OR all:cache)"
+        "(cat:cs.AR OR cat:cs.DC OR cat:cs.PF) AND (all:LLM OR all:transformer OR all:foundation OR all:language) AND (all:accelerator OR all:processor OR all:architecture OR all:hardware OR all:system OR all:serving OR all:training OR all:inference OR all:cache)",
+        "(all:prefill OR all:decoding OR all:KV OR all:cache OR all:attention) AND (all:accelerator OR all:kernel OR all:compiler OR all:serving OR all:memory) AND (all:LLM OR all:transformer)",
+        "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)"
       ],
       "targetThemes": [],
       "conferenceVenues": [],
       "conferenceYears": [],
-      "recommendationTrack": "hardware-primary",
-      "recommendationLabel": "硬件体系结构主线",
-      "recommendationScore": 97,
-      "relevanceReason": "命中 AI 处理器、体系结构、量化、训推系统或内存/缓存优化主题",
-      "pdfStatus": "remote",
-      "workflow": {
-        "digestStatus": "ready",
-        "emailStatus": "sent",
-        "digestError": "",
-        "harnessVersion": "paper-reader-v1",
-        "collectStatus": "collected",
-        "pdfStatus": "remote",
-        "harnessCheckedAt": "2026-10-26T02:32:32.991Z",
-        "harnessWarnings": [],
-        "emailSentAt": "2026-10-26T02:32:37.592Z",
-        "lastEmailError": ""
-      },
       "digest": {
-        "summaryZh": "混合位宽权重量化已能达到平均2—3 bit，但GPU先反量化再乘加，固定精度FP-INT硬件也不能随位宽下降增加计算吞吐。用radix-4移位加法统一FP-INT乘加的部分积归约，并复用INT3闲置资源；按GPTQ无法补偿的误差分配组位宽，以列缩放和二次幂归一化避免FP16次正规数。LLaMA-2-7B平均3/2 bit的WikiText-2困惑度为5.85/8.77；3 bit线性GEMM吞吐/面积为AxCore的1.56倍、FIGLUT的1.42倍。",
-        "motivationZh": "混合位宽权重量化已能达到平均2—3 bit，但GPU先反量化再乘加，固定精度FP-INT硬件也不能随位宽下降增加计算吞吐。压缩收益停留在存储端，计算数据通路缺少精度伸缩能力，INT3还存在radix-4资源闲置。低比特只有同时转化为计算密度和面积效率收益，才能支持下一代推理核心。直接对应低精度计算核心与量化转换数据通路，可作为算法和微架构协同设计的参考。",
-        "methodZh": "用radix-4移位加法统一FP-INT乘加的部分积归约，并复用INT3闲置资源；按GPTQ无法补偿的误差分配组位宽，以列缩放和二次幂归一化避免FP16次正规数。硬件与量化协同设计；改变FP-INT乘加数据通路，低位宽减少部分积，并使模型量化结果适配硬件执行。把混合位宽的存储节省变成位并行数据通路的计算密度收益。",
-        "experimentsZh": "评估LLaMA-2-7B等六个模型；WikiText-2/C4困惑度与零样本任务，解码器线性层量化，激活保持FP16且不微调。量化对比GPTQ、AWQ、SliM-LLM、AMQ、QuIP#；硬件对比AxCore与FIGLUT。LLaMA-2-7B平均3/2 bit的WikiText-2困惑度为5.85/8.77；3 bit线性GEMM吞吐/面积为AxCore的1.56倍、FIGLUT的1.42倍。平均位数仅计权重编码，额外尺度和标签有开销；所报硬件收益针对线性GEMM，不能解释为端到端生成加速。",
-        "affiliationsZh": "未在 DBLP/arXiv 元数据中提供",
+        "summaryZh": "AI 摘要未生成。原始摘要要点：LLM inference is increasingly deployed as a core service for enterprise and interactive applications, but sovereignty, compliance, latency and resource-locality...",
+        "motivationZh": "命令行启用了 --no-ai",
+        "methodZh": "请配置 AI 后重新运行，以生成方法提炼。",
+        "experimentsZh": "来源元数据未披露完整实验设置或结果。",
+        "affiliationsZh": "未在 DBLP/arXiv 元数据中提供。",
         "tags": [
-          "混合精度",
-          "FP-INT乘加",
-          "量化硬件协同"
+          "cs.DC",
+          "cs.AI"
         ],
-        "importance": 5,
-        "researchFitZh": "直接对应低精度计算核心与量化转换数据通路，可作为算法和微架构协同设计的参考。",
-        "hardwareRelevance": 5,
-        "algorithmRelevance": 5,
-        "systemRelevance": 3,
-        "readPriority": "deep-read",
-        "whyReadZh": "直接对应低精度计算核心与量化转换数据通路，可作为算法和微架构协同设计的参考。建议结合其证据边界决定后续阅读与对比范围。",
-        "limitationsZh": "平均位数仅计权重编码，额外尺度和标签有开销；所报硬件收益针对线性GEMM，不能解释为端到端生成加速。",
+        "importance": 3,
+        "researchFitZh": "AI harness 尚未完成分析，无法判断与用户研究方向的具体关系。",
+        "hardwareRelevance": 1,
+        "algorithmRelevance": 1,
+        "systemRelevance": 1,
+        "readPriority": "archive",
+        "whyReadZh": "需要完成 motivation、method 和实验结果分析后再判断是否值得深读。",
+        "limitationsZh": "命令行启用了 --no-ai",
         "motivationDetail": {
-          "problemZh": "混合位宽权重量化已能达到平均2—3 bit，但GPU先反量化再乘加，固定精度FP-INT硬件也不能随位宽下降增加计算吞吐。",
-          "gapZh": "压缩收益停留在存储端，计算数据通路缺少精度伸缩能力，INT3还存在radix-4资源闲置。",
-          "whyImportantZh": "低比特只有同时转化为计算密度和面积效率收益，才能支持下一代推理核心。",
-          "userRelevanceZh": "直接对应低精度计算核心与量化转换数据通路，可作为算法和微架构协同设计的参考。",
-          "evidence": "已读 https://arxiv.org/abs/2610.30480v1 摘要及 https://arxiv.org/html/2610.30480v1 的上述方法/实验片段"
+          "problemZh": "harness 未完成分析。",
+          "gapZh": "harness 未完成分析。",
+          "whyImportantZh": "harness 未完成分析。",
+          "userRelevanceZh": "harness 未完成分析。",
+          "evidence": "not analyzed"
         },
         "methodDetail": {
-          "coreIdeaZh": "用radix-4移位加法统一FP-INT乘加的部分积归约，并复用INT3闲置资源；按GPTQ无法补偿的误差分配组位宽，以列缩放和二次幂归一化避免FP16次正规数。",
+          "coreIdeaZh": "harness 未完成分析。",
           "componentsZh": [
-            "radix-4精度可伸缩归约",
-            "INT3资源复用",
-            "补偿误差驱动混合位宽",
-            "列缩放与归一化"
+            "未分析"
           ],
-          "hardwareSystemDetailZh": "硬件与量化协同设计；改变FP-INT乘加数据通路，低位宽减少部分积，并使模型量化结果适配硬件执行。",
-          "noveltyZh": "把混合位宽的存储节省变成位并行数据通路的计算密度收益。",
-          "evidence": "已读 https://arxiv.org/abs/2610.30480v1 摘要及 https://arxiv.org/html/2610.30480v1 的上述方法/实验片段"
+          "hardwareSystemDetailZh": "harness 未完成分析。",
+          "noveltyZh": "harness 未完成分析。",
+          "evidence": "not analyzed"
         },
         "experimentDetail": {
-          "setupZh": "评估LLaMA-2-7B等六个模型；WikiText-2/C4困惑度与零样本任务，解码器线性层量化，激活保持FP16且不微调。",
-          "baselinesZh": "量化对比GPTQ、AWQ、SliM-LLM、AMQ、QuIP#；硬件对比AxCore与FIGLUT。",
+          "setupZh": "harness 未完成分析。",
+          "baselinesZh": "harness 未完成分析。",
           "metricsZh": [
-            "困惑度",
-            "零样本准确率",
-            "整芯片吞吐/面积"
+            "未分析"
           ],
-          "mainResultsZh": "LLaMA-2-7B平均3/2 bit的WikiText-2困惑度为5.85/8.77；3 bit线性GEMM吞吐/面积为AxCore的1.56倍、FIGLUT的1.42倍。",
-          "limitationsZh": "平均位数仅计权重编码，额外尺度和标签有开销；所报硬件收益针对线性GEMM，不能解释为端到端生成加速。",
-          "evidence": "已读 https://arxiv.org/abs/2610.30480v1 摘要及 https://arxiv.org/html/2610.30480v1 的上述方法/实验片段"
+          "mainResultsZh": "harness 未完成分析。",
+          "limitationsZh": "harness 未完成分析。",
+          "evidence": "not analyzed"
         },
         "evidence": {
           "usedSources": [
-            "daily.json metadata",
-            "https://arxiv.org/abs/2610.30480v1",
-            "https://arxiv.org/html/2610.30480v1 （仅已读片段）"
+            "metadata"
           ],
-          "affiliationEvidence": "队列authorAffiliations和affiliations为空；按任务要求保留缺失单位说明。",
-          "experimentEvidence": "已读 https://arxiv.org/abs/2610.30480v1 摘要及 https://arxiv.org/html/2610.30480v1 的上述方法/实验片段",
+          "affiliationEvidence": "",
+          "experimentEvidence": "",
           "missingFields": [
-            "元数据作者单位",
-            "未核验全部实验表与复现细节"
+            "motivation",
+            "method",
+            "experiments"
           ]
         },
         "confidence": {
-          "summary": 0.87,
-          "motivation": 0.87,
-          "method": 0.88,
-          "experiments": 0.85,
+          "summary": 0.2,
+          "motivation": 0,
+          "method": 0,
+          "experiments": 0,
           "affiliations": 0
         }
       },
-      "pushedAt": "2026-10-26T02:32:37.592Z",
-      "emailSentAt": "2026-10-26T02:32:37.592Z",
-      "firstPushedAt": "2026-10-26T02:32:37.592Z"
+      "recommendationTrack": "hardware-primary",
+      "recommendationLabel": "硬件体系结构主线",
+      "recommendationScore": 195,
+      "relevanceReason": "命中 AI 处理器、体系结构、量化、训推系统或内存/缓存优化主题",
+      "pdfStatus": "remote",
+      "workflow": {
+        "digestStatus": "pending",
+        "emailStatus": "waiting-digest",
+        "digestError": "命令行启用了 --no-ai",
+        "harnessVersion": "paper-reader-v1",
+        "collectStatus": "collected",
+        "pdfStatus": "remote"
+      }
     },
     {
-      "id": "arxiv:2610.29873",
+      "id": "arxiv:2610.32632",
       "source": "arXiv",
-      "title": "HAWK: Heterogeneity-Aware KV Cache Transfer for Efficient GPU-NPU Phase-Disaggregated LLM Inference",
+      "title": "Toward Open ISA Supercomputing: A Comparative Study of RISC-V, Arm, and x86 Architectures on HPC Workloads",
       "authors": [
-        "Junhyeok Park",
-        "Jungeun Yoon",
-        "Kyungmin Kim",
-        "Hunsoon Lee",
-        "Shinyoung Ahn",
-        "Kangho Kim"
+        "Emanuele Venieri",
+        "Giacomo Madella",
+        "Gabriele Ceccolini",
+        "Simone Manoni",
+        "Federico Ficarelli",
+        "Filippo Barbari",
+        "Jenny Lynn Almerol",
+        "Elisabetta Boella",
+        "Nitin Shukla",
+        "Simone Bnà",
+        "Luca Benini",
+        "Andrea bartolini"
       ],
       "authorAffiliations": [],
       "affiliations": [],
-      "abstract": "Large language model (LLM) inference exhibits distinct computational characteristics across its two phases: prefill is compute-intensive, whereas decode is more memory-bound. As a result, AI accelerators achieve varying levels of efficiency across the two phases. GPUs are well suited to prefill, but are often underutilized during decode. By contrast, NPUs can utilize their compute resources more effectively during decode. Motivated by this observation, we explore a heterogeneous architecture that integrates GPUs and NPUs, mapping prefill to GPUs and decode to NPUs to achieve high performance and efficiency. However, realizing such heterogeneous integration is challenging because LLM phase disaggregation requires KV cache transfer from prefill to decode (that is, from GPUs to NPUs), which is complicated by differences in inter-device communication mechanisms and KV cache tensor layouts. To address this, we propose HAWK, a transfer mechanism that enables rapid KV cache transfer across heterogeneous devices. HAWK establishes a remote direct memory access (RDMA) path for direct cross-device transfers while handling inter-device tensor layout discrepancies as part of the transfer process. In particular, HAWK allocates tensor-layout-aware RDMA buffers on the NPU side to match the target tensor layout. Leveraging these buffers, HAWK orchestrates data transfer from a conventional contiguous GPU RDMA buffer to the corresponding NPU buffers, allowing transferred tensors to be consumed directly without additional data rearrangement while maintaining transfer efficiency. We implement and evaluate HAWK on a system built with commercially available GPUs and NPUs, demonstrating performance within 7.88% of a GPU-only system under the same SLO constraints while achieving up to 1.26$\\times$ higher power efficiency and 1.72$\\times$ higher cost efficiency.",
+      "abstract": "RISC-V is emerging as a candidate architecture for high-performance computing (HPC), but its competitiveness against established x86 and Arm processors remains difficult to assess because existing studies use different platforms, workloads, and methodologies, and rarely consider energy efficiency. Our work provides an evaluation of contemporary HPC RISC-V, Arm, and x86 processors using a common software stack and methodology. We characterize the Sophgo SG2044 and compare it with the NVIDIA Grace CPU Superchip and Intel Xeon Platinum 8480+ across four HPC benchmarks (STREAM, HPL, HPL-MxP, and HPCG) and four representative applications (iPIC3D, PLUTO, OpenFOAM, and llama.cpp). The version of HPL-MxP linked to OpenBLAS built and used for this work is made available as open-source software. The SG2044 reaches 8.02 GFLOP/s of FP64 performance and 7.8 GB/s of memory bandwidth per core, increasing to 294 GFLOP/s and 107 GB/s at 64 cores. L2-cache-aware process placement enables near-linear scaling up to 16 cores, beyond which memory-bandwidth saturation limits further gains. Across generations of RISC-V hardware, in the context of the Monte Cimone (MC) project, the SG2044-based MCv3 doubles both single-core performance and peak memory bandwidth relative to MCv2, while improving memory bandwidth, node-level FP64 performance, and energy efficiency by approximately 100x, 158x, and 10x, over MCv1. Against the Arm and x86 systems, the SG2044 shows 8-15x less absolute performance, reflecting its narrower vector resources and less advanced technology node, but delivers competitive scaling and energy efficiency on several workloads. Its most notable result is LLM decode, where 64-core execution provides the highest relative scaling and energy efficiency among the evaluated platforms while exceeding Intel in throughput. Our results show that RISC-V processors are closing the gap with the competition.",
       "venue": "arXiv",
-      "published": "2026-10-21T15:25:35Z",
-      "updated": "2026-10-21T15:25:35Z",
-      "url": "http://arxiv.org/abs/2610.29873v1",
-      "pdfUrl": "https://arxiv.org/pdf/2610.29873v1",
+      "published": "2026-10-23T13:43:38Z",
+      "updated": "2026-10-23T13:43:38Z",
+      "url": "http://arxiv.org/abs/2610.32632v1",
+      "pdfUrl": "https://arxiv.org/pdf/2610.32632v1",
       "categories": [
+        "cs.DC",
         "cs.AR",
-        "cs.DC"
+        "cs.PF"
       ],
-      "collectedAt": "2026-10-25T22:35:48.907Z",
-      "firstSeenAt": "2026-10-25T22:35:48.907Z",
-      "lastSeenAt": "2026-10-25T22:35:48.907Z",
+      "collectedAt": "2026-10-26T23:55:18.364Z",
+      "firstSeenAt": "2026-10-26T23:55:18.364Z",
+      "lastSeenAt": "2026-10-26T23:55:18.364Z",
       "collectionType": "daily-latest",
       "matchedQuery": "(cat:cs.AR OR cat:cs.DC OR cat:cs.PF) AND (all:LLM OR all:transformer OR all:foundation OR all:language) AND (all:accelerator OR all:processor OR all:architecture OR all:hardware OR all:system OR all:serving OR all:training OR all:inference OR all:cache)",
       "collectionTypes": [
         "daily-latest"
       ],
       "matchedQueries": [
-        "(cat:cs.AR OR cat:cs.DC OR cat:cs.PF) AND (all:LLM OR all:transformer OR all:foundation OR all:language) AND (all:accelerator OR all:processor OR all:architecture OR all:hardware OR all:system OR all:serving OR all:training OR all:inference OR all:cache)"
+        "(cat:cs.AR OR cat:cs.DC OR cat:cs.PF) AND (all:LLM OR all:transformer OR all:foundation OR all:language) AND (all:accelerator OR all:processor OR all:architecture OR all:hardware OR all:system OR all:serving OR all:training OR all:inference OR all:cache)",
+        "(all:prefill OR all:decoding OR all:KV OR all:cache OR all:attention) AND (all:accelerator OR all:kernel OR all:compiler OR all:serving OR all:memory) AND (all:LLM OR all:transformer)",
+        "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)"
+      ],
+      "targetThemes": [],
+      "conferenceVenues": [],
+      "conferenceYears": [],
+      "digest": {
+        "summaryZh": "AI 摘要未生成。原始摘要要点：RISC-V is emerging as a candidate architecture for high-performance computing (HPC), but its competitiveness against established x86 and Arm processors remains ...",
+        "motivationZh": "命令行启用了 --no-ai",
+        "methodZh": "请配置 AI 后重新运行，以生成方法提炼。",
+        "experimentsZh": "来源元数据未披露完整实验设置或结果。",
+        "affiliationsZh": "未在 DBLP/arXiv 元数据中提供。",
+        "tags": [
+          "cs.DC",
+          "cs.AR",
+          "cs.PF"
+        ],
+        "importance": 3,
+        "researchFitZh": "AI harness 尚未完成分析，无法判断与用户研究方向的具体关系。",
+        "hardwareRelevance": 1,
+        "algorithmRelevance": 1,
+        "systemRelevance": 1,
+        "readPriority": "archive",
+        "whyReadZh": "需要完成 motivation、method 和实验结果分析后再判断是否值得深读。",
+        "limitationsZh": "命令行启用了 --no-ai",
+        "motivationDetail": {
+          "problemZh": "harness 未完成分析。",
+          "gapZh": "harness 未完成分析。",
+          "whyImportantZh": "harness 未完成分析。",
+          "userRelevanceZh": "harness 未完成分析。",
+          "evidence": "not analyzed"
+        },
+        "methodDetail": {
+          "coreIdeaZh": "harness 未完成分析。",
+          "componentsZh": [
+            "未分析"
+          ],
+          "hardwareSystemDetailZh": "harness 未完成分析。",
+          "noveltyZh": "harness 未完成分析。",
+          "evidence": "not analyzed"
+        },
+        "experimentDetail": {
+          "setupZh": "harness 未完成分析。",
+          "baselinesZh": "harness 未完成分析。",
+          "metricsZh": [
+            "未分析"
+          ],
+          "mainResultsZh": "harness 未完成分析。",
+          "limitationsZh": "harness 未完成分析。",
+          "evidence": "not analyzed"
+        },
+        "evidence": {
+          "usedSources": [
+            "metadata"
+          ],
+          "affiliationEvidence": "",
+          "experimentEvidence": "",
+          "missingFields": [
+            "motivation",
+            "method",
+            "experiments"
+          ]
+        },
+        "confidence": {
+          "summary": 0.2,
+          "motivation": 0,
+          "method": 0,
+          "experiments": 0,
+          "affiliations": 0
+        }
+      },
+      "recommendationTrack": "hardware-primary",
+      "recommendationLabel": "硬件体系结构主线",
+      "recommendationScore": 183,
+      "relevanceReason": "命中 AI 处理器、体系结构、量化、训推系统或内存/缓存优化主题",
+      "pdfStatus": "remote",
+      "workflow": {
+        "digestStatus": "pending",
+        "emailStatus": "waiting-digest",
+        "digestError": "命令行启用了 --no-ai",
+        "harnessVersion": "paper-reader-v1",
+        "collectStatus": "collected",
+        "pdfStatus": "remote"
+      }
+    },
+    {
+      "id": "arxiv:2610.32427",
+      "source": "arXiv",
+      "title": "Compression of turbulent flow data through an extended space-time correlation: certification against the modal energy budget",
+      "authors": [
+        "Gustavo Lopes",
+        "Davide Lengani",
+        "Dan Henningson"
+      ],
+      "authorAffiliations": [],
+      "affiliations": [],
+      "abstract": "The fidelity of direct numerical simulation now outpaces the storage and data-movement capacity available for the resulting fields. We present an open, distributed, GPU-accelerated low-rank compression framework for large turbulent flow databases. We assess it using two direct numerical simulations of a controlled diffusion compressor cascade under laminar and turbulent inflow conditions. Compression is formulated using a correlation operator over space and time, which is two orders of magnitude larger than that of snapshot POD. Its dominant range is extracted with a randomized range finder based on communication-avoiding hierarchical QR. The compressed databases are evaluated through a hierarchy of increasingly strict diagnostics, from instantaneous reconstruction and second-order statistics to the modal turbulent kinetic energy budget and its nonlinear interscale transfer. The budget terms are far more sensitive to compression than fieldwise or one-point errors. They remain accurate at conservative compression and degrade sharply once the retained energy is relaxed. The near-wall dissipation and the interscale transfer degrade the most and set the admissible compression level. An aggressive reduction preserves every one-point statistic to within a few per cent while corrupting both by an order of magnitude more. The dissipation error is confined to the viscous sublayer and grows with the development of the boundary layer. It is carried by the high-order modes. For both inflows, the linear budget terms scale with the discarded energy to the power $0.8$ and the triadic transfer to a power above one.",
+      "venue": "arXiv",
+      "published": "2026-10-23T09:52:34Z",
+      "updated": "2026-10-23T09:52:34Z",
+      "url": "http://arxiv.org/abs/2610.32427v1",
+      "pdfUrl": "https://arxiv.org/pdf/2610.32427v1",
+      "categories": [
+        "physics.flu-dyn",
+        "physics.comp-ph"
+      ],
+      "collectedAt": "2026-10-26T23:55:23.545Z",
+      "firstSeenAt": "2026-10-26T23:55:23.545Z",
+      "lastSeenAt": "2026-10-26T23:55:23.545Z",
+      "collectionType": "daily-latest",
+      "matchedQuery": "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)",
+      "collectionTypes": [
+        "daily-latest"
+      ],
+      "matchedQueries": [
+        "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)"
       ],
       "targetThemes": [],
       "conferenceVenues": [],
       "conferenceYears": [],
       "recommendationTrack": "hardware-primary",
       "recommendationLabel": "硬件体系结构主线",
-      "recommendationScore": 86,
+      "recommendationScore": 161.5,
       "relevanceReason": "命中 AI 处理器、体系结构、量化、训推系统或内存/缓存优化主题",
       "pdfStatus": "remote",
       "workflow": {
-        "digestStatus": "ready",
-        "emailStatus": "sent",
-        "digestError": "",
+        "digestStatus": "pending",
+        "emailStatus": "waiting-digest",
+        "digestError": "命令行启用了 --no-ai",
         "harnessVersion": "paper-reader-v1",
         "collectStatus": "collected",
-        "pdfStatus": "remote",
-        "harnessCheckedAt": "2026-10-26T02:32:32.991Z",
-        "harnessWarnings": [],
-        "emailSentAt": "2026-10-26T02:32:37.592Z",
-        "lastEmailError": ""
+        "pdfStatus": "remote"
       },
       "digest": {
-        "summaryZh": "GPU适合prefill而部分NPU更适合decode，但阶段分离要求跨异构设备传输KV，通信机制和张量布局不兼容。建立GPU到NPU的直接RDMA路径，在NPU侧分配目标布局感知缓冲区，将GPU连续缓冲区数据组织到对应NPU缓冲区，并把布局调整融入传输。摘要报告性能与GPU-only差距在7.88%以内，最高能效为其1.26倍、成本效率为其1.72倍。",
-        "motivationZh": "GPU适合prefill而部分NPU更适合decode，但阶段分离要求跨异构设备传输KV，通信机制和张量布局不兼容。主机中转和传后重排增加延迟，会抵消异构阶段分工的能效收益。系统必须让KV到达后可直接消费，才能把异构算力差异转化为服务收益。适合研究NPU数据布局、KV搬运和异构推理系统，属于系统层参考而非新计算核心。",
-        "methodZh": "建立GPU到NPU的直接RDMA路径，在NPU侧分配目标布局感知缓冲区，将GPU连续缓冲区数据组织到对应NPU缓冲区，并把布局调整融入传输。在vLLM和Tenstorrent驱动栈中实现；GPU负责prefill、NPU负责decode，通过缓冲区映射消除额外传后重排。联合设计RDMA传输和目标张量布局，而非先完整传输再独立重排。",
-        "experimentsZh": "Llama 3.1 70B，TP=4；A100与Tenstorrent p150a分节点，200 Gbps InfiniBand；ShareGPT和LongBench负载。包括GPU-GPU主机中转与GPU-NPU主机中转配置，并与GPU-only系统在相同SLO约束下比较。摘要报告性能与GPU-only差距在7.88%以内，最高能效为其1.26倍、成本效率为其1.72倍。当前Tenstorrent模型栈限制实验主要使用一个70B模型；跨其他NPU布局的通用性不能视为均已实测。",
-        "affiliationsZh": "未在 DBLP/arXiv 元数据中提供",
+        "summaryZh": "AI 摘要未生成。原始摘要要点：The fidelity of direct numerical simulation now outpaces the storage and data-movement capacity available for the resulting fields. We present an open, distribu...",
+        "motivationZh": "命令行启用了 --no-ai",
+        "methodZh": "请配置 AI 后重新运行，以生成方法提炼。",
+        "experimentsZh": "来源元数据未披露完整实验设置或结果。",
+        "affiliationsZh": "未在 DBLP/arXiv 元数据中提供。",
         "tags": [
-          "异构GPU-NPU",
-          "KV传输",
-          "RDMA"
+          "physics.flu-dyn",
+          "physics.comp-ph"
         ],
-        "importance": 5,
-        "researchFitZh": "适合研究NPU数据布局、KV搬运和异构推理系统，属于系统层参考而非新计算核心。",
-        "hardwareRelevance": 4,
-        "algorithmRelevance": 2,
-        "systemRelevance": 5,
-        "readPriority": "deep-read",
-        "whyReadZh": "适合研究NPU数据布局、KV搬运和异构推理系统，属于系统层参考而非新计算核心。建议结合其证据边界决定后续阅读与对比范围。",
-        "limitationsZh": "当前Tenstorrent模型栈限制实验主要使用一个70B模型；跨其他NPU布局的通用性不能视为均已实测。",
+        "importance": 3,
+        "researchFitZh": "AI harness 尚未完成分析，无法判断与用户研究方向的具体关系。",
+        "hardwareRelevance": 1,
+        "algorithmRelevance": 1,
+        "systemRelevance": 1,
+        "readPriority": "archive",
+        "whyReadZh": "需要完成 motivation、method 和实验结果分析后再判断是否值得深读。",
+        "limitationsZh": "命令行启用了 --no-ai",
         "motivationDetail": {
-          "problemZh": "GPU适合prefill而部分NPU更适合decode，但阶段分离要求跨异构设备传输KV，通信机制和张量布局不兼容。",
-          "gapZh": "主机中转和传后重排增加延迟，会抵消异构阶段分工的能效收益。",
-          "whyImportantZh": "系统必须让KV到达后可直接消费，才能把异构算力差异转化为服务收益。",
-          "userRelevanceZh": "适合研究NPU数据布局、KV搬运和异构推理系统，属于系统层参考而非新计算核心。",
-          "evidence": "已读 https://arxiv.org/abs/2610.29873v1 摘要及 https://arxiv.org/html/2610.29873v1 的上述方法/实验片段"
+          "problemZh": "harness 未完成分析。",
+          "gapZh": "harness 未完成分析。",
+          "whyImportantZh": "harness 未完成分析。",
+          "userRelevanceZh": "harness 未完成分析。",
+          "evidence": "not analyzed"
         },
         "methodDetail": {
-          "coreIdeaZh": "建立GPU到NPU的直接RDMA路径，在NPU侧分配目标布局感知缓冲区，将GPU连续缓冲区数据组织到对应NPU缓冲区，并把布局调整融入传输。",
+          "coreIdeaZh": "harness 未完成分析。",
           "componentsZh": [
-            "异构设备直接RDMA",
-            "布局感知NPU缓冲区",
-            "传输感知张量变换"
+            "未分析"
           ],
-          "hardwareSystemDetailZh": "在vLLM和Tenstorrent驱动栈中实现；GPU负责prefill、NPU负责decode，通过缓冲区映射消除额外传后重排。",
-          "noveltyZh": "联合设计RDMA传输和目标张量布局，而非先完整传输再独立重排。",
-          "evidence": "已读 https://arxiv.org/abs/2610.29873v1 摘要及 https://arxiv.org/html/2610.29873v1 的上述方法/实验片段"
+          "hardwareSystemDetailZh": "harness 未完成分析。",
+          "noveltyZh": "harness 未完成分析。",
+          "evidence": "not analyzed"
         },
         "experimentDetail": {
-          "setupZh": "Llama 3.1 70B，TP=4；A100与Tenstorrent p150a分节点，200 Gbps InfiniBand；ShareGPT和LongBench负载。",
-          "baselinesZh": "包括GPU-GPU主机中转与GPU-NPU主机中转配置，并与GPU-only系统在相同SLO约束下比较。",
+          "setupZh": "harness 未完成分析。",
+          "baselinesZh": "harness 未完成分析。",
           "metricsZh": [
-            "KV传输延迟",
-            "TTFT/TPOT",
-            "SLO达成率",
-            "能效",
-            "成本效率"
+            "未分析"
           ],
-          "mainResultsZh": "摘要报告性能与GPU-only差距在7.88%以内，最高能效为其1.26倍、成本效率为其1.72倍。",
-          "limitationsZh": "当前Tenstorrent模型栈限制实验主要使用一个70B模型；跨其他NPU布局的通用性不能视为均已实测。",
-          "evidence": "已读 https://arxiv.org/abs/2610.29873v1 摘要及 https://arxiv.org/html/2610.29873v1 的上述方法/实验片段"
+          "mainResultsZh": "harness 未完成分析。",
+          "limitationsZh": "harness 未完成分析。",
+          "evidence": "not analyzed"
         },
         "evidence": {
           "usedSources": [
-            "daily.json metadata",
-            "https://arxiv.org/abs/2610.29873v1",
-            "https://arxiv.org/html/2610.29873v1 （仅已读片段）"
+            "metadata"
           ],
-          "affiliationEvidence": "队列authorAffiliations和affiliations为空；按任务要求保留缺失单位说明。",
-          "experimentEvidence": "已读 https://arxiv.org/abs/2610.29873v1 摘要及 https://arxiv.org/html/2610.29873v1 的上述方法/实验片段",
+          "affiliationEvidence": "",
+          "experimentEvidence": "",
           "missingFields": [
-            "元数据作者单位",
-            "未核验全部实验表与复现细节"
+            "motivation",
+            "method",
+            "experiments"
           ]
         },
         "confidence": {
-          "summary": 0.87,
-          "motivation": 0.87,
-          "method": 0.88,
-          "experiments": 0.85,
+          "summary": 0.2,
+          "motivation": 0,
+          "method": 0,
+          "experiments": 0,
           "affiliations": 0
         }
-      },
-      "pushedAt": "2026-10-26T02:32:37.592Z",
-      "emailSentAt": "2026-10-26T02:32:37.592Z",
-      "firstPushedAt": "2026-10-26T02:32:37.592Z"
+      }
     },
     {
-      "id": "arxiv:2610.31667",
+      "id": "arxiv:2610.31946",
       "source": "arXiv",
-      "title": "Direct Pass@$k$ Optimization for Thought Pruning: Balancing Quality and Diversity in Test-Time Reasoning",
+      "title": "Which Answer Did the Seventeen-Year-Old Write? A Behavioral Case Study of Author-Age Misattribution, Miscalibrated Confidence, and Non-Corrective Self-Explanation in Six Frontier Language Models",
       "authors": [
-        "Mahdi Salmani",
-        "Adel Javanmard",
-        "Devansh Gupta",
-        "Meisam Razaviyayn"
+        "Brianne Lee"
       ],
       "authorAffiliations": [],
       "affiliations": [],
-      "abstract": "Test-time scaling has emerged as a key inference strategy for reasoning models, where a model generates a large number of candidate solutions in the hope of finding at least one correct solution. Running all candidate solutions to completion can be computationally demanding, so recent work prunes the candidate pool after generating only a short prefix, committing further computation only to the surviving candidates. Existing pruning strategies divide broadly into two categories: Quality-based methods assign a score to each partial solution and discard those predicted to ultimately lead to an incorrect final solution, while diversity-based methods select partial solutions that follow different reasoning trajectories and are therefore likely to cover different final solutions. The tension between these two objectives is an instance of exploration versus exploitation, yet little to no prior work on pruning exposes this trade-off directly, let alone optimizes it. In this paper, we introduce a pruning procedure that addresses this trade-off directly by optimizing pass@$k$ over the selected solution pool. In particular, it chooses the pool to maximize the probability that at least one of its partial solutions, when continued to completion, yields a correct answer. Because this objective simultaneously rewards high-quality partial solutions and penalizes redundancy among them, quality and diversity are naturally balanced by the criterion itself rather than through separate ad-hoc design choices. On eight open-weight reasoning models, our method outperforms existing quality-based and diversity-based pruning strategies. The gains are particularly pronounced when the pruning procedure keeps a moderate number of partial solutions for continued generation, highlighting the value of directly balancing quality and diversity during pruning.",
+      "abstract": "Three students answered the same exam prompt by hand: \"What is happiness? Are you happy?\" Their ages, recorded at collection, are 17, 28, and 45. The 17-year-old's answer is hedged and formally phrased. Asked to match each answer to an age and gender label, most frontier language models confidently assign it to an adult. This paper reports a structured case study of that failure across six models: Claude Fable 5, Gemini 3.1 Pro, GPT-5.6 Sol, Grok 4.5, GPT-4o (2024), and DeepSeek V4. We ran 1,081 API sessions and scored 3,225 responses across six experimental conditions that manipulate framing, disclosure format, and audience-awareness instruction. Three of six models perform at or near chance (1/3) on the matching task while reporting 73-88% mean confidence. The youngest writer's answer is misattributed to an adult in up to 90% of trials. Removing the multiple-choice scaffold collapses accuracy further: three models never place within three years of the true age once open-ended estimation is required. Institutional framing (\"a community-college biology final\") significantly degrades the best-performing model's accuracy; a neutral label does not. A single audience-awareness instruction significantly improves one model (+21 points) and moves another to ceiling, with no detectable effect on the three weakest models. Stated confidence is uncorrelated or inversely correlated with correctness for five of six models. After ground truth is revealed, one model names its own stereotyping in 68 of 114 explanations, yet shows the lowest accuracy and highest confidence of any model under blind presentation: articulate retrospective diagnosis that does not track the quality of its judgments. This is a three-item, single-topic, single-language case study meant to isolate a mechanism, not to estimate a population bias rate. Data, code, and raw model outputs are publicly released.",
       "venue": "arXiv",
-      "published": "2026-10-22T17:59:48Z",
-      "updated": "2026-10-22T17:59:48Z",
-      "url": "http://arxiv.org/abs/2610.31667v1",
-      "pdfUrl": "https://arxiv.org/pdf/2610.31667v1",
+      "published": "2026-10-22T21:45:19Z",
+      "updated": "2026-10-22T21:45:19Z",
+      "url": "http://arxiv.org/abs/2610.31946v1",
+      "pdfUrl": "https://arxiv.org/pdf/2610.31946v1",
+      "categories": [
+        "cs.CL"
+      ],
+      "collectedAt": "2026-10-26T23:55:23.545Z",
+      "firstSeenAt": "2026-10-26T23:55:23.545Z",
+      "lastSeenAt": "2026-10-26T23:55:23.545Z",
+      "collectionType": "daily-latest",
+      "matchedQuery": "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)",
+      "collectionTypes": [
+        "daily-latest"
+      ],
+      "matchedQueries": [
+        "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)"
+      ],
+      "targetThemes": [],
+      "conferenceVenues": [],
+      "conferenceYears": [],
+      "recommendationTrack": "hardware-primary",
+      "recommendationLabel": "硬件体系结构主线",
+      "recommendationScore": 153,
+      "relevanceReason": "命中 AI 处理器、体系结构、量化、训推系统或内存/缓存优化主题",
+      "pdfStatus": "remote",
+      "workflow": {
+        "digestStatus": "pending",
+        "emailStatus": "waiting-digest",
+        "digestError": "命令行启用了 --no-ai",
+        "harnessVersion": "paper-reader-v1",
+        "collectStatus": "collected",
+        "pdfStatus": "remote"
+      },
+      "digest": {
+        "summaryZh": "AI 摘要未生成。原始摘要要点：Three students answered the same exam prompt by hand: \"What is happiness? Are you happy?\" Their ages, recorded at collection, are 17, 28, and 45. The 17-year-ol...",
+        "motivationZh": "命令行启用了 --no-ai",
+        "methodZh": "请配置 AI 后重新运行，以生成方法提炼。",
+        "experimentsZh": "来源元数据未披露完整实验设置或结果。",
+        "affiliationsZh": "未在 DBLP/arXiv 元数据中提供。",
+        "tags": [
+          "cs.CL"
+        ],
+        "importance": 3,
+        "researchFitZh": "AI harness 尚未完成分析，无法判断与用户研究方向的具体关系。",
+        "hardwareRelevance": 1,
+        "algorithmRelevance": 1,
+        "systemRelevance": 1,
+        "readPriority": "archive",
+        "whyReadZh": "需要完成 motivation、method 和实验结果分析后再判断是否值得深读。",
+        "limitationsZh": "命令行启用了 --no-ai",
+        "motivationDetail": {
+          "problemZh": "harness 未完成分析。",
+          "gapZh": "harness 未完成分析。",
+          "whyImportantZh": "harness 未完成分析。",
+          "userRelevanceZh": "harness 未完成分析。",
+          "evidence": "not analyzed"
+        },
+        "methodDetail": {
+          "coreIdeaZh": "harness 未完成分析。",
+          "componentsZh": [
+            "未分析"
+          ],
+          "hardwareSystemDetailZh": "harness 未完成分析。",
+          "noveltyZh": "harness 未完成分析。",
+          "evidence": "not analyzed"
+        },
+        "experimentDetail": {
+          "setupZh": "harness 未完成分析。",
+          "baselinesZh": "harness 未完成分析。",
+          "metricsZh": [
+            "未分析"
+          ],
+          "mainResultsZh": "harness 未完成分析。",
+          "limitationsZh": "harness 未完成分析。",
+          "evidence": "not analyzed"
+        },
+        "evidence": {
+          "usedSources": [
+            "metadata"
+          ],
+          "affiliationEvidence": "",
+          "experimentEvidence": "",
+          "missingFields": [
+            "motivation",
+            "method",
+            "experiments"
+          ]
+        },
+        "confidence": {
+          "summary": 0.2,
+          "motivation": 0,
+          "method": 0,
+          "experiments": 0,
+          "affiliations": 0
+        }
+      }
+    },
+    {
+      "id": "arxiv:2610.32752",
+      "source": "arXiv",
+      "title": "ActionRAG: Evidence-Refining Graph Diffusion for Long-Term Memory in LLM Agents",
+      "authors": [
+        "Navyansh Mahla",
+        "Sashank Vandrangi"
+      ],
+      "authorAffiliations": [],
+      "affiliations": [],
+      "abstract": "LLM agents need long-term memory that can recover precise and mutually consistent evidence from growing interaction histories, particularly when answers depend on relations among facts rather than isolated semantic matches. Current memory pipelines remain vulnerable at two stages: indexing errors can fragment repeated entities or merge distinct ones, and online retrieval often treats initial similarity scores as final even when the surrounding graph provides evidence for revising them. We introduce ActionRAG, a graph memory architecture that couples cautious indexing with query-time graph retroevaluation. Its indexing pipeline reconciles type labels and applies tiered entity resolution. Given a query, dual-channel entity and triple retrieval forms an initial evidence set and induces a bounded local graph. Query-conditioned receiver-normalized diffusion refines triple scores using local path structure. Seed protection, hub-penalized flux, and triple materialization preserve direct evidence while recovering missed connections. We evaluate ActionRAG on MemoryAgentBench (MAB), which tests accurate retrieval, conflict resolution, long-range understanding, and test-time learning. Across its eight deterministic-scoring columns, ActionRAG achieves 55.1 average accuracy, improving over the strongest retrieval-based memory baseline by 5.4 points. Under MAB's query-time cost accounting, mean synthesis cost stays below \\$0.001 per query on the four reported cost columns, and the sum of separately measured retrieval-side p99 components is 440.7 ms on our consumer Apple Silicon setup.",
+      "venue": "arXiv",
+      "published": "2026-10-23T14:59:37Z",
+      "updated": "2026-10-23T14:59:37Z",
+      "url": "http://arxiv.org/abs/2610.32752v1",
+      "pdfUrl": "https://arxiv.org/pdf/2610.32752v1",
       "categories": [
         "cs.AI",
         "cs.CL"
       ],
-      "collectedAt": "2026-10-25T22:35:50.663Z",
-      "firstSeenAt": "2026-10-25T22:35:50.663Z",
-      "lastSeenAt": "2026-10-25T22:35:50.663Z",
+      "collectedAt": "2026-10-26T23:55:23.545Z",
+      "firstSeenAt": "2026-10-26T23:55:23.545Z",
+      "lastSeenAt": "2026-10-26T23:55:23.545Z",
       "collectionType": "daily-latest",
-      "matchedQuery": "(all:quantization OR all:compression OR all:pruning OR all:sparsity OR all:low-bit) AND (all:LLM OR all:transformer OR all:language) AND (all:hardware OR all:accelerator OR all:inference OR all:serving OR all:processor)",
+      "matchedQuery": "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)",
       "collectionTypes": [
         "daily-latest"
       ],
       "matchedQueries": [
-        "(all:quantization OR all:compression OR all:pruning OR all:sparsity OR all:low-bit) AND (all:LLM OR all:transformer OR all:language) AND (all:hardware OR all:accelerator OR all:inference OR all:serving OR all:processor)",
-        "(all:agent OR all:agents OR all:agentic OR all:reasoning OR all:post-training OR all:alignment OR all:multimodal OR all:world-model) AND (all:LLM OR all:foundation OR all:language)"
+        "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)"
       ],
       "targetThemes": [],
       "conferenceVenues": [],
       "conferenceYears": [],
+      "recommendationTrack": "hardware-primary",
+      "recommendationLabel": "硬件体系结构主线",
+      "recommendationScore": 152,
+      "relevanceReason": "命中 AI 处理器、体系结构、量化、训推系统或内存/缓存优化主题",
+      "pdfStatus": "remote",
+      "workflow": {
+        "digestStatus": "pending",
+        "emailStatus": "waiting-digest",
+        "digestError": "命令行启用了 --no-ai",
+        "harnessVersion": "paper-reader-v1",
+        "collectStatus": "collected",
+        "pdfStatus": "remote"
+      },
       "digest": {
-        "summaryZh": "推理时生成大量完整候选解会浪费计算；提前剪枝若仅保留高分解可能重复，若只追求多样性又可能保留低质量解。建立包含候选质量与相关性的潜高斯模型，用联合结果训练质量映射，以二阶代理近似全失败概率，再选择使pass@k最大的保留子集。摘要报告八个模型均优于既有质量或多样性策略，保留中等数量候选时收益更明显；未据已读片段给出统一数值增幅。",
-        "motivationZh": "推理时生成大量完整候选解会浪费计算；提前剪枝若仅保留高分解可能重复，若只追求多样性又可能保留低质量解。已有质量或多样性策略缺少直接优化候选池至少成功一次概率的统一目标。合理分配续写预算能影响推理计算量和分支存活数量。可为推理时动态工作负载与分支调度提供算法背景，未设计张量单元或芯片数据通路。",
-        "methodZh": "建立包含候选质量与相关性的潜高斯模型，用联合结果训练质量映射，以二阶代理近似全失败概率，再选择使pass@k最大的保留子集。算法级剪枝；减少继续生成的候选集合，不包含硬件核心实现或片上存储设计。在同一个成功概率目标中奖励质量并惩罚冗余，避免独立手工拼接两个目标。",
-        "experimentsZh": "八个开放权重推理模型，含Qwen3及DeepSeek-R1-Distill系列；全文设置生成完整预算32768 token。对比基于质量与基于多样性的剪枝策略；当前已读片段未逐一核验所有基线结果表。摘要报告八个模型均优于既有质量或多样性策略，保留中等数量候选时收益更明显；未据已读片段给出统一数值增幅。二阶代理是局部近似而非精确概率或界；当前证据不足以量化真实芯片加速和调度开销。",
-        "affiliationsZh": "未在 DBLP/arXiv 元数据中提供",
+        "summaryZh": "AI 摘要未生成。原始摘要要点：LLM agents need long-term memory that can recover precise and mutually consistent evidence from growing interaction histories, particularly when answers depend ...",
+        "motivationZh": "命令行启用了 --no-ai",
+        "methodZh": "请配置 AI 后重新运行，以生成方法提炼。",
+        "experimentsZh": "来源元数据未披露完整实验设置或结果。",
+        "affiliationsZh": "未在 DBLP/arXiv 元数据中提供。",
         "tags": [
-          "推理时计算",
-          "候选剪枝",
-          "质量多样性"
+          "cs.AI",
+          "cs.CL"
         ],
         "importance": 3,
-        "researchFitZh": "可为推理时动态工作负载与分支调度提供算法背景，未设计张量单元或芯片数据通路。",
-        "hardwareRelevance": 2,
-        "algorithmRelevance": 5,
-        "systemRelevance": 3,
-        "readPriority": "skim",
-        "whyReadZh": "可为推理时动态工作负载与分支调度提供算法背景，未设计张量单元或芯片数据通路。建议结合其证据边界决定后续阅读与对比范围。",
-        "limitationsZh": "二阶代理是局部近似而非精确概率或界；当前证据不足以量化真实芯片加速和调度开销。",
-        "motivationDetail": {
-          "problemZh": "推理时生成大量完整候选解会浪费计算；提前剪枝若仅保留高分解可能重复，若只追求多样性又可能保留低质量解。",
-          "gapZh": "已有质量或多样性策略缺少直接优化候选池至少成功一次概率的统一目标。",
-          "whyImportantZh": "合理分配续写预算能影响推理计算量和分支存活数量。",
-          "userRelevanceZh": "可为推理时动态工作负载与分支调度提供算法背景，未设计张量单元或芯片数据通路。",
-          "evidence": "已读 https://arxiv.org/abs/2610.31667v1 摘要及 https://arxiv.org/html/2610.31667v1 的上述方法/实验片段"
-        },
-        "methodDetail": {
-          "coreIdeaZh": "建立包含候选质量与相关性的潜高斯模型，用联合结果训练质量映射，以二阶代理近似全失败概率，再选择使pass@k最大的保留子集。",
-          "componentsZh": [
-            "候选前缀表示",
-            "联合结果质量学习",
-            "失败概率二阶代理",
-            "子集选择"
-          ],
-          "hardwareSystemDetailZh": "算法级剪枝；减少继续生成的候选集合，不包含硬件核心实现或片上存储设计。",
-          "noveltyZh": "在同一个成功概率目标中奖励质量并惩罚冗余，避免独立手工拼接两个目标。",
-          "evidence": "已读 https://arxiv.org/abs/2610.31667v1 摘要及 https://arxiv.org/html/2610.31667v1 的上述方法/实验片段"
-        },
-        "experimentDetail": {
-          "setupZh": "八个开放权重推理模型，含Qwen3及DeepSeek-R1-Distill系列；全文设置生成完整预算32768 token。",
-          "baselinesZh": "对比基于质量与基于多样性的剪枝策略；当前已读片段未逐一核验所有基线结果表。",
-          "metricsZh": [
-            "pass@k",
-            "保留候选数",
-            "续写预算"
-          ],
-          "mainResultsZh": "摘要报告八个模型均优于既有质量或多样性策略，保留中等数量候选时收益更明显；未据已读片段给出统一数值增幅。",
-          "limitationsZh": "二阶代理是局部近似而非精确概率或界；当前证据不足以量化真实芯片加速和调度开销。",
-          "evidence": "已读 https://arxiv.org/abs/2610.31667v1 摘要及 https://arxiv.org/html/2610.31667v1 的上述方法/实验片段"
-        },
-        "evidence": {
-          "usedSources": [
-            "daily.json metadata",
-            "https://arxiv.org/abs/2610.31667v1",
-            "https://arxiv.org/html/2610.31667v1 （仅已读片段）"
-          ],
-          "affiliationEvidence": "队列authorAffiliations和affiliations为空；按任务要求保留缺失单位说明。",
-          "experimentEvidence": "已读 https://arxiv.org/abs/2610.31667v1 摘要及 https://arxiv.org/html/2610.31667v1 的上述方法/实验片段",
-          "missingFields": [
-            "元数据作者单位",
-            "未核验全部实验表与复现细节"
-          ]
-        },
-        "confidence": {
-          "summary": 0.87,
-          "motivation": 0.87,
-          "method": 0.88,
-          "experiments": 0.85,
-          "affiliations": 0
-        }
-      },
-      "recommendationTrack": "hardware-primary",
-      "recommendationLabel": "硬件体系结构主线",
-      "recommendationScore": 83.5,
-      "relevanceReason": "命中 AI 处理器、体系结构、量化、训推系统或内存/缓存优化主题",
-      "pdfStatus": "remote",
-      "workflow": {
-        "digestStatus": "ready",
-        "emailStatus": "sent",
-        "digestError": "",
-        "harnessVersion": "paper-reader-v1",
-        "collectStatus": "collected",
-        "pdfStatus": "remote",
-        "harnessCheckedAt": "2026-10-26T02:32:32.991Z",
-        "harnessWarnings": [],
-        "emailSentAt": "2026-10-26T02:32:37.592Z",
-        "lastEmailError": ""
-      },
-      "pushedAt": "2026-10-26T02:32:37.592Z",
-      "emailSentAt": "2026-10-26T02:32:37.592Z",
-      "firstPushedAt": "2026-10-26T02:32:37.592Z"
-    },
-    {
-      "id": "arxiv:2610.30825",
-      "source": "arXiv",
-      "title": "Bezier-Guided Adaptive Flow for Cross-domain Sequential Recommendation",
-      "authors": [
-        "Ziang Lu",
-        "Yu Zhang",
-        "Xinzhe Jiang",
-        "Lei Sang",
-        "Yiwen Zhang"
-      ],
-      "authorAffiliations": [],
-      "affiliations": [],
-      "abstract": "Cross-domain sequential recommendation aims to alleviate data sparsity and cold-start problems by transferring useful preference knowledge across domains. However, users exhibit varying degrees of preference consistency across domains, while existing methods often rely on global alignment objectives or coarse-grained transfer strategies. Such approaches may introduce irrelevant information and provide limited flexibility in adapting semantic representations to individual user preferences. To address these challenges, we propose BGAFlow, a personalized framework that combines state-adaptive semantic evolution with user-specific transfer control. BGAFlow first establishes a shared semantic space through unified dual-domain pretraining with user profiles inferred by a large language model (LLM). Based on latent interest overlap, it then estimates a personalized horizon to determine the appropriate transfer extent for each user. To enable semantic adaptation, BGAFlow constructs a conditional Bezier curve as a geometric reference and learns a residual flow that progressively refines the trajectory based on intermediate preference states. The learned flow incorporates dynamic preference feedback to adjust transfer directions, while recommendation supervision and trajectory regularization encourage effective and smooth adaptation. Extensive experiments on real-world datasets demonstrate that BGAFlow consistently outperforms state-of-the-art baselines, validating the benefits of personalized transfer control and state-adaptive semantic evolution.",
-      "venue": "arXiv",
-      "published": "2026-10-22T06:53:57Z",
-      "updated": "2026-10-22T06:53:57Z",
-      "url": "http://arxiv.org/abs/2610.30825v1",
-      "pdfUrl": "https://arxiv.org/pdf/2610.30825v1",
-      "categories": [
-        "cs.IR"
-      ],
-      "collectedAt": "2026-10-25T22:35:50.664Z",
-      "firstSeenAt": "2026-10-25T22:35:50.664Z",
-      "lastSeenAt": "2026-10-25T22:35:50.664Z",
-      "collectionType": "daily-latest",
-      "matchedQuery": "(all:quantization OR all:compression OR all:pruning OR all:sparsity OR all:low-bit) AND (all:LLM OR all:transformer OR all:language) AND (all:hardware OR all:accelerator OR all:inference OR all:serving OR all:processor)",
-      "collectionTypes": [
-        "daily-latest"
-      ],
-      "matchedQueries": [
-        "(all:quantization OR all:compression OR all:pruning OR all:sparsity OR all:low-bit) AND (all:LLM OR all:transformer OR all:language) AND (all:hardware OR all:accelerator OR all:inference OR all:serving OR all:processor)"
-      ],
-      "targetThemes": [],
-      "conferenceVenues": [],
-      "conferenceYears": [],
-      "recommendationTrack": "hardware-primary",
-      "recommendationLabel": "硬件体系结构主线",
-      "recommendationScore": 78.75,
-      "relevanceReason": "命中 AI 处理器、体系结构、量化、训推系统或内存/缓存优化主题",
-      "pdfStatus": "remote",
-      "workflow": {
-        "digestStatus": "ready",
-        "emailStatus": "sent",
-        "digestError": "",
-        "harnessVersion": "paper-reader-v1",
-        "collectStatus": "collected",
-        "pdfStatus": "remote",
-        "harnessCheckedAt": "2026-10-26T02:32:32.991Z",
-        "harnessWarnings": [],
-        "emailSentAt": "2026-10-26T02:32:37.592Z",
-        "lastEmailError": ""
-      },
-      "digest": {
-        "summaryZh": "跨域序列推荐希望缓解稀疏与冷启动，但用户跨域偏好一致性不同，统一对齐容易引入无关信息。BGAFlow用LLM推断用户画像并进行双域预训练，按兴趣重叠估计个性化迁移跨度，以条件Bezier曲线为参考学习残差流，并由中间偏好反馈修正轨迹。摘要报告持续优于对比方法并验证个性化控制与状态适应的价值；未披露数值结果。",
-        "motivationZh": "跨域序列推荐希望缓解稀疏与冷启动，但用户跨域偏好一致性不同，统一对齐容易引入无关信息。全局对齐或粗粒度迁移缺少按用户确定迁移程度和逐步调整语义方向的能力。迁移过多会引起负迁移，按个体控制迁移是该推荐任务的核心需求。与序列推荐算法背景相关，与当前LLM计算核心、低精度或KV管理研究联系较弱。",
-        "methodZh": "BGAFlow用LLM推断用户画像并进行双域预训练，按兴趣重叠估计个性化迁移跨度，以条件Bezier曲线为参考学习残差流，并由中间偏好反馈修正轨迹。推荐算法框架；摘要未披露硬件结构、算子加速或内存层次设计。将按用户的迁移程度控制与按中间状态的语义演化合并。",
-        "experimentsZh": "摘要仅说明在真实世界推荐数据集开展实验，未披露具体数据集名称、模型规模或设备。摘要称与先进跨域推荐基线比较，未披露具体基线名称。摘要报告持续优于对比方法并验证个性化控制与状态适应的价值；未披露数值结果。本篇仅核验公开摘要；无法据此确认数据划分、公平性、统计显著性或硬件收益。",
-        "affiliationsZh": "未在 DBLP/arXiv 元数据中提供",
-        "tags": [
-          "跨域推荐",
-          "Bezier轨迹",
-          "个性化迁移"
-        ],
-        "importance": 2,
-        "researchFitZh": "与序列推荐算法背景相关，与当前LLM计算核心、低精度或KV管理研究联系较弱。",
+        "researchFitZh": "AI harness 尚未完成分析，无法判断与用户研究方向的具体关系。",
         "hardwareRelevance": 1,
-        "algorithmRelevance": 4,
+        "algorithmRelevance": 1,
         "systemRelevance": 1,
         "readPriority": "archive",
-        "whyReadZh": "与序列推荐算法背景相关，与当前LLM计算核心、低精度或KV管理研究联系较弱。建议结合其证据边界决定后续阅读与对比范围。",
-        "limitationsZh": "本篇仅核验公开摘要；无法据此确认数据划分、公平性、统计显著性或硬件收益。",
+        "whyReadZh": "需要完成 motivation、method 和实验结果分析后再判断是否值得深读。",
+        "limitationsZh": "命令行启用了 --no-ai",
         "motivationDetail": {
-          "problemZh": "跨域序列推荐希望缓解稀疏与冷启动，但用户跨域偏好一致性不同，统一对齐容易引入无关信息。",
-          "gapZh": "全局对齐或粗粒度迁移缺少按用户确定迁移程度和逐步调整语义方向的能力。",
-          "whyImportantZh": "迁移过多会引起负迁移，按个体控制迁移是该推荐任务的核心需求。",
-          "userRelevanceZh": "与序列推荐算法背景相关，与当前LLM计算核心、低精度或KV管理研究联系较弱。",
-          "evidence": "已读 https://arxiv.org/abs/2610.30825v1 公开摘要；并核对daily.json元数据"
+          "problemZh": "harness 未完成分析。",
+          "gapZh": "harness 未完成分析。",
+          "whyImportantZh": "harness 未完成分析。",
+          "userRelevanceZh": "harness 未完成分析。",
+          "evidence": "not analyzed"
         },
         "methodDetail": {
-          "coreIdeaZh": "BGAFlow用LLM推断用户画像并进行双域预训练，按兴趣重叠估计个性化迁移跨度，以条件Bezier曲线为参考学习残差流，并由中间偏好反馈修正轨迹。",
+          "coreIdeaZh": "harness 未完成分析。",
           "componentsZh": [
-            "双域语义预训练",
-            "用户迁移跨度",
-            "Bezier参考轨迹",
-            "偏好反馈残差流"
+            "未分析"
           ],
-          "hardwareSystemDetailZh": "推荐算法框架；摘要未披露硬件结构、算子加速或内存层次设计。",
-          "noveltyZh": "将按用户的迁移程度控制与按中间状态的语义演化合并。",
-          "evidence": "已读 https://arxiv.org/abs/2610.30825v1 公开摘要；并核对daily.json元数据"
+          "hardwareSystemDetailZh": "harness 未完成分析。",
+          "noveltyZh": "harness 未完成分析。",
+          "evidence": "not analyzed"
         },
         "experimentDetail": {
-          "setupZh": "摘要仅说明在真实世界推荐数据集开展实验，未披露具体数据集名称、模型规模或设备。",
-          "baselinesZh": "摘要称与先进跨域推荐基线比较，未披露具体基线名称。",
+          "setupZh": "harness 未完成分析。",
+          "baselinesZh": "harness 未完成分析。",
           "metricsZh": [
-            "推荐效果（具体指标未披露）"
+            "未分析"
           ],
-          "mainResultsZh": "摘要报告持续优于对比方法并验证个性化控制与状态适应的价值；未披露数值结果。",
-          "limitationsZh": "本篇仅核验公开摘要；无法据此确认数据划分、公平性、统计显著性或硬件收益。",
-          "evidence": "已读 https://arxiv.org/abs/2610.30825v1 公开摘要；并核对daily.json元数据"
+          "mainResultsZh": "harness 未完成分析。",
+          "limitationsZh": "harness 未完成分析。",
+          "evidence": "not analyzed"
         },
         "evidence": {
           "usedSources": [
-            "daily.json metadata",
-            "https://arxiv.org/abs/2610.30825v1"
+            "metadata"
           ],
-          "affiliationEvidence": "队列authorAffiliations和affiliations为空；按任务要求保留缺失单位说明。",
-          "experimentEvidence": "已读 https://arxiv.org/abs/2610.30825v1 公开摘要；并核对daily.json元数据",
+          "affiliationEvidence": "",
+          "experimentEvidence": "",
           "missingFields": [
-            "元数据作者单位",
-            "全文方法和实验细节"
+            "motivation",
+            "method",
+            "experiments"
           ]
         },
         "confidence": {
-          "summary": 0.87,
-          "motivation": 0.87,
-          "method": 0.79,
-          "experiments": 0.73,
+          "summary": 0.2,
+          "motivation": 0,
+          "method": 0,
+          "experiments": 0,
           "affiliations": 0
         }
-      },
-      "pushedAt": "2026-10-26T02:32:37.592Z",
-      "emailSentAt": "2026-10-26T02:32:37.592Z",
-      "firstPushedAt": "2026-10-26T02:32:37.592Z"
+      }
     },
     {
-      "id": "arxiv:2610.29820",
+      "id": "arxiv:2610.32830",
       "source": "arXiv",
-      "title": "UlaCache: Unified Logical Addressing for Sparse LLM Serving",
+      "title": "Embodied Emissions of 2.5D and 3D Scaling in Chipletized GPUs for Low-Carbon AI",
       "authors": [
-        "Isaac Zhu",
-        "Alan Cao",
-        "Hugh Yin",
-        "Rocky Wang",
-        "Orion Wang",
-        "Hscos Zhang",
-        "Jack Li",
-        "Jason Zhao"
+        "Hannah Watson",
+        "Arjun Singh",
+        "Jennifer Stephenson",
+        "Job Soethoudt",
+        "Debjyoti Bhattacharjee",
+        "James Myers"
       ],
       "authorAffiliations": [],
       "affiliations": [],
-      "abstract": "Long contexts increase the memory cost of the key-value (KV) cache in large language model (LLM) inference. Sparse attention reduces attention computation and memory traffic by selecting historical tokens, but the retained KV cache must remain available for later decoding steps. We present UlaCache, a KV cache management system built around a unified logical address space spanning GPU KV pools and optional CPU memory. Stable logical references let the inference engine allocate and select KV independently of physical placement. Common allocation and sparse-access interfaces support data-parallel (DP) and tensor-parallel (TP) attention. For distributed storage, local GPU buffers retain selected KV across decoding steps, so only missing entries require transfers. When CPU storage is enabled, Parallel Bucketed LRU (PB-LRU) manages a GPU pool shared across requests. It updates recency metadata and selects eviction victims in parallel. UlaCache transfers KV and then updates the address mappings. With speculative decoding enabled under matched CPU and GPU memory budgets, UlaCache achieves peak decoding throughput speedups of 1.16 $\\times$ (DP) and 1.70 $\\times$ (TP) on H200, and 1.73 $\\times$ (DP) and 2.51 $\\times$ (TP) on B300, compared with the state-of-the-art baseline.",
+      "abstract": "GPU compute resources are scaling to support growing AI workloads, leading to further rises in the climate change impact of hyperscale data centers that rely on high-performance GPUs. To model how packaging decisions impact the carbon footprint we have estimated the embodied emissions (EE) of a chiplet-based GPU that has been scaled in 2.5D and 3D using the imec.netzero modelling platform. We doubled the number of compute units and high bandwidth memory (HBM) capacity in the 2.5D and 3D scaled systems and found that 3D scaling results in an 89% increase in EE, as compared to an increase of 141% for 2.5D scaling, positioning 3D scaling as an attractive solution to limit the embodied emissions due to GPU scaling.",
       "venue": "arXiv",
-      "published": "2026-10-21T14:46:11Z",
-      "updated": "2026-10-21T14:46:11Z",
-      "url": "http://arxiv.org/abs/2610.29820v1",
-      "pdfUrl": "https://arxiv.org/pdf/2610.29820v1",
+      "published": "2026-10-23T16:03:19Z",
+      "updated": "2026-10-23T16:03:19Z",
+      "url": "http://arxiv.org/abs/2610.32830v1",
+      "pdfUrl": "https://arxiv.org/pdf/2610.32830v1",
       "categories": [
-        "cs.DC"
+        "cs.AR"
       ],
-      "collectedAt": "2026-10-25T22:35:48.907Z",
-      "firstSeenAt": "2026-10-25T22:35:48.907Z",
-      "lastSeenAt": "2026-10-25T22:35:48.907Z",
+      "collectedAt": "2026-10-26T23:55:23.545Z",
+      "firstSeenAt": "2026-10-26T23:55:23.545Z",
+      "lastSeenAt": "2026-10-26T23:55:23.545Z",
       "collectionType": "daily-latest",
-      "matchedQuery": "(cat:cs.AR OR cat:cs.DC OR cat:cs.PF) AND (all:LLM OR all:transformer OR all:foundation OR all:language) AND (all:accelerator OR all:processor OR all:architecture OR all:hardware OR all:system OR all:serving OR all:training OR all:inference OR all:cache)",
+      "matchedQuery": "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)",
       "collectionTypes": [
         "daily-latest"
       ],
       "matchedQueries": [
-        "(cat:cs.AR OR cat:cs.DC OR cat:cs.PF) AND (all:LLM OR all:transformer OR all:foundation OR all:language) AND (all:accelerator OR all:processor OR all:architecture OR all:hardware OR all:system OR all:serving OR all:training OR all:inference OR all:cache)"
+        "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)"
       ],
       "targetThemes": [],
       "conferenceVenues": [],
       "conferenceYears": [],
       "recommendationTrack": "hardware-primary",
       "recommendationLabel": "硬件体系结构主线",
-      "recommendationScore": 76,
+      "recommendationScore": 147,
       "relevanceReason": "命中 AI 处理器、体系结构、量化、训推系统或内存/缓存优化主题",
       "pdfStatus": "remote",
       "workflow": {
-        "digestStatus": "ready",
-        "emailStatus": "sent",
-        "digestError": "",
+        "digestStatus": "pending",
+        "emailStatus": "waiting-digest",
+        "digestError": "命令行启用了 --no-ai",
         "harnessVersion": "paper-reader-v1",
         "collectStatus": "collected",
-        "pdfStatus": "remote",
-        "harnessCheckedAt": "2026-10-26T02:32:32.991Z",
-        "harnessWarnings": [],
-        "emailSentAt": "2026-10-26T02:32:37.592Z",
-        "lastEmailError": ""
+        "pdfStatus": "remote"
       },
       "digest": {
-        "summaryZh": "稀疏注意力每步只访问部分历史token，但未来解码仍可能需要其他KV，因此减少访存并不会自动减少必须保存的历史容量。跨GPU KV池和可选CPU存储建立稳定逻辑地址；TP计算rank缓存已选KV并仅取缺失项，PB-LRU并行维护跨请求共享GPU池，搬运完成后更新映射。H200上DP/TP峰值吞吐为基线的1.16/1.70倍，B300为1.73/2.51倍，均属于匹配内存预算并启用投机解码的条件。",
-        "motivationZh": "稀疏注意力每步只访问部分历史token，但未来解码仍可能需要其他KV，因此减少访存并不会自动减少必须保存的历史容量。物理放置耦合逻辑选择，以及固定逐请求GPU配额，会限制跨GPU与CPU层次中的共享和复用。长上下文服务吞吐取决于固定容量能容纳多少活跃请求及每步搬运量。与长上下文稀疏KVCache管理高度相关，可作为内存层次与数据移动方案的系统基线候选。",
-        "methodZh": "跨GPU KV池和可选CPU存储建立稳定逻辑地址；TP计算rank缓存已选KV并仅取缺失项，PB-LRU并行维护跨请求共享GPU池，搬运完成后更新映射。TP缺失项通过GPU kernel与CUDA IPC读取，跨层共享选择计划并用独立stream预取；DP直接访问本地KV池。把逻辑选择与物理位置解耦，并联合分布式复用与共享容量替换。",
-        "experimentsZh": "摘要报告匹配CPU/GPU容量且启用投机解码，在H200、B300平台比较DP与TP；全文摘要注明各8张卡。摘要仅称先进基线；已读正文引用HiSparse，但未核验实验表，不把其自动认定为唯一对照。H200上DP/TP峰值吞吐为基线的1.16/1.70倍，B300为1.73/2.51倍，均属于匹配内存预算并启用投机解码的条件。峰值吞吐不能等同全负载加速；低并发索引分数all-gather仍有同步成本，尚未核验全部实验配置。",
-        "affiliationsZh": "未在 DBLP/arXiv 元数据中提供",
+        "summaryZh": "AI 摘要未生成。原始摘要要点：GPU compute resources are scaling to support growing AI workloads, leading to further rises in the climate change impact of hyperscale data centers that rely on...",
+        "motivationZh": "命令行启用了 --no-ai",
+        "methodZh": "请配置 AI 后重新运行，以生成方法提炼。",
+        "experimentsZh": "来源元数据未披露完整实验设置或结果。",
+        "affiliationsZh": "未在 DBLP/arXiv 元数据中提供。",
         "tags": [
-          "稀疏注意力",
-          "KVCache",
-          "统一逻辑地址",
-          "内存层次"
-        ],
-        "importance": 5,
-        "researchFitZh": "与长上下文稀疏KVCache管理高度相关，可作为内存层次与数据移动方案的系统基线候选。",
-        "hardwareRelevance": 4,
-        "algorithmRelevance": 3,
-        "systemRelevance": 5,
-        "readPriority": "deep-read",
-        "whyReadZh": "与长上下文稀疏KVCache管理高度相关，可作为内存层次与数据移动方案的系统基线候选。建议结合其证据边界决定后续阅读与对比范围。",
-        "limitationsZh": "峰值吞吐不能等同全负载加速；低并发索引分数all-gather仍有同步成本，尚未核验全部实验配置。",
-        "motivationDetail": {
-          "problemZh": "稀疏注意力每步只访问部分历史token，但未来解码仍可能需要其他KV，因此减少访存并不会自动减少必须保存的历史容量。",
-          "gapZh": "物理放置耦合逻辑选择，以及固定逐请求GPU配额，会限制跨GPU与CPU层次中的共享和复用。",
-          "whyImportantZh": "长上下文服务吞吐取决于固定容量能容纳多少活跃请求及每步搬运量。",
-          "userRelevanceZh": "与长上下文稀疏KVCache管理高度相关，可作为内存层次与数据移动方案的系统基线候选。",
-          "evidence": "已读 https://arxiv.org/abs/2610.29820v1 摘要及 https://arxiv.org/html/2610.29820v1 的上述方法/实验片段"
-        },
-        "methodDetail": {
-          "coreIdeaZh": "跨GPU KV池和可选CPU存储建立稳定逻辑地址；TP计算rank缓存已选KV并仅取缺失项，PB-LRU并行维护跨请求共享GPU池，搬运完成后更新映射。",
-          "componentsZh": [
-            "统一逻辑KV地址",
-            "TP本地复用缓冲",
-            "DP/TP统一接口",
-            "PB-LRU共享替换"
-          ],
-          "hardwareSystemDetailZh": "TP缺失项通过GPU kernel与CUDA IPC读取，跨层共享选择计划并用独立stream预取；DP直接访问本地KV池。",
-          "noveltyZh": "把逻辑选择与物理位置解耦，并联合分布式复用与共享容量替换。",
-          "evidence": "已读 https://arxiv.org/abs/2610.29820v1 摘要及 https://arxiv.org/html/2610.29820v1 的上述方法/实验片段"
-        },
-        "experimentDetail": {
-          "setupZh": "摘要报告匹配CPU/GPU容量且启用投机解码，在H200、B300平台比较DP与TP；全文摘要注明各8张卡。",
-          "baselinesZh": "摘要仅称先进基线；已读正文引用HiSparse，但未核验实验表，不把其自动认定为唯一对照。",
-          "metricsZh": [
-            "峰值解码吞吐",
-            "DP/TP扩展",
-            "KV容量与搬运"
-          ],
-          "mainResultsZh": "H200上DP/TP峰值吞吐为基线的1.16/1.70倍，B300为1.73/2.51倍，均属于匹配内存预算并启用投机解码的条件。",
-          "limitationsZh": "峰值吞吐不能等同全负载加速；低并发索引分数all-gather仍有同步成本，尚未核验全部实验配置。",
-          "evidence": "已读 https://arxiv.org/abs/2610.29820v1 摘要及 https://arxiv.org/html/2610.29820v1 的上述方法/实验片段"
-        },
-        "evidence": {
-          "usedSources": [
-            "daily.json metadata",
-            "https://arxiv.org/abs/2610.29820v1",
-            "https://arxiv.org/html/2610.29820v1 （仅已读片段）"
-          ],
-          "affiliationEvidence": "队列authorAffiliations和affiliations为空；按任务要求保留缺失单位说明。",
-          "experimentEvidence": "已读 https://arxiv.org/abs/2610.29820v1 摘要及 https://arxiv.org/html/2610.29820v1 的上述方法/实验片段",
-          "missingFields": [
-            "元数据作者单位",
-            "未核验全部实验表与复现细节"
-          ]
-        },
-        "confidence": {
-          "summary": 0.87,
-          "motivation": 0.87,
-          "method": 0.88,
-          "experiments": 0.85,
-          "affiliations": 0
-        }
-      },
-      "pushedAt": "2026-10-26T02:32:37.592Z",
-      "emailSentAt": "2026-10-26T02:32:37.592Z",
-      "firstPushedAt": "2026-10-26T02:32:37.592Z"
-    },
-    {
-      "id": "arxiv:2610.29544",
-      "source": "arXiv",
-      "title": "RISK-KV: Quality-Aware Selective KV Cache Reconstruction for Distributed LLM Inference",
-      "authors": [
-        "Wang Yuekai"
-      ],
-      "authorAffiliations": [],
-      "affiliations": [],
-      "abstract": "Request migration and interruption recovery in distributed large language model (LLM) inference rely on historical key-value (KV) caches. Retaining or transferring a complete cache incurs substantial state overhead, whereas replaying historical tokens requires additional computation. This paper proposes RISK-KV, a quality-aware method for selective historical KV reconstruction in pretrained models. RISK-KV uses exact KV states on both sides of a target layer and cross-layer ridge regression to predict the missing layer's attention-projection input; it then folds in the original model's KV projection matrices to reduce predictor storage. Reconstruction risk is measured by the change in negative log-likelihood (NLL) caused by actual reconstruction, and low-overhead topology search with quality gating selects the layer groups to reconstruct. Independent tests on three language models show that representative recovery configurations omit 18.2 percent to 33.3 percent of historical KV, with perplexity changes below 0.5 percent. In a local request-recovery experiment with a 512-token history, RISK-KV achieves a 1.51 to 3.31 times speedup over full Token Replay. These results indicate that selective KV reconstruction can reduce historical cache overhead with small changes in predictive quality and improve request-recovery efficiency under the evaluated deployment conditions.",
-      "venue": "arXiv",
-      "published": "2026-10-21T10:30:46Z",
-      "updated": "2026-10-21T10:30:46Z",
-      "url": "http://arxiv.org/abs/2610.29544v1",
-      "pdfUrl": "https://arxiv.org/pdf/2610.29544v1",
-      "categories": [
-        "cs.DC"
-      ],
-      "collectedAt": "2026-10-25T22:35:48.907Z",
-      "firstSeenAt": "2026-10-25T22:35:48.907Z",
-      "lastSeenAt": "2026-10-25T22:35:48.907Z",
-      "collectionType": "daily-latest",
-      "matchedQuery": "(cat:cs.AR OR cat:cs.DC OR cat:cs.PF) AND (all:LLM OR all:transformer OR all:foundation OR all:language) AND (all:accelerator OR all:processor OR all:architecture OR all:hardware OR all:system OR all:serving OR all:training OR all:inference OR all:cache)",
-      "collectionTypes": [
-        "daily-latest"
-      ],
-      "matchedQueries": [
-        "(cat:cs.AR OR cat:cs.DC OR cat:cs.PF) AND (all:LLM OR all:transformer OR all:foundation OR all:language) AND (all:accelerator OR all:processor OR all:architecture OR all:hardware OR all:system OR all:serving OR all:training OR all:inference OR all:cache)"
-      ],
-      "targetThemes": [],
-      "conferenceVenues": [],
-      "conferenceYears": [],
-      "recommendationTrack": "hardware-primary",
-      "recommendationLabel": "硬件体系结构主线",
-      "recommendationScore": 76,
-      "relevanceReason": "命中 AI 处理器、体系结构、量化、训推系统或内存/缓存优化主题",
-      "pdfStatus": "remote",
-      "workflow": {
-        "digestStatus": "ready",
-        "emailStatus": "sent",
-        "digestError": "",
-        "harnessVersion": "paper-reader-v1",
-        "collectStatus": "collected",
-        "pdfStatus": "remote",
-        "harnessCheckedAt": "2026-10-26T02:32:32.991Z",
-        "harnessWarnings": [],
-        "emailSentAt": "2026-10-26T02:32:37.592Z",
-        "lastEmailError": ""
-      },
-      "digest": {
-        "summaryZh": "分布式请求迁移与中断恢复需要历史KV，完整保留或传输状态昂贵，丢弃后全量token重放又增加计算。使用目标层两侧的精确KV锚点，以跨层岭回归预测注意力投影输入，再折叠原始KV投影矩阵；以真实重建造成的NLL变化衡量风险并搜索层组。代表配置省略18.2%—33.3%历史KV且PPL变化低于0.5%；512 token本地恢复相对全量Token Replay加速1.51—3.31倍。",
-        "motivationZh": "分布式请求迁移与中断恢复需要历史KV，完整保留或传输状态昂贵，丢弃后全量token重放又增加计算。需要按实际预测质量风险选择可重建层，而不能仅依赖层位置或无质量门限的近似恢复。以小质量代价减少历史缓存，可降低请求恢复的数据搬运或重算开销。可为KV容量与恢复策略协同设计提供负载依据，但未证明是新硬件计算核心。",
-        "methodZh": "使用目标层两侧的精确KV锚点，以跨层岭回归预测注意力投影输入，再折叠原始KV投影矩阵；以真实重建造成的NLL变化衡量风险并搜索层组。基础模型冻结，只拟合恢复预测器；恢复成本包括预测、RoPE与缓存组装，部署另比较FP32/FP16折叠预测器。以实际重建损失选择恢复拓扑，同时压缩预测器实现开销。",
-        "experimentsZh": "WikiText-2，Qwen2.5-0.5B/1.5B-Instruct和TinyLlama-1.1B；512 token历史与后续512 token质量评估，独立测试集验证。质量比较完整精确KV；本地恢复延迟比较完整Token Replay。代表配置省略18.2%—33.3%历史KV且PPL变化低于0.5%；512 token本地恢复相对全量Token Replay加速1.51—3.31倍。延迟实验仅覆盖短历史和小模型，不能外推为长上下文、多节点网络迁移或大模型服务收益。",
-        "affiliationsZh": "未在 DBLP/arXiv 元数据中提供",
-        "tags": [
-          "KV重建",
-          "质量门控",
-          "请求恢复"
-        ],
-        "importance": 4,
-        "researchFitZh": "可为KV容量与恢复策略协同设计提供负载依据，但未证明是新硬件计算核心。",
-        "hardwareRelevance": 3,
-        "algorithmRelevance": 4,
-        "systemRelevance": 5,
-        "readPriority": "deep-read",
-        "whyReadZh": "可为KV容量与恢复策略协同设计提供负载依据，但未证明是新硬件计算核心。建议结合其证据边界决定后续阅读与对比范围。",
-        "limitationsZh": "延迟实验仅覆盖短历史和小模型，不能外推为长上下文、多节点网络迁移或大模型服务收益。",
-        "motivationDetail": {
-          "problemZh": "分布式请求迁移与中断恢复需要历史KV，完整保留或传输状态昂贵，丢弃后全量token重放又增加计算。",
-          "gapZh": "需要按实际预测质量风险选择可重建层，而不能仅依赖层位置或无质量门限的近似恢复。",
-          "whyImportantZh": "以小质量代价减少历史缓存，可降低请求恢复的数据搬运或重算开销。",
-          "userRelevanceZh": "可为KV容量与恢复策略协同设计提供负载依据，但未证明是新硬件计算核心。",
-          "evidence": "已读 https://arxiv.org/abs/2610.29544v1 摘要及 https://arxiv.org/html/2610.29544v1 的上述方法/实验片段"
-        },
-        "methodDetail": {
-          "coreIdeaZh": "使用目标层两侧的精确KV锚点，以跨层岭回归预测注意力投影输入，再折叠原始KV投影矩阵；以真实重建造成的NLL变化衡量风险并搜索层组。",
-          "componentsZh": [
-            "双侧精确锚点",
-            "跨层岭回归",
-            "投影折叠",
-            "NLL风险与质量门控"
-          ],
-          "hardwareSystemDetailZh": "基础模型冻结，只拟合恢复预测器；恢复成本包括预测、RoPE与缓存组装，部署另比较FP32/FP16折叠预测器。",
-          "noveltyZh": "以实际重建损失选择恢复拓扑，同时压缩预测器实现开销。",
-          "evidence": "已读 https://arxiv.org/abs/2610.29544v1 摘要及 https://arxiv.org/html/2610.29544v1 的上述方法/实验片段"
-        },
-        "experimentDetail": {
-          "setupZh": "WikiText-2，Qwen2.5-0.5B/1.5B-Instruct和TinyLlama-1.1B；512 token历史与后续512 token质量评估，独立测试集验证。",
-          "baselinesZh": "质量比较完整精确KV；本地恢复延迟比较完整Token Replay。",
-          "metricsZh": [
-            "ΔNLL",
-            "PPL变化",
-            "省略KV比例",
-            "请求恢复延迟"
-          ],
-          "mainResultsZh": "代表配置省略18.2%—33.3%历史KV且PPL变化低于0.5%；512 token本地恢复相对全量Token Replay加速1.51—3.31倍。",
-          "limitationsZh": "延迟实验仅覆盖短历史和小模型，不能外推为长上下文、多节点网络迁移或大模型服务收益。",
-          "evidence": "已读 https://arxiv.org/abs/2610.29544v1 摘要及 https://arxiv.org/html/2610.29544v1 的上述方法/实验片段"
-        },
-        "evidence": {
-          "usedSources": [
-            "daily.json metadata",
-            "https://arxiv.org/abs/2610.29544v1",
-            "https://arxiv.org/html/2610.29544v1 （仅已读片段）"
-          ],
-          "affiliationEvidence": "队列authorAffiliations和affiliations为空；按任务要求保留缺失单位说明。",
-          "experimentEvidence": "已读 https://arxiv.org/abs/2610.29544v1 摘要及 https://arxiv.org/html/2610.29544v1 的上述方法/实验片段",
-          "missingFields": [
-            "元数据作者单位",
-            "未核验全部实验表与复现细节"
-          ]
-        },
-        "confidence": {
-          "summary": 0.87,
-          "motivation": 0.87,
-          "method": 0.88,
-          "experiments": 0.85,
-          "affiliations": 0
-        }
-      },
-      "pushedAt": "2026-10-26T02:32:37.592Z",
-      "emailSentAt": "2026-10-26T02:32:37.592Z",
-      "firstPushedAt": "2026-10-26T02:32:37.592Z"
-    },
-    {
-      "id": "arxiv:2610.31624",
-      "source": "arXiv",
-      "title": "Questioning Instrumental Convergence in RLVR: Checkpoint Evidence from OLMo-3",
-      "authors": [
-        "Barış Alparslan",
-        "Sandy Tanwisuth",
-        "Caleb Petterson"
-      ],
-      "authorAffiliations": [],
-      "affiliations": [],
-      "abstract": "Instrumental convergence is often invoked as a general reason to expect capable agents to acquire or express power-seeking subgoals: self-preservation, resource acquisition, deception, or resistance to oversight which poses an important threat to the society. For LLMs, reinforcement learning is the first stage of post-training that directly optimizes behavior against an objective; therefore, it is the stage where convergent instrumental behavior, on IC grounds, likely to appear. Does reinforcement learning with verifiable rewards (RLVR) make a model more likely to express instrumental-convergence behavior, or does this depend on the training regime, evaluation frame, and stage of post-training? We study this question as a checkpoint-conditioned behavioral trajectory rather than as a single before/after safety score. Using InstrumentalEval, we evaluate OLMo-3-7B-Think across SFT, DPO, 13 intermediate RLVR checkpoints, and the final RLVR model. The trajectory is nonmonotonic: instrumental rate rises from 25.0% at SFT to 46.1% near RLVR step 200, then falls to 11.8% at the final checkpoint. Paired item-level tests and step-wise regression support the final SFT-to-RLVR reduction. Prompt framing does not explain this pattern: a harmful-prompt indicator combined with other framing effects explains only 15% of within-checkpoint score variance on average, and Iterative Null-space Projection (INLP) removes a detectable framing direction without changing the SFT-to-final-RLVR gap. Together with preliminary 32B endpoint results (35.53% SFT to 22.37% RLVR final), these findings indicate that RLVR does not monotonically increase instrumental behavior in this setting: the rate rises early, then falls below the SFT baseline. The result is specific to this model family and benchmark, and judge agreement is moderate, so absolute rates should be read cautiously.",
-      "venue": "arXiv",
-      "published": "2026-10-22T17:44:41Z",
-      "updated": "2026-10-22T17:44:41Z",
-      "url": "http://arxiv.org/abs/2610.31624v1",
-      "pdfUrl": "https://arxiv.org/pdf/2610.31624v1",
-      "categories": [
-        "cs.LG",
-        "cs.AI"
-      ],
-      "collectedAt": "2026-10-25T22:35:56.105Z",
-      "firstSeenAt": "2026-10-25T22:35:56.105Z",
-      "lastSeenAt": "2026-10-25T22:35:56.105Z",
-      "collectionType": "daily-latest",
-      "matchedQuery": "(all:agent OR all:agents OR all:agentic OR all:reasoning OR all:post-training OR all:alignment OR all:multimodal OR all:world-model) AND (all:LLM OR all:foundation OR all:language)",
-      "collectionTypes": [
-        "daily-latest"
-      ],
-      "matchedQueries": [
-        "(all:agent OR all:agents OR all:agentic OR all:reasoning OR all:post-training OR all:alignment OR all:multimodal OR all:world-model) AND (all:LLM OR all:foundation OR all:language)"
-      ],
-      "targetThemes": [],
-      "conferenceVenues": [],
-      "conferenceYears": [],
-      "recommendationTrack": "algorithm-trend",
-      "recommendationLabel": "算法趋势观察",
-      "recommendationScore": 35.5,
-      "relevanceReason": "命中 LLM/Agent/多模态/后训练等算法趋势主题",
-      "pdfStatus": "remote",
-      "workflow": {
-        "digestStatus": "ready",
-        "emailStatus": "sent",
-        "digestError": "",
-        "harnessVersion": "paper-reader-v1",
-        "collectStatus": "collected",
-        "pdfStatus": "remote",
-        "harnessCheckedAt": "2026-10-26T02:32:32.991Z",
-        "harnessWarnings": [],
-        "emailSentAt": "2026-10-26T02:32:37.592Z",
-        "lastEmailError": ""
-      },
-      "digest": {
-        "summaryZh": "RLVR是否促使模型表达自保、资源获取等工具性行为，不能由训练前后单个安全分数解释。使用InstrumentalEval沿OLMo-3-7B-Think的SFT、DPO、中间及最终RLVR检查点测量行为轨迹，并以配对检验、逐步回归和INLP排查提示框架解释。7B行为率从SFT的25.0%升至约step 200的46.1%，最终降至11.8%；初步32B从35.53%降至22.37%。",
-        "motivationZh": "RLVR是否促使模型表达自保、资源获取等工具性行为，不能由训练前后单个安全分数解释。只比较端点会掩盖中间训练阶段的非单调行为，提示框架还可能干扰评估。检查训练过程而非单一终态，有助于更准确理解后训练安全变化。作为后训练与Agent行为趋势跟踪，和推理芯片计算核心直接关联较低。",
-        "methodZh": "使用InstrumentalEval沿OLMo-3-7B-Think的SFT、DPO、中间及最终RLVR检查点测量行为轨迹，并以配对检验、逐步回归和INLP排查提示框架解释。行为实证研究，摘要未包含芯片架构、内存优化或硬件加速方法。把工具性行为看作随检查点变化的轨迹，而非假设随RLVR单调上升。",
-        "experimentsZh": "InstrumentalEval，OLMo-3-7B-Think含13个中间RLVR检查点，另有初步32B端点评估。SFT与DPO及最终RLVR端点作为阶段对照，并测试提示框架因素。7B行为率从SFT的25.0%升至约step 200的46.1%，最终降至11.8%；初步32B从35.53%降至22.37%。结论限定该模型家族与基准；裁判一致性中等，不能视为通用安全性保证；仅核验摘要。",
-        "affiliationsZh": "未在 DBLP/arXiv 元数据中提供",
-        "tags": [
-          "RLVR",
-          "检查点评估",
-          "Agent安全"
-        ],
-        "importance": 2,
-        "researchFitZh": "作为后训练与Agent行为趋势跟踪，和推理芯片计算核心直接关联较低。",
-        "hardwareRelevance": 1,
-        "algorithmRelevance": 4,
-        "systemRelevance": 2,
-        "readPriority": "skim",
-        "whyReadZh": "作为后训练与Agent行为趋势跟踪，和推理芯片计算核心直接关联较低。建议结合其证据边界决定后续阅读与对比范围。",
-        "limitationsZh": "结论限定该模型家族与基准；裁判一致性中等，不能视为通用安全性保证；仅核验摘要。",
-        "motivationDetail": {
-          "problemZh": "RLVR是否促使模型表达自保、资源获取等工具性行为，不能由训练前后单个安全分数解释。",
-          "gapZh": "只比较端点会掩盖中间训练阶段的非单调行为，提示框架还可能干扰评估。",
-          "whyImportantZh": "检查训练过程而非单一终态，有助于更准确理解后训练安全变化。",
-          "userRelevanceZh": "作为后训练与Agent行为趋势跟踪，和推理芯片计算核心直接关联较低。",
-          "evidence": "已读 https://arxiv.org/abs/2610.31624v1 公开摘要；并核对daily.json元数据"
-        },
-        "methodDetail": {
-          "coreIdeaZh": "使用InstrumentalEval沿OLMo-3-7B-Think的SFT、DPO、中间及最终RLVR检查点测量行为轨迹，并以配对检验、逐步回归和INLP排查提示框架解释。",
-          "componentsZh": [
-            "训练检查点行为轨迹",
-            "配对检验与回归",
-            "INLP提示因素分析"
-          ],
-          "hardwareSystemDetailZh": "行为实证研究，摘要未包含芯片架构、内存优化或硬件加速方法。",
-          "noveltyZh": "把工具性行为看作随检查点变化的轨迹，而非假设随RLVR单调上升。",
-          "evidence": "已读 https://arxiv.org/abs/2610.31624v1 公开摘要；并核对daily.json元数据"
-        },
-        "experimentDetail": {
-          "setupZh": "InstrumentalEval，OLMo-3-7B-Think含13个中间RLVR检查点，另有初步32B端点评估。",
-          "baselinesZh": "SFT与DPO及最终RLVR端点作为阶段对照，并测试提示框架因素。",
-          "metricsZh": [
-            "工具性行为率",
-            "检查点内方差解释比例"
-          ],
-          "mainResultsZh": "7B行为率从SFT的25.0%升至约step 200的46.1%，最终降至11.8%；初步32B从35.53%降至22.37%。",
-          "limitationsZh": "结论限定该模型家族与基准；裁判一致性中等，不能视为通用安全性保证；仅核验摘要。",
-          "evidence": "已读 https://arxiv.org/abs/2610.31624v1 公开摘要；并核对daily.json元数据"
-        },
-        "evidence": {
-          "usedSources": [
-            "daily.json metadata",
-            "https://arxiv.org/abs/2610.31624v1"
-          ],
-          "affiliationEvidence": "队列authorAffiliations和affiliations为空；按任务要求保留缺失单位说明。",
-          "experimentEvidence": "已读 https://arxiv.org/abs/2610.31624v1 公开摘要；并核对daily.json元数据",
-          "missingFields": [
-            "元数据作者单位",
-            "全文方法和实验细节"
-          ]
-        },
-        "confidence": {
-          "summary": 0.87,
-          "motivation": 0.87,
-          "method": 0.79,
-          "experiments": 0.73,
-          "affiliations": 0
-        }
-      },
-      "pushedAt": "2026-10-26T02:32:37.592Z",
-      "emailSentAt": "2026-10-26T02:32:37.592Z",
-      "firstPushedAt": "2026-10-26T02:32:37.592Z"
-    },
-    {
-      "id": "arxiv:2610.31650",
-      "source": "arXiv",
-      "title": "EpiSEM-Bench: Evaluating Safety and Evidence Recovery in LLM Agents under Missing Evidence",
-      "authors": [
-        "Qijin Zhang",
-        "Hanzhen Wang",
-        "Yuehan Zhao",
-        "Haoyu Dai",
-        "Yao Shu",
-        "Zhongxiang Dai",
-        "Shuang Qiu"
-      ],
-      "authorAffiliations": [],
-      "affiliations": [],
-      "abstract": "Tool-using language model agents rely on environmental facts to decide whether an action is permitted. When a tool response omits a safety-relevant fact, an agent may carry out a prohibited action even though the user request is benign and every returned statement is true. We introduce \\bench{}, an executable benchmark for evaluating unsafe execution, safety boundaries, and evidence recovery in LLM agents under missing evidence. It contains 300 matched unsafe/safe task pairs across six domains. By systematically suppressing critical facts, the benchmark measures unsafe execution under critical evidence omission and determines the minimum observed failure cardinality, including failures with full evidence and cases with no observed failure after exhaustive testing. An independent audit tool tests whether agents seek missing facts and then withhold prohibited actions while completing permissible tasks. The benchmark reveals substantial variation across the ten models in omission robustness, evidence acquisition, and appropriate action. Resistance to missing evidence does not necessarily translate into useful recovery. Recovery access reduces unsafe execution for all ten models, but agents differ in whether they actively obtain the missing facts and use them to act appropriately in both worlds.",
-      "venue": "arXiv",
-      "published": "2026-10-22T17:57:04Z",
-      "updated": "2026-10-22T17:57:04Z",
-      "url": "http://arxiv.org/abs/2610.31650v1",
-      "pdfUrl": "https://arxiv.org/pdf/2610.31650v1",
-      "categories": [
-        "cs.AI",
-        "cs.LG"
-      ],
-      "collectedAt": "2026-10-25T22:35:56.103Z",
-      "firstSeenAt": "2026-10-25T22:35:56.103Z",
-      "lastSeenAt": "2026-10-25T22:35:56.103Z",
-      "collectionType": "daily-latest",
-      "matchedQuery": "(all:agent OR all:agents OR all:agentic OR all:reasoning OR all:post-training OR all:alignment OR all:multimodal OR all:world-model) AND (all:LLM OR all:foundation OR all:language)",
-      "collectionTypes": [
-        "daily-latest"
-      ],
-      "matchedQueries": [
-        "(all:agent OR all:agents OR all:agentic OR all:reasoning OR all:post-training OR all:alignment OR all:multimodal OR all:world-model) AND (all:LLM OR all:foundation OR all:language)"
-      ],
-      "targetThemes": [],
-      "conferenceVenues": [],
-      "conferenceYears": [],
-      "recommendationTrack": "algorithm-trend",
-      "recommendationLabel": "算法趋势观察",
-      "recommendationScore": 35.2,
-      "relevanceReason": "命中 LLM/Agent/多模态/后训练等算法趋势主题",
-      "pdfStatus": "remote",
-      "workflow": {
-        "digestStatus": "ready",
-        "emailStatus": "sent",
-        "digestError": "",
-        "harnessVersion": "paper-reader-v1",
-        "collectStatus": "collected",
-        "pdfStatus": "remote",
-        "harnessCheckedAt": "2026-10-26T02:32:32.991Z",
-        "harnessWarnings": [],
-        "emailSentAt": "2026-10-26T02:32:37.592Z",
-        "lastEmailError": ""
-      },
-      "digest": {
-        "summaryZh": "Agent工具响应可能每句都真实，却遗漏决定行动是否允许的事实，从而令良性请求触发不安全执行。EpiSEM-Bench构造安全/不安全匹配任务，系统性抑制关键事实并测量最小观察失败基数；通过独立审计工具测试能否主动补证并采取恰当行动。十个模型在缺证鲁棒性和补证利用上差异明显；恢复访问均减少违规执行，但抗遗漏不必然意味着有效补证，摘要未给具体降幅。",
-        "motivationZh": "Agent工具响应可能每句都真实，却遗漏决定行动是否允许的事实，从而令良性请求触发不安全执行。仅测试错误信息或拒答不足以区分缺证鲁棒性、主动找证据和完成允许任务的能力。工具型Agent必须获取关键事实，同时保持对允许任务的实际可用性。适合Agent系统评估与工具调用可靠性趋势跟踪，并非计算核心或硬件基线。",
-        "methodZh": "EpiSEM-Bench构造安全/不安全匹配任务，系统性抑制关键事实并测量最小观察失败基数；通过独立审计工具测试能否主动补证并采取恰当行动。可执行Agent评测基准，不提供矩阵阵列、量化数据通路或片上存储设计。分别评估证据缺失下的违规执行与恢复证据后对两种情境的合适行为。",
-        "experimentsZh": "300对安全/不安全匹配任务、六个领域、十个模型，比较证据遗漏与可使用恢复工具的情境。同一任务的安全/不安全世界以及补证工具可用前后形成对照；摘要未列具体十模型名称。十个模型在缺证鲁棒性和补证利用上差异明显；恢复访问均减少违规执行，但抗遗漏不必然意味着有效补证，摘要未给具体降幅。仅核验摘要；模型名单、逐领域分数与统计细节未披露于已读资料，不能推断生产可靠性。",
-        "affiliationsZh": "未在 DBLP/arXiv 元数据中提供",
-        "tags": [
-          "Agent评测",
-          "证据恢复",
-          "工具可靠性"
+          "cs.AR"
         ],
         "importance": 3,
-        "researchFitZh": "适合Agent系统评估与工具调用可靠性趋势跟踪，并非计算核心或硬件基线。",
+        "researchFitZh": "AI harness 尚未完成分析，无法判断与用户研究方向的具体关系。",
         "hardwareRelevance": 1,
-        "algorithmRelevance": 4,
-        "systemRelevance": 3,
-        "readPriority": "skim",
-        "whyReadZh": "适合Agent系统评估与工具调用可靠性趋势跟踪，并非计算核心或硬件基线。建议结合其证据边界决定后续阅读与对比范围。",
-        "limitationsZh": "仅核验摘要；模型名单、逐领域分数与统计细节未披露于已读资料，不能推断生产可靠性。",
+        "algorithmRelevance": 1,
+        "systemRelevance": 1,
+        "readPriority": "archive",
+        "whyReadZh": "需要完成 motivation、method 和实验结果分析后再判断是否值得深读。",
+        "limitationsZh": "命令行启用了 --no-ai",
         "motivationDetail": {
-          "problemZh": "Agent工具响应可能每句都真实，却遗漏决定行动是否允许的事实，从而令良性请求触发不安全执行。",
-          "gapZh": "仅测试错误信息或拒答不足以区分缺证鲁棒性、主动找证据和完成允许任务的能力。",
-          "whyImportantZh": "工具型Agent必须获取关键事实，同时保持对允许任务的实际可用性。",
-          "userRelevanceZh": "适合Agent系统评估与工具调用可靠性趋势跟踪，并非计算核心或硬件基线。",
-          "evidence": "已读 https://arxiv.org/abs/2610.31650v1 公开摘要；并核对daily.json元数据"
+          "problemZh": "harness 未完成分析。",
+          "gapZh": "harness 未完成分析。",
+          "whyImportantZh": "harness 未完成分析。",
+          "userRelevanceZh": "harness 未完成分析。",
+          "evidence": "not analyzed"
         },
         "methodDetail": {
-          "coreIdeaZh": "EpiSEM-Bench构造安全/不安全匹配任务，系统性抑制关键事实并测量最小观察失败基数；通过独立审计工具测试能否主动补证并采取恰当行动。",
+          "coreIdeaZh": "harness 未完成分析。",
           "componentsZh": [
-            "匹配安全任务对",
-            "关键证据抑制",
-            "最小失败基数",
-            "独立审计补证工具"
+            "未分析"
           ],
-          "hardwareSystemDetailZh": "可执行Agent评测基准，不提供矩阵阵列、量化数据通路或片上存储设计。",
-          "noveltyZh": "分别评估证据缺失下的违规执行与恢复证据后对两种情境的合适行为。",
-          "evidence": "已读 https://arxiv.org/abs/2610.31650v1 公开摘要；并核对daily.json元数据"
+          "hardwareSystemDetailZh": "harness 未完成分析。",
+          "noveltyZh": "harness 未完成分析。",
+          "evidence": "not analyzed"
         },
         "experimentDetail": {
-          "setupZh": "300对安全/不安全匹配任务、六个领域、十个模型，比较证据遗漏与可使用恢复工具的情境。",
-          "baselinesZh": "同一任务的安全/不安全世界以及补证工具可用前后形成对照；摘要未列具体十模型名称。",
+          "setupZh": "harness 未完成分析。",
+          "baselinesZh": "harness 未完成分析。",
           "metricsZh": [
-            "不安全执行率",
-            "补证行为",
-            "恰当行动",
-            "最小观察失败基数"
+            "未分析"
           ],
-          "mainResultsZh": "十个模型在缺证鲁棒性和补证利用上差异明显；恢复访问均减少违规执行，但抗遗漏不必然意味着有效补证，摘要未给具体降幅。",
-          "limitationsZh": "仅核验摘要；模型名单、逐领域分数与统计细节未披露于已读资料，不能推断生产可靠性。",
-          "evidence": "已读 https://arxiv.org/abs/2610.31650v1 公开摘要；并核对daily.json元数据"
+          "mainResultsZh": "harness 未完成分析。",
+          "limitationsZh": "harness 未完成分析。",
+          "evidence": "not analyzed"
         },
         "evidence": {
           "usedSources": [
-            "daily.json metadata",
-            "https://arxiv.org/abs/2610.31650v1"
+            "metadata"
           ],
-          "affiliationEvidence": "队列authorAffiliations和affiliations为空；按任务要求保留缺失单位说明。",
-          "experimentEvidence": "已读 https://arxiv.org/abs/2610.31650v1 公开摘要；并核对daily.json元数据",
+          "affiliationEvidence": "",
+          "experimentEvidence": "",
           "missingFields": [
-            "元数据作者单位",
-            "全文方法和实验细节"
+            "motivation",
+            "method",
+            "experiments"
           ]
         },
         "confidence": {
-          "summary": 0.87,
-          "motivation": 0.87,
-          "method": 0.79,
-          "experiments": 0.73,
+          "summary": 0.2,
+          "motivation": 0,
+          "method": 0,
+          "experiments": 0,
           "affiliations": 0
         }
+      }
+    },
+    {
+      "id": "arxiv:2610.32888",
+      "source": "arXiv",
+      "title": "When Human Corrections Travel: Safety in Federated VLA Adaptation",
+      "authors": [
+        "Vigneshwaran Subbaraju",
+        "Obaidullah Zaland",
+        "Monowar Bhuyan"
+      ],
+      "authorAffiliations": [],
+      "affiliations": [],
+      "abstract": "Vision-language-action (VLA) policies can adapt to local human intervention, while federated learning can combine distributed robot experience without pooling raw records. We examine their prospective intersection: sharing adaptations derived from diverse human corrections across tasks, environments, people, and robot embodiments. Corrections differ in modality, safety semantics(urgency, behavioral scope, etc.), and privacy sensitivity. A shared update that improves mean task success may suppress a rare safety intervention or produce an unsafe response on another robot. We argue for three requirements: preserve the context and uncertainty of multimodal corrections when deciding what to share; assess candidate updates in each receiving robot's closed loop before deployment; and evaluate leakage alongside retention of safety-critical evidence. Immediate, legible defensive behavior remains necessary during human interaction. We offer counterexamples and a falsifiable evaluation agenda, not experimental results.",
+      "venue": "arXiv",
+      "published": "2026-10-23T16:56:03Z",
+      "updated": "2026-10-23T16:56:03Z",
+      "url": "http://arxiv.org/abs/2610.32888v1",
+      "pdfUrl": "https://arxiv.org/pdf/2610.32888v1",
+      "categories": [
+        "cs.RO",
+        "cs.LG"
+      ],
+      "collectedAt": "2026-10-26T23:55:25.257Z",
+      "firstSeenAt": "2026-10-26T23:55:25.257Z",
+      "lastSeenAt": "2026-10-26T23:55:25.257Z",
+      "collectionType": "daily-latest",
+      "matchedQuery": "(all:agent OR all:agents OR all:agentic OR all:reasoning OR all:post-training OR all:alignment OR all:multimodal OR all:world-model) AND (all:LLM OR all:foundation OR all:language)",
+      "collectionTypes": [
+        "daily-latest"
+      ],
+      "matchedQueries": [
+        "(all:agent OR all:agents OR all:agentic OR all:reasoning OR all:post-training OR all:alignment OR all:multimodal OR all:world-model) AND (all:LLM OR all:foundation OR all:language)"
+      ],
+      "targetThemes": [],
+      "conferenceVenues": [],
+      "conferenceYears": [],
+      "recommendationTrack": "algorithm-trend",
+      "recommendationLabel": "算法趋势观察",
+      "recommendationScore": 43.8,
+      "relevanceReason": "命中 LLM/Agent/多模态/后训练等算法趋势主题",
+      "pdfStatus": "remote",
+      "workflow": {
+        "digestStatus": "pending",
+        "emailStatus": "waiting-digest",
+        "digestError": "命令行启用了 --no-ai",
+        "harnessVersion": "paper-reader-v1",
+        "collectStatus": "collected",
+        "pdfStatus": "remote"
       },
-      "pushedAt": "2026-10-26T02:32:37.592Z",
-      "emailSentAt": "2026-10-26T02:32:37.592Z",
-      "firstPushedAt": "2026-10-26T02:32:37.592Z"
+      "digest": {
+        "summaryZh": "AI 摘要未生成。原始摘要要点：Vision-language-action (VLA) policies can adapt to local human intervention, while federated learning can combine distributed robot experience without pooling r...",
+        "motivationZh": "命令行启用了 --no-ai",
+        "methodZh": "请配置 AI 后重新运行，以生成方法提炼。",
+        "experimentsZh": "来源元数据未披露完整实验设置或结果。",
+        "affiliationsZh": "未在 DBLP/arXiv 元数据中提供。",
+        "tags": [
+          "cs.RO",
+          "cs.LG"
+        ],
+        "importance": 3,
+        "researchFitZh": "AI harness 尚未完成分析，无法判断与用户研究方向的具体关系。",
+        "hardwareRelevance": 1,
+        "algorithmRelevance": 1,
+        "systemRelevance": 1,
+        "readPriority": "archive",
+        "whyReadZh": "需要完成 motivation、method 和实验结果分析后再判断是否值得深读。",
+        "limitationsZh": "命令行启用了 --no-ai",
+        "motivationDetail": {
+          "problemZh": "harness 未完成分析。",
+          "gapZh": "harness 未完成分析。",
+          "whyImportantZh": "harness 未完成分析。",
+          "userRelevanceZh": "harness 未完成分析。",
+          "evidence": "not analyzed"
+        },
+        "methodDetail": {
+          "coreIdeaZh": "harness 未完成分析。",
+          "componentsZh": [
+            "未分析"
+          ],
+          "hardwareSystemDetailZh": "harness 未完成分析。",
+          "noveltyZh": "harness 未完成分析。",
+          "evidence": "not analyzed"
+        },
+        "experimentDetail": {
+          "setupZh": "harness 未完成分析。",
+          "baselinesZh": "harness 未完成分析。",
+          "metricsZh": [
+            "未分析"
+          ],
+          "mainResultsZh": "harness 未完成分析。",
+          "limitationsZh": "harness 未完成分析。",
+          "evidence": "not analyzed"
+        },
+        "evidence": {
+          "usedSources": [
+            "metadata"
+          ],
+          "affiliationEvidence": "",
+          "experimentEvidence": "",
+          "missingFields": [
+            "motivation",
+            "method",
+            "experiments"
+          ]
+        },
+        "confidence": {
+          "summary": 0.2,
+          "motivation": 0,
+          "method": 0,
+          "experiments": 0,
+          "affiliations": 0
+        }
+      }
+    },
+    {
+      "id": "arxiv:2610.32967",
+      "source": "arXiv",
+      "title": "MiD-VLM: Detecting and Grounding Global Semantic Misinformation in Image-Caption Pairs",
+      "authors": [
+        "Tarunya Prasad",
+        "Bharatesh Chakravarthi"
+      ],
+      "authorAffiliations": [],
+      "affiliations": [],
+      "abstract": "Semantic misinformation can arise when an authentic image is paired with a caption that changes or distorts its narrative. Because the image itself may contain no visible signs of manipulation, methods designed to detect pixel-level artifacts can miss these misleading image-caption pairs. We study this problem using DGM4+, a dataset designed to evaluate the detection of global scene and semantic inconsistencies. We propose a multimodal model that combines image-text representations from SigLIP with visual scene features from DINOv2 through a projection MLP, and adapts Qwen2-VL-7B using LoRA. The model jointly predicts whether an image-caption pair is authentic, identifies the manipulation type, and grounds the misleading caption tokens. On the DGM4+ validation split, the model achieves an F1 score of $0.9679$ for binary authenticity classification. These results suggest that parameter-efficient adaptation of vision-language models is promising for detecting semantic inconsistencies, while also motivating further work on precise token-level grounding.",
+      "venue": "arXiv",
+      "published": "2026-10-23T17:55:02Z",
+      "updated": "2026-10-23T17:55:02Z",
+      "url": "http://arxiv.org/abs/2610.32967v1",
+      "pdfUrl": "https://arxiv.org/pdf/2610.32967v1",
+      "categories": [
+        "cs.CV"
+      ],
+      "collectedAt": "2026-10-26T23:55:25.257Z",
+      "firstSeenAt": "2026-10-26T23:55:25.257Z",
+      "lastSeenAt": "2026-10-26T23:55:25.257Z",
+      "collectionType": "daily-latest",
+      "matchedQuery": "(all:agent OR all:agents OR all:agentic OR all:reasoning OR all:post-training OR all:alignment OR all:multimodal OR all:world-model) AND (all:LLM OR all:foundation OR all:language)",
+      "collectionTypes": [
+        "daily-latest"
+      ],
+      "matchedQueries": [
+        "(all:agent OR all:agents OR all:agentic OR all:reasoning OR all:post-training OR all:alignment OR all:multimodal OR all:world-model) AND (all:LLM OR all:foundation OR all:language)"
+      ],
+      "targetThemes": [],
+      "conferenceVenues": [],
+      "conferenceYears": [],
+      "recommendationTrack": "algorithm-trend",
+      "recommendationLabel": "算法趋势观察",
+      "recommendationScore": 35.6,
+      "relevanceReason": "命中 LLM/Agent/多模态/后训练等算法趋势主题",
+      "pdfStatus": "remote",
+      "workflow": {
+        "digestStatus": "pending",
+        "emailStatus": "waiting-digest",
+        "digestError": "命令行启用了 --no-ai",
+        "harnessVersion": "paper-reader-v1",
+        "collectStatus": "collected",
+        "pdfStatus": "remote"
+      },
+      "digest": {
+        "summaryZh": "AI 摘要未生成。原始摘要要点：Semantic misinformation can arise when an authentic image is paired with a caption that changes or distorts its narrative. Because the image itself may contain ...",
+        "motivationZh": "命令行启用了 --no-ai",
+        "methodZh": "请配置 AI 后重新运行，以生成方法提炼。",
+        "experimentsZh": "来源元数据未披露完整实验设置或结果。",
+        "affiliationsZh": "未在 DBLP/arXiv 元数据中提供。",
+        "tags": [
+          "cs.CV"
+        ],
+        "importance": 3,
+        "researchFitZh": "AI harness 尚未完成分析，无法判断与用户研究方向的具体关系。",
+        "hardwareRelevance": 1,
+        "algorithmRelevance": 1,
+        "systemRelevance": 1,
+        "readPriority": "archive",
+        "whyReadZh": "需要完成 motivation、method 和实验结果分析后再判断是否值得深读。",
+        "limitationsZh": "命令行启用了 --no-ai",
+        "motivationDetail": {
+          "problemZh": "harness 未完成分析。",
+          "gapZh": "harness 未完成分析。",
+          "whyImportantZh": "harness 未完成分析。",
+          "userRelevanceZh": "harness 未完成分析。",
+          "evidence": "not analyzed"
+        },
+        "methodDetail": {
+          "coreIdeaZh": "harness 未完成分析。",
+          "componentsZh": [
+            "未分析"
+          ],
+          "hardwareSystemDetailZh": "harness 未完成分析。",
+          "noveltyZh": "harness 未完成分析。",
+          "evidence": "not analyzed"
+        },
+        "experimentDetail": {
+          "setupZh": "harness 未完成分析。",
+          "baselinesZh": "harness 未完成分析。",
+          "metricsZh": [
+            "未分析"
+          ],
+          "mainResultsZh": "harness 未完成分析。",
+          "limitationsZh": "harness 未完成分析。",
+          "evidence": "not analyzed"
+        },
+        "evidence": {
+          "usedSources": [
+            "metadata"
+          ],
+          "affiliationEvidence": "",
+          "experimentEvidence": "",
+          "missingFields": [
+            "motivation",
+            "method",
+            "experiments"
+          ]
+        },
+        "confidence": {
+          "summary": 0.2,
+          "motivation": 0,
+          "method": 0,
+          "experiments": 0,
+          "affiliations": 0
+        }
+      }
     }
   ]
 }
