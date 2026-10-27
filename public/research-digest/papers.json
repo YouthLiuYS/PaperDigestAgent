@@ -1,23 +1,301 @@
 {
-  "generatedAt": "2026-10-26T02:32:37.599Z",
+  "generatedAt": "2026-10-27T02:31:15.162Z",
   "timezone": "Asia/Shanghai",
   "siteUrl": "https://YouthLiuYS.github.io/PaperDigestAgent/",
   "stats": {
-    "total": 60,
-    "arxiv": 51,
+    "total": 68,
+    "arxiv": 59,
     "dblp": 9,
-    "dailyLatest": 59,
+    "dailyLatest": 67,
     "dailyBackfill": 0,
     "conferenceArchive": 1,
     "current": 0,
     "newlyAdded": 0,
-    "pushed": 60,
+    "pushed": 68,
     "pdfDownloaded": 0,
-    "hardwarePrimary": 43,
-    "algorithmTrend": 16,
+    "hardwarePrimary": 49,
+    "algorithmTrend": 18,
     "lowRelevance": 1
   },
   "papers": [
+    {
+      "id": "arxiv:2610.32638",
+      "source": "arXiv",
+      "title": "InferSlice: A Reference Architecture for SLO-driven LLM Inference over a Telco Wide-Area Network",
+      "authors": [
+        "Juan Parra-Ullauri",
+        "Anthony Chiu",
+        "Hari Madhukumar",
+        "Zhaozhou Wu",
+        "Anderson Bravalheri",
+        "Alex Healing",
+        "Andy Corston-Petrie",
+        "Dimitra Simeonidou",
+        "Nektaria Efthymiou"
+      ],
+      "authorAffiliations": [],
+      "affiliations": [],
+      "abstract": "LLM inference is increasingly deployed as a core service for enterprise and interactive applications, but sovereignty, compliance, latency and resource-locality requirements can limit the suitability of centralised cloud deployments. Telco operators offer geographically distributed compute and network infrastructure for addressing these constraints. However, existing LLM serving frameworks are designed for tightly coupled data centres and provide limited support for coordinating geographically distributed and heterogeneous resources. We present InferSlice, a reference architecture for Service-Level Objective (SLO)-driven LLM inference over a telco infrastructure, integrating network slicing, GPU partitioning, elastic serving and observability. Led by BT in collaboration with the University of Bristol and NVIDIA, and realised on the JOINER UK national-scale wide-area network (WAN), InferSlice is evaluated on service differentiation across tiers, elastic scale-out, client-edge bandwidth as a bottleneck, and the reach of tensor, pipeline, data parallelism, and prefill/decode disaggregation over the WAN. Our results show that, on a general-purpose telco network, tiers yield distinct latency-throughput regimes, and weight streaming shortens scale-out time. Replication is placement-insensitive but memory-bound; pipeline parallelism tolerates near- and mid-cross-site hops, while tensor parallelism and disaggregation fail beyond a single subnet hop. We share practical insights from operating SLO-driven inference on a telco network, lessons learned and open questions, and hope to encourage further research on distributed and heterogeneous LLM inference systems.",
+      "venue": "arXiv",
+      "published": "2026-10-23T13:51:02Z",
+      "updated": "2026-10-23T13:51:02Z",
+      "url": "http://arxiv.org/abs/2610.32638v1",
+      "pdfUrl": "https://arxiv.org/pdf/2610.32638v1",
+      "categories": [
+        "cs.DC",
+        "cs.AI"
+      ],
+      "collectedAt": "2026-10-26T23:55:18.364Z",
+      "firstSeenAt": "2026-10-26T23:55:18.364Z",
+      "lastSeenAt": "2026-10-26T23:55:18.364Z",
+      "collectionType": "daily-latest",
+      "matchedQuery": "(cat:cs.AR OR cat:cs.DC OR cat:cs.PF) AND (all:LLM OR all:transformer OR all:foundation OR all:language) AND (all:accelerator OR all:processor OR all:architecture OR all:hardware OR all:system OR all:serving OR all:training OR all:inference OR all:cache)",
+      "collectionTypes": [
+        "daily-latest"
+      ],
+      "matchedQueries": [
+        "(cat:cs.AR OR cat:cs.DC OR cat:cs.PF) AND (all:LLM OR all:transformer OR all:foundation OR all:language) AND (all:accelerator OR all:processor OR all:architecture OR all:hardware OR all:system OR all:serving OR all:training OR all:inference OR all:cache)",
+        "(all:prefill OR all:decoding OR all:KV OR all:cache OR all:attention) AND (all:accelerator OR all:kernel OR all:compiler OR all:serving OR all:memory) AND (all:LLM OR all:transformer)",
+        "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)"
+      ],
+      "targetThemes": [],
+      "conferenceVenues": [],
+      "conferenceYears": [],
+      "digest": {
+        "summaryZh": "面向交互应用的LLM集中云部署受数据主权、时延与算力位置约束，电信WAN虽有分布式资源，却不具备数据中心式紧耦合互联。InferSlice把网络切片、GPU分区、弹性副本和可观测性合并为SLO驱动参考架构，按服务等级协调网络与计算资源，并评估跨站点并行和权重流式扩容。服务等级形成不同时延吞吐区间，流式权重缩短扩容；复制受内存限制，流水线并行容忍近中距站点，TP和prefill/decode分离在超过单一子网跳数后失败。",
+        "motivationZh": "面向交互应用的LLM集中云部署受数据主权、时延与算力位置约束，电信WAN虽有分布式资源，却不具备数据中心式紧耦合互联。现有服务框架对跨地理位置、异构GPU与不同SLO的联合资源管理支持有限。把网络条件纳入推理放置与并行策略，才能判断服务能否满足时延和吞吐目标。关联异构推理系统、KV传输和阶段分离的适用边界，属于部署系统架构，不是芯片计算核心设计。",
+        "methodZh": "InferSlice把网络切片、GPU分区、弹性副本和可观测性合并为SLO驱动参考架构，按服务等级协调网络与计算资源，并评估跨站点并行和权重流式扩容。JOINER测试床上vLLM副本作为Ray服务由KubeRay编排；跨副本KV及collective传输走普通TCP/IP，而非假设专用低时延互联。将电信WAN的网络与计算联合切片具体落实为可运行推理服务及并行策略边界评估。",
+        "experimentsZh": "全文§4.1：六个PoP，六台配48 GB L40S的VM，vLLM/Ray服务，ShareGPT请求及Poisson到达过程。比较不同服务等级、放置距离、扩容与并行配置；不是与新芯片微架构的等面积对比。服务等级形成不同时延吞吐区间，流式权重缩短扩容；复制受内存限制，流水线并行容忍近中距站点，TP和prefill/decode分离在超过单一子网跳数后失败。结果是该普通电信网络与配置下的实证边界，不能推断所有WAN都不适用TP；尚未逐表核验全部数值。",
+        "affiliationsZh": "未在 DBLP/arXiv 元数据中提供",
+        "tags": [
+          "WAN推理",
+          "SLO",
+          "阶段分离"
+        ],
+        "importance": 4,
+        "researchFitZh": "关联异构推理系统、KV传输和阶段分离的适用边界，属于部署系统架构，不是芯片计算核心设计。",
+        "hardwareRelevance": 3,
+        "algorithmRelevance": 2,
+        "systemRelevance": 5,
+        "readPriority": "deep-read",
+        "whyReadZh": "关联异构推理系统、KV传输和阶段分离的适用边界，属于部署系统架构，不是芯片计算核心设计。建议按实际问题和证据范围选择后续阅读优先级。",
+        "limitationsZh": "结果是该普通电信网络与配置下的实证边界，不能推断所有WAN都不适用TP；尚未逐表核验全部数值。",
+        "motivationDetail": {
+          "problemZh": "面向交互应用的LLM集中云部署受数据主权、时延与算力位置约束，电信WAN虽有分布式资源，却不具备数据中心式紧耦合互联。",
+          "gapZh": "现有服务框架对跨地理位置、异构GPU与不同SLO的联合资源管理支持有限。",
+          "whyImportantZh": "把网络条件纳入推理放置与并行策略，才能判断服务能否满足时延和吞吐目标。",
+          "userRelevanceZh": "关联异构推理系统、KV传输和阶段分离的适用边界，属于部署系统架构，不是芯片计算核心设计。",
+          "evidence": "https://arxiv.org/abs/2610.32638v1 的公开摘要与daily.json元数据；另读 https://arxiv.org/pdf/2610.32638v1：PDF首页、引言及§4.1实验配置"
+        },
+        "methodDetail": {
+          "coreIdeaZh": "InferSlice把网络切片、GPU分区、弹性副本和可观测性合并为SLO驱动参考架构，按服务等级协调网络与计算资源，并评估跨站点并行和权重流式扩容。",
+          "componentsZh": [
+            "网络切片与GPU分区",
+            "SLO服务等级",
+            "弹性副本与权重流式加载",
+            "跨站点可观测性"
+          ],
+          "hardwareSystemDetailZh": "JOINER测试床上vLLM副本作为Ray服务由KubeRay编排；跨副本KV及collective传输走普通TCP/IP，而非假设专用低时延互联。",
+          "noveltyZh": "将电信WAN的网络与计算联合切片具体落实为可运行推理服务及并行策略边界评估。",
+          "evidence": "https://arxiv.org/abs/2610.32638v1 的公开摘要与daily.json元数据；另读 https://arxiv.org/pdf/2610.32638v1：PDF首页、引言及§4.1实验配置"
+        },
+        "experimentDetail": {
+          "setupZh": "全文§4.1：六个PoP，六台配48 GB L40S的VM，vLLM/Ray服务，ShareGPT请求及Poisson到达过程。",
+          "baselinesZh": "比较不同服务等级、放置距离、扩容与并行配置；不是与新芯片微架构的等面积对比。",
+          "metricsZh": [
+            "TTFT",
+            "TPOT",
+            "吞吐",
+            "扩容时间",
+            "跨站点可行性"
+          ],
+          "mainResultsZh": "服务等级形成不同时延吞吐区间，流式权重缩短扩容；复制受内存限制，流水线并行容忍近中距站点，TP和prefill/decode分离在超过单一子网跳数后失败。",
+          "limitationsZh": "结果是该普通电信网络与配置下的实证边界，不能推断所有WAN都不适用TP；尚未逐表核验全部数值。",
+          "evidence": "https://arxiv.org/abs/2610.32638v1 的公开摘要与daily.json元数据；另读 https://arxiv.org/pdf/2610.32638v1：PDF首页、引言及§4.1实验配置"
+        },
+        "evidence": {
+          "usedSources": [
+            "daily.json metadata",
+            "https://arxiv.org/abs/2610.32638v1",
+            "https://arxiv.org/pdf/2610.32638v1（PDF首页、引言及§4.1实验配置）"
+          ],
+          "affiliationEvidence": "队列authorAffiliations与affiliations均为空，按任务规则保留元数据缺失说明。",
+          "experimentEvidence": "https://arxiv.org/abs/2610.32638v1 的公开摘要与daily.json元数据；另读 https://arxiv.org/pdf/2610.32638v1：PDF首页、引言及§4.1实验配置",
+          "missingFields": [
+            "元数据作者单位",
+            "未逐项核验的全文实验和复现细节"
+          ]
+        },
+        "confidence": {
+          "summary": 0.87,
+          "motivation": 0.86,
+          "method": 0.88,
+          "experiments": 0.86,
+          "affiliations": 0
+        }
+      },
+      "recommendationTrack": "hardware-primary",
+      "recommendationLabel": "硬件体系结构主线",
+      "recommendationScore": 195,
+      "relevanceReason": "命中 AI 处理器、体系结构、量化、训推系统或内存/缓存优化主题",
+      "pdfStatus": "remote",
+      "workflow": {
+        "digestStatus": "ready",
+        "emailStatus": "sent",
+        "digestError": "",
+        "harnessVersion": "paper-reader-v1",
+        "collectStatus": "collected",
+        "pdfStatus": "remote",
+        "harnessCheckedAt": "2026-10-27T02:31:09.976Z",
+        "harnessWarnings": [],
+        "emailSentAt": "2026-10-27T02:31:15.153Z",
+        "lastEmailError": ""
+      },
+      "pushedAt": "2026-10-27T02:31:15.153Z",
+      "emailSentAt": "2026-10-27T02:31:15.153Z",
+      "firstPushedAt": "2026-10-27T02:31:15.153Z"
+    },
+    {
+      "id": "arxiv:2610.32632",
+      "source": "arXiv",
+      "title": "Toward Open ISA Supercomputing: A Comparative Study of RISC-V, Arm, and x86 Architectures on HPC Workloads",
+      "authors": [
+        "Emanuele Venieri",
+        "Giacomo Madella",
+        "Gabriele Ceccolini",
+        "Simone Manoni",
+        "Federico Ficarelli",
+        "Filippo Barbari",
+        "Jenny Lynn Almerol",
+        "Elisabetta Boella",
+        "Nitin Shukla",
+        "Simone Bnà",
+        "Luca Benini",
+        "Andrea bartolini"
+      ],
+      "authorAffiliations": [],
+      "affiliations": [],
+      "abstract": "RISC-V is emerging as a candidate architecture for high-performance computing (HPC), but its competitiveness against established x86 and Arm processors remains difficult to assess because existing studies use different platforms, workloads, and methodologies, and rarely consider energy efficiency. Our work provides an evaluation of contemporary HPC RISC-V, Arm, and x86 processors using a common software stack and methodology. We characterize the Sophgo SG2044 and compare it with the NVIDIA Grace CPU Superchip and Intel Xeon Platinum 8480+ across four HPC benchmarks (STREAM, HPL, HPL-MxP, and HPCG) and four representative applications (iPIC3D, PLUTO, OpenFOAM, and llama.cpp). The version of HPL-MxP linked to OpenBLAS built and used for this work is made available as open-source software. The SG2044 reaches 8.02 GFLOP/s of FP64 performance and 7.8 GB/s of memory bandwidth per core, increasing to 294 GFLOP/s and 107 GB/s at 64 cores. L2-cache-aware process placement enables near-linear scaling up to 16 cores, beyond which memory-bandwidth saturation limits further gains. Across generations of RISC-V hardware, in the context of the Monte Cimone (MC) project, the SG2044-based MCv3 doubles both single-core performance and peak memory bandwidth relative to MCv2, while improving memory bandwidth, node-level FP64 performance, and energy efficiency by approximately 100x, 158x, and 10x, over MCv1. Against the Arm and x86 systems, the SG2044 shows 8-15x less absolute performance, reflecting its narrower vector resources and less advanced technology node, but delivers competitive scaling and energy efficiency on several workloads. Its most notable result is LLM decode, where 64-core execution provides the highest relative scaling and energy efficiency among the evaluated platforms while exceeding Intel in throughput. Our results show that RISC-V processors are closing the gap with the competition.",
+      "venue": "arXiv",
+      "published": "2026-10-23T13:43:38Z",
+      "updated": "2026-10-23T13:43:38Z",
+      "url": "http://arxiv.org/abs/2610.32632v1",
+      "pdfUrl": "https://arxiv.org/pdf/2610.32632v1",
+      "categories": [
+        "cs.DC",
+        "cs.AR",
+        "cs.PF"
+      ],
+      "collectedAt": "2026-10-26T23:55:18.364Z",
+      "firstSeenAt": "2026-10-26T23:55:18.364Z",
+      "lastSeenAt": "2026-10-26T23:55:18.364Z",
+      "collectionType": "daily-latest",
+      "matchedQuery": "(cat:cs.AR OR cat:cs.DC OR cat:cs.PF) AND (all:LLM OR all:transformer OR all:foundation OR all:language) AND (all:accelerator OR all:processor OR all:architecture OR all:hardware OR all:system OR all:serving OR all:training OR all:inference OR all:cache)",
+      "collectionTypes": [
+        "daily-latest"
+      ],
+      "matchedQueries": [
+        "(cat:cs.AR OR cat:cs.DC OR cat:cs.PF) AND (all:LLM OR all:transformer OR all:foundation OR all:language) AND (all:accelerator OR all:processor OR all:architecture OR all:hardware OR all:system OR all:serving OR all:training OR all:inference OR all:cache)",
+        "(all:prefill OR all:decoding OR all:KV OR all:cache OR all:attention) AND (all:accelerator OR all:kernel OR all:compiler OR all:serving OR all:memory) AND (all:LLM OR all:transformer)",
+        "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)"
+      ],
+      "targetThemes": [],
+      "conferenceVenues": [],
+      "conferenceYears": [],
+      "digest": {
+        "summaryZh": "RISC-V用于HPC的竞争力难以判断，因为不同研究的平台、工作负载和软件方法不一致，而且经常忽略能效。使用共同软件栈比较SG2044、Grace和Xeon的四类HPC基准与四个应用，并通过NUMA/L2感知绑定、线程扩展和能效测量分析瓶颈，另开放OpenBLAS版HPL-MxP。SG2044单核8.02 GFLOP/s、7.8 GB/s，64核294 GFLOP/s、107 GB/s；L2感知放置近线性扩展至16核，之后受带宽限制；摘要称64核解码吞吐超过Intel。",
+        "motivationZh": "RISC-V用于HPC的竞争力难以判断，因为不同研究的平台、工作负载和软件方法不一致，而且经常忽略能效。需要在同一评测框架下区分向量资源、缓存亲和性与带宽饱和对性能和扩展性的影响。CPU上的LLM解码可能主要受存储限制，不能只用FP64峰值衡量推理价值。可参考CPU向量资源与内存带宽的实证分析，但不是新型GPU/NPU矩阵向量融合核心方案。",
+        "methodZh": "使用共同软件栈比较SG2044、Grace和Xeon的四类HPC基准与四个应用，并通过NUMA/L2感知绑定、线程扩展和能效测量分析瓶颈，另开放OpenBLAS版HPL-MxP。现有CPU平台测量，分析向量宽度与带宽瓶颈；全文llama-bench图示gpt-oss-20b-F16及batch=512，不涉及新增专用加速器。把跨ISA性能、能效和缓存感知进程放置放到同一实验框架。",
+        "experimentsZh": "Sophgo SG2044、NVIDIA Grace CPU Superchip、Intel Xeon Platinum 8480+；STREAM/HPL/HPL-MxP/HPCG及iPIC3D、PLUTO、OpenFOAM、llama.cpp。Arm与x86平台及Monte Cimone前代RISC-V系统，比较绝对性能、相对扩展和能效。SG2044单核8.02 GFLOP/s、7.8 GB/s，64核294 GFLOP/s、107 GB/s；L2感知放置近线性扩展至16核，之后受带宽限制；摘要称64核解码吞吐超过Intel。平台向量资源与工艺差异意味着不能把结果归因于ISA本身；llama-bench batch不等于在线并发请求数。",
+        "affiliationsZh": "未在 DBLP/arXiv 元数据中提供",
+        "tags": [
+          "RISC-V",
+          "向量与带宽",
+          "CPU推理"
+        ],
+        "importance": 4,
+        "researchFitZh": "可参考CPU向量资源与内存带宽的实证分析，但不是新型GPU/NPU矩阵向量融合核心方案。",
+        "hardwareRelevance": 4,
+        "algorithmRelevance": 2,
+        "systemRelevance": 4,
+        "readPriority": "skim",
+        "whyReadZh": "可参考CPU向量资源与内存带宽的实证分析，但不是新型GPU/NPU矩阵向量融合核心方案。建议按实际问题和证据范围选择后续阅读优先级。",
+        "limitationsZh": "平台向量资源与工艺差异意味着不能把结果归因于ISA本身；llama-bench batch不等于在线并发请求数。",
+        "motivationDetail": {
+          "problemZh": "RISC-V用于HPC的竞争力难以判断，因为不同研究的平台、工作负载和软件方法不一致，而且经常忽略能效。",
+          "gapZh": "需要在同一评测框架下区分向量资源、缓存亲和性与带宽饱和对性能和扩展性的影响。",
+          "whyImportantZh": "CPU上的LLM解码可能主要受存储限制，不能只用FP64峰值衡量推理价值。",
+          "userRelevanceZh": "可参考CPU向量资源与内存带宽的实证分析，但不是新型GPU/NPU矩阵向量融合核心方案。",
+          "evidence": "https://arxiv.org/abs/2610.32632v1 的公开摘要与daily.json元数据；另读 https://arxiv.org/html/2610.32632v1：HTML摘要、架构目录与§5.2.4可读片段"
+        },
+        "methodDetail": {
+          "coreIdeaZh": "使用共同软件栈比较SG2044、Grace和Xeon的四类HPC基准与四个应用，并通过NUMA/L2感知绑定、线程扩展和能效测量分析瓶颈，另开放OpenBLAS版HPL-MxP。",
+          "componentsZh": [
+            "跨ISA共同方法",
+            "HPC与llama.cpp负载",
+            "NUMA/L2亲和绑定",
+            "能效与扩展性分析"
+          ],
+          "hardwareSystemDetailZh": "现有CPU平台测量，分析向量宽度与带宽瓶颈；全文llama-bench图示gpt-oss-20b-F16及batch=512，不涉及新增专用加速器。",
+          "noveltyZh": "把跨ISA性能、能效和缓存感知进程放置放到同一实验框架。",
+          "evidence": "https://arxiv.org/abs/2610.32632v1 的公开摘要与daily.json元数据；另读 https://arxiv.org/html/2610.32632v1：HTML摘要、架构目录与§5.2.4可读片段"
+        },
+        "experimentDetail": {
+          "setupZh": "Sophgo SG2044、NVIDIA Grace CPU Superchip、Intel Xeon Platinum 8480+；STREAM/HPL/HPL-MxP/HPCG及iPIC3D、PLUTO、OpenFOAM、llama.cpp。",
+          "baselinesZh": "Arm与x86平台及Monte Cimone前代RISC-V系统，比较绝对性能、相对扩展和能效。",
+          "metricsZh": [
+            "FP64 GFLOP/s",
+            "内存GB/s",
+            "token/s",
+            "能效",
+            "并行扩展"
+          ],
+          "mainResultsZh": "SG2044单核8.02 GFLOP/s、7.8 GB/s，64核294 GFLOP/s、107 GB/s；L2感知放置近线性扩展至16核，之后受带宽限制；摘要称64核解码吞吐超过Intel。",
+          "limitationsZh": "平台向量资源与工艺差异意味着不能把结果归因于ISA本身；llama-bench batch不等于在线并发请求数。",
+          "evidence": "https://arxiv.org/abs/2610.32632v1 的公开摘要与daily.json元数据；另读 https://arxiv.org/html/2610.32632v1：HTML摘要、架构目录与§5.2.4可读片段"
+        },
+        "evidence": {
+          "usedSources": [
+            "daily.json metadata",
+            "https://arxiv.org/abs/2610.32632v1",
+            "https://arxiv.org/html/2610.32632v1（HTML摘要、架构目录与§5.2.4可读片段）"
+          ],
+          "affiliationEvidence": "队列authorAffiliations与affiliations均为空，按任务规则保留元数据缺失说明。",
+          "experimentEvidence": "https://arxiv.org/abs/2610.32632v1 的公开摘要与daily.json元数据；另读 https://arxiv.org/html/2610.32632v1：HTML摘要、架构目录与§5.2.4可读片段",
+          "missingFields": [
+            "元数据作者单位",
+            "未逐项核验的全文实验和复现细节"
+          ]
+        },
+        "confidence": {
+          "summary": 0.87,
+          "motivation": 0.86,
+          "method": 0.88,
+          "experiments": 0.86,
+          "affiliations": 0
+        }
+      },
+      "recommendationTrack": "hardware-primary",
+      "recommendationLabel": "硬件体系结构主线",
+      "recommendationScore": 183,
+      "relevanceReason": "命中 AI 处理器、体系结构、量化、训推系统或内存/缓存优化主题",
+      "pdfStatus": "remote",
+      "workflow": {
+        "digestStatus": "ready",
+        "emailStatus": "sent",
+        "digestError": "",
+        "harnessVersion": "paper-reader-v1",
+        "collectStatus": "collected",
+        "pdfStatus": "remote",
+        "harnessCheckedAt": "2026-10-27T02:31:09.976Z",
+        "harnessWarnings": [],
+        "emailSentAt": "2026-10-27T02:31:15.153Z",
+        "lastEmailError": ""
+      },
+      "pushedAt": "2026-10-27T02:31:15.153Z",
+      "emailSentAt": "2026-10-27T02:31:15.153Z",
+      "firstPushedAt": "2026-10-27T02:31:15.153Z"
+    },
     {
       "id": "arxiv:2610.31659",
       "source": "arXiv",
@@ -153,6 +431,133 @@
       "firstPushedAt": "2026-10-24T14:49:32.084Z"
     },
     {
+      "id": "arxiv:2610.32427",
+      "source": "arXiv",
+      "title": "Compression of turbulent flow data through an extended space-time correlation: certification against the modal energy budget",
+      "authors": [
+        "Gustavo Lopes",
+        "Davide Lengani",
+        "Dan Henningson"
+      ],
+      "authorAffiliations": [],
+      "affiliations": [],
+      "abstract": "The fidelity of direct numerical simulation now outpaces the storage and data-movement capacity available for the resulting fields. We present an open, distributed, GPU-accelerated low-rank compression framework for large turbulent flow databases. We assess it using two direct numerical simulations of a controlled diffusion compressor cascade under laminar and turbulent inflow conditions. Compression is formulated using a correlation operator over space and time, which is two orders of magnitude larger than that of snapshot POD. Its dominant range is extracted with a randomized range finder based on communication-avoiding hierarchical QR. The compressed databases are evaluated through a hierarchy of increasingly strict diagnostics, from instantaneous reconstruction and second-order statistics to the modal turbulent kinetic energy budget and its nonlinear interscale transfer. The budget terms are far more sensitive to compression than fieldwise or one-point errors. They remain accurate at conservative compression and degrade sharply once the retained energy is relaxed. The near-wall dissipation and the interscale transfer degrade the most and set the admissible compression level. An aggressive reduction preserves every one-point statistic to within a few per cent while corrupting both by an order of magnitude more. The dissipation error is confined to the viscous sublayer and grows with the development of the boundary layer. It is carried by the high-order modes. For both inflows, the linear budget terms scale with the discarded energy to the power $0.8$ and the triadic transfer to a power above one.",
+      "venue": "arXiv",
+      "published": "2026-10-23T09:52:34Z",
+      "updated": "2026-10-23T09:52:34Z",
+      "url": "http://arxiv.org/abs/2610.32427v1",
+      "pdfUrl": "https://arxiv.org/pdf/2610.32427v1",
+      "categories": [
+        "physics.flu-dyn",
+        "physics.comp-ph"
+      ],
+      "collectedAt": "2026-10-26T23:55:23.545Z",
+      "firstSeenAt": "2026-10-26T23:55:23.545Z",
+      "lastSeenAt": "2026-10-26T23:55:23.545Z",
+      "collectionType": "daily-latest",
+      "matchedQuery": "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)",
+      "collectionTypes": [
+        "daily-latest"
+      ],
+      "matchedQueries": [
+        "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)"
+      ],
+      "targetThemes": [],
+      "conferenceVenues": [],
+      "conferenceYears": [],
+      "recommendationTrack": "hardware-primary",
+      "recommendationLabel": "硬件体系结构主线",
+      "recommendationScore": 161.5,
+      "relevanceReason": "命中 AI 处理器、体系结构、量化、训推系统或内存/缓存优化主题",
+      "pdfStatus": "remote",
+      "workflow": {
+        "digestStatus": "ready",
+        "emailStatus": "sent",
+        "digestError": "",
+        "harnessVersion": "paper-reader-v1",
+        "collectStatus": "collected",
+        "pdfStatus": "remote",
+        "harnessCheckedAt": "2026-10-27T02:31:09.976Z",
+        "harnessWarnings": [],
+        "emailSentAt": "2026-10-27T02:31:15.153Z",
+        "lastEmailError": ""
+      },
+      "digest": {
+        "summaryZh": "湍流直接数值模拟数据量增长超过存储与搬运能力，压缩后的一点统计误差却不足以保证流动物理诊断仍可靠。以时空相关算子构造低秩压缩，用通信规避层次QR的随机范围查找器提取主导子空间，再逐级检查场重构、统计量和模态湍动能预算。保守压缩下能量预算准确，降低保留能量后近壁耗散和跨尺度传递先恶化；一点统计仅有数个百分点误差时，敏感物理项误差可能高一个数量级。",
+        "motivationZh": "湍流直接数值模拟数据量增长超过存储与搬运能力，压缩后的一点统计误差却不足以保证流动物理诊断仍可靠。只检查场重构或二阶统计，可能遗漏模态能量耗散及非线性能量传递被破坏的问题。科学数据压缩需要与下游物理量相关的保真度标准，避免存储节省换来错误科学结论。仅与GPU分布式数据处理有间接联系；实际属于流体数据压缩，偏离LLM计算核心，应归档而非硬件主线。",
+        "methodZh": "以时空相关算子构造低秩压缩，用通信规避层次QR的随机范围查找器提取主导子空间，再逐级检查场重构、统计量和模态湍动能预算。摘要称分布式GPU加速实现，但未披露GPU型号、核心微架构或LLM推理路径。以更敏感的能量预算和跨尺度传递诊断压缩可接受范围，而非只看一点统计误差。",
+        "experimentsZh": "受控扩散压气机叶栅的层流及湍流入口两组DNS数据；摘要未披露规模、GPU和完整压缩率表。以快照POD相关算子和不同保留能量程度为参照；具体性能基线未在已读摘要披露。保守压缩下能量预算准确，降低保留能量后近壁耗散和跨尺度传递先恶化；一点统计仅有数个百分点误差时，敏感物理项误差可能高一个数量级。只读摘要，未核验完整数值；不是LLM压缩、量化或芯片架构论文，不能用作该方向性能基线。",
+        "affiliationsZh": "未在 DBLP/arXiv 元数据中提供",
+        "tags": [
+          "流体压缩",
+          "随机低秩",
+          "偏离LLM主线"
+        ],
+        "importance": 1,
+        "researchFitZh": "仅与GPU分布式数据处理有间接联系；实际属于流体数据压缩，偏离LLM计算核心，应归档而非硬件主线。",
+        "hardwareRelevance": 1,
+        "algorithmRelevance": 2,
+        "systemRelevance": 2,
+        "readPriority": "archive",
+        "whyReadZh": "仅与GPU分布式数据处理有间接联系；实际属于流体数据压缩，偏离LLM计算核心，应归档而非硬件主线。建议按实际问题和证据范围选择后续阅读优先级。",
+        "limitationsZh": "只读摘要，未核验完整数值；不是LLM压缩、量化或芯片架构论文，不能用作该方向性能基线。",
+        "motivationDetail": {
+          "problemZh": "湍流直接数值模拟数据量增长超过存储与搬运能力，压缩后的一点统计误差却不足以保证流动物理诊断仍可靠。",
+          "gapZh": "只检查场重构或二阶统计，可能遗漏模态能量耗散及非线性能量传递被破坏的问题。",
+          "whyImportantZh": "科学数据压缩需要与下游物理量相关的保真度标准，避免存储节省换来错误科学结论。",
+          "userRelevanceZh": "仅与GPU分布式数据处理有间接联系；实际属于流体数据压缩，偏离LLM计算核心，应归档而非硬件主线。",
+          "evidence": "https://arxiv.org/abs/2610.32427v1 的公开摘要与daily.json元数据；未读全文"
+        },
+        "methodDetail": {
+          "coreIdeaZh": "以时空相关算子构造低秩压缩，用通信规避层次QR的随机范围查找器提取主导子空间，再逐级检查场重构、统计量和模态湍动能预算。",
+          "componentsZh": [
+            "时空相关低秩压缩",
+            "随机范围查找",
+            "通信规避层次QR",
+            "能量预算保真诊断"
+          ],
+          "hardwareSystemDetailZh": "摘要称分布式GPU加速实现，但未披露GPU型号、核心微架构或LLM推理路径。",
+          "noveltyZh": "以更敏感的能量预算和跨尺度传递诊断压缩可接受范围，而非只看一点统计误差。",
+          "evidence": "https://arxiv.org/abs/2610.32427v1 的公开摘要与daily.json元数据；未读全文"
+        },
+        "experimentDetail": {
+          "setupZh": "受控扩散压气机叶栅的层流及湍流入口两组DNS数据；摘要未披露规模、GPU和完整压缩率表。",
+          "baselinesZh": "以快照POD相关算子和不同保留能量程度为参照；具体性能基线未在已读摘要披露。",
+          "metricsZh": [
+            "场重构误差",
+            "一点统计",
+            "模态能量预算",
+            "耗散与跨尺度传递误差"
+          ],
+          "mainResultsZh": "保守压缩下能量预算准确，降低保留能量后近壁耗散和跨尺度传递先恶化；一点统计仅有数个百分点误差时，敏感物理项误差可能高一个数量级。",
+          "limitationsZh": "只读摘要，未核验完整数值；不是LLM压缩、量化或芯片架构论文，不能用作该方向性能基线。",
+          "evidence": "https://arxiv.org/abs/2610.32427v1 的公开摘要与daily.json元数据；未读全文"
+        },
+        "evidence": {
+          "usedSources": [
+            "daily.json metadata",
+            "https://arxiv.org/abs/2610.32427v1"
+          ],
+          "affiliationEvidence": "队列authorAffiliations与affiliations均为空，按任务规则保留元数据缺失说明。",
+          "experimentEvidence": "https://arxiv.org/abs/2610.32427v1 的公开摘要与daily.json元数据；未读全文",
+          "missingFields": [
+            "元数据作者单位",
+            "全文方法与实验细节"
+          ]
+        },
+        "confidence": {
+          "summary": 0.87,
+          "motivation": 0.86,
+          "method": 0.8,
+          "experiments": 0.76,
+          "affiliations": 0
+        }
+      },
+      "pushedAt": "2026-10-27T02:31:15.153Z",
+      "emailSentAt": "2026-10-27T02:31:15.153Z",
+      "firstPushedAt": "2026-10-27T02:31:15.153Z"
+    },
+    {
       "id": "arxiv:2604.27844",
       "source": "arXiv",
       "title": "ZipCCL: Efficient Lossless Data Compression of Communication Collectives for Accelerating LLM Training",
@@ -221,6 +626,256 @@
         "emailStatus": "sent",
         "pdfStatus": "remote"
       }
+    },
+    {
+      "id": "arxiv:2610.31946",
+      "source": "arXiv",
+      "title": "Which Answer Did the Seventeen-Year-Old Write? A Behavioral Case Study of Author-Age Misattribution, Miscalibrated Confidence, and Non-Corrective Self-Explanation in Six Frontier Language Models",
+      "authors": [
+        "Brianne Lee"
+      ],
+      "authorAffiliations": [],
+      "affiliations": [],
+      "abstract": "Three students answered the same exam prompt by hand: \"What is happiness? Are you happy?\" Their ages, recorded at collection, are 17, 28, and 45. The 17-year-old's answer is hedged and formally phrased. Asked to match each answer to an age and gender label, most frontier language models confidently assign it to an adult. This paper reports a structured case study of that failure across six models: Claude Fable 5, Gemini 3.1 Pro, GPT-5.6 Sol, Grok 4.5, GPT-4o (2024), and DeepSeek V4. We ran 1,081 API sessions and scored 3,225 responses across six experimental conditions that manipulate framing, disclosure format, and audience-awareness instruction. Three of six models perform at or near chance (1/3) on the matching task while reporting 73-88% mean confidence. The youngest writer's answer is misattributed to an adult in up to 90% of trials. Removing the multiple-choice scaffold collapses accuracy further: three models never place within three years of the true age once open-ended estimation is required. Institutional framing (\"a community-college biology final\") significantly degrades the best-performing model's accuracy; a neutral label does not. A single audience-awareness instruction significantly improves one model (+21 points) and moves another to ceiling, with no detectable effect on the three weakest models. Stated confidence is uncorrelated or inversely correlated with correctness for five of six models. After ground truth is revealed, one model names its own stereotyping in 68 of 114 explanations, yet shows the lowest accuracy and highest confidence of any model under blind presentation: articulate retrospective diagnosis that does not track the quality of its judgments. This is a three-item, single-topic, single-language case study meant to isolate a mechanism, not to estimate a population bias rate. Data, code, and raw model outputs are publicly released.",
+      "venue": "arXiv",
+      "published": "2026-10-22T21:45:19Z",
+      "updated": "2026-10-22T21:45:19Z",
+      "url": "http://arxiv.org/abs/2610.31946v1",
+      "pdfUrl": "https://arxiv.org/pdf/2610.31946v1",
+      "categories": [
+        "cs.CL"
+      ],
+      "collectedAt": "2026-10-26T23:55:23.545Z",
+      "firstSeenAt": "2026-10-26T23:55:23.545Z",
+      "lastSeenAt": "2026-10-26T23:55:23.545Z",
+      "collectionType": "daily-latest",
+      "matchedQuery": "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)",
+      "collectionTypes": [
+        "daily-latest"
+      ],
+      "matchedQueries": [
+        "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)"
+      ],
+      "targetThemes": [],
+      "conferenceVenues": [],
+      "conferenceYears": [],
+      "recommendationTrack": "hardware-primary",
+      "recommendationLabel": "硬件体系结构主线",
+      "recommendationScore": 153,
+      "relevanceReason": "命中 AI 处理器、体系结构、量化、训推系统或内存/缓存优化主题",
+      "pdfStatus": "remote",
+      "workflow": {
+        "digestStatus": "ready",
+        "emailStatus": "sent",
+        "digestError": "",
+        "harnessVersion": "paper-reader-v1",
+        "collectStatus": "collected",
+        "pdfStatus": "remote",
+        "harnessCheckedAt": "2026-10-27T02:31:09.976Z",
+        "harnessWarnings": [],
+        "emailSentAt": "2026-10-27T02:31:15.153Z",
+        "lastEmailError": ""
+      },
+      "digest": {
+        "summaryZh": "语言模型从有限文本推断作者年龄时，可能把正式措辞误当作成年证据，并给出与正确率不匹配的高置信度。围绕三名学生同题回答，在六个模型上操纵标签框架、披露格式与受众意识指令，比较年龄匹配、开放估计、置信度及揭示真值后的解释。三个模型正确率接近机会水平但平均置信度73%—88%；最年轻作者最高90%被判成年；受众指令使其中一个模型改善21个百分点。",
+        "motivationZh": "语言模型从有限文本推断作者年龄时，可能把正式措辞误当作成年证据，并给出与正确率不匹配的高置信度。事后能解释刻板印象不代表盲测判断准确，需区分自我解释流畅性与实际校准。评估模型可靠性时应同时测量判断、置信度和提示框架影响，而非只看解释质量。属于模型行为个案，对Agent评估有参考价值，和计算核心及推理硬件无直接关系。",
+        "methodZh": "围绕三名学生同题回答，在六个模型上操纵标签框架、披露格式与受众意识指令，比较年龄匹配、开放估计、置信度及揭示真值后的解释。行为实证分析；未设计新算法加速器、缓存系统或芯片数据通路。在同一小型个案中对照年龄误判、高置信度和不纠正判断质量的事后解释。",
+        "experimentsZh": "三份单题、单语言回答，作者17/28/45岁；六个前沿模型、1081次API会话、3225个评分回答、六种实验条件。同一模型在盲测、框架变化、开放估计和受众指令条件下对照；匹配任务机会水平为1/3。三个模型正确率接近机会水平但平均置信度73%—88%；最年轻作者最高90%被判成年；受众指令使其中一个模型改善21个百分点。三条回答不是人口样本，不能推断群体偏见发生率；只核验公开摘要，没有独立复现模型输出。",
+        "affiliationsZh": "未在 DBLP/arXiv 元数据中提供",
+        "tags": [
+          "模型校准",
+          "行为个案",
+          "非硬件研究"
+        ],
+        "importance": 2,
+        "researchFitZh": "属于模型行为个案，对Agent评估有参考价值，和计算核心及推理硬件无直接关系。",
+        "hardwareRelevance": 1,
+        "algorithmRelevance": 3,
+        "systemRelevance": 1,
+        "readPriority": "archive",
+        "whyReadZh": "属于模型行为个案，对Agent评估有参考价值，和计算核心及推理硬件无直接关系。建议按实际问题和证据范围选择后续阅读优先级。",
+        "limitationsZh": "三条回答不是人口样本，不能推断群体偏见发生率；只核验公开摘要，没有独立复现模型输出。",
+        "motivationDetail": {
+          "problemZh": "语言模型从有限文本推断作者年龄时，可能把正式措辞误当作成年证据，并给出与正确率不匹配的高置信度。",
+          "gapZh": "事后能解释刻板印象不代表盲测判断准确，需区分自我解释流畅性与实际校准。",
+          "whyImportantZh": "评估模型可靠性时应同时测量判断、置信度和提示框架影响，而非只看解释质量。",
+          "userRelevanceZh": "属于模型行为个案，对Agent评估有参考价值，和计算核心及推理硬件无直接关系。",
+          "evidence": "https://arxiv.org/abs/2610.31946v1 的公开摘要与daily.json元数据；未读全文"
+        },
+        "methodDetail": {
+          "coreIdeaZh": "围绕三名学生同题回答，在六个模型上操纵标签框架、披露格式与受众意识指令，比较年龄匹配、开放估计、置信度及揭示真值后的解释。",
+          "componentsZh": [
+            "年龄匹配与开放估计",
+            "提示框架干预",
+            "置信度校准",
+            "事后自我解释"
+          ],
+          "hardwareSystemDetailZh": "行为实证分析；未设计新算法加速器、缓存系统或芯片数据通路。",
+          "noveltyZh": "在同一小型个案中对照年龄误判、高置信度和不纠正判断质量的事后解释。",
+          "evidence": "https://arxiv.org/abs/2610.31946v1 的公开摘要与daily.json元数据；未读全文"
+        },
+        "experimentDetail": {
+          "setupZh": "三份单题、单语言回答，作者17/28/45岁；六个前沿模型、1081次API会话、3225个评分回答、六种实验条件。",
+          "baselinesZh": "同一模型在盲测、框架变化、开放估计和受众指令条件下对照；匹配任务机会水平为1/3。",
+          "metricsZh": [
+            "年龄匹配正确率",
+            "开放估计误差",
+            "自报置信度",
+            "解释内容"
+          ],
+          "mainResultsZh": "三个模型正确率接近机会水平但平均置信度73%—88%；最年轻作者最高90%被判成年；受众指令使其中一个模型改善21个百分点。",
+          "limitationsZh": "三条回答不是人口样本，不能推断群体偏见发生率；只核验公开摘要，没有独立复现模型输出。",
+          "evidence": "https://arxiv.org/abs/2610.31946v1 的公开摘要与daily.json元数据；未读全文"
+        },
+        "evidence": {
+          "usedSources": [
+            "daily.json metadata",
+            "https://arxiv.org/abs/2610.31946v1"
+          ],
+          "affiliationEvidence": "队列authorAffiliations与affiliations均为空，按任务规则保留元数据缺失说明。",
+          "experimentEvidence": "https://arxiv.org/abs/2610.31946v1 的公开摘要与daily.json元数据；未读全文",
+          "missingFields": [
+            "元数据作者单位",
+            "全文方法与实验细节"
+          ]
+        },
+        "confidence": {
+          "summary": 0.87,
+          "motivation": 0.86,
+          "method": 0.8,
+          "experiments": 0.76,
+          "affiliations": 0
+        }
+      },
+      "pushedAt": "2026-10-27T02:31:15.153Z",
+      "emailSentAt": "2026-10-27T02:31:15.153Z",
+      "firstPushedAt": "2026-10-27T02:31:15.153Z"
+    },
+    {
+      "id": "arxiv:2610.32752",
+      "source": "arXiv",
+      "title": "ActionRAG: Evidence-Refining Graph Diffusion for Long-Term Memory in LLM Agents",
+      "authors": [
+        "Navyansh Mahla",
+        "Sashank Vandrangi"
+      ],
+      "authorAffiliations": [],
+      "affiliations": [],
+      "abstract": "LLM agents need long-term memory that can recover precise and mutually consistent evidence from growing interaction histories, particularly when answers depend on relations among facts rather than isolated semantic matches. Current memory pipelines remain vulnerable at two stages: indexing errors can fragment repeated entities or merge distinct ones, and online retrieval often treats initial similarity scores as final even when the surrounding graph provides evidence for revising them. We introduce ActionRAG, a graph memory architecture that couples cautious indexing with query-time graph retroevaluation. Its indexing pipeline reconciles type labels and applies tiered entity resolution. Given a query, dual-channel entity and triple retrieval forms an initial evidence set and induces a bounded local graph. Query-conditioned receiver-normalized diffusion refines triple scores using local path structure. Seed protection, hub-penalized flux, and triple materialization preserve direct evidence while recovering missed connections. We evaluate ActionRAG on MemoryAgentBench (MAB), which tests accurate retrieval, conflict resolution, long-range understanding, and test-time learning. Across its eight deterministic-scoring columns, ActionRAG achieves 55.1 average accuracy, improving over the strongest retrieval-based memory baseline by 5.4 points. Under MAB's query-time cost accounting, mean synthesis cost stays below \\$0.001 per query on the four reported cost columns, and the sum of separately measured retrieval-side p99 components is 440.7 ms on our consumer Apple Silicon setup.",
+      "venue": "arXiv",
+      "published": "2026-10-23T14:59:37Z",
+      "updated": "2026-10-23T14:59:37Z",
+      "url": "http://arxiv.org/abs/2610.32752v1",
+      "pdfUrl": "https://arxiv.org/pdf/2610.32752v1",
+      "categories": [
+        "cs.AI",
+        "cs.CL"
+      ],
+      "collectedAt": "2026-10-26T23:55:23.545Z",
+      "firstSeenAt": "2026-10-26T23:55:23.545Z",
+      "lastSeenAt": "2026-10-26T23:55:23.545Z",
+      "collectionType": "daily-latest",
+      "matchedQuery": "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)",
+      "collectionTypes": [
+        "daily-latest"
+      ],
+      "matchedQueries": [
+        "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)"
+      ],
+      "targetThemes": [],
+      "conferenceVenues": [],
+      "conferenceYears": [],
+      "recommendationTrack": "hardware-primary",
+      "recommendationLabel": "硬件体系结构主线",
+      "recommendationScore": 152,
+      "relevanceReason": "命中 AI 处理器、体系结构、量化、训推系统或内存/缓存优化主题",
+      "pdfStatus": "remote",
+      "workflow": {
+        "digestStatus": "ready",
+        "emailStatus": "sent",
+        "digestError": "",
+        "harnessVersion": "paper-reader-v1",
+        "collectStatus": "collected",
+        "pdfStatus": "remote",
+        "harnessCheckedAt": "2026-10-27T02:31:09.976Z",
+        "harnessWarnings": [],
+        "emailSentAt": "2026-10-27T02:31:15.153Z",
+        "lastEmailError": ""
+      },
+      "digest": {
+        "summaryZh": "Agent长时记忆需恢复关系一致的证据，但实体索引会拆散同一实体或合并不同实体，初始相似分数也常忽视周围图结构。ActionRAG先协调类型标签并分层实体消歧，查询时双通道检索实体与三元组构建有界局部图，用查询条件化、接收端归一化扩散修正分数，结合种子保护和枢纽惩罚保留直接证据。均分55.1，比HippoRAG-v2高5.4个百分点；各自测得的检索与编码p99相加440.7 ms，不是端到端p99。正文成本表为0.00031—0.00116美元/查询，与摘要低于0.001的概括有差异。",
+        "motivationZh": "Agent长时记忆需恢复关系一致的证据，但实体索引会拆散同一实体或合并不同实体，初始相似分数也常忽视周围图结构。平面检索难处理多跳与事实冲突，单靠实体种子或固定相似度可能遗漏关系证据。查询时用局部结构修正候选证据，可能减少无关长上下文和错误事实综合。关联Agent记忆检索及系统开销，但graph memory不是KVCache，不能直接充当注意力核心硬件基线。",
+        "methodZh": "ActionRAG先协调类型标签并分层实体消歧，查询时双通道检索实体与三元组构建有界局部图，用查询条件化、接收端归一化扩散修正分数，结合种子保护和枢纽惩罚保留直接证据。软件检索系统，查询期无需LLM实体解析；消费者Apple Silicon测量检索组件延迟，未提出芯片结构。把谨慎图构建与查询期三元组证据重评分联合起来，而非将初始相似度视为最终证据。",
+        "experimentsZh": "MemoryAgentBench八项确定性评分列，涵盖检索、冲突消解、长程理解与测试时学习；HTML正文含成本与消融表。对比BM25、嵌入RAG、HippoRAG-v2及记忆Agent等；多数基线引用原MAB论文数值。均分55.1，比HippoRAG-v2高5.4个百分点；各自测得的检索与编码p99相加440.7 ms，不是端到端p99。正文成本表为0.00031—0.00116美元/查询，与摘要低于0.001的概括有差异。查询成本不含建图、存储、本地嵌入；部分基线模型不同且非本次重跑，不能直接解释为等条件硬件加速。",
+        "affiliationsZh": "未在 DBLP/arXiv 元数据中提供",
+        "tags": [
+          "Agent长时记忆",
+          "图检索",
+          "证据扩散"
+        ],
+        "importance": 3,
+        "researchFitZh": "关联Agent记忆检索及系统开销，但graph memory不是KVCache，不能直接充当注意力核心硬件基线。",
+        "hardwareRelevance": 2,
+        "algorithmRelevance": 4,
+        "systemRelevance": 4,
+        "readPriority": "skim",
+        "whyReadZh": "关联Agent记忆检索及系统开销，但graph memory不是KVCache，不能直接充当注意力核心硬件基线。建议按实际问题和证据范围选择后续阅读优先级。",
+        "limitationsZh": "查询成本不含建图、存储、本地嵌入；部分基线模型不同且非本次重跑，不能直接解释为等条件硬件加速。",
+        "motivationDetail": {
+          "problemZh": "Agent长时记忆需恢复关系一致的证据，但实体索引会拆散同一实体或合并不同实体，初始相似分数也常忽视周围图结构。",
+          "gapZh": "平面检索难处理多跳与事实冲突，单靠实体种子或固定相似度可能遗漏关系证据。",
+          "whyImportantZh": "查询时用局部结构修正候选证据，可能减少无关长上下文和错误事实综合。",
+          "userRelevanceZh": "关联Agent记忆检索及系统开销，但graph memory不是KVCache，不能直接充当注意力核心硬件基线。",
+          "evidence": "https://arxiv.org/abs/2610.32752v1 的公开摘要与daily.json元数据；另读 https://arxiv.org/html/2610.32752v1：HTML引言、方法概述及§4实验和成本表"
+        },
+        "methodDetail": {
+          "coreIdeaZh": "ActionRAG先协调类型标签并分层实体消歧，查询时双通道检索实体与三元组构建有界局部图，用查询条件化、接收端归一化扩散修正分数，结合种子保护和枢纽惩罚保留直接证据。",
+          "componentsZh": [
+            "类型协调与实体消歧",
+            "实体/三元组双通道",
+            "局部图扩散",
+            "种子保护与证据物化"
+          ],
+          "hardwareSystemDetailZh": "软件检索系统，查询期无需LLM实体解析；消费者Apple Silicon测量检索组件延迟，未提出芯片结构。",
+          "noveltyZh": "把谨慎图构建与查询期三元组证据重评分联合起来，而非将初始相似度视为最终证据。",
+          "evidence": "https://arxiv.org/abs/2610.32752v1 的公开摘要与daily.json元数据；另读 https://arxiv.org/html/2610.32752v1：HTML引言、方法概述及§4实验和成本表"
+        },
+        "experimentDetail": {
+          "setupZh": "MemoryAgentBench八项确定性评分列，涵盖检索、冲突消解、长程理解与测试时学习；HTML正文含成本与消融表。",
+          "baselinesZh": "对比BM25、嵌入RAG、HippoRAG-v2及记忆Agent等；多数基线引用原MAB论文数值。",
+          "metricsZh": [
+            "八列平均准确率",
+            "单查询综合成本",
+            "检索组件p99"
+          ],
+          "mainResultsZh": "均分55.1，比HippoRAG-v2高5.4个百分点；各自测得的检索与编码p99相加440.7 ms，不是端到端p99。正文成本表为0.00031—0.00116美元/查询，与摘要低于0.001的概括有差异。",
+          "limitationsZh": "查询成本不含建图、存储、本地嵌入；部分基线模型不同且非本次重跑，不能直接解释为等条件硬件加速。",
+          "evidence": "https://arxiv.org/abs/2610.32752v1 的公开摘要与daily.json元数据；另读 https://arxiv.org/html/2610.32752v1：HTML引言、方法概述及§4实验和成本表"
+        },
+        "evidence": {
+          "usedSources": [
+            "daily.json metadata",
+            "https://arxiv.org/abs/2610.32752v1",
+            "https://arxiv.org/html/2610.32752v1（HTML引言、方法概述及§4实验和成本表）"
+          ],
+          "affiliationEvidence": "队列authorAffiliations与affiliations均为空，按任务规则保留元数据缺失说明。",
+          "experimentEvidence": "https://arxiv.org/abs/2610.32752v1 的公开摘要与daily.json元数据；另读 https://arxiv.org/html/2610.32752v1：HTML引言、方法概述及§4实验和成本表",
+          "missingFields": [
+            "元数据作者单位",
+            "未逐项核验的全文实验和复现细节"
+          ]
+        },
+        "confidence": {
+          "summary": 0.87,
+          "motivation": 0.86,
+          "method": 0.88,
+          "experiments": 0.86,
+          "affiliations": 0
+        }
+      },
+      "pushedAt": "2026-10-27T02:31:15.153Z",
+      "emailSentAt": "2026-10-27T02:31:15.153Z",
+      "firstPushedAt": "2026-10-27T02:31:15.153Z"
     },
     {
       "id": "arxiv:2610.31451",
@@ -614,6 +1269,135 @@
       "pushedAt": "2026-10-24T14:49:32.084Z",
       "emailSentAt": "2026-10-24T14:49:32.084Z",
       "firstPushedAt": "2026-10-24T14:49:32.084Z"
+    },
+    {
+      "id": "arxiv:2610.32830",
+      "source": "arXiv",
+      "title": "Embodied Emissions of 2.5D and 3D Scaling in Chipletized GPUs for Low-Carbon AI",
+      "authors": [
+        "Hannah Watson",
+        "Arjun Singh",
+        "Jennifer Stephenson",
+        "Job Soethoudt",
+        "Debjyoti Bhattacharjee",
+        "James Myers"
+      ],
+      "authorAffiliations": [],
+      "affiliations": [],
+      "abstract": "GPU compute resources are scaling to support growing AI workloads, leading to further rises in the climate change impact of hyperscale data centers that rely on high-performance GPUs. To model how packaging decisions impact the carbon footprint we have estimated the embodied emissions (EE) of a chiplet-based GPU that has been scaled in 2.5D and 3D using the imec.netzero modelling platform. We doubled the number of compute units and high bandwidth memory (HBM) capacity in the 2.5D and 3D scaled systems and found that 3D scaling results in an 89% increase in EE, as compared to an increase of 141% for 2.5D scaling, positioning 3D scaling as an attractive solution to limit the embodied emissions due to GPU scaling.",
+      "venue": "arXiv",
+      "published": "2026-10-23T16:03:19Z",
+      "updated": "2026-10-23T16:03:19Z",
+      "url": "http://arxiv.org/abs/2610.32830v1",
+      "pdfUrl": "https://arxiv.org/pdf/2610.32830v1",
+      "categories": [
+        "cs.AR"
+      ],
+      "collectedAt": "2026-10-26T23:55:23.545Z",
+      "firstSeenAt": "2026-10-26T23:55:23.545Z",
+      "lastSeenAt": "2026-10-26T23:55:23.545Z",
+      "collectionType": "daily-latest",
+      "matchedQuery": "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)",
+      "collectionTypes": [
+        "daily-latest"
+      ],
+      "matchedQueries": [
+        "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)"
+      ],
+      "targetThemes": [],
+      "conferenceVenues": [],
+      "conferenceYears": [],
+      "recommendationTrack": "hardware-primary",
+      "recommendationLabel": "硬件体系结构主线",
+      "recommendationScore": 147,
+      "relevanceReason": "命中 AI 处理器、体系结构、量化、训推系统或内存/缓存优化主题",
+      "pdfStatus": "remote",
+      "workflow": {
+        "digestStatus": "ready",
+        "emailStatus": "sent",
+        "digestError": "",
+        "harnessVersion": "paper-reader-v1",
+        "collectStatus": "collected",
+        "pdfStatus": "remote",
+        "harnessCheckedAt": "2026-10-27T02:31:09.976Z",
+        "harnessWarnings": [],
+        "emailSentAt": "2026-10-27T02:31:15.153Z",
+        "lastEmailError": ""
+      },
+      "digest": {
+        "summaryZh": "AI GPU算力与HBM容量扩展会增加制造端隐含碳排放，封装选择可能改变增长幅度，不能只评估使用时功耗。用imec.netzero自底向上制造模型估计MI300X启发的chiplet GPU，并在计算单元和HBM容量翻倍条件下比较平面扩展与堆叠扩展，结合晶粒及封装良率核算。3D扩展隐含排放比基线增89%，2.5D增141%；这是制造排放增加幅度的比较，不代表3D总碳排放下降89%。",
+        "motivationZh": "AI GPU算力与HBM容量扩展会增加制造端隐含碳排放，封装选择可能改变增长幅度，不能只评估使用时功耗。需要在匹配计算单元和HBM扩容量时分解2.5D及3D的晶粒、互连与良率制造影响。下一代加速器设计的环境成本涉及HBM和封装制造，不只涉及运行能效。与chiplet、3D内存和GPU系统设计相关，可作为环境成本维度参考，不能代替计算核心性能评测。",
+        "methodZh": "用imec.netzero自底向上制造模型估计MI300X启发的chiplet GPU，并在计算单元和HBM容量翻倍条件下比较平面扩展与堆叠扩展，结合晶粒及封装良率核算。基线为计算晶粒堆在IO晶粒上的chiplet GPU；3D方案增加顶部计算晶粒和HBM堆栈，2.5D方案扩大封装平面。把封装扩展路线与制造良率联系到同等资源增长的隐含排放差异。",
+        "experimentsZh": "四页PDF§II—III，以公开尺寸和工艺估计的MI300X启发GPU为模型基线，计算单元及HBM容量翻倍；非流片实测。原始chiplet GPU及2.5D、3D两种扩展模型，匹配计算资源和HBM容量。3D扩展隐含排放比基线增89%，2.5D增141%；这是制造排放增加幅度的比较，不代表3D总碳排放下降89%。制造模型未计HBM DRAM额外减薄、reticle stitching和翘曲影响；没有把运行能耗或热限制纳入完整生命周期验证。",
+        "affiliationsZh": "未在 DBLP/arXiv 元数据中提供",
+        "tags": [
+          "chiplet GPU",
+          "3D集成",
+          "制造碳排放"
+        ],
+        "importance": 4,
+        "researchFitZh": "与chiplet、3D内存和GPU系统设计相关，可作为环境成本维度参考，不能代替计算核心性能评测。",
+        "hardwareRelevance": 5,
+        "algorithmRelevance": 1,
+        "systemRelevance": 3,
+        "readPriority": "skim",
+        "whyReadZh": "与chiplet、3D内存和GPU系统设计相关，可作为环境成本维度参考，不能代替计算核心性能评测。建议按实际问题和证据范围选择后续阅读优先级。",
+        "limitationsZh": "制造模型未计HBM DRAM额外减薄、reticle stitching和翘曲影响；没有把运行能耗或热限制纳入完整生命周期验证。",
+        "motivationDetail": {
+          "problemZh": "AI GPU算力与HBM容量扩展会增加制造端隐含碳排放，封装选择可能改变增长幅度，不能只评估使用时功耗。",
+          "gapZh": "需要在匹配计算单元和HBM扩容量时分解2.5D及3D的晶粒、互连与良率制造影响。",
+          "whyImportantZh": "下一代加速器设计的环境成本涉及HBM和封装制造，不只涉及运行能效。",
+          "userRelevanceZh": "与chiplet、3D内存和GPU系统设计相关，可作为环境成本维度参考，不能代替计算核心性能评测。",
+          "evidence": "https://arxiv.org/abs/2610.32830v1 的公开摘要与daily.json元数据；另读 https://arxiv.org/pdf/2610.32830v1：PDF第1—2页摘要、实验设置及封装扩展模型"
+        },
+        "methodDetail": {
+          "coreIdeaZh": "用imec.netzero自底向上制造模型估计MI300X启发的chiplet GPU，并在计算单元和HBM容量翻倍条件下比较平面扩展与堆叠扩展，结合晶粒及封装良率核算。",
+          "componentsZh": [
+            "制造过程隐含碳模型",
+            "2.5D与3D匹配容量扩展",
+            "HBM/逻辑/中介层分解",
+            "封装良率"
+          ],
+          "hardwareSystemDetailZh": "基线为计算晶粒堆在IO晶粒上的chiplet GPU；3D方案增加顶部计算晶粒和HBM堆栈，2.5D方案扩大封装平面。",
+          "noveltyZh": "把封装扩展路线与制造良率联系到同等资源增长的隐含排放差异。",
+          "evidence": "https://arxiv.org/abs/2610.32830v1 的公开摘要与daily.json元数据；另读 https://arxiv.org/pdf/2610.32830v1：PDF第1—2页摘要、实验设置及封装扩展模型"
+        },
+        "experimentDetail": {
+          "setupZh": "四页PDF§II—III，以公开尺寸和工艺估计的MI300X启发GPU为模型基线，计算单元及HBM容量翻倍；非流片实测。",
+          "baselinesZh": "原始chiplet GPU及2.5D、3D两种扩展模型，匹配计算资源和HBM容量。",
+          "metricsZh": [
+            "隐含碳排放增幅",
+            "部件贡献",
+            "封装良率"
+          ],
+          "mainResultsZh": "3D扩展隐含排放比基线增89%，2.5D增141%；这是制造排放增加幅度的比较，不代表3D总碳排放下降89%。",
+          "limitationsZh": "制造模型未计HBM DRAM额外减薄、reticle stitching和翘曲影响；没有把运行能耗或热限制纳入完整生命周期验证。",
+          "evidence": "https://arxiv.org/abs/2610.32830v1 的公开摘要与daily.json元数据；另读 https://arxiv.org/pdf/2610.32830v1：PDF第1—2页摘要、实验设置及封装扩展模型"
+        },
+        "evidence": {
+          "usedSources": [
+            "daily.json metadata",
+            "https://arxiv.org/abs/2610.32830v1",
+            "https://arxiv.org/pdf/2610.32830v1（PDF第1—2页摘要、实验设置及封装扩展模型）"
+          ],
+          "affiliationEvidence": "队列authorAffiliations与affiliations均为空，按任务规则保留元数据缺失说明。",
+          "experimentEvidence": "https://arxiv.org/abs/2610.32830v1 的公开摘要与daily.json元数据；另读 https://arxiv.org/pdf/2610.32830v1：PDF第1—2页摘要、实验设置及封装扩展模型",
+          "missingFields": [
+            "元数据作者单位",
+            "未逐项核验的全文实验和复现细节"
+          ]
+        },
+        "confidence": {
+          "summary": 0.87,
+          "motivation": 0.86,
+          "method": 0.88,
+          "experiments": 0.86,
+          "affiliations": 0
+        }
+      },
+      "pushedAt": "2026-10-27T02:31:15.153Z",
+      "emailSentAt": "2026-10-27T02:31:15.153Z",
+      "firstPushedAt": "2026-10-27T02:31:15.153Z"
     },
     {
       "id": "arxiv:2604.27384",
@@ -5380,6 +6164,131 @@
       "firstPushedAt": "2026-10-24T14:49:32.084Z"
     },
     {
+      "id": "arxiv:2610.32888",
+      "source": "arXiv",
+      "title": "When Human Corrections Travel: Safety in Federated VLA Adaptation",
+      "authors": [
+        "Vigneshwaran Subbaraju",
+        "Obaidullah Zaland",
+        "Monowar Bhuyan"
+      ],
+      "authorAffiliations": [],
+      "affiliations": [],
+      "abstract": "Vision-language-action (VLA) policies can adapt to local human intervention, while federated learning can combine distributed robot experience without pooling raw records. We examine their prospective intersection: sharing adaptations derived from diverse human corrections across tasks, environments, people, and robot embodiments. Corrections differ in modality, safety semantics(urgency, behavioral scope, etc.), and privacy sensitivity. A shared update that improves mean task success may suppress a rare safety intervention or produce an unsafe response on another robot. We argue for three requirements: preserve the context and uncertainty of multimodal corrections when deciding what to share; assess candidate updates in each receiving robot's closed loop before deployment; and evaluate leakage alongside retention of safety-critical evidence. Immediate, legible defensive behavior remains necessary during human interaction. We offer counterexamples and a falsifiable evaluation agenda, not experimental results.",
+      "venue": "arXiv",
+      "published": "2026-10-23T16:56:03Z",
+      "updated": "2026-10-23T16:56:03Z",
+      "url": "http://arxiv.org/abs/2610.32888v1",
+      "pdfUrl": "https://arxiv.org/pdf/2610.32888v1",
+      "categories": [
+        "cs.RO",
+        "cs.LG"
+      ],
+      "collectedAt": "2026-10-26T23:55:25.257Z",
+      "firstSeenAt": "2026-10-26T23:55:25.257Z",
+      "lastSeenAt": "2026-10-26T23:55:25.257Z",
+      "collectionType": "daily-latest",
+      "matchedQuery": "(all:agent OR all:agents OR all:agentic OR all:reasoning OR all:post-training OR all:alignment OR all:multimodal OR all:world-model) AND (all:LLM OR all:foundation OR all:language)",
+      "collectionTypes": [
+        "daily-latest"
+      ],
+      "matchedQueries": [
+        "(all:agent OR all:agents OR all:agentic OR all:reasoning OR all:post-training OR all:alignment OR all:multimodal OR all:world-model) AND (all:LLM OR all:foundation OR all:language)"
+      ],
+      "targetThemes": [],
+      "conferenceVenues": [],
+      "conferenceYears": [],
+      "recommendationTrack": "algorithm-trend",
+      "recommendationLabel": "算法趋势观察",
+      "recommendationScore": 43.8,
+      "relevanceReason": "命中 LLM/Agent/多模态/后训练等算法趋势主题",
+      "pdfStatus": "remote",
+      "workflow": {
+        "digestStatus": "ready",
+        "emailStatus": "sent",
+        "digestError": "",
+        "harnessVersion": "paper-reader-v1",
+        "collectStatus": "collected",
+        "pdfStatus": "remote",
+        "harnessCheckedAt": "2026-10-27T02:31:09.976Z",
+        "harnessWarnings": [],
+        "emailSentAt": "2026-10-27T02:31:15.153Z",
+        "lastEmailError": ""
+      },
+      "digest": {
+        "summaryZh": "机器人本地人工纠正可改善VLA策略，但把这些更新经联邦学习传播到其他机器人，可能稀释罕见安全干预。论文提出三项研究要求：共享时保留多模态纠正的上下文与不确定性；部署前在各接收机器人闭环评估；联合评估泄漏和安全证据保留，并强调即时可理解的防御行为。未报告实测增益，主要结论是共享更新的平均成功率不能作为接收端安全的充分证据。",
+        "motivationZh": "机器人本地人工纠正可改善VLA策略，但把这些更新经联邦学习传播到其他机器人，可能稀释罕见安全干预。平均任务成功率不保证不同任务、人员和具身条件下都保留安全语义，纠正数据还存在隐私敏感性。共享更新前需要同时验证接收机器人的闭环安全和关键证据保留。是具身模型与联邦适配安全趋势，未涉及推理计算核心或硬件数据通路。",
+        "methodZh": "论文提出三项研究要求：共享时保留多模态纠正的上下文与不确定性；部署前在各接收机器人闭环评估；联合评估泄漏和安全证据保留，并强调即时可理解的防御行为。观点与可证伪评估议程，不是已实现的联邦VLA算法、机器人芯片或加速系统。聚焦人工纠正跨机器人传播时的安全含义，提出平均成功率以外的验证要求。",
+        "experimentsZh": "作者明确提供反例与评估议程，没有原创实验结果；摘要未给机器人平台、数据集或训练配置。未开展可据此报告的受控对比，基线与量化指标结果未披露。未报告实测增益，主要结论是共享更新的平均成功率不能作为接收端安全的充分证据。仅核验摘要，属于前瞻性立场工作；不能把建议的验证流程写成已完成实验。",
+        "affiliationsZh": "未在 DBLP/arXiv 元数据中提供",
+        "tags": [
+          "联邦VLA",
+          "人工纠正",
+          "安全评估议程"
+        ],
+        "importance": 2,
+        "researchFitZh": "是具身模型与联邦适配安全趋势，未涉及推理计算核心或硬件数据通路。",
+        "hardwareRelevance": 1,
+        "algorithmRelevance": 3,
+        "systemRelevance": 2,
+        "readPriority": "skim",
+        "whyReadZh": "是具身模型与联邦适配安全趋势，未涉及推理计算核心或硬件数据通路。建议按实际问题和证据范围选择后续阅读优先级。",
+        "limitationsZh": "仅核验摘要，属于前瞻性立场工作；不能把建议的验证流程写成已完成实验。",
+        "motivationDetail": {
+          "problemZh": "机器人本地人工纠正可改善VLA策略，但把这些更新经联邦学习传播到其他机器人，可能稀释罕见安全干预。",
+          "gapZh": "平均任务成功率不保证不同任务、人员和具身条件下都保留安全语义，纠正数据还存在隐私敏感性。",
+          "whyImportantZh": "共享更新前需要同时验证接收机器人的闭环安全和关键证据保留。",
+          "userRelevanceZh": "是具身模型与联邦适配安全趋势，未涉及推理计算核心或硬件数据通路。",
+          "evidence": "https://arxiv.org/abs/2610.32888v1 的公开摘要与daily.json元数据；未读全文"
+        },
+        "methodDetail": {
+          "coreIdeaZh": "论文提出三项研究要求：共享时保留多模态纠正的上下文与不确定性；部署前在各接收机器人闭环评估；联合评估泄漏和安全证据保留，并强调即时可理解的防御行为。",
+          "componentsZh": [
+            "纠正上下文与不确定性",
+            "接收端闭环评估",
+            "泄漏与安全证据联合评估"
+          ],
+          "hardwareSystemDetailZh": "观点与可证伪评估议程，不是已实现的联邦VLA算法、机器人芯片或加速系统。",
+          "noveltyZh": "聚焦人工纠正跨机器人传播时的安全含义，提出平均成功率以外的验证要求。",
+          "evidence": "https://arxiv.org/abs/2610.32888v1 的公开摘要与daily.json元数据；未读全文"
+        },
+        "experimentDetail": {
+          "setupZh": "作者明确提供反例与评估议程，没有原创实验结果；摘要未给机器人平台、数据集或训练配置。",
+          "baselinesZh": "未开展可据此报告的受控对比，基线与量化指标结果未披露。",
+          "metricsZh": [
+            "建议评估闭环安全",
+            "建议评估隐私泄漏",
+            "建议评估关键纠正保留"
+          ],
+          "mainResultsZh": "未报告实测增益，主要结论是共享更新的平均成功率不能作为接收端安全的充分证据。",
+          "limitationsZh": "仅核验摘要，属于前瞻性立场工作；不能把建议的验证流程写成已完成实验。",
+          "evidence": "https://arxiv.org/abs/2610.32888v1 的公开摘要与daily.json元数据；未读全文"
+        },
+        "evidence": {
+          "usedSources": [
+            "daily.json metadata",
+            "https://arxiv.org/abs/2610.32888v1"
+          ],
+          "affiliationEvidence": "队列authorAffiliations与affiliations均为空，按任务规则保留元数据缺失说明。",
+          "experimentEvidence": "https://arxiv.org/abs/2610.32888v1 的公开摘要与daily.json元数据；未读全文",
+          "missingFields": [
+            "元数据作者单位",
+            "全文方法与实验细节"
+          ]
+        },
+        "confidence": {
+          "summary": 0.87,
+          "motivation": 0.86,
+          "method": 0.8,
+          "experiments": 0.76,
+          "affiliations": 0
+        }
+      },
+      "pushedAt": "2026-10-27T02:31:15.153Z",
+      "emailSentAt": "2026-10-27T02:31:15.153Z",
+      "firstPushedAt": "2026-10-27T02:31:15.153Z"
+    },
+    {
       "id": "arxiv:2605.05126",
       "source": "arXiv",
       "title": "ConsisVLA-4D: Advancing Spatiotemporal Consistency in Efficient 3D-Perception and 4D-Reasoning for Robotic Manipulation",
@@ -6162,6 +7071,129 @@
       "pushedAt": "2026-05-08T04:40:41.777Z",
       "emailSentAt": "2026-05-08T04:40:41.777Z",
       "firstPushedAt": "2026-05-08T04:40:41.777Z"
+    },
+    {
+      "id": "arxiv:2610.32967",
+      "source": "arXiv",
+      "title": "MiD-VLM: Detecting and Grounding Global Semantic Misinformation in Image-Caption Pairs",
+      "authors": [
+        "Tarunya Prasad",
+        "Bharatesh Chakravarthi"
+      ],
+      "authorAffiliations": [],
+      "affiliations": [],
+      "abstract": "Semantic misinformation can arise when an authentic image is paired with a caption that changes or distorts its narrative. Because the image itself may contain no visible signs of manipulation, methods designed to detect pixel-level artifacts can miss these misleading image-caption pairs. We study this problem using DGM4+, a dataset designed to evaluate the detection of global scene and semantic inconsistencies. We propose a multimodal model that combines image-text representations from SigLIP with visual scene features from DINOv2 through a projection MLP, and adapts Qwen2-VL-7B using LoRA. The model jointly predicts whether an image-caption pair is authentic, identifies the manipulation type, and grounds the misleading caption tokens. On the DGM4+ validation split, the model achieves an F1 score of $0.9679$ for binary authenticity classification. These results suggest that parameter-efficient adaptation of vision-language models is promising for detecting semantic inconsistencies, while also motivating further work on precise token-level grounding.",
+      "venue": "arXiv",
+      "published": "2026-10-23T17:55:02Z",
+      "updated": "2026-10-23T17:55:02Z",
+      "url": "http://arxiv.org/abs/2610.32967v1",
+      "pdfUrl": "https://arxiv.org/pdf/2610.32967v1",
+      "categories": [
+        "cs.CV"
+      ],
+      "collectedAt": "2026-10-26T23:55:25.257Z",
+      "firstSeenAt": "2026-10-26T23:55:25.257Z",
+      "lastSeenAt": "2026-10-26T23:55:25.257Z",
+      "collectionType": "daily-latest",
+      "matchedQuery": "(all:agent OR all:agents OR all:agentic OR all:reasoning OR all:post-training OR all:alignment OR all:multimodal OR all:world-model) AND (all:LLM OR all:foundation OR all:language)",
+      "collectionTypes": [
+        "daily-latest"
+      ],
+      "matchedQueries": [
+        "(all:agent OR all:agents OR all:agentic OR all:reasoning OR all:post-training OR all:alignment OR all:multimodal OR all:world-model) AND (all:LLM OR all:foundation OR all:language)"
+      ],
+      "targetThemes": [],
+      "conferenceVenues": [],
+      "conferenceYears": [],
+      "recommendationTrack": "algorithm-trend",
+      "recommendationLabel": "算法趋势观察",
+      "recommendationScore": 35.6,
+      "relevanceReason": "命中 LLM/Agent/多模态/后训练等算法趋势主题",
+      "pdfStatus": "remote",
+      "workflow": {
+        "digestStatus": "ready",
+        "emailStatus": "sent",
+        "digestError": "",
+        "harnessVersion": "paper-reader-v1",
+        "collectStatus": "collected",
+        "pdfStatus": "remote",
+        "harnessCheckedAt": "2026-10-27T02:31:09.976Z",
+        "harnessWarnings": [],
+        "emailSentAt": "2026-10-27T02:31:15.153Z",
+        "lastEmailError": ""
+      },
+      "digest": {
+        "summaryZh": "真实图像配上扭曲叙事的标题也能产生语义误导，因此依赖像素篡改痕迹的检测会漏掉图文不一致。MiD-VLM将SigLIP图文表示与DINOv2场景特征经投影MLP融合，对Qwen2-VL-7B进行LoRA适配，联合预测真假、操纵类型和误导caption token位置。DGM4+验证集二元分类F1为0.9679；该数字不代表独立测试集或token定位精度。",
+        "motivationZh": "真实图像配上扭曲叙事的标题也能产生语义误导，因此依赖像素篡改痕迹的检测会漏掉图文不一致。需要同时识别全局语义冲突、操纵类型和误导文本位置，而非只判断图像是否编辑。图文真实性评估必须结合视觉场景与文本叙事，才能识别没有像素伪造的误导。可追踪多模态推理负载与参数高效适配，但缺少计算核心优化，不能当作芯片性能基线。",
+        "methodZh": "MiD-VLM将SigLIP图文表示与DINOv2场景特征经投影MLP融合，对Qwen2-VL-7B进行LoRA适配，联合预测真假、操纵类型和误导caption token位置。模型与训练方法研究；摘要未给出硬件平台、延迟、内存占用或张量执行优化。面向全局场景语义冲突联合训练分类与文本定位，而非只检测局部图像伪造。",
+        "experimentsZh": "DGM4+图文对数据集；报告Qwen2-VL-7B适配模型在validation split的分类结果。已读摘要未披露具体对照方法、消融或测试集结果。DGM4+验证集二元分类F1为0.9679；该数字不代表独立测试集或token定位精度。只有摘要证据；没有基线表、训练规模、外域泛化及精确token定位数值，不能据单项F1声称全面领先。",
+        "affiliationsZh": "未在 DBLP/arXiv 元数据中提供",
+        "tags": [
+          "图文误导检测",
+          "多模态LoRA",
+          "语义定位"
+        ],
+        "importance": 2,
+        "researchFitZh": "可追踪多模态推理负载与参数高效适配，但缺少计算核心优化，不能当作芯片性能基线。",
+        "hardwareRelevance": 1,
+        "algorithmRelevance": 4,
+        "systemRelevance": 2,
+        "readPriority": "skim",
+        "whyReadZh": "可追踪多模态推理负载与参数高效适配，但缺少计算核心优化，不能当作芯片性能基线。建议按实际问题和证据范围选择后续阅读优先级。",
+        "limitationsZh": "只有摘要证据；没有基线表、训练规模、外域泛化及精确token定位数值，不能据单项F1声称全面领先。",
+        "motivationDetail": {
+          "problemZh": "真实图像配上扭曲叙事的标题也能产生语义误导，因此依赖像素篡改痕迹的检测会漏掉图文不一致。",
+          "gapZh": "需要同时识别全局语义冲突、操纵类型和误导文本位置，而非只判断图像是否编辑。",
+          "whyImportantZh": "图文真实性评估必须结合视觉场景与文本叙事，才能识别没有像素伪造的误导。",
+          "userRelevanceZh": "可追踪多模态推理负载与参数高效适配，但缺少计算核心优化，不能当作芯片性能基线。",
+          "evidence": "https://arxiv.org/abs/2610.32967v1 的公开摘要与daily.json元数据；未读全文"
+        },
+        "methodDetail": {
+          "coreIdeaZh": "MiD-VLM将SigLIP图文表示与DINOv2场景特征经投影MLP融合，对Qwen2-VL-7B进行LoRA适配，联合预测真假、操纵类型和误导caption token位置。",
+          "componentsZh": [
+            "SigLIP图文表示",
+            "DINOv2场景特征",
+            "MLP投影融合",
+            "Qwen2-VL LoRA多任务"
+          ],
+          "hardwareSystemDetailZh": "模型与训练方法研究；摘要未给出硬件平台、延迟、内存占用或张量执行优化。",
+          "noveltyZh": "面向全局场景语义冲突联合训练分类与文本定位，而非只检测局部图像伪造。",
+          "evidence": "https://arxiv.org/abs/2610.32967v1 的公开摘要与daily.json元数据；未读全文"
+        },
+        "experimentDetail": {
+          "setupZh": "DGM4+图文对数据集；报告Qwen2-VL-7B适配模型在validation split的分类结果。",
+          "baselinesZh": "已读摘要未披露具体对照方法、消融或测试集结果。",
+          "metricsZh": [
+            "二元真实性F1",
+            "操纵类别与token定位（未给结果）"
+          ],
+          "mainResultsZh": "DGM4+验证集二元分类F1为0.9679；该数字不代表独立测试集或token定位精度。",
+          "limitationsZh": "只有摘要证据；没有基线表、训练规模、外域泛化及精确token定位数值，不能据单项F1声称全面领先。",
+          "evidence": "https://arxiv.org/abs/2610.32967v1 的公开摘要与daily.json元数据；未读全文"
+        },
+        "evidence": {
+          "usedSources": [
+            "daily.json metadata",
+            "https://arxiv.org/abs/2610.32967v1"
+          ],
+          "affiliationEvidence": "队列authorAffiliations与affiliations均为空，按任务规则保留元数据缺失说明。",
+          "experimentEvidence": "https://arxiv.org/abs/2610.32967v1 的公开摘要与daily.json元数据；未读全文",
+          "missingFields": [
+            "元数据作者单位",
+            "全文方法与实验细节"
+          ]
+        },
+        "confidence": {
+          "summary": 0.87,
+          "motivation": 0.86,
+          "method": 0.8,
+          "experiments": 0.76,
+          "affiliations": 0
+        }
+      },
+      "pushedAt": "2026-10-27T02:31:15.153Z",
+      "emailSentAt": "2026-10-27T02:31:15.153Z",
+      "firstPushedAt": "2026-10-27T02:31:15.153Z"
     },
     {
       "id": "arxiv:2605.05161",
