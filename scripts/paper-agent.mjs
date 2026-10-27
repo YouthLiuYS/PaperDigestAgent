@@ -699,6 +699,7 @@ async function collectDblpPapers(config, collectionType, source) {
     }
     try {
       const json = await source.search(query, { limit: config.maxPerQuery });
+      console.log(`DBLP query ${index + 1}/${config.dblpQueries.length}: ${json.result.hits.hit.length} metadata records.`);
       papers.push(...parseDblpResults(json).map((paper) => tagPaper(paper, {
         collectionType,
         matchedQuery: query
