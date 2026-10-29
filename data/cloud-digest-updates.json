@@ -1,593 +1,578 @@
 {
   "harnessVersion": "paper-reader-v1",
-  "digestDate": "2026-10-28",
+  "digestDate": "2026-10-29",
   "papers": [
     {
-      "id": "arxiv:2610.35272",
+      "id": "doi:10.48550/arxiv.2608.28048",
       "digest": {
-        "summaryZh": "实时语音Agent的单麦克风转写会同时听到旁人；短片段评测掩盖长时间忘记目标说话人和损伤独说语音的问题。训练从通话自身注册说话人的因果masking Transformer，利用长通话、窗口外记忆及裁剪窗口训练，联合因果化WavLM；再把发布模型蒸馏为不含WavLM的小型CPU学生。发布版在60秒AMI窗口词错率16.13%，VoxLock为23.66%；CPU学生开发集10.66%，约占单核33%。独说干净测试仍为5.58%，差于VoxLock的2.92%。",
-        "motivationZh": "实时语音Agent的单麦克风转写会同时听到旁人；短片段评测掩盖长时间忘记目标说话人和损伤独说语音的问题。隔离更强与保留目标语音存在取舍，GPU大模型还难部署到无GPU的语音Agent。语音前处理必须同时满足长通话稳定性、实时延迟和单核成本。可参考流式Transformer蒸馏与CPU实时推理取舍，实际是音频模型和部署研究，不是NPU核心设计。",
-        "methodZh": "训练从通话自身注册说话人的因果masking Transformer，利用长通话、窗口外记忆及裁剪窗口训练，联合因果化WavLM；再把发布模型蒸馏为不含WavLM的小型CPU学生。全文§9保留帧LSTM和流式窗口、缩小Transformer并移除WavLM，在LiveKit插件内单CPU线程执行。联合处理长通话身份遗忘和独说语音损伤，并通过教师输出实现小模型实时部署。",
-        "experimentsZh": "AMI、Krisp及自建干净/串音通话；比较发布版与22.1M CPU学生，LiveKit流式执行。VoxLock和Krisp基准，并消融预训练音频编码器、窗口训练及蒸馏。发布版在60秒AMI窗口词错率16.13%，VoxLock为23.66%；CPU学生开发集10.66%，约占单核33%。独说干净测试仍为5.58%，差于VoxLock的2.92%。20 ms算法延迟不等于端到端延迟；不同窗口与数据集结果不可混比，目标语音保留仍有代价。",
+        "summaryZh": "LLM训练与服务的瓶颈不仅是算力，解码带宽、KV容量和数据移动能耗使硬件平台比较缺少统一口径。以Transformer计算结构和roofline为共同框架，梳理GPU、定制ASIC、FPGA、PIM/PNM及新型计算，并比较计算、存储、能耗、可编程性和扩展。作者认为无单一架构适合全部负载，解码受带宽影响且数据移动重要；未披露原创定量加速结果。",
+        "motivationZh": "LLM训练与服务的瓶颈不仅是算力，解码带宽、KV容量和数据移动能耗使硬件平台比较缺少统一口径。不同GPU、ASIC、FPGA及近存方案各有侧重，不能仅据峰值算力选型。明确阶段和内存约束，有助于为新推理架构建立问题背景。适合内存层次与LLM加速器背景调研；综述观点不能替代计算核心的直接实验基线。",
+        "methodZh": "以Transformer计算结构和roofline为共同框架，梳理GPU、定制ASIC、FPGA、PIM/PNM及新型计算，并比较计算、存储、能耗、可编程性和扩展。综述已有平台，主张异构、内存中心协同；未提出一个经统一实测的新核心。提供跨架构的存储瓶颈视角，属于综合分析而非新硬件机制。",
+        "experimentsZh": "公开arXiv检索摘要为综述；没有可确认的统一实验平台、模型和数据集。比较平台类别而非统一重跑；具体对照实验未在可读摘要披露。作者认为无单一架构适合全部负载，解码受带宽影响且数据移动重要；未披露原创定量加速结果。arXiv页面/PDF读取报DisabledError，仅取得arXiv检索摘要；“PIM最有前景”是作者判断，不能当作已证实普遍结论。",
         "affiliationsZh": "未在 DBLP/arXiv 元数据中提供",
         "tags": [
-          "流式语音",
-          "CPU蒸馏",
-          "实时推理"
+          "LLM硬件综述",
+          "内存墙",
+          "roofline"
         ],
         "importance": 3,
-        "researchFitZh": "可参考流式Transformer蒸馏与CPU实时推理取舍，实际是音频模型和部署研究，不是NPU核心设计。",
-        "hardwareRelevance": 2,
-        "algorithmRelevance": 4,
+        "researchFitZh": "适合内存层次与LLM加速器背景调研；综述观点不能替代计算核心的直接实验基线。",
+        "hardwareRelevance": 4,
+        "algorithmRelevance": 2,
         "systemRelevance": 4,
         "readPriority": "skim",
-        "whyReadZh": "可参考流式Transformer蒸馏与CPU实时推理取舍，实际是音频模型和部署研究，不是NPU核心设计。按证据范围和真实研究层级决定后续阅读与对比。",
-        "limitationsZh": "20 ms算法延迟不等于端到端延迟；不同窗口与数据集结果不可混比，目标语音保留仍有代价。",
+        "whyReadZh": "适合内存层次与LLM加速器背景调研；综述观点不能替代计算核心的直接实验基线。按实际证据边界选择后续精读与实验对比。",
+        "limitationsZh": "arXiv页面/PDF读取报DisabledError，仅取得arXiv检索摘要；“PIM最有前景”是作者判断，不能当作已证实普遍结论。",
         "motivationDetail": {
-          "problemZh": "实时语音Agent的单麦克风转写会同时听到旁人；短片段评测掩盖长时间忘记目标说话人和损伤独说语音的问题。",
-          "gapZh": "隔离更强与保留目标语音存在取舍，GPU大模型还难部署到无GPU的语音Agent。",
-          "whyImportantZh": "语音前处理必须同时满足长通话稳定性、实时延迟和单核成本。",
-          "userRelevanceZh": "可参考流式Transformer蒸馏与CPU实时推理取舍，实际是音频模型和部署研究，不是NPU核心设计。",
-          "evidence": "daily.json实际元数据与完整原始摘要（arXiv abs直接读取报DisabledError）；已读 https://arxiv.org/html/2610.35272v1：HTML摘要、背景与§9 CPU部署片段"
+          "problemZh": "LLM训练与服务的瓶颈不仅是算力，解码带宽、KV容量和数据移动能耗使硬件平台比较缺少统一口径。",
+          "gapZh": "不同GPU、ASIC、FPGA及近存方案各有侧重，不能仅据峰值算力选型。",
+          "whyImportantZh": "明确阶段和内存约束，有助于为新推理架构建立问题背景。",
+          "userRelevanceZh": "适合内存层次与LLM加速器背景调研；综述观点不能替代计算核心的直接实验基线。",
+          "evidence": "https://arxiv.org/abs/2608.28048；读取范围：arXiv搜索结果实际返回的完整摘要；未读全文"
         },
         "methodDetail": {
-          "coreIdeaZh": "训练从通话自身注册说话人的因果masking Transformer，利用长通话、窗口外记忆及裁剪窗口训练，联合因果化WavLM；再把发布模型蒸馏为不含WavLM的小型CPU学生。",
+          "coreIdeaZh": "以Transformer计算结构和roofline为共同框架，梳理GPU、定制ASIC、FPGA、PIM/PNM及新型计算，并比较计算、存储、能耗、可编程性和扩展。",
           "componentsZh": [
-            "因果语音掩码",
-            "通话内注册和长期记忆",
-            "裁剪窗口训练",
-            "CPU学生蒸馏"
+            "Transformer负载分解",
+            "roofline分析",
+            "跨平台综述"
           ],
-          "hardwareSystemDetailZh": "全文§9保留帧LSTM和流式窗口、缩小Transformer并移除WavLM，在LiveKit插件内单CPU线程执行。",
-          "noveltyZh": "联合处理长通话身份遗忘和独说语音损伤，并通过教师输出实现小模型实时部署。",
-          "evidence": "daily.json实际元数据与完整原始摘要（arXiv abs直接读取报DisabledError）；已读 https://arxiv.org/html/2610.35272v1：HTML摘要、背景与§9 CPU部署片段"
+          "hardwareSystemDetailZh": "综述已有平台，主张异构、内存中心协同；未提出一个经统一实测的新核心。",
+          "noveltyZh": "提供跨架构的存储瓶颈视角，属于综合分析而非新硬件机制。",
+          "evidence": "https://arxiv.org/abs/2608.28048；读取范围：arXiv搜索结果实际返回的完整摘要；未读全文"
         },
         "experimentDetail": {
-          "setupZh": "AMI、Krisp及自建干净/串音通话；比较发布版与22.1M CPU学生，LiveKit流式执行。",
-          "baselinesZh": "VoxLock和Krisp基准，并消融预训练音频编码器、窗口训练及蒸馏。",
+          "setupZh": "公开arXiv检索摘要为综述；没有可确认的统一实验平台、模型和数据集。",
+          "baselinesZh": "比较平台类别而非统一重跑；具体对照实验未在可读摘要披露。",
           "metricsZh": [
-            "词错误率",
-            "帧延迟",
-            "单线程占用",
-            "目标语音损伤"
+            "计算/带宽关系",
+            "能耗",
+            "可编程性",
+            "扩展性"
           ],
-          "mainResultsZh": "发布版在60秒AMI窗口词错率16.13%，VoxLock为23.66%；CPU学生开发集10.66%，约占单核33%。独说干净测试仍为5.58%，差于VoxLock的2.92%。",
-          "limitationsZh": "20 ms算法延迟不等于端到端延迟；不同窗口与数据集结果不可混比，目标语音保留仍有代价。",
-          "evidence": "daily.json实际元数据与完整原始摘要（arXiv abs直接读取报DisabledError）；已读 https://arxiv.org/html/2610.35272v1：HTML摘要、背景与§9 CPU部署片段"
+          "mainResultsZh": "作者认为无单一架构适合全部负载，解码受带宽影响且数据移动重要；未披露原创定量加速结果。",
+          "limitationsZh": "arXiv页面/PDF读取报DisabledError，仅取得arXiv检索摘要；“PIM最有前景”是作者判断，不能当作已证实普遍结论。",
+          "evidence": "https://arxiv.org/abs/2608.28048；读取范围：arXiv搜索结果实际返回的完整摘要；未读全文"
         },
         "evidence": {
           "usedSources": [
-            "daily.json metadata and supplied abstract",
-            "https://arxiv.org/html/2610.35272v1（HTML摘要、背景与§9 CPU部署片段）"
+            "daily.json metadata",
+            "https://arxiv.org/abs/2608.28048"
           ],
-          "affiliationEvidence": "队列authorAffiliations与affiliations为空，按任务要求保留元数据缺失说明。",
-          "experimentEvidence": "daily.json实际元数据与完整原始摘要（arXiv abs直接读取报DisabledError）；已读 https://arxiv.org/html/2610.35272v1：HTML摘要、背景与§9 CPU部署片段",
+          "affiliationEvidence": "队列未提供可靠作者单位字段；按任务要求保留元数据缺失说明。",
+          "experimentEvidence": "https://arxiv.org/abs/2608.28048；读取范围：arXiv搜索结果实际返回的完整摘要；未读全文",
           "missingFields": [
             "元数据作者单位",
-            "未核验的全文证明或实验细节"
+            "已读范围以外的全文与复现细节"
           ]
         },
         "confidence": {
-          "summary": 0.86,
-          "motivation": 0.85,
-          "method": 0.86,
-          "experiments": 0.84,
+          "summary": 0.84,
+          "motivation": 0.82,
+          "method": 0.8,
+          "experiments": 0.76,
           "affiliations": 0
         }
       }
     },
     {
-      "id": "arxiv:2610.35524",
+      "id": "doi:10.1109/isscc49663.2026.11409211",
       "digest": {
-        "summaryZh": "QCD红外相的Dirac谱密度呈接近负一次幂行为，需判断手征Anderson无序模型能否模拟这种尺度不变现象。研究具有对数非对角无序的三维手征正交系统，比较有限无序强度与增强无序极限的态密度，把谱行为联系到截断的1/t随机跃迁分布。摘要报告适中有限无序时零能处不存在所猜测幂奇异；可达能量范围内无序增强使指数趋于-1。",
-        "motivationZh": "QCD红外相的Dirac谱密度呈接近负一次幂行为，需判断手征Anderson无序模型能否模拟这种尺度不变现象。有限无序下观察到的谱尖峰，不一定意味着热力学极限中零能态密度真正幂律奇异。区分有限窗口的拟合和极限行为，是建立该物理模型解释所必需。这是量子无序与QCD谱理论，和LLM推理、低精度计算核心或缓存架构无直接关系，应归档。",
-        "methodZh": "研究具有对数非对角无序的三维手征正交系统，比较有限无序强度与增强无序极限的态密度，把谱行为联系到截断的1/t随机跃迁分布。物理理论与数值谱研究，未提供AI芯片、软件推理优化或硬件体系结构。将模拟QCD红外截止的来源从晶格尺寸转向无序强度控制。",
-        "experimentsZh": "元数据摘要披露三维模型与有限/增强无序条件；公开HTML已确认标题与引言，未核验完整数值配置。以有限无序与无序增强极限对照，并联系QCD红外谱；无LLM基线。摘要报告适中有限无序时零能处不存在所猜测幂奇异；可达能量范围内无序增强使指数趋于-1。未核验数值拟合与有限尺寸分析；不应把物理术语architecture或memory解释为计算机体系结构。",
+        "summaryZh": "投机解码和低比特LLM仍受权重片外搬运及资源利用率限制，堆叠存储需与压缩和调度协同。在ReRAM-on-logic堆叠上加入局部旋转、块式向量量化和堆叠感知PNM，配合自适应并行投机解码及乱序调度。作者报告14.08—135.69 token/s，相对普通投机解码加速4.46—7.17倍。",
+        "motivationZh": "投机解码和低比特LLM仍受权重片外搬运及资源利用率限制，堆叠存储需与压缩和调度协同。单独使用低比特或普通投机解码不能充分利用堆叠存储带宽与计算资源。近存与压缩协同是改善解码数据移动成本的具体路线。直接关联PNM、低精度旋转与投机解码，但需取得全文才能作为可复现核心基线。",
+        "methodZh": "在ReRAM-on-logic堆叠上加入局部旋转、块式向量量化和堆叠感知PNM，配合自适应并行投机解码及乱序调度。作者机构摘要明确为55nm面对面凸点堆叠芯片；未披露可读完整数据通路。把低比特压缩、堆叠存储访问和投机调度联合优化。",
+        "experimentsZh": "HKUST研究门户摘要披露55nm芯片，未披露完整模型、量化配置与输入长度。相对vanilla speculative decoding；其完整硬件和算法配置未披露。作者报告14.08—135.69 token/s，相对普通投机解码加速4.46—7.17倍。仅作者机构摘要；不同吞吐端点对应条件未知，不能视为同一模型的区间或与GPU直接比较。",
         "affiliationsZh": "未在 DBLP/arXiv 元数据中提供",
         "tags": [
-          "QCD谱理论",
-          "无序系统",
-          "偏离研究主线"
-        ],
-        "importance": 1,
-        "researchFitZh": "这是量子无序与QCD谱理论，和LLM推理、低精度计算核心或缓存架构无直接关系，应归档。",
-        "hardwareRelevance": 1,
-        "algorithmRelevance": 1,
-        "systemRelevance": 1,
-        "readPriority": "archive",
-        "whyReadZh": "这是量子无序与QCD谱理论，和LLM推理、低精度计算核心或缓存架构无直接关系，应归档。按证据范围和真实研究层级决定后续阅读与对比。",
-        "limitationsZh": "未核验数值拟合与有限尺寸分析；不应把物理术语architecture或memory解释为计算机体系结构。",
-        "motivationDetail": {
-          "problemZh": "QCD红外相的Dirac谱密度呈接近负一次幂行为，需判断手征Anderson无序模型能否模拟这种尺度不变现象。",
-          "gapZh": "有限无序下观察到的谱尖峰，不一定意味着热力学极限中零能态密度真正幂律奇异。",
-          "whyImportantZh": "区分有限窗口的拟合和极限行为，是建立该物理模型解释所必需。",
-          "userRelevanceZh": "这是量子无序与QCD谱理论，和LLM推理、低精度计算核心或缓存架构无直接关系，应归档。",
-          "evidence": "daily.json实际元数据与完整原始摘要（arXiv abs直接读取报DisabledError）；已读 https://arxiv.org/html/2610.35524v1：HTML标题、作者及引言；结论依据队列所供完整摘要"
-        },
-        "methodDetail": {
-          "coreIdeaZh": "研究具有对数非对角无序的三维手征正交系统，比较有限无序强度与增强无序极限的态密度，把谱行为联系到截断的1/t随机跃迁分布。",
-          "componentsZh": [
-            "三维手征正交模型",
-            "有限无序谱分析",
-            "截断跃迁分布",
-            "无序极限解释"
-          ],
-          "hardwareSystemDetailZh": "物理理论与数值谱研究，未提供AI芯片、软件推理优化或硬件体系结构。",
-          "noveltyZh": "将模拟QCD红外截止的来源从晶格尺寸转向无序强度控制。",
-          "evidence": "daily.json实际元数据与完整原始摘要（arXiv abs直接读取报DisabledError）；已读 https://arxiv.org/html/2610.35524v1：HTML标题、作者及引言；结论依据队列所供完整摘要"
-        },
-        "experimentDetail": {
-          "setupZh": "元数据摘要披露三维模型与有限/增强无序条件；公开HTML已确认标题与引言，未核验完整数值配置。",
-          "baselinesZh": "以有限无序与无序增强极限对照，并联系QCD红外谱；无LLM基线。",
-          "metricsZh": [
-            "态密度幂指数",
-            "能量区间",
-            "无序强度依赖"
-          ],
-          "mainResultsZh": "摘要报告适中有限无序时零能处不存在所猜测幂奇异；可达能量范围内无序增强使指数趋于-1。",
-          "limitationsZh": "未核验数值拟合与有限尺寸分析；不应把物理术语architecture或memory解释为计算机体系结构。",
-          "evidence": "daily.json实际元数据与完整原始摘要（arXiv abs直接读取报DisabledError）；已读 https://arxiv.org/html/2610.35524v1：HTML标题、作者及引言；结论依据队列所供完整摘要"
-        },
-        "evidence": {
-          "usedSources": [
-            "daily.json metadata and supplied abstract",
-            "https://arxiv.org/html/2610.35524v1（HTML标题、作者及引言；结论依据队列所供完整摘要）"
-          ],
-          "affiliationEvidence": "队列authorAffiliations与affiliations为空，按任务要求保留元数据缺失说明。",
-          "experimentEvidence": "daily.json实际元数据与完整原始摘要（arXiv abs直接读取报DisabledError）；已读 https://arxiv.org/html/2610.35524v1：HTML标题、作者及引言；结论依据队列所供完整摘要",
-          "missingFields": [
-            "元数据作者单位",
-            "未核验的全文证明或实验细节"
-          ]
-        },
-        "confidence": {
-          "summary": 0.86,
-          "motivation": 0.85,
-          "method": 0.86,
-          "experiments": 0.84,
-          "affiliations": 0
-        }
-      }
-    },
-    {
-      "id": "arxiv:2610.35256",
-      "digest": {
-        "summaryZh": "导航搜索要在数亿页面中找唯一目标，点击表不能泛化新问法，嵌入检索又常排不好熟悉站点的导航目标。Octen-WebGR用语言模型生成两token语义ID，并约束到真实URL表；通过点击数据训练把页面索引存入模型参数，再分析页面曝光次数和模型容量的作用。全导航流量top-1为59.6%，点击增强dense为46.5%；约10 GB GPU内存对比精确dense索引412 GB。发布参考实现4B单查询56 ms；2.3 GPU-ms/查询来自未发布代码的批量测量。",
-        "motivationZh": "导航搜索要在数亿页面中找唯一目标，点击表不能泛化新问法，嵌入检索又常排不好熟悉站点的导航目标。需要在导航准确率、索引存储容量与查询泛化之间取得更有效平衡。把大规模索引从显式向量搬到模型参数，会改变推理的存储和计算需求。可作为检索型LLM工作负载及权重/索引存储取舍参考，没有设计新的矩阵向量核心。",
-        "methodZh": "Octen-WebGR用语言模型生成两token语义ID，并约束到真实URL表；通过点击数据训练把页面索引存入模型参数，再分析页面曝光次数和模型容量的作用。4B模型单GPU服务；正文区分发布参考实现与未发布的KV复用解码代码，后者减少重复prompt计算。把生成式检索扩到约两亿页面，并揭示其查询侧泛化和嵌入检索页面侧泛化的互补性。",
-        "experimentsZh": "201M URL，训练次月真实导航流量；正文§10.2在空闲H200测GPU服务，0.6B另测Xeon单socket。相同点击训练的dense retriever、带点击先验dense检索及闭卷前沿LLM。全导航流量top-1为59.6%，点击增强dense为46.5%；约10 GB GPU内存对比精确dense索引412 GB。发布参考实现4B单查询56 ms；2.3 GPU-ms/查询来自未发布代码的批量测量。412 GB针对精确dense，并非所有压缩ANN索引；批量摊销GPU时间不是单查询延迟，最优解码代码未发布。",
-        "affiliationsZh": "未在 DBLP/arXiv 元数据中提供",
-        "tags": [
-          "生成式检索",
-          "受约束解码",
-          "模型索引存储"
-        ],
-        "importance": 4,
-        "researchFitZh": "可作为检索型LLM工作负载及权重/索引存储取舍参考，没有设计新的矩阵向量核心。",
-        "hardwareRelevance": 3,
-        "algorithmRelevance": 5,
-        "systemRelevance": 4,
-        "readPriority": "skim",
-        "whyReadZh": "可作为检索型LLM工作负载及权重/索引存储取舍参考，没有设计新的矩阵向量核心。按证据范围和真实研究层级决定后续阅读与对比。",
-        "limitationsZh": "412 GB针对精确dense，并非所有压缩ANN索引；批量摊销GPU时间不是单查询延迟，最优解码代码未发布。",
-        "motivationDetail": {
-          "problemZh": "导航搜索要在数亿页面中找唯一目标，点击表不能泛化新问法，嵌入检索又常排不好熟悉站点的导航目标。",
-          "gapZh": "需要在导航准确率、索引存储容量与查询泛化之间取得更有效平衡。",
-          "whyImportantZh": "把大规模索引从显式向量搬到模型参数，会改变推理的存储和计算需求。",
-          "userRelevanceZh": "可作为检索型LLM工作负载及权重/索引存储取舍参考，没有设计新的矩阵向量核心。",
-          "evidence": "daily.json实际元数据与完整原始摘要；已读 https://arxiv.org/abs/2610.35256v1；已读 https://arxiv.org/html/2610.35256v1：HTML摘要、§10与表4服务评估"
-        },
-        "methodDetail": {
-          "coreIdeaZh": "Octen-WebGR用语言模型生成两token语义ID，并约束到真实URL表；通过点击数据训练把页面索引存入模型参数，再分析页面曝光次数和模型容量的作用。",
-          "componentsZh": [
-            "两token语义ID",
-            "受约束解码",
-            "点击训练",
-            "曝光与容量缩放"
-          ],
-          "hardwareSystemDetailZh": "4B模型单GPU服务；正文区分发布参考实现与未发布的KV复用解码代码，后者减少重复prompt计算。",
-          "noveltyZh": "把生成式检索扩到约两亿页面，并揭示其查询侧泛化和嵌入检索页面侧泛化的互补性。",
-          "evidence": "daily.json实际元数据与完整原始摘要；已读 https://arxiv.org/abs/2610.35256v1；已读 https://arxiv.org/html/2610.35256v1：HTML摘要、§10与表4服务评估"
-        },
-        "experimentDetail": {
-          "setupZh": "201M URL，训练次月真实导航流量；正文§10.2在空闲H200测GPU服务，0.6B另测Xeon单socket。",
-          "baselinesZh": "相同点击训练的dense retriever、带点击先验dense检索及闭卷前沿LLM。",
-          "metricsZh": [
-            "top-1准确率",
-            "GPU内存",
-            "单查询时间",
-            "服务成本"
-          ],
-          "mainResultsZh": "全导航流量top-1为59.6%，点击增强dense为46.5%；约10 GB GPU内存对比精确dense索引412 GB。发布参考实现4B单查询56 ms；2.3 GPU-ms/查询来自未发布代码的批量测量。",
-          "limitationsZh": "412 GB针对精确dense，并非所有压缩ANN索引；批量摊销GPU时间不是单查询延迟，最优解码代码未发布。",
-          "evidence": "daily.json实际元数据与完整原始摘要；已读 https://arxiv.org/abs/2610.35256v1；已读 https://arxiv.org/html/2610.35256v1：HTML摘要、§10与表4服务评估"
-        },
-        "evidence": {
-          "usedSources": [
-            "daily.json metadata and supplied abstract",
-            "https://arxiv.org/abs/2610.35256v1",
-            "https://arxiv.org/html/2610.35256v1（HTML摘要、§10与表4服务评估）"
-          ],
-          "affiliationEvidence": "队列authorAffiliations与affiliations为空，按任务要求保留元数据缺失说明。",
-          "experimentEvidence": "daily.json实际元数据与完整原始摘要；已读 https://arxiv.org/abs/2610.35256v1；已读 https://arxiv.org/html/2610.35256v1：HTML摘要、§10与表4服务评估",
-          "missingFields": [
-            "元数据作者单位",
-            "未核验的全文证明或实验细节"
-          ]
-        },
-        "confidence": {
-          "summary": 0.86,
-          "motivation": 0.85,
-          "method": 0.86,
-          "experiments": 0.84,
-          "affiliations": 0
-        }
-      }
-    },
-    {
-      "id": "arxiv:2610.34983",
-      "digest": {
-        "summaryZh": "辐照缺陷的微观轨迹与核燃料包壳宏观劣化之间需要自洽关联，局部边界应力和长期记忆影响寿命预测。结合剂量相关半Markov更新输运、广义Doob h变换与Feynman-Kac形式，将Liouville微观缺陷轨迹映射到积分损伤势，并用投影算子交换子表示非局部记忆。摘要描述孕育、线性增长、雪崩破坏组成的S形劣化过程，并报告边界附近寿命局部骤减；无可核验量化预测误差。",
-        "motivationZh": "辐照缺陷的微观轨迹与核燃料包壳宏观劣化之间需要自洽关联，局部边界应力和长期记忆影响寿命预测。仅局部或无记忆动力学难表达微观缺陷汇约束如何形成宏观损伤路径代价。该物理问题旨在解释高燃耗条件下结构损伤和边界脆化机制。实际研究核材料损伤动力学，与LLM、芯片存储或推理计算核心无关联，应作为误召回归档。",
-        "methodZh": "结合剂量相关半Markov更新输运、广义Doob h变换与Feynman-Kac形式，将Liouville微观缺陷轨迹映射到积分损伤势，并用投影算子交换子表示非局部记忆。理论物理与数值建模；所谓path integral architecture是数学框架，不是芯片体系结构。以轨迹泛函关联非平衡涨落、空间缺陷汇约束与宏观断裂势垒。",
-        "experimentsZh": "摘要以WWER-1000/1200包壳劣化为对象；未披露完整材料参数、数值配置和实验验证。已读摘要未给明确数值对照基线，不存在可报告的AI推理基线。摘要描述孕育、线性增长、雪崩破坏组成的S形劣化过程，并报告边界附近寿命局部骤减；无可核验量化预测误差。仅核验摘要，不能据此认证核燃料安全预测能力；没有AI硬件实验或性能结论。",
-        "affiliationsZh": "未在 DBLP/arXiv 元数据中提供",
-        "tags": [
-          "核材料动力学",
-          "轨迹泛函",
-          "偏离研究主线"
-        ],
-        "importance": 1,
-        "researchFitZh": "实际研究核材料损伤动力学，与LLM、芯片存储或推理计算核心无关联，应作为误召回归档。",
-        "hardwareRelevance": 1,
-        "algorithmRelevance": 1,
-        "systemRelevance": 1,
-        "readPriority": "archive",
-        "whyReadZh": "实际研究核材料损伤动力学，与LLM、芯片存储或推理计算核心无关联，应作为误召回归档。按证据范围和真实研究层级决定后续阅读与对比。",
-        "limitationsZh": "仅核验摘要，不能据此认证核燃料安全预测能力；没有AI硬件实验或性能结论。",
-        "motivationDetail": {
-          "problemZh": "辐照缺陷的微观轨迹与核燃料包壳宏观劣化之间需要自洽关联，局部边界应力和长期记忆影响寿命预测。",
-          "gapZh": "仅局部或无记忆动力学难表达微观缺陷汇约束如何形成宏观损伤路径代价。",
-          "whyImportantZh": "该物理问题旨在解释高燃耗条件下结构损伤和边界脆化机制。",
-          "userRelevanceZh": "实际研究核材料损伤动力学，与LLM、芯片存储或推理计算核心无关联，应作为误召回归档。",
-          "evidence": "daily.json实际元数据与完整原始摘要；已读 https://arxiv.org/abs/2610.34983v1；未读全文"
-        },
-        "methodDetail": {
-          "coreIdeaZh": "结合剂量相关半Markov更新输运、广义Doob h变换与Feynman-Kac形式，将Liouville微观缺陷轨迹映射到积分损伤势，并用投影算子交换子表示非局部记忆。",
-          "componentsZh": [
-            "半Markov输运",
-            "Doob变换",
-            "Feynman-Kac轨迹泛函",
-            "宏观损伤势"
-          ],
-          "hardwareSystemDetailZh": "理论物理与数值建模；所谓path integral architecture是数学框架，不是芯片体系结构。",
-          "noveltyZh": "以轨迹泛函关联非平衡涨落、空间缺陷汇约束与宏观断裂势垒。",
-          "evidence": "daily.json实际元数据与完整原始摘要；已读 https://arxiv.org/abs/2610.34983v1；未读全文"
-        },
-        "experimentDetail": {
-          "setupZh": "摘要以WWER-1000/1200包壳劣化为对象；未披露完整材料参数、数值配置和实验验证。",
-          "baselinesZh": "已读摘要未给明确数值对照基线，不存在可报告的AI推理基线。",
-          "metricsZh": [
-            "平均寿命空间分布",
-            "损伤演化轨迹",
-            "边界脆化趋势"
-          ],
-          "mainResultsZh": "摘要描述孕育、线性增长、雪崩破坏组成的S形劣化过程，并报告边界附近寿命局部骤减；无可核验量化预测误差。",
-          "limitationsZh": "仅核验摘要，不能据此认证核燃料安全预测能力；没有AI硬件实验或性能结论。",
-          "evidence": "daily.json实际元数据与完整原始摘要；已读 https://arxiv.org/abs/2610.34983v1；未读全文"
-        },
-        "evidence": {
-          "usedSources": [
-            "daily.json metadata and supplied abstract",
-            "https://arxiv.org/abs/2610.34983v1"
-          ],
-          "affiliationEvidence": "队列authorAffiliations与affiliations为空，按任务要求保留元数据缺失说明。",
-          "experimentEvidence": "daily.json实际元数据与完整原始摘要；已读 https://arxiv.org/abs/2610.34983v1；未读全文",
-          "missingFields": [
-            "元数据作者单位",
-            "全文方法与实验细节"
-          ]
-        },
-        "confidence": {
-          "summary": 0.86,
-          "motivation": 0.85,
-          "method": 0.78,
-          "experiments": 0.74,
-          "affiliations": 0
-        }
-      }
-    },
-    {
-      "id": "arxiv:2610.35411",
-      "digest": {
-        "summaryZh": "不同规模与指令调优后的语言模型是否保留可对应的情绪表示几何，以及几何随深度如何变化，需要统一测量。对Gemma 2三种规模的base与instruction模型抽取情绪向量，拟合跨模型线性映射，比较主成分、人工效价相关及逐层输出词表投影。摘要报告清理嵌入后的30个有向模型对均在rank 1找回留出情绪；效价相关为0.71—0.78，规模增大使主成分方差更分散。",
-        "motivationZh": "不同规模与指令调优后的语言模型是否保留可对应的情绪表示几何，以及几何随深度如何变化，需要统一测量。单一模型观察无法区分规模、层深和调优对表示的影响，也不能把情绪词投影等同心理状态。表示跨模型稳定性有助于理解内部特征迁移，但不是推理效率指标。属于模型可解释性趋势，与低精度推理或矩阵向量硬件没有直接机制联系，优先归档。",
-        "methodZh": "对Gemma 2三种规模的base与instruction模型抽取情绪向量，拟合跨模型线性映射，比较主成分、人工效价相关及逐层输出词表投影。表示几何实证研究，未设计量化算法、推理kernel或芯片数据通路。用共同分析流程分离模型规模、网络深度与指令调优对情绪几何的影响。",
-        "experimentsZh": "Gemma 2 2B/9B/27B的base和调优六组模型，留出情绪迁移检验及人工效价评分相关分析。不同规模、base/调优组和清理嵌入向量版本互作对照。摘要报告清理嵌入后的30个有向模型对均在rank 1找回留出情绪；效价相关为0.71—0.78，规模增大使主成分方差更分散。仅核验公开摘要，未审查提取和统计细节；表示命名为情绪不表示模型具有人类情感。",
-        "affiliationsZh": "未在 DBLP/arXiv 元数据中提供",
-        "tags": [
-          "表示几何",
-          "模型可解释性",
-          "非硬件研究"
-        ],
-        "importance": 2,
-        "researchFitZh": "属于模型可解释性趋势，与低精度推理或矩阵向量硬件没有直接机制联系，优先归档。",
-        "hardwareRelevance": 1,
-        "algorithmRelevance": 3,
-        "systemRelevance": 1,
-        "readPriority": "archive",
-        "whyReadZh": "属于模型可解释性趋势，与低精度推理或矩阵向量硬件没有直接机制联系，优先归档。按证据范围和真实研究层级决定后续阅读与对比。",
-        "limitationsZh": "仅核验公开摘要，未审查提取和统计细节；表示命名为情绪不表示模型具有人类情感。",
-        "motivationDetail": {
-          "problemZh": "不同规模与指令调优后的语言模型是否保留可对应的情绪表示几何，以及几何随深度如何变化，需要统一测量。",
-          "gapZh": "单一模型观察无法区分规模、层深和调优对表示的影响，也不能把情绪词投影等同心理状态。",
-          "whyImportantZh": "表示跨模型稳定性有助于理解内部特征迁移，但不是推理效率指标。",
-          "userRelevanceZh": "属于模型可解释性趋势，与低精度推理或矩阵向量硬件没有直接机制联系，优先归档。",
-          "evidence": "daily.json实际元数据与完整原始摘要；已读 https://arxiv.org/abs/2610.35411v1；未读全文"
-        },
-        "methodDetail": {
-          "coreIdeaZh": "对Gemma 2三种规模的base与instruction模型抽取情绪向量，拟合跨模型线性映射，比较主成分、人工效价相关及逐层输出词表投影。",
-          "componentsZh": [
-            "情绪向量抽取",
-            "跨模型线性映射",
-            "主成分分析",
-            "逐层词表投影"
-          ],
-          "hardwareSystemDetailZh": "表示几何实证研究，未设计量化算法、推理kernel或芯片数据通路。",
-          "noveltyZh": "用共同分析流程分离模型规模、网络深度与指令调优对情绪几何的影响。",
-          "evidence": "daily.json实际元数据与完整原始摘要；已读 https://arxiv.org/abs/2610.35411v1；未读全文"
-        },
-        "experimentDetail": {
-          "setupZh": "Gemma 2 2B/9B/27B的base和调优六组模型，留出情绪迁移检验及人工效价评分相关分析。",
-          "baselinesZh": "不同规模、base/调优组和清理嵌入向量版本互作对照。",
-          "metricsZh": [
-            "留出情绪检索rank",
-            "主成分方差",
-            "效价相关",
-            "情绪词进入词表前列的深度"
-          ],
-          "mainResultsZh": "摘要报告清理嵌入后的30个有向模型对均在rank 1找回留出情绪；效价相关为0.71—0.78，规模增大使主成分方差更分散。",
-          "limitationsZh": "仅核验公开摘要，未审查提取和统计细节；表示命名为情绪不表示模型具有人类情感。",
-          "evidence": "daily.json实际元数据与完整原始摘要；已读 https://arxiv.org/abs/2610.35411v1；未读全文"
-        },
-        "evidence": {
-          "usedSources": [
-            "daily.json metadata and supplied abstract",
-            "https://arxiv.org/abs/2610.35411v1"
-          ],
-          "affiliationEvidence": "队列authorAffiliations与affiliations为空，按任务要求保留元数据缺失说明。",
-          "experimentEvidence": "daily.json实际元数据与完整原始摘要；已读 https://arxiv.org/abs/2610.35411v1；未读全文",
-          "missingFields": [
-            "元数据作者单位",
-            "全文方法与实验细节"
-          ]
-        },
-        "confidence": {
-          "summary": 0.86,
-          "motivation": 0.85,
-          "method": 0.78,
-          "experiments": 0.74,
-          "affiliations": 0
-        }
-      }
-    },
-    {
-      "id": "arxiv:2610.35020",
-      "digest": {
-        "summaryZh": "注意力近似的最坏空间下界常依靠query与key完全对齐，但真实模型通常表现为小余弦相似度与各向异性。研究不依赖查询的加权token子集，在限定Q/K余弦区间和范数条件下建立近最优空间算法与下界，并分别分析均匀采样和重要性采样区域。得到近最优空间上界及匹配下界，典型参数区间均匀采样近最优；经验图对排除初始attention sink后的Q/K几何进行核查，未报告硬件加速比。",
-        "motivationZh": "注意力近似的最坏空间下界常依靠query与key完全对齐，但真实模型通常表现为小余弦相似度与各向异性。需在受限key-query夹角的更贴近观测假设下，重新判断KV token驱逐能压缩到什么程度。理论边界可解释简单采样何时足够，避免把极端构造直接当成实际KV容量需求。直接关联稀疏推理与KVCache压缩的理论动机，可参考其假设，但不是新的硬件核心或实测加速器。",
-        "methodZh": "研究不依赖查询的加权token子集，在限定Q/K余弦区间和范数条件下建立近最优空间算法与下界，并分别分析均匀采样和重要性采样区域。理论算法工作；摘要在看到查询前构建，保证针对独立固定query，不能误写成对所有未来query同时成功。下界构造也可呈现实测各向异性，并证明典型参数范围下均匀采样接近空间最优。",
-        "experimentsZh": "正文§1给出固定query的加性注意力输出误差保证；附录F以Llama 3.1 8B、Qwen3 8B、Ministral 3 8B的8192 token输入分析Q/K。对照既有最坏空间理论及均匀/重要性采样；经验几何检查不是端到端压缩系统比赛。得到近最优空间上界及匹配下界，典型参数区间均匀采样近最优；经验图对排除初始attention sink后的Q/K几何进行核查，未报告硬件加速比。需满足几何与范数限制，attention sink另行处理；固定query概率保证不等价所有自适应解码步骤同时可靠。",
-        "affiliationsZh": "未在 DBLP/arXiv 元数据中提供",
-        "tags": [
-          "KV压缩理论",
-          "Q/K各向异性",
-          "均匀采样"
+          "ReRAM堆叠",
+          "PNM",
+          "投机解码"
         ],
         "importance": 5,
-        "researchFitZh": "直接关联稀疏推理与KVCache压缩的理论动机，可参考其假设，但不是新的硬件核心或实测加速器。",
-        "hardwareRelevance": 3,
-        "algorithmRelevance": 5,
-        "systemRelevance": 4,
+        "researchFitZh": "直接关联PNM、低精度旋转与投机解码，但需取得全文才能作为可复现核心基线。",
+        "hardwareRelevance": 5,
+        "algorithmRelevance": 4,
+        "systemRelevance": 5,
         "readPriority": "deep-read",
-        "whyReadZh": "直接关联稀疏推理与KVCache压缩的理论动机，可参考其假设，但不是新的硬件核心或实测加速器。按证据范围和真实研究层级决定后续阅读与对比。",
-        "limitationsZh": "需满足几何与范数限制，attention sink另行处理；固定query概率保证不等价所有自适应解码步骤同时可靠。",
+        "whyReadZh": "直接关联PNM、低精度旋转与投机解码，但需取得全文才能作为可复现核心基线。按实际证据边界选择后续精读与实验对比。",
+        "limitationsZh": "仅作者机构摘要；不同吞吐端点对应条件未知，不能视为同一模型的区间或与GPU直接比较。",
         "motivationDetail": {
-          "problemZh": "注意力近似的最坏空间下界常依靠query与key完全对齐，但真实模型通常表现为小余弦相似度与各向异性。",
-          "gapZh": "需在受限key-query夹角的更贴近观测假设下，重新判断KV token驱逐能压缩到什么程度。",
-          "whyImportantZh": "理论边界可解释简单采样何时足够，避免把极端构造直接当成实际KV容量需求。",
-          "userRelevanceZh": "直接关联稀疏推理与KVCache压缩的理论动机，可参考其假设，但不是新的硬件核心或实测加速器。",
-          "evidence": "daily.json实际元数据与完整原始摘要；已读 https://arxiv.org/abs/2610.35020v1；已读 https://arxiv.org/html/2610.35020v1：HTML§1问题定义及附录F实验描述"
+          "problemZh": "投机解码和低比特LLM仍受权重片外搬运及资源利用率限制，堆叠存储需与压缩和调度协同。",
+          "gapZh": "单独使用低比特或普通投机解码不能充分利用堆叠存储带宽与计算资源。",
+          "whyImportantZh": "近存与压缩协同是改善解码数据移动成本的具体路线。",
+          "userRelevanceZh": "直接关联PNM、低精度旋转与投机解码，但需取得全文才能作为可复现核心基线。",
+          "evidence": "https://researchportal.hkust.edu.hk/en/publications/a-1408-to-13569tokens-reram-on-logic-stacked-outlier-free-large-l/；读取范围：作者机构研究门户摘要"
         },
         "methodDetail": {
-          "coreIdeaZh": "研究不依赖查询的加权token子集，在限定Q/K余弦区间和范数条件下建立近最优空间算法与下界，并分别分析均匀采样和重要性采样区域。",
+          "coreIdeaZh": "在ReRAM-on-logic堆叠上加入局部旋转、块式向量量化和堆叠感知PNM，配合自适应并行投机解码及乱序调度。",
           "componentsZh": [
-            "受限Q/K几何",
-            "查询无关加权摘要",
-            "均匀采样区域",
-            "重要性采样与空间下界"
+            "局部旋转",
+            "块式向量量化",
+            "堆叠PNM",
+            "并行投机与乱序调度"
           ],
-          "hardwareSystemDetailZh": "理论算法工作；摘要在看到查询前构建，保证针对独立固定query，不能误写成对所有未来query同时成功。",
-          "noveltyZh": "下界构造也可呈现实测各向异性，并证明典型参数范围下均匀采样接近空间最优。",
-          "evidence": "daily.json实际元数据与完整原始摘要；已读 https://arxiv.org/abs/2610.35020v1；已读 https://arxiv.org/html/2610.35020v1：HTML§1问题定义及附录F实验描述"
+          "hardwareSystemDetailZh": "作者机构摘要明确为55nm面对面凸点堆叠芯片；未披露可读完整数据通路。",
+          "noveltyZh": "把低比特压缩、堆叠存储访问和投机调度联合优化。",
+          "evidence": "https://researchportal.hkust.edu.hk/en/publications/a-1408-to-13569tokens-reram-on-logic-stacked-outlier-free-large-l/；读取范围：作者机构研究门户摘要"
         },
         "experimentDetail": {
-          "setupZh": "正文§1给出固定query的加性注意力输出误差保证；附录F以Llama 3.1 8B、Qwen3 8B、Ministral 3 8B的8192 token输入分析Q/K。",
-          "baselinesZh": "对照既有最坏空间理论及均匀/重要性采样；经验几何检查不是端到端压缩系统比赛。",
+          "setupZh": "HKUST研究门户摘要披露55nm芯片，未披露完整模型、量化配置与输入长度。",
+          "baselinesZh": "相对vanilla speculative decoding；其完整硬件和算法配置未披露。",
           "metricsZh": [
-            "保留token空间",
-            "注意力输出误差",
-            "Q/K余弦与范数"
+            "token/s",
+            "投机解码加速比"
           ],
-          "mainResultsZh": "得到近最优空间上界及匹配下界，典型参数区间均匀采样近最优；经验图对排除初始attention sink后的Q/K几何进行核查，未报告硬件加速比。",
-          "limitationsZh": "需满足几何与范数限制，attention sink另行处理；固定query概率保证不等价所有自适应解码步骤同时可靠。",
-          "evidence": "daily.json实际元数据与完整原始摘要；已读 https://arxiv.org/abs/2610.35020v1；已读 https://arxiv.org/html/2610.35020v1：HTML§1问题定义及附录F实验描述"
+          "mainResultsZh": "作者报告14.08—135.69 token/s，相对普通投机解码加速4.46—7.17倍。",
+          "limitationsZh": "仅作者机构摘要；不同吞吐端点对应条件未知，不能视为同一模型的区间或与GPU直接比较。",
+          "evidence": "https://researchportal.hkust.edu.hk/en/publications/a-1408-to-13569tokens-reram-on-logic-stacked-outlier-free-large-l/；读取范围：作者机构研究门户摘要"
         },
         "evidence": {
           "usedSources": [
-            "daily.json metadata and supplied abstract",
-            "https://arxiv.org/abs/2610.35020v1",
-            "https://arxiv.org/html/2610.35020v1（HTML§1问题定义及附录F实验描述）"
+            "daily.json metadata",
+            "https://researchportal.hkust.edu.hk/en/publications/a-1408-to-13569tokens-reram-on-logic-stacked-outlier-free-large-l/"
           ],
-          "affiliationEvidence": "队列authorAffiliations与affiliations为空，按任务要求保留元数据缺失说明。",
-          "experimentEvidence": "daily.json实际元数据与完整原始摘要；已读 https://arxiv.org/abs/2610.35020v1；已读 https://arxiv.org/html/2610.35020v1：HTML§1问题定义及附录F实验描述",
+          "affiliationEvidence": "队列未提供可靠作者单位字段；按任务要求保留元数据缺失说明。",
+          "experimentEvidence": "https://researchportal.hkust.edu.hk/en/publications/a-1408-to-13569tokens-reram-on-logic-stacked-outlier-free-large-l/；读取范围：作者机构研究门户摘要",
           "missingFields": [
             "元数据作者单位",
-            "未核验的全文证明或实验细节"
+            "已读范围以外的全文与复现细节"
           ]
         },
         "confidence": {
-          "summary": 0.86,
-          "motivation": 0.85,
-          "method": 0.86,
-          "experiments": 0.84,
+          "summary": 0.84,
+          "motivation": 0.82,
+          "method": 0.8,
+          "experiments": 0.76,
           "affiliations": 0
         }
       }
     },
     {
-      "id": "arxiv:2610.35832",
+      "id": "doi:10.23919/date69613.2026.11539329",
       "digest": {
-        "summaryZh": "通用多模态Agent可直接控制机器人，但与专门后训练VLA/WAM在不同操作需求上的互补性尚不清晰。在相同视觉与本体感知协议下，比较GPT-6-Astra直接输出waypoint和允许调用后训练VLA/WAM的两种harness，按任务类型分析互补与控制交接失败。直接控制擅长短时程但弱于长时程与高精度接触；调用策略使总体成功率达到最强对照水平并减少token成本，仍低于逐任务最优组件上界。",
-        "motivationZh": "通用多模态Agent可直接控制机器人，但与专门后训练VLA/WAM在不同操作需求上的互补性尚不清晰。单个总体成功率不能揭示长短时程、接触精度和策略调用时机带来的能力边界。判断何时调用专用策略，可以同时影响任务可靠性和token成本。适合Agent harness与多模态推理负载趋势跟踪，不是推理芯片核心优化工作。",
-        "methodZh": "在相同视觉与本体感知协议下，比较GPT-6-Astra直接输出waypoint和允许调用后训练VLA/WAM的两种harness，按任务类型分析互补与控制交接失败。机器人Agent系统评测，未设计量化转换单元、矩阵阵列或片上存储结构。把通用Agent和专用策略组合放进同一基准，分析混合控制仍低于逐任务组件上界的原因。",
-        "experimentsZh": "EBench机器人操作基准，通用Agent及后训练VLA/WAM在一致观测协议下测试；摘要未披露全部设备和数值。独立后训练策略、Agent直接控制及harness-with-policy配置。直接控制擅长短时程但弱于长时程与高精度接触；调用策略使总体成功率达到最强对照水平并减少token成本，仍低于逐任务最优组件上界。摘要未给完整成功率和成本表；不能把定性减少成本换算为芯片速度或能效收益。",
+        "summaryZh": "BFP共享指数减少格式开销，但更低位宽时对离群值敏感，启发式块长和尾数分配也难匹配各层敏感度。AO-BFP以自适应离群指数映射和逐层敏感度驱动的混合精度搜索配置BFP，并用统一的可重构位串行数据通路利用位稀疏。IEEE摘要报告相对ANT、OliVe、BitMoD分别加速1.61、1.39、1.11倍，并称保持模型精度。",
+        "motivationZh": "BFP共享指数减少格式开销，但更低位宽时对离群值敏感，启发式块长和尾数分配也难匹配各层敏感度。量化引出的位级稀疏尚未与可伸缩计算数据通路系统结合。低精度若只节省容量而无法减少执行成本，难充分发挥芯片收益。直接关联自适应精度、离群值处理与位串行核心，适合作为量化硬件协同参考。",
+        "methodZh": "AO-BFP以自适应离群指数映射和逐层敏感度驱动的混合精度搜索配置BFP，并用统一的可重构位串行数据通路利用位稀疏。算法硬件协同加速器；公开摘要未给阵列大小、工艺或精度组合。把BFP离群处理及精度选择与位稀疏执行统一设计。",
+        "experimentsZh": "DATE 2026论文，IEEE检索摘要披露LLM推理评估；具体模型和实验平台未给。ANT、OliVe和BitMoD加速器。IEEE摘要报告相对ANT、OliVe、BitMoD分别加速1.61、1.39、1.11倍，并称保持模型精度。IEEE正文受JavaScript验证阻挡；未读实验表，无法确认等面积、精度或带宽配置是否匹配。",
         "affiliationsZh": "未在 DBLP/arXiv 元数据中提供",
         "tags": [
-          "机器人Agent",
-          "策略调用",
-          "推理成本"
+          "BFP",
+          "离群值",
+          "位串行核心"
         ],
-        "importance": 3,
-        "researchFitZh": "适合Agent harness与多模态推理负载趋势跟踪，不是推理芯片核心优化工作。",
-        "hardwareRelevance": 1,
+        "importance": 5,
+        "researchFitZh": "直接关联自适应精度、离群值处理与位串行核心，适合作为量化硬件协同参考。",
+        "hardwareRelevance": 5,
         "algorithmRelevance": 4,
         "systemRelevance": 3,
-        "readPriority": "skim",
-        "whyReadZh": "适合Agent harness与多模态推理负载趋势跟踪，不是推理芯片核心优化工作。按证据范围和真实研究层级决定后续阅读与对比。",
-        "limitationsZh": "摘要未给完整成功率和成本表；不能把定性减少成本换算为芯片速度或能效收益。",
+        "readPriority": "deep-read",
+        "whyReadZh": "直接关联自适应精度、离群值处理与位串行核心，适合作为量化硬件协同参考。按实际证据边界选择后续精读与实验对比。",
+        "limitationsZh": "IEEE正文受JavaScript验证阻挡；未读实验表，无法确认等面积、精度或带宽配置是否匹配。",
         "motivationDetail": {
-          "problemZh": "通用多模态Agent可直接控制机器人，但与专门后训练VLA/WAM在不同操作需求上的互补性尚不清晰。",
-          "gapZh": "单个总体成功率不能揭示长短时程、接触精度和策略调用时机带来的能力边界。",
-          "whyImportantZh": "判断何时调用专用策略，可以同时影响任务可靠性和token成本。",
-          "userRelevanceZh": "适合Agent harness与多模态推理负载趋势跟踪，不是推理芯片核心优化工作。",
-          "evidence": "daily.json实际元数据与完整原始摘要；已读 https://arxiv.org/abs/2610.35832v1；未读全文"
+          "problemZh": "BFP共享指数减少格式开销，但更低位宽时对离群值敏感，启发式块长和尾数分配也难匹配各层敏感度。",
+          "gapZh": "量化引出的位级稀疏尚未与可伸缩计算数据通路系统结合。",
+          "whyImportantZh": "低精度若只节省容量而无法减少执行成本，难充分发挥芯片收益。",
+          "userRelevanceZh": "直接关联自适应精度、离群值处理与位串行核心，适合作为量化硬件协同参考。",
+          "evidence": "https://doi.org/10.23919/DATE69613.2026.11539329；读取范围：IEEE搜索检索返回的完整摘要；正文验证墙"
         },
         "methodDetail": {
-          "coreIdeaZh": "在相同视觉与本体感知协议下，比较GPT-6-Astra直接输出waypoint和允许调用后训练VLA/WAM的两种harness，按任务类型分析互补与控制交接失败。",
+          "coreIdeaZh": "AO-BFP以自适应离群指数映射和逐层敏感度驱动的混合精度搜索配置BFP，并用统一的可重构位串行数据通路利用位稀疏。",
           "componentsZh": [
-            "直接waypoint控制",
-            "VLA/WAM策略调用",
-            "统一观测协议",
-            "任务维度能力分析"
+            "离群指数映射",
+            "层敏感度精度搜索",
+            "统一位串行通路"
           ],
-          "hardwareSystemDetailZh": "机器人Agent系统评测，未设计量化转换单元、矩阵阵列或片上存储结构。",
-          "noveltyZh": "把通用Agent和专用策略组合放进同一基准，分析混合控制仍低于逐任务组件上界的原因。",
-          "evidence": "daily.json实际元数据与完整原始摘要；已读 https://arxiv.org/abs/2610.35832v1；未读全文"
+          "hardwareSystemDetailZh": "算法硬件协同加速器；公开摘要未给阵列大小、工艺或精度组合。",
+          "noveltyZh": "把BFP离群处理及精度选择与位稀疏执行统一设计。",
+          "evidence": "https://doi.org/10.23919/DATE69613.2026.11539329；读取范围：IEEE搜索检索返回的完整摘要；正文验证墙"
         },
         "experimentDetail": {
-          "setupZh": "EBench机器人操作基准，通用Agent及后训练VLA/WAM在一致观测协议下测试；摘要未披露全部设备和数值。",
-          "baselinesZh": "独立后训练策略、Agent直接控制及harness-with-policy配置。",
+          "setupZh": "DATE 2026论文，IEEE检索摘要披露LLM推理评估；具体模型和实验平台未给。",
+          "baselinesZh": "ANT、OliVe和BitMoD加速器。",
           "metricsZh": [
-            "任务成功率",
-            "泛化维度变化",
-            "token成本"
+            "加速比",
+            "模型精度保持"
           ],
-          "mainResultsZh": "直接控制擅长短时程但弱于长时程与高精度接触；调用策略使总体成功率达到最强对照水平并减少token成本，仍低于逐任务最优组件上界。",
-          "limitationsZh": "摘要未给完整成功率和成本表；不能把定性减少成本换算为芯片速度或能效收益。",
-          "evidence": "daily.json实际元数据与完整原始摘要；已读 https://arxiv.org/abs/2610.35832v1；未读全文"
+          "mainResultsZh": "IEEE摘要报告相对ANT、OliVe、BitMoD分别加速1.61、1.39、1.11倍，并称保持模型精度。",
+          "limitationsZh": "IEEE正文受JavaScript验证阻挡；未读实验表，无法确认等面积、精度或带宽配置是否匹配。",
+          "evidence": "https://doi.org/10.23919/DATE69613.2026.11539329；读取范围：IEEE搜索检索返回的完整摘要；正文验证墙"
         },
         "evidence": {
           "usedSources": [
-            "daily.json metadata and supplied abstract",
-            "https://arxiv.org/abs/2610.35832v1"
+            "daily.json metadata",
+            "https://doi.org/10.23919/DATE69613.2026.11539329"
           ],
-          "affiliationEvidence": "队列authorAffiliations与affiliations为空，按任务要求保留元数据缺失说明。",
-          "experimentEvidence": "daily.json实际元数据与完整原始摘要；已读 https://arxiv.org/abs/2610.35832v1；未读全文",
+          "affiliationEvidence": "队列未提供可靠作者单位字段；按任务要求保留元数据缺失说明。",
+          "experimentEvidence": "https://doi.org/10.23919/DATE69613.2026.11539329；读取范围：IEEE搜索检索返回的完整摘要；正文验证墙",
           "missingFields": [
             "元数据作者单位",
-            "全文方法与实验细节"
+            "已读范围以外的全文与复现细节"
           ]
         },
         "confidence": {
-          "summary": 0.86,
-          "motivation": 0.85,
-          "method": 0.78,
-          "experiments": 0.74,
+          "summary": 0.84,
+          "motivation": 0.82,
+          "method": 0.8,
+          "experiments": 0.76,
           "affiliations": 0
         }
       }
     },
     {
-      "id": "arxiv:2610.35817",
+      "id": "doi:10.1109/sse72781.2026.00012",
       "digest": {
-        "summaryZh": "机器人既需要理解任务和场景，也需要掌握执行运动；仅依赖大模型通用推理或真实机器人数据训练都有成本。ZAP以预训练27B模型提供世界理解，在简单模拟任务上先SFT再GRPO，通过工具harness学习机器人动作，训练不使用真实机器人数据。摘要报告真实任务96.7%，MolmoAct2为33.3%，相对GPT-6 Astra快3倍且便宜17倍；Franka RoboLab-120为55.9%，高4.9个百分点。",
-        "motivationZh": "机器人既需要理解任务和场景，也需要掌握执行运动；仅依赖大模型通用推理或真实机器人数据训练都有成本。需验证预训练理解加模拟动作学习能否组合泛化到未见物体、目标及具身。若模拟训练可转移到真实任务，可降低数据采集与在线Agent执行成本。关注VLM微调和具身Agent成本，属于算法系统趋势，不能用作低精度注意力计算核心基线。",
-        "methodZh": "ZAP以预训练27B模型提供世界理解，在简单模拟任务上先SFT再GRPO，通过工具harness学习机器人动作，训练不使用真实机器人数据。模型训练及机器人控制方法，未披露专用芯片或矩阵向量微架构优化。将预训练语义能力与模拟动作学习分工，检验零真实数据训练下的组合泛化。",
-        "experimentsZh": "真实机器人任务、未见目标操作及单臂Franka上的RoboLab-120；训练仅使用模拟机器人数据。同harness中的GPT-6 Astra与MolmoAct2 VLA，另比较RoboLab-120领先VLA/WAM。摘要报告真实任务96.7%，MolmoAct2为33.3%，相对GPT-6 Astra快3倍且便宜17倍；Franka RoboLab-120为55.9%，高4.9个百分点。结果限定论文任务与harness；仅核验摘要，未读取任务数量、置信区间和成本口径，不能外推到所有机器人任务。",
+        "summaryZh": "LLM迁移到新加速器时，算子不支持、编译断图和后端数值分歧难以定位，重复人工调试耗时。DeepView基于PyTorch forward hooks提供不支持算子检测及复现生成、逐层编译/运行定位、跨后端中间张量余弦相似度与平均绝对差分析。作者摘要称人工调试由数天或数周缩至分钟；无足够细节支持精确倍数。",
+        "motivationZh": "LLM迁移到新加速器时，算子不支持、编译断图和后端数值分歧难以定位，重复人工调试耗时。需要跨模型、跨torch.compile后端复用的错误定位和最小复现工具。新芯片能否运行真实LLM，取决于软件使能与数值排错效率。适合新NPU软件栈验证与逐层误差诊断，研究对象是调试系统而非新芯片核心。",
+        "methodZh": "DeepView基于PyTorch forward hooks提供不支持算子检测及复现生成、逐层编译/运行定位、跨后端中间张量余弦相似度与平均绝对差分析。torch.compile后端无关框架，以IBM Spyre作为外部后端实例，无需改模型源码或后端专用插桩。用统一hook观测机制覆盖算子、层失败和数值偏离三类使能问题。",
+        "experimentsZh": "IBM作者页面报告Spyre及Granite、Mistral、Bamba生产LLM；未给完整版本和样本数。人工调试工作流程；没有公开可读统一计时对照表。作者摘要称人工调试由数天或数周缩至分钟；无足够细节支持精确倍数。仅机构摘要；作者名单与队列存在名字差异，保持原始id与元数据，不推断统一基准或普遍加速。",
         "affiliationsZh": "未在 DBLP/arXiv 元数据中提供",
         "tags": [
-          "模拟到真实",
-          "VLM动作学习",
-          "组合泛化"
+          "NPU软件使能",
+          "数值调试",
+          "torch.compile"
+        ],
+        "importance": 4,
+        "researchFitZh": "适合新NPU软件栈验证与逐层误差诊断，研究对象是调试系统而非新芯片核心。",
+        "hardwareRelevance": 3,
+        "algorithmRelevance": 2,
+        "systemRelevance": 5,
+        "readPriority": "skim",
+        "whyReadZh": "适合新NPU软件栈验证与逐层误差诊断，研究对象是调试系统而非新芯片核心。按实际证据边界选择后续精读与实验对比。",
+        "limitationsZh": "仅机构摘要；作者名单与队列存在名字差异，保持原始id与元数据，不推断统一基准或普遍加速。",
+        "motivationDetail": {
+          "problemZh": "LLM迁移到新加速器时，算子不支持、编译断图和后端数值分歧难以定位，重复人工调试耗时。",
+          "gapZh": "需要跨模型、跨torch.compile后端复用的错误定位和最小复现工具。",
+          "whyImportantZh": "新芯片能否运行真实LLM，取决于软件使能与数值排错效率。",
+          "userRelevanceZh": "适合新NPU软件栈验证与逐层误差诊断，研究对象是调试系统而非新芯片核心。",
+          "evidence": "https://research.ibm.com/publications/deepview-a-generalizable-debugging-methodology-for-enabling-large-language-models-on-emerging-ai-accelerators；读取范围：IBM作者机构完整摘要"
+        },
+        "methodDetail": {
+          "coreIdeaZh": "DeepView基于PyTorch forward hooks提供不支持算子检测及复现生成、逐层编译/运行定位、跨后端中间张量余弦相似度与平均绝对差分析。",
+          "componentsZh": [
+            "不支持算子复现",
+            "逐层错误定位",
+            "I/O数值差异分析"
+          ],
+          "hardwareSystemDetailZh": "torch.compile后端无关框架，以IBM Spyre作为外部后端实例，无需改模型源码或后端专用插桩。",
+          "noveltyZh": "用统一hook观测机制覆盖算子、层失败和数值偏离三类使能问题。",
+          "evidence": "https://research.ibm.com/publications/deepview-a-generalizable-debugging-methodology-for-enabling-large-language-models-on-emerging-ai-accelerators；读取范围：IBM作者机构完整摘要"
+        },
+        "experimentDetail": {
+          "setupZh": "IBM作者页面报告Spyre及Granite、Mistral、Bamba生产LLM；未给完整版本和样本数。",
+          "baselinesZh": "人工调试工作流程；没有公开可读统一计时对照表。",
+          "metricsZh": [
+            "定位能力",
+            "调试耗时",
+            "余弦相似度",
+            "平均绝对差"
+          ],
+          "mainResultsZh": "作者摘要称人工调试由数天或数周缩至分钟；无足够细节支持精确倍数。",
+          "limitationsZh": "仅机构摘要；作者名单与队列存在名字差异，保持原始id与元数据，不推断统一基准或普遍加速。",
+          "evidence": "https://research.ibm.com/publications/deepview-a-generalizable-debugging-methodology-for-enabling-large-language-models-on-emerging-ai-accelerators；读取范围：IBM作者机构完整摘要"
+        },
+        "evidence": {
+          "usedSources": [
+            "daily.json metadata",
+            "https://research.ibm.com/publications/deepview-a-generalizable-debugging-methodology-for-enabling-large-language-models-on-emerging-ai-accelerators"
+          ],
+          "affiliationEvidence": "队列未提供可靠作者单位字段；按任务要求保留元数据缺失说明。",
+          "experimentEvidence": "https://research.ibm.com/publications/deepview-a-generalizable-debugging-methodology-for-enabling-large-language-models-on-emerging-ai-accelerators；读取范围：IBM作者机构完整摘要",
+          "missingFields": [
+            "元数据作者单位",
+            "已读范围以外的全文与复现细节"
+          ]
+        },
+        "confidence": {
+          "summary": 0.84,
+          "motivation": 0.82,
+          "method": 0.8,
+          "experiments": 0.76,
+          "affiliations": 0
+        }
+      }
+    },
+    {
+      "id": "doi:10.1109/isscc49663.2026.11409212",
+      "digest": {
+        "summaryZh": "旋转双量化的额外变换、分组缩放和非线性会打断整数执行流，低位宽计算未必带来系统能效收益。采用PE外的子空间Hadamard量化单元、整数域融合缩放与激活单元，以及重排bit-slice LUT计算引擎。副本报告最佳51.6 μJ/token，含外存访问；各模块收益不可直接相乘为端到端加速。",
+        "motivationZh": "旋转双量化的额外变换、分组缩放和非线性会打断整数执行流，低位宽计算未必带来系统能效收益。通用MAC执行旋转开销高，精度可伸缩计算也会遇到位稀疏利用不足。把旋转及格式转换成本纳入核心设计，是低精度部署的重要动机。直接关联旋转、量化转换及非线性单元，可作为计算核心方向重点参考；全文副本真实性需谨慎。",
+        "methodZh": "采用PE外的子空间Hadamard量化单元、整数域融合缩放与激活单元，以及重排bit-slice LUT计算引擎。论文副本描述旋转与PE流水重叠，缩放和激活共享整数执行资源。联合降低旋转和格式切换成本，同时利用LUT支持精度伸缩。",
+        "experimentsZh": "ISSCC 2026论文文本副本报告芯片测量，包含外存能耗；未独立核验图表和完整工作点。副本以MAC旋转、朴素FP缩放激活和常规MAC为局部对照。副本报告最佳51.6 μJ/token，含外存访问；各模块收益不可直接相乘为端到端加速。IEEE正文验证墙，读取的是第三方承载的原论文文本，未独立确认图表；题名数值不能外推全部模型。",
+        "affiliationsZh": "未在 DBLP/arXiv 元数据中提供",
+        "tags": [
+          "旋转双量化",
+          "整数缩放激活",
+          "LUT核心"
+        ],
+        "importance": 5,
+        "researchFitZh": "直接关联旋转、量化转换及非线性单元，可作为计算核心方向重点参考；全文副本真实性需谨慎。",
+        "hardwareRelevance": 5,
+        "algorithmRelevance": 4,
+        "systemRelevance": 3,
+        "readPriority": "deep-read",
+        "whyReadZh": "直接关联旋转、量化转换及非线性单元，可作为计算核心方向重点参考；全文副本真实性需谨慎。按实际证据边界选择后续精读与实验对比。",
+        "limitationsZh": "IEEE正文验证墙，读取的是第三方承载的原论文文本，未独立确认图表；题名数值不能外推全部模型。",
+        "motivationDetail": {
+          "problemZh": "旋转双量化的额外变换、分组缩放和非线性会打断整数执行流，低位宽计算未必带来系统能效收益。",
+          "gapZh": "通用MAC执行旋转开销高，精度可伸缩计算也会遇到位稀疏利用不足。",
+          "whyImportantZh": "把旋转及格式转换成本纳入核心设计，是低精度部署的重要动机。",
+          "userRelevanceZh": "直接关联旋转、量化转换及非线性单元，可作为计算核心方向重点参考；全文副本真实性需谨慎。",
+          "evidence": "原论文文本副本：studylib.net，题名 A 51.6μJ/Token Subspace-Rotation-Based Dual-Quantized Large-Language-Model Accelerator；DOI 10.1109/ISSCC49663.2026.11409212；https://submissions.mirasmart.com/ISSCC2026/PDF/ISSCC2026AdvanceProgram.pdf；读取范围：已读原论文文本副本；官方会议程序检索结果交叉核对题名"
+        },
+        "methodDetail": {
+          "coreIdeaZh": "采用PE外的子空间Hadamard量化单元、整数域融合缩放与激活单元，以及重排bit-slice LUT计算引擎。",
+          "componentsZh": [
+            "SHQ",
+            "FSA",
+            "RBLUT"
+          ],
+          "hardwareSystemDetailZh": "论文副本描述旋转与PE流水重叠，缩放和激活共享整数执行资源。",
+          "noveltyZh": "联合降低旋转和格式切换成本，同时利用LUT支持精度伸缩。",
+          "evidence": "原论文文本副本：studylib.net，题名 A 51.6μJ/Token Subspace-Rotation-Based Dual-Quantized Large-Language-Model Accelerator；DOI 10.1109/ISSCC49663.2026.11409212；https://submissions.mirasmart.com/ISSCC2026/PDF/ISSCC2026AdvanceProgram.pdf；读取范围：已读原论文文本副本；官方会议程序检索结果交叉核对题名"
+        },
+        "experimentDetail": {
+          "setupZh": "ISSCC 2026论文文本副本报告芯片测量，包含外存能耗；未独立核验图表和完整工作点。",
+          "baselinesZh": "副本以MAC旋转、朴素FP缩放激活和常规MAC为局部对照。",
+          "metricsZh": [
+            "每token能量",
+            "模块面积功耗",
+            "位宽伸缩"
+          ],
+          "mainResultsZh": "副本报告最佳51.6 μJ/token，含外存访问；各模块收益不可直接相乘为端到端加速。",
+          "limitationsZh": "IEEE正文验证墙，读取的是第三方承载的原论文文本，未独立确认图表；题名数值不能外推全部模型。",
+          "evidence": "原论文文本副本：studylib.net，题名 A 51.6μJ/Token Subspace-Rotation-Based Dual-Quantized Large-Language-Model Accelerator；DOI 10.1109/ISSCC49663.2026.11409212；https://submissions.mirasmart.com/ISSCC2026/PDF/ISSCC2026AdvanceProgram.pdf；读取范围：已读原论文文本副本；官方会议程序检索结果交叉核对题名"
+        },
+        "evidence": {
+          "usedSources": [
+            "daily.json metadata",
+            "原论文文本副本：studylib.net，题名 A 51.6μJ/Token Subspace-Rotation-Based Dual-Quantized Large-Language-Model Accelerator；DOI 10.1109/ISSCC49663.2026.11409212",
+            "https://submissions.mirasmart.com/ISSCC2026/PDF/ISSCC2026AdvanceProgram.pdf"
+          ],
+          "affiliationEvidence": "队列未提供可靠作者单位字段；按任务要求保留元数据缺失说明。",
+          "experimentEvidence": "原论文文本副本：studylib.net，题名 A 51.6μJ/Token Subspace-Rotation-Based Dual-Quantized Large-Language-Model Accelerator；DOI 10.1109/ISSCC49663.2026.11409212；https://submissions.mirasmart.com/ISSCC2026/PDF/ISSCC2026AdvanceProgram.pdf；读取范围：已读原论文文本副本；官方会议程序检索结果交叉核对题名",
+          "missingFields": [
+            "元数据作者单位",
+            "已读范围以外的全文与复现细节"
+          ]
+        },
+        "confidence": {
+          "summary": 0.84,
+          "motivation": 0.82,
+          "method": 0.8,
+          "experiments": 0.76,
+          "affiliations": 0
+        }
+      }
+    },
+    {
+      "id": "doi:10.48550/arxiv.2602.17169",
+      "digest": {
+        "summaryZh": "为新DNN架构编写逐周期模拟器耗时，通用代码生成又易缺少硬件语义与功能验证。SimulatorCoder把模拟器分为映射、存储、互连模块，结合ICL/CoT提示逐步生成，再用编译与仿真反馈多轮修复。组合提示的DeepSeek-V3 pass@1/5为91.30%/96.38%；八网络相对SCALE-Sim周期误差低于1%，并报告多数运行更快。",
+        "motivationZh": "为新DNN架构编写逐周期模拟器耗时，通用代码生成又易缺少硬件语义与功能验证。需要把映射、存储和互连知识放入生成模板，并通过可执行反馈约束代码。模拟器开发效率影响早期硬件设计空间探索，但不能以生成通过率替代硬件准确性。可辅助体系结构评测工具开发；应先用真实架构与RTL交叉验证，不直接把生成结果当真值。",
+        "methodZh": "SimulatorCoder把模拟器分为映射、存储、互连模块，结合ICL/CoT提示逐步生成，再用编译与仿真反馈多轮修复。Agent开发工具，无新加速器核心；用自然语言架构规格约束Python模拟代码。将领域模块化与反馈修复应用于加速器模拟器生成和运行优化。",
+        "experimentsZh": "定制SCALE-Sim的138项任务，DeepSeek-V3和GPT-4o，八类网络验证周期与运行时间。Zero-shot、ICL、CoT、组合提示及手工SCALE-Sim。组合提示的DeepSeek-V3 pass@1/5为91.30%/96.38%；八网络相对SCALE-Sim周期误差低于1%，并报告多数运行更快。对SCALE-Sim的一致性不是对真实芯片的验证；任务和架构多样性有限，不能保证任意新设计准确。",
+        "affiliationsZh": "未在 DBLP/arXiv 元数据中提供",
+        "tags": [
+          "加速器模拟器",
+          "代码Agent",
+          "验证反馈"
+        ],
+        "importance": 4,
+        "researchFitZh": "可辅助体系结构评测工具开发；应先用真实架构与RTL交叉验证，不直接把生成结果当真值。",
+        "hardwareRelevance": 3,
+        "algorithmRelevance": 3,
+        "systemRelevance": 5,
+        "readPriority": "skim",
+        "whyReadZh": "可辅助体系结构评测工具开发；应先用真实架构与RTL交叉验证，不直接把生成结果当真值。按实际证据边界选择后续精读与实验对比。",
+        "limitationsZh": "对SCALE-Sim的一致性不是对真实芯片的验证；任务和架构多样性有限，不能保证任意新设计准确。",
+        "motivationDetail": {
+          "problemZh": "为新DNN架构编写逐周期模拟器耗时，通用代码生成又易缺少硬件语义与功能验证。",
+          "gapZh": "需要把映射、存储和互连知识放入生成模板，并通过可执行反馈约束代码。",
+          "whyImportantZh": "模拟器开发效率影响早期硬件设计空间探索，但不能以生成通过率替代硬件准确性。",
+          "userRelevanceZh": "可辅助体系结构评测工具开发；应先用真实架构与RTL交叉验证，不直接把生成结果当真值。",
+          "evidence": "https://arxiv.org/html/2602.17169v1；读取范围：全文HTML方法§2与实验§3、表1/2"
+        },
+        "methodDetail": {
+          "coreIdeaZh": "SimulatorCoder把模拟器分为映射、存储、互连模块，结合ICL/CoT提示逐步生成，再用编译与仿真反馈多轮修复。",
+          "componentsZh": [
+            "硬件模块模板",
+            "领域提示",
+            "反馈验证"
+          ],
+          "hardwareSystemDetailZh": "Agent开发工具，无新加速器核心；用自然语言架构规格约束Python模拟代码。",
+          "noveltyZh": "将领域模块化与反馈修复应用于加速器模拟器生成和运行优化。",
+          "evidence": "https://arxiv.org/html/2602.17169v1；读取范围：全文HTML方法§2与实验§3、表1/2"
+        },
+        "experimentDetail": {
+          "setupZh": "定制SCALE-Sim的138项任务，DeepSeek-V3和GPT-4o，八类网络验证周期与运行时间。",
+          "baselinesZh": "Zero-shot、ICL、CoT、组合提示及手工SCALE-Sim。",
+          "metricsZh": [
+            "Pass@k",
+            "周期偏差",
+            "模拟运行时间"
+          ],
+          "mainResultsZh": "组合提示的DeepSeek-V3 pass@1/5为91.30%/96.38%；八网络相对SCALE-Sim周期误差低于1%，并报告多数运行更快。",
+          "limitationsZh": "对SCALE-Sim的一致性不是对真实芯片的验证；任务和架构多样性有限，不能保证任意新设计准确。",
+          "evidence": "https://arxiv.org/html/2602.17169v1；读取范围：全文HTML方法§2与实验§3、表1/2"
+        },
+        "evidence": {
+          "usedSources": [
+            "daily.json metadata",
+            "https://arxiv.org/html/2602.17169v1"
+          ],
+          "affiliationEvidence": "队列未提供可靠作者单位字段；按任务要求保留元数据缺失说明。",
+          "experimentEvidence": "https://arxiv.org/html/2602.17169v1；读取范围：全文HTML方法§2与实验§3、表1/2",
+          "missingFields": [
+            "元数据作者单位",
+            "已读范围以外的全文与复现细节"
+          ]
+        },
+        "confidence": {
+          "summary": 0.84,
+          "motivation": 0.82,
+          "method": 0.8,
+          "experiments": 0.76,
+          "affiliations": 0
+        }
+      }
+    },
+    {
+      "id": "arxiv:2610.37666",
+      "digest": {
+        "summaryZh": "VLA泛化受带动作标签机器人示范覆盖限制，人类视频规模大却缺少明确动作标注。ThinkWorld用离散运动token构成Chain-of-Dynamics，先由动作示范初始化，再预测各CoD引起的未来，用与实际结果匹配程度强化推理。摘要报告有效迁移及较强泛化，但没有披露可核验成功率和提升数值。",
+        "motivationZh": "VLA泛化受带动作标签机器人示范覆盖限制，人类视频规模大却缺少明确动作标注。需要跨具身共享的动作表征，使无动作视频也能约束动作推理。状态变化监督可扩大机器人学习数据来源。作为世界模型与VLA趋势跟踪，未给计算核心或低精度执行优化。",
+        "methodZh": "ThinkWorld用离散运动token构成Chain-of-Dynamics，先由动作示范初始化，再预测各CoD引起的未来，用与实际结果匹配程度强化推理。算法学习框架；公开摘要未披露芯片、算子实现或存储布局。将人类与机器人经验映射进统一动态推理空间，让无动作标注视频提供状态转移监督。",
+        "experimentsZh": "模拟与真实机器人评估；摘要未给具体数据集、硬件和任务规模。摘要未披露具体基线，不能据此构造数值对比。摘要报告有效迁移及较强泛化，但没有披露可核验成功率和提升数值。仅核验摘要，未读全文实验，不能评估训练成本、统计显著性或硬件收益。",
+        "affiliationsZh": "未在 DBLP/arXiv 元数据中提供",
+        "tags": [
+          "VLA",
+          "世界想象",
+          "动态推理"
         ],
         "importance": 3,
-        "researchFitZh": "关注VLM微调和具身Agent成本，属于算法系统趋势，不能用作低精度注意力计算核心基线。",
+        "researchFitZh": "作为世界模型与VLA趋势跟踪，未给计算核心或低精度执行优化。",
+        "hardwareRelevance": 1,
+        "algorithmRelevance": 4,
+        "systemRelevance": 2,
+        "readPriority": "skim",
+        "whyReadZh": "作为世界模型与VLA趋势跟踪，未给计算核心或低精度执行优化。按实际证据边界选择后续精读与实验对比。",
+        "limitationsZh": "仅核验摘要，未读全文实验，不能评估训练成本、统计显著性或硬件收益。",
+        "motivationDetail": {
+          "problemZh": "VLA泛化受带动作标签机器人示范覆盖限制，人类视频规模大却缺少明确动作标注。",
+          "gapZh": "需要跨具身共享的动作表征，使无动作视频也能约束动作推理。",
+          "whyImportantZh": "状态变化监督可扩大机器人学习数据来源。",
+          "userRelevanceZh": "作为世界模型与VLA趋势跟踪，未给计算核心或低精度执行优化。",
+          "evidence": "https://arxiv.org/abs/2610.37666v1；读取范围：公开摘要及队列元数据"
+        },
+        "methodDetail": {
+          "coreIdeaZh": "ThinkWorld用离散运动token构成Chain-of-Dynamics，先由动作示范初始化，再预测各CoD引起的未来，用与实际结果匹配程度强化推理。",
+          "componentsZh": [
+            "CoD运动token",
+            "动作示范初始化",
+            "世界想象强化"
+          ],
+          "hardwareSystemDetailZh": "算法学习框架；公开摘要未披露芯片、算子实现或存储布局。",
+          "noveltyZh": "将人类与机器人经验映射进统一动态推理空间，让无动作标注视频提供状态转移监督。",
+          "evidence": "https://arxiv.org/abs/2610.37666v1；读取范围：公开摘要及队列元数据"
+        },
+        "experimentDetail": {
+          "setupZh": "模拟与真实机器人评估；摘要未给具体数据集、硬件和任务规模。",
+          "baselinesZh": "摘要未披露具体基线，不能据此构造数值对比。",
+          "metricsZh": [
+            "人到机器人迁移",
+            "未见任务与环境泛化"
+          ],
+          "mainResultsZh": "摘要报告有效迁移及较强泛化，但没有披露可核验成功率和提升数值。",
+          "limitationsZh": "仅核验摘要，未读全文实验，不能评估训练成本、统计显著性或硬件收益。",
+          "evidence": "https://arxiv.org/abs/2610.37666v1；读取范围：公开摘要及队列元数据"
+        },
+        "evidence": {
+          "usedSources": [
+            "daily.json metadata",
+            "https://arxiv.org/abs/2610.37666v1"
+          ],
+          "affiliationEvidence": "队列未提供可靠作者单位字段；按任务要求保留元数据缺失说明。",
+          "experimentEvidence": "https://arxiv.org/abs/2610.37666v1；读取范围：公开摘要及队列元数据",
+          "missingFields": [
+            "元数据作者单位",
+            "已读范围以外的全文与复现细节"
+          ]
+        },
+        "confidence": {
+          "summary": 0.84,
+          "motivation": 0.82,
+          "method": 0.8,
+          "experiments": 0.76,
+          "affiliations": 0
+        }
+      }
+    },
+    {
+      "id": "arxiv:2610.37651",
+      "digest": {
+        "summaryZh": "反思型prompt优化器从失败轨迹学习，但失败可能来自harness、执行随机性或噪声裁判，未必能被prompt修复。GEPA-Curator先筛除可能产生噪声或不可靠学习信号的任务，再按任务检索以往成功轨迹作为prompt优化的附加上下文。摘要报告均值匹配或超过两基线，最高相对GEPA增20.7%、相对ACE增21.2%。",
+        "motivationZh": "反思型prompt优化器从失败轨迹学习，但失败可能来自harness、执行随机性或噪声裁判，未必能被prompt修复。未经筛选的失败可能误导优化，还缺少选择性利用已有成功轨迹的机制。优化信号质量决定Agent迭代效率，不能把所有失败都当成同类训练证据。关联Agent自改进与评测流程，非芯片或推理核心工作。",
+        "methodZh": "GEPA-Curator先筛除可能产生噪声或不可靠学习信号的任务，再按任务检索以往成功轨迹作为prompt优化的附加上下文。prompt优化软件框架；不设计硬件执行单元或KV存储机制。对哪些经验进入反思优化进行显式选择，而非仅改变优化器提示。",
+        "experimentsZh": "GoBrowse、ALFWorld、AppWorld、τ-bench；Gemini 3.1 Pro与Claude Opus 5作为优化模型。GEPA与ACE，比较多任务平均表现。摘要报告均值匹配或超过两基线，最高相对GEPA增20.7%、相对ACE增21.2%。最高增益不是全基准平均值，摘要未说明这些百分数的详细口径；未核验完整成本与消融。",
+        "affiliationsZh": "未在 DBLP/arXiv 元数据中提供",
+        "tags": [
+          "Agent自改进",
+          "经验筛选",
+          "prompt优化"
+        ],
+        "importance": 3,
+        "researchFitZh": "关联Agent自改进与评测流程，非芯片或推理核心工作。",
         "hardwareRelevance": 1,
         "algorithmRelevance": 4,
         "systemRelevance": 3,
         "readPriority": "skim",
-        "whyReadZh": "关注VLM微调和具身Agent成本，属于算法系统趋势，不能用作低精度注意力计算核心基线。按证据范围和真实研究层级决定后续阅读与对比。",
-        "limitationsZh": "结果限定论文任务与harness；仅核验摘要，未读取任务数量、置信区间和成本口径，不能外推到所有机器人任务。",
+        "whyReadZh": "关联Agent自改进与评测流程，非芯片或推理核心工作。按实际证据边界选择后续精读与实验对比。",
+        "limitationsZh": "最高增益不是全基准平均值，摘要未说明这些百分数的详细口径；未核验完整成本与消融。",
         "motivationDetail": {
-          "problemZh": "机器人既需要理解任务和场景，也需要掌握执行运动；仅依赖大模型通用推理或真实机器人数据训练都有成本。",
-          "gapZh": "需验证预训练理解加模拟动作学习能否组合泛化到未见物体、目标及具身。",
-          "whyImportantZh": "若模拟训练可转移到真实任务，可降低数据采集与在线Agent执行成本。",
-          "userRelevanceZh": "关注VLM微调和具身Agent成本，属于算法系统趋势，不能用作低精度注意力计算核心基线。",
-          "evidence": "daily.json实际元数据与完整原始摘要；已读 https://arxiv.org/abs/2610.35817v1；未读全文"
+          "problemZh": "反思型prompt优化器从失败轨迹学习，但失败可能来自harness、执行随机性或噪声裁判，未必能被prompt修复。",
+          "gapZh": "未经筛选的失败可能误导优化，还缺少选择性利用已有成功轨迹的机制。",
+          "whyImportantZh": "优化信号质量决定Agent迭代效率，不能把所有失败都当成同类训练证据。",
+          "userRelevanceZh": "关联Agent自改进与评测流程，非芯片或推理核心工作。",
+          "evidence": "https://arxiv.org/abs/2610.37651v1；读取范围：公开摘要及队列元数据"
         },
         "methodDetail": {
-          "coreIdeaZh": "ZAP以预训练27B模型提供世界理解，在简单模拟任务上先SFT再GRPO，通过工具harness学习机器人动作，训练不使用真实机器人数据。",
+          "coreIdeaZh": "GEPA-Curator先筛除可能产生噪声或不可靠学习信号的任务，再按任务检索以往成功轨迹作为prompt优化的附加上下文。",
           "componentsZh": [
-            "预训练VLM理解",
-            "模拟任务SFT",
-            "GRPO动作学习",
-            "工具harness与真实迁移"
+            "任务筛选",
+            "成功轨迹检索"
           ],
-          "hardwareSystemDetailZh": "模型训练及机器人控制方法，未披露专用芯片或矩阵向量微架构优化。",
-          "noveltyZh": "将预训练语义能力与模拟动作学习分工，检验零真实数据训练下的组合泛化。",
-          "evidence": "daily.json实际元数据与完整原始摘要；已读 https://arxiv.org/abs/2610.35817v1；未读全文"
+          "hardwareSystemDetailZh": "prompt优化软件框架；不设计硬件执行单元或KV存储机制。",
+          "noveltyZh": "对哪些经验进入反思优化进行显式选择，而非仅改变优化器提示。",
+          "evidence": "https://arxiv.org/abs/2610.37651v1；读取范围：公开摘要及队列元数据"
         },
         "experimentDetail": {
-          "setupZh": "真实机器人任务、未见目标操作及单臂Franka上的RoboLab-120；训练仅使用模拟机器人数据。",
-          "baselinesZh": "同harness中的GPT-6 Astra与MolmoAct2 VLA，另比较RoboLab-120领先VLA/WAM。",
+          "setupZh": "GoBrowse、ALFWorld、AppWorld、τ-bench；Gemini 3.1 Pro与Claude Opus 5作为优化模型。",
+          "baselinesZh": "GEPA与ACE，比较多任务平均表现。",
           "metricsZh": [
-            "任务成功率",
-            "运行速度",
-            "成本",
-            "跨具身泛化"
+            "任务表现",
+            "相对基线增益"
           ],
-          "mainResultsZh": "摘要报告真实任务96.7%，MolmoAct2为33.3%，相对GPT-6 Astra快3倍且便宜17倍；Franka RoboLab-120为55.9%，高4.9个百分点。",
-          "limitationsZh": "结果限定论文任务与harness；仅核验摘要，未读取任务数量、置信区间和成本口径，不能外推到所有机器人任务。",
-          "evidence": "daily.json实际元数据与完整原始摘要；已读 https://arxiv.org/abs/2610.35817v1；未读全文"
+          "mainResultsZh": "摘要报告均值匹配或超过两基线，最高相对GEPA增20.7%、相对ACE增21.2%。",
+          "limitationsZh": "最高增益不是全基准平均值，摘要未说明这些百分数的详细口径；未核验完整成本与消融。",
+          "evidence": "https://arxiv.org/abs/2610.37651v1；读取范围：公开摘要及队列元数据"
         },
         "evidence": {
           "usedSources": [
-            "daily.json metadata and supplied abstract",
-            "https://arxiv.org/abs/2610.35817v1"
+            "daily.json metadata",
+            "https://arxiv.org/abs/2610.37651v1"
           ],
-          "affiliationEvidence": "队列authorAffiliations与affiliations为空，按任务要求保留元数据缺失说明。",
-          "experimentEvidence": "daily.json实际元数据与完整原始摘要；已读 https://arxiv.org/abs/2610.35817v1；未读全文",
+          "affiliationEvidence": "队列未提供可靠作者单位字段；按任务要求保留元数据缺失说明。",
+          "experimentEvidence": "https://arxiv.org/abs/2610.37651v1；读取范围：公开摘要及队列元数据",
           "missingFields": [
             "元数据作者单位",
-            "全文方法与实验细节"
+            "已读范围以外的全文与复现细节"
           ]
         },
         "confidence": {
-          "summary": 0.86,
-          "motivation": 0.85,
-          "method": 0.78,
-          "experiments": 0.74,
+          "summary": 0.84,
+          "motivation": 0.82,
+          "method": 0.8,
+          "experiments": 0.76,
           "affiliations": 0
         }
       }
