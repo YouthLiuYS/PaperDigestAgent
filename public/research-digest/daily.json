@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-10-29T23:58:53.595Z",
+  "generatedAt": "2026-10-30T00:36:26.784Z",
   "digestDate": "2026-10-30",
   "kind": "daily-new",
   "timezone": "Asia/Shanghai",
   "siteUrl": "https://YouthLiuYS.github.io/PaperDigestAgent/",
   "historyPath": "public/research-digest/papers.json",
   "sources": {
-    "collectionMode": "daily",
+    "collectionMode": "all",
     "arxivQueries": [
       "(cat:cs.AR OR cat:cs.DC OR cat:cs.PF) AND (all:LLM OR all:transformer OR all:foundation OR all:language) AND (all:accelerator OR all:processor OR all:architecture OR all:hardware OR all:system OR all:serving OR all:training OR all:inference OR all:cache)",
       "(all:quantization OR all:compression OR all:pruning OR all:sparsity OR all:low-bit) AND (all:LLM OR all:transformer OR all:language) AND (all:hardware OR all:accelerator OR all:inference OR all:serving OR all:processor)",
@@ -102,14 +102,14 @@
     ],
     "daysBack": 7,
     "maxPapers": 12,
-    "dailyMaxPapers": 8,
+    "dailyMaxPapers": 12,
     "dailyPrimaryMaxPapers": 6,
     "dailyTrendMaxPapers": 2,
     "minNewPapers": 5,
     "backfillEnabled": true,
     "backfillDays": 45,
     "backfillMaxPerQuery": 24,
-    "conferenceMaxPapers": 16,
+    "conferenceMaxPapers": 12,
     "pdfDownloadEnabled": false,
     "pdfDirectory": "public/research-digest/pdfs",
     "pdfMaxPerRun": 12
@@ -142,9 +142,9 @@
     "backfillCandidates": 0,
     "rawCandidates": 149,
     "newlyAdded": 8,
-    "pendingDigest": 8,
+    "pendingDigest": 0,
     "pendingEmail": 0,
-    "pushed": 0,
+    "pushed": 8,
     "failedDigest": 0,
     "failedEmail": 0,
     "pdfDownloaded": 0,
@@ -193,65 +193,72 @@
       "conferenceVenues": [],
       "conferenceYears": [],
       "digest": {
-        "summaryZh": "AI 摘要未生成。原始摘要要点：We present a fabricated SRAM DCIM Ising machine that performs set-level context selection for large language model (LLM) with retrieval-augmented generation (RA...",
-        "motivationZh": "命令行启用了 --no-ai",
-        "methodZh": "请配置 AI 后重新运行，以生成方法提炼。",
-        "experimentsZh": "来源元数据未披露完整实验设置或结果。",
-        "affiliationsZh": "未在 DBLP/arXiv 元数据中提供。",
+        "summaryZh": "p-DCIM把RAG证据子集选择写成QUBO，用同一SRAM DCIM通路构造系数并退火求解。已流片宏之外，较大任务和HBM/HBF集成仍以测量参数化模型评估，67%节能需按该口径理解。",
+        "motivationZh": "RAG反复调用语言模型重排或选择证据会增加推理能耗，逐篇top-k又难保证所选集合覆盖互补证据。需在集合级选择中兼顾相关、冗余和覆盖，并减少选择阶段的数据移动和LLM调用。近存选择器可能降低Agent检索流水线成本，但必须区分芯片宏与系统估算。关联PNM及Agent软硬协同；对象是检索子集优化，不是注意力矩阵乘核心。",
+        "methodZh": "把候选证据选择转为QUBO，共用SRAM DCIM的有符号MAC路径计算相似度系数与逐spin能差；以plane-count及伪读翻转控制退火。28nm已流片宏；HBM/HBF逻辑底层部署是提出的集成方案，只向GPU返回选中段落ID。同一存算通路复用到系数构造和随机优化，面向检索选择负载。",
+        "experimentsZh": "PDF§V：宏实测，小QUBO片上执行；较大HotpotQA实例采用测量参数化行为模型。SetR、SetRO语言模型选择器；需求生成和最终回答仍由GPU执行。报告总查询能耗降低67%；选择能耗约0.9 μJ是宏归一化估算，不是完整大阵列或封装系统实测。系统收益含模型估算，样本主要用于演示，不能解释为完整HBM/HBF产品实测或同算法等质量普遍收益。",
+        "affiliationsZh": "未在 DBLP/arXiv 元数据中提供",
         "tags": [
-          "cs.AR"
+          "近存RAG",
+          "SRAM DCIM",
+          "QUBO"
         ],
-        "importance": 3,
-        "researchFitZh": "AI harness 尚未完成分析，无法判断与用户研究方向的具体关系。",
-        "hardwareRelevance": 1,
-        "algorithmRelevance": 1,
-        "systemRelevance": 1,
-        "readPriority": "archive",
-        "whyReadZh": "需要完成 motivation、method 和实验结果分析后再判断是否值得深读。",
-        "limitationsZh": "命令行启用了 --no-ai",
+        "importance": 4,
+        "researchFitZh": "关联PNM及Agent软硬协同；对象是检索子集优化，不是注意力矩阵乘核心。",
+        "hardwareRelevance": 5,
+        "algorithmRelevance": 3,
+        "systemRelevance": 4,
+        "readPriority": "deep-read",
+        "whyReadZh": "关联PNM及Agent软硬协同；对象是检索子集优化，不是注意力矩阵乘核心。建议按证据边界决定精读及实验对比范围。",
+        "limitationsZh": "系统收益含模型估算，样本主要用于演示，不能解释为完整HBM/HBF产品实测或同算法等质量普遍收益。",
         "motivationDetail": {
-          "problemZh": "harness 未完成分析。",
-          "gapZh": "harness 未完成分析。",
-          "whyImportantZh": "harness 未完成分析。",
-          "userRelevanceZh": "harness 未完成分析。",
-          "evidence": "not analyzed"
+          "problemZh": "RAG反复调用语言模型重排或选择证据会增加推理能耗，逐篇top-k又难保证所选集合覆盖互补证据。",
+          "gapZh": "需在集合级选择中兼顾相关、冗余和覆盖，并减少选择阶段的数据移动和LLM调用。",
+          "whyImportantZh": "近存选择器可能降低Agent检索流水线成本，但必须区分芯片宏与系统估算。",
+          "userRelevanceZh": "关联PNM及Agent软硬协同；对象是检索子集优化，不是注意力矩阵乘核心。",
+          "evidence": "已读 https://arxiv.org/abs/2610.37033v1 公开摘要及daily.json元数据；另读 https://arxiv.org/pdf/2610.37033v1：PDF首页、架构§III、评估§V"
         },
         "methodDetail": {
-          "coreIdeaZh": "harness 未完成分析。",
+          "coreIdeaZh": "把候选证据选择转为QUBO，共用SRAM DCIM的有符号MAC路径计算相似度系数与逐spin能差；以plane-count及伪读翻转控制退火。",
           "componentsZh": [
-            "未分析"
+            "QUBO集合选择",
+            "双模式MAC复用",
+            "数字退火控制"
           ],
-          "hardwareSystemDetailZh": "harness 未完成分析。",
-          "noveltyZh": "harness 未完成分析。",
-          "evidence": "not analyzed"
+          "hardwareSystemDetailZh": "28nm已流片宏；HBM/HBF逻辑底层部署是提出的集成方案，只向GPU返回选中段落ID。",
+          "noveltyZh": "同一存算通路复用到系数构造和随机优化，面向检索选择负载。",
+          "evidence": "已读 https://arxiv.org/abs/2610.37033v1 公开摘要及daily.json元数据；另读 https://arxiv.org/pdf/2610.37033v1：PDF首页、架构§III、评估§V"
         },
         "experimentDetail": {
-          "setupZh": "harness 未完成分析。",
-          "baselinesZh": "harness 未完成分析。",
+          "setupZh": "PDF§V：宏实测，小QUBO片上执行；较大HotpotQA实例采用测量参数化行为模型。",
+          "baselinesZh": "SetR、SetRO语言模型选择器；需求生成和最终回答仍由GPU执行。",
           "metricsZh": [
-            "未分析"
+            "token F1",
+            "选择能耗",
+            "总查询能耗"
           ],
-          "mainResultsZh": "harness 未完成分析。",
-          "limitationsZh": "harness 未完成分析。",
-          "evidence": "not analyzed"
+          "mainResultsZh": "报告总查询能耗降低67%；选择能耗约0.9 μJ是宏归一化估算，不是完整大阵列或封装系统实测。",
+          "limitationsZh": "系统收益含模型估算，样本主要用于演示，不能解释为完整HBM/HBF产品实测或同算法等质量普遍收益。",
+          "evidence": "已读 https://arxiv.org/abs/2610.37033v1 公开摘要及daily.json元数据；另读 https://arxiv.org/pdf/2610.37033v1：PDF首页、架构§III、评估§V"
         },
         "evidence": {
           "usedSources": [
-            "metadata"
+            "daily.json metadata",
+            "https://arxiv.org/abs/2610.37033v1",
+            "https://arxiv.org/pdf/2610.37033v1（PDF首页、架构§III、评估§V）"
           ],
-          "affiliationEvidence": "",
-          "experimentEvidence": "",
+          "affiliationEvidence": "队列authorAffiliations与affiliations为空，按任务要求保留元数据缺失说明。",
+          "experimentEvidence": "已读 https://arxiv.org/abs/2610.37033v1 公开摘要及daily.json元数据；另读 https://arxiv.org/pdf/2610.37033v1：PDF首页、架构§III、评估§V",
           "missingFields": [
-            "motivation",
-            "method",
-            "experiments"
+            "元数据作者单位",
+            "未核验的完整实验与复现细节"
           ]
         },
         "confidence": {
-          "summary": 0.2,
-          "motivation": 0,
-          "method": 0,
-          "experiments": 0,
+          "summary": 0.85,
+          "motivation": 0.84,
+          "method": 0.87,
+          "experiments": 0.82,
           "affiliations": 0
         }
       },
@@ -261,13 +268,20 @@
       "relevanceReason": "命中 PNM/processing-near-memory、近数据计算、memory-side/CXL/HBM 或 AI 处理器体系结构主题",
       "pdfStatus": "remote",
       "workflow": {
-        "digestStatus": "pending",
-        "emailStatus": "waiting-digest",
-        "digestError": "命令行启用了 --no-ai",
+        "digestStatus": "ready",
+        "emailStatus": "sent",
+        "digestError": "",
         "harnessVersion": "paper-reader-v1",
         "collectStatus": "collected",
-        "pdfStatus": "remote"
-      }
+        "pdfStatus": "remote",
+        "harnessCheckedAt": "2026-10-30T00:36:22.605Z",
+        "harnessWarnings": [],
+        "emailSentAt": "2026-10-30T00:36:26.783Z",
+        "lastEmailError": ""
+      },
+      "pushedAt": "2026-10-30T00:36:26.783Z",
+      "emailSentAt": "2026-10-30T00:36:26.783Z",
+      "firstPushedAt": "2026-10-30T00:36:26.783Z"
     },
     {
       "id": "arxiv:2610.37454",
@@ -310,76 +324,92 @@
       "relevanceReason": "命中 AI 处理器、体系结构、量化、训推系统或内存/缓存优化主题",
       "pdfStatus": "remote",
       "workflow": {
-        "digestStatus": "pending",
-        "emailStatus": "waiting-digest",
-        "digestError": "命令行启用了 --no-ai",
+        "digestStatus": "ready",
+        "emailStatus": "sent",
+        "digestError": "",
         "harnessVersion": "paper-reader-v1",
         "collectStatus": "collected",
-        "pdfStatus": "remote"
+        "pdfStatus": "remote",
+        "harnessCheckedAt": "2026-10-30T00:36:22.605Z",
+        "harnessWarnings": [],
+        "emailSentAt": "2026-10-30T00:36:26.783Z",
+        "lastEmailError": ""
       },
       "digest": {
-        "summaryZh": "AI 摘要未生成。原始摘要要点：Data memory-dependent prefetchers (DMPs) are a microarchitectural optimization recently introduced in mainstream desktop and server CPUs. Although DMPs offer pe...",
-        "motivationZh": "命令行启用了 --no-ai",
-        "methodZh": "请配置 AI 后重新运行，以生成方法提炼。",
-        "experimentsZh": "来源元数据未披露完整实验设置或结果。",
-        "affiliationsZh": "未在 DBLP/arXiv 元数据中提供。",
+        "summaryZh": "SecDMP通过标记内存中的秘密区域，阻止预取器基于秘密数据扫描和更新微架构状态；在Proteus RISC-V模型中验证安全与成本。与LLM核心研究关联间接，适合作为预取安全参考。",
+        "motivationZh": "数据依赖预取器会把加载值编码到微架构状态，恒定时间代码即便防御Spectre也可能泄漏。禁用预取损失性能，选择性禁用又无法覆盖全部泄漏路径。保留公共数据预取性能时仍需保证秘密不经预取器传播。关联CPU内存系统与间接访问安全，可作为体系结构方法参考，非LLM推理加速器。",
+        "methodZh": "分类DMP泄漏并建立形式语义；通过内存秘密标记阻止秘密驱动预取和状态更新，证明相较无DMP基线不引入额外泄漏。Proteus乱序RISC-V实现多个DMP；CSR配置静态秘密区，与ProSpeCT可组合。将防护落实为预取器不编码秘密的硬件条件，并给出相对基线证明。",
+        "experimentsZh": "全文§VIII：四类DMP原型，Verilator仿真，密码学与DMP-Bench等负载。Proteus+DMP、永久禁用、选择性禁用、ProSpeCT及组合防护。引言报告平均性能开销0.36%、最大3.3%，面积增0.5%且不影响关键路径；测试中阻止DMP泄漏。安全性依赖秘密标记及模型假设；这组结果是研究处理器评估，不能自动覆盖任意商业CPU的未知预取机制。",
+        "affiliationsZh": "未在 DBLP/arXiv 元数据中提供",
         "tags": [
-          "cs.CR"
+          "预取安全",
+          "RISC-V",
+          "形式验证"
         ],
         "importance": 3,
-        "researchFitZh": "AI harness 尚未完成分析，无法判断与用户研究方向的具体关系。",
-        "hardwareRelevance": 1,
+        "researchFitZh": "关联CPU内存系统与间接访问安全，可作为体系结构方法参考，非LLM推理加速器。",
+        "hardwareRelevance": 4,
         "algorithmRelevance": 1,
-        "systemRelevance": 1,
-        "readPriority": "archive",
-        "whyReadZh": "需要完成 motivation、method 和实验结果分析后再判断是否值得深读。",
-        "limitationsZh": "命令行启用了 --no-ai",
+        "systemRelevance": 3,
+        "readPriority": "skim",
+        "whyReadZh": "关联CPU内存系统与间接访问安全，可作为体系结构方法参考，非LLM推理加速器。建议按证据边界决定精读及实验对比范围。",
+        "limitationsZh": "安全性依赖秘密标记及模型假设；这组结果是研究处理器评估，不能自动覆盖任意商业CPU的未知预取机制。",
         "motivationDetail": {
-          "problemZh": "harness 未完成分析。",
-          "gapZh": "harness 未完成分析。",
-          "whyImportantZh": "harness 未完成分析。",
-          "userRelevanceZh": "harness 未完成分析。",
-          "evidence": "not analyzed"
+          "problemZh": "数据依赖预取器会把加载值编码到微架构状态，恒定时间代码即便防御Spectre也可能泄漏。",
+          "gapZh": "禁用预取损失性能，选择性禁用又无法覆盖全部泄漏路径。",
+          "whyImportantZh": "保留公共数据预取性能时仍需保证秘密不经预取器传播。",
+          "userRelevanceZh": "关联CPU内存系统与间接访问安全，可作为体系结构方法参考，非LLM推理加速器。",
+          "evidence": "已读 https://arxiv.org/abs/2610.37454v1 公开摘要及daily.json元数据；另读 https://arxiv.org/html/2610.37454v1：HTML引言和§VIII实现评估"
         },
         "methodDetail": {
-          "coreIdeaZh": "harness 未完成分析。",
+          "coreIdeaZh": "分类DMP泄漏并建立形式语义；通过内存秘密标记阻止秘密驱动预取和状态更新，证明相较无DMP基线不引入额外泄漏。",
           "componentsZh": [
-            "未分析"
+            "泄漏分类",
+            "秘密内存区域",
+            "预取状态保护",
+            "形式证明"
           ],
-          "hardwareSystemDetailZh": "harness 未完成分析。",
-          "noveltyZh": "harness 未完成分析。",
-          "evidence": "not analyzed"
+          "hardwareSystemDetailZh": "Proteus乱序RISC-V实现多个DMP；CSR配置静态秘密区，与ProSpeCT可组合。",
+          "noveltyZh": "将防护落实为预取器不编码秘密的硬件条件，并给出相对基线证明。",
+          "evidence": "已读 https://arxiv.org/abs/2610.37454v1 公开摘要及daily.json元数据；另读 https://arxiv.org/html/2610.37454v1：HTML引言和§VIII实现评估"
         },
         "experimentDetail": {
-          "setupZh": "harness 未完成分析。",
-          "baselinesZh": "harness 未完成分析。",
+          "setupZh": "全文§VIII：四类DMP原型，Verilator仿真，密码学与DMP-Bench等负载。",
+          "baselinesZh": "Proteus+DMP、永久禁用、选择性禁用、ProSpeCT及组合防护。",
           "metricsZh": [
-            "未分析"
+            "泄漏测试",
+            "性能开销",
+            "面积",
+            "关键路径"
           ],
-          "mainResultsZh": "harness 未完成分析。",
-          "limitationsZh": "harness 未完成分析。",
-          "evidence": "not analyzed"
+          "mainResultsZh": "引言报告平均性能开销0.36%、最大3.3%，面积增0.5%且不影响关键路径；测试中阻止DMP泄漏。",
+          "limitationsZh": "安全性依赖秘密标记及模型假设；这组结果是研究处理器评估，不能自动覆盖任意商业CPU的未知预取机制。",
+          "evidence": "已读 https://arxiv.org/abs/2610.37454v1 公开摘要及daily.json元数据；另读 https://arxiv.org/html/2610.37454v1：HTML引言和§VIII实现评估"
         },
         "evidence": {
           "usedSources": [
-            "metadata"
+            "daily.json metadata",
+            "https://arxiv.org/abs/2610.37454v1",
+            "https://arxiv.org/html/2610.37454v1（HTML引言和§VIII实现评估）"
           ],
-          "affiliationEvidence": "",
-          "experimentEvidence": "",
+          "affiliationEvidence": "队列authorAffiliations与affiliations为空，按任务要求保留元数据缺失说明。",
+          "experimentEvidence": "已读 https://arxiv.org/abs/2610.37454v1 公开摘要及daily.json元数据；另读 https://arxiv.org/html/2610.37454v1：HTML引言和§VIII实现评估",
           "missingFields": [
-            "motivation",
-            "method",
-            "experiments"
+            "元数据作者单位",
+            "未核验的完整实验与复现细节"
           ]
         },
         "confidence": {
-          "summary": 0.2,
-          "motivation": 0,
-          "method": 0,
-          "experiments": 0,
+          "summary": 0.85,
+          "motivation": 0.84,
+          "method": 0.87,
+          "experiments": 0.82,
           "affiliations": 0
         }
-      }
+      },
+      "pushedAt": "2026-10-30T00:36:26.783Z",
+      "emailSentAt": "2026-10-30T00:36:26.783Z",
+      "firstPushedAt": "2026-10-30T00:36:26.783Z"
     },
     {
       "id": "arxiv:2610.36983",
@@ -427,77 +457,89 @@
       "relevanceReason": "命中 AI 处理器、体系结构、量化、训推系统或内存/缓存优化主题",
       "pdfStatus": "remote",
       "workflow": {
-        "digestStatus": "pending",
-        "emailStatus": "waiting-digest",
-        "digestError": "命令行启用了 --no-ai",
+        "digestStatus": "ready",
+        "emailStatus": "sent",
+        "digestError": "",
         "harnessVersion": "paper-reader-v1",
         "collectStatus": "collected",
-        "pdfStatus": "remote"
+        "pdfStatus": "remote",
+        "harnessCheckedAt": "2026-10-30T00:36:22.605Z",
+        "harnessWarnings": [],
+        "emailSentAt": "2026-10-30T00:36:26.783Z",
+        "lastEmailError": ""
       },
       "digest": {
-        "summaryZh": "AI 摘要未生成。原始摘要要点：While data curation is widely credited with improving large language model training, a basic question remains unresolved: does curation expand what a model can ...",
-        "motivationZh": "命令行启用了 --no-ai",
-        "methodZh": "请配置 AI 后重新运行，以生成方法提炼。",
-        "experimentsZh": "来源元数据未披露完整实验设置或结果。",
-        "affiliationsZh": "未在 DBLP/arXiv 元数据中提供。",
+        "summaryZh": "论文区分数据筛选提升最终可达性能和加快收敛，提出用未筛选基线的训练/目标损失差进行Δ-test。结论强调训练与目标可纠正差距，属于训练理论与数据方法研究。",
+        "motivationZh": "数据筛选带来的收益可能只是更快到达相同性能，也可能改变最终可达表现，两者常被混淆。有限训练预算上的收益不足以说明筛选提升最终学习上限。区分收敛速度与端点收益，才能正确分配数据策展成本。关联训练数据效率及评估方法，和推理芯片计算核心没有直接机制联系。",
+        "methodZh": "形式化advancement与acceleration，在训练目标和目标任务之间的可纠正差距视角下，提出基于未筛选训练/目标损失差的Δ-test。理论与LLM训练实验工作，未提供新芯片或推理数据通路。把能否提高最终表现归因于策展任务的差距，而非只归因于筛选算法。",
+        "experimentsZh": "摘要称解析推导与真实LLM实验，未披露具体模型、数据集、硬件及训练预算。未筛选训练基线与不同筛选/混合策略；可读摘要未列方法名称。摘要报告明显非零Δ预测持续收益，Δ接近零时收益随预算增长减弱；没有可据此填写的统一数值增益。仅核验摘要；目标一致时无端点收益需在其理论条件下理解，不能推广为所有有限训练或优化情境。",
+        "affiliationsZh": "未在 DBLP/arXiv 元数据中提供",
         "tags": [
-          "cs.LG",
-          "cs.AI"
+          "数据筛选",
+          "训练效率",
+          "目标差距"
         ],
-        "importance": 3,
-        "researchFitZh": "AI harness 尚未完成分析，无法判断与用户研究方向的具体关系。",
+        "importance": 2,
+        "researchFitZh": "关联训练数据效率及评估方法，和推理芯片计算核心没有直接机制联系。",
         "hardwareRelevance": 1,
-        "algorithmRelevance": 1,
-        "systemRelevance": 1,
-        "readPriority": "archive",
-        "whyReadZh": "需要完成 motivation、method 和实验结果分析后再判断是否值得深读。",
-        "limitationsZh": "命令行启用了 --no-ai",
+        "algorithmRelevance": 4,
+        "systemRelevance": 2,
+        "readPriority": "skim",
+        "whyReadZh": "关联训练数据效率及评估方法，和推理芯片计算核心没有直接机制联系。建议按证据边界决定精读及实验对比范围。",
+        "limitationsZh": "仅核验摘要；目标一致时无端点收益需在其理论条件下理解，不能推广为所有有限训练或优化情境。",
         "motivationDetail": {
-          "problemZh": "harness 未完成分析。",
-          "gapZh": "harness 未完成分析。",
-          "whyImportantZh": "harness 未完成分析。",
-          "userRelevanceZh": "harness 未完成分析。",
-          "evidence": "not analyzed"
+          "problemZh": "数据筛选带来的收益可能只是更快到达相同性能，也可能改变最终可达表现，两者常被混淆。",
+          "gapZh": "有限训练预算上的收益不足以说明筛选提升最终学习上限。",
+          "whyImportantZh": "区分收敛速度与端点收益，才能正确分配数据策展成本。",
+          "userRelevanceZh": "关联训练数据效率及评估方法，和推理芯片计算核心没有直接机制联系。",
+          "evidence": "已读 https://arxiv.org/abs/2610.36983v1 公开摘要及daily.json元数据；未读全文"
         },
         "methodDetail": {
-          "coreIdeaZh": "harness 未完成分析。",
+          "coreIdeaZh": "形式化advancement与acceleration，在训练目标和目标任务之间的可纠正差距视角下，提出基于未筛选训练/目标损失差的Δ-test。",
           "componentsZh": [
-            "未分析"
+            "端点与速度区分",
+            "train-target gap",
+            "Δ-test"
           ],
-          "hardwareSystemDetailZh": "harness 未完成分析。",
-          "noveltyZh": "harness 未完成分析。",
-          "evidence": "not analyzed"
+          "hardwareSystemDetailZh": "理论与LLM训练实验工作，未提供新芯片或推理数据通路。",
+          "noveltyZh": "把能否提高最终表现归因于策展任务的差距，而非只归因于筛选算法。",
+          "evidence": "已读 https://arxiv.org/abs/2610.36983v1 公开摘要及daily.json元数据；未读全文"
         },
         "experimentDetail": {
-          "setupZh": "harness 未完成分析。",
-          "baselinesZh": "harness 未完成分析。",
+          "setupZh": "摘要称解析推导与真实LLM实验，未披露具体模型、数据集、硬件及训练预算。",
+          "baselinesZh": "未筛选训练基线与不同筛选/混合策略；可读摘要未列方法名称。",
           "metricsZh": [
-            "未分析"
+            "训练损失",
+            "目标损失",
+            "预算增长下收益持续性"
           ],
-          "mainResultsZh": "harness 未完成分析。",
-          "limitationsZh": "harness 未完成分析。",
-          "evidence": "not analyzed"
+          "mainResultsZh": "摘要报告明显非零Δ预测持续收益，Δ接近零时收益随预算增长减弱；没有可据此填写的统一数值增益。",
+          "limitationsZh": "仅核验摘要；目标一致时无端点收益需在其理论条件下理解，不能推广为所有有限训练或优化情境。",
+          "evidence": "已读 https://arxiv.org/abs/2610.36983v1 公开摘要及daily.json元数据；未读全文"
         },
         "evidence": {
           "usedSources": [
-            "metadata"
+            "daily.json metadata",
+            "https://arxiv.org/abs/2610.36983v1"
           ],
-          "affiliationEvidence": "",
-          "experimentEvidence": "",
+          "affiliationEvidence": "队列authorAffiliations与affiliations为空，按任务要求保留元数据缺失说明。",
+          "experimentEvidence": "已读 https://arxiv.org/abs/2610.36983v1 公开摘要及daily.json元数据；未读全文",
           "missingFields": [
-            "motivation",
-            "method",
-            "experiments"
+            "元数据作者单位",
+            "全文方法与实验细节"
           ]
         },
         "confidence": {
-          "summary": 0.2,
-          "motivation": 0,
-          "method": 0,
-          "experiments": 0,
+          "summary": 0.85,
+          "motivation": 0.84,
+          "method": 0.78,
+          "experiments": 0.73,
           "affiliations": 0
         }
-      }
+      },
+      "pushedAt": "2026-10-30T00:36:26.783Z",
+      "emailSentAt": "2026-10-30T00:36:26.783Z",
+      "firstPushedAt": "2026-10-30T00:36:26.783Z"
     },
     {
       "id": "arxiv:2610.37524",
@@ -533,65 +575,74 @@
       "conferenceVenues": [],
       "conferenceYears": [],
       "digest": {
-        "summaryZh": "AI 摘要未生成。原始摘要要点：Self-attention mechanisms have established the Transformer as the dominant backbone across natural language processing, source code intelligence, and automated ...",
-        "motivationZh": "命令行启用了 --no-ai",
-        "methodZh": "请配置 AI 后重新运行，以生成方法提炼。",
-        "experimentsZh": "来源元数据未披露完整实验设置或结果。",
-        "affiliationsZh": "未在 DBLP/arXiv 元数据中提供。",
+        "summaryZh": "GTFormer用有界度图层次替代全自注意力，在程序生成的小词表分类任务上报告极长外推。正文存在硬件内存限制与误差条描述差异，结果不能视为通用语言模型长上下文替代已成立。",
+        "motivationZh": "全自注意力的二次计算成本限制长序列，短长度训练也可能难以外推到更长的关系任务。需要让局部聚合规则随长度保持稳定，并以层次路径传播远距离信息。图结构会改变运算与存储访问负载，为长上下文替代算法提供参考。可跟踪稀疏图聚合的硬件需求，但实验是合成任务，不是预训练LLM的通用替换证据。",
+        "methodZh": "把原始token组织为平衡二叉树，加入边界shift、可选expander及凸highway门控和自顶向下传播；以有界fan-in控制复杂度。GPU上的模型算法；不实现新计算核心，采用程序生成的320词表、64类最终状态标签任务。利用动态层次深度与门控保持局部规则跨长度泛化。",
+        "experimentsZh": "正文八个程序生成任务，训练长度至512，评估至4194304；表4最佳是Local Shift、No Expander变体。普通/带RoPE Transformer及多种树GNN消融；非FlashAttention最优实现对比。报告最佳变体在4194304长度准确率98.1%；该结果局限于合成分类任务。正文4 GB显存限制与引言22.1 GB描述、98.1%的误差条有差异；基线OOM口径需复核，不能接受为通用Transformer替代结论。",
+        "affiliationsZh": "未在 DBLP/arXiv 元数据中提供",
         "tags": [
-          "cs.LG"
+          "长序列图网络",
+          "合成外推",
+          "证据需复核"
         ],
         "importance": 3,
-        "researchFitZh": "AI harness 尚未完成分析，无法判断与用户研究方向的具体关系。",
-        "hardwareRelevance": 1,
-        "algorithmRelevance": 1,
-        "systemRelevance": 1,
-        "readPriority": "archive",
-        "whyReadZh": "需要完成 motivation、method 和实验结果分析后再判断是否值得深读。",
-        "limitationsZh": "命令行启用了 --no-ai",
+        "researchFitZh": "可跟踪稀疏图聚合的硬件需求，但实验是合成任务，不是预训练LLM的通用替换证据。",
+        "hardwareRelevance": 2,
+        "algorithmRelevance": 4,
+        "systemRelevance": 2,
+        "readPriority": "skim",
+        "whyReadZh": "可跟踪稀疏图聚合的硬件需求，但实验是合成任务，不是预训练LLM的通用替换证据。建议按证据边界决定精读及实验对比范围。",
+        "limitationsZh": "正文4 GB显存限制与引言22.1 GB描述、98.1%的误差条有差异；基线OOM口径需复核，不能接受为通用Transformer替代结论。",
         "motivationDetail": {
-          "problemZh": "harness 未完成分析。",
-          "gapZh": "harness 未完成分析。",
-          "whyImportantZh": "harness 未完成分析。",
-          "userRelevanceZh": "harness 未完成分析。",
-          "evidence": "not analyzed"
+          "problemZh": "全自注意力的二次计算成本限制长序列，短长度训练也可能难以外推到更长的关系任务。",
+          "gapZh": "需要让局部聚合规则随长度保持稳定，并以层次路径传播远距离信息。",
+          "whyImportantZh": "图结构会改变运算与存储访问负载，为长上下文替代算法提供参考。",
+          "userRelevanceZh": "可跟踪稀疏图聚合的硬件需求，但实验是合成任务，不是预训练LLM的通用替换证据。",
+          "evidence": "已读 https://arxiv.org/abs/2610.37524v1 公开摘要及daily.json元数据；另读 https://arxiv.org/html/2610.37524v1：HTML方法§2、计算设置§3与结果§4/表4"
         },
         "methodDetail": {
-          "coreIdeaZh": "harness 未完成分析。",
+          "coreIdeaZh": "把原始token组织为平衡二叉树，加入边界shift、可选expander及凸highway门控和自顶向下传播；以有界fan-in控制复杂度。",
           "componentsZh": [
-            "未分析"
+            "树形归约",
+            "局部shift",
+            "expander消融",
+            "凸门控与广播"
           ],
-          "hardwareSystemDetailZh": "harness 未完成分析。",
-          "noveltyZh": "harness 未完成分析。",
-          "evidence": "not analyzed"
+          "hardwareSystemDetailZh": "GPU上的模型算法；不实现新计算核心，采用程序生成的320词表、64类最终状态标签任务。",
+          "noveltyZh": "利用动态层次深度与门控保持局部规则跨长度泛化。",
+          "evidence": "已读 https://arxiv.org/abs/2610.37524v1 公开摘要及daily.json元数据；另读 https://arxiv.org/html/2610.37524v1：HTML方法§2、计算设置§3与结果§4/表4"
         },
         "experimentDetail": {
-          "setupZh": "harness 未完成分析。",
-          "baselinesZh": "harness 未完成分析。",
+          "setupZh": "正文八个程序生成任务，训练长度至512，评估至4194304；表4最佳是Local Shift、No Expander变体。",
+          "baselinesZh": "普通/带RoPE Transformer及多种树GNN消融；非FlashAttention最优实现对比。",
           "metricsZh": [
-            "未分析"
+            "exact-match准确率",
+            "推理时延",
+            "峰值显存",
+            "外推长度"
           ],
-          "mainResultsZh": "harness 未完成分析。",
-          "limitationsZh": "harness 未完成分析。",
-          "evidence": "not analyzed"
+          "mainResultsZh": "报告最佳变体在4194304长度准确率98.1%；该结果局限于合成分类任务。",
+          "limitationsZh": "正文4 GB显存限制与引言22.1 GB描述、98.1%的误差条有差异；基线OOM口径需复核，不能接受为通用Transformer替代结论。",
+          "evidence": "已读 https://arxiv.org/abs/2610.37524v1 公开摘要及daily.json元数据；另读 https://arxiv.org/html/2610.37524v1：HTML方法§2、计算设置§3与结果§4/表4"
         },
         "evidence": {
           "usedSources": [
-            "metadata"
+            "daily.json metadata",
+            "https://arxiv.org/abs/2610.37524v1",
+            "https://arxiv.org/html/2610.37524v1（HTML方法§2、计算设置§3与结果§4/表4）"
           ],
-          "affiliationEvidence": "",
-          "experimentEvidence": "",
+          "affiliationEvidence": "队列authorAffiliations与affiliations为空，按任务要求保留元数据缺失说明。",
+          "experimentEvidence": "已读 https://arxiv.org/abs/2610.37524v1 公开摘要及daily.json元数据；另读 https://arxiv.org/html/2610.37524v1：HTML方法§2、计算设置§3与结果§4/表4",
           "missingFields": [
-            "motivation",
-            "method",
-            "experiments"
+            "元数据作者单位",
+            "未核验的完整实验与复现细节"
           ]
         },
         "confidence": {
-          "summary": 0.2,
-          "motivation": 0,
-          "method": 0,
-          "experiments": 0,
+          "summary": 0.85,
+          "motivation": 0.84,
+          "method": 0.87,
+          "experiments": 0.82,
           "affiliations": 0
         }
       },
@@ -601,13 +652,20 @@
       "relevanceReason": "命中 AI 处理器、体系结构、量化、训推系统或内存/缓存优化主题",
       "pdfStatus": "remote",
       "workflow": {
-        "digestStatus": "pending",
-        "emailStatus": "waiting-digest",
-        "digestError": "命令行启用了 --no-ai",
+        "digestStatus": "ready",
+        "emailStatus": "sent",
+        "digestError": "",
         "harnessVersion": "paper-reader-v1",
         "collectStatus": "collected",
-        "pdfStatus": "remote"
-      }
+        "pdfStatus": "remote",
+        "harnessCheckedAt": "2026-10-30T00:36:22.605Z",
+        "harnessWarnings": [],
+        "emailSentAt": "2026-10-30T00:36:26.783Z",
+        "lastEmailError": ""
+      },
+      "pushedAt": "2026-10-30T00:36:26.783Z",
+      "emailSentAt": "2026-10-30T00:36:26.783Z",
+      "firstPushedAt": "2026-10-30T00:36:26.783Z"
     },
     {
       "id": "arxiv:2610.37484",
@@ -648,76 +706,90 @@
       "relevanceReason": "命中 AI 处理器、体系结构、量化、训推系统或内存/缓存优化主题",
       "pdfStatus": "remote",
       "workflow": {
-        "digestStatus": "pending",
-        "emailStatus": "waiting-digest",
-        "digestError": "命令行启用了 --no-ai",
+        "digestStatus": "ready",
+        "emailStatus": "sent",
+        "digestError": "",
         "harnessVersion": "paper-reader-v1",
         "collectStatus": "collected",
-        "pdfStatus": "remote"
+        "pdfStatus": "remote",
+        "harnessCheckedAt": "2026-10-30T00:36:22.605Z",
+        "harnessWarnings": [],
+        "emailSentAt": "2026-10-30T00:36:26.783Z",
+        "lastEmailError": ""
       },
       "digest": {
-        "summaryZh": "AI 摘要未生成。原始摘要要点：Large language models (LLMs) are increasingly used to make and execute decisions that affect living systems. Yet, to our knowledge, ecological reasoning is not ...",
-        "motivationZh": "命令行启用了 --no-ai",
-        "methodZh": "请配置 AI 后重新运行，以生成方法提炼。",
-        "experimentsZh": "来源元数据未披露完整实验设置或结果。",
-        "affiliationsZh": "未在 DBLP/arXiv 元数据中提供。",
+        "summaryZh": "作者用生态相互依赖语料进行QLoRA继续预训练，测试模型在逐级压力下的有害决策。部分模型有害选择减少，但仅是特定压力测评，无法据此证明通用对齐或硬件收益。",
+        "motivationZh": "模型在中性提示下给出环保表述，不保证受到操作压力时仍避免不可逆生态伤害。应测试受压决策而非只看伦理口号，并区分语料内容与一般继续训练效应。情境化测试有助于发现表面回答与实际决策的差异。属于对齐和继续训练趋势，与量化核心及推理系统性能关系较弱。",
+        "methodZh": "以人类、生物圈与AI依赖及损害恢复记录构建语料，执行一次QLoRA CPT；用压力阶梯、决策网格和中性控制语料比较。训练与行为评测方法，未设计硬件或低精度推理优化。将生态依赖事实学习与受压决策联系，而非只训练伦理措辞。",
+        "experimentsZh": "五个开放模型、三类设计；摘要举Llama-3.3-70B和Qwen3.6-27B，未披露完整训练配置。原模型与construct-neutral控制语料；MMLU作为能力检查。摘要报告五模型中四个最高压力下有害选择接近零；Llama-3.3-70B从300次中的70次降至0，MMLU不变。仅摘要证据；自建压力任务、裁判与泛化需要全文核验，不能外推为全面安全保证。",
+        "affiliationsZh": "未在 DBLP/arXiv 元数据中提供",
         "tags": [
-          "cs.CL"
+          "继续预训练",
+          "压力对齐",
+          "行为评测"
         ],
-        "importance": 3,
-        "researchFitZh": "AI harness 尚未完成分析，无法判断与用户研究方向的具体关系。",
+        "importance": 2,
+        "researchFitZh": "属于对齐和继续训练趋势，与量化核心及推理系统性能关系较弱。",
         "hardwareRelevance": 1,
-        "algorithmRelevance": 1,
+        "algorithmRelevance": 3,
         "systemRelevance": 1,
         "readPriority": "archive",
-        "whyReadZh": "需要完成 motivation、method 和实验结果分析后再判断是否值得深读。",
-        "limitationsZh": "命令行启用了 --no-ai",
+        "whyReadZh": "属于对齐和继续训练趋势，与量化核心及推理系统性能关系较弱。建议按证据边界决定精读及实验对比范围。",
+        "limitationsZh": "仅摘要证据；自建压力任务、裁判与泛化需要全文核验，不能外推为全面安全保证。",
         "motivationDetail": {
-          "problemZh": "harness 未完成分析。",
-          "gapZh": "harness 未完成分析。",
-          "whyImportantZh": "harness 未完成分析。",
-          "userRelevanceZh": "harness 未完成分析。",
-          "evidence": "not analyzed"
+          "problemZh": "模型在中性提示下给出环保表述，不保证受到操作压力时仍避免不可逆生态伤害。",
+          "gapZh": "应测试受压决策而非只看伦理口号，并区分语料内容与一般继续训练效应。",
+          "whyImportantZh": "情境化测试有助于发现表面回答与实际决策的差异。",
+          "userRelevanceZh": "属于对齐和继续训练趋势，与量化核心及推理系统性能关系较弱。",
+          "evidence": "已读 https://arxiv.org/abs/2610.37484v1 公开摘要及daily.json元数据；未读全文"
         },
         "methodDetail": {
-          "coreIdeaZh": "harness 未完成分析。",
+          "coreIdeaZh": "以人类、生物圈与AI依赖及损害恢复记录构建语料，执行一次QLoRA CPT；用压力阶梯、决策网格和中性控制语料比较。",
           "componentsZh": [
-            "未分析"
+            "耦合福祉语料",
+            "QLoRA CPT",
+            "压力决策测试",
+            "中性语料控制"
           ],
-          "hardwareSystemDetailZh": "harness 未完成分析。",
-          "noveltyZh": "harness 未完成分析。",
-          "evidence": "not analyzed"
+          "hardwareSystemDetailZh": "训练与行为评测方法，未设计硬件或低精度推理优化。",
+          "noveltyZh": "将生态依赖事实学习与受压决策联系，而非只训练伦理措辞。",
+          "evidence": "已读 https://arxiv.org/abs/2610.37484v1 公开摘要及daily.json元数据；未读全文"
         },
         "experimentDetail": {
-          "setupZh": "harness 未完成分析。",
-          "baselinesZh": "harness 未完成分析。",
+          "setupZh": "五个开放模型、三类设计；摘要举Llama-3.3-70B和Qwen3.6-27B，未披露完整训练配置。",
+          "baselinesZh": "原模型与construct-neutral控制语料；MMLU作为能力检查。",
           "metricsZh": [
-            "未分析"
+            "有害决策次数",
+            "压力鲁棒性",
+            "MMLU"
           ],
-          "mainResultsZh": "harness 未完成分析。",
-          "limitationsZh": "harness 未完成分析。",
-          "evidence": "not analyzed"
+          "mainResultsZh": "摘要报告五模型中四个最高压力下有害选择接近零；Llama-3.3-70B从300次中的70次降至0，MMLU不变。",
+          "limitationsZh": "仅摘要证据；自建压力任务、裁判与泛化需要全文核验，不能外推为全面安全保证。",
+          "evidence": "已读 https://arxiv.org/abs/2610.37484v1 公开摘要及daily.json元数据；未读全文"
         },
         "evidence": {
           "usedSources": [
-            "metadata"
+            "daily.json metadata",
+            "https://arxiv.org/abs/2610.37484v1"
           ],
-          "affiliationEvidence": "",
-          "experimentEvidence": "",
+          "affiliationEvidence": "队列authorAffiliations与affiliations为空，按任务要求保留元数据缺失说明。",
+          "experimentEvidence": "已读 https://arxiv.org/abs/2610.37484v1 公开摘要及daily.json元数据；未读全文",
           "missingFields": [
-            "motivation",
-            "method",
-            "experiments"
+            "元数据作者单位",
+            "全文方法与实验细节"
           ]
         },
         "confidence": {
-          "summary": 0.2,
-          "motivation": 0,
-          "method": 0,
-          "experiments": 0,
+          "summary": 0.85,
+          "motivation": 0.84,
+          "method": 0.78,
+          "experiments": 0.73,
           "affiliations": 0
         }
-      }
+      },
+      "pushedAt": "2026-10-30T00:36:26.783Z",
+      "emailSentAt": "2026-10-30T00:36:26.783Z",
+      "firstPushedAt": "2026-10-30T00:36:26.783Z"
     },
     {
       "id": "arxiv:2610.37036",
@@ -759,77 +831,89 @@
       "relevanceReason": "命中 AI 处理器、体系结构、量化、训推系统或内存/缓存优化主题",
       "pdfStatus": "remote",
       "workflow": {
-        "digestStatus": "pending",
-        "emailStatus": "waiting-digest",
-        "digestError": "命令行启用了 --no-ai",
+        "digestStatus": "ready",
+        "emailStatus": "sent",
+        "digestError": "",
         "harnessVersion": "paper-reader-v1",
         "collectStatus": "collected",
-        "pdfStatus": "remote"
+        "pdfStatus": "remote",
+        "harnessCheckedAt": "2026-10-30T00:36:22.605Z",
+        "harnessWarnings": [],
+        "emailSentAt": "2026-10-30T00:36:26.783Z",
+        "lastEmailError": ""
       },
       "digest": {
-        "summaryZh": "AI 摘要未生成。原始摘要要点：Inserting virtual objects into scenes reconstructed via 2D or 3D Gaussian Splatting (2DGS/3DGS) is a key capability for content creation, AR, and synthetic data...",
-        "motivationZh": "命令行启用了 --no-ai",
-        "methodZh": "请配置 AI 后重新运行，以生成方法提炼。",
-        "experimentsZh": "来源元数据未披露完整实验设置或结果。",
-        "affiliationsZh": "未在 DBLP/arXiv 元数据中提供。",
+        "summaryZh": "GraftRay通过材质法线恢复、显式面光源和高斯/网格混合路径追踪，使插入物体与场景互相照明和投影。属于图形渲染算法，和当前LLM计算核心方向关联较弱。",
+        "motivationZh": "向Gaussian Splatting场景插入网格时，图像域调色缺多视角一致性，单点环境贴图难表达室内近场面光源。需要同时处理插入物体受光及其对场景产生的软阴影与间接照明。物理一致插入关系到AR与合成数据的可信视觉效果。仅与GPU渲染负载间接相关，非LLM注意力、量化或KV管理工作，应归档。",
+        "methodZh": "用扩散先验恢复材质和表面法线，显式建模扩展光源并闭式求辐亮度，再联合路径追踪高斯场景与网格。图形算法及渲染器，公开摘要未给芯片或核心微架构设计。在2DGS/3DGS中统一生成视角一致的插入物体明暗、互反射和软阴影。",
+        "experimentsZh": "FIPT数据评估；摘要未披露硬件、场景数量或具体训练与渲染设置。ComGS与EAG-PT等；可读摘要未给完整数值表。摘要声称优于近期基线且效率有竞争力，但没有可验证的具体指标数值。只读摘要，不能判断速度/质量公平性，不能把渲染改进当作LLM推理加速。",
+        "affiliationsZh": "未在 DBLP/arXiv 元数据中提供",
         "tags": [
-          "cs.CV",
-          "cs.GR"
+          "高斯渲染",
+          "网格插入",
+          "偏离LLM主线"
         ],
-        "importance": 3,
-        "researchFitZh": "AI harness 尚未完成分析，无法判断与用户研究方向的具体关系。",
+        "importance": 1,
+        "researchFitZh": "仅与GPU渲染负载间接相关，非LLM注意力、量化或KV管理工作，应归档。",
         "hardwareRelevance": 1,
-        "algorithmRelevance": 1,
+        "algorithmRelevance": 2,
         "systemRelevance": 1,
         "readPriority": "archive",
-        "whyReadZh": "需要完成 motivation、method 和实验结果分析后再判断是否值得深读。",
-        "limitationsZh": "命令行启用了 --no-ai",
+        "whyReadZh": "仅与GPU渲染负载间接相关，非LLM注意力、量化或KV管理工作，应归档。建议按证据边界决定精读及实验对比范围。",
+        "limitationsZh": "只读摘要，不能判断速度/质量公平性，不能把渲染改进当作LLM推理加速。",
         "motivationDetail": {
-          "problemZh": "harness 未完成分析。",
-          "gapZh": "harness 未完成分析。",
-          "whyImportantZh": "harness 未完成分析。",
-          "userRelevanceZh": "harness 未完成分析。",
-          "evidence": "not analyzed"
+          "problemZh": "向Gaussian Splatting场景插入网格时，图像域调色缺多视角一致性，单点环境贴图难表达室内近场面光源。",
+          "gapZh": "需要同时处理插入物体受光及其对场景产生的软阴影与间接照明。",
+          "whyImportantZh": "物理一致插入关系到AR与合成数据的可信视觉效果。",
+          "userRelevanceZh": "仅与GPU渲染负载间接相关，非LLM注意力、量化或KV管理工作，应归档。",
+          "evidence": "已读 https://arxiv.org/abs/2610.37036v1 公开摘要及daily.json元数据；未读全文"
         },
         "methodDetail": {
-          "coreIdeaZh": "harness 未完成分析。",
+          "coreIdeaZh": "用扩散先验恢复材质和表面法线，显式建模扩展光源并闭式求辐亮度，再联合路径追踪高斯场景与网格。",
           "componentsZh": [
-            "未分析"
+            "扩散材质法线先验",
+            "显式面光源",
+            "混合路径追踪"
           ],
-          "hardwareSystemDetailZh": "harness 未完成分析。",
-          "noveltyZh": "harness 未完成分析。",
-          "evidence": "not analyzed"
+          "hardwareSystemDetailZh": "图形算法及渲染器，公开摘要未给芯片或核心微架构设计。",
+          "noveltyZh": "在2DGS/3DGS中统一生成视角一致的插入物体明暗、互反射和软阴影。",
+          "evidence": "已读 https://arxiv.org/abs/2610.37036v1 公开摘要及daily.json元数据；未读全文"
         },
         "experimentDetail": {
-          "setupZh": "harness 未完成分析。",
-          "baselinesZh": "harness 未完成分析。",
+          "setupZh": "FIPT数据评估；摘要未披露硬件、场景数量或具体训练与渲染设置。",
+          "baselinesZh": "ComGS与EAG-PT等；可读摘要未给完整数值表。",
           "metricsZh": [
-            "未分析"
+            "渲染保真",
+            "阴影准确度",
+            "渲染效率"
           ],
-          "mainResultsZh": "harness 未完成分析。",
-          "limitationsZh": "harness 未完成分析。",
-          "evidence": "not analyzed"
+          "mainResultsZh": "摘要声称优于近期基线且效率有竞争力，但没有可验证的具体指标数值。",
+          "limitationsZh": "只读摘要，不能判断速度/质量公平性，不能把渲染改进当作LLM推理加速。",
+          "evidence": "已读 https://arxiv.org/abs/2610.37036v1 公开摘要及daily.json元数据；未读全文"
         },
         "evidence": {
           "usedSources": [
-            "metadata"
+            "daily.json metadata",
+            "https://arxiv.org/abs/2610.37036v1"
           ],
-          "affiliationEvidence": "",
-          "experimentEvidence": "",
+          "affiliationEvidence": "队列authorAffiliations与affiliations为空，按任务要求保留元数据缺失说明。",
+          "experimentEvidence": "已读 https://arxiv.org/abs/2610.37036v1 公开摘要及daily.json元数据；未读全文",
           "missingFields": [
-            "motivation",
-            "method",
-            "experiments"
+            "元数据作者单位",
+            "全文方法与实验细节"
           ]
         },
         "confidence": {
-          "summary": 0.2,
-          "motivation": 0,
-          "method": 0,
-          "experiments": 0,
+          "summary": 0.85,
+          "motivation": 0.84,
+          "method": 0.78,
+          "experiments": 0.73,
           "affiliations": 0
         }
-      }
+      },
+      "pushedAt": "2026-10-30T00:36:26.783Z",
+      "emailSentAt": "2026-10-30T00:36:26.783Z",
+      "firstPushedAt": "2026-10-30T00:36:26.783Z"
     },
     {
       "id": "arxiv:2610.37649",
@@ -874,78 +958,90 @@
       "relevanceReason": "命中 LLM/Agent/多模态/后训练等算法趋势主题",
       "pdfStatus": "remote",
       "workflow": {
-        "digestStatus": "pending",
-        "emailStatus": "waiting-digest",
-        "digestError": "命令行启用了 --no-ai",
+        "digestStatus": "ready",
+        "emailStatus": "sent",
+        "digestError": "",
         "harnessVersion": "paper-reader-v1",
         "collectStatus": "collected",
-        "pdfStatus": "remote"
+        "pdfStatus": "remote",
+        "harnessCheckedAt": "2026-10-30T00:36:22.605Z",
+        "harnessWarnings": [],
+        "emailSentAt": "2026-10-30T00:36:26.783Z",
+        "lastEmailError": ""
       },
       "digest": {
-        "summaryZh": "AI 摘要未生成。原始摘要要点：Scientific discovery often begins with an unexpected observation that prompts a new research question. In a world with altered physical laws, can large language...",
-        "motivationZh": "命令行启用了 --no-ai",
-        "methodZh": "请配置 AI 后重新运行，以生成方法提炼。",
-        "experimentsZh": "来源元数据未披露完整实验设置或结果。",
-        "affiliationsZh": "未在 DBLP/arXiv 元数据中提供。",
+        "summaryZh": "LongChang让模型在改变物理定律的模拟世界自由探索，用多Agent生成场景、审查工具和评判报告。十二模型中只有一个得到非零发现率，结果说明该评测设置下开放发现困难。",
+        "motivationZh": "现有科学发现任务常明确告诉模型研究问题，不能检验其能否主动注意异常并设计实验找出隐藏定律。需要没有目标提示的自由探索环境及实验记录支持的发现评估。主动提出问题是科学Agent能力的重要边界。适合Agent探索与评测趋势，缺少芯片或推理计算核心优化。",
+        "methodZh": "LongChang合成修改物理规律的世界，让模型操作物体和建工具；其他Agent生成审核场景、工具及报告，并根据探索记录演化场景。模拟环境与评测框架，未设计硬件结构或执行kernel。把异常发现、问题形成和实验验证一并放入无提示探索流程。",
+        "experimentsZh": "十二个LLM在改变定律的模拟世界测试，摘要未给任务总量、硬件或裁判校准细节。其他十一模型与GPT-6-Astra之间比较；不是性能加速基线。摘要报告GPT-6-Astra发现率16.7%，其余十一模型为0%，记录显示异常未调查或仅部分识别。只核验摘要；低发现率可能受工具、场景和裁判影响，不能概括所有科学推理能力。",
+        "affiliationsZh": "未在 DBLP/arXiv 元数据中提供",
         "tags": [
-          "cs.CL",
-          "cs.AI",
-          "cs.MA"
+          "科学Agent",
+          "自由探索",
+          "模拟评测"
         ],
-        "importance": 3,
-        "researchFitZh": "AI harness 尚未完成分析，无法判断与用户研究方向的具体关系。",
+        "importance": 2,
+        "researchFitZh": "适合Agent探索与评测趋势，缺少芯片或推理计算核心优化。",
         "hardwareRelevance": 1,
-        "algorithmRelevance": 1,
-        "systemRelevance": 1,
-        "readPriority": "archive",
-        "whyReadZh": "需要完成 motivation、method 和实验结果分析后再判断是否值得深读。",
-        "limitationsZh": "命令行启用了 --no-ai",
+        "algorithmRelevance": 4,
+        "systemRelevance": 2,
+        "readPriority": "skim",
+        "whyReadZh": "适合Agent探索与评测趋势，缺少芯片或推理计算核心优化。建议按证据边界决定精读及实验对比范围。",
+        "limitationsZh": "只核验摘要；低发现率可能受工具、场景和裁判影响，不能概括所有科学推理能力。",
         "motivationDetail": {
-          "problemZh": "harness 未完成分析。",
-          "gapZh": "harness 未完成分析。",
-          "whyImportantZh": "harness 未完成分析。",
-          "userRelevanceZh": "harness 未完成分析。",
-          "evidence": "not analyzed"
+          "problemZh": "现有科学发现任务常明确告诉模型研究问题，不能检验其能否主动注意异常并设计实验找出隐藏定律。",
+          "gapZh": "需要没有目标提示的自由探索环境及实验记录支持的发现评估。",
+          "whyImportantZh": "主动提出问题是科学Agent能力的重要边界。",
+          "userRelevanceZh": "适合Agent探索与评测趋势，缺少芯片或推理计算核心优化。",
+          "evidence": "已读 https://arxiv.org/abs/2610.37649v1 公开摘要及daily.json元数据；未读全文"
         },
         "methodDetail": {
-          "coreIdeaZh": "harness 未完成分析。",
+          "coreIdeaZh": "LongChang合成修改物理规律的世界，让模型操作物体和建工具；其他Agent生成审核场景、工具及报告，并根据探索记录演化场景。",
           "componentsZh": [
-            "未分析"
+            "改写物理环境",
+            "自由实验工具",
+            "多Agent审查",
+            "记录驱动场景演化"
           ],
-          "hardwareSystemDetailZh": "harness 未完成分析。",
-          "noveltyZh": "harness 未完成分析。",
-          "evidence": "not analyzed"
+          "hardwareSystemDetailZh": "模拟环境与评测框架，未设计硬件结构或执行kernel。",
+          "noveltyZh": "把异常发现、问题形成和实验验证一并放入无提示探索流程。",
+          "evidence": "已读 https://arxiv.org/abs/2610.37649v1 公开摘要及daily.json元数据；未读全文"
         },
         "experimentDetail": {
-          "setupZh": "harness 未完成分析。",
-          "baselinesZh": "harness 未完成分析。",
+          "setupZh": "十二个LLM在改变定律的模拟世界测试，摘要未给任务总量、硬件或裁判校准细节。",
+          "baselinesZh": "其他十一模型与GPT-6-Astra之间比较；不是性能加速基线。",
           "metricsZh": [
-            "未分析"
+            "定律发现率",
+            "异常调查",
+            "报告实验支持"
           ],
-          "mainResultsZh": "harness 未完成分析。",
-          "limitationsZh": "harness 未完成分析。",
-          "evidence": "not analyzed"
+          "mainResultsZh": "摘要报告GPT-6-Astra发现率16.7%，其余十一模型为0%，记录显示异常未调查或仅部分识别。",
+          "limitationsZh": "只核验摘要；低发现率可能受工具、场景和裁判影响，不能概括所有科学推理能力。",
+          "evidence": "已读 https://arxiv.org/abs/2610.37649v1 公开摘要及daily.json元数据；未读全文"
         },
         "evidence": {
           "usedSources": [
-            "metadata"
+            "daily.json metadata",
+            "https://arxiv.org/abs/2610.37649v1"
           ],
-          "affiliationEvidence": "",
-          "experimentEvidence": "",
+          "affiliationEvidence": "队列authorAffiliations与affiliations为空，按任务要求保留元数据缺失说明。",
+          "experimentEvidence": "已读 https://arxiv.org/abs/2610.37649v1 公开摘要及daily.json元数据；未读全文",
           "missingFields": [
-            "motivation",
-            "method",
-            "experiments"
+            "元数据作者单位",
+            "全文方法与实验细节"
           ]
         },
         "confidence": {
-          "summary": 0.2,
-          "motivation": 0,
-          "method": 0,
-          "experiments": 0,
+          "summary": 0.85,
+          "motivation": 0.84,
+          "method": 0.78,
+          "experiments": 0.73,
           "affiliations": 0
         }
-      }
+      },
+      "pushedAt": "2026-10-30T00:36:26.783Z",
+      "emailSentAt": "2026-10-30T00:36:26.783Z",
+      "firstPushedAt": "2026-10-30T00:36:26.783Z"
     },
     {
       "id": "arxiv:2610.37648",
@@ -992,76 +1088,88 @@
       "relevanceReason": "命中 LLM/Agent/多模态/后训练等算法趋势主题",
       "pdfStatus": "remote",
       "workflow": {
-        "digestStatus": "pending",
-        "emailStatus": "waiting-digest",
-        "digestError": "命令行启用了 --no-ai",
+        "digestStatus": "ready",
+        "emailStatus": "sent",
+        "digestError": "",
         "harnessVersion": "paper-reader-v1",
         "collectStatus": "collected",
-        "pdfStatus": "remote"
+        "pdfStatus": "remote",
+        "harnessCheckedAt": "2026-10-30T00:36:22.605Z",
+        "harnessWarnings": [],
+        "emailSentAt": "2026-10-30T00:36:26.783Z",
+        "lastEmailError": ""
       },
       "digest": {
-        "summaryZh": "AI 摘要未生成。原始摘要要点：We explore how to build performant large language model (LLM) tool-use agents that complete complex, multi-step tasks. Specifically, we study how data compositi...",
-        "motivationZh": "命令行启用了 --no-ai",
-        "methodZh": "请配置 AI 后重新运行，以生成方法提炼。",
-        "experimentsZh": "来源元数据未披露完整实验设置或结果。",
-        "affiliationsZh": "未在 DBLP/arXiv 元数据中提供。",
+        "summaryZh": "SynthAPI控制工具、任务和数据库多样性，研究合成环境组成如何决定Agent泛化。论文给出训练数据缩放规律，强调预算增大后工具和数据库多样性的价值。",
+        "motivationZh": "多步工具Agent需要大量训练环境，但增加任务数、工具种类或数据库种类哪种最有效仍不明确。仅扩张合成任务总量无法分辨环境组成对泛化的贡献。可预测的组成规律能减少Agent训练数据预算浪费。关联Agent训练规模和工具负载趋势，未提供推理芯片核心方案。",
+        "methodZh": "SynthAPI显式控制工具、任务及数据库三个轴，在不同规模模型上系统改变合成数据组成并拟合下游泛化缩放规律。合成数据与训练实证研究；摘要未给硬件执行优化。把环境多样性和数据复杂度纳入Agent训练缩放关系。",
+        "experimentsZh": "458752任务、849个训练模型、四种尺寸，四个下游基准；具体模型名和设备未在摘要披露。既有大规模工具Agent及合成环境数据训练方法，具体名称未披露。摘要称预算增大后工具/数据库多样性优于单纯增任务，复杂度增加收益更大；按规律缩放的Agent在四基准超过对照。未核验全文拟合、置信区间和训练成本，不能填入未给出的统一提升百分比。",
+        "affiliationsZh": "未在 DBLP/arXiv 元数据中提供",
         "tags": [
-          "cs.LG"
+          "工具Agent",
+          "环境合成",
+          "训练缩放"
         ],
         "importance": 3,
-        "researchFitZh": "AI harness 尚未完成分析，无法判断与用户研究方向的具体关系。",
+        "researchFitZh": "关联Agent训练规模和工具负载趋势，未提供推理芯片核心方案。",
         "hardwareRelevance": 1,
-        "algorithmRelevance": 1,
-        "systemRelevance": 1,
-        "readPriority": "archive",
-        "whyReadZh": "需要完成 motivation、method 和实验结果分析后再判断是否值得深读。",
-        "limitationsZh": "命令行启用了 --no-ai",
+        "algorithmRelevance": 4,
+        "systemRelevance": 3,
+        "readPriority": "skim",
+        "whyReadZh": "关联Agent训练规模和工具负载趋势，未提供推理芯片核心方案。建议按证据边界决定精读及实验对比范围。",
+        "limitationsZh": "未核验全文拟合、置信区间和训练成本，不能填入未给出的统一提升百分比。",
         "motivationDetail": {
-          "problemZh": "harness 未完成分析。",
-          "gapZh": "harness 未完成分析。",
-          "whyImportantZh": "harness 未完成分析。",
-          "userRelevanceZh": "harness 未完成分析。",
-          "evidence": "not analyzed"
+          "problemZh": "多步工具Agent需要大量训练环境，但增加任务数、工具种类或数据库种类哪种最有效仍不明确。",
+          "gapZh": "仅扩张合成任务总量无法分辨环境组成对泛化的贡献。",
+          "whyImportantZh": "可预测的组成规律能减少Agent训练数据预算浪费。",
+          "userRelevanceZh": "关联Agent训练规模和工具负载趋势，未提供推理芯片核心方案。",
+          "evidence": "已读 https://arxiv.org/abs/2610.37648v1 公开摘要及daily.json元数据；未读全文"
         },
         "methodDetail": {
-          "coreIdeaZh": "harness 未完成分析。",
+          "coreIdeaZh": "SynthAPI显式控制工具、任务及数据库三个轴，在不同规模模型上系统改变合成数据组成并拟合下游泛化缩放规律。",
           "componentsZh": [
-            "未分析"
+            "可控环境合成",
+            "数据组成扫描",
+            "泛化缩放模型"
           ],
-          "hardwareSystemDetailZh": "harness 未完成分析。",
-          "noveltyZh": "harness 未完成分析。",
-          "evidence": "not analyzed"
+          "hardwareSystemDetailZh": "合成数据与训练实证研究；摘要未给硬件执行优化。",
+          "noveltyZh": "把环境多样性和数据复杂度纳入Agent训练缩放关系。",
+          "evidence": "已读 https://arxiv.org/abs/2610.37648v1 公开摘要及daily.json元数据；未读全文"
         },
         "experimentDetail": {
-          "setupZh": "harness 未完成分析。",
-          "baselinesZh": "harness 未完成分析。",
+          "setupZh": "458752任务、849个训练模型、四种尺寸，四个下游基准；具体模型名和设备未在摘要披露。",
+          "baselinesZh": "既有大规模工具Agent及合成环境数据训练方法，具体名称未披露。",
           "metricsZh": [
-            "未分析"
+            "下游工具任务泛化",
+            "数据规模与组成效应"
           ],
-          "mainResultsZh": "harness 未完成分析。",
-          "limitationsZh": "harness 未完成分析。",
-          "evidence": "not analyzed"
+          "mainResultsZh": "摘要称预算增大后工具/数据库多样性优于单纯增任务，复杂度增加收益更大；按规律缩放的Agent在四基准超过对照。",
+          "limitationsZh": "未核验全文拟合、置信区间和训练成本，不能填入未给出的统一提升百分比。",
+          "evidence": "已读 https://arxiv.org/abs/2610.37648v1 公开摘要及daily.json元数据；未读全文"
         },
         "evidence": {
           "usedSources": [
-            "metadata"
+            "daily.json metadata",
+            "https://arxiv.org/abs/2610.37648v1"
           ],
-          "affiliationEvidence": "",
-          "experimentEvidence": "",
+          "affiliationEvidence": "队列authorAffiliations与affiliations为空，按任务要求保留元数据缺失说明。",
+          "experimentEvidence": "已读 https://arxiv.org/abs/2610.37648v1 公开摘要及daily.json元数据；未读全文",
           "missingFields": [
-            "motivation",
-            "method",
-            "experiments"
+            "元数据作者单位",
+            "全文方法与实验细节"
           ]
         },
         "confidence": {
-          "summary": 0.2,
-          "motivation": 0,
-          "method": 0,
-          "experiments": 0,
+          "summary": 0.85,
+          "motivation": 0.84,
+          "method": 0.78,
+          "experiments": 0.73,
           "affiliations": 0
         }
-      }
+      },
+      "pushedAt": "2026-10-30T00:36:26.783Z",
+      "emailSentAt": "2026-10-30T00:36:26.783Z",
+      "firstPushedAt": "2026-10-30T00:36:26.783Z"
     }
   ]
 }
