@@ -1,23 +1,151 @@
 {
-  "generatedAt": "2026-11-02T00:31:52.125Z",
+  "generatedAt": "2026-11-03T02:36:27.919Z",
   "timezone": "Asia/Shanghai",
   "siteUrl": "https://YouthLiuYS.github.io/PaperDigestAgent/",
   "stats": {
-    "total": 116,
-    "arxiv": 94,
+    "total": 124,
+    "arxiv": 102,
     "dblp": 22,
-    "dailyLatest": 115,
+    "dailyLatest": 123,
     "dailyBackfill": 0,
     "conferenceArchive": 1,
     "current": 0,
     "newlyAdded": 0,
-    "pushed": 116,
+    "pushed": 124,
     "pdfDownloaded": 0,
-    "hardwarePrimary": 85,
-    "algorithmTrend": 30,
+    "hardwarePrimary": 91,
+    "algorithmTrend": 32,
     "lowRelevance": 1
   },
   "papers": [
+    {
+      "id": "arxiv:2611.00391",
+      "source": "arXiv",
+      "title": "Rethinking KV Cache Eviction for Agentic LLM Serving",
+      "authors": [
+        "Jiakun Fan",
+        "Han Meng",
+        "Yuxuan Xia",
+        "Hao Mark Chen",
+        "Dong Li",
+        "Dimitrios S. Nikolopoulos"
+      ],
+      "authorAffiliations": [],
+      "affiliations": [],
+      "abstract": "Key-value (KV) caches impose substantial memory pressure on large language model serving systems, requiring cache eviction when capacity is insufficient. Existing mechanisms typically evict KV from the ends of cached sequences to preserve prefix sharing across requests. However, agent workloads repeatedly reuse long histories across successive turns. Recomputing the KV cache for tokens near the end of a sequence is substantially more expensive than for earlier tokens because their attention computation involves longer histories. To address this problem, we propose preserving shared prefixes and evicting the KV cache from the beginning of the remaining history while retaining the cached suffix. We build Penelope around this strategy by co-designing the eviction policy, KV recomputation, and unified GPU-CPU cache management. Returning requests reuse the KV cache retained in GPU or CPU memory and recompute only missing segments while preserving reuse of the cached suffix. We implement Penelope in SGLang and evaluate it on three Qwen3 model sizes using real agent traces. Compared with SGLang, Penelope reduces mean time to first token by up to 60% and job completion time by up to 37% with a GPU-only cache, and by up to 76% and 60% with a two-tier GPU-CPU cache.",
+      "venue": "arXiv",
+      "published": "2026-10-30T21:14:26Z",
+      "updated": "2026-10-30T21:14:26Z",
+      "url": "http://arxiv.org/abs/2611.00391v1",
+      "pdfUrl": "https://arxiv.org/pdf/2611.00391v1",
+      "categories": [
+        "cs.DC"
+      ],
+      "collectedAt": "2026-11-03T02:22:25.400Z",
+      "firstSeenAt": "2026-11-03T02:22:25.400Z",
+      "lastSeenAt": "2026-11-03T02:22:25.400Z",
+      "collectionType": "daily-latest",
+      "matchedQuery": "(cat:cs.AR OR cat:cs.DC OR cat:cs.PF) AND (all:LLM OR all:transformer OR all:foundation OR all:language) AND (all:accelerator OR all:processor OR all:architecture OR all:hardware OR all:system OR all:serving OR all:training OR all:inference OR all:cache)",
+      "collectionTypes": [
+        "daily-latest"
+      ],
+      "matchedQueries": [
+        "(cat:cs.AR OR cat:cs.DC OR cat:cs.PF) AND (all:LLM OR all:transformer OR all:foundation OR all:language) AND (all:accelerator OR all:processor OR all:architecture OR all:hardware OR all:system OR all:serving OR all:training OR all:inference OR all:cache)",
+        "(all:prefill OR all:decoding OR all:KV OR all:cache OR all:attention) AND (all:accelerator OR all:kernel OR all:compiler OR all:serving OR all:memory) AND (all:LLM OR all:transformer)",
+        "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)"
+      ],
+      "targetThemes": [],
+      "conferenceVenues": [],
+      "conferenceYears": [],
+      "digest": {
+        "summaryZh": "多轮Agent反复复用长历史，KV容量不足时必须驱逐；越靠后token的注意力重算涉及越长上下文，重算成本更高。Penelope保留共享前缀，从剩余历史的前部驱逐并保留缓存后缀，联合设计驱逐、缺失片段重算与GPU-CPU统一缓存管理。摘要报告相对SGLang，GPU单级缓存平均TTFT最多降低60%、作业完成时间最多降低37%；两级缓存分别最多降低76%和60%。",
+        "motivationZh": "多轮Agent反复复用长历史，KV容量不足时必须驱逐；越靠后token的注意力重算涉及越长上下文，重算成本更高。惯常保留共享前缀并从序列末尾驱逐，忽视历史不同位置的重算成本，可能丢弃最昂贵的后缀。按重算成本管理缓存能降低返回请求的首token延迟，并影响GPU与CPU两级缓存容量的分配。直接对应你的长上下文KVCache管理与稀疏推理方向，适合提取成本感知缓存策略作为系统对照。",
+        "methodZh": "Penelope保留共享前缀，从剩余历史的前部驱逐并保留缓存后缀，联合设计驱逐、缺失片段重算与GPU-CPU统一缓存管理。在SGLang中实现；返回请求复用GPU或CPU中保留的KV，只重算缺失片段，同时保留后缀复用。把历史位置相关的重算代价纳入驱逐决策，并与部分重算、跨层级KV管理共同设计。",
+        "experimentsZh": "SGLang实现，三个Qwen3模型规模及真实Agent轨迹，比较GPU单级缓存和GPU-CPU两级缓存。原始SGLang；所供摘要未给具体版本、GPU型号、轨迹名称和各模型参数量。摘要报告相对SGLang，GPU单级缓存平均TTFT最多降低60%、作业完成时间最多降低37%；两级缓存分别最多降低76%和60%。公开摘要页和HTML读取均返回DisabledError；当前仅依据队列完整摘要，未核验重算实现、消融、硬件配置及各项最大收益对应场景。",
+        "affiliationsZh": "未在 DBLP/arXiv 元数据中提供",
+        "tags": [
+          "KV缓存驱逐",
+          "Agent服务",
+          "GPU-CPU分层"
+        ],
+        "importance": 5,
+        "researchFitZh": "直接对应你的长上下文KVCache管理与稀疏推理方向，适合提取成本感知缓存策略作为系统对照。",
+        "hardwareRelevance": 3,
+        "algorithmRelevance": 3,
+        "systemRelevance": 5,
+        "readPriority": "deep-read",
+        "whyReadZh": "直接对应你的长上下文KVCache管理与稀疏推理方向，适合提取成本感知缓存策略作为系统对照。阅读时应按实际证据范围判断可用于对照的结论。",
+        "limitationsZh": "公开摘要页和HTML读取均返回DisabledError；当前仅依据队列完整摘要，未核验重算实现、消融、硬件配置及各项最大收益对应场景。",
+        "motivationDetail": {
+          "problemZh": "多轮Agent反复复用长历史，KV容量不足时必须驱逐；越靠后token的注意力重算涉及越长上下文，重算成本更高。",
+          "gapZh": "惯常保留共享前缀并从序列末尾驱逐，忽视历史不同位置的重算成本，可能丢弃最昂贵的后缀。",
+          "whyImportantZh": "按重算成本管理缓存能降低返回请求的首token延迟，并影响GPU与CPU两级缓存容量的分配。",
+          "userRelevanceZh": "直接对应你的长上下文KVCache管理与稀疏推理方向，适合提取成本感知缓存策略作为系统对照。",
+          "evidence": "daily.json实际元数据及完整原始英文摘要；公开arXiv页面读取返回DisabledError，未读取公开全文。"
+        },
+        "methodDetail": {
+          "coreIdeaZh": "Penelope保留共享前缀，从剩余历史的前部驱逐并保留缓存后缀，联合设计驱逐、缺失片段重算与GPU-CPU统一缓存管理。",
+          "componentsZh": [
+            "共享前缀保护",
+            "非共享历史前部驱逐",
+            "后缀复用与缺失片段重算",
+            "GPU-CPU统一缓存"
+          ],
+          "hardwareSystemDetailZh": "在SGLang中实现；返回请求复用GPU或CPU中保留的KV，只重算缺失片段，同时保留后缀复用。",
+          "noveltyZh": "把历史位置相关的重算代价纳入驱逐决策，并与部分重算、跨层级KV管理共同设计。",
+          "evidence": "daily.json实际元数据及完整原始英文摘要；公开arXiv页面读取返回DisabledError，未读取公开全文。"
+        },
+        "experimentDetail": {
+          "setupZh": "SGLang实现，三个Qwen3模型规模及真实Agent轨迹，比较GPU单级缓存和GPU-CPU两级缓存。",
+          "baselinesZh": "原始SGLang；所供摘要未给具体版本、GPU型号、轨迹名称和各模型参数量。",
+          "metricsZh": [
+            "平均首token时间",
+            "作业完成时间"
+          ],
+          "mainResultsZh": "摘要报告相对SGLang，GPU单级缓存平均TTFT最多降低60%、作业完成时间最多降低37%；两级缓存分别最多降低76%和60%。",
+          "limitationsZh": "公开摘要页和HTML读取均返回DisabledError；当前仅依据队列完整摘要，未核验重算实现、消融、硬件配置及各项最大收益对应场景。",
+          "evidence": "daily.json原始英文摘要明确列出SGLang、三个Qwen3规模、真实Agent轨迹以及两种缓存配置下四项最大降幅；公开全文读取失败。"
+        },
+        "evidence": {
+          "usedSources": [
+            "public/research-digest/daily.json: supplied metadata and complete original abstract"
+          ],
+          "affiliationEvidence": "authorAffiliations和affiliations均为空；遵循任务要求保留元数据缺失说明。",
+          "experimentEvidence": "daily.json原始英文摘要明确列出SGLang、三个Qwen3规模、真实Agent轨迹以及两种缓存配置下四项最大降幅；公开全文读取失败。",
+          "missingFields": [
+            "DBLP/arXiv元数据作者单位",
+            "全文方法、实验细节及硬件配置"
+          ]
+        },
+        "confidence": {
+          "summary": 0.8,
+          "motivation": 0.85,
+          "method": 0.77,
+          "experiments": 0.73,
+          "affiliations": 0
+        }
+      },
+      "recommendationTrack": "hardware-primary",
+      "recommendationLabel": "硬件体系结构主线",
+      "recommendationScore": 210.25,
+      "relevanceReason": "命中 AI 处理器、体系结构、量化、训推系统或内存/缓存优化主题",
+      "pdfStatus": "remote",
+      "workflow": {
+        "digestStatus": "ready",
+        "emailStatus": "sent",
+        "digestError": "",
+        "harnessVersion": "paper-reader-v1",
+        "collectStatus": "collected",
+        "pdfStatus": "remote",
+        "harnessCheckedAt": "2026-11-03T02:36:23.804Z",
+        "harnessWarnings": [],
+        "emailSentAt": "2026-11-03T02:36:27.905Z",
+        "lastEmailError": ""
+      },
+      "pushedAt": "2026-11-03T02:36:27.905Z",
+      "emailSentAt": "2026-11-03T02:36:27.905Z",
+      "firstPushedAt": "2026-11-03T02:36:27.905Z"
+    },
     {
       "id": "arxiv:2610.37033",
       "source": "arXiv",
@@ -283,6 +411,270 @@
       "pushedAt": "2026-10-27T02:31:15.153Z",
       "emailSentAt": "2026-10-27T02:31:15.153Z",
       "firstPushedAt": "2026-10-27T02:31:15.153Z"
+    },
+    {
+      "id": "arxiv:2611.00403",
+      "source": "arXiv",
+      "title": "MXCode: Vector Quantization for MX-Native Inference at Scale",
+      "authors": [
+        "Gaurav Kolhe",
+        "Cansu Demirkiran",
+        "Shubhi Tyagi",
+        "Sulaiman Sadiq",
+        "Boyao Wang",
+        "Richard Wang",
+        "Maximiliana Behnke",
+        "Shreyas Labhsetwar",
+        "Levi Melnick",
+        "Matthew Mattina",
+        "Partha Maji"
+      ],
+      "authorAffiliations": [],
+      "affiliations": [],
+      "abstract": "Memory capacity and bandwidth are major bottlenecks in LLM inference, motivating weight compression beyond conventional 4-bit quantization. Vector quantization (VQ) enables approximately 2-bit weight storage but often relies on codebooks incompatible with native FP4 computation. We introduce MXCode (MX-Native Codebook Quantization), a framework bridging ultra-low-bit VQ compression with MicroXcaling (MX)-native FP4 computation. MXCode proposes three strategies: PostScale, which quantizes learned codebooks to MXFP4; PreScale, which extracts MX scales before codebook learning; and PreScale+, which further compresses these scales using VQ. These strategies explore tradeoffs among quantization quality, scale overhead, and codebook granularity. All reconstruct MX-native W4A4 operands without materializing intermediate high-precision weights. We evaluate MXCode on Qwen3 (235B), DeepSeek-R1 (671B), and GLM-5.2 (753B) using the Microsoft MX Emulation Library. MXCode achieves approximately 2 bits per weight with competitive, workload-dependent model quality. On GB300 hardware, experiments with Qwen3 (235B) show approximately 50% lower model-load memory than Native FP4 while maintaining near-Native-FP4 serving throughput. Under memory-constrained prefix reuse, P90 TTFT improves by up to 94.5%. These results demonstrate software-based reconstruction on existing FP4 hardware and inform the development of future MX-native inference systems.",
+      "venue": "arXiv",
+      "published": "2026-10-30T21:48:10Z",
+      "updated": "2026-10-30T21:48:10Z",
+      "url": "http://arxiv.org/abs/2611.00403v1",
+      "pdfUrl": "https://arxiv.org/pdf/2611.00403v1",
+      "categories": [
+        "cs.LG"
+      ],
+      "collectedAt": "2026-11-03T02:22:28.899Z",
+      "firstSeenAt": "2026-11-03T02:22:28.899Z",
+      "lastSeenAt": "2026-11-03T02:22:28.899Z",
+      "collectionType": "daily-latest",
+      "matchedQuery": "(all:quantization OR all:compression OR all:pruning OR all:sparsity OR all:low-bit) AND (all:LLM OR all:transformer OR all:language) AND (all:hardware OR all:accelerator OR all:inference OR all:serving OR all:processor)",
+      "collectionTypes": [
+        "daily-latest"
+      ],
+      "matchedQueries": [
+        "(all:quantization OR all:compression OR all:pruning OR all:sparsity OR all:low-bit) AND (all:LLM OR all:transformer OR all:language) AND (all:hardware OR all:accelerator OR all:inference OR all:serving OR all:processor)",
+        "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)"
+      ],
+      "targetThemes": [],
+      "conferenceVenues": [],
+      "conferenceYears": [],
+      "digest": {
+        "summaryZh": "LLM权重容量与带宽限制推理，约2bit的向量量化压缩虽然节省存储，但其码本通常不匹配原生FP4计算。MXCode以PostScale将学习码本量化为MXFP4，以PreScale先抽取MX尺度再学习码本，以PreScale+进一步向量量化压缩尺度。摘要报告约2bit/weight；GB300的Qwen3-235B模型加载显存较Native FP4约低50%，吞吐接近；受限显存前缀复用下P90 TTFT最多改善94.5%。",
+        "motivationZh": "LLM权重容量与带宽限制推理，约2bit的向量量化压缩虽然节省存储，但其码本通常不匹配原生FP4计算。存储格式与硬件执行格式脱节，若先物化高精度权重再转换，会增加中间存储和数据搬运。压缩表示直接重构原生低精度操作数，能把容量收益转化为更大的KV复用空间和服务收益。与你的极低比特量化、量化转换单元及推理计算核心方向高度相关，适合研究解码带宽和FP4数据通路。",
+        "methodZh": "MXCode以PostScale将学习码本量化为MXFP4，以PreScale先抽取MX尺度再学习码本，以PreScale+进一步向量量化压缩尺度。三种策略均重构MX原生W4A4操作数，不物化中间高精度权重；GB300实验属于现有FP4硬件上的软件重构。把超低比特VQ存储与MXFP4原生执行衔接，并显式比较量化质量、尺度开销和码本粒度。",
+        "experimentsZh": "以Microsoft MX Emulation Library评测Qwen3-235B、DeepSeek-R1-671B和GLM-5.2-753B；GB300上测试Qwen3-235B服务。Native FP4；摘要未列模型质量任务表、批大小、并行配置和前缀复用具体容量限制。摘要报告约2bit/weight；GB300的Qwen3-235B模型加载显存较Native FP4约低50%，吞吐接近；受限显存前缀复用下P90 TTFT最多改善94.5%。摘要页及HTML均返回DisabledError，当前仅据队列摘要；接近原生吞吐和质量均依赖负载，不能推断所有模型或单卡4090可直接复现。",
+        "affiliationsZh": "未在 DBLP/arXiv 元数据中提供",
+        "tags": [
+          "向量量化",
+          "MXFP4重构",
+          "低比特推理"
+        ],
+        "importance": 5,
+        "researchFitZh": "与你的极低比特量化、量化转换单元及推理计算核心方向高度相关，适合研究解码带宽和FP4数据通路。",
+        "hardwareRelevance": 5,
+        "algorithmRelevance": 5,
+        "systemRelevance": 5,
+        "readPriority": "deep-read",
+        "whyReadZh": "与你的极低比特量化、量化转换单元及推理计算核心方向高度相关，适合研究解码带宽和FP4数据通路。阅读时应按实际证据范围判断可用于对照的结论。",
+        "limitationsZh": "摘要页及HTML均返回DisabledError，当前仅据队列摘要；接近原生吞吐和质量均依赖负载，不能推断所有模型或单卡4090可直接复现。",
+        "motivationDetail": {
+          "problemZh": "LLM权重容量与带宽限制推理，约2bit的向量量化压缩虽然节省存储，但其码本通常不匹配原生FP4计算。",
+          "gapZh": "存储格式与硬件执行格式脱节，若先物化高精度权重再转换，会增加中间存储和数据搬运。",
+          "whyImportantZh": "压缩表示直接重构原生低精度操作数，能把容量收益转化为更大的KV复用空间和服务收益。",
+          "userRelevanceZh": "与你的极低比特量化、量化转换单元及推理计算核心方向高度相关，适合研究解码带宽和FP4数据通路。",
+          "evidence": "daily.json实际元数据及完整原始英文摘要；公开arXiv页面读取返回DisabledError，未读取公开全文。"
+        },
+        "methodDetail": {
+          "coreIdeaZh": "MXCode以PostScale将学习码本量化为MXFP4，以PreScale先抽取MX尺度再学习码本，以PreScale+进一步向量量化压缩尺度。",
+          "componentsZh": [
+            "PostScale码本量化",
+            "PreScale尺度先提取",
+            "PreScale+尺度压缩",
+            "MX原生W4A4操作数重构"
+          ],
+          "hardwareSystemDetailZh": "三种策略均重构MX原生W4A4操作数，不物化中间高精度权重；GB300实验属于现有FP4硬件上的软件重构。",
+          "noveltyZh": "把超低比特VQ存储与MXFP4原生执行衔接，并显式比较量化质量、尺度开销和码本粒度。",
+          "evidence": "daily.json实际元数据及完整原始英文摘要；公开arXiv页面读取返回DisabledError，未读取公开全文。"
+        },
+        "experimentDetail": {
+          "setupZh": "以Microsoft MX Emulation Library评测Qwen3-235B、DeepSeek-R1-671B和GLM-5.2-753B；GB300上测试Qwen3-235B服务。",
+          "baselinesZh": "Native FP4；摘要未列模型质量任务表、批大小、并行配置和前缀复用具体容量限制。",
+          "metricsZh": [
+            "每权重有效比特数",
+            "模型质量",
+            "模型加载显存",
+            "服务吞吐",
+            "P90首token延迟"
+          ],
+          "mainResultsZh": "摘要报告约2bit/weight；GB300的Qwen3-235B模型加载显存较Native FP4约低50%，吞吐接近；受限显存前缀复用下P90 TTFT最多改善94.5%。",
+          "limitationsZh": "摘要页及HTML均返回DisabledError，当前仅据队列摘要；接近原生吞吐和质量均依赖负载，不能推断所有模型或单卡4090可直接复现。",
+          "evidence": "daily.json完整英文摘要提供模型、MX仿真库、GB300、Native FP4及约50%显存降幅和最高94.5%的P90 TTFT改善；未读取全文。"
+        },
+        "evidence": {
+          "usedSources": [
+            "public/research-digest/daily.json: supplied metadata and complete original abstract"
+          ],
+          "affiliationEvidence": "authorAffiliations和affiliations均为空；遵循任务要求保留元数据缺失说明。",
+          "experimentEvidence": "daily.json完整英文摘要提供模型、MX仿真库、GB300、Native FP4及约50%显存降幅和最高94.5%的P90 TTFT改善；未读取全文。",
+          "missingFields": [
+            "DBLP/arXiv元数据作者单位",
+            "全文方法、实验细节及硬件配置"
+          ]
+        },
+        "confidence": {
+          "summary": 0.8,
+          "motivation": 0.85,
+          "method": 0.77,
+          "experiments": 0.73,
+          "affiliations": 0
+        }
+      },
+      "recommendationTrack": "hardware-primary",
+      "recommendationLabel": "硬件体系结构主线",
+      "recommendationScore": 193,
+      "relevanceReason": "命中 AI 处理器、体系结构、量化、训推系统或内存/缓存优化主题",
+      "pdfStatus": "remote",
+      "workflow": {
+        "digestStatus": "ready",
+        "emailStatus": "sent",
+        "digestError": "",
+        "harnessVersion": "paper-reader-v1",
+        "collectStatus": "collected",
+        "pdfStatus": "remote",
+        "harnessCheckedAt": "2026-11-03T02:36:23.804Z",
+        "harnessWarnings": [],
+        "emailSentAt": "2026-11-03T02:36:27.905Z",
+        "lastEmailError": ""
+      },
+      "pushedAt": "2026-11-03T02:36:27.905Z",
+      "emailSentAt": "2026-11-03T02:36:27.905Z",
+      "firstPushedAt": "2026-11-03T02:36:27.905Z"
+    },
+    {
+      "id": "arxiv:2610.41919",
+      "source": "arXiv",
+      "title": "Matching Workloads to Blackwell: Power-Resolved Benchmarking of NVIDIA B200 and B300 across HPC and AI Workloads",
+      "authors": [
+        "Mohsen Zand",
+        "Trung Dac Nguyen",
+        "H. Birali Runesha"
+      ],
+      "authorAffiliations": [],
+      "affiliations": [],
+      "abstract": "We evaluate NVIDIA B200 and B300 (Blackwell Ultra) GPUs on two independent eight-GPU clusters, spanning computer-vision inference and training, LLM inference with Llama-3-8B and 70B~\\cite{llama3}, and six production HPC codes. The B300 is not a uniform successor to the B200: it trails by up to 5.6$\\times$ on convolutional inference, 8$\\times$ on 3D vision transformer training, 24--27\\% on 70B LLM throughput, and 16$\\times$ on double-precision Quantum ESPRESSO. We resolve the convolutional deficit using per-GPU board power rather than throughput alone: on the affected workloads the B300 draws only 36--53\\% of its 1100\\,W envelope, whereas on ViT-Large, which it wins, both parts saturate at 95--97\\% of TDP. Because our harness keeps inputs resident in device memory, a host-side data pipeline is excluded by construction, localizing the cause to per-kernel cost. Two B300 nodes of identical silicon differ by 2.1$\\times$ in time-to-first-token solely from a development vLLM build. We give per-workload procurement guidance.",
+      "venue": "arXiv",
+      "published": "2026-10-30T15:51:19Z",
+      "updated": "2026-10-30T15:51:19Z",
+      "url": "http://arxiv.org/abs/2610.41919v1",
+      "pdfUrl": "https://arxiv.org/pdf/2610.41919v1",
+      "categories": [
+        "cs.DC",
+        "cs.AR"
+      ],
+      "collectedAt": "2026-11-03T02:22:25.400Z",
+      "firstSeenAt": "2026-11-03T02:22:25.400Z",
+      "lastSeenAt": "2026-11-03T02:22:25.400Z",
+      "collectionType": "daily-latest",
+      "matchedQuery": "(cat:cs.AR OR cat:cs.DC OR cat:cs.PF) AND (all:LLM OR all:transformer OR all:foundation OR all:language) AND (all:accelerator OR all:processor OR all:architecture OR all:hardware OR all:system OR all:serving OR all:training OR all:inference OR all:cache)",
+      "collectionTypes": [
+        "daily-latest"
+      ],
+      "matchedQueries": [
+        "(cat:cs.AR OR cat:cs.DC OR cat:cs.PF) AND (all:LLM OR all:transformer OR all:foundation OR all:language) AND (all:accelerator OR all:processor OR all:architecture OR all:hardware OR all:system OR all:serving OR all:training OR all:inference OR all:cache)",
+        "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)"
+      ],
+      "targetThemes": [],
+      "conferenceVenues": [],
+      "conferenceYears": [],
+      "digest": {
+        "summaryZh": "新GPU的容量和峰值吞吐提升不保证实际LLM、视觉及HPC负载普遍加速，需要区分硅片能力和软件栈效应。在两个独立八GPU集群上比较B200与B300，结合设备常驻输入和NVML板卡功耗，分析负载差异及vLLM构建配置的影响。摘要称B300在所测70B LLM吞吐落后24%–27%；卷积负载只用功耗上限的36%–53%；同型号B300节点TTFT因软件构建相差2.1倍。",
+        "motivationZh": "新GPU的容量和峰值吞吐提升不保证实际LLM、视觉及HPC负载普遍加速，需要区分硅片能力和软件栈效应。仅看吞吐无法区分设备繁忙但执行慢与内核间空闲；跨节点软件版本差异也可能被误认为架构差异。计算核心研究的基线应控制软件版本并结合功耗，否则容易把后端选择和启动开销误判为硬件瓶颈。适合作为你的GPU/NPU评测方法参考，帮助设计吞吐、TTFT与功耗联合诊断；并非新的注意力计算核心。",
+        "methodZh": "在两个独立八GPU集群上比较B200与B300，结合设备常驻输入和NVML板卡功耗，分析负载差异及vLLM构建配置的影响。正文§III说明视觉输入驻留GPU，NVML在rank0以20Hz采样；LLM用vLLM张量并行和150条不同长度提示。把跨集群复现和功耗状态纳入实际应用GPU对比，揭示软件栈可显著改变看似硬件决定的性能排序。",
+        "experimentsZh": "B200/B300八GPU节点；Llama-3-8B/70B、视觉模型及六种HPC代码；正文§III记录CUDA和库版本。B200与B300相互对照，部分HPC还对照H200/A100；两类B300节点使用不同vLLM构建。摘要称B300在所测70B LLM吞吐落后24%–27%；卷积负载只用功耗上限的36%–53%；同型号B300节点TTFT因软件构建相差2.1倍。正文明确未用CUDA graph或时间线实验区分启动开销与库内核成熟度；视觉和LLM为单次计时，功耗只采rank0，结论不应泛化为硬件普遍退步。",
+        "affiliationsZh": "未在 DBLP/arXiv 元数据中提供",
+        "tags": [
+          "Blackwell评测",
+          "功耗诊断",
+          "软件栈影响"
+        ],
+        "importance": 4,
+        "researchFitZh": "适合作为你的GPU/NPU评测方法参考，帮助设计吞吐、TTFT与功耗联合诊断；并非新的注意力计算核心。",
+        "hardwareRelevance": 5,
+        "algorithmRelevance": 1,
+        "systemRelevance": 5,
+        "readPriority": "deep-read",
+        "whyReadZh": "适合作为你的GPU/NPU评测方法参考，帮助设计吞吐、TTFT与功耗联合诊断；并非新的注意力计算核心。阅读时应按实际证据范围判断可用于对照的结论。",
+        "limitationsZh": "正文明确未用CUDA graph或时间线实验区分启动开销与库内核成熟度；视觉和LLM为单次计时，功耗只采rank0，结论不应泛化为硬件普遍退步。",
+        "motivationDetail": {
+          "problemZh": "新GPU的容量和峰值吞吐提升不保证实际LLM、视觉及HPC负载普遍加速，需要区分硅片能力和软件栈效应。",
+          "gapZh": "仅看吞吐无法区分设备繁忙但执行慢与内核间空闲；跨节点软件版本差异也可能被误认为架构差异。",
+          "whyImportantZh": "计算核心研究的基线应控制软件版本并结合功耗，否则容易把后端选择和启动开销误判为硬件瓶颈。",
+          "userRelevanceZh": "适合作为你的GPU/NPU评测方法参考，帮助设计吞吐、TTFT与功耗联合诊断；并非新的注意力计算核心。",
+          "evidence": "daily.json实际元数据及完整原始英文摘要；实际读取：https://arxiv.org/abs/2610.41919v1；https://arxiv.org/html/2610.41919v1。"
+        },
+        "methodDetail": {
+          "coreIdeaZh": "在两个独立八GPU集群上比较B200与B300，结合设备常驻输入和NVML板卡功耗，分析负载差异及vLLM构建配置的影响。",
+          "componentsZh": [
+            "跨集群交叉验证",
+            "设备常驻输入",
+            "吞吐与板卡功耗联合测量",
+            "不同vLLM构建对照"
+          ],
+          "hardwareSystemDetailZh": "正文§III说明视觉输入驻留GPU，NVML在rank0以20Hz采样；LLM用vLLM张量并行和150条不同长度提示。",
+          "noveltyZh": "把跨集群复现和功耗状态纳入实际应用GPU对比，揭示软件栈可显著改变看似硬件决定的性能排序。",
+          "evidence": "daily.json实际元数据及完整原始英文摘要；实际读取：https://arxiv.org/abs/2610.41919v1；https://arxiv.org/html/2610.41919v1。"
+        },
+        "experimentDetail": {
+          "setupZh": "B200/B300八GPU节点；Llama-3-8B/70B、视觉模型及六种HPC代码；正文§III记录CUDA和库版本。",
+          "baselinesZh": "B200与B300相互对照，部分HPC还对照H200/A100；两类B300节点使用不同vLLM构建。",
+          "metricsZh": [
+            "吞吐",
+            "首token延迟",
+            "板卡功耗",
+            "能效"
+          ],
+          "mainResultsZh": "摘要称B300在所测70B LLM吞吐落后24%–27%；卷积负载只用功耗上限的36%–53%；同型号B300节点TTFT因软件构建相差2.1倍。",
+          "limitationsZh": "正文明确未用CUDA graph或时间线实验区分启动开销与库内核成熟度；视觉和LLM为单次计时，功耗只采rank0，结论不应泛化为硬件普遍退步。",
+          "evidence": "队列完整摘要及已读arXiv摘要；HTML§III、§IV-B/IV-C说明采样、LLM设置、软件构建差异和归因尚未完全分离。"
+        },
+        "evidence": {
+          "usedSources": [
+            "public/research-digest/daily.json: supplied metadata and complete original abstract",
+            "https://arxiv.org/abs/2610.41919v1",
+            "https://arxiv.org/html/2610.41919v1"
+          ],
+          "affiliationEvidence": "authorAffiliations和affiliations均为空；遵循任务要求保留元数据缺失说明。",
+          "experimentEvidence": "队列完整摘要及已读arXiv摘要；HTML§III、§IV-B/IV-C说明采样、LLM设置、软件构建差异和归因尚未完全分离。",
+          "missingFields": [
+            "DBLP/arXiv元数据作者单位",
+            "未读取全文的其他章节与补充材料"
+          ]
+        },
+        "confidence": {
+          "summary": 0.9,
+          "motivation": 0.85,
+          "method": 0.9,
+          "experiments": 0.86,
+          "affiliations": 0
+        }
+      },
+      "recommendationTrack": "hardware-primary",
+      "recommendationLabel": "硬件体系结构主线",
+      "recommendationScore": 191,
+      "relevanceReason": "命中 AI 处理器、体系结构、量化、训推系统或内存/缓存优化主题",
+      "pdfStatus": "remote",
+      "workflow": {
+        "digestStatus": "ready",
+        "emailStatus": "sent",
+        "digestError": "",
+        "harnessVersion": "paper-reader-v1",
+        "collectStatus": "collected",
+        "pdfStatus": "remote",
+        "harnessCheckedAt": "2026-11-03T02:36:23.804Z",
+        "harnessWarnings": [],
+        "emailSentAt": "2026-11-03T02:36:27.905Z",
+        "lastEmailError": ""
+      },
+      "pushedAt": "2026-11-03T02:36:27.905Z",
+      "emailSentAt": "2026-11-03T02:36:27.905Z",
+      "firstPushedAt": "2026-11-03T02:36:27.905Z"
     },
     {
       "id": "arxiv:2610.38110",
@@ -556,6 +948,136 @@
       "firstPushedAt": "2026-10-27T02:31:15.153Z"
     },
     {
+      "id": "arxiv:2610.41822",
+      "source": "arXiv",
+      "title": "Trainable Vector Quantization for Large Language Models",
+      "authors": [
+        "Anastasiia Prutianova",
+        "Alina Bogdanova",
+        "Mikhail Shutov",
+        "Dmitrii Poimanov",
+        "Anatoly Gorkov",
+        "Ilia Zharikov"
+      ],
+      "authorAffiliations": [],
+      "affiliations": [],
+      "abstract": "Vector Quantization (VQ) is a rapidly evolving technique for compressing Large Language Model (LLM) weights, reducing memory usage, and speeding up inference. However, extreme compression deteriorates model performance, which is challenging to recover due to the discrete nature of VQ parameters. Existing methods employ training-free approaches that are limited to layer-wise reconstruction loss minimization. To address this limitation, we propose TVQ, a novel method that leverages straight-through estimation to enable gradient descent-based optimization of vector-quantized LLMs. By reformulating VQ LLM optimization with trainable latent weights, TVQ enables arbitrary objective minimization. We constitute our approach by applying TVQ in a block-wise knowledge distillation paradigm, which balances quality and training efficiency, and propose several practical solutions to accelerate training. In experiments on modern LLMs, we demonstrate that TVQ is compatible with modern VQ schemes. As a result, TVQ achieves state-of-the-art quality in low-bit post-training quantization settings with a modest training budget and straightforward PyTorch implementation. For instance, TVQ achieves near-lossless 2-bit quantization for LLaMA2-70B with only 1% accuracy drop on popular Question-Answering benchmarks.",
+      "venue": "arXiv",
+      "published": "2026-10-30T14:42:40Z",
+      "updated": "2026-10-30T14:42:40Z",
+      "url": "http://arxiv.org/abs/2610.41822v1",
+      "pdfUrl": "https://arxiv.org/pdf/2610.41822v1",
+      "categories": [
+        "cs.LG"
+      ],
+      "collectedAt": "2026-11-03T02:22:33.471Z",
+      "firstSeenAt": "2026-11-03T02:22:33.471Z",
+      "lastSeenAt": "2026-11-03T02:22:33.471Z",
+      "collectionType": "daily-latest",
+      "matchedQuery": "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)",
+      "collectionTypes": [
+        "daily-latest"
+      ],
+      "matchedQueries": [
+        "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)"
+      ],
+      "targetThemes": [],
+      "conferenceVenues": [],
+      "conferenceYears": [],
+      "recommendationTrack": "hardware-primary",
+      "recommendationLabel": "硬件体系结构主线",
+      "recommendationScore": 171,
+      "relevanceReason": "命中 AI 处理器、体系结构、量化、训推系统或内存/缓存优化主题",
+      "pdfStatus": "remote",
+      "workflow": {
+        "digestStatus": "ready",
+        "emailStatus": "sent",
+        "digestError": "",
+        "harnessVersion": "paper-reader-v1",
+        "collectStatus": "collected",
+        "pdfStatus": "remote",
+        "harnessCheckedAt": "2026-11-03T02:36:23.804Z",
+        "harnessWarnings": [],
+        "emailSentAt": "2026-11-03T02:36:27.905Z",
+        "lastEmailError": ""
+      },
+      "digest": {
+        "summaryZh": "极低比特VQ中的离散索引难以通过梯度优化，逐层重构损失不能充分反映跨层量化误差传播。TVQ通过连续潜在权重重参数化离散索引，以STE把量化权重梯度传回潜在权重；先做分块蒸馏，再微调少量连续参数。摘要称Llama2-70B约2bit时QA准确率仅下降约1%；正文表1与讨论显示结果受VQ方案和平均任务口径影响，应同时检查困惑度和下游QA。",
+        "motivationZh": "极低比特VQ中的离散索引难以通过梯度优化，逐层重构损失不能充分反映跨层量化误差传播。既有逐层优化受单层线性重构约束；端到端索引优化成本高，固定索引微调又限制恢复能力。在较小校准预算下恢复低比特质量，需要让多个层的量化索引共同适应后续计算与任务目标。直接对应你关注的逐层误差累积与低比特优化，尤其值得比较分块目标与逐层重构目标的差异。",
+        "methodZh": "TVQ通过连续潜在权重重参数化离散索引，以STE把量化权重梯度传回潜在权重；先做分块蒸馏，再微调少量连续参数。正文§3说明按码本和潜在权重求约束内索引，训练后只保留码本与索引；周期性索引更新降低训练开销。在保留既有VQ推理表示的同时优化跨层离散分配，使分块蒸馏目标可用于多种码本方案。",
+        "experimentsZh": "Llama2、Llama3及Mistral；正文表1报告困惑度和QA结果，表2以A100-80GB GPU小时衡量量化成本。AQLM、VPTQ、QuIP#、QTIP和PV-tuning，并固定VQ表示比较优化方式。摘要称Llama2-70B约2bit时QA准确率仅下降约1%；正文表1与讨论显示结果受VQ方案和平均任务口径影响，应同时检查困惑度和下游QA。这是量化优化算法，未证明新的推理内核加速；训练需潜在权重和索引重算，不同VQ方案的训练代价不同，不能据压缩率推断单卡训练可行。",
+        "affiliationsZh": "未在 DBLP/arXiv 元数据中提供",
+        "tags": [
+          "可训练向量量化",
+          "分块蒸馏",
+          "量化误差传播"
+        ],
+        "importance": 5,
+        "researchFitZh": "直接对应你关注的逐层误差累积与低比特优化，尤其值得比较分块目标与逐层重构目标的差异。",
+        "hardwareRelevance": 3,
+        "algorithmRelevance": 5,
+        "systemRelevance": 3,
+        "readPriority": "deep-read",
+        "whyReadZh": "直接对应你关注的逐层误差累积与低比特优化，尤其值得比较分块目标与逐层重构目标的差异。阅读时应按实际证据范围判断可用于对照的结论。",
+        "limitationsZh": "这是量化优化算法，未证明新的推理内核加速；训练需潜在权重和索引重算，不同VQ方案的训练代价不同，不能据压缩率推断单卡训练可行。",
+        "motivationDetail": {
+          "problemZh": "极低比特VQ中的离散索引难以通过梯度优化，逐层重构损失不能充分反映跨层量化误差传播。",
+          "gapZh": "既有逐层优化受单层线性重构约束；端到端索引优化成本高，固定索引微调又限制恢复能力。",
+          "whyImportantZh": "在较小校准预算下恢复低比特质量，需要让多个层的量化索引共同适应后续计算与任务目标。",
+          "userRelevanceZh": "直接对应你关注的逐层误差累积与低比特优化，尤其值得比较分块目标与逐层重构目标的差异。",
+          "evidence": "daily.json实际元数据及完整原始英文摘要；实际读取：https://arxiv.org/abs/2610.41822v1；https://arxiv.org/html/2610.41822v1。"
+        },
+        "methodDetail": {
+          "coreIdeaZh": "TVQ通过连续潜在权重重参数化离散索引，以STE把量化权重梯度传回潜在权重；先做分块蒸馏，再微调少量连续参数。",
+          "componentsZh": [
+            "连续潜在权重",
+            "STE索引优化",
+            "分块知识蒸馏",
+            "连续参数端到端微调"
+          ],
+          "hardwareSystemDetailZh": "正文§3说明按码本和潜在权重求约束内索引，训练后只保留码本与索引；周期性索引更新降低训练开销。",
+          "noveltyZh": "在保留既有VQ推理表示的同时优化跨层离散分配，使分块蒸馏目标可用于多种码本方案。",
+          "evidence": "daily.json实际元数据及完整原始英文摘要；实际读取：https://arxiv.org/abs/2610.41822v1；https://arxiv.org/html/2610.41822v1。"
+        },
+        "experimentDetail": {
+          "setupZh": "Llama2、Llama3及Mistral；正文表1报告困惑度和QA结果，表2以A100-80GB GPU小时衡量量化成本。",
+          "baselinesZh": "AQLM、VPTQ、QuIP#、QTIP和PV-tuning，并固定VQ表示比较优化方式。",
+          "metricsZh": [
+            "困惑度",
+            "QA平均准确率",
+            "每权重比特",
+            "量化GPU小时"
+          ],
+          "mainResultsZh": "摘要称Llama2-70B约2bit时QA准确率仅下降约1%；正文表1与讨论显示结果受VQ方案和平均任务口径影响，应同时检查困惑度和下游QA。",
+          "limitationsZh": "这是量化优化算法，未证明新的推理内核加速；训练需潜在权重和索引重算，不同VQ方案的训练代价不同，不能据压缩率推断单卡训练可行。",
+          "evidence": "队列原始摘要与已读arXiv摘要提供约2bit和约1%准确率损失；HTML§3、§4表1/表2及讨论核实优化流程、任务口径和训练成本。"
+        },
+        "evidence": {
+          "usedSources": [
+            "public/research-digest/daily.json: supplied metadata and complete original abstract",
+            "https://arxiv.org/abs/2610.41822v1",
+            "https://arxiv.org/html/2610.41822v1"
+          ],
+          "affiliationEvidence": "authorAffiliations和affiliations均为空；遵循任务要求保留元数据缺失说明。",
+          "experimentEvidence": "队列原始摘要与已读arXiv摘要提供约2bit和约1%准确率损失；HTML§3、§4表1/表2及讨论核实优化流程、任务口径和训练成本。",
+          "missingFields": [
+            "DBLP/arXiv元数据作者单位",
+            "未读取全文的其他章节与补充材料"
+          ]
+        },
+        "confidence": {
+          "summary": 0.9,
+          "motivation": 0.85,
+          "method": 0.9,
+          "experiments": 0.86,
+          "affiliations": 0
+        }
+      },
+      "pushedAt": "2026-11-03T02:36:27.905Z",
+      "emailSentAt": "2026-11-03T02:36:27.905Z",
+      "firstPushedAt": "2026-11-03T02:36:27.905Z"
+    },
+    {
       "id": "arxiv:2610.37454",
       "source": "arXiv",
       "title": "SecDMP: Provably Secure Data Memory-Dependent Prefetching (Extended Version)",
@@ -682,6 +1204,132 @@
       "pushedAt": "2026-10-30T00:36:26.783Z",
       "emailSentAt": "2026-10-30T00:36:26.783Z",
       "firstPushedAt": "2026-10-30T00:36:26.783Z"
+    },
+    {
+      "id": "arxiv:2610.41803",
+      "source": "arXiv",
+      "title": "What Standard Evaluations Hide About Detectors of Hijacked LLM Agents: Rare Attacks, Unseen Tools and Benchmark Transfer",
+      "authors": [
+        "Mahmoud Abbasi",
+        "Juan M. Núñez V.",
+        "Amin Shahraki"
+      ],
+      "authorAffiliations": [],
+      "affiliations": [],
+      "abstract": "Detectors can flag hijacked large language model (LLM) agents from the traces of the tools they call. In the eleven evaluations we audited, attacks or anomalies make up 16% to 86% of the test samples, no evaluation varies that share, and six report no test on data from a second benchmark or source. We ask what such evaluations hide. On the AgentDrift and AgentDojo benchmarks we test trained detectors that read tool identities, behavior, call sequences, step embeddings or text, and a released LLM action monitor, AlignmentCheck, with thresholds fixed on training data or set by the monitor's released decision rule. First, at a 2% attack rate a detector with an area under the receiver operating characteristic curve (AUROC) of 0.879 reaches a precision of 0.076, and the mix of negatives alone moves that precision between 0.039 and 0.117. Second, as tool coverage, the share of test tool calls whose tool was seen in training, falls, detector rankings cross near 50% coverage and reverse below it, because unseen tools map to inputs that training never reached. Dropout on tool inputs largely removes the reversal. Third, no detector trained on AgentDrift ranks AgentDojo traces better than chance (AUROC 0.47 to 0.52), including one that reaches 0.996 within AgentDojo. The monitor, trained on neither, reaches 0.930, but with its open backbone its released decision rule would still mostly raise false alerts at a 2% attack rate (precision 0.096). We turn these findings into a checklist for evaluating trace detectors.",
+      "venue": "arXiv",
+      "published": "2026-10-30T14:30:47Z",
+      "updated": "2026-10-30T14:30:47Z",
+      "url": "http://arxiv.org/abs/2610.41803v1",
+      "pdfUrl": "https://arxiv.org/pdf/2610.41803v1",
+      "categories": [
+        "cs.CR",
+        "cs.LG"
+      ],
+      "collectedAt": "2026-11-03T02:22:33.471Z",
+      "firstSeenAt": "2026-11-03T02:22:33.471Z",
+      "lastSeenAt": "2026-11-03T02:22:33.471Z",
+      "collectionType": "daily-latest",
+      "matchedQuery": "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)",
+      "collectionTypes": [
+        "daily-latest"
+      ],
+      "matchedQueries": [
+        "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)"
+      ],
+      "targetThemes": [],
+      "conferenceVenues": [],
+      "conferenceYears": [],
+      "recommendationTrack": "hardware-primary",
+      "recommendationLabel": "硬件体系结构主线",
+      "recommendationScore": 163.25,
+      "relevanceReason": "命中 AI 处理器、体系结构、量化、训推系统或内存/缓存优化主题",
+      "pdfStatus": "remote",
+      "workflow": {
+        "digestStatus": "ready",
+        "emailStatus": "sent",
+        "digestError": "",
+        "harnessVersion": "paper-reader-v1",
+        "collectStatus": "collected",
+        "pdfStatus": "remote",
+        "harnessCheckedAt": "2026-11-03T02:36:23.804Z",
+        "harnessWarnings": [],
+        "emailSentAt": "2026-11-03T02:36:27.905Z",
+        "lastEmailError": ""
+      },
+      "digest": {
+        "summaryZh": "Agent劫持检测评测常使用偏高攻击比例，且缺少未见工具和跨基准迁移测试，可能高估上线可靠性。审计已有评测，在AgentDrift与AgentDojo上固定训练期阈值，分别改变攻击比例、负例组成及工具覆盖率，并测试跨基准迁移。摘要报告攻击率2%时，AUROC为0.879的检测器precision仅0.076；跨AgentDrift到AgentDojo的检测器AUROC为0.47–0.52。",
+        "motivationZh": "Agent劫持检测评测常使用偏高攻击比例，且缺少未见工具和跨基准迁移测试，可能高估上线可靠性。AUROC较高不保证低攻击发生率下的告警精度；训练中未见工具会改变输入分布并翻转方法排名。真实部署需要控制误报和验证跨来源泛化，否则检测器可能产生大量无效告警。属于Agent安全评测趋势，与推理芯片和注意力微架构关系较弱，可借鉴分布转移和评测口径控制。",
+        "methodZh": "审计已有评测，在AgentDrift与AgentDojo上固定训练期阈值，分别改变攻击比例、负例组成及工具覆盖率，并测试跨基准迁移。软件检测评测工作，对照工具身份、行为序列、嵌入或文本检测器及AlignmentCheck；未设计硬件单元。将攻击稀有性、工具覆盖和基准迁移拆开检验，说明同一个高分检测器为何在线上会失效。",
+        "experimentsZh": "审计11项既有评测；在AgentDrift、AgentDojo上比较训练检测器和发布的LLM动作监控器。多种工具轨迹检测器与AlignmentCheck，按训练数据或监控器发布规则固定判定阈值。摘要报告攻击率2%时，AUROC为0.879的检测器precision仅0.076；跨AgentDrift到AgentDojo的检测器AUROC为0.47–0.52。当前读取了元数据与公开摘要，未读完整方法/表格；安全检测结论不等同Agent推理效率结论，队列hardware-primary标签不宜直接沿用。",
+        "affiliationsZh": "未在 DBLP/arXiv 元数据中提供",
+        "tags": [
+          "Agent安全",
+          "低基率误报",
+          "跨基准泛化"
+        ],
+        "importance": 2,
+        "researchFitZh": "属于Agent安全评测趋势，与推理芯片和注意力微架构关系较弱，可借鉴分布转移和评测口径控制。",
+        "hardwareRelevance": 1,
+        "algorithmRelevance": 3,
+        "systemRelevance": 3,
+        "readPriority": "skim",
+        "whyReadZh": "属于Agent安全评测趋势，与推理芯片和注意力微架构关系较弱，可借鉴分布转移和评测口径控制。阅读时应按实际证据范围判断可用于对照的结论。",
+        "limitationsZh": "当前读取了元数据与公开摘要，未读完整方法/表格；安全检测结论不等同Agent推理效率结论，队列hardware-primary标签不宜直接沿用。",
+        "motivationDetail": {
+          "problemZh": "Agent劫持检测评测常使用偏高攻击比例，且缺少未见工具和跨基准迁移测试，可能高估上线可靠性。",
+          "gapZh": "AUROC较高不保证低攻击发生率下的告警精度；训练中未见工具会改变输入分布并翻转方法排名。",
+          "whyImportantZh": "真实部署需要控制误报和验证跨来源泛化，否则检测器可能产生大量无效告警。",
+          "userRelevanceZh": "属于Agent安全评测趋势，与推理芯片和注意力微架构关系较弱，可借鉴分布转移和评测口径控制。",
+          "evidence": "daily.json实际元数据及完整原始英文摘要；实际读取：https://arxiv.org/abs/2610.41803v1。"
+        },
+        "methodDetail": {
+          "coreIdeaZh": "审计已有评测，在AgentDrift与AgentDojo上固定训练期阈值，分别改变攻击比例、负例组成及工具覆盖率，并测试跨基准迁移。",
+          "componentsZh": [
+            "攻击基率扫描",
+            "未见工具覆盖评估",
+            "跨基准迁移",
+            "工具输入dropout"
+          ],
+          "hardwareSystemDetailZh": "软件检测评测工作，对照工具身份、行为序列、嵌入或文本检测器及AlignmentCheck；未设计硬件单元。",
+          "noveltyZh": "将攻击稀有性、工具覆盖和基准迁移拆开检验，说明同一个高分检测器为何在线上会失效。",
+          "evidence": "daily.json实际元数据及完整原始英文摘要；实际读取：https://arxiv.org/abs/2610.41803v1。"
+        },
+        "experimentDetail": {
+          "setupZh": "审计11项既有评测；在AgentDrift、AgentDojo上比较训练检测器和发布的LLM动作监控器。",
+          "baselinesZh": "多种工具轨迹检测器与AlignmentCheck，按训练数据或监控器发布规则固定判定阈值。",
+          "metricsZh": [
+            "AUROC",
+            "告警precision",
+            "工具覆盖率"
+          ],
+          "mainResultsZh": "摘要报告攻击率2%时，AUROC为0.879的检测器precision仅0.076；跨AgentDrift到AgentDojo的检测器AUROC为0.47–0.52。",
+          "limitationsZh": "当前读取了元数据与公开摘要，未读完整方法/表格；安全检测结论不等同Agent推理效率结论，队列hardware-primary标签不宜直接沿用。",
+          "evidence": "daily.json完整摘要及已读arXiv摘要明确给出基准、固定阈值、2%攻击率下precision与跨基准AUROC区间。"
+        },
+        "evidence": {
+          "usedSources": [
+            "public/research-digest/daily.json: supplied metadata and complete original abstract",
+            "https://arxiv.org/abs/2610.41803v1"
+          ],
+          "affiliationEvidence": "authorAffiliations和affiliations均为空；遵循任务要求保留元数据缺失说明。",
+          "experimentEvidence": "daily.json完整摘要及已读arXiv摘要明确给出基准、固定阈值、2%攻击率下precision与跨基准AUROC区间。",
+          "missingFields": [
+            "DBLP/arXiv元数据作者单位",
+            "全文方法、实验细节及硬件配置"
+          ]
+        },
+        "confidence": {
+          "summary": 0.9,
+          "motivation": 0.85,
+          "method": 0.77,
+          "experiments": 0.73,
+          "affiliations": 0
+        }
+      },
+      "pushedAt": "2026-11-03T02:36:27.905Z",
+      "emailSentAt": "2026-11-03T02:36:27.905Z",
+      "firstPushedAt": "2026-11-03T02:36:27.905Z"
     },
     {
       "id": "arxiv:2610.31659",
@@ -3120,6 +3768,128 @@
         "emailStatus": "sent",
         "pdfStatus": "remote"
       }
+    },
+    {
+      "id": "arxiv:2611.00290",
+      "source": "arXiv",
+      "title": "Quantifying Local and Global Fidelity of Nonlinear Embeddings",
+      "authors": [
+        "Henry Han"
+      ],
+      "authorAffiliations": [],
+      "affiliations": [],
+      "abstract": "Dimension reduction methods are chosen by a common claim: t-SNE and UMAP preserve local structure, and PCA preserves global structure. Checking it on given data takes local and global scores on one scale and a test that compares two maps. Both scores come from one curve. The locality profile is the chance-corrected share of each point's k nearest neighbors that a map keeps, over all neighborhood sizes. Its value at k = 10 is the local fidelity L, and its mean over 30 to 50 percent of the data is the global fidelity G. We prove that at the midpoint the profile is the agreement on which half of the data is near each point, a rank correlation of the distances. Because L and G are one statistic, two maps can be tested against each other. The LG reversal test applies to any two dimension reduction methods. It decides, with a block-jackknife p-value, whether one map is more local and the other more global, and returns the scale at which to change maps. On 156 maps of twelve datasets with up to 1.38 million points, G agrees with established global scores at 0.89 and 0.96, and 2,000 points estimate it. The test confirms the usual claim on seven datasets. On both retail datasets and both rolled-up manifolds, it finds the neighbor embeddings more global. In an agent memory of one million passages, the two maps cross at 150,000 passages (p = 2.6e-5). Applications span pathology, single cells, supply chains and AI agent memory.",
+      "venue": "arXiv",
+      "published": "2026-10-30T19:16:23Z",
+      "updated": "2026-10-30T19:16:23Z",
+      "url": "http://arxiv.org/abs/2611.00290v1",
+      "pdfUrl": "https://arxiv.org/pdf/2611.00290v1",
+      "categories": [
+        "cs.AI"
+      ],
+      "collectedAt": "2026-11-03T02:22:33.471Z",
+      "firstSeenAt": "2026-11-03T02:22:33.471Z",
+      "lastSeenAt": "2026-11-03T02:22:33.471Z",
+      "collectionType": "daily-latest",
+      "matchedQuery": "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)",
+      "collectionTypes": [
+        "daily-latest"
+      ],
+      "matchedQueries": [
+        "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)"
+      ],
+      "targetThemes": [],
+      "conferenceVenues": [],
+      "conferenceYears": [],
+      "recommendationTrack": "hardware-primary",
+      "recommendationLabel": "硬件体系结构主线",
+      "recommendationScore": 143.5,
+      "relevanceReason": "命中 AI 处理器、体系结构、量化、训推系统或内存/缓存优化主题",
+      "pdfStatus": "remote",
+      "workflow": {
+        "digestStatus": "ready",
+        "emailStatus": "sent",
+        "digestError": "",
+        "harnessVersion": "paper-reader-v1",
+        "collectStatus": "collected",
+        "pdfStatus": "remote",
+        "harnessCheckedAt": "2026-11-03T02:36:23.804Z",
+        "harnessWarnings": [],
+        "emailSentAt": "2026-11-03T02:36:27.905Z",
+        "lastEmailError": ""
+      },
+      "digest": {
+        "summaryZh": "常见的t-SNE/UMAP保局部与PCA保全局说法需要在具体数据上检验，但局部和全局得分往往不在同一标尺。用经机会校正的近邻保留比例定义locality profile，在同一曲线上提取局部与全局保真，并以block-jackknife构建LG反转检验。摘要称G与既有全局评分一致性为0.89和0.96；通常的局部/全局判断在七个数据集获支持，但部分零售和卷曲流形数据出现反例。",
+        "motivationZh": "常见的t-SNE/UMAP保局部与PCA保全局说法需要在具体数据上检验，但局部和全局得分往往不在同一标尺。不同指标难以直接比较两幅降维图，也难定位哪一种邻域尺度开始出现方法优势反转。统一保真曲线及统计检验有助于避免凭可视化印象选择映射，适用于多类高维数据。仅与Agent记忆的嵌入分析有间接联系，未涉及KVCache、硬件存储层级或推理核心，建议归档。",
+        "methodZh": "用经机会校正的近邻保留比例定义locality profile，在同一曲线上提取局部与全局保真，并以block-jackknife构建LG反转检验。属于降维统计评估算法；Agent记忆是应用示例，摘要未披露GPU/NPU加速或缓存管理结构。把局部与全局评价置于同一统计量，并对两种映射的尺度优势提供显著性检验。",
+        "experimentsZh": "摘要覆盖12个数据集的156幅映射，最大约138万点，含百万passage的Agent记忆示例。比较t-SNE、UMAP、PCA等映射及既有全局评分；摘要未列各数据集完整配置。摘要称G与既有全局评分一致性为0.89和0.96；通常的局部/全局判断在七个数据集获支持，但部分零售和卷曲流形数据出现反例。公开摘要读取返回DisabledError，当前仅据队列摘要；未读统计证明、数据预处理和误差区间，不能把嵌入邻域保真等同检索或推理质量。",
+        "affiliationsZh": "未在 DBLP/arXiv 元数据中提供",
+        "tags": [
+          "降维评估",
+          "邻域保真",
+          "统计检验"
+        ],
+        "importance": 1,
+        "researchFitZh": "仅与Agent记忆的嵌入分析有间接联系，未涉及KVCache、硬件存储层级或推理核心，建议归档。",
+        "hardwareRelevance": 1,
+        "algorithmRelevance": 3,
+        "systemRelevance": 1,
+        "readPriority": "archive",
+        "whyReadZh": "仅与Agent记忆的嵌入分析有间接联系，未涉及KVCache、硬件存储层级或推理核心，建议归档。阅读时应按实际证据范围判断可用于对照的结论。",
+        "limitationsZh": "公开摘要读取返回DisabledError，当前仅据队列摘要；未读统计证明、数据预处理和误差区间，不能把嵌入邻域保真等同检索或推理质量。",
+        "motivationDetail": {
+          "problemZh": "常见的t-SNE/UMAP保局部与PCA保全局说法需要在具体数据上检验，但局部和全局得分往往不在同一标尺。",
+          "gapZh": "不同指标难以直接比较两幅降维图，也难定位哪一种邻域尺度开始出现方法优势反转。",
+          "whyImportantZh": "统一保真曲线及统计检验有助于避免凭可视化印象选择映射，适用于多类高维数据。",
+          "userRelevanceZh": "仅与Agent记忆的嵌入分析有间接联系，未涉及KVCache、硬件存储层级或推理核心，建议归档。",
+          "evidence": "daily.json实际元数据及完整原始英文摘要；公开arXiv页面读取返回DisabledError，未读取公开全文。"
+        },
+        "methodDetail": {
+          "coreIdeaZh": "用经机会校正的近邻保留比例定义locality profile，在同一曲线上提取局部与全局保真，并以block-jackknife构建LG反转检验。",
+          "componentsZh": [
+            "机会校正近邻曲线",
+            "统一局部/全局指标",
+            "LG反转检验",
+            "尺度交叉点"
+          ],
+          "hardwareSystemDetailZh": "属于降维统计评估算法；Agent记忆是应用示例，摘要未披露GPU/NPU加速或缓存管理结构。",
+          "noveltyZh": "把局部与全局评价置于同一统计量，并对两种映射的尺度优势提供显著性检验。",
+          "evidence": "daily.json实际元数据及完整原始英文摘要；公开arXiv页面读取返回DisabledError，未读取公开全文。"
+        },
+        "experimentDetail": {
+          "setupZh": "摘要覆盖12个数据集的156幅映射，最大约138万点，含百万passage的Agent记忆示例。",
+          "baselinesZh": "比较t-SNE、UMAP、PCA等映射及既有全局评分；摘要未列各数据集完整配置。",
+          "metricsZh": [
+            "局部保真L",
+            "全局保真G",
+            "LG反转检验p值"
+          ],
+          "mainResultsZh": "摘要称G与既有全局评分一致性为0.89和0.96；通常的局部/全局判断在七个数据集获支持，但部分零售和卷曲流形数据出现反例。",
+          "limitationsZh": "公开摘要读取返回DisabledError，当前仅据队列摘要；未读统计证明、数据预处理和误差区间，不能把嵌入邻域保真等同检索或推理质量。",
+          "evidence": "daily.json完整原始摘要列出12个数据集、156幅映射、0.89/0.96一致性和七个数据集支持通常判断；全文未读取。"
+        },
+        "evidence": {
+          "usedSources": [
+            "public/research-digest/daily.json: supplied metadata and complete original abstract"
+          ],
+          "affiliationEvidence": "authorAffiliations和affiliations均为空；遵循任务要求保留元数据缺失说明。",
+          "experimentEvidence": "daily.json完整原始摘要列出12个数据集、156幅映射、0.89/0.96一致性和七个数据集支持通常判断；全文未读取。",
+          "missingFields": [
+            "DBLP/arXiv元数据作者单位",
+            "全文方法、实验细节及硬件配置"
+          ]
+        },
+        "confidence": {
+          "summary": 0.8,
+          "motivation": 0.85,
+          "method": 0.77,
+          "experiments": 0.73,
+          "affiliations": 0
+        }
+      },
+      "pushedAt": "2026-11-03T02:36:27.905Z",
+      "emailSentAt": "2026-11-03T02:36:27.905Z",
+      "firstPushedAt": "2026-11-03T02:36:27.905Z"
     },
     {
       "id": "arxiv:2610.30388",
@@ -12411,6 +13181,130 @@
       "firstPushedAt": "2026-05-08T04:40:41.777Z"
     },
     {
+      "id": "arxiv:2611.00616",
+      "source": "arXiv",
+      "title": "Enhancing Language Model Reasoning with Structured Multi-Level Modeling",
+      "authors": [
+        "Siheng Xiong",
+        "Ali Payani",
+        "Faramarz Fekri"
+      ],
+      "authorAffiliations": [],
+      "affiliations": [],
+      "abstract": "Inference-time scaling enhances a model's reasoning by extending its chain-of-thought (CoT). However, existing approaches typically rely on a single policy trained with outcome-reward reinforcement learning (RL), which often suffers from long-horizon plan failures where the implicit plan drifts from valid strategies, especially for small LMs with limited capacity. To address this, we propose Multi-Level Reasoning (MLR), which reformulates long-CoT generation as a two-level stochastic process. A high-level planner generates structured step descriptors specifying both the reasoning mode and the semantic subgoal. The low-level executor then produces detailed reasoning conditioned on these descriptors, forming an alternating plan--execute loop. To maintain scalability, we adopt a minimal design where the base model serves as the low-level policy and a lightweight LoRA module implements the high-level policy. For training, we observe that outcome-reward RL provides sparse and delayed feedback for long trajectories (e.g., several thousand tokens), hindering credit assignment. We therefore introduce iterative Step-DPO, a process-level preference optimization scheme that leverages Twisted Sequential Monte Carlo (TSMC) to provide scalable stepwise supervision. This yields more effective training, improved stability, and higher accuracy. Extensive experiments on challenging math, science, and logical reasoning benchmarks show that, under the same reduced data budget (10% SFT and 5% preference relative to the DeepSeek-R1 distillation setup), MLR outperforms both SFT-based distillation and strong RL/preference-optimization baselines across multiple base models and tasks. Moreover, MLR exhibits slower performance degradation on long-horizon reasoning, demonstrating stronger robustness under extended CoT generation.",
+      "venue": "arXiv",
+      "published": "2026-10-31T04:33:35Z",
+      "updated": "2026-10-31T04:33:35Z",
+      "url": "http://arxiv.org/abs/2611.00616v1",
+      "pdfUrl": "https://arxiv.org/pdf/2611.00616v1",
+      "categories": [
+        "cs.CL"
+      ],
+      "collectedAt": "2026-11-03T02:22:35.554Z",
+      "firstSeenAt": "2026-11-03T02:22:35.554Z",
+      "lastSeenAt": "2026-11-03T02:22:35.554Z",
+      "collectionType": "daily-latest",
+      "matchedQuery": "(all:agent OR all:agents OR all:agentic OR all:reasoning OR all:post-training OR all:alignment OR all:multimodal OR all:world-model) AND (all:LLM OR all:foundation OR all:language)",
+      "collectionTypes": [
+        "daily-latest"
+      ],
+      "matchedQueries": [
+        "(all:agent OR all:agents OR all:agentic OR all:reasoning OR all:post-training OR all:alignment OR all:multimodal OR all:world-model) AND (all:LLM OR all:foundation OR all:language)"
+      ],
+      "targetThemes": [],
+      "conferenceVenues": [],
+      "conferenceYears": [],
+      "recommendationTrack": "algorithm-trend",
+      "recommendationLabel": "算法趋势观察",
+      "recommendationScore": 41.2,
+      "relevanceReason": "命中 LLM/Agent/多模态/后训练等算法趋势主题",
+      "pdfStatus": "remote",
+      "workflow": {
+        "digestStatus": "ready",
+        "emailStatus": "sent",
+        "digestError": "",
+        "harnessVersion": "paper-reader-v1",
+        "collectStatus": "collected",
+        "pdfStatus": "remote",
+        "harnessCheckedAt": "2026-11-03T02:36:23.804Z",
+        "harnessWarnings": [],
+        "emailSentAt": "2026-11-03T02:36:27.905Z",
+        "lastEmailError": ""
+      },
+      "digest": {
+        "summaryZh": "小语言模型长CoT推理容易出现高层计划漂移，结果奖励在长轨迹上又稀疏且延迟，难以正确分配训练信用。MLR把CoT分成高层步骤描述和低层条件执行，用轻量LoRA实现规划策略，结合TSMC生成步骤监督并进行迭代Step-DPO。摘要报告在同一缩减数据预算下优于SFT蒸馏与强RL/偏好优化对照，延长CoT时性能下降较慢，未给具体准确率或时延数值。",
+        "motivationZh": "小语言模型长CoT推理容易出现高层计划漂移，结果奖励在长轨迹上又稀疏且延迟，难以正确分配训练信用。单一策略同时承担计划与细节生成，难以维持长程有效策略；单靠最终结果奖励不能稳定监督中间步骤。显式拆分计划与执行并提供步骤偏好信号，可能改善长推理的可靠性和数据利用效率。适合作为Agent及长推理负载趋势跟踪，可关注计划/执行交替对服务调度的影响，但论文未提出硬件设计。",
+        "methodZh": "MLR把CoT分成高层步骤描述和低层条件执行，用轻量LoRA实现规划策略，结合TSMC生成步骤监督并进行迭代Step-DPO。同一基础模型承担低层策略，轻量LoRA模块承担高层策略；交替plan-execute，属于训练和推理组织方法。把推理模式和语义子目标显式化，并以过程级偏好优化缓解长轨迹的稀疏奖励问题。",
+        "experimentsZh": "多个基础模型上的数学、科学和逻辑推理基准；相对DeepSeek-R1蒸馏设置仅用10% SFT与5%偏好数据。SFT蒸馏及强化学习/偏好优化基线；摘要未列具体模型、基准全名和全部准确率。摘要报告在同一缩减数据预算下优于SFT蒸馏与强RL/偏好优化对照，延长CoT时性能下降较慢，未给具体准确率或时延数值。公开摘要页读取返回DisabledError，仅据队列完整摘要；TSMC成本、LoRA切换开销和端到端推理效率未核验。",
+        "affiliationsZh": "未在 DBLP/arXiv 元数据中提供",
+        "tags": [
+          "分层推理",
+          "Step-DPO",
+          "推理时扩展"
+        ],
+        "importance": 3,
+        "researchFitZh": "适合作为Agent及长推理负载趋势跟踪，可关注计划/执行交替对服务调度的影响，但论文未提出硬件设计。",
+        "hardwareRelevance": 1,
+        "algorithmRelevance": 5,
+        "systemRelevance": 3,
+        "readPriority": "skim",
+        "whyReadZh": "适合作为Agent及长推理负载趋势跟踪，可关注计划/执行交替对服务调度的影响，但论文未提出硬件设计。阅读时应按实际证据范围判断可用于对照的结论。",
+        "limitationsZh": "公开摘要页读取返回DisabledError，仅据队列完整摘要；TSMC成本、LoRA切换开销和端到端推理效率未核验。",
+        "motivationDetail": {
+          "problemZh": "小语言模型长CoT推理容易出现高层计划漂移，结果奖励在长轨迹上又稀疏且延迟，难以正确分配训练信用。",
+          "gapZh": "单一策略同时承担计划与细节生成，难以维持长程有效策略；单靠最终结果奖励不能稳定监督中间步骤。",
+          "whyImportantZh": "显式拆分计划与执行并提供步骤偏好信号，可能改善长推理的可靠性和数据利用效率。",
+          "userRelevanceZh": "适合作为Agent及长推理负载趋势跟踪，可关注计划/执行交替对服务调度的影响，但论文未提出硬件设计。",
+          "evidence": "daily.json实际元数据及完整原始英文摘要；公开arXiv页面读取返回DisabledError，未读取公开全文。"
+        },
+        "methodDetail": {
+          "coreIdeaZh": "MLR把CoT分成高层步骤描述和低层条件执行，用轻量LoRA实现规划策略，结合TSMC生成步骤监督并进行迭代Step-DPO。",
+          "componentsZh": [
+            "结构化步骤描述",
+            "基础模型执行器",
+            "LoRA高层规划器",
+            "TSMC与迭代Step-DPO"
+          ],
+          "hardwareSystemDetailZh": "同一基础模型承担低层策略，轻量LoRA模块承担高层策略；交替plan-execute，属于训练和推理组织方法。",
+          "noveltyZh": "把推理模式和语义子目标显式化，并以过程级偏好优化缓解长轨迹的稀疏奖励问题。",
+          "evidence": "daily.json实际元数据及完整原始英文摘要；公开arXiv页面读取返回DisabledError，未读取公开全文。"
+        },
+        "experimentDetail": {
+          "setupZh": "多个基础模型上的数学、科学和逻辑推理基准；相对DeepSeek-R1蒸馏设置仅用10% SFT与5%偏好数据。",
+          "baselinesZh": "SFT蒸馏及强化学习/偏好优化基线；摘要未列具体模型、基准全名和全部准确率。",
+          "metricsZh": [
+            "推理准确率",
+            "训练稳定性",
+            "长程性能退化"
+          ],
+          "mainResultsZh": "摘要报告在同一缩减数据预算下优于SFT蒸馏与强RL/偏好优化对照，延长CoT时性能下降较慢，未给具体准确率或时延数值。",
+          "limitationsZh": "公开摘要页读取返回DisabledError，仅据队列完整摘要；TSMC成本、LoRA切换开销和端到端推理效率未核验。",
+          "evidence": "daily.json完整摘要给出10% SFT、5%偏好数据的相对预算与定性结果；摘要未披露绝对准确率、硬件或吞吐。"
+        },
+        "evidence": {
+          "usedSources": [
+            "public/research-digest/daily.json: supplied metadata and complete original abstract"
+          ],
+          "affiliationEvidence": "authorAffiliations和affiliations均为空；遵循任务要求保留元数据缺失说明。",
+          "experimentEvidence": "daily.json完整摘要给出10% SFT、5%偏好数据的相对预算与定性结果；摘要未披露绝对准确率、硬件或吞吐。",
+          "missingFields": [
+            "DBLP/arXiv元数据作者单位",
+            "全文方法、实验细节及硬件配置"
+          ]
+        },
+        "confidence": {
+          "summary": 0.8,
+          "motivation": 0.85,
+          "method": 0.77,
+          "experiments": 0.73,
+          "affiliations": 0
+        }
+      },
+      "pushedAt": "2026-11-03T02:36:27.905Z",
+      "emailSentAt": "2026-11-03T02:36:27.905Z",
+      "firstPushedAt": "2026-11-03T02:36:27.905Z"
+    },
+    {
       "id": "arxiv:2610.35817",
       "source": "arXiv",
       "title": "Pretraining Knows What, Simulation Teaches How: Compositional Generalization in a Sim-Trained Robot Agent",
@@ -12680,6 +13574,142 @@
       "pushedAt": "2026-10-24T14:49:32.084Z",
       "emailSentAt": "2026-10-24T14:49:32.084Z",
       "firstPushedAt": "2026-10-24T14:49:32.084Z"
+    },
+    {
+      "id": "arxiv:2611.00617",
+      "source": "arXiv",
+      "title": "Words Caught in the Heart: Simulating Person-Specific Expression for Self-Opaque Clients in Psychotherapy",
+      "authors": [
+        "Mengxi Xiao",
+        "Jingjing Chen",
+        "Ziyan Kuang",
+        "Jiarong Song",
+        "Wenhao Zhao",
+        "Zuchen Han",
+        "Yihuai Xu",
+        "Xiyang Huang",
+        "Jie Gong",
+        "Yuechen Jiang",
+        "Xueqing Peng",
+        "Yankai Chen",
+        "Xiaoyan Qu",
+        "Min Peng",
+        "Qianqian Xie"
+      ],
+      "authorAffiliations": [],
+      "affiliations": [],
+      "abstract": "Psychotherapy clients may experience distress before they can coherently describe it, and their expression changes with emotion, perceived safety, and trust. Large language model-based client simulators often rely on clinically organized case descriptions, which can encourage responses explaining the client's difficulties more clearly than their current understanding warrants. We propose Pandora, a psychotherapy client simulation framework that models how psychological experience becomes situated, individual expression. Pandora updates psychological and relational states in response to therapist interventions, constructs subjective appraisals and attributions, and plans response content and strategy. A separate expression planner combines these decisions with language patterns distilled from the client's utterances to guide linguistic realization. We evaluate Pandora against five baselines on 115 cases from four counseling and motivational interviewing datasets. It achieves the highest expression similarity and overall disclosure-alignment score among the compared systems. In a four-evaluator study of 45 matched disclosure items, Pandora receives AI-like judgments in 7.2% of ratings, compared with 43.3--67.2% for the baselines and 35.6% without expression planning. The ablation also reduces expression similarity. These results support explicit expression planning in client simulation to improve alignment with individual language patterns and reduce perceived AI-like expression in the evaluated setting.",
+      "venue": "arXiv",
+      "published": "2026-10-31T04:36:28Z",
+      "updated": "2026-10-31T04:36:28Z",
+      "url": "http://arxiv.org/abs/2611.00617v1",
+      "pdfUrl": "https://arxiv.org/pdf/2611.00617v1",
+      "categories": [
+        "cs.HC"
+      ],
+      "collectedAt": "2026-11-03T02:22:35.554Z",
+      "firstSeenAt": "2026-11-03T02:22:35.554Z",
+      "lastSeenAt": "2026-11-03T02:22:35.554Z",
+      "collectionType": "daily-latest",
+      "matchedQuery": "(all:agent OR all:agents OR all:agentic OR all:reasoning OR all:post-training OR all:alignment OR all:multimodal OR all:world-model) AND (all:LLM OR all:foundation OR all:language)",
+      "collectionTypes": [
+        "daily-latest"
+      ],
+      "matchedQueries": [
+        "(all:agent OR all:agents OR all:agentic OR all:reasoning OR all:post-training OR all:alignment OR all:multimodal OR all:world-model) AND (all:LLM OR all:foundation OR all:language)"
+      ],
+      "targetThemes": [],
+      "conferenceVenues": [],
+      "conferenceYears": [],
+      "recommendationTrack": "algorithm-trend",
+      "recommendationLabel": "算法趋势观察",
+      "recommendationScore": 39.2,
+      "relevanceReason": "命中 LLM/Agent/多模态/后训练等算法趋势主题",
+      "pdfStatus": "remote",
+      "workflow": {
+        "digestStatus": "ready",
+        "emailStatus": "sent",
+        "digestError": "",
+        "harnessVersion": "paper-reader-v1",
+        "collectStatus": "collected",
+        "pdfStatus": "remote",
+        "harnessCheckedAt": "2026-11-03T02:36:23.804Z",
+        "harnessWarnings": [],
+        "emailSentAt": "2026-11-03T02:36:27.905Z",
+        "lastEmailError": ""
+      },
+      "digest": {
+        "summaryZh": "心理咨询来访者可能尚不能清楚描述自身困扰，而基于临床整理案例的LLM模拟器容易表达得过于清晰和条理化。Pandora更新心理及关系状态，构造主观评价和归因，规划回应内容与策略，再通过独立表达规划器结合来访者语言模式实现输出。摘要报告表达相似度和总体披露对齐最高；AI式判断占7.2%，对照为43.3%–67.2%，移除表达规划后为35.6%。",
+        "motivationZh": "心理咨询来访者可能尚不能清楚描述自身困扰，而基于临床整理案例的LLM模拟器容易表达得过于清晰和条理化。只提供病例背景难以刻画安全感、信任和情绪变化下的个人表达差异，可能降低模拟真实性。模拟来访者需要让披露程度和语言模式符合其当前理解状态，避免把模型的组织能力当作人的自我认识。是多状态Agent应用趋势，与低比特Attention或GPU/NPU核心设计关联有限，建议归档而非硬件精读。",
+        "methodZh": "Pandora更新心理及关系状态，构造主观评价和归因，规划回应内容与策略，再通过独立表达规划器结合来访者语言模式实现输出。多阶段软件Agent框架，摘要未给模型、硬件、token成本或服务吞吐；不属于芯片架构工作。将内部体验、披露决策和语言表达分开建模，并用个体话语提取的表达模式引导生成。",
+        "experimentsZh": "四个咨询/动机访谈数据集的115个案例，与五个基线比较；另做四位评价者参与的45个匹配披露项目研究。五个模拟系统及去掉表达规划的消融配置；摘要未给基线全名和模型配置。摘要报告表达相似度和总体披露对齐最高；AI式判断占7.2%，对照为43.3%–67.2%，移除表达规划后为35.6%。公开摘要页读取返回DisabledError，当前仅据队列摘要；这是特定模拟评测，不能外推为真实治疗效果或临床安全结论。",
+        "affiliationsZh": "未在 DBLP/arXiv 元数据中提供",
+        "tags": [
+          "心理咨询模拟",
+          "表达规划",
+          "多状态Agent"
+        ],
+        "importance": 1,
+        "researchFitZh": "是多状态Agent应用趋势，与低比特Attention或GPU/NPU核心设计关联有限，建议归档而非硬件精读。",
+        "hardwareRelevance": 1,
+        "algorithmRelevance": 3,
+        "systemRelevance": 2,
+        "readPriority": "archive",
+        "whyReadZh": "是多状态Agent应用趋势，与低比特Attention或GPU/NPU核心设计关联有限，建议归档而非硬件精读。阅读时应按实际证据范围判断可用于对照的结论。",
+        "limitationsZh": "公开摘要页读取返回DisabledError，当前仅据队列摘要；这是特定模拟评测，不能外推为真实治疗效果或临床安全结论。",
+        "motivationDetail": {
+          "problemZh": "心理咨询来访者可能尚不能清楚描述自身困扰，而基于临床整理案例的LLM模拟器容易表达得过于清晰和条理化。",
+          "gapZh": "只提供病例背景难以刻画安全感、信任和情绪变化下的个人表达差异，可能降低模拟真实性。",
+          "whyImportantZh": "模拟来访者需要让披露程度和语言模式符合其当前理解状态，避免把模型的组织能力当作人的自我认识。",
+          "userRelevanceZh": "是多状态Agent应用趋势，与低比特Attention或GPU/NPU核心设计关联有限，建议归档而非硬件精读。",
+          "evidence": "daily.json实际元数据及完整原始英文摘要；公开arXiv页面读取返回DisabledError，未读取公开全文。"
+        },
+        "methodDetail": {
+          "coreIdeaZh": "Pandora更新心理及关系状态，构造主观评价和归因，规划回应内容与策略，再通过独立表达规划器结合来访者语言模式实现输出。",
+          "componentsZh": [
+            "心理与关系状态更新",
+            "主观评价与归因",
+            "回应策略规划",
+            "个人表达规划"
+          ],
+          "hardwareSystemDetailZh": "多阶段软件Agent框架，摘要未给模型、硬件、token成本或服务吞吐；不属于芯片架构工作。",
+          "noveltyZh": "将内部体验、披露决策和语言表达分开建模，并用个体话语提取的表达模式引导生成。",
+          "evidence": "daily.json实际元数据及完整原始英文摘要；公开arXiv页面读取返回DisabledError，未读取公开全文。"
+        },
+        "experimentDetail": {
+          "setupZh": "四个咨询/动机访谈数据集的115个案例，与五个基线比较；另做四位评价者参与的45个匹配披露项目研究。",
+          "baselinesZh": "五个模拟系统及去掉表达规划的消融配置；摘要未给基线全名和模型配置。",
+          "metricsZh": [
+            "表达相似度",
+            "披露对齐",
+            "被判断为AI式表达的比例"
+          ],
+          "mainResultsZh": "摘要报告表达相似度和总体披露对齐最高；AI式判断占7.2%，对照为43.3%–67.2%，移除表达规划后为35.6%。",
+          "limitationsZh": "公开摘要页读取返回DisabledError，当前仅据队列摘要；这是特定模拟评测，不能外推为真实治疗效果或临床安全结论。",
+          "evidence": "daily.json完整摘要提供案例规模、五个基线、评价者研究及7.2%/43.3%–67.2%/35.6%的AI式判断比例；未读全文。"
+        },
+        "evidence": {
+          "usedSources": [
+            "public/research-digest/daily.json: supplied metadata and complete original abstract"
+          ],
+          "affiliationEvidence": "authorAffiliations和affiliations均为空；遵循任务要求保留元数据缺失说明。",
+          "experimentEvidence": "daily.json完整摘要提供案例规模、五个基线、评价者研究及7.2%/43.3%–67.2%/35.6%的AI式判断比例；未读全文。",
+          "missingFields": [
+            "DBLP/arXiv元数据作者单位",
+            "全文方法、实验细节及硬件配置"
+          ]
+        },
+        "confidence": {
+          "summary": 0.8,
+          "motivation": 0.85,
+          "method": 0.77,
+          "experiments": 0.73,
+          "affiliations": 0
+        }
+      },
+      "pushedAt": "2026-11-03T02:36:27.905Z",
+      "emailSentAt": "2026-11-03T02:36:27.905Z",
+      "firstPushedAt": "2026-11-03T02:36:27.905Z"
     },
     {
       "id": "arxiv:2605.05115",
