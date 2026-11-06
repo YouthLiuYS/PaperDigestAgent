@@ -1,20 +1,20 @@
 {
-  "generatedAt": "2026-11-05T02:33:26.304Z",
+  "generatedAt": "2026-11-06T02:38:46.357Z",
   "timezone": "Asia/Shanghai",
   "siteUrl": "https://YouthLiuYS.github.io/PaperDigestAgent/",
   "stats": {
-    "total": 140,
-    "arxiv": 118,
+    "total": 148,
+    "arxiv": 126,
     "dblp": 22,
-    "dailyLatest": 139,
+    "dailyLatest": 147,
     "dailyBackfill": 0,
     "conferenceArchive": 1,
     "current": 0,
     "newlyAdded": 0,
-    "pushed": 140,
+    "pushed": 148,
     "pdfDownloaded": 0,
-    "hardwarePrimary": 103,
-    "algorithmTrend": 36,
+    "hardwarePrimary": 109,
+    "algorithmTrend": 38,
     "lowRelevance": 1
   },
   "papers": [
@@ -274,6 +274,132 @@
       "pushedAt": "2026-11-03T02:36:27.905Z",
       "emailSentAt": "2026-11-03T02:36:27.905Z",
       "firstPushedAt": "2026-11-03T02:36:27.905Z"
+    },
+    {
+      "id": "arxiv:2611.06380",
+      "source": "arXiv",
+      "title": "Does Context Compression Preserve Refusal Alignment?",
+      "authors": [
+        "Anthony Nguyen",
+        "Wenjun Lin"
+      ],
+      "authorAffiliations": [],
+      "affiliations": [],
+      "abstract": "Context compression reduces inference cost by encoding inputs into compact representations while preserving semantic content. An open question is whether semantic preservation alone is sufficient to maintain downstream behaviours such as refusal alignment. We investigate this question and find that encoder-based compression systematically weakens refusal behaviour in instruction-tuned language models, despite high reconstruction fidelity. This effect persists across model families and compression architectures. Mechanistic analysis shows that compression attenuates activation along the decoder's learned refusal direction. We further explore Memory Steering, a lightweight inference-time intervention that restores refusal rates to near-baseline levels without retraining and operates entirely in compressed representation space. These results demonstrate that semantic preservation does not guarantee behavioural preservation under compression, highlighting the need to explicitly preserve alignment-relevant features in compression-aware systems.",
+      "venue": "arXiv",
+      "published": "2026-11-04T11:42:42Z",
+      "updated": "2026-11-04T11:42:42Z",
+      "url": "http://arxiv.org/abs/2611.06380v1",
+      "pdfUrl": "https://arxiv.org/pdf/2611.06380v1",
+      "categories": [
+        "cs.AI",
+        "cs.CL"
+      ],
+      "collectedAt": "2026-11-06T00:57:48.811Z",
+      "firstSeenAt": "2026-11-06T00:57:48.811Z",
+      "lastSeenAt": "2026-11-06T00:57:48.811Z",
+      "collectionType": "daily-latest",
+      "matchedQuery": "(all:quantization OR all:compression OR all:pruning OR all:sparsity OR all:low-bit) AND (all:LLM OR all:transformer OR all:language) AND (all:hardware OR all:accelerator OR all:inference OR all:serving OR all:processor)",
+      "collectionTypes": [
+        "daily-latest"
+      ],
+      "matchedQueries": [
+        "(all:quantization OR all:compression OR all:pruning OR all:sparsity OR all:low-bit) AND (all:LLM OR all:transformer OR all:language) AND (all:hardware OR all:accelerator OR all:inference OR all:serving OR all:processor)",
+        "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)"
+      ],
+      "targetThemes": [],
+      "conferenceVenues": [],
+      "conferenceYears": [],
+      "digest": {
+        "summaryZh": "比较压缩前后的拒绝率和解码器拒绝方向，再用Memory Steering在解码前对固定长度压缩记忆作门控修正。摘要报告多模型及压缩架构下拒绝行为减弱，解码器拒绝方向激活衰减；记忆修正可恢复接近未压缩水平，未在此引用未核对的具体比率。",
+        "motivationZh": "编码式上下文压缩即使保留语义，也可能丢失触发拒绝行为的表示，不能只靠重构质量判断行为是否保持。以语义重构训练的编码器没有直接约束下游对齐特征，压缩率与任务质量之外缺少行为维度评测。压缩系统若忽略行为保持，可能在节省输入成本的同时改变模型响应。与你的长上下文压缩和量化评价相关，可借鉴除困惑度外检查行为特征，非KV驱逐或硬件论文。",
+        "methodZh": "比较压缩前后的拒绝率和解码器拒绝方向，再用Memory Steering在解码前对固定长度压缩记忆作门控修正。正文限定整个用户请求都被压缩，原token提示不直接留给解码器；修正只适用于固定长度ICAEs，不能直接用于变长ARC。把行为保持与语义保持分开诊断，展示压缩接口上的一次表示修正可以恢复拒绝行为。",
+        "experimentsZh": "多个指令模型及ICAE、ARC压缩架构，比较拒绝率和正常输入回答质量。未压缩模型、压缩模型及加入Memory Steering的固定长度配置。摘要报告多模型及压缩架构下拒绝行为减弱，解码器拒绝方向激活衰减；记忆修正可恢复接近未压缩水平，未在此引用未核对的具体比率。研究使用全请求压缩设置，与保留原用户问题的常见文档RAG不同；无需重训解码器不等于完全无需学习门控参数。",
+        "affiliationsZh": "未在 DBLP/arXiv 元数据中提供",
+        "tags": [
+          "上下文压缩",
+          "拒绝对齐",
+          "表示干预"
+        ],
+        "importance": 3,
+        "researchFitZh": "与你的长上下文压缩和量化评价相关，可借鉴除困惑度外检查行为特征，非KV驱逐或硬件论文。",
+        "hardwareRelevance": 2,
+        "algorithmRelevance": 4,
+        "systemRelevance": 3,
+        "readPriority": "skim",
+        "whyReadZh": "与你的长上下文压缩和量化评价相关，可借鉴除困惑度外检查行为特征，非KV驱逐或硬件论文。压缩系统若忽略行为保持，可能在节省输入成本的同时改变模型响应。",
+        "limitationsZh": "研究使用全请求压缩设置，与保留原用户问题的常见文档RAG不同；无需重训解码器不等于完全无需学习门控参数。",
+        "motivationDetail": {
+          "problemZh": "编码式上下文压缩即使保留语义，也可能丢失触发拒绝行为的表示，不能只靠重构质量判断行为是否保持。",
+          "gapZh": "以语义重构训练的编码器没有直接约束下游对齐特征，压缩率与任务质量之外缺少行为维度评测。",
+          "whyImportantZh": "压缩系统若忽略行为保持，可能在节省输入成本的同时改变模型响应。",
+          "userRelevanceZh": "与你的长上下文压缩和量化评价相关，可借鉴除困惑度外检查行为特征，非KV驱逐或硬件论文。",
+          "evidence": "队列元数据与完整原始英文摘要；公开摘要与HTML引言、§3.2，核实固定槽位、门控训练和适用设置。"
+        },
+        "methodDetail": {
+          "coreIdeaZh": "比较压缩前后的拒绝率和解码器拒绝方向，再用Memory Steering在解码前对固定长度压缩记忆作门控修正。",
+          "componentsZh": [
+            "语义重构对照",
+            "拒绝方向探测",
+            "固定槽位记忆修正"
+          ],
+          "hardwareSystemDetailZh": "正文限定整个用户请求都被压缩，原token提示不直接留给解码器；修正只适用于固定长度ICAEs，不能直接用于变长ARC。",
+          "noveltyZh": "把行为保持与语义保持分开诊断，展示压缩接口上的一次表示修正可以恢复拒绝行为。",
+          "evidence": "队列元数据与完整原始英文摘要；公开摘要与HTML引言、§3.2，核实固定槽位、门控训练和适用设置。"
+        },
+        "experimentDetail": {
+          "setupZh": "多个指令模型及ICAE、ARC压缩架构，比较拒绝率和正常输入回答质量。",
+          "baselinesZh": "未压缩模型、压缩模型及加入Memory Steering的固定长度配置。",
+          "metricsZh": [
+            "拒绝率",
+            "语义重构",
+            "正常回答质量"
+          ],
+          "mainResultsZh": "摘要报告多模型及压缩架构下拒绝行为减弱，解码器拒绝方向激活衰减；记忆修正可恢复接近未压缩水平，未在此引用未核对的具体比率。",
+          "limitationsZh": "研究使用全请求压缩设置，与保留原用户问题的常见文档RAG不同；无需重训解码器不等于完全无需学习门控参数。",
+          "evidence": "队列元数据与完整原始英文摘要；公开摘要与HTML引言、§3.2，核实固定槽位、门控训练和适用设置。"
+        },
+        "evidence": {
+          "usedSources": [
+            "public/research-digest/daily.json: metadata and complete original abstract",
+            "https://arxiv.org/abs/2611.06380v1",
+            "https://arxiv.org/html/2611.06380v1"
+          ],
+          "affiliationEvidence": "队列 affiliations 与 authorAffiliations 字段均为空；按任务要求填写元数据缺失说明。",
+          "experimentEvidence": "队列元数据与完整原始英文摘要；公开摘要与HTML引言、§3.2，核实固定槽位、门控训练和适用设置。",
+          "missingFields": [
+            "结构化作者单位",
+            "未核验全文其余实验数据"
+          ]
+        },
+        "confidence": {
+          "summary": 0.88,
+          "motivation": 0.85,
+          "method": 0.88,
+          "experiments": 0.85,
+          "affiliations": 0
+        }
+      },
+      "recommendationTrack": "hardware-primary",
+      "recommendationLabel": "硬件体系结构主线",
+      "recommendationScore": 203.75,
+      "relevanceReason": "命中 AI 处理器、体系结构、量化、训推系统或内存/缓存优化主题",
+      "pdfStatus": "remote",
+      "workflow": {
+        "digestStatus": "ready",
+        "emailStatus": "sent",
+        "digestError": "",
+        "harnessVersion": "paper-reader-v1",
+        "collectStatus": "collected",
+        "pdfStatus": "remote",
+        "harnessCheckedAt": "2026-11-06T02:38:41.285Z",
+        "harnessWarnings": [],
+        "emailSentAt": "2026-11-06T02:38:46.333Z",
+        "lastEmailError": ""
+      },
+      "pushedAt": "2026-11-06T02:38:46.333Z",
+      "emailSentAt": "2026-11-06T02:38:46.333Z",
+      "firstPushedAt": "2026-11-06T02:38:46.333Z"
     },
     {
       "id": "arxiv:2610.37033",
@@ -1848,6 +1974,130 @@
       "firstPushedAt": "2026-10-24T14:49:32.084Z"
     },
     {
+      "id": "arxiv:2611.06555",
+      "source": "arXiv",
+      "title": "FA-Agent: An extensible multimodal agent framework for first-arrival picking in mountainous seismic data",
+      "authors": [
+        "Wenda Li",
+        "Weibing Cai",
+        "Congcong Yuan"
+      ],
+      "authorAffiliations": [],
+      "affiliations": [],
+      "abstract": "First-arrival traveltimes underpin near-surface velocity modeling and static corrections, but in low signal-to-noise mountainous land data the first arrival is often weak, intermittent, and masked by strong direct waves and noise. Energy-based pickers then pick later arrivals or noise, and deep-learning pickers usually require retraining for a new survey. Because erroneous picks bias first-arrival tomography, many difficult zones are still inspected and corrected manually. We present FA-Agent, an agent framework for first-arrival picking built on a multimodal large language model. It combines a model that performs visual recognition and makes decisions, tools that process the data, and skills that carry experience of processing mountainous data. The framework is open and extensible: new pickers, denoising methods, and quality-control tools can be added, and new experience can be written into the skills. It is restricted neither to mountainous data nor to a particular model. Emulating a seismic data processor, the agent first surveys the whole gather to find zones needing attention, then examines them in enlarged views, and finally keeps, corrects, or removes the initial picks. On semi-synthetic gathers with known first arrivals and real mountainous noise, the agent picked the first arrival with high accuracy where it was clearly visible and removed the picks where it was invisible and could not be judged. Applied to randomly sampled gathers from a mountainous survey, it corrected picks onto weak first-arrival branches and removed picks where no first arrival could be confirmed, and it performed well on the most difficult data. Cases reviewed by experts are added to the skills automatically, so the agent improves with use, and a locally deployed model keeps confidential data on site. FA-Agent can thus become an essential component of future automated seismic data processing workflows.",
+      "venue": "arXiv",
+      "published": "2026-11-04T14:18:38Z",
+      "updated": "2026-11-04T14:18:38Z",
+      "url": "http://arxiv.org/abs/2611.06555v1",
+      "pdfUrl": "https://arxiv.org/pdf/2611.06555v1",
+      "categories": [
+        "physics.geo-ph"
+      ],
+      "collectedAt": "2026-11-06T00:57:53.002Z",
+      "firstSeenAt": "2026-11-06T00:57:53.002Z",
+      "lastSeenAt": "2026-11-06T00:57:53.002Z",
+      "collectionType": "daily-latest",
+      "matchedQuery": "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)",
+      "collectionTypes": [
+        "daily-latest"
+      ],
+      "matchedQueries": [
+        "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)"
+      ],
+      "targetThemes": [],
+      "conferenceVenues": [],
+      "conferenceYears": [],
+      "recommendationTrack": "hardware-primary",
+      "recommendationLabel": "硬件体系结构主线",
+      "recommendationScore": 162.25,
+      "relevanceReason": "命中 AI 处理器、体系结构、量化、训推系统或内存/缓存优化主题",
+      "pdfStatus": "remote",
+      "workflow": {
+        "digestStatus": "ready",
+        "emailStatus": "sent",
+        "digestError": "",
+        "harnessVersion": "paper-reader-v1",
+        "collectStatus": "collected",
+        "pdfStatus": "remote",
+        "harnessCheckedAt": "2026-11-06T02:38:41.285Z",
+        "harnessWarnings": [],
+        "emailSentAt": "2026-11-06T02:38:46.333Z",
+        "lastEmailError": ""
+      },
+      "digest": {
+        "summaryZh": "FA-Agent先查看整炮集定位难区，再放大检查，借助处理工具与经验技能保留、纠正或删除初始拾取。摘要称可见初至准确拾取，无法确认处删除拾取；真实数据可纠正弱分支，未提供精确准确率或耗时。",
+        "motivationZh": "山区低信噪比地震数据的初至弱且断续，自动拾取容易选到后续波或噪声，人工纠错负担大。能量法无法可靠识别难区，深度模型跨测区常需重训，难以复用人工处理经验。错误初至会影响速度建模，因此系统需要能对不可判定位置主动删除错误拾取。属于多模态Agent应用，可跟踪局部放大与工具调用负载，和推理核心设计关联有限。",
+        "methodZh": "FA-Agent先查看整炮集定位难区，再放大检查，借助处理工具与经验技能保留、纠正或删除初始拾取。可添加不同工具和模型，本地部署用于数据留场；摘要未给硬件、并发或时延。将专家式逐区判断、工具扩展与经验积累放入同一处理流程。",
+        "experimentsZh": "半合成炮集含已知初至与真实山区噪声，并使用随机抽取的真实山区测区炮集。以初始拾取为修正对象，并由专家检查案例；摘要未披露完整定量基线。摘要称可见初至准确拾取，无法确认处删除拾取；真实数据可纠正弱分支，未提供精确准确率或耗时。当前仅据完整原始与公开摘要，未核实模型、数据规模和专家一致性；不能将技能更新理解为模型权重训练。",
+        "affiliationsZh": "未在 DBLP/arXiv 元数据中提供",
+        "tags": [
+          "地震数据",
+          "多模态Agent",
+          "工具与技能"
+        ],
+        "importance": 2,
+        "researchFitZh": "属于多模态Agent应用，可跟踪局部放大与工具调用负载，和推理核心设计关联有限。",
+        "hardwareRelevance": 1,
+        "algorithmRelevance": 3,
+        "systemRelevance": 3,
+        "readPriority": "skim",
+        "whyReadZh": "属于多模态Agent应用，可跟踪局部放大与工具调用负载，和推理核心设计关联有限。错误初至会影响速度建模，因此系统需要能对不可判定位置主动删除错误拾取。",
+        "limitationsZh": "当前仅据完整原始与公开摘要，未核实模型、数据规模和专家一致性；不能将技能更新理解为模型权重训练。",
+        "motivationDetail": {
+          "problemZh": "山区低信噪比地震数据的初至弱且断续，自动拾取容易选到后续波或噪声，人工纠错负担大。",
+          "gapZh": "能量法无法可靠识别难区，深度模型跨测区常需重训，难以复用人工处理经验。",
+          "whyImportantZh": "错误初至会影响速度建模，因此系统需要能对不可判定位置主动删除错误拾取。",
+          "userRelevanceZh": "属于多模态Agent应用，可跟踪局部放大与工具调用负载，和推理核心设计关联有限。",
+          "evidence": "队列元数据与完整原始英文摘要；已读arXiv摘要明确流程、两类数据和定性结果。"
+        },
+        "methodDetail": {
+          "coreIdeaZh": "FA-Agent先查看整炮集定位难区，再放大检查，借助处理工具与经验技能保留、纠正或删除初始拾取。",
+          "componentsZh": [
+            "整体巡检",
+            "局部放大",
+            "拾取与去噪工具",
+            "专家经验技能"
+          ],
+          "hardwareSystemDetailZh": "可添加不同工具和模型，本地部署用于数据留场；摘要未给硬件、并发或时延。",
+          "noveltyZh": "将专家式逐区判断、工具扩展与经验积累放入同一处理流程。",
+          "evidence": "队列元数据与完整原始英文摘要；已读arXiv摘要明确流程、两类数据和定性结果。"
+        },
+        "experimentDetail": {
+          "setupZh": "半合成炮集含已知初至与真实山区噪声，并使用随机抽取的真实山区测区炮集。",
+          "baselinesZh": "以初始拾取为修正对象，并由专家检查案例；摘要未披露完整定量基线。",
+          "metricsZh": [
+            "可见初至拾取正确性",
+            "不可判定拾取清除"
+          ],
+          "mainResultsZh": "摘要称可见初至准确拾取，无法确认处删除拾取；真实数据可纠正弱分支，未提供精确准确率或耗时。",
+          "limitationsZh": "当前仅据完整原始与公开摘要，未核实模型、数据规模和专家一致性；不能将技能更新理解为模型权重训练。",
+          "evidence": "队列元数据与完整原始英文摘要；已读arXiv摘要明确流程、两类数据和定性结果。"
+        },
+        "evidence": {
+          "usedSources": [
+            "public/research-digest/daily.json: metadata and complete original abstract",
+            "https://arxiv.org/abs/2611.06555v1"
+          ],
+          "affiliationEvidence": "队列 affiliations 与 authorAffiliations 字段均为空；按任务要求填写元数据缺失说明。",
+          "experimentEvidence": "队列元数据与完整原始英文摘要；已读arXiv摘要明确流程、两类数据和定性结果。",
+          "missingFields": [
+            "结构化作者单位",
+            "未核验全文方法与实验细节"
+          ]
+        },
+        "confidence": {
+          "summary": 0.88,
+          "motivation": 0.85,
+          "method": 0.79,
+          "experiments": 0.75,
+          "affiliations": 0
+        }
+      },
+      "pushedAt": "2026-11-06T02:38:46.333Z",
+      "emailSentAt": "2026-11-06T02:38:46.333Z",
+      "firstPushedAt": "2026-11-06T02:38:46.333Z"
+    },
+    {
       "id": "arxiv:2610.32427",
       "source": "arXiv",
       "title": "Compression of turbulent flow data through an extended space-time correlation: certification against the modal energy budget",
@@ -2551,6 +2801,132 @@
       "pushedAt": "2026-11-05T02:33:26.283Z",
       "emailSentAt": "2026-11-05T02:33:26.283Z",
       "firstPushedAt": "2026-11-05T02:33:26.283Z"
+    },
+    {
+      "id": "arxiv:2611.06772",
+      "source": "arXiv",
+      "title": "Energy Efficient Near-Threshold Voltage Massive MIMO Computing",
+      "authors": [
+        "MD Salman Sakib",
+        "Mehdi Safarpour",
+        "Pejman Ghasemzadeh",
+        "Shahriar Shahabuddin"
+      ],
+      "authorAffiliations": [],
+      "affiliations": [],
+      "abstract": "Near-Threshold Computing (NTC) offers a substan- tial energy savings, i.e., up to 10x, for digital circuits. However, due to Process, Voltage, and Temperature (PVT) variations, low voltage operating digital processors face increased susceptibility to timing errors. This work equips conventional massive MIMO algorithms with computational error detection mechanisms, en- abling reliable operation down to near-threshold voltages. While conventional hardware based Timing Error Detection (TED) systems introduce substantial overhead, this work modifies MIMO algorithms to seamlessly integrate low overhead Algorithm Based Fault Tolerance (ABFT). A co-simulation framework combining transistor level SPICE simulations and workload aware fault injection is developed to investigate reliability, Bit Error Rate (BER), energy savings, and overheads of modified algorithms operating at low voltages. The transistor-level characterization was performed in PSpice using generic Level-1 Shichman-Hodges CMOS transistor models with Monte Carlo parameter variations. No specific CMOS fabrication process node was assumed. Conse- quently, the reported energy savings are analytical estimates and are not specific to a particular CMOS fabrication technology. We evaluate Gauss Seidel (GS), ADMM based infinity norm detection (ADMIN), and Conjugate Gradient (CG) detectors using circuit derived fault models. Results demonstrate remarkable algorith- mic resilience. Although undetected computational errors in some trials near the Point of First Failure (PoFF) were observed, BER increases by only 0.7% to 1.4%, while beyond PoFF, ABFT reported nearly all erroneous cases. The proposed checksum based ABFT detects most arithmetic and memory errors, with an estimated overhead below 2% for a 64 x 16 MIMO system, decreasing further for larger configurations.",
+      "venue": "arXiv",
+      "published": "2026-11-04T16:50:50Z",
+      "updated": "2026-11-04T16:50:50Z",
+      "url": "http://arxiv.org/abs/2611.06772v1",
+      "pdfUrl": "https://arxiv.org/pdf/2611.06772v1",
+      "categories": [
+        "cs.AR"
+      ],
+      "collectedAt": "2026-11-06T00:57:53.001Z",
+      "firstSeenAt": "2026-11-06T00:57:53.001Z",
+      "lastSeenAt": "2026-11-06T00:57:53.001Z",
+      "collectionType": "daily-latest",
+      "matchedQuery": "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)",
+      "collectionTypes": [
+        "daily-latest"
+      ],
+      "matchedQueries": [
+        "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)"
+      ],
+      "targetThemes": [],
+      "conferenceVenues": [],
+      "conferenceYears": [],
+      "recommendationTrack": "hardware-primary",
+      "recommendationLabel": "硬件体系结构主线",
+      "recommendationScore": 157,
+      "relevanceReason": "命中 AI 处理器、体系结构、量化、训推系统或内存/缓存优化主题",
+      "pdfStatus": "remote",
+      "workflow": {
+        "digestStatus": "ready",
+        "emailStatus": "sent",
+        "digestError": "",
+        "harnessVersion": "paper-reader-v1",
+        "collectStatus": "collected",
+        "pdfStatus": "remote",
+        "harnessCheckedAt": "2026-11-06T02:38:41.285Z",
+        "harnessWarnings": [],
+        "emailSentAt": "2026-11-06T02:38:46.333Z",
+        "lastEmailError": ""
+      },
+      "digest": {
+        "summaryZh": "将校验和ABFT嵌入GS、ADMIN和CG检测器，结合晶体管PSpice特征与工作负载注错，在最终输出比较校验一致性。摘要报告首次失效点附近BER增加0.7%–1.4%，64×16系统估计校验开销低于2%；部分错误会漏检，失效点以下检出几乎全部错误。",
+        "motivationZh": "近阈值降压可以省动态能量，但PVT变化诱发算术与存储错误，迭代MIMO检测可能累积这些错误。硬件时序检测开销较高，均匀随机注错又难反映电路和位位置的差异。基于工作负载的低开销校验有助于界定降压收益和可靠性损失。可参考你的计算核心能效与误差评测方法，但本工作负载是MIMO而非LLM。",
+        "methodZh": "将校验和ABFT嵌入GS、ADMIN和CG检测器，结合晶体管PSpice特征与工作负载注错，在最终输出比较校验一致性。模型使用通用Level-1 CMOS而未指定工艺节点；CG除法器假定可靠，校验未独立验证其标量系数。用算法结构承载容错并关联电压敏感的故障分布，而不是只添加硬件时序检测。",
+        "experimentsZh": "主设置64×16 MIMO、64-QAM、16位定点，GS/ADMIN/CG迭代三次；PSpice与系统注错联合仿真。以对应无故障定点结果判定真实错误，再统计ABFT发现与静默漏检。摘要报告首次失效点附近BER增加0.7%–1.4%，64×16系统估计校验开销低于2%；部分错误会漏检，失效点以下检出几乎全部错误。能耗是通用晶体管模型下的分析估算，无工艺或硅片实测；不能引用引言的最高10倍潜力作为本文实现收益。",
+        "affiliationsZh": "未在 DBLP/arXiv 元数据中提供",
+        "tags": [
+          "近阈值计算",
+          "算法容错",
+          "MIMO"
+        ],
+        "importance": 3,
+        "researchFitZh": "可参考你的计算核心能效与误差评测方法，但本工作负载是MIMO而非LLM。",
+        "hardwareRelevance": 4,
+        "algorithmRelevance": 3,
+        "systemRelevance": 3,
+        "readPriority": "skim",
+        "whyReadZh": "可参考你的计算核心能效与误差评测方法，但本工作负载是MIMO而非LLM。基于工作负载的低开销校验有助于界定降压收益和可靠性损失。",
+        "limitationsZh": "能耗是通用晶体管模型下的分析估算，无工艺或硅片实测；不能引用引言的最高10倍潜力作为本文实现收益。",
+        "motivationDetail": {
+          "problemZh": "近阈值降压可以省动态能量，但PVT变化诱发算术与存储错误，迭代MIMO检测可能累积这些错误。",
+          "gapZh": "硬件时序检测开销较高，均匀随机注错又难反映电路和位位置的差异。",
+          "whyImportantZh": "基于工作负载的低开销校验有助于界定降压收益和可靠性损失。",
+          "userRelevanceZh": "可参考你的计算核心能效与误差评测方法，但本工作负载是MIMO而非LLM。",
+          "evidence": "队列元数据与完整原始英文摘要；公开摘要和HTML §V–VI核对最终判定、可靠除法器与仿真设置。"
+        },
+        "methodDetail": {
+          "coreIdeaZh": "将校验和ABFT嵌入GS、ADMIN和CG检测器，结合晶体管PSpice特征与工作负载注错，在最终输出比较校验一致性。",
+          "componentsZh": [
+            "电路派生故障模型",
+            "校验和传播",
+            "最终输出判定"
+          ],
+          "hardwareSystemDetailZh": "模型使用通用Level-1 CMOS而未指定工艺节点；CG除法器假定可靠，校验未独立验证其标量系数。",
+          "noveltyZh": "用算法结构承载容错并关联电压敏感的故障分布，而不是只添加硬件时序检测。",
+          "evidence": "队列元数据与完整原始英文摘要；公开摘要和HTML §V–VI核对最终判定、可靠除法器与仿真设置。"
+        },
+        "experimentDetail": {
+          "setupZh": "主设置64×16 MIMO、64-QAM、16位定点，GS/ADMIN/CG迭代三次；PSpice与系统注错联合仿真。",
+          "baselinesZh": "以对应无故障定点结果判定真实错误，再统计ABFT发现与静默漏检。",
+          "metricsZh": [
+            "BER",
+            "错误检测率",
+            "估计校验开销"
+          ],
+          "mainResultsZh": "摘要报告首次失效点附近BER增加0.7%–1.4%，64×16系统估计校验开销低于2%；部分错误会漏检，失效点以下检出几乎全部错误。",
+          "limitationsZh": "能耗是通用晶体管模型下的分析估算，无工艺或硅片实测；不能引用引言的最高10倍潜力作为本文实现收益。",
+          "evidence": "队列元数据与完整原始英文摘要；公开摘要和HTML §V–VI核对最终判定、可靠除法器与仿真设置。"
+        },
+        "evidence": {
+          "usedSources": [
+            "public/research-digest/daily.json: metadata and complete original abstract",
+            "https://arxiv.org/abs/2611.06772v1",
+            "https://arxiv.org/html/2611.06772v1"
+          ],
+          "affiliationEvidence": "队列 affiliations 与 authorAffiliations 字段均为空；按任务要求填写元数据缺失说明。",
+          "experimentEvidence": "队列元数据与完整原始英文摘要；公开摘要和HTML §V–VI核对最终判定、可靠除法器与仿真设置。",
+          "missingFields": [
+            "结构化作者单位",
+            "未核验全文其余实验数据"
+          ]
+        },
+        "confidence": {
+          "summary": 0.88,
+          "motivation": 0.85,
+          "method": 0.88,
+          "experiments": 0.85,
+          "affiliations": 0
+        }
+      },
+      "pushedAt": "2026-11-06T02:38:46.333Z",
+      "emailSentAt": "2026-11-06T02:38:46.333Z",
+      "firstPushedAt": "2026-11-06T02:38:46.333Z"
     },
     {
       "id": "arxiv:2611.05319",
@@ -3569,6 +3945,130 @@
       "pushedAt": "2026-10-27T02:31:15.153Z",
       "emailSentAt": "2026-10-27T02:31:15.153Z",
       "firstPushedAt": "2026-10-27T02:31:15.153Z"
+    },
+    {
+      "id": "arxiv:2611.06607",
+      "source": "arXiv",
+      "title": "Hard to Fool: A Bounded LLM Research Loop for Quantitative Finance, and What Two Dozen Campaigns Found",
+      "authors": [
+        "Henry Zhang"
+      ],
+      "authorAffiliations": [],
+      "affiliations": [],
+      "abstract": "Agentic research loops that let a language model propose a change, run a fixed experiment and keep whatever improves the metric work well in machine learning. In trading research the same loop is a machine for producing false discoveries: a backtest that \"improves the metric\" is, by default, overfit, look-ahead, a multiple-comparisons artifact, cost-free, or market drift wearing a strategy. We describe Autonomous Quant Researcher, an open-source loop built on the opposite premise: the model proposes, and only trusted code decides. Proposals are strict declarative JSON over a fixed vocabulary, so there is no model-written code to sandbox. Evaluation runs on immutable chronological stores split into discovery, validation and a final holdout that can be opened exactly once, after a durable receipt is written. Acceptance is a conjunction of absolute gates (positive edge and net P&L after costs, a positive weekly-cluster bootstrap lower bound, survival at elevated costs, per-year stability and sample floors), never a single score. Duplicates are refused before they spend a trial, and every formulation, refusal, crash and result is kept in a hash-chained, append-only ledger. We report every campaign run to date, across 0DTE options priced from traded option bars, overnight SPX verticals, daily ETF rules, technical-analysis premises, Kalshi crypto binaries, earnings options, off-exchange volume and a pre-registered alternative-data campaign. Most hypotheses fail, and we report them. Two results survive their pre-registered bars. The clearest example of the loop working is a failure: a language-model survivor that passed discovery and validation with Sharpe ratios near 3 and fell to 0.26 on its single holdout use. The value of such a loop lies less in what it finds than in how hard it is to make it report something that is not there.",
+      "venue": "arXiv",
+      "published": "2026-11-04T14:57:39Z",
+      "updated": "2026-11-04T14:57:39Z",
+      "url": "http://arxiv.org/abs/2611.06607v1",
+      "pdfUrl": "https://arxiv.org/pdf/2611.06607v1",
+      "categories": [
+        "q-fin.CP",
+        "q-fin.TR"
+      ],
+      "collectedAt": "2026-11-06T00:57:53.002Z",
+      "firstSeenAt": "2026-11-06T00:57:53.002Z",
+      "lastSeenAt": "2026-11-06T00:57:53.002Z",
+      "collectionType": "daily-latest",
+      "matchedQuery": "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)",
+      "collectionTypes": [
+        "daily-latest"
+      ],
+      "matchedQueries": [
+        "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)"
+      ],
+      "targetThemes": [],
+      "conferenceVenues": [],
+      "conferenceYears": [],
+      "recommendationTrack": "hardware-primary",
+      "recommendationLabel": "硬件体系结构主线",
+      "recommendationScore": 151.25,
+      "relevanceReason": "命中 AI 处理器、体系结构、量化、训推系统或内存/缓存优化主题",
+      "pdfStatus": "remote",
+      "workflow": {
+        "digestStatus": "ready",
+        "emailStatus": "sent",
+        "digestError": "",
+        "harnessVersion": "paper-reader-v1",
+        "collectStatus": "collected",
+        "pdfStatus": "remote",
+        "harnessCheckedAt": "2026-11-06T02:38:41.285Z",
+        "harnessWarnings": [],
+        "emailSentAt": "2026-11-06T02:38:46.333Z",
+        "lastEmailError": ""
+      },
+      "digest": {
+        "summaryZh": "模型仅输出固定词汇的声明式JSON，由可信代码按时间隔离数据并执行多条件门槛；最终留出只在持久回执后使用一次。摘要称仅两项结果通过预登记门槛；一个验证期Sharpe接近3的幸存策略在单次留出下降到0.26。",
+        "motivationZh": "自动量化研究循环反复保留回测改进，容易选中前视、过拟合、多重比较或忽略成本造成的假发现。单个分数上升无法同时排除多类失效，重复试验和多次查看留出集也会污染结论。不可变实验协议可以让失败可追溯，而非只展示幸存结果。可借鉴Agent实验harness、一次性留出与消融登记，和你的硬件设计关联较弱。",
+        "methodZh": "模型仅输出固定词汇的声明式JSON，由可信代码按时间隔离数据并执行多条件门槛；最终留出只在持久回执后使用一次。无需执行模型生成的程序，所有提议、拒绝和崩溃留痕；属于软件研究流程设计。把审计和多重防过拟合约束作为循环核心，并公开失败而非仅汇报成功。",
+        "experimentsZh": "覆盖多类期权、ETF及替代数据研究campaign；报告所有已运行活动。发现与验证阶段结果对照单次最终留出，并检验更高交易成本和年份稳定性。摘要称仅两项结果通过预登记门槛；一个验证期Sharpe接近3的幸存策略在单次留出下降到0.26。回测结果不代表未来回报，本文是研究流程而非投资建议；未读取各campaign样本和交易细节。",
+        "affiliationsZh": "未在 DBLP/arXiv 元数据中提供",
+        "tags": [
+          "受约束Agent",
+          "实验留出",
+          "审计日志"
+        ],
+        "importance": 2,
+        "researchFitZh": "可借鉴Agent实验harness、一次性留出与消融登记，和你的硬件设计关联较弱。",
+        "hardwareRelevance": 1,
+        "algorithmRelevance": 3,
+        "systemRelevance": 3,
+        "readPriority": "skim",
+        "whyReadZh": "可借鉴Agent实验harness、一次性留出与消融登记，和你的硬件设计关联较弱。不可变实验协议可以让失败可追溯，而非只展示幸存结果。",
+        "limitationsZh": "回测结果不代表未来回报，本文是研究流程而非投资建议；未读取各campaign样本和交易细节。",
+        "motivationDetail": {
+          "problemZh": "自动量化研究循环反复保留回测改进，容易选中前视、过拟合、多重比较或忽略成本造成的假发现。",
+          "gapZh": "单个分数上升无法同时排除多类失效，重复试验和多次查看留出集也会污染结论。",
+          "whyImportantZh": "不可变实验协议可以让失败可追溯，而非只展示幸存结果。",
+          "userRelevanceZh": "可借鉴Agent实验harness、一次性留出与消融登记，和你的硬件设计关联较弱。",
+          "evidence": "队列元数据与完整原始英文摘要；已读arXiv摘要包含验收流程、结果数量及Sharpe失败示例。"
+        },
+        "methodDetail": {
+          "coreIdeaZh": "模型仅输出固定词汇的声明式JSON，由可信代码按时间隔离数据并执行多条件门槛；最终留出只在持久回执后使用一次。",
+          "componentsZh": [
+            "声明式提议",
+            "时间隔离数据",
+            "联合验收门槛",
+            "追加式哈希账本"
+          ],
+          "hardwareSystemDetailZh": "无需执行模型生成的程序，所有提议、拒绝和崩溃留痕；属于软件研究流程设计。",
+          "noveltyZh": "把审计和多重防过拟合约束作为循环核心，并公开失败而非仅汇报成功。",
+          "evidence": "队列元数据与完整原始英文摘要；已读arXiv摘要包含验收流程、结果数量及Sharpe失败示例。"
+        },
+        "experimentDetail": {
+          "setupZh": "覆盖多类期权、ETF及替代数据研究campaign；报告所有已运行活动。",
+          "baselinesZh": "发现与验证阶段结果对照单次最终留出，并检验更高交易成本和年份稳定性。",
+          "metricsZh": [
+            "成本后净收益",
+            "bootstrap下界",
+            "年份稳定性"
+          ],
+          "mainResultsZh": "摘要称仅两项结果通过预登记门槛；一个验证期Sharpe接近3的幸存策略在单次留出下降到0.26。",
+          "limitationsZh": "回测结果不代表未来回报，本文是研究流程而非投资建议；未读取各campaign样本和交易细节。",
+          "evidence": "队列元数据与完整原始英文摘要；已读arXiv摘要包含验收流程、结果数量及Sharpe失败示例。"
+        },
+        "evidence": {
+          "usedSources": [
+            "public/research-digest/daily.json: metadata and complete original abstract",
+            "https://arxiv.org/abs/2611.06607v1"
+          ],
+          "affiliationEvidence": "队列 affiliations 与 authorAffiliations 字段均为空；按任务要求填写元数据缺失说明。",
+          "experimentEvidence": "队列元数据与完整原始英文摘要；已读arXiv摘要包含验收流程、结果数量及Sharpe失败示例。",
+          "missingFields": [
+            "结构化作者单位",
+            "未核验全文方法与实验细节"
+          ]
+        },
+        "confidence": {
+          "summary": 0.88,
+          "motivation": 0.85,
+          "method": 0.79,
+          "experiments": 0.75,
+          "affiliations": 0
+        }
+      },
+      "pushedAt": "2026-11-06T02:38:46.333Z",
+      "emailSentAt": "2026-11-06T02:38:46.333Z",
+      "firstPushedAt": "2026-11-06T02:38:46.333Z"
     },
     {
       "id": "arxiv:2610.35524",
@@ -5099,6 +5599,131 @@
       "firstPushedAt": "2026-10-27T02:31:15.153Z"
     },
     {
+      "id": "arxiv:2611.06715",
+      "source": "arXiv",
+      "title": "Reasoning over Non-Parametric Memory in Multilingual LLMs: A Cognitive-Based Analysis of Relational Knowledge",
+      "authors": [
+        "Zohreh Abbasi Liasi",
+        "Batoul Hammoud",
+        "Anas Madkoor",
+        "Ehsaneddin Asgari"
+      ],
+      "authorAffiliations": [],
+      "affiliations": [],
+      "abstract": "Retrieval-augmented generation (RAG) assumes that language models can reason over relations stated in their context rather than fall back on associations memorized during pretraining. We study this evidence-conditioned relational reasoning in isolation, with the facts supplied directly in the prompt rather than retrieved. \\textsc{Rel-Bloom} is a controlled multilingual diagnostic of 450 multiple-choice questions built from 30 Wikidata relations; the same source relations are instantiated at five Bloom-inspired levels (Remember, Understand, Apply, Analyze, Evaluate) and under three veracity conditions (Factual, Counterfactual, Neutralized). Across 43 models, six languages, and two multilingual settings (226,800 predictions), three findings stand out. First, accuracy drops sharply from Apply to Analyze in every evaluated open-weight model series, reaching 47.2 percentage points for the Large Granite bucket, but not for either Gemini model. Second, Evaluate items remain a bottleneck even for models near ceiling on the other task types: Gemini~3.1 Pro averages 99.5\\% on the other four levels but 60.7\\% on Evaluate. Third, item- and relation-level difficulty rankings are consistently preserved across languages, indicating a difficulty structure partly shared across languages within this benchmark. Across knowledge conditions, Counterfactual contexts are generally harder than Factual ones, while removing entity identities can improve higher-level performance in some model regimes. Greater model capability therefore does not by itself ensure reliable reasoning over supplied relational evidence. Relevant resources are available at: https://huggingface.co/spaces/QCRI/non-parametric-memory-relational-reasoning.",
+      "venue": "arXiv",
+      "published": "2026-11-04T16:11:26Z",
+      "updated": "2026-11-04T16:11:26Z",
+      "url": "http://arxiv.org/abs/2611.06715v1",
+      "pdfUrl": "https://arxiv.org/pdf/2611.06715v1",
+      "categories": [
+        "cs.CL",
+        "cs.AI"
+      ],
+      "collectedAt": "2026-11-06T00:57:53.001Z",
+      "firstSeenAt": "2026-11-06T00:57:53.001Z",
+      "lastSeenAt": "2026-11-06T00:57:53.001Z",
+      "collectionType": "daily-latest",
+      "matchedQuery": "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)",
+      "collectionTypes": [
+        "daily-latest"
+      ],
+      "matchedQueries": [
+        "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)"
+      ],
+      "targetThemes": [],
+      "conferenceVenues": [],
+      "conferenceYears": [],
+      "recommendationTrack": "hardware-primary",
+      "recommendationLabel": "硬件体系结构主线",
+      "recommendationScore": 145.75,
+      "relevanceReason": "命中 AI 处理器、体系结构、量化、训推系统或内存/缓存优化主题",
+      "pdfStatus": "remote",
+      "workflow": {
+        "digestStatus": "ready",
+        "emailStatus": "sent",
+        "digestError": "",
+        "harnessVersion": "paper-reader-v1",
+        "collectStatus": "collected",
+        "pdfStatus": "remote",
+        "harnessCheckedAt": "2026-11-06T02:38:41.285Z",
+        "harnessWarnings": [],
+        "emailSentAt": "2026-11-06T02:38:46.333Z",
+        "lastEmailError": ""
+      },
+      "digest": {
+        "summaryZh": "Rel-Bloom对同一Wikidata关系构造五类认知任务，交叉事实、反事实和去实体条件，并跨语言比较。Gemini 3.1 Pro在其他四层均值99.5%，Evaluate为60.7%；多种开源系列从Apply到Analyze明显下降。",
+        "motivationZh": "RAG依赖模型根据给定关系推理，而模型可能回到预训练实体关联，不能把检索正确等同推理正确。检索误差和关系推理混在一起时，难判断模型究竟为何答错。直接提供事实并改变真伪与实体身份，可以隔离证据服从和推理难度。可跟踪RAG与长上下文质量评价，这里的非参数记忆不等同硬件KVCache。",
+        "methodZh": "Rel-Bloom对同一Wikidata关系构造五类认知任务，交叉事实、反事实和去实体条件，并跨语言比较。所有事实直接写入提示，实验不运行检索器，也未设计存储或注意力硬件。控制来源关系和提示证据，隔离从应用到分析及评价的难度跃迁。",
+        "experimentsZh": "450道多选题来自30类关系，评测43个模型、六种语言和两种多语言设置，共226,800次预测。模型系列、认知层级与事实条件相互对照。Gemini 3.1 Pro在其他四层均值99.5%，Evaluate为60.7%；多种开源系列从Apply到Analyze明显下降。结论限该受控选择题集，不能外推为所有多语言RAG；本轮未读全文任务构造。",
+        "affiliationsZh": "未在 DBLP/arXiv 元数据中提供",
+        "tags": [
+          "多语言推理",
+          "上下文证据",
+          "关系诊断"
+        ],
+        "importance": 2,
+        "researchFitZh": "可跟踪RAG与长上下文质量评价，这里的非参数记忆不等同硬件KVCache。",
+        "hardwareRelevance": 1,
+        "algorithmRelevance": 4,
+        "systemRelevance": 2,
+        "readPriority": "skim",
+        "whyReadZh": "可跟踪RAG与长上下文质量评价，这里的非参数记忆不等同硬件KVCache。直接提供事实并改变真伪与实体身份，可以隔离证据服从和推理难度。",
+        "limitationsZh": "结论限该受控选择题集，不能外推为所有多语言RAG；本轮未读全文任务构造。",
+        "motivationDetail": {
+          "problemZh": "RAG依赖模型根据给定关系推理，而模型可能回到预训练实体关联，不能把检索正确等同推理正确。",
+          "gapZh": "检索误差和关系推理混在一起时，难判断模型究竟为何答错。",
+          "whyImportantZh": "直接提供事实并改变真伪与实体身份，可以隔离证据服从和推理难度。",
+          "userRelevanceZh": "可跟踪RAG与长上下文质量评价，这里的非参数记忆不等同硬件KVCache。",
+          "evidence": "队列元数据与完整原始英文摘要；队列原始与公开摘要给出规模、准确率及条件比较。"
+        },
+        "methodDetail": {
+          "coreIdeaZh": "Rel-Bloom对同一Wikidata关系构造五类认知任务，交叉事实、反事实和去实体条件，并跨语言比较。",
+          "componentsZh": [
+            "关系保持任务",
+            "三种真伪条件",
+            "多语言诊断"
+          ],
+          "hardwareSystemDetailZh": "所有事实直接写入提示，实验不运行检索器，也未设计存储或注意力硬件。",
+          "noveltyZh": "控制来源关系和提示证据，隔离从应用到分析及评价的难度跃迁。",
+          "evidence": "队列元数据与完整原始英文摘要；队列原始与公开摘要给出规模、准确率及条件比较。"
+        },
+        "experimentDetail": {
+          "setupZh": "450道多选题来自30类关系，评测43个模型、六种语言和两种多语言设置，共226,800次预测。",
+          "baselinesZh": "模型系列、认知层级与事实条件相互对照。",
+          "metricsZh": [
+            "多选准确率",
+            "跨语言难度排序"
+          ],
+          "mainResultsZh": "Gemini 3.1 Pro在其他四层均值99.5%，Evaluate为60.7%；多种开源系列从Apply到Analyze明显下降。",
+          "limitationsZh": "结论限该受控选择题集，不能外推为所有多语言RAG；本轮未读全文任务构造。",
+          "evidence": "队列元数据与完整原始英文摘要；队列原始与公开摘要给出规模、准确率及条件比较。"
+        },
+        "evidence": {
+          "usedSources": [
+            "public/research-digest/daily.json: metadata and complete original abstract",
+            "https://arxiv.org/abs/2611.06715v1"
+          ],
+          "affiliationEvidence": "队列 affiliations 与 authorAffiliations 字段均为空；按任务要求填写元数据缺失说明。",
+          "experimentEvidence": "队列元数据与完整原始英文摘要；队列原始与公开摘要给出规模、准确率及条件比较。",
+          "missingFields": [
+            "结构化作者单位",
+            "未核验全文方法与实验细节"
+          ]
+        },
+        "confidence": {
+          "summary": 0.88,
+          "motivation": 0.85,
+          "method": 0.79,
+          "experiments": 0.75,
+          "affiliations": 0
+        }
+      },
+      "pushedAt": "2026-11-06T02:38:46.333Z",
+      "emailSentAt": "2026-11-06T02:38:46.333Z",
+      "firstPushedAt": "2026-11-06T02:38:46.333Z"
+    },
+    {
       "id": "arxiv:2610.35020",
       "source": "arXiv",
       "title": "Attention under Bounded Key-Query Similarity: Space Complexity and Transformer Anisotropy",
@@ -5227,6 +5852,131 @@
       "pushedAt": "2026-10-28T00:29:41.195Z",
       "emailSentAt": "2026-10-28T00:29:41.195Z",
       "firstPushedAt": "2026-10-28T00:29:41.195Z"
+    },
+    {
+      "id": "arxiv:2611.06373",
+      "source": "arXiv",
+      "title": "Reassessing Dataset Quality and Fine-Tuning Practices for Vulnerability Detection on PrimeVul dataset",
+      "authors": [
+        "Norbert Sándor Szolnoki",
+        "Gábor Antal"
+      ],
+      "authorAffiliations": [],
+      "affiliations": [],
+      "abstract": "Recent studies report promising results from supervised fine-tuning of pre-trained code language models for automated vulnerability detection on benchmarks such as PrimeVul. In this paper, we present a large-scale empirical evaluation of both model performance and dataset quality in this setting. We systematically fine-tune three widely used encoder models (CodeBERT, GraphCodeBERT, and UniXCoder) across five imbalance mitigation strategies, extensive hyperparameter sweeps, and multiple random seeds, resulting in 770 independent training runs. Our results reveal a consistent pattern. While standard metrics such as F1 and ROC-AUC occasionally suggest improvements, security-critical and calibration-aware measures tell a different story. Matthews Correlation Coefficient remains near zero, predicted probabilities are poorly calibrated, and evaluation under strict false-positive constraints reveals high false-negative rates. Neither imbalance handling, threshold optimization, nor post-hoc calibration recovers a meaningful discriminative signal. We also conduct a data quality assessment of the PrimeVul benchmark and identify structural issues such as minimal semantic differences between vulnerable and fixed functions, and annotation noise introduced by commit-level labeling. These findings suggests that the PrimeVul dataset, in its current form, presents significant challenges for reliable AI-based vulnerability detection in software engineering with the methodologies we used. Our study highlights the need for more robust dataset design, improved evaluation protocols, and rethinking of fine-tuning practices for security-critical tasks.",
+      "venue": "arXiv",
+      "published": "2026-11-04T11:34:02Z",
+      "updated": "2026-11-04T11:34:02Z",
+      "url": "http://arxiv.org/abs/2611.06373v1",
+      "pdfUrl": "https://arxiv.org/pdf/2611.06373v1",
+      "categories": [
+        "cs.SE"
+      ],
+      "collectedAt": "2026-11-06T00:57:53.002Z",
+      "firstSeenAt": "2026-11-06T00:57:53.002Z",
+      "lastSeenAt": "2026-11-06T00:57:53.002Z",
+      "collectionType": "daily-latest",
+      "matchedQuery": "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)",
+      "collectionTypes": [
+        "daily-latest"
+      ],
+      "matchedQueries": [
+        "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)"
+      ],
+      "targetThemes": [],
+      "conferenceVenues": [],
+      "conferenceYears": [],
+      "recommendationTrack": "hardware-primary",
+      "recommendationLabel": "硬件体系结构主线",
+      "recommendationScore": 145,
+      "relevanceReason": "命中 AI 处理器、体系结构、量化、训推系统或内存/缓存优化主题",
+      "pdfStatus": "remote",
+      "workflow": {
+        "digestStatus": "ready",
+        "emailStatus": "sent",
+        "digestError": "",
+        "harnessVersion": "paper-reader-v1",
+        "collectStatus": "collected",
+        "pdfStatus": "remote",
+        "harnessCheckedAt": "2026-11-06T02:38:41.285Z",
+        "harnessWarnings": [],
+        "emailSentAt": "2026-11-06T02:38:46.333Z",
+        "lastEmailError": ""
+      },
+      "digest": {
+        "summaryZh": "系统扫描编码模型、不平衡处理、超参与随机种子，并审核漏洞和修复函数的语义差异及提交级标签。摘要报告MCC接近零、概率校准差，严格误报约束下漏报高；重平衡和校准未恢复明显区分信号。",
+        "motivationZh": "漏洞检测在不平衡数据上可能取得表面F1改善，却在严格低误报条件下漏掉大量漏洞。阈值调整和重采样可能掩盖标签噪声，普通总体指标也不足以证明有可靠区分信号。检查MCC、校准与误报约束可以判断系统是否适合安全检测。可借鉴你的网络安全评测口径，但这是代码漏洞模型而非正则匹配硬件。",
+        "methodZh": "系统扫描编码模型、不平衡处理、超参与随机种子，并审核漏洞和修复函数的语义差异及提交级标签。使用CodeBERT、GraphCodeBERT和UniXCoder，无新硬件；评估侧重点是训练与数据协议。把大规模训练对照与标签审核结合，检验常规指标提升是否有实际检测意义。",
+        "experimentsZh": "PrimeVul数据集，三种模型、五类不平衡策略、多个种子，总计770次独立训练。不同不平衡策略、阈值优化与事后校准对照。摘要报告MCC接近零、概率校准差，严格误报约束下漏报高；重平衡和校准未恢复明显区分信号。仅支持所测模型和协议的结论，不能推断所有方法在PrimeVul上无效；未核实详细划分与置信区间。",
+        "affiliationsZh": "未在 DBLP/arXiv 元数据中提供",
+        "tags": [
+          "漏洞检测",
+          "数据标签噪声",
+          "模型校准"
+        ],
+        "importance": 2,
+        "researchFitZh": "可借鉴你的网络安全评测口径，但这是代码漏洞模型而非正则匹配硬件。",
+        "hardwareRelevance": 1,
+        "algorithmRelevance": 3,
+        "systemRelevance": 2,
+        "readPriority": "skim",
+        "whyReadZh": "可借鉴你的网络安全评测口径，但这是代码漏洞模型而非正则匹配硬件。检查MCC、校准与误报约束可以判断系统是否适合安全检测。",
+        "limitationsZh": "仅支持所测模型和协议的结论，不能推断所有方法在PrimeVul上无效；未核实详细划分与置信区间。",
+        "motivationDetail": {
+          "problemZh": "漏洞检测在不平衡数据上可能取得表面F1改善，却在严格低误报条件下漏掉大量漏洞。",
+          "gapZh": "阈值调整和重采样可能掩盖标签噪声，普通总体指标也不足以证明有可靠区分信号。",
+          "whyImportantZh": "检查MCC、校准与误报约束可以判断系统是否适合安全检测。",
+          "userRelevanceZh": "可借鉴你的网络安全评测口径，但这是代码漏洞模型而非正则匹配硬件。",
+          "evidence": "队列元数据与完整原始英文摘要；已读arXiv摘要提供模型、770次训练及定性负结果。"
+        },
+        "methodDetail": {
+          "coreIdeaZh": "系统扫描编码模型、不平衡处理、超参与随机种子，并审核漏洞和修复函数的语义差异及提交级标签。",
+          "componentsZh": [
+            "多模型微调",
+            "不平衡缓解",
+            "校准分析",
+            "标签质量审核"
+          ],
+          "hardwareSystemDetailZh": "使用CodeBERT、GraphCodeBERT和UniXCoder，无新硬件；评估侧重点是训练与数据协议。",
+          "noveltyZh": "把大规模训练对照与标签审核结合，检验常规指标提升是否有实际检测意义。",
+          "evidence": "队列元数据与完整原始英文摘要；已读arXiv摘要提供模型、770次训练及定性负结果。"
+        },
+        "experimentDetail": {
+          "setupZh": "PrimeVul数据集，三种模型、五类不平衡策略、多个种子，总计770次独立训练。",
+          "baselinesZh": "不同不平衡策略、阈值优化与事后校准对照。",
+          "metricsZh": [
+            "F1与ROC-AUC",
+            "MCC",
+            "校准",
+            "受限误报下漏报"
+          ],
+          "mainResultsZh": "摘要报告MCC接近零、概率校准差，严格误报约束下漏报高；重平衡和校准未恢复明显区分信号。",
+          "limitationsZh": "仅支持所测模型和协议的结论，不能推断所有方法在PrimeVul上无效；未核实详细划分与置信区间。",
+          "evidence": "队列元数据与完整原始英文摘要；已读arXiv摘要提供模型、770次训练及定性负结果。"
+        },
+        "evidence": {
+          "usedSources": [
+            "public/research-digest/daily.json: metadata and complete original abstract",
+            "https://arxiv.org/abs/2611.06373v1"
+          ],
+          "affiliationEvidence": "队列 affiliations 与 authorAffiliations 字段均为空；按任务要求填写元数据缺失说明。",
+          "experimentEvidence": "队列元数据与完整原始英文摘要；已读arXiv摘要提供模型、770次训练及定性负结果。",
+          "missingFields": [
+            "结构化作者单位",
+            "未核验全文方法与实验细节"
+          ]
+        },
+        "confidence": {
+          "summary": 0.88,
+          "motivation": 0.85,
+          "method": 0.79,
+          "experiments": 0.75,
+          "affiliations": 0
+        }
+      },
+      "pushedAt": "2026-11-06T02:38:46.333Z",
+      "emailSentAt": "2026-11-06T02:38:46.333Z",
+      "firstPushedAt": "2026-11-06T02:38:46.333Z"
     },
     {
       "id": "arxiv:2604.27384",
@@ -15101,6 +15851,144 @@
       "firstPushedAt": "2026-10-24T14:49:32.084Z"
     },
     {
+      "id": "arxiv:2611.06911",
+      "source": "arXiv",
+      "title": "BEAKER: An Expert-Curated Benchmark for Embodied Brains in Self-Driving Chemical Laboratories",
+      "authors": [
+        "Fei Lin",
+        "Tengchao Zhang",
+        "Ziyang Gong",
+        "Xiaotong Yu",
+        "Bohan Zhang",
+        "Yifan Zhou",
+        "Qihao Yang",
+        "Ji Dai",
+        "Dong Li",
+        "Yining Jiang",
+        "Qinghua Ni",
+        "Jun Huang",
+        "Qiang Zhang",
+        "Yue Zhou",
+        "Zhihang Zhong",
+        "Yonglin Tian",
+        "Fei-Yue Wang",
+        "Xue Yang"
+      ],
+      "authorAffiliations": [],
+      "affiliations": [],
+      "abstract": "Self-Driving Chemical Laboratories (SDCLs) are moving chemical experimentation toward embodied automation, where machines must perceive laboratory scenes, reason about experimental states, and act under physical, procedural, and safety constraints. Although Multimodal Large Language Models (MLLMs) are increasingly considered as embodied brains for such systems, existing laboratory benchmarks mainly focus on safety, anomaly detection, or general scientific understanding, leaving their execution-oriented embodied capabilities underexplored. To fill this gap, we introduce BEAKER, a Benchmark for evaluating Embodied Actionability, Knowledge, Experimentation, and Reasoning in SDCLs. BEAKER contains 1,000 expert-curated question-answer samples across 11 image and video task types, covering key judgments required for chemical laboratory execution, including affordance grounding, trajectory planning, equipment, state, and safety recognition, apparatus setup, operation and step reasoning, and temporal procedure reasoning. All questions and annotations are manually created and reviewed by chemistry and embodied Artificial Intelligence (AI) experts, without AI-assisted generation or annotation. We evaluate 28 general-purpose, science-oriented, chemistry-specialized, and embodied MLLMs in an offline, single-turn setting. Results show that current models can follow coarse experimental procedures in videos, but still struggle to ground actions into operable regions and feasible trajectories, to recognize fine-grained laboratory apparatus, states, and safety norms, and to order steps in mid-length procedures. BEAKER thus reveals a clear gap between coarse procedural understanding and the precise, action-grounded perception required for laboratory execution, providing a diagnostic benchmark for future MLLMs in SDCLs.",
+      "venue": "arXiv",
+      "published": "2026-11-04T18:57:17Z",
+      "updated": "2026-11-04T18:57:17Z",
+      "url": "http://arxiv.org/abs/2611.06911v1",
+      "pdfUrl": "https://arxiv.org/pdf/2611.06911v1",
+      "categories": [
+        "cs.AI"
+      ],
+      "collectedAt": "2026-11-06T00:57:54.940Z",
+      "firstSeenAt": "2026-11-06T00:57:54.940Z",
+      "lastSeenAt": "2026-11-06T00:57:54.940Z",
+      "collectionType": "daily-latest",
+      "matchedQuery": "(all:agent OR all:agents OR all:agentic OR all:reasoning OR all:post-training OR all:alignment OR all:multimodal OR all:world-model) AND (all:LLM OR all:foundation OR all:language)",
+      "collectionTypes": [
+        "daily-latest"
+      ],
+      "matchedQueries": [
+        "(all:agent OR all:agents OR all:agentic OR all:reasoning OR all:post-training OR all:alignment OR all:multimodal OR all:world-model) AND (all:LLM OR all:foundation OR all:language)"
+      ],
+      "targetThemes": [],
+      "conferenceVenues": [],
+      "conferenceYears": [],
+      "recommendationTrack": "algorithm-trend",
+      "recommendationLabel": "算法趋势观察",
+      "recommendationScore": 39.2,
+      "relevanceReason": "命中 LLM/Agent/多模态/后训练等算法趋势主题",
+      "pdfStatus": "remote",
+      "workflow": {
+        "digestStatus": "ready",
+        "emailStatus": "sent",
+        "digestError": "",
+        "harnessVersion": "paper-reader-v1",
+        "collectStatus": "collected",
+        "pdfStatus": "remote",
+        "harnessCheckedAt": "2026-11-06T02:38:41.285Z",
+        "harnessWarnings": [],
+        "emailSentAt": "2026-11-06T02:38:46.333Z",
+        "lastEmailError": ""
+      },
+      "digest": {
+        "summaryZh": "BEAKER由化学和具身AI专家手工编制、审核图像与视频问答，覆盖行动可供性、轨迹、装置和时序推理。模型能理解粗流程，但在操作区域、可行轨迹、细仪器和中等长度步骤排序上仍困难，摘要未给总分。",
+        "motivationZh": "实验室Agent需要判断可操作区域、轨迹与仪器状态，而已有题集偏重一般知识或异常识别。理解视频的大致流程不代表能选对操作位置和可行步骤，缺乏执行导向的诊断。专家审核的行动任务可揭示感知到实际操作之间的能力差距。适合多模态与具身Agent趋势跟踪，未涉及GPU/NPU或量化设计。",
+        "methodZh": "BEAKER由化学和具身AI专家手工编制、审核图像与视频问答，覆盖行动可供性、轨迹、装置和时序推理。离线单轮问答，不是实验室机器人闭环控制或真实试剂操作。按执行需求组织任务，且避免AI辅助生成与标注引入同源评估偏差。",
+        "experimentsZh": "1,000条专家题、11类任务，对28个通用、科学、化学及具身MLLM评测。不同模型类别按任务类型对比；摘要未列完整模型名单。模型能理解粗流程，但在操作区域、可行轨迹、细仪器和中等长度步骤排序上仍困难，摘要未给总分。离线题目表现不能当作真实实验执行成功率；本轮未读评分规则和模型细表。",
+        "affiliationsZh": "未在 DBLP/arXiv 元数据中提供",
+        "tags": [
+          "实验室Agent",
+          "多模态基准",
+          "行动落地"
+        ],
+        "importance": 2,
+        "researchFitZh": "适合多模态与具身Agent趋势跟踪，未涉及GPU/NPU或量化设计。",
+        "hardwareRelevance": 1,
+        "algorithmRelevance": 3,
+        "systemRelevance": 2,
+        "readPriority": "skim",
+        "whyReadZh": "适合多模态与具身Agent趋势跟踪，未涉及GPU/NPU或量化设计。专家审核的行动任务可揭示感知到实际操作之间的能力差距。",
+        "limitationsZh": "离线题目表现不能当作真实实验执行成功率；本轮未读评分规则和模型细表。",
+        "motivationDetail": {
+          "problemZh": "实验室Agent需要判断可操作区域、轨迹与仪器状态，而已有题集偏重一般知识或异常识别。",
+          "gapZh": "理解视频的大致流程不代表能选对操作位置和可行步骤，缺乏执行导向的诊断。",
+          "whyImportantZh": "专家审核的行动任务可揭示感知到实际操作之间的能力差距。",
+          "userRelevanceZh": "适合多模态与具身Agent趋势跟踪，未涉及GPU/NPU或量化设计。",
+          "evidence": "队列元数据与完整原始英文摘要；已读arXiv摘要给出规模、人工审核、单轮设置及定性发现。"
+        },
+        "methodDetail": {
+          "coreIdeaZh": "BEAKER由化学和具身AI专家手工编制、审核图像与视频问答，覆盖行动可供性、轨迹、装置和时序推理。",
+          "componentsZh": [
+            "人工专家题集",
+            "图像视频任务",
+            "分项能力诊断"
+          ],
+          "hardwareSystemDetailZh": "离线单轮问答，不是实验室机器人闭环控制或真实试剂操作。",
+          "noveltyZh": "按执行需求组织任务，且避免AI辅助生成与标注引入同源评估偏差。",
+          "evidence": "队列元数据与完整原始英文摘要；已读arXiv摘要给出规模、人工审核、单轮设置及定性发现。"
+        },
+        "experimentDetail": {
+          "setupZh": "1,000条专家题、11类任务，对28个通用、科学、化学及具身MLLM评测。",
+          "baselinesZh": "不同模型类别按任务类型对比；摘要未列完整模型名单。",
+          "metricsZh": [
+            "分项问答表现",
+            "行动与轨迹落地能力"
+          ],
+          "mainResultsZh": "模型能理解粗流程，但在操作区域、可行轨迹、细仪器和中等长度步骤排序上仍困难，摘要未给总分。",
+          "limitationsZh": "离线题目表现不能当作真实实验执行成功率；本轮未读评分规则和模型细表。",
+          "evidence": "队列元数据与完整原始英文摘要；已读arXiv摘要给出规模、人工审核、单轮设置及定性发现。"
+        },
+        "evidence": {
+          "usedSources": [
+            "public/research-digest/daily.json: metadata and complete original abstract",
+            "https://arxiv.org/abs/2611.06911v1"
+          ],
+          "affiliationEvidence": "队列 affiliations 与 authorAffiliations 字段均为空；按任务要求填写元数据缺失说明。",
+          "experimentEvidence": "队列元数据与完整原始英文摘要；已读arXiv摘要给出规模、人工审核、单轮设置及定性发现。",
+          "missingFields": [
+            "结构化作者单位",
+            "未核验全文方法与实验细节"
+          ]
+        },
+        "confidence": {
+          "summary": 0.88,
+          "motivation": 0.85,
+          "method": 0.79,
+          "experiments": 0.75,
+          "affiliations": 0
+        }
+      },
+      "pushedAt": "2026-11-06T02:38:46.333Z",
+      "emailSentAt": "2026-11-06T02:38:46.333Z",
+      "firstPushedAt": "2026-11-06T02:38:46.333Z"
+    },
+    {
       "id": "arxiv:2611.00617",
       "source": "arXiv",
       "title": "Words Caught in the Heart: Simulating Person-Specific Expression for Self-Opaque Clients in Psychotherapy",
@@ -15775,6 +16663,131 @@
       "pushedAt": "2026-10-25T08:50:20.815Z",
       "emailSentAt": "2026-10-25T08:50:20.815Z",
       "firstPushedAt": "2026-10-25T08:50:20.815Z"
+    },
+    {
+      "id": "arxiv:2611.06914",
+      "source": "arXiv",
+      "title": "A Framework for Context Enrichment and Selective Robustness in LLM Social Agents",
+      "authors": [
+        "Mattia Greiche",
+        "Reihaneh Rabbany",
+        "Maximilian Puelma Touzel"
+      ],
+      "authorAffiliations": [],
+      "affiliations": [],
+      "abstract": "Researchers use large language models as agents in social simulations, where agents are prompted with observations and background information intended to shape their actions. Yet LLM agents have been shown to substantially change their behavior under meaning-preserving prompt variations, creating a validation problem for social simulation. One plausible hypothesis is that this brittleness reflects a lack of grounding and can be reduced by enriching the context provided to the agents. Whether richer context improves robustness remains unclear, in part because context richness and robustness are rarely defined in ways that support controlled comparisons. We address the first need with controlled context enrichment, a set of prompt substitution rules that systematically enriches distinct types of context: neutral padding, generic social background, descriptive decision grounding, and normative decision grounding. We address the second by introducing selective robustness as a validation criterion: insensitivity to meaning-preserving prompt variation combined with a directional response to decision-relevant changes in the social world. We demonstrate the framework in a Prisoner's Dilemma-like game, showing how it can be used to identify which forms of context enrichment produce more desirable and robust agent behavior. We find that these forms of enrichment produce distinct behavioral patterns that vary between the two models tested.",
+      "venue": "arXiv",
+      "published": "2026-11-04T18:58:23Z",
+      "updated": "2026-11-04T18:58:23Z",
+      "url": "http://arxiv.org/abs/2611.06914v1",
+      "pdfUrl": "https://arxiv.org/pdf/2611.06914v1",
+      "categories": [
+        "cs.MA",
+        "cs.CL",
+        "cs.LG"
+      ],
+      "collectedAt": "2026-11-06T00:57:54.940Z",
+      "firstSeenAt": "2026-11-06T00:57:54.940Z",
+      "lastSeenAt": "2026-11-06T00:57:54.940Z",
+      "collectionType": "daily-latest",
+      "matchedQuery": "(all:agent OR all:agents OR all:agentic OR all:reasoning OR all:post-training OR all:alignment OR all:multimodal OR all:world-model) AND (all:LLM OR all:foundation OR all:language)",
+      "collectionTypes": [
+        "daily-latest"
+      ],
+      "matchedQueries": [
+        "(all:agent OR all:agents OR all:agentic OR all:reasoning OR all:post-training OR all:alignment OR all:multimodal OR all:world-model) AND (all:LLM OR all:foundation OR all:language)"
+      ],
+      "targetThemes": [],
+      "conferenceVenues": [],
+      "conferenceYears": [],
+      "recommendationTrack": "algorithm-trend",
+      "recommendationLabel": "算法趋势观察",
+      "recommendationScore": 37.2,
+      "relevanceReason": "命中 LLM/Agent/多模态/后训练等算法趋势主题",
+      "pdfStatus": "remote",
+      "workflow": {
+        "digestStatus": "ready",
+        "emailStatus": "sent",
+        "digestError": "",
+        "harnessVersion": "paper-reader-v1",
+        "collectStatus": "collected",
+        "pdfStatus": "remote",
+        "harnessCheckedAt": "2026-11-06T02:38:41.285Z",
+        "harnessWarnings": [],
+        "emailSentAt": "2026-11-06T02:38:46.333Z",
+        "lastEmailError": ""
+      },
+      "digest": {
+        "summaryZh": "通过替换规则分别加入中性填充、社会背景、描述性和规范性决策依据，以选择性稳健评估不同信息类型。摘要报告不同增强方式产生不同模式，且两个模型之间不一致，未给普遍最佳增强方式或准确率。",
+        "motivationZh": "LLM社会Agent会受语义不变的提示改写影响，单纯增加背景是否能降低这种变化仍不清楚。丰富度与稳健性缺少可控定义；完全不变也可能让Agent忽视真正影响决策的社会信息。应同时检查对无关措辞不敏感和对重要环境变化有方向响应。可借鉴你的Agent验证中正负扰动设计，与推理架构无直接联系。",
+        "methodZh": "通过替换规则分别加入中性填充、社会背景、描述性和规范性决策依据，以选择性稳健评估不同信息类型。在类似囚徒困境的游戏中比较行为；不涉及参数训练或计算硬件改动。把语义不变扰动与决策相关变化分开测试，避免用单一不变性定义可靠行为。",
+        "experimentsZh": "在两个模型的囚徒困境式社会游戏中运行受控上下文增强。原提示、不同增强类型及意义保持改写相互对照。摘要报告不同增强方式产生不同模式，且两个模型之间不一致，未给普遍最佳增强方式或准确率。仅两个模型和特定游戏，不能据此宣称上下文越长越稳健；未核对模型名称与统计细节。",
+        "affiliationsZh": "未在 DBLP/arXiv 元数据中提供",
+        "tags": [
+          "社会仿真",
+          "上下文丰富度",
+          "选择性稳健"
+        ],
+        "importance": 2,
+        "researchFitZh": "可借鉴你的Agent验证中正负扰动设计，与推理架构无直接联系。",
+        "hardwareRelevance": 1,
+        "algorithmRelevance": 3,
+        "systemRelevance": 2,
+        "readPriority": "skim",
+        "whyReadZh": "可借鉴你的Agent验证中正负扰动设计，与推理架构无直接联系。应同时检查对无关措辞不敏感和对重要环境变化有方向响应。",
+        "limitationsZh": "仅两个模型和特定游戏，不能据此宣称上下文越长越稳健；未核对模型名称与统计细节。",
+        "motivationDetail": {
+          "problemZh": "LLM社会Agent会受语义不变的提示改写影响，单纯增加背景是否能降低这种变化仍不清楚。",
+          "gapZh": "丰富度与稳健性缺少可控定义；完全不变也可能让Agent忽视真正影响决策的社会信息。",
+          "whyImportantZh": "应同时检查对无关措辞不敏感和对重要环境变化有方向响应。",
+          "userRelevanceZh": "可借鉴你的Agent验证中正负扰动设计，与推理架构无直接联系。",
+          "evidence": "队列元数据与完整原始英文摘要；队列完整摘要和已读arXiv摘要提供干预类别、模型数量及定性结果。"
+        },
+        "methodDetail": {
+          "coreIdeaZh": "通过替换规则分别加入中性填充、社会背景、描述性和规范性决策依据，以选择性稳健评估不同信息类型。",
+          "componentsZh": [
+            "可控提示替换",
+            "四类背景增强",
+            "选择性稳健判据"
+          ],
+          "hardwareSystemDetailZh": "在类似囚徒困境的游戏中比较行为；不涉及参数训练或计算硬件改动。",
+          "noveltyZh": "把语义不变扰动与决策相关变化分开测试，避免用单一不变性定义可靠行为。",
+          "evidence": "队列元数据与完整原始英文摘要；队列完整摘要和已读arXiv摘要提供干预类别、模型数量及定性结果。"
+        },
+        "experimentDetail": {
+          "setupZh": "在两个模型的囚徒困境式社会游戏中运行受控上下文增强。",
+          "baselinesZh": "原提示、不同增强类型及意义保持改写相互对照。",
+          "metricsZh": [
+            "改写敏感性",
+            "环境变化方向响应"
+          ],
+          "mainResultsZh": "摘要报告不同增强方式产生不同模式，且两个模型之间不一致，未给普遍最佳增强方式或准确率。",
+          "limitationsZh": "仅两个模型和特定游戏，不能据此宣称上下文越长越稳健；未核对模型名称与统计细节。",
+          "evidence": "队列元数据与完整原始英文摘要；队列完整摘要和已读arXiv摘要提供干预类别、模型数量及定性结果。"
+        },
+        "evidence": {
+          "usedSources": [
+            "public/research-digest/daily.json: metadata and complete original abstract",
+            "https://arxiv.org/abs/2611.06914v1"
+          ],
+          "affiliationEvidence": "队列 affiliations 与 authorAffiliations 字段均为空；按任务要求填写元数据缺失说明。",
+          "experimentEvidence": "队列元数据与完整原始英文摘要；队列完整摘要和已读arXiv摘要提供干预类别、模型数量及定性结果。",
+          "missingFields": [
+            "结构化作者单位",
+            "未核验全文方法与实验细节"
+          ]
+        },
+        "confidence": {
+          "summary": 0.88,
+          "motivation": 0.85,
+          "method": 0.79,
+          "experiments": 0.75,
+          "affiliations": 0
+        }
+      },
+      "pushedAt": "2026-11-06T02:38:46.333Z",
+      "emailSentAt": "2026-11-06T02:38:46.333Z",
+      "firstPushedAt": "2026-11-06T02:38:46.333Z"
     },
     {
       "id": "arxiv:2611.03602",
