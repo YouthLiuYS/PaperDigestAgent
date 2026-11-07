@@ -1,20 +1,20 @@
 {
-  "generatedAt": "2026-11-06T02:38:46.357Z",
+  "generatedAt": "2026-11-07T00:30:51.138Z",
   "timezone": "Asia/Shanghai",
   "siteUrl": "https://YouthLiuYS.github.io/PaperDigestAgent/",
   "stats": {
-    "total": 148,
-    "arxiv": 126,
+    "total": 156,
+    "arxiv": 134,
     "dblp": 22,
-    "dailyLatest": 147,
+    "dailyLatest": 155,
     "dailyBackfill": 0,
     "conferenceArchive": 1,
     "current": 0,
     "newlyAdded": 0,
-    "pushed": 148,
+    "pushed": 156,
     "pdfDownloaded": 0,
-    "hardwarePrimary": 109,
-    "algorithmTrend": 38,
+    "hardwarePrimary": 115,
+    "algorithmTrend": 40,
     "lowRelevance": 1
   },
   "papers": [
@@ -400,6 +400,137 @@
       "pushedAt": "2026-11-06T02:38:46.333Z",
       "emailSentAt": "2026-11-06T02:38:46.333Z",
       "firstPushedAt": "2026-11-06T02:38:46.333Z"
+    },
+    {
+      "id": "arxiv:2611.08376",
+      "source": "arXiv",
+      "title": "Muir: Linear Attention with Sensitivity-Allocated Gating and Matched-Filter Readout",
+      "authors": [
+        "Tushaar Gangavarapu",
+        "Gil Tabak",
+        "Clemens JS Schaefer"
+      ],
+      "authorAffiliations": [],
+      "affiliations": [],
+      "abstract": "Linear attention compresses context into a fixed-size key-value state for linear-time training and constant-memory inference. Gated delta-rule models decay this state and erase its prediction for an incoming key before writing a new value; Gated DeltaNet-2 (GDN-2) generalizes this with channel-wise decay and decoupled, full-rank erase and write gates. However, we show that state updates are far less sensitive to erasure than to writes: key activation and unit normalization concentrate key energy onto a sparse subset of channels, whereas value writes scale all channels, so the erase gate can be parameterized at lower rank. Furthermore, slow-decaying state rows accumulate much larger norms than fast rows, dominating unweighted readout and forcing stronger write-time erasure to suppress interference. Guided by this analysis, we introduce Muir, which fuses all gates into a sensitivity-allocated low-rank projection, re-weights state rows with a matched-filter readout gate, and reinvests the saved parameters in a wider feed-forward network. Because standard chunkwise algorithms become numerically unstable at the large chunk sizes needed to saturate wide matrix units, we design a parallel update for stable, efficient training. Across 166M-1.34B parameters, Muir lowers perplexity by 1.8-2.0% over GDN-2 and 2.5-3.6% over Transformer, raises commonsense accuracy by up to 1.9 points, and improves extractive recall over GDN-2. At 1.34B, Muir outperforms both baselines on multi-hop and multi-needle recall, extrapolates 2,560x from its 4K training length to 10M-token streams without perplexity drift, and maintains near-100% passkey retrieval to 1M tokens with static readout. Muir achieves these gains while matching GDN-2 throughput, reaching its 100B-token validation loss 1.2x faster, and training 2.7x faster than Transformer at 32K.",
+      "venue": "arXiv",
+      "published": "2026-11-05T17:53:49Z",
+      "updated": "2026-11-05T17:53:49Z",
+      "url": "http://arxiv.org/abs/2611.08376v1",
+      "pdfUrl": "https://arxiv.org/pdf/2611.08376v1",
+      "categories": [
+        "cs.LG"
+      ],
+      "collectedAt": "2026-11-07T00:07:37.375Z",
+      "firstSeenAt": "2026-11-07T00:07:37.375Z",
+      "lastSeenAt": "2026-11-07T00:07:37.375Z",
+      "collectionType": "daily-latest",
+      "matchedQuery": "(all:quantization OR all:compression OR all:pruning OR all:sparsity OR all:low-bit) AND (all:LLM OR all:transformer OR all:language) AND (all:hardware OR all:accelerator OR all:inference OR all:serving OR all:processor)",
+      "collectionTypes": [
+        "daily-latest"
+      ],
+      "matchedQueries": [
+        "(all:quantization OR all:compression OR all:pruning OR all:sparsity OR all:low-bit) AND (all:LLM OR all:transformer OR all:language) AND (all:hardware OR all:accelerator OR all:inference OR all:serving OR all:processor)",
+        "(all:prefill OR all:decoding OR all:KV OR all:cache OR all:attention) AND (all:accelerator OR all:kernel OR all:compiler OR all:serving OR all:memory) AND (all:LLM OR all:transformer)",
+        "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)"
+      ],
+      "targetThemes": [],
+      "conferenceVenues": [],
+      "conferenceYears": [],
+      "digest": {
+        "summaryZh": "Muir按门控敏感性分配低秩参数，并以匹配滤波读出抑制慢衰减状态的主导效应，将节省参数投入FFN。稳定分块训练内核面向宽矩阵单元组织计算，适合研究线性注意力的矩阵与向量分工。",
+        "motivationZh": "门控delta线性注意力的擦除与写入敏感性不同，状态行能量失衡还会干扰读出。为擦除与写入都配置全秩投影浪费预算，直接扩大chunk又会引发数值不稳定。门控参数、状态更新与计算布局共同影响长序列质量及硬件利用率。与混合注意力、矩阵向量协同和训练内核密切相关，建议精读稳定分块公式及算子归属。",
+        "methodZh": "融合低秩门控投影，给擦除更低秩并对查询读出加增益，结合边界枢轴分块更新。敏感性分配门控秩；匹配滤波读出；等参数FFN扩展；分块三角系统求解与状态扫描。正文将窄投影拼为批量矩阵乘，状态保留片上VMEM，并把前缀和改写为MXU矩阵乘以减轻VPU负担。把门控敏感性与状态读出分析转为模型预算及矩阵单元友好的稳定内核。",
+        "experimentsZh": "166M至1.34B的四个等参数规模，对比Transformer及GDN-2，统一头维128和循环模型chunk256。Transformer使用TPU Pallas Splash Attention，GDN-2为递归基线，另做读出增益与门控秩消融。摘要报告困惑度较GDN-2下降1.8–2.0%，32K训练较Transformer快2.7倍。正文内核分析称每token每头VPU计算减少24倍。节省门控参数在主实验中重新投入FFN，收益涉及多项共同变化。训练吞吐和极长流测试不能直接推断通用解码硬件加速。",
+        "affiliationsZh": "未在 DBLP/arXiv 元数据中提供",
+        "tags": [
+          "线性注意力",
+          "低秩门控",
+          "矩阵向量协同",
+          "训练内核"
+        ],
+        "importance": 5,
+        "researchFitZh": "与混合注意力、矩阵向量协同和训练内核密切相关，建议精读稳定分块公式及算子归属。",
+        "hardwareRelevance": 4,
+        "algorithmRelevance": 5,
+        "systemRelevance": 4,
+        "readPriority": "deep-read",
+        "whyReadZh": "与混合注意力、矩阵向量协同和训练内核密切相关，建议精读稳定分块公式及算子归属。后续阅读优先核对设置、代价与适用边界。",
+        "limitationsZh": "节省门控参数在主实验中重新投入FFN，收益涉及多项共同变化。训练吞吐和极长流测试不能直接推断通用解码硬件加速。",
+        "motivationDetail": {
+          "problemZh": "门控delta线性注意力的擦除与写入敏感性不同，状态行能量失衡还会干扰读出。",
+          "gapZh": "为擦除与写入都配置全秩投影浪费预算，直接扩大chunk又会引发数值不稳定。",
+          "whyImportantZh": "门控参数、状态更新与计算布局共同影响长序列质量及硬件利用率。",
+          "userRelevanceZh": "与混合注意力、矩阵向量协同和训练内核密切相关，建议精读稳定分块公式及算子归属。",
+          "evidence": "已读取原摘要、4.1门控、4.2分块内核和5.1设置，数值来自摘要及内核成本分析。 来源：https://arxiv.org/html/2611.08376v1"
+        },
+        "methodDetail": {
+          "coreIdeaZh": "融合低秩门控投影，给擦除更低秩并对查询读出加增益，结合边界枢轴分块更新。",
+          "componentsZh": [
+            "敏感性分配门控秩",
+            "匹配滤波读出",
+            "等参数FFN扩展",
+            "分块三角系统求解与状态扫描"
+          ],
+          "hardwareSystemDetailZh": "正文将窄投影拼为批量矩阵乘，状态保留片上VMEM，并把前缀和改写为MXU矩阵乘以减轻VPU负担。",
+          "noveltyZh": "把门控敏感性与状态读出分析转为模型预算及矩阵单元友好的稳定内核。",
+          "evidence": "已读取原摘要、4.1门控、4.2分块内核和5.1设置，数值来自摘要及内核成本分析。 来源：https://arxiv.org/html/2611.08376v1"
+        },
+        "experimentDetail": {
+          "setupZh": "166M至1.34B的四个等参数规模，对比Transformer及GDN-2，统一头维128和循环模型chunk256。",
+          "baselinesZh": "Transformer使用TPU Pallas Splash Attention，GDN-2为递归基线，另做读出增益与门控秩消融。",
+          "metricsZh": [
+            "困惑度",
+            "常识准确率",
+            "关联召回",
+            "训练吞吐",
+            "数值稳定性"
+          ],
+          "mainResultsZh": "摘要报告困惑度较GDN-2下降1.8–2.0%，32K训练较Transformer快2.7倍。正文内核分析称每token每头VPU计算减少24倍。",
+          "limitationsZh": "节省门控参数在主实验中重新投入FFN，收益涉及多项共同变化。训练吞吐和极长流测试不能直接推断通用解码硬件加速。",
+          "evidence": "已读取原摘要、4.1门控、4.2分块内核和5.1设置，数值来自摘要及内核成本分析。 来源：https://arxiv.org/html/2611.08376v1"
+        },
+        "evidence": {
+          "usedSources": [
+            "public/research-digest/daily.json metadata and full supplied abstract",
+            "https://arxiv.org/html/2611.08376v1"
+          ],
+          "affiliationEvidence": "队列DBLP/arXiv元数据未提供单位，按任务要求保留未知。",
+          "experimentEvidence": "已读取原摘要、4.1门控、4.2分块内核和5.1设置，数值来自摘要及内核成本分析。 来源：https://arxiv.org/html/2611.08376v1",
+          "missingFields": [
+            "元数据作者单位",
+            "独立复现",
+            "通用硬件解码测量"
+          ]
+        },
+        "confidence": {
+          "summary": 0.88,
+          "motivation": 0.86,
+          "method": 0.87,
+          "experiments": 0.84,
+          "affiliations": 0
+        }
+      },
+      "recommendationTrack": "hardware-primary",
+      "recommendationLabel": "硬件体系结构主线",
+      "recommendationScore": 203,
+      "relevanceReason": "命中 AI 处理器、体系结构、量化、训推系统或内存/缓存优化主题",
+      "pdfStatus": "remote",
+      "workflow": {
+        "digestStatus": "ready",
+        "emailStatus": "sent",
+        "digestError": "",
+        "harnessVersion": "paper-reader-v1",
+        "collectStatus": "collected",
+        "pdfStatus": "remote",
+        "harnessCheckedAt": "2026-11-07T00:30:47.185Z",
+        "harnessWarnings": [],
+        "emailSentAt": "2026-11-07T00:30:51.115Z",
+        "lastEmailError": ""
+      },
+      "pushedAt": "2026-11-07T00:30:51.115Z",
+      "emailSentAt": "2026-11-07T00:30:51.115Z",
+      "firstPushedAt": "2026-11-07T00:30:51.115Z"
     },
     {
       "id": "arxiv:2610.37033",
@@ -1456,6 +1587,149 @@
       "firstPushedAt": "2026-11-05T02:33:26.283Z"
     },
     {
+      "id": "arxiv:2611.07593",
+      "source": "arXiv",
+      "title": "TACT-KV: Tri-Axis Cosine Transform for Compressing Volumetric KV Caches in Medical VLMs",
+      "authors": [
+        "Chongyu Qu",
+        "Ritchie Zhao",
+        "Yufan He",
+        "Dong Yang",
+        "Zhengyi Lu",
+        "Junchao Zhu",
+        "Tianyuan Yao",
+        "Juming Xiong",
+        "Junlin Guo",
+        "Yanfan Zhu",
+        "Yuechen Yang",
+        "Daguang Xu",
+        "Bennett Allan Landman",
+        "Yucheng Tang",
+        "Yuankai Huo"
+      ],
+      "authorAffiliations": [],
+      "affiliations": [],
+      "abstract": "Vision-language models (VLMs) applied to 3D medical scans face a structural memory wall. A single CT or MRI volume produces tens of thousands of vision tokens, and the resulting key-value (KV) cache scales linearly with both batch and context. Existing KV compression methods operate on the cache's feature or token statistics, or apply 1D and 2D transforms, leaving the three-axis spatial structure in the cache unexploited. We propose TACT-KV (Tri-Axis Cosine Transform), a calibration-free KV compression method that exploits strong spatial correlations in visual KV states along all three anatomical axes of 3D scans. This correlation concentrates the KV cache energy under a frequency-domain transform. TACT-KV applies a separable 3D discrete cosine transform to the KV cache, allocates a per-layer bit budget across frequency bins via reverse water-filling (more bits to high-energy components), and quantizes each bin with a fixed scalar codebook. We derive a close-form relation: the distortion reduction from adaptive bit allocation is dominated by the spectral concentration of the transformed cache. Across six medical VLMs and two 3D CT benchmarks, TACT-KV achieves the lowest 1-bit prediction-flip rate on eleven of twelve model and dataset pairs in our main comparison. The same advantage reproduces on four general-purpose VLMs evaluated on video tasks, indicating that the benefit of exploiting three-axis structure generalizes beyond medical imaging. At equal high-bandwidth memory (HBM), TACT-KV scales the decoding batch size on a single GPU by up to $8\\times$.",
+      "venue": "arXiv",
+      "published": "2026-11-05T07:43:29Z",
+      "updated": "2026-11-05T07:43:29Z",
+      "url": "http://arxiv.org/abs/2611.07593v1",
+      "pdfUrl": "https://arxiv.org/pdf/2611.07593v1",
+      "categories": [
+        "cs.CV",
+        "cs.LG"
+      ],
+      "collectedAt": "2026-11-07T00:07:41.465Z",
+      "firstSeenAt": "2026-11-07T00:07:41.465Z",
+      "lastSeenAt": "2026-11-07T00:07:41.465Z",
+      "collectionType": "daily-latest",
+      "matchedQuery": "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)",
+      "collectionTypes": [
+        "daily-latest"
+      ],
+      "matchedQueries": [
+        "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)"
+      ],
+      "targetThemes": [],
+      "conferenceVenues": [],
+      "conferenceYears": [],
+      "recommendationTrack": "hardware-primary",
+      "recommendationLabel": "硬件体系结构主线",
+      "recommendationScore": 172,
+      "relevanceReason": "命中 AI 处理器、体系结构、量化、训推系统或内存/缓存优化主题",
+      "pdfStatus": "remote",
+      "workflow": {
+        "digestStatus": "ready",
+        "emailStatus": "sent",
+        "digestError": "",
+        "harnessVersion": "paper-reader-v1",
+        "collectStatus": "collected",
+        "pdfStatus": "remote",
+        "harnessCheckedAt": "2026-11-07T00:30:47.185Z",
+        "harnessWarnings": [],
+        "emailSentAt": "2026-11-07T00:30:51.115Z",
+        "lastEmailError": ""
+      },
+      "digest": {
+        "summaryZh": "TACT-KV利用三维视觉KV的空间相关性，以三轴DCT和频域位预算分配压缩缓存，并将逆变换融合到注意力tile。容量节省支持更大批量，实际吞吐增幅取决于变换开销和模型显存余量。",
+        "motivationZh": "三维CT和MRI产生大量视觉token，KV随体积和批量增长造成显存压力。按单轴或特征统计压缩没有充分利用三轴空间关联。缓存压缩能扩大同显存并发，但需要限制解码重建的中间占用。直接关联KV量化和FlashAttention融合，可借鉴频域变换及低比特缓存执行设计。",
+        "methodZh": "将视觉KV恢复三维布局，逐轴DCT后用反向注水分配频率位宽，再使用固定标量码本。三维KV布局；可分离三轴DCT；逐层频率位预算；固定码本；tile融合逆DCT与反量化。在单96GiB RTX PRO6000上评测，解码时把反量化和逆变换并入FlashAttention，避免物化完整重建缓存。把三轴频谱集中性转化为按频率分配精度的KV压缩，并提供融合解码路径。",
+        "experimentsZh": "六个医学VLM、两个CT基准，另测四个通用视频VLM。部署评测为60轴向切片的Hulu-Med系列。质量比较包含KIVI、TurboQuant等，部署表以BF16缓存为参照，同时报告最大批量和匹配批量时间。正文最大批量扩展4–8倍，聚合吞吐为BF16的1.17–2.02倍。匹配批量下步延迟加速1.10–1.45倍，口径需分别读取。定理依赖高码率高斯及连续松弛假设，极低位宽下有有限率偏差。额外解码FLOPs和单GPU类别限制跨硬件外推。",
+        "affiliationsZh": "未在 DBLP/arXiv 元数据中提供",
+        "tags": [
+          "KV缓存",
+          "频域量化",
+          "三维VLM",
+          "FlashAttention"
+        ],
+        "importance": 4,
+        "researchFitZh": "直接关联KV量化和FlashAttention融合，可借鉴频域变换及低比特缓存执行设计。",
+        "hardwareRelevance": 4,
+        "algorithmRelevance": 5,
+        "systemRelevance": 5,
+        "readPriority": "deep-read",
+        "whyReadZh": "直接关联KV量化和FlashAttention融合，可借鉴频域变换及低比特缓存执行设计。后续阅读优先核对设置、代价与适用边界。",
+        "limitationsZh": "定理依赖高码率高斯及连续松弛假设，极低位宽下有有限率偏差。额外解码FLOPs和单GPU类别限制跨硬件外推。",
+        "motivationDetail": {
+          "problemZh": "三维CT和MRI产生大量视觉token，KV随体积和批量增长造成显存压力。",
+          "gapZh": "按单轴或特征统计压缩没有充分利用三轴空间关联。",
+          "whyImportantZh": "缓存压缩能扩大同显存并发，但需要限制解码重建的中间占用。",
+          "userRelevanceZh": "直接关联KV量化和FlashAttention融合，可借鉴频域变换及低比特缓存执行设计。",
+          "evidence": "读摘要、2.2–2.3方法及3.6部署表6/7，明确容量、吞吐与匹配批量指标。 来源：https://arxiv.org/html/2611.07593v1"
+        },
+        "methodDetail": {
+          "coreIdeaZh": "将视觉KV恢复三维布局，逐轴DCT后用反向注水分配频率位宽，再使用固定标量码本。",
+          "componentsZh": [
+            "三维KV布局",
+            "可分离三轴DCT",
+            "逐层频率位预算",
+            "固定码本",
+            "tile融合逆DCT与反量化"
+          ],
+          "hardwareSystemDetailZh": "在单96GiB RTX PRO6000上评测，解码时把反量化和逆变换并入FlashAttention，避免物化完整重建缓存。",
+          "noveltyZh": "把三轴频谱集中性转化为按频率分配精度的KV压缩，并提供融合解码路径。",
+          "evidence": "读摘要、2.2–2.3方法及3.6部署表6/7，明确容量、吞吐与匹配批量指标。 来源：https://arxiv.org/html/2611.07593v1"
+        },
+        "experimentDetail": {
+          "setupZh": "六个医学VLM、两个CT基准，另测四个通用视频VLM。部署评测为60轴向切片的Hulu-Med系列。",
+          "baselinesZh": "质量比较包含KIVI、TurboQuant等，部署表以BF16缓存为参照，同时报告最大批量和匹配批量时间。",
+          "metricsZh": [
+            "预测翻转率",
+            "缓存占用",
+            "最大解码批量",
+            "吞吐",
+            "解码步延迟"
+          ],
+          "mainResultsZh": "正文最大批量扩展4–8倍，聚合吞吐为BF16的1.17–2.02倍。匹配批量下步延迟加速1.10–1.45倍，口径需分别读取。",
+          "limitationsZh": "定理依赖高码率高斯及连续松弛假设，极低位宽下有有限率偏差。额外解码FLOPs和单GPU类别限制跨硬件外推。",
+          "evidence": "读摘要、2.2–2.3方法及3.6部署表6/7，明确容量、吞吐与匹配批量指标。 来源：https://arxiv.org/html/2611.07593v1"
+        },
+        "evidence": {
+          "usedSources": [
+            "public/research-digest/daily.json metadata and full supplied abstract",
+            "https://arxiv.org/html/2611.07593v1"
+          ],
+          "affiliationEvidence": "队列DBLP/arXiv元数据未提供单位，按任务要求保留未知。",
+          "experimentEvidence": "读摘要、2.2–2.3方法及3.6部署表6/7，明确容量、吞吐与匹配批量指标。 来源：https://arxiv.org/html/2611.07593v1",
+          "missingFields": [
+            "元数据作者单位",
+            "跨GPU部署评测",
+            "独立复现"
+          ]
+        },
+        "confidence": {
+          "summary": 0.88,
+          "motivation": 0.86,
+          "method": 0.87,
+          "experiments": 0.84,
+          "affiliations": 0
+        }
+      },
+      "pushedAt": "2026-11-07T00:30:51.115Z",
+      "emailSentAt": "2026-11-07T00:30:51.115Z",
+      "firstPushedAt": "2026-11-07T00:30:51.115Z"
+    },
+    {
       "id": "arxiv:2610.41822",
       "source": "arXiv",
       "title": "Trainable Vector Quantization for Large Language Models",
@@ -1584,6 +1858,136 @@
       "pushedAt": "2026-11-03T02:36:27.905Z",
       "emailSentAt": "2026-11-03T02:36:27.905Z",
       "firstPushedAt": "2026-11-03T02:36:27.905Z"
+    },
+    {
+      "id": "arxiv:2611.08399",
+      "source": "arXiv",
+      "title": "Scaling Up Analog CIM: A Simulation Framework for Topology-Aware Mapping",
+      "authors": [
+        "Yuxin Ren",
+        "Danella Zhao",
+        "Huanrui Yang"
+      ],
+      "authorAffiliations": [],
+      "affiliations": [],
+      "abstract": "Analog compute-in-memory (CIM) enables energy-efficient AI inference by performing in-situ matrix multiplication. The growing demand for deploying larger models motivates chiplet integration to expand CIM capacity. However, simulation abstractions based on local operator costs and aggregate communication metrics obscure the impact of weight-mapping topology when CIM system scales up. We develop a phase analysis that quantifies how strongly mapping topology affects system performance across hardware configurations and how mapping optimization translates into latency gains. To evaluate and exploit this design space, we present Isobar, a simulation platform integrating CIM decompositions, heterogeneous execution, and resource modeling. Validated against silicon measurements and cycle-accurate simulation, Isobar provides reliable cost estimates that enable effective mapping search across model and hardware configurations. For Gemma-7B prefill, Isobar-guided mapping reduces communication time by 23.3% and end-to-end latency by 18.6% relative to the strongest baseline. Isobar's system-level modeling show that analog CIM retains energy-efficiency potential relative to GPU when scaled to thousands of dies, and identify topology-aware mapping as a key design dimension for efficient execution.",
+      "venue": "arXiv",
+      "published": "2026-11-05T18:11:00Z",
+      "updated": "2026-11-05T18:11:00Z",
+      "url": "http://arxiv.org/abs/2611.08399v1",
+      "pdfUrl": "https://arxiv.org/pdf/2611.08399v1",
+      "categories": [
+        "cs.AR"
+      ],
+      "collectedAt": "2026-11-07T00:07:41.464Z",
+      "firstSeenAt": "2026-11-07T00:07:41.464Z",
+      "lastSeenAt": "2026-11-07T00:07:41.464Z",
+      "collectionType": "daily-latest",
+      "matchedQuery": "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)",
+      "collectionTypes": [
+        "daily-latest"
+      ],
+      "matchedQueries": [
+        "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)"
+      ],
+      "targetThemes": [],
+      "conferenceVenues": [],
+      "conferenceYears": [],
+      "recommendationTrack": "hardware-primary",
+      "recommendationLabel": "硬件体系结构主线",
+      "recommendationScore": 169,
+      "relevanceReason": "命中 AI 处理器、体系结构、量化、训推系统或内存/缓存优化主题",
+      "pdfStatus": "remote",
+      "workflow": {
+        "digestStatus": "ready",
+        "emailStatus": "sent",
+        "digestError": "",
+        "harnessVersion": "paper-reader-v1",
+        "collectStatus": "collected",
+        "pdfStatus": "remote",
+        "harnessCheckedAt": "2026-11-07T00:30:47.185Z",
+        "harnessWarnings": [],
+        "emailSentAt": "2026-11-07T00:30:51.115Z",
+        "lastEmailError": ""
+      },
+      "digest": {
+        "summaryZh": "Isobar为扩展模拟CIM建立拓扑感知评估，将共享链路争用、异构交接和KV访存纳入映射成本，再搜索物理布局。收益来自模拟平台的映射优化，适合借鉴多芯粒评测而非作为已流片加速器成果。",
+        "motivationZh": "模拟CIM扩到大量芯粒后，相同通信总量可因物理布局不同产生不同拥塞。局部算子成本与总word-hops指标不能反映共享链路瓶颈及数字单元交接。忽略拓扑会选错映射，削弱对延迟和能耗扩展性的判断。与异构加速器互连及映射研究相关，CIM为次要背景，可重点参考资源争用和验证方法。",
+        "methodZh": "沿执行图累计端口、链路、数字计算与KV服务成本，并以分层搜索优化算子分组及物理die布局。CIM分解与异构执行；路由资源负载模型；DP与模拟退火搜索；增量成本更新；硅测与BookSim对照。参考设置含2D mesh、XY路由、模拟CIM和独立数字注意力单元，建模materialized/tiled attention及工作区溢出。将物理资源服务时间和串并行执行纳入成本，区分相同传输总量下的争用。",
+        "experimentsZh": "OPT-6.7B、Gemma-7B和OPT-13B，batch1、512-token prefill，Gemma参考1232个CIM die。最强基线来自可行规则和500个随机布局的最低延迟候选，并与word-hops、max-hops选图对照。摘要Gemma-7B prefill通信时间降低23.3%，端到端骨干延迟降低18.6%。Simba芯粒距离延迟比验证相对误差5.1%。大规模CIM能效是模型估计，参考硬件带宽与阵列参数影响收益。验证部分来源于其他硅平台，未独立实现千die系统。",
+        "affiliationsZh": "未在 DBLP/arXiv 元数据中提供",
+        "tags": [
+          "模拟CIM",
+          "芯粒互连",
+          "拓扑映射",
+          "仿真"
+        ],
+        "importance": 4,
+        "researchFitZh": "与异构加速器互连及映射研究相关，CIM为次要背景，可重点参考资源争用和验证方法。",
+        "hardwareRelevance": 4,
+        "algorithmRelevance": 2,
+        "systemRelevance": 4,
+        "readPriority": "deep-read",
+        "whyReadZh": "与异构加速器互连及映射研究相关，CIM为次要背景，可重点参考资源争用和验证方法。后续阅读优先核对设置、代价与适用边界。",
+        "limitationsZh": "大规模CIM能效是模型估计，参考硬件带宽与阵列参数影响收益。验证部分来源于其他硅平台，未独立实现千die系统。",
+        "motivationDetail": {
+          "problemZh": "模拟CIM扩到大量芯粒后，相同通信总量可因物理布局不同产生不同拥塞。",
+          "gapZh": "局部算子成本与总word-hops指标不能反映共享链路瓶颈及数字单元交接。",
+          "whyImportantZh": "忽略拓扑会选错映射，削弱对延迟和能耗扩展性的判断。",
+          "userRelevanceZh": "与异构加速器互连及映射研究相关，CIM为次要背景，可重点参考资源争用和验证方法。",
+          "evidence": "读摘要、III平台与验证、IV-A设置和映射选择比较，数字对应论文参考配置。 来源：https://arxiv.org/html/2611.08399v1"
+        },
+        "methodDetail": {
+          "coreIdeaZh": "沿执行图累计端口、链路、数字计算与KV服务成本，并以分层搜索优化算子分组及物理die布局。",
+          "componentsZh": [
+            "CIM分解与异构执行",
+            "路由资源负载模型",
+            "DP与模拟退火搜索",
+            "增量成本更新",
+            "硅测与BookSim对照"
+          ],
+          "hardwareSystemDetailZh": "参考设置含2D mesh、XY路由、模拟CIM和独立数字注意力单元，建模materialized/tiled attention及工作区溢出。",
+          "noveltyZh": "将物理资源服务时间和串并行执行纳入成本，区分相同传输总量下的争用。",
+          "evidence": "读摘要、III平台与验证、IV-A设置和映射选择比较，数字对应论文参考配置。 来源：https://arxiv.org/html/2611.08399v1"
+        },
+        "experimentDetail": {
+          "setupZh": "OPT-6.7B、Gemma-7B和OPT-13B，batch1、512-token prefill，Gemma参考1232个CIM die。",
+          "baselinesZh": "最强基线来自可行规则和500个随机布局的最低延迟候选，并与word-hops、max-hops选图对照。",
+          "metricsZh": [
+            "通信时间",
+            "骨干延迟",
+            "动态能量",
+            "映射选择质量",
+            "预测误差"
+          ],
+          "mainResultsZh": "摘要Gemma-7B prefill通信时间降低23.3%，端到端骨干延迟降低18.6%。Simba芯粒距离延迟比验证相对误差5.1%。",
+          "limitationsZh": "大规模CIM能效是模型估计，参考硬件带宽与阵列参数影响收益。验证部分来源于其他硅平台，未独立实现千die系统。",
+          "evidence": "读摘要、III平台与验证、IV-A设置和映射选择比较，数字对应论文参考配置。 来源：https://arxiv.org/html/2611.08399v1"
+        },
+        "evidence": {
+          "usedSources": [
+            "public/research-digest/daily.json metadata and full supplied abstract",
+            "https://arxiv.org/html/2611.08399v1"
+          ],
+          "affiliationEvidence": "队列DBLP/arXiv元数据未提供单位，按任务要求保留未知。",
+          "experimentEvidence": "读摘要、III平台与验证、IV-A设置和映射选择比较，数字对应论文参考配置。 来源：https://arxiv.org/html/2611.08399v1",
+          "missingFields": [
+            "元数据作者单位",
+            "完整千die系统实测",
+            "独立复现"
+          ]
+        },
+        "confidence": {
+          "summary": 0.88,
+          "motivation": 0.86,
+          "method": 0.87,
+          "experiments": 0.84,
+          "affiliations": 0
+        }
+      },
+      "pushedAt": "2026-11-07T00:30:51.115Z",
+      "emailSentAt": "2026-11-07T00:30:51.115Z",
+      "firstPushedAt": "2026-11-07T00:30:51.115Z"
     },
     {
       "id": "arxiv:2610.37454",
@@ -2607,6 +3011,164 @@
       "firstPushedAt": "2026-10-30T00:36:26.783Z"
     },
     {
+      "id": "arxiv:2611.07853",
+      "source": "arXiv",
+      "title": "CANMentor: A Large-Small Model Collaboration Framework for CAN Bus Intrusion Detection",
+      "authors": [
+        "Zhiquan Liu",
+        "Haolin Gao",
+        "Bo Wu",
+        "Jingjing Guo",
+        "Heng Sun",
+        "Jianfeng Ma"
+      ],
+      "authorAffiliations": [
+        {
+          "name": "Zhiquan Liu",
+          "affiliation": "the College of Cyber Security, Jinan University"
+        },
+        {
+          "name": "Haolin Gao",
+          "affiliation": "the College of Cyber Security, Jinan University"
+        },
+        {
+          "name": "Bo Wu",
+          "affiliation": "the College of Cyber Security, Jinan University"
+        },
+        {
+          "name": "Jingjing Guo",
+          "affiliation": "the School of Cyber Engineering, Xidian University"
+        },
+        {
+          "name": "Heng Sun",
+          "affiliation": "the College of Information Science and Technology, Jinan University"
+        },
+        {
+          "name": "Jianfeng Ma",
+          "affiliation": "the School of Cyber Engineering, Xidian University"
+        }
+      ],
+      "affiliations": [
+        "the College of Cyber Security, Jinan University",
+        "the School of Cyber Engineering, Xidian University",
+        "the College of Information Science and Technology, Jinan University"
+      ],
+      "abstract": "The Controller Area Network (CAN) bus lacks built-in security mechanisms, making real-time intrusion detection necessary. However, resource and latency constraints limit vehicle-side intrusion detection systems (IDSs) to lightweight models, whose detection performance and generalization can degrade under non-independent and identically distributed (non-IID) data. Meanwhile, uploading original CAN messages to the cloud for more powerful model inference risks exposing sensitive vehicle information. We propose CANMentor, a large-small model collaboration framework in which a cloud-side large language model (LLM) teacher supervises vehicle-side lightweight IDS models for CAN bus intrusion detection. Each vehicle first performs local inference, and a privacy-aware generator then produces proxies from the original CAN messages for cloud-side teacher inference to protect data privacy. The vehicle uses the teacher prediction only when the response arrives within a prescribed latency bound and otherwise retains the local prediction; all returned teacher logits are converted into soft targets for periodic knowledge distillation. On non-IID partitions of the ROAD dataset and the HCRL Car-Hacking dataset, knowledge distillation yields maximum relative Macro F1 improvements of 25.01% and 20.79%, respectively. Teacher predictions also improve detection accuracy for CAN messages near the local decision boundary by 38.71-42.00 percentage points.",
+      "venue": "arXiv",
+      "published": "2026-11-05T11:31:03Z",
+      "updated": "2026-11-05T11:31:03Z",
+      "url": "http://arxiv.org/abs/2611.07853v1",
+      "pdfUrl": "https://arxiv.org/pdf/2611.07853v1",
+      "categories": [
+        "cs.CR"
+      ],
+      "collectedAt": "2026-11-07T00:07:41.464Z",
+      "firstSeenAt": "2026-11-07T00:07:41.464Z",
+      "lastSeenAt": "2026-11-07T00:07:41.464Z",
+      "collectionType": "daily-latest",
+      "matchedQuery": "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)",
+      "collectionTypes": [
+        "daily-latest"
+      ],
+      "matchedQueries": [
+        "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)"
+      ],
+      "targetThemes": [],
+      "conferenceVenues": [],
+      "conferenceYears": [],
+      "recommendationTrack": "hardware-primary",
+      "recommendationLabel": "硬件体系结构主线",
+      "recommendationScore": 158,
+      "relevanceReason": "命中 AI 处理器、体系结构、量化、训推系统或内存/缓存优化主题",
+      "pdfStatus": "remote",
+      "workflow": {
+        "digestStatus": "ready",
+        "emailStatus": "sent",
+        "digestError": "",
+        "harnessVersion": "paper-reader-v1",
+        "collectStatus": "collected",
+        "pdfStatus": "remote",
+        "harnessCheckedAt": "2026-11-07T00:30:47.185Z",
+        "harnessWarnings": [],
+        "emailSentAt": "2026-11-07T00:30:51.115Z",
+        "lastEmailError": ""
+      },
+      "digest": {
+        "summaryZh": "CANMentor让车端轻量IDS先独立预测，再以隐私代理请求云端LLM教师，在时限内采用教师结果并周期蒸馏。该工作研究端云协作检测，性能证据主要是检测质量而非专用硬件效率。",
+        "motivationZh": "车端资源和响应时限约束轻量检测器，非IID数据使泛化进一步退化。直接上传CAN报文存在隐私问题，等待云推理也可能超过实时期限。需兼顾本地可用性、检测质量及教师反馈时效。与端云推理调度和网络安全应用相关，计算核心架构贡献较弱，建议略读协作协议。",
+        "methodZh": "本地模型先预测，以隐私生成器产生代理输入给教师，及时结果辅助检测并将返回logit用于蒸馏。车端轻量IDS；隐私代理生成；时限门控教师预测；周期知识蒸馏。摘要明确端云分工与延迟门限，未披露车载芯片型号、云端GPU或硬件功耗。把实时结果采纳与后续蒸馏分开，迟到反馈仍可用于长期学习。",
+        "experimentsZh": "在ROAD和HCRL Car-Hacking的非IID分区评估，并分析本地决策边界附近报文。摘要以本地检测及蒸馏前后质量为参照，未列完整IDS基线、模型规模或联网延迟设置。摘要报告两个数据集最大相对Macro F1增幅25.01%和20.79%，边界报文提升38.71–42.00个百分点。最大相对改善和百分点变化需区分，摘要未给完整平均值或隐私证明。未读取完整实验配置，不能推断实际车载部署效果。",
+        "affiliationsZh": "暨南大学网络空间安全学院、信息科学技术学院，西安电子科技大学网络与信息安全学院",
+        "tags": [
+          "CAN安全",
+          "端云协作",
+          "知识蒸馏"
+        ],
+        "importance": 3,
+        "researchFitZh": "与端云推理调度和网络安全应用相关，计算核心架构贡献较弱，建议略读协作协议。",
+        "hardwareRelevance": 2,
+        "algorithmRelevance": 4,
+        "systemRelevance": 3,
+        "readPriority": "skim",
+        "whyReadZh": "与端云推理调度和网络安全应用相关，计算核心架构贡献较弱，建议略读协作协议。后续阅读优先核对设置、代价与适用边界。",
+        "limitationsZh": "最大相对改善和百分点变化需区分，摘要未给完整平均值或隐私证明。未读取完整实验配置，不能推断实际车载部署效果。",
+        "motivationDetail": {
+          "problemZh": "车端资源和响应时限约束轻量检测器，非IID数据使泛化进一步退化。",
+          "gapZh": "直接上传CAN报文存在隐私问题，等待云推理也可能超过实时期限。",
+          "whyImportantZh": "需兼顾本地可用性、检测质量及教师反馈时效。",
+          "userRelevanceZh": "与端云推理调度和网络安全应用相关，计算核心架构贡献较弱，建议略读协作协议。",
+          "evidence": "读元数据完整摘要及arXiv摘要，单位由元数据与公开作者标注对应。 来源：https://arxiv.org/abs/2611.07853v1"
+        },
+        "methodDetail": {
+          "coreIdeaZh": "本地模型先预测，以隐私生成器产生代理输入给教师，及时结果辅助检测并将返回logit用于蒸馏。",
+          "componentsZh": [
+            "车端轻量IDS",
+            "隐私代理生成",
+            "时限门控教师预测",
+            "周期知识蒸馏"
+          ],
+          "hardwareSystemDetailZh": "摘要明确端云分工与延迟门限，未披露车载芯片型号、云端GPU或硬件功耗。",
+          "noveltyZh": "把实时结果采纳与后续蒸馏分开，迟到反馈仍可用于长期学习。",
+          "evidence": "读元数据完整摘要及arXiv摘要，单位由元数据与公开作者标注对应。 来源：https://arxiv.org/abs/2611.07853v1"
+        },
+        "experimentDetail": {
+          "setupZh": "在ROAD和HCRL Car-Hacking的非IID分区评估，并分析本地决策边界附近报文。",
+          "baselinesZh": "摘要以本地检测及蒸馏前后质量为参照，未列完整IDS基线、模型规模或联网延迟设置。",
+          "metricsZh": [
+            "Macro F1",
+            "边界样例检测准确率",
+            "延迟约束"
+          ],
+          "mainResultsZh": "摘要报告两个数据集最大相对Macro F1增幅25.01%和20.79%，边界报文提升38.71–42.00个百分点。",
+          "limitationsZh": "最大相对改善和百分点变化需区分，摘要未给完整平均值或隐私证明。未读取完整实验配置，不能推断实际车载部署效果。",
+          "evidence": "读元数据完整摘要及arXiv摘要，单位由元数据与公开作者标注对应。 来源：https://arxiv.org/abs/2611.07853v1"
+        },
+        "evidence": {
+          "usedSources": [
+            "public/research-digest/daily.json metadata and full supplied abstract",
+            "https://arxiv.org/abs/2611.07853v1"
+          ],
+          "affiliationEvidence": "daily.json affiliations和arXiv作者单位标注列出暨南大学与西安电子科技大学相关学院。",
+          "experimentEvidence": "读元数据完整摘要及arXiv摘要，单位由元数据与公开作者标注对应。 来源：https://arxiv.org/abs/2611.07853v1",
+          "missingFields": [
+            "完整硬件平台",
+            "全量基线与平均指标",
+            "隐私形式化保证"
+          ]
+        },
+        "confidence": {
+          "summary": 0.88,
+          "motivation": 0.86,
+          "method": 0.8,
+          "experiments": 0.73,
+          "affiliations": 0.9
+        }
+      },
+      "pushedAt": "2026-11-07T00:30:51.115Z",
+      "emailSentAt": "2026-11-07T00:30:51.115Z",
+      "firstPushedAt": "2026-11-07T00:30:51.115Z"
+    },
+    {
       "id": "arxiv:2604.27844",
       "source": "arXiv",
       "title": "ZipCCL: Efficient Lossless Data Compression of Communication Collectives for Accelerating LLM Training",
@@ -2927,6 +3489,134 @@
       "pushedAt": "2026-11-06T02:38:46.333Z",
       "emailSentAt": "2026-11-06T02:38:46.333Z",
       "firstPushedAt": "2026-11-06T02:38:46.333Z"
+    },
+    {
+      "id": "arxiv:2611.08341",
+      "source": "arXiv",
+      "title": "Enhancing Local and Global Structure in Compressed AI Agent Memory",
+      "authors": [
+        "Henry Han"
+      ],
+      "authorAffiliations": [],
+      "affiliations": [],
+      "abstract": "AI agents store text as embedding vectors and compress them at scale. A compression is accepted when each item's nearest neighbors survive, but agents also consolidate, delete, and compare memories, tasks that depend on which items lie far apart. We evaluate both ends with two label-free fidelities from our prior work: the local fidelity $L$ at 10 neighbors and the global fidelity $G$ at 30 to 50 percent of the memory. At 96 bytes per passage, rescored binary codes reach an $L$ of 0.97 yet move 10.1 percent of passages to another theme; PCA with 8-bit codes, at an $L$ of 0.77, moves 1.7 percent. Rescoring leaves the stored codes, and thus $G$, unchanged. We prove that across the $G$ band, $1-ν_k$ is at most 2 to 2.18 times the square root of the near-far rank-violation rate, and that this rate follows the distance noise of the compression (correlation 0.979). Our locality-aware quantization (LAQ) turns the bound into a hinge objective on the codebooks of an OPQ index, keeping its bytes, rotation, and search. To our knowledge, LAQ is the first quantizer whose objective comes from a proven bound on the far end. Reconstruction alone raises $G$ in 0 of 52 held-out runs; the far hinge raises it in all 52. LAQ raises $G$ in all 52 ($p=8.5\\times 10^{-4}$ over 13 memory-encoder groups), including the external FinDER memory, has the highest $G$ of seven equal-size quantizers in all 12 Multi-Doc-2025 runs, scales to a million passages, and keeps evidence recall.",
+      "venue": "arXiv",
+      "published": "2026-11-05T17:27:08Z",
+      "updated": "2026-11-05T17:27:08Z",
+      "url": "http://arxiv.org/abs/2611.08341v1",
+      "pdfUrl": "https://arxiv.org/pdf/2611.08341v1",
+      "categories": [
+        "cs.AI"
+      ],
+      "collectedAt": "2026-11-07T00:07:41.464Z",
+      "firstSeenAt": "2026-11-07T00:07:41.464Z",
+      "lastSeenAt": "2026-11-07T00:07:41.464Z",
+      "collectionType": "daily-latest",
+      "matchedQuery": "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)",
+      "collectionTypes": [
+        "daily-latest"
+      ],
+      "matchedQueries": [
+        "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)"
+      ],
+      "targetThemes": [],
+      "conferenceVenues": [],
+      "conferenceYears": [],
+      "recommendationTrack": "hardware-primary",
+      "recommendationLabel": "硬件体系结构主线",
+      "recommendationScore": 155.5,
+      "relevanceReason": "命中 AI 处理器、体系结构、量化、训推系统或内存/缓存优化主题",
+      "pdfStatus": "remote",
+      "workflow": {
+        "digestStatus": "ready",
+        "emailStatus": "sent",
+        "digestError": "",
+        "harnessVersion": "paper-reader-v1",
+        "collectStatus": "collected",
+        "pdfStatus": "remote",
+        "harnessCheckedAt": "2026-11-07T00:30:47.185Z",
+        "harnessWarnings": [],
+        "emailSentAt": "2026-11-07T00:30:51.115Z",
+        "lastEmailError": ""
+      },
+      "digest": {
+        "summaryZh": "LAQ在OPQ码本上增加远端排序违例的hinge目标，同时评估压缩记忆的近邻与全局结构。它保持索引字节和查询路径，通过离线码本训练改善全局保真，避免只看近邻召回而忽视主题漂移。",
+        "motivationZh": "Agent压缩向量后近邻可能保留，但合并、删除及跨主题比较依赖的全局结构会受损。仅优化重建或重打分难修复已存码的远端排序失真。全局结构关系到记忆组织和维护，需与局部检索共同评估。与Agent向量存储及量化算法相关，可略读同字节保真对比，硬件计算核心关联间接。",
+        "methodZh": "从远端排序违例界推导hinge损失，固定OPQ旋转和编码大小，训练码本并监测重建约束。局部L与全局G指标；远近排序违例界；码本hinge训练；直通估计与监控集；百万条目扩展。查询仍使用OPQ的ADC路径，额外成本集中在离线训练。普通训练含两两排序，百万规模改用参考项抽样。把全局结构的理论界转成码本优化目标，补充传统重建与局部邻域目标。",
+        "experimentsZh": "财报、会话及新闻记忆与六种编码器，留出集合比较，额外测试FinDER和百万MS MARCO条目。OPQ、重建目标及其他同大小量化器，比较有无far hinge及重打分策略。摘要报告LAQ在52个留出运行均提高G，且在12个Multi-Doc-2025运行的七种等大小量化器中G最高并保留证据召回。保真指标不是完整Agent任务成功率。离线训练存在排序与重编码成本，金融证据定位也含数据构建假设。",
+        "affiliationsZh": "未在 DBLP/arXiv 元数据中提供",
+        "tags": [
+          "向量量化",
+          "Agent记忆",
+          "全局保真",
+          "OPQ"
+        ],
+        "importance": 3,
+        "researchFitZh": "与Agent向量存储及量化算法相关，可略读同字节保真对比，硬件计算核心关联间接。",
+        "hardwareRelevance": 2,
+        "algorithmRelevance": 4,
+        "systemRelevance": 4,
+        "readPriority": "skim",
+        "whyReadZh": "与Agent向量存储及量化算法相关，可略读同字节保真对比，硬件计算核心关联间接。后续阅读优先核对设置、代价与适用边界。",
+        "limitationsZh": "保真指标不是完整Agent任务成功率。离线训练存在排序与重编码成本，金融证据定位也含数据构建假设。",
+        "motivationDetail": {
+          "problemZh": "Agent压缩向量后近邻可能保留，但合并、删除及跨主题比较依赖的全局结构会受损。",
+          "gapZh": "仅优化重建或重打分难修复已存码的远端排序失真。",
+          "whyImportantZh": "全局结构关系到记忆组织和维护，需与局部检索共同评估。",
+          "userRelevanceZh": "与Agent向量存储及量化算法相关，可略读同字节保真对比，硬件计算核心关联间接。",
+          "evidence": "读取摘要、IV码本训练及V实验设置和复杂度说明，未独立重跑统计。 来源：https://arxiv.org/html/2611.08341v1"
+        },
+        "methodDetail": {
+          "coreIdeaZh": "从远端排序违例界推导hinge损失，固定OPQ旋转和编码大小，训练码本并监测重建约束。",
+          "componentsZh": [
+            "局部L与全局G指标",
+            "远近排序违例界",
+            "码本hinge训练",
+            "直通估计与监控集",
+            "百万条目扩展"
+          ],
+          "hardwareSystemDetailZh": "查询仍使用OPQ的ADC路径，额外成本集中在离线训练。普通训练含两两排序，百万规模改用参考项抽样。",
+          "noveltyZh": "把全局结构的理论界转成码本优化目标，补充传统重建与局部邻域目标。",
+          "evidence": "读取摘要、IV码本训练及V实验设置和复杂度说明，未独立重跑统计。 来源：https://arxiv.org/html/2611.08341v1"
+        },
+        "experimentDetail": {
+          "setupZh": "财报、会话及新闻记忆与六种编码器，留出集合比较，额外测试FinDER和百万MS MARCO条目。",
+          "baselinesZh": "OPQ、重建目标及其他同大小量化器，比较有无far hinge及重打分策略。",
+          "metricsZh": [
+            "局部保真L",
+            "全局保真G",
+            "证据召回",
+            "主题迁移",
+            "离线训练开销"
+          ],
+          "mainResultsZh": "摘要报告LAQ在52个留出运行均提高G，且在12个Multi-Doc-2025运行的七种等大小量化器中G最高并保留证据召回。",
+          "limitationsZh": "保真指标不是完整Agent任务成功率。离线训练存在排序与重编码成本，金融证据定位也含数据构建假设。",
+          "evidence": "读取摘要、IV码本训练及V实验设置和复杂度说明，未独立重跑统计。 来源：https://arxiv.org/html/2611.08341v1"
+        },
+        "evidence": {
+          "usedSources": [
+            "public/research-digest/daily.json metadata and full supplied abstract",
+            "https://arxiv.org/html/2611.08341v1"
+          ],
+          "affiliationEvidence": "队列DBLP/arXiv元数据未提供单位，按任务要求保留未知。",
+          "experimentEvidence": "读取摘要、IV码本训练及V实验设置和复杂度说明，未独立重跑统计。 来源：https://arxiv.org/html/2611.08341v1",
+          "missingFields": [
+            "元数据作者单位",
+            "独立复现",
+            "完整Agent任务验证"
+          ]
+        },
+        "confidence": {
+          "summary": 0.88,
+          "motivation": 0.86,
+          "method": 0.8,
+          "experiments": 0.73,
+          "affiliations": 0
+        }
+      },
+      "pushedAt": "2026-11-07T00:30:51.115Z",
+      "emailSentAt": "2026-11-07T00:30:51.115Z",
+      "firstPushedAt": "2026-11-07T00:30:51.115Z"
     },
     {
       "id": "arxiv:2611.05319",
@@ -4967,6 +5657,136 @@
       "pushedAt": "2026-10-28T00:29:41.195Z",
       "emailSentAt": "2026-10-28T00:29:41.195Z",
       "firstPushedAt": "2026-10-28T00:29:41.195Z"
+    },
+    {
+      "id": "arxiv:2611.07631",
+      "source": "arXiv",
+      "title": "MEMOIR: A Training-Free Memory Lifecycle for Long-Horizon LLM Agents",
+      "authors": [
+        "Mayank Anand",
+        "Subham Raj",
+        "Aman Vaibhav Jha",
+        "Sriparna Saha"
+      ],
+      "authorAffiliations": [],
+      "affiliations": [],
+      "abstract": "Long-horizon LLM agents require memory systems that preserve useful information across sessions and retrieve it when needed. Existing systems treat these as separate problems: memories are written prospectively with static importance scores that are never revised after use. This creates two coupled failure modes: consolidation can silently destroy evidence that future queries require, while retrieval continues to favor stale memories. We propose MEMOIR (Memory Evidence via Merge-certified, Online Importance Revision), a training-free memory lifecycle that unifies judge-gated consolidation with retrospective attribution. Before compressing memory, screening gates test whether answer-relevant evidence is preserved. After each query, attribution estimates which retrieved memories supported the answer and updates their retrieval priority. A UCB-style exploration bonus additionally encourages retrieval of under-exposed memories, reducing the risk that frequently retrieved memories crowd out useful but less-seen evidence. On 1,905 deduplicated LoCoMo QA pairs, the full retrieval stack improves evidence recall@5 by 11.92 percentage points over bare cosine, with confidence-gated feedback adding 1.50 points overall without reference answers or reranker training; a deployment-unavailable oracle adds 1.84 points overall and 8.05 points on multi-hop. Judge-gated merge changes the recall of text-based evidence from 58.82% to 59.08%, reduces the active store by 1.42%, and incurs 0 observed losses in 100 independently audited merges, with a one-sided 95% upper loss-rate bound of 2.95%. Together, these results outline a practical deployment path: no additional LLM call on the online write path, with merge screening confined to periodic offline consolidation. The lifecycle reduces to one principle: attribute usefulness after use, and screen for preservation before compression.",
+      "venue": "arXiv",
+      "published": "2026-11-05T08:17:22Z",
+      "updated": "2026-11-05T08:17:22Z",
+      "url": "http://arxiv.org/abs/2611.07631v1",
+      "pdfUrl": "https://arxiv.org/pdf/2611.07631v1",
+      "categories": [
+        "cs.IR"
+      ],
+      "collectedAt": "2026-11-07T00:07:41.464Z",
+      "firstSeenAt": "2026-11-07T00:07:41.464Z",
+      "lastSeenAt": "2026-11-07T00:07:41.464Z",
+      "collectionType": "daily-latest",
+      "matchedQuery": "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)",
+      "collectionTypes": [
+        "daily-latest"
+      ],
+      "matchedQueries": [
+        "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)"
+      ],
+      "targetThemes": [],
+      "conferenceVenues": [],
+      "conferenceYears": [],
+      "recommendationTrack": "hardware-primary",
+      "recommendationLabel": "硬件体系结构主线",
+      "recommendationScore": 147.5,
+      "relevanceReason": "命中 AI 处理器、体系结构、量化、训推系统或内存/缓存优化主题",
+      "pdfStatus": "remote",
+      "workflow": {
+        "digestStatus": "ready",
+        "emailStatus": "sent",
+        "digestError": "",
+        "harnessVersion": "paper-reader-v1",
+        "collectStatus": "collected",
+        "pdfStatus": "remote",
+        "harnessCheckedAt": "2026-11-07T00:30:47.185Z",
+        "harnessWarnings": [],
+        "emailSentAt": "2026-11-07T00:30:51.115Z",
+        "lastEmailError": ""
+      },
+      "digest": {
+        "summaryZh": "MEMOIR把记忆压缩前的证据保留检查与使用后的重要性归因结合，以UCB探索减少检索反馈锁定。结果支持长期记忆生命周期设计，但审计零损失样本量有限，压缩幅度也较小。",
+        "motivationZh": "静态重要性与压缩合并会丢失未来证据，反复检索又会强化旧条目的优势。把写入压缩和查询检索独立优化，难保证有用性分数随证据内容同步变化。多会话Agent需同时保留支持事实并动态更新检索优先级。与Agent记忆和检索系统相关，可借鉴维护策略。未涉及专用芯片或KV缓存内核。",
+        "methodZh": "离线合并前用judge门控检查证据，查询后做置信门控归因更新，并用UCB提升低曝光条目。证据保持合并；可逆过时事实退休；TRACE归因；RECALL-Q混合检索；UCB探索。在线写入不额外调用LLM，合并检查置于周期离线阶段。系统成本仍包括检索、回答和离线judge推理。以证据内容和检索信用的一致性连接事前压缩与事后重要性修订。",
+        "experimentsZh": "LoCoMo去重1905问答做顺序反馈，LongMemEval-S为500单查询对话。查询评估发生在本次反馈更新之前。比较MemoryBank、Zep、Mem0、A-MEM等，归因分析另对照裸余弦检索和部署不可用oracle。完整检索栈较裸余弦增加11.92个百分点，置信反馈额外1.50点。100次审计合并观察0次损失，但95%单侧上界2.95%。合并后active store仅减少1.42%，零观察损失不构成零风险证明。oracle结果与可部署反馈需区分，数据集顺序影响迁移。",
+        "affiliationsZh": "未在 DBLP/arXiv 元数据中提供",
+        "tags": [
+          "Agent记忆",
+          "检索反馈",
+          "记忆压缩",
+          "证据保留"
+        ],
+        "importance": 3,
+        "researchFitZh": "与Agent记忆和检索系统相关，可借鉴维护策略。未涉及专用芯片或KV缓存内核。",
+        "hardwareRelevance": 1,
+        "algorithmRelevance": 4,
+        "systemRelevance": 4,
+        "readPriority": "skim",
+        "whyReadZh": "与Agent记忆和检索系统相关，可借鉴维护策略。未涉及专用芯片或KV缓存内核。后续阅读优先核对设置、代价与适用边界。",
+        "limitationsZh": "合并后active store仅减少1.42%，零观察损失不构成零风险证明。oracle结果与可部署反馈需区分，数据集顺序影响迁移。",
+        "motivationDetail": {
+          "problemZh": "静态重要性与压缩合并会丢失未来证据，反复检索又会强化旧条目的优势。",
+          "gapZh": "把写入压缩和查询检索独立优化，难保证有用性分数随证据内容同步变化。",
+          "whyImportantZh": "多会话Agent需同时保留支持事实并动态更新检索优先级。",
+          "userRelevanceZh": "与Agent记忆和检索系统相关，可借鉴维护策略。未涉及专用芯片或KV缓存内核。",
+          "evidence": "读摘要、3.4–3.5方法、4.1–4.2协议，数值由摘要且区分oracle与可部署设置。 来源：https://arxiv.org/html/2611.07631v1"
+        },
+        "methodDetail": {
+          "coreIdeaZh": "离线合并前用judge门控检查证据，查询后做置信门控归因更新，并用UCB提升低曝光条目。",
+          "componentsZh": [
+            "证据保持合并",
+            "可逆过时事实退休",
+            "TRACE归因",
+            "RECALL-Q混合检索",
+            "UCB探索"
+          ],
+          "hardwareSystemDetailZh": "在线写入不额外调用LLM，合并检查置于周期离线阶段。系统成本仍包括检索、回答和离线judge推理。",
+          "noveltyZh": "以证据内容和检索信用的一致性连接事前压缩与事后重要性修订。",
+          "evidence": "读摘要、3.4–3.5方法、4.1–4.2协议，数值由摘要且区分oracle与可部署设置。 来源：https://arxiv.org/html/2611.07631v1"
+        },
+        "experimentDetail": {
+          "setupZh": "LoCoMo去重1905问答做顺序反馈，LongMemEval-S为500单查询对话。查询评估发生在本次反馈更新之前。",
+          "baselinesZh": "比较MemoryBank、Zep、Mem0、A-MEM等，归因分析另对照裸余弦检索和部署不可用oracle。",
+          "metricsZh": [
+            "证据recall@5",
+            "问答质量",
+            "active store大小",
+            "合并证据损失"
+          ],
+          "mainResultsZh": "完整检索栈较裸余弦增加11.92个百分点，置信反馈额外1.50点。100次审计合并观察0次损失，但95%单侧上界2.95%。",
+          "limitationsZh": "合并后active store仅减少1.42%，零观察损失不构成零风险证明。oracle结果与可部署反馈需区分，数据集顺序影响迁移。",
+          "evidence": "读摘要、3.4–3.5方法、4.1–4.2协议，数值由摘要且区分oracle与可部署设置。 来源：https://arxiv.org/html/2611.07631v1"
+        },
+        "evidence": {
+          "usedSources": [
+            "public/research-digest/daily.json metadata and full supplied abstract",
+            "https://arxiv.org/html/2611.07631v1"
+          ],
+          "affiliationEvidence": "队列DBLP/arXiv元数据未提供单位，按任务要求保留未知。",
+          "experimentEvidence": "读摘要、3.4–3.5方法、4.1–4.2协议，数值由摘要且区分oracle与可部署设置。 来源：https://arxiv.org/html/2611.07631v1",
+          "missingFields": [
+            "元数据作者单位",
+            "大规模长期线上验证",
+            "独立复现"
+          ]
+        },
+        "confidence": {
+          "summary": 0.88,
+          "motivation": 0.86,
+          "method": 0.8,
+          "experiments": 0.73,
+          "affiliations": 0
+        }
+      },
+      "pushedAt": "2026-11-07T00:30:51.115Z",
+      "emailSentAt": "2026-11-07T00:30:51.115Z",
+      "firstPushedAt": "2026-11-07T00:30:51.115Z"
     },
     {
       "id": "arxiv:2611.03263",
@@ -15325,6 +16145,135 @@
       "firstPushedAt": "2026-10-31T00:37:30.312Z"
     },
     {
+      "id": "arxiv:2611.08462",
+      "source": "arXiv",
+      "title": "OopsieRecover: Learning Transferable VLA Corrections from Semantic Interventions",
+      "authors": [
+        "Arpit Bahety",
+        "Skand Peri",
+        "Sriniket Ambatipudi",
+        "Chen Xu",
+        "Haruki Nishimura",
+        "Masha Itkina",
+        "Roberto Martín-Martín"
+      ],
+      "authorAffiliations": [],
+      "affiliations": [],
+      "abstract": "Vision-Language-Action (VLA) models can perform a wide range of robotic manipulation tasks, but often fail during deployment. Teaching them to recover from these failures requires substantial corrective data: existing approaches learn to recover from failures by directly associating corrective actions with the observations in which they were demonstrated. For instance, DAgger-like fine-tuning can require tens to hundreds of interactions, yet the resulting policy may still fail to generalize the learned corrections beyond the demonstrated scenarios. We hypothesize that semantics can capture the underlying reasons for failures and their corrections, enabling policies to learn from only a handful of corrective demonstrations and generalize those corrections to novel objects, and scene variations. We propose OopsieRecover, a framework that uses abduction to infer the intent behind a small set of corrective demonstrations and encodes the inferred knowledge as dense spatial representations and conditional costs. These costs capture when a behavior is undesirable and steer the policy toward more desirable action regions. We experiment across 6 tasks and variations in object poses, scenes, and related tasks, and find that only a handful of corrective demonstrations can enable a VLA to overcome failures across a broad range of novel situations, without requiring new corrective data for each variation. Please refer to https://robin-lab.cs.utexas.edu/oopsierecover for videos.",
+      "venue": "arXiv",
+      "published": "2026-11-05T18:53:16Z",
+      "updated": "2026-11-05T18:53:16Z",
+      "url": "http://arxiv.org/abs/2611.08462v1",
+      "pdfUrl": "https://arxiv.org/pdf/2611.08462v1",
+      "categories": [
+        "cs.RO"
+      ],
+      "collectedAt": "2026-11-07T00:07:43.460Z",
+      "firstSeenAt": "2026-11-07T00:07:43.460Z",
+      "lastSeenAt": "2026-11-07T00:07:43.460Z",
+      "collectionType": "daily-latest",
+      "matchedQuery": "(all:agent OR all:agents OR all:agentic OR all:reasoning OR all:post-training OR all:alignment OR all:multimodal OR all:world-model) AND (all:LLM OR all:foundation OR all:language)",
+      "collectionTypes": [
+        "daily-latest"
+      ],
+      "matchedQueries": [
+        "(all:agent OR all:agents OR all:agentic OR all:reasoning OR all:post-training OR all:alignment OR all:multimodal OR all:world-model) AND (all:LLM OR all:foundation OR all:language)"
+      ],
+      "targetThemes": [],
+      "conferenceVenues": [],
+      "conferenceYears": [],
+      "recommendationTrack": "algorithm-trend",
+      "recommendationLabel": "算法趋势观察",
+      "recommendationScore": 41.8,
+      "relevanceReason": "命中 LLM/Agent/多模态/后训练等算法趋势主题",
+      "pdfStatus": "remote",
+      "workflow": {
+        "digestStatus": "ready",
+        "emailStatus": "sent",
+        "digestError": "",
+        "harnessVersion": "paper-reader-v1",
+        "collectStatus": "collected",
+        "pdfStatus": "remote",
+        "harnessCheckedAt": "2026-11-07T00:30:47.185Z",
+        "harnessWarnings": [],
+        "emailSentAt": "2026-11-07T00:30:51.115Z",
+        "lastEmailError": ""
+      },
+      "digest": {
+        "summaryZh": "OopsieRecover从少量纠正示范推断失败原因与修正意图，将其编码为空间表示和条件代价，引导VLA避开不期望动作。工作关注纠错语义迁移，尚无可读摘要支持的硬件速度结论。",
+        "motivationZh": "VLA部署失败后的直接动作微调需要较多纠正交互，且迁移到新场景困难。仅把动作与当时观察关联，没有显式捕获失败及纠正背后的语义原因。若纠正语义能迁移，可降低每种物体或场景重新收集数据的成本。属于机器人VLA算法趋势，与推理计算核心方向关联较弱，建议略读语义纠错机制。",
+        "methodZh": "用溯因推断解释纠正示范意图，并生成稠密空间表示和条件成本约束策略。少量纠正示范；语义溯因；空间表示；条件动作代价。摘要未披露机器人平台细节、推理芯片、模型计算开销或实时控制频率。让失败原因及纠正语义参与动作引导，使修正可跨物体姿态与场景变化复用。",
+        "experimentsZh": "六项任务及物体姿态、场景和相关任务变体，摘要称只需少量纠正示范。讨论DAgger式微调的数据需求，但摘要未列具体受控基线及成功率。作者报告少量示范可帮助VLA在新变化下恢复失败，摘要未提供完整成功率或置信区间。本轮只核验公开摘要，无法量化相对基线和额外规划成本，场景泛化边界需全文核对。",
+        "affiliationsZh": "未在 DBLP/arXiv 元数据中提供",
+        "tags": [
+          "VLA",
+          "机器人纠错",
+          "语义干预"
+        ],
+        "importance": 3,
+        "researchFitZh": "属于机器人VLA算法趋势，与推理计算核心方向关联较弱，建议略读语义纠错机制。",
+        "hardwareRelevance": 1,
+        "algorithmRelevance": 4,
+        "systemRelevance": 2,
+        "readPriority": "skim",
+        "whyReadZh": "属于机器人VLA算法趋势，与推理计算核心方向关联较弱，建议略读语义纠错机制。后续阅读优先核对设置、代价与适用边界。",
+        "limitationsZh": "本轮只核验公开摘要，无法量化相对基线和额外规划成本，场景泛化边界需全文核对。",
+        "motivationDetail": {
+          "problemZh": "VLA部署失败后的直接动作微调需要较多纠正交互，且迁移到新场景困难。",
+          "gapZh": "仅把动作与当时观察关联，没有显式捕获失败及纠正背后的语义原因。",
+          "whyImportantZh": "若纠正语义能迁移，可降低每种物体或场景重新收集数据的成本。",
+          "userRelevanceZh": "属于机器人VLA算法趋势，与推理计算核心方向关联较弱，建议略读语义纠错机制。",
+          "evidence": "已读队列完整摘要及arXiv摘要，未补造平台、模型与成功率。 来源：https://arxiv.org/abs/2611.08462v1"
+        },
+        "methodDetail": {
+          "coreIdeaZh": "用溯因推断解释纠正示范意图，并生成稠密空间表示和条件成本约束策略。",
+          "componentsZh": [
+            "少量纠正示范",
+            "语义溯因",
+            "空间表示",
+            "条件动作代价"
+          ],
+          "hardwareSystemDetailZh": "摘要未披露机器人平台细节、推理芯片、模型计算开销或实时控制频率。",
+          "noveltyZh": "让失败原因及纠正语义参与动作引导，使修正可跨物体姿态与场景变化复用。",
+          "evidence": "已读队列完整摘要及arXiv摘要，未补造平台、模型与成功率。 来源：https://arxiv.org/abs/2611.08462v1"
+        },
+        "experimentDetail": {
+          "setupZh": "六项任务及物体姿态、场景和相关任务变体，摘要称只需少量纠正示范。",
+          "baselinesZh": "讨论DAgger式微调的数据需求，但摘要未列具体受控基线及成功率。",
+          "metricsZh": [
+            "纠错成功与泛化",
+            "纠正示范需求"
+          ],
+          "mainResultsZh": "作者报告少量示范可帮助VLA在新变化下恢复失败，摘要未提供完整成功率或置信区间。",
+          "limitationsZh": "本轮只核验公开摘要，无法量化相对基线和额外规划成本，场景泛化边界需全文核对。",
+          "evidence": "已读队列完整摘要及arXiv摘要，未补造平台、模型与成功率。 来源：https://arxiv.org/abs/2611.08462v1"
+        },
+        "evidence": {
+          "usedSources": [
+            "public/research-digest/daily.json metadata and full supplied abstract",
+            "https://arxiv.org/abs/2611.08462v1"
+          ],
+          "affiliationEvidence": "队列DBLP/arXiv元数据未提供单位，按任务要求保留未知。",
+          "experimentEvidence": "已读队列完整摘要及arXiv摘要，未补造平台、模型与成功率。 来源：https://arxiv.org/abs/2611.08462v1",
+          "missingFields": [
+            "作者单位",
+            "完整实验与硬件",
+            "成功率数字"
+          ]
+        },
+        "confidence": {
+          "summary": 0.88,
+          "motivation": 0.86,
+          "method": 0.8,
+          "experiments": 0.73,
+          "affiliations": 0
+        }
+      },
+      "pushedAt": "2026-11-07T00:30:51.115Z",
+      "emailSentAt": "2026-11-07T00:30:51.115Z",
+      "firstPushedAt": "2026-11-07T00:30:51.115Z"
+    },
+    {
       "id": "arxiv:2605.05126",
       "source": "arXiv",
       "title": "ConsisVLA-4D: Advancing Spatiotemporal Consistency in Efficient 3D-Perception and 4D-Reasoning for Robotic Manipulation",
@@ -16663,6 +17612,130 @@
       "pushedAt": "2026-10-25T08:50:20.815Z",
       "emailSentAt": "2026-10-25T08:50:20.815Z",
       "firstPushedAt": "2026-10-25T08:50:20.815Z"
+    },
+    {
+      "id": "arxiv:2611.08428",
+      "source": "arXiv",
+      "title": "The Power of Meta Access in the Software of the Future --- Demonstrated on LLM Chat UIs and Chat AI",
+      "authors": [
+        "Julian Kunkel",
+        "Ali Doosthosseini"
+      ],
+      "authorAffiliations": [],
+      "affiliations": [],
+      "abstract": "Chat remains the default surface for many large language model (LLM) tasks, even as agentic tools such as OpenCode excel at coding and automation. Yet the model sees the current dialogue but not the workspace around it. We explore meta access---giving the assistant a structured, permissioned view of the interface itself and propose a ladder of levels: feature tutoring; metadata, settings, and preference access; retrieval over summaries and messages, confirmed mutation, and full orchestration. Meta access can turn a chat client from many screens into one entry point for finding, navigating, organising, and operating it, while raising risks around grounding, privacy, prompt injection, and trust. General-purpose agentic harnesses are runtimes; because they can change their own settings, meta access becomes reflexive and needs a separate control-plane boundary. We ground this in the Meta Chat prototype of the Chat AI client. It builds bounded context from, e.g., summaries, settings, and relevant messages; links references to conversations, topics, and personas; supports confirmed, reversible changes; offers a browsable tutorial library; and recommends personas as user-started conversations. By exposing application state in structured form, meta access can extend screen readers from widget descriptions to semantic workspace operations. Meta access thus turns chat from a window onto one conversation into a control layer for the whole workspace, extending chat toward agentic capability without surrendering user control. As assistants become embedded in IDEs, dashboards, office suites, and operating systems, AI-era interfaces should expose a structured, permissioned model of their state and capabilities, ideally by opening their existing metamodels through a debugger-like interface.",
+      "venue": "arXiv",
+      "published": "2026-11-05T18:22:24Z",
+      "updated": "2026-11-05T18:22:24Z",
+      "url": "http://arxiv.org/abs/2611.08428v1",
+      "pdfUrl": "https://arxiv.org/pdf/2611.08428v1",
+      "categories": [
+        "cs.AI"
+      ],
+      "collectedAt": "2026-11-07T00:07:43.460Z",
+      "firstSeenAt": "2026-11-07T00:07:43.460Z",
+      "lastSeenAt": "2026-11-07T00:07:43.460Z",
+      "collectionType": "daily-latest",
+      "matchedQuery": "(all:agent OR all:agents OR all:agentic OR all:reasoning OR all:post-training OR all:alignment OR all:multimodal OR all:world-model) AND (all:LLM OR all:foundation OR all:language)",
+      "collectionTypes": [
+        "daily-latest"
+      ],
+      "matchedQueries": [
+        "(all:agent OR all:agents OR all:agentic OR all:reasoning OR all:post-training OR all:alignment OR all:multimodal OR all:world-model) AND (all:LLM OR all:foundation OR all:language)"
+      ],
+      "targetThemes": [],
+      "conferenceVenues": [],
+      "conferenceYears": [],
+      "recommendationTrack": "algorithm-trend",
+      "recommendationLabel": "算法趋势观察",
+      "recommendationScore": 37.7,
+      "relevanceReason": "命中 LLM/Agent/多模态/后训练等算法趋势主题",
+      "pdfStatus": "remote",
+      "workflow": {
+        "digestStatus": "ready",
+        "emailStatus": "sent",
+        "digestError": "",
+        "harnessVersion": "paper-reader-v1",
+        "collectStatus": "collected",
+        "pdfStatus": "remote",
+        "harnessCheckedAt": "2026-11-07T00:30:47.185Z",
+        "harnessWarnings": [],
+        "emailSentAt": "2026-11-07T00:30:51.115Z",
+        "lastEmailError": ""
+      },
+      "digest": {
+        "summaryZh": "该工作讨论给LLM结构化且受权限约束的应用元状态访问，以聊天统一检索、导航与可逆修改，并在Meta Chat原型中展示。贡献是界面与控制层设计，目前摘要未提供定量用户研究。",
+        "motivationZh": "聊天助手通常只看到当前对话，缺少工作区设置、消息组织和可用能力的结构化上下文。跨多个界面操作依赖人工导航，通用Agent可修改自身设置又需要控制边界。显式暴露状态与权限有助于操作落地、引用定位和用户可控性。属于Agent应用接口及控制层趋势，可了解工具上下文组织，与芯片架构关联较低。",
+        "methodZh": "定义meta access能力阶梯，以有界上下文和结构化引用连接工作区状态及受确认的可逆操作。功能教程；元数据与设置访问；消息摘要检索；可逆修改；独立控制平面。Meta Chat原型在应用层组织状态和能力，摘要未披露硬件平台、推理成本或性能测量。把界面元模型作为可授权语义接口，并对Agent反身修改设置提出单独控制边界。",
+        "experimentsZh": "以Chat AI客户端的Meta Chat原型展示教程、检索、设置和主题组织等能力。摘要未提供用户研究、现有UI/Agent受控对比或标准任务集。展示有界上下文、会话引用与可逆操作等设计，未给出成功率、操作时间或可用性评分。为概念与原型论证，隐私、提示注入及可访问性收益仍需定量评估，本轮未读完整用户实验。",
+        "affiliationsZh": "未在 DBLP/arXiv 元数据中提供",
+        "tags": [
+          "Agent界面",
+          "元状态访问",
+          "权限控制"
+        ],
+        "importance": 2,
+        "researchFitZh": "属于Agent应用接口及控制层趋势，可了解工具上下文组织，与芯片架构关联较低。",
+        "hardwareRelevance": 1,
+        "algorithmRelevance": 3,
+        "systemRelevance": 3,
+        "readPriority": "skim",
+        "whyReadZh": "属于Agent应用接口及控制层趋势，可了解工具上下文组织，与芯片架构关联较低。后续阅读优先核对设置、代价与适用边界。",
+        "limitationsZh": "为概念与原型论证，隐私、提示注入及可访问性收益仍需定量评估，本轮未读完整用户实验。",
+        "motivationDetail": {
+          "problemZh": "聊天助手通常只看到当前对话，缺少工作区设置、消息组织和可用能力的结构化上下文。",
+          "gapZh": "跨多个界面操作依赖人工导航，通用Agent可修改自身设置又需要控制边界。",
+          "whyImportantZh": "显式暴露状态与权限有助于操作落地、引用定位和用户可控性。",
+          "userRelevanceZh": "属于Agent应用接口及控制层趋势，可了解工具上下文组织，与芯片架构关联较低。",
+          "evidence": "读取完整队列摘要及arXiv摘要，保留概念原型的证据范围。 来源：https://arxiv.org/abs/2611.08428v1"
+        },
+        "methodDetail": {
+          "coreIdeaZh": "定义meta access能力阶梯，以有界上下文和结构化引用连接工作区状态及受确认的可逆操作。",
+          "componentsZh": [
+            "功能教程",
+            "元数据与设置访问",
+            "消息摘要检索",
+            "可逆修改",
+            "独立控制平面"
+          ],
+          "hardwareSystemDetailZh": "Meta Chat原型在应用层组织状态和能力，摘要未披露硬件平台、推理成本或性能测量。",
+          "noveltyZh": "把界面元模型作为可授权语义接口，并对Agent反身修改设置提出单独控制边界。",
+          "evidence": "读取完整队列摘要及arXiv摘要，保留概念原型的证据范围。 来源：https://arxiv.org/abs/2611.08428v1"
+        },
+        "experimentDetail": {
+          "setupZh": "以Chat AI客户端的Meta Chat原型展示教程、检索、设置和主题组织等能力。",
+          "baselinesZh": "摘要未提供用户研究、现有UI/Agent受控对比或标准任务集。",
+          "metricsZh": [
+            "原型能力展示（无定量指标）"
+          ],
+          "mainResultsZh": "展示有界上下文、会话引用与可逆操作等设计，未给出成功率、操作时间或可用性评分。",
+          "limitationsZh": "为概念与原型论证，隐私、提示注入及可访问性收益仍需定量评估，本轮未读完整用户实验。",
+          "evidence": "读取完整队列摘要及arXiv摘要，保留概念原型的证据范围。 来源：https://arxiv.org/abs/2611.08428v1"
+        },
+        "evidence": {
+          "usedSources": [
+            "public/research-digest/daily.json metadata and full supplied abstract",
+            "https://arxiv.org/abs/2611.08428v1"
+          ],
+          "affiliationEvidence": "队列DBLP/arXiv元数据未提供单位，按任务要求保留未知。",
+          "experimentEvidence": "读取完整队列摘要及arXiv摘要，保留概念原型的证据范围。 来源：https://arxiv.org/abs/2611.08428v1",
+          "missingFields": [
+            "作者单位",
+            "定量用户研究",
+            "推理成本"
+          ]
+        },
+        "confidence": {
+          "summary": 0.88,
+          "motivation": 0.86,
+          "method": 0.8,
+          "experiments": 0.73,
+          "affiliations": 0
+        }
+      },
+      "pushedAt": "2026-11-07T00:30:51.115Z",
+      "emailSentAt": "2026-11-07T00:30:51.115Z",
+      "firstPushedAt": "2026-11-07T00:30:51.115Z"
     },
     {
       "id": "arxiv:2611.06914",
