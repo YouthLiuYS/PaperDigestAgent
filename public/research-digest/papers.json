@@ -1,20 +1,20 @@
 {
-  "generatedAt": "2026-11-09T00:34:09.826Z",
+  "generatedAt": "2026-11-11T00:38:44.767Z",
   "timezone": "Asia/Shanghai",
   "siteUrl": "https://YouthLiuYS.github.io/PaperDigestAgent/",
   "stats": {
-    "total": 172,
-    "arxiv": 150,
+    "total": 180,
+    "arxiv": 158,
     "dblp": 22,
-    "dailyLatest": 171,
+    "dailyLatest": 179,
     "dailyBackfill": 0,
     "conferenceArchive": 1,
     "current": 0,
     "newlyAdded": 0,
-    "pushed": 172,
+    "pushed": 180,
     "pdfDownloaded": 0,
-    "hardwarePrimary": 127,
-    "algorithmTrend": 44,
+    "hardwarePrimary": 133,
+    "algorithmTrend": 46,
     "lowRelevance": 1
   },
   "papers": [
@@ -146,6 +146,266 @@
       "pushedAt": "2026-11-04T02:36:20.085Z",
       "emailSentAt": "2026-11-04T02:36:20.085Z",
       "firstPushedAt": "2026-11-04T02:36:20.085Z"
+    },
+    {
+      "id": "arxiv:2611.09722",
+      "source": "arXiv",
+      "title": "FOSCAR: Accelerating Decode Attention over 2- and 4-Bit KV Caches through Affine Folding",
+      "authors": [
+        "Donglin Zhuang",
+        "Pragaash Ponnusamy",
+        "Xiaoxia Wu",
+        "Shuaiwen Leon Song",
+        "Zhongzhu Zhou"
+      ],
+      "authorAffiliations": [],
+      "affiliations": [],
+      "abstract": "Large-language-model decode attention streams the key-value (KV) cache for every generated token. Packing that cache into 2-bit or 4-bit quantized integers reduces memory traffic but does not automatically translate into latency saving. Existing 2-bit fused kernels reach under 31%/15% of peak HBM throughput on H100/B200. Converting each value and applying its scale and offset before feeding Tensor Cores is a major bottleneck because instruction-issue throughput is scarce on modern GPUs. Instead of applying scale and offset to each KV value, FOSCAR uses affine folding to apply them to the other operand or the output of decode-attention matrix products, depending on the quantization scheme (token-wise or channel-wise). This reduces scale-and-offset operations by up to two orders of magnitude while preserving the dequantized attention output in exact arithmetic. FOSCAR also uses bit manipulation to feed KV operands to Tensor Cores efficiently, requiring only 1 and 0.19 ALU instructions per INT2 element on H100 and B200, respectively. Finally, FOSCAR builds warp-specialized GPU pipelines for Hopper (H100) and Blackwell (B200) using wgmma and tcgen05. On H100, FOSCAR INT2 and INT4 kernels achieve geo-mean speedups of $3.36\\times$ and $2.83\\times$ over FlashInfer BF16, and $2.03\\times$ and $1.71\\times$ over TensorRT-LLM FP8. On B200, the corresponding INT2 and INT4 speedups are $2.67\\times$ and $2.30\\times$ over FlashInfer BF16, $1.48\\times$ and $1.28\\times$ over TensorRT-LLM FP8, and $1.16\\times$ and $1.00\\times$ over TensorRT-LLM NVFP4. We integrate FOSCAR into SGLang to benchmark serving efficiency. On long-context serving workloads, FOSCAR increases peak aggregate throughput by up to 170% and 341% over 2-bit and 16-bit baselines, respectively. We open-source FOSCAR as a kernel library at https://github.com/FutureMLS-Lab/FOSCAR.",
+      "venue": "arXiv",
+      "published": "2026-11-06T17:00:25Z",
+      "updated": "2026-11-06T17:00:25Z",
+      "url": "http://arxiv.org/abs/2611.09722v1",
+      "pdfUrl": "https://arxiv.org/pdf/2611.09722v1",
+      "categories": [
+        "cs.AI"
+      ],
+      "collectedAt": "2026-11-10T02:45:14.496Z",
+      "firstSeenAt": "2026-11-10T02:45:14.496Z",
+      "lastSeenAt": "2026-11-10T02:45:14.496Z",
+      "collectionType": "daily-latest",
+      "matchedQuery": "(all:quantization OR all:compression OR all:pruning OR all:sparsity OR all:low-bit) AND (all:LLM OR all:transformer OR all:language) AND (all:hardware OR all:accelerator OR all:inference OR all:serving OR all:processor)",
+      "collectionTypes": [
+        "daily-latest"
+      ],
+      "matchedQueries": [
+        "(all:quantization OR all:compression OR all:pruning OR all:sparsity OR all:low-bit) AND (all:LLM OR all:transformer OR all:language) AND (all:hardware OR all:accelerator OR all:inference OR all:serving OR all:processor)",
+        "(all:prefill OR all:decoding OR all:KV OR all:cache OR all:attention) AND (all:accelerator OR all:kernel OR all:compiler OR all:serving OR all:memory) AND (all:LLM OR all:transformer)",
+        "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)"
+      ],
+      "targetThemes": [],
+      "conferenceVenues": [],
+      "conferenceYears": [],
+      "digest": {
+        "summaryZh": "FOSCAR 通过仿射折叠把低比特 KV 的逐值缩放与偏置搬到另一操作数或累加结果，缓解 GPU 指令发射瓶颈。结合位级构造和专用流水线，它将缓存压缩转化为解码加速，直接关联低比特注意力实现。",
+        "motivationZh": "INT2/INT4 KV 虽减少 HBM 流量，但逐元素解包、转换和仿射反量化仍占用有限指令发射资源。只降低存储位宽并不能按比例降低准备 Tensor Core 操作数的成本，导致带宽利用不足。新 GPU 的矩阵与 HBM 吞吐增长快于指令发射，格式转换可能成为低比特解码的新瓶颈。直接关联 KV 量化、矩阵与非矩阵单元分工及注意力数据通路，应作为本轮硬件协同重点。",
+        "methodZh": "依据量化分组方向，将共享尺度乘到另一操作数或局部累加结果，并用单独的归约项修正偏置。token-wise和channel-wise K/V分别选择operand-fold或acc-fold。直接从打包整数构造 Tensor Core 输入。在H100/B200采用warp专门化流水线重叠搬运、准备与矩阵计算。Hopper 使用 wgmma，Blackwell 使用 tcgen05；软件内核针对 GPU 指令与数据格式设计，未提出新流片芯片。以代数重排减少逐值反量化操作，联合位操作和流水线设计，而非仅提出新的 KV 量化算法。",
+        "experimentsZh": "在 H100、B200 上测试 INT2/INT4 解码内核，并集成 SGLang 测试长上下文服务。比较 FlashInfer BF16、TensorRT-LLM FP8/NVFP4 等路径；正文也包含同位宽内核和折叠消融。相对 FlashInfer BF16，H100 INT2/INT4 几何平均加速3.36/2.83倍，B200为2.67/2.30倍；B200相对NVFP4为1.16/1.00倍。长上下文峰值聚合吞吐相对2比特和16比特基线最高增加170%和341%。仿射折叠在精确算术下等价，不消除原有量化误差；内核、格式和服务级比较应分开，最高吞吐增幅不能当作所有场景端到端时延收益。",
+        "affiliationsZh": "未在 DBLP/arXiv 元数据中提供",
+        "tags": [
+          "低比特KV",
+          "仿射折叠",
+          "注意力内核",
+          "指令发射",
+          "GPU流水线"
+        ],
+        "importance": 5,
+        "researchFitZh": "直接关联 KV 量化、矩阵与非矩阵单元分工及注意力数据通路，应作为本轮硬件协同重点。",
+        "hardwareRelevance": 5,
+        "algorithmRelevance": 5,
+        "systemRelevance": 5,
+        "readPriority": "deep-read",
+        "whyReadZh": "优先研究分组方向如何改变缩放和归约位置，尤其适合矩阵/向量/量化转换协同的数据通路设计。",
+        "limitationsZh": "仿射折叠在精确算术下等价，不消除原有量化误差；内核、格式和服务级比较应分开，最高吞吐增幅不能当作所有场景端到端时延收益。",
+        "motivationDetail": {
+          "problemZh": "INT2/INT4 KV 虽减少 HBM 流量，但逐元素解包、转换和仿射反量化仍占用有限指令发射资源。",
+          "gapZh": "只降低存储位宽并不能按比例降低准备 Tensor Core 操作数的成本，导致带宽利用不足。",
+          "whyImportantZh": "新 GPU 的矩阵与 HBM 吞吐增长快于指令发射，格式转换可能成为低比特解码的新瓶颈。",
+          "userRelevanceZh": "直接关联 KV 量化、矩阵与非矩阵单元分工及注意力数据通路，应作为本轮硬件协同重点。",
+          "evidence": "已读取公开HTML的瓶颈分析、仿射折叠设计和内核结果及精度消融；主要数值由队列完整摘要支持。 来源：https://arxiv.org/html/2611.09722v1"
+        },
+        "methodDetail": {
+          "coreIdeaZh": "依据量化分组方向，将共享尺度乘到另一操作数或局部累加结果，并用单独的归约项修正偏置。",
+          "componentsZh": [
+            "token-wise和channel-wise K/V分别选择operand-fold或acc-fold",
+            "直接从打包整数构造 Tensor Core 输入",
+            "在H100/B200采用warp专门化流水线重叠搬运、准备与矩阵计算"
+          ],
+          "hardwareSystemDetailZh": "Hopper 使用 wgmma，Blackwell 使用 tcgen05；软件内核针对 GPU 指令与数据格式设计，未提出新流片芯片。",
+          "noveltyZh": "以代数重排减少逐值反量化操作，联合位操作和流水线设计，而非仅提出新的 KV 量化算法。",
+          "evidence": "已读取公开HTML的瓶颈分析、仿射折叠设计和内核结果及精度消融；主要数值由队列完整摘要支持。 来源：https://arxiv.org/html/2611.09722v1"
+        },
+        "experimentDetail": {
+          "setupZh": "在 H100、B200 上测试 INT2/INT4 解码内核，并集成 SGLang 测试长上下文服务。",
+          "baselinesZh": "比较 FlashInfer BF16、TensorRT-LLM FP8/NVFP4 等路径；正文也包含同位宽内核和折叠消融。",
+          "metricsZh": [
+            "内核时延几何平均加速",
+            "注意力输出误差",
+            "峰值聚合服务吞吐"
+          ],
+          "mainResultsZh": "相对 FlashInfer BF16，H100 INT2/INT4 几何平均加速3.36/2.83倍，B200为2.67/2.30倍；B200相对NVFP4为1.16/1.00倍。长上下文峰值聚合吞吐相对2比特和16比特基线最高增加170%和341%。",
+          "limitationsZh": "仿射折叠在精确算术下等价，不消除原有量化误差；内核、格式和服务级比较应分开，最高吞吐增幅不能当作所有场景端到端时延收益。",
+          "evidence": "已读取公开HTML的瓶颈分析、仿射折叠设计和内核结果及精度消融；主要数值由队列完整摘要支持。 来源：https://arxiv.org/html/2611.09722v1"
+        },
+        "evidence": {
+          "usedSources": [
+            "public/research-digest/daily.json: 原始元数据及完整英文摘要",
+            "https://arxiv.org/html/2611.09722v1"
+          ],
+          "affiliationEvidence": "队列DBLP/arXiv元数据未提供单位，按指定缺省文案记录，未据作者身份推测。",
+          "experimentEvidence": "已读取公开HTML的瓶颈分析、仿射折叠设计和内核结果及精度消融；主要数值由队列完整摘要支持。 来源：https://arxiv.org/html/2611.09722v1",
+          "missingFields": [
+            "元数据作者单位",
+            "未完整复核所有服务配置及附录"
+          ]
+        },
+        "confidence": {
+          "summary": 0.9,
+          "motivation": 0.88,
+          "method": 0.85,
+          "experiments": 0.82,
+          "affiliations": 0
+        }
+      },
+      "recommendationTrack": "hardware-primary",
+      "recommendationLabel": "硬件体系结构主线",
+      "recommendationScore": 223,
+      "relevanceReason": "命中 AI 处理器、体系结构、量化、训推系统或内存/缓存优化主题",
+      "pdfStatus": "remote",
+      "workflow": {
+        "digestStatus": "ready",
+        "emailStatus": "sent",
+        "digestError": "",
+        "harnessVersion": "paper-reader-v1",
+        "collectStatus": "collected",
+        "pdfStatus": "remote",
+        "harnessCheckedAt": "2026-11-11T00:38:40.148Z",
+        "harnessWarnings": [],
+        "emailSentAt": "2026-11-11T00:38:44.738Z",
+        "lastEmailError": ""
+      },
+      "pushedAt": "2026-11-11T00:38:44.738Z",
+      "emailSentAt": "2026-11-11T00:38:44.738Z",
+      "firstPushedAt": "2026-11-11T00:38:44.738Z"
+    },
+    {
+      "id": "arxiv:2611.09254",
+      "source": "arXiv",
+      "title": "TwinHash: Two-Sided Object Identity Management for Time- and Energy-Efficient Agentic Workflows",
+      "authors": [
+        "Sangbu Yun",
+        "Jung Gyu Min",
+        "Jin Hyun",
+        "Jeonghwan Ahn",
+        "Youngjoo Lee"
+      ],
+      "authorAffiliations": [],
+      "affiliations": [],
+      "abstract": "Agentic artificial intelligence (AI) services interleave large language model (LLM) generation with external tool execution, and increasingly rely on search-based workflows that repeatedly revisit shared reasoning states and computations. These patterns create substantial redundancy across tool outputs, LLM responses, and key-value (KV) prefixes, yet existing serving systems primarily optimize shared prompt prefixes, while naive input-keyed caching is unsafe when identical requests produce different outputs. We present TwinHash, a unified object management architecture that assigns each object an input-side hash key to recognize repeated requests and an output-side content fingerprint to validate and locate stored state, complemented by type-specific reuse guards that preserve correctness and response diversity. A software object identity table maintains reusable objects across requests and trajectories, while a hardware object placement table tracks their residency across hierarchical memory tiers so that evicted state can be retrieved rather than recomputed. Across seven agent frameworks and five benchmark suites, reuse follows workflow structure more than benchmark identity. TwinHash serves up to 81% of tool outputs wherever deterministic tool reads recur, and up to 92% of LLM responses in search-based frameworks. Retrieving an evicted KV-prefix from DRAM reduces TTFT by up to 5.6x on Qwen3-32B, with greater gains projected for larger dense models. Under search-based frameworks, TwinHash reduces end-to-end wall-clock time by up to 87% and measured task energy by up to 81% over a prefix-cached baseline, while a per-key serving cap controls the quality-reuse trade-off in adaptive search. These results demonstrate that unified identity, safety, and placement management can convert structural redundancy in emerging agentic workflows into substantial serving-efficiency gains.",
+      "venue": "arXiv",
+      "published": "2026-11-06T10:13:21Z",
+      "updated": "2026-11-06T10:13:21Z",
+      "url": "http://arxiv.org/abs/2611.09254v1",
+      "pdfUrl": "https://arxiv.org/pdf/2611.09254v1",
+      "categories": [
+        "cs.AR"
+      ],
+      "collectedAt": "2026-11-10T02:45:18.495Z",
+      "firstSeenAt": "2026-11-10T02:45:18.495Z",
+      "lastSeenAt": "2026-11-10T02:45:18.495Z",
+      "collectionType": "daily-latest",
+      "matchedQuery": "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)",
+      "collectionTypes": [
+        "daily-latest"
+      ],
+      "matchedQueries": [
+        "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)"
+      ],
+      "targetThemes": [],
+      "conferenceVenues": [],
+      "conferenceYears": [],
+      "recommendationTrack": "hardware-primary",
+      "recommendationLabel": "硬件体系结构主线",
+      "recommendationScore": 211.5,
+      "relevanceReason": "命中 AI 处理器、体系结构、量化、训推系统或内存/缓存优化主题",
+      "pdfStatus": "remote",
+      "workflow": {
+        "digestStatus": "ready",
+        "emailStatus": "sent",
+        "digestError": "",
+        "harnessVersion": "paper-reader-v1",
+        "collectStatus": "collected",
+        "pdfStatus": "remote",
+        "harnessCheckedAt": "2026-11-11T00:38:40.148Z",
+        "harnessWarnings": [],
+        "emailSentAt": "2026-11-11T00:38:44.738Z",
+        "lastEmailError": ""
+      },
+      "digest": {
+        "summaryZh": "TwinHash 用输入键识别重复请求、输出指纹定位内容，并按对象类型约束工具、回复和 KV 复用。软件身份表与硬件放置表连接分层内存，可降低搜索型 Agent 的重算，但收益和正确性依赖复用规则。",
+        "motivationZh": "Agent 在多轨迹搜索中反复产生相同工具结果、回复和 KV 前缀，前缀缓存无法覆盖全部冗余。仅按输入缓存无法处理状态变化或随机输出；对象被逐出热层后也可能被不必要地重算。统一身份与存储位置管理有机会同时降低工具、生成和prefill成本，但必须保护有效性和多样性。直接关联 Agent 软硬件协同、KV 分层存储与对象缓存，适合体系结构主线深读。",
+        "methodZh": "输入侧哈希识别请求，输出侧指纹验证和去重内容，类型专用guard决定何时可复用，再由放置表寻找所在层。主机OIT记录可复用身份。OPT记录对象在层次内存的驻留与引用。工具使用状态epoch和作用域，回复使用每键服务上限以限制重复采样。OPT 有 RTL 仿真与综合原型；容量压力下的层次存储结果另用功能模型重放，不能全部视为实体硬件部署。将请求身份、内容身份、复用约束和分层放置统一，覆盖工具输出、模型回复与KV三类对象。",
+        "experimentsZh": "H200 上主要以 Qwen3-14B 和 SGLang 前缀缓存为基础，覆盖七类框架/应用Agent与五套基准；另测KV取回与表原型。成对比较仅改变复用路由的默认、观察与复用模式，标准radix前缀缓存保持一致；层次重放独立于端到端实验。摘要报告工具输出最高81%、搜索型回复最高92%复用；Qwen3-32B从DRAM取回KV前缀使TTFT最高改善5.6倍。搜索型框架墙钟最高减少87%，测量任务能耗最高减少81%。回复复用是替代率而非无损采样保证；工具失效依赖变化信号及时到达，网页等无信号来源需限作用域。能耗口径含工具层与GPU板级空闲扣除，审计等成本需另核对；大模型外推与分层重放不等于实测。",
+        "affiliationsZh": "未在 DBLP/arXiv 元数据中提供",
+        "tags": [
+          "Agent复用",
+          "对象身份",
+          "KV缓存",
+          "分层内存",
+          "软硬件协同"
+        ],
+        "importance": 5,
+        "researchFitZh": "直接关联 Agent 软硬件协同、KV 分层存储与对象缓存，适合体系结构主线深读。",
+        "hardwareRelevance": 5,
+        "algorithmRelevance": 4,
+        "systemRelevance": 5,
+        "readPriority": "deep-read",
+        "whyReadZh": "优先分析身份表和放置表的接口、失效规则与容量压力，可为Agent内存管理和近存储设计提供具体负载。",
+        "limitationsZh": "回复复用是替代率而非无损采样保证；工具失效依赖变化信号及时到达，网页等无信号来源需限作用域。能耗口径含工具层与GPU板级空闲扣除，审计等成本需另核对；大模型外推与分层重放不等于实测。",
+        "motivationDetail": {
+          "problemZh": "Agent 在多轨迹搜索中反复产生相同工具结果、回复和 KV 前缀，前缀缓存无法覆盖全部冗余。",
+          "gapZh": "仅按输入缓存无法处理状态变化或随机输出；对象被逐出热层后也可能被不必要地重算。",
+          "whyImportantZh": "统一身份与存储位置管理有机会同时降低工具、生成和prefill成本，但必须保护有效性和多样性。",
+          "userRelevanceZh": "直接关联 Agent 软硬件协同、KV 分层存储与对象缓存，适合体系结构主线深读。",
+          "evidence": "已读取公开PDF首页、身份/guard与放置表说明、综合原型和第V节实验与能耗口径；headline数值来自摘要。 来源：https://arxiv.org/pdf/2611.09254"
+        },
+        "methodDetail": {
+          "coreIdeaZh": "输入侧哈希识别请求，输出侧指纹验证和去重内容，类型专用guard决定何时可复用，再由放置表寻找所在层。",
+          "componentsZh": [
+            "主机OIT记录可复用身份",
+            "OPT记录对象在层次内存的驻留与引用",
+            "工具使用状态epoch和作用域，回复使用每键服务上限以限制重复采样"
+          ],
+          "hardwareSystemDetailZh": "OPT 有 RTL 仿真与综合原型；容量压力下的层次存储结果另用功能模型重放，不能全部视为实体硬件部署。",
+          "noveltyZh": "将请求身份、内容身份、复用约束和分层放置统一，覆盖工具输出、模型回复与KV三类对象。",
+          "evidence": "已读取公开PDF首页、身份/guard与放置表说明、综合原型和第V节实验与能耗口径；headline数值来自摘要。 来源：https://arxiv.org/pdf/2611.09254"
+        },
+        "experimentDetail": {
+          "setupZh": "H200 上主要以 Qwen3-14B 和 SGLang 前缀缓存为基础，覆盖七类框架/应用Agent与五套基准；另测KV取回与表原型。",
+          "baselinesZh": "成对比较仅改变复用路由的默认、观察与复用模式，标准radix前缀缓存保持一致；层次重放独立于端到端实验。",
+          "metricsZh": [
+            "工具与回复复用率",
+            "TTFT",
+            "端到端墙钟",
+            "任务能耗",
+            "质量与多样性"
+          ],
+          "mainResultsZh": "摘要报告工具输出最高81%、搜索型回复最高92%复用；Qwen3-32B从DRAM取回KV前缀使TTFT最高改善5.6倍。搜索型框架墙钟最高减少87%，测量任务能耗最高减少81%。",
+          "limitationsZh": "回复复用是替代率而非无损采样保证；工具失效依赖变化信号及时到达，网页等无信号来源需限作用域。能耗口径含工具层与GPU板级空闲扣除，审计等成本需另核对；大模型外推与分层重放不等于实测。",
+          "evidence": "已读取公开PDF首页、身份/guard与放置表说明、综合原型和第V节实验与能耗口径；headline数值来自摘要。 来源：https://arxiv.org/pdf/2611.09254"
+        },
+        "evidence": {
+          "usedSources": [
+            "public/research-digest/daily.json: 原始元数据及完整英文摘要",
+            "https://arxiv.org/pdf/2611.09254"
+          ],
+          "affiliationEvidence": "队列DBLP/arXiv元数据未提供单位，按指定缺省文案记录，未据作者身份推测。",
+          "experimentEvidence": "已读取公开PDF首页、身份/guard与放置表说明、综合原型和第V节实验与能耗口径；headline数值来自摘要。 来源：https://arxiv.org/pdf/2611.09254",
+          "missingFields": [
+            "元数据作者单位",
+            "未完整复核全部质量/审计及重放结果"
+          ]
+        },
+        "confidence": {
+          "summary": 0.9,
+          "motivation": 0.88,
+          "method": 0.85,
+          "experiments": 0.82,
+          "affiliations": 0
+        }
+      },
+      "pushedAt": "2026-11-11T00:38:44.738Z",
+      "emailSentAt": "2026-11-11T00:38:44.738Z",
+      "firstPushedAt": "2026-11-11T00:38:44.738Z"
     },
     {
       "id": "arxiv:2611.00391",
@@ -1191,6 +1451,136 @@
       "pushedAt": "2026-10-31T00:37:30.312Z",
       "emailSentAt": "2026-10-31T00:37:30.312Z",
       "firstPushedAt": "2026-10-31T00:37:30.312Z"
+    },
+    {
+      "id": "arxiv:2611.10316",
+      "source": "arXiv",
+      "title": "The World Model Planning Accelerator (WMPA): Hardware-Algorithm Co-Design for Embedded AI in Robotics",
+      "authors": [
+        "Prerana Ramkumar",
+        "Suhas Suresh Bharadwaj",
+        "Fazal Hameed"
+      ],
+      "authorAffiliations": [],
+      "affiliations": [],
+      "abstract": "Embedded AI is moving from perception to prediction. Robots now use world models$\\unicode{x2014}$learned simulators that predict the outcome of candidate actions in a compressed latent space before any is executed. Every predicted step must be computed on board within a tight power and thermal budget, yet the energy these steps fundamentally require, and how far real hardware sits from it, have not been characterized. We derive lower bounds on the arithmetic operations and the CMOS dynamic energy of a latent state transition from information theory and Boolean circuit complexity. Profiling a DreamerV3-style Recurrent State Space Model (RSSM) shows that every rollout operation is memory-bandwidth bound and that a GPU consumes at least $5.9\\times10^{10}$ times the CMOS energy floor. Transient 3D thermal simulations show that this inefficiency is also a thermal one, since sustained back-to-back planning heats a millimeter-scale silicon tile to 556 K even behind an ideal copper heat spreader. Guided by this chain from bound to bottleneck, we propose the World Model Planning Accelerator (WMPA), a chip architecture for embedded world model planning that combines near-memory computation, real-time entropy estimation, variable-precision rollout units, and copy-on-write latent scratchpads. With a design target of 40x lower power, the same tile stays near ambient at 306 K in simulation, pointing toward practical planning on thermally constrained robots.",
+      "venue": "arXiv",
+      "published": "2026-11-06T23:31:12Z",
+      "updated": "2026-11-06T23:31:12Z",
+      "url": "http://arxiv.org/abs/2611.10316v1",
+      "pdfUrl": "https://arxiv.org/pdf/2611.10316v1",
+      "categories": [
+        "cs.AR",
+        "cs.LG",
+        "cs.RO"
+      ],
+      "collectedAt": "2026-11-10T02:45:18.494Z",
+      "firstSeenAt": "2026-11-10T02:45:18.494Z",
+      "lastSeenAt": "2026-11-10T02:45:18.494Z",
+      "collectionType": "daily-latest",
+      "matchedQuery": "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)",
+      "collectionTypes": [
+        "daily-latest"
+      ],
+      "matchedQueries": [
+        "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)"
+      ],
+      "targetThemes": [],
+      "conferenceVenues": [],
+      "conferenceYears": [],
+      "recommendationTrack": "hardware-primary",
+      "recommendationLabel": "硬件体系结构主线",
+      "recommendationScore": 185.25,
+      "relevanceReason": "命中 PNM/processing-near-memory、近数据计算、memory-side/CXL/HBM 或 AI 处理器体系结构主题",
+      "pdfStatus": "remote",
+      "workflow": {
+        "digestStatus": "ready",
+        "emailStatus": "sent",
+        "digestError": "",
+        "harnessVersion": "paper-reader-v1",
+        "collectStatus": "collected",
+        "pdfStatus": "remote",
+        "harnessCheckedAt": "2026-11-11T00:38:40.148Z",
+        "harnessWarnings": [],
+        "emailSentAt": "2026-11-11T00:38:44.738Z",
+        "lastEmailError": ""
+      },
+      "digest": {
+        "summaryZh": "WMPA 从世界模型 rollout 的带宽和能耗分析提出近存计算、熵估计、可变精度和写时复制状态缓存。其架构仍为概念设计，40倍降功耗是输入目标，热仿真与极宽松能量下界不构成芯片收益实证。",
+        "motivationZh": "机器人需要在功耗和散热限制内反复执行潜在状态预测，通用GPU可能为小型顺序工作负载支付较高数据搬运成本。理论能量下界、实际GPU测量与专用架构目标之间存在巨大差距，不能直接把差距当作可实现收益。嵌入式规划必须共同考虑数据复用、数值精度、带宽和热边界。近存计算与片上状态scratchpad切合体系结构研究，但证据成熟度有限，应作为概念方案审视。",
+        "methodZh": "把GRU与潜在投影放到近SRAM单元，用预测熵启发式控制FP16/INT8/INT4，轨迹共享前缀使用写时复制状态。近存计算单元缩短数据移动。熵估计单元驱动可变精度rollout。潜在状态scratchpad在分支点才复制状态。正文明确为概念芯片；T4为实际profile平台，其他GPU屋顶线为投影，低精度比例和热源分配包含合成假设。把世界模型预测、轨迹共享与精度选择组织为专用架构，但尚需训练策略上的精度验证和实现评估。",
+        "experimentsZh": "DreamerV3风格RSSM，T4上测量；另做屋顶线分析、合成稀疏代理与三维瞬态热仿真。以GPU结构profile和理论CMOS能量地板作分析参考，热模型对比GPU级热源与降低40倍的目标热源。摘要称GPU能耗至少为所选CMOS地板的5.9×10^10倍。热应力场景约556 K；输入40倍低功耗设计目标后约306 K。二者为模型结果，40倍不是测量的加速器节能。热点把板级功率的一部分集中到毫米级tile，作者承认是压力假设；真实控制频率不同。熵低即可安全降精度尚未验证，理论下界极松，未见可支持40倍收益的完整芯片实测。",
+        "affiliationsZh": "未在 DBLP/arXiv 元数据中提供",
+        "tags": [
+          "世界模型规划",
+          "近存计算",
+          "可变精度",
+          "状态复用",
+          "热仿真"
+        ],
+        "importance": 3,
+        "researchFitZh": "近存计算与片上状态scratchpad切合体系结构研究，但证据成熟度有限，应作为概念方案审视。",
+        "hardwareRelevance": 4,
+        "algorithmRelevance": 3,
+        "systemRelevance": 3,
+        "readPriority": "skim",
+        "whyReadZh": "可浏览近存状态复用的设计动机，优先审查低精度质量、热源分配和目标功耗的推导依据。",
+        "limitationsZh": "热点把板级功率的一部分集中到毫米级tile，作者承认是压力假设；真实控制频率不同。熵低即可安全降精度尚未验证，理论下界极松，未见可支持40倍收益的完整芯片实测。",
+        "motivationDetail": {
+          "problemZh": "机器人需要在功耗和散热限制内反复执行潜在状态预测，通用GPU可能为小型顺序工作负载支付较高数据搬运成本。",
+          "gapZh": "理论能量下界、实际GPU测量与专用架构目标之间存在巨大差距，不能直接把差距当作可实现收益。",
+          "whyImportantZh": "嵌入式规划必须共同考虑数据复用、数值精度、带宽和热边界。",
+          "userRelevanceZh": "近存计算与片上状态scratchpad切合体系结构研究，但证据成熟度有限，应作为概念方案审视。",
+          "evidence": "已读取公开HTML的T4实验设置、能量下界数值、热模型假设和第V节概念架构；区分实测、投影与设计目标。 来源：https://arxiv.org/html/2611.10316v1"
+        },
+        "methodDetail": {
+          "coreIdeaZh": "把GRU与潜在投影放到近SRAM单元，用预测熵启发式控制FP16/INT8/INT4，轨迹共享前缀使用写时复制状态。",
+          "componentsZh": [
+            "近存计算单元缩短数据移动",
+            "熵估计单元驱动可变精度rollout",
+            "潜在状态scratchpad在分支点才复制状态"
+          ],
+          "hardwareSystemDetailZh": "正文明确为概念芯片；T4为实际profile平台，其他GPU屋顶线为投影，低精度比例和热源分配包含合成假设。",
+          "noveltyZh": "把世界模型预测、轨迹共享与精度选择组织为专用架构，但尚需训练策略上的精度验证和实现评估。",
+          "evidence": "已读取公开HTML的T4实验设置、能量下界数值、热模型假设和第V节概念架构；区分实测、投影与设计目标。 来源：https://arxiv.org/html/2611.10316v1"
+        },
+        "experimentDetail": {
+          "setupZh": "DreamerV3风格RSSM，T4上测量；另做屋顶线分析、合成稀疏代理与三维瞬态热仿真。",
+          "baselinesZh": "以GPU结构profile和理论CMOS能量地板作分析参考，热模型对比GPU级热源与降低40倍的目标热源。",
+          "metricsZh": [
+            "算术强度",
+            "规划调用能耗",
+            "理论能量差距",
+            "模拟热点温度"
+          ],
+          "mainResultsZh": "摘要称GPU能耗至少为所选CMOS地板的5.9×10^10倍。热应力场景约556 K；输入40倍低功耗设计目标后约306 K。二者为模型结果，40倍不是测量的加速器节能。",
+          "limitationsZh": "热点把板级功率的一部分集中到毫米级tile，作者承认是压力假设；真实控制频率不同。熵低即可安全降精度尚未验证，理论下界极松，未见可支持40倍收益的完整芯片实测。",
+          "evidence": "已读取公开HTML的T4实验设置、能量下界数值、热模型假设和第V节概念架构；区分实测、投影与设计目标。 来源：https://arxiv.org/html/2611.10316v1"
+        },
+        "evidence": {
+          "usedSources": [
+            "public/research-digest/daily.json: 原始元数据及完整英文摘要",
+            "https://arxiv.org/html/2611.10316v1"
+          ],
+          "affiliationEvidence": "队列DBLP/arXiv元数据未提供单位，按指定缺省文案记录，未据作者身份推测。",
+          "experimentEvidence": "已读取公开HTML的T4实验设置、能量下界数值、热模型假设和第V节概念架构；区分实测、投影与设计目标。 来源：https://arxiv.org/html/2611.10316v1",
+          "missingFields": [
+            "元数据作者单位",
+            "完整RTL或芯片实测",
+            "训练策略的低精度精度验证"
+          ]
+        },
+        "confidence": {
+          "summary": 0.9,
+          "motivation": 0.88,
+          "method": 0.85,
+          "experiments": 0.82,
+          "affiliations": 0
+        }
+      },
+      "pushedAt": "2026-11-11T00:38:44.738Z",
+      "emailSentAt": "2026-11-11T00:38:44.738Z",
+      "firstPushedAt": "2026-11-11T00:38:44.738Z"
     },
     {
       "id": "arxiv:2611.04804",
@@ -5410,6 +5800,131 @@
       "firstPushedAt": "2026-10-28T00:29:41.195Z"
     },
     {
+      "id": "arxiv:2611.09441",
+      "source": "arXiv",
+      "title": "Reconstructing intracell polarization with calibrated sapphire-window optics for collimated blue-light generation in a rubidium cell",
+      "authors": [
+        "Sarah Ashby",
+        "David Bostanjyan",
+        "Mikayel Khanbekyan"
+      ],
+      "authorAffiliations": [],
+      "affiliations": [],
+      "abstract": "We study the polarization dependence of collimated blue light (CBL) generated near 420~nm by resonant four-wave mixing in thermal rubidium vapor in a sapphire-window cell driven at 780 and 776~nm. Sapphire windows can transform the polarization of pump light before it reaches the vapor, complicating the interpretation of polarization-dependent nonlinear emission. We measured the 780-nm pump Stokes state at an external before-cell reference plane to calibrate the common HWP/QWP preparation optics and recorded 266 off-resonant external output Stokes states after the complete sapphire-window rubidium cell at 90, 100, and 110~$^\\circ$C in two propagation orientations. Direct paired-wavelength measurements show a mean before-cell 780/776 separation of $4.29^\\circ$ and temperature- and orientation-specific complete-cell rotations of $22.20^\\circ$--$32.02^\\circ$, with rms residuals of $4.83^\\circ$--$12.87^\\circ$. Using this calibrated co-prepared pump description, we analyzed 2574 measurements of total spectrally filtered 420-nm CBL intensity. Across the six temperature--orientation data sets, a complete nine-coefficient second-order response yielded cross-validated $R^2$ values of 0.636 to 0.828. These paired-wavelength measurements establish, for each temperature--orientation data set, a fixed relative Stokes-space map between the two co-prepared pump trajectories, with the residual of this mapping defining the experimental uncertainty of the correlated two-pump reduction used in the response model. Thus, the resulting framework combines a reconstructed vapor-entrance polarization coordinate with direct two-wavelength calibration of the assembled cell and provides a practical basis for polarization-controlled nonlinear-optical experiments in sapphire-window vapor cells.",
+      "venue": "arXiv",
+      "published": "2026-11-06T13:15:12Z",
+      "updated": "2026-11-06T13:15:12Z",
+      "url": "http://arxiv.org/abs/2611.09441v1",
+      "pdfUrl": "https://arxiv.org/pdf/2611.09441v1",
+      "categories": [
+        "physics.optics",
+        "physics.atom-ph",
+        "quant-ph"
+      ],
+      "collectedAt": "2026-11-10T02:45:18.495Z",
+      "firstSeenAt": "2026-11-10T02:45:18.495Z",
+      "lastSeenAt": "2026-11-10T02:45:18.495Z",
+      "collectionType": "daily-latest",
+      "matchedQuery": "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)",
+      "collectionTypes": [
+        "daily-latest"
+      ],
+      "matchedQueries": [
+        "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)"
+      ],
+      "targetThemes": [],
+      "conferenceVenues": [],
+      "conferenceYears": [],
+      "recommendationTrack": "hardware-primary",
+      "recommendationLabel": "硬件体系结构主线",
+      "recommendationScore": 149,
+      "relevanceReason": "命中 AI 处理器、体系结构、量化、训推系统或内存/缓存优化主题",
+      "pdfStatus": "remote",
+      "workflow": {
+        "digestStatus": "ready",
+        "emailStatus": "sent",
+        "digestError": "",
+        "harnessVersion": "paper-reader-v1",
+        "collectStatus": "collected",
+        "pdfStatus": "remote",
+        "harnessCheckedAt": "2026-11-11T00:38:40.148Z",
+        "harnessWarnings": [],
+        "emailSentAt": "2026-11-11T00:38:44.738Z",
+        "lastEmailError": ""
+      },
+      "digest": {
+        "summaryZh": "该光学工作通过外部双波长偏振测量校准蓝宝石窗口铷蒸气池，重构泵浦入射偏振并拟合蓝光响应。它研究非线性光学实验的校准误差，与 AI 处理器、LLM 推理或内存体系结构没有直接关系。",
+        "motivationZh": "蓝宝石窗口会改变泵浦进入蒸气前的偏振，使蓝光强度对偏振的关系难以解释。仅用外部制备角度或单波长近似，不能充分描述两个泵浦在完整池中的相对变化。需要把窗口引起的变换与真正的非线性介质响应分离，才能可靠控制偏振实验。该文属于原子光学而非AI计算架构，队列的硬件主线标签与实际主题不符，宜归档。",
+        "methodZh": "先校准共同半波/四分之一波制备光路，再以成对780/776 nm测量建立相对Stokes映射并拟合二阶强度响应。外部参考平面校准。跨温度与方向的完整池偏振测量。交叉验证二阶响应与映射残差。实验器件是蓝宝石窗口铷蒸气池与光学偏振测量装置，不是光计算或AI加速芯片。将可重构的蒸气入口偏振坐标与直接双波长校准结合，并用残差明确近似误差。",
+        "experimentsZh": "在90、100、110℃和两个传播方向测266组离共振Stokes状态，并分析2574组420 nm蓝光强度。比较圆度/一阶与二阶响应模型；本轮未逐项复核各模型完整结果表。摘要报告池前双波长平均分离4.29°，完整池旋转22.20–32.02°，残差4.83–12.87°；九系数二阶模型R²为0.636–0.828。结果限具体装置、温度和方向，偏振重构存在测量残差；不能据此推断AI硬件效率或通用器件性能。",
+        "affiliationsZh": "未在 DBLP/arXiv 元数据中提供",
+        "tags": [
+          "偏振校准",
+          "铷蒸气池",
+          "非线性光学"
+        ],
+        "importance": 1,
+        "researchFitZh": "该文属于原子光学而非AI计算架构，队列的硬件主线标签与实际主题不符，宜归档。",
+        "hardwareRelevance": 1,
+        "algorithmRelevance": 1,
+        "systemRelevance": 1,
+        "readPriority": "archive",
+        "whyReadZh": "与当前AI芯片和低比特注意力研究不匹配，可归档，无需投入主线阅读时间。",
+        "limitationsZh": "结果限具体装置、温度和方向，偏振重构存在测量残差；不能据此推断AI硬件效率或通用器件性能。",
+        "motivationDetail": {
+          "problemZh": "蓝宝石窗口会改变泵浦进入蒸气前的偏振，使蓝光强度对偏振的关系难以解释。",
+          "gapZh": "仅用外部制备角度或单波长近似，不能充分描述两个泵浦在完整池中的相对变化。",
+          "whyImportantZh": "需要把窗口引起的变换与真正的非线性介质响应分离，才能可靠控制偏振实验。",
+          "userRelevanceZh": "该文属于原子光学而非AI计算架构，队列的硬件主线标签与实际主题不符，宜归档。",
+          "evidence": "已读取公开HTML摘要与引言，具体实验条件和数值均来自队列完整摘要及公开摘要。 来源：https://arxiv.org/html/2611.09441v1"
+        },
+        "methodDetail": {
+          "coreIdeaZh": "先校准共同半波/四分之一波制备光路，再以成对780/776 nm测量建立相对Stokes映射并拟合二阶强度响应。",
+          "componentsZh": [
+            "外部参考平面校准",
+            "跨温度与方向的完整池偏振测量",
+            "交叉验证二阶响应与映射残差"
+          ],
+          "hardwareSystemDetailZh": "实验器件是蓝宝石窗口铷蒸气池与光学偏振测量装置，不是光计算或AI加速芯片。",
+          "noveltyZh": "将可重构的蒸气入口偏振坐标与直接双波长校准结合，并用残差明确近似误差。",
+          "evidence": "已读取公开HTML摘要与引言，具体实验条件和数值均来自队列完整摘要及公开摘要。 来源：https://arxiv.org/html/2611.09441v1"
+        },
+        "experimentDetail": {
+          "setupZh": "在90、100、110℃和两个传播方向测266组离共振Stokes状态，并分析2574组420 nm蓝光强度。",
+          "baselinesZh": "比较圆度/一阶与二阶响应模型；本轮未逐项复核各模型完整结果表。",
+          "metricsZh": [
+            "Stokes映射旋转及均方根残差",
+            "交叉验证R²"
+          ],
+          "mainResultsZh": "摘要报告池前双波长平均分离4.29°，完整池旋转22.20–32.02°，残差4.83–12.87°；九系数二阶模型R²为0.636–0.828。",
+          "limitationsZh": "结果限具体装置、温度和方向，偏振重构存在测量残差；不能据此推断AI硬件效率或通用器件性能。",
+          "evidence": "已读取公开HTML摘要与引言，具体实验条件和数值均来自队列完整摘要及公开摘要。 来源：https://arxiv.org/html/2611.09441v1"
+        },
+        "evidence": {
+          "usedSources": [
+            "public/research-digest/daily.json: 原始元数据及完整英文摘要",
+            "https://arxiv.org/html/2611.09441v1"
+          ],
+          "affiliationEvidence": "队列DBLP/arXiv元数据未提供单位，按指定缺省文案记录，未据作者身份推测。",
+          "experimentEvidence": "已读取公开HTML摘要与引言，具体实验条件和数值均来自队列完整摘要及公开摘要。 来源：https://arxiv.org/html/2611.09441v1",
+          "missingFields": [
+            "元数据作者单位",
+            "未逐项读取完整实验表"
+          ]
+        },
+        "confidence": {
+          "summary": 0.9,
+          "motivation": 0.88,
+          "method": 0.85,
+          "experiments": 0.82,
+          "affiliations": 0
+        }
+      },
+      "pushedAt": "2026-11-11T00:38:44.738Z",
+      "emailSentAt": "2026-11-11T00:38:44.738Z",
+      "firstPushedAt": "2026-11-11T00:38:44.738Z"
+    },
+    {
       "id": "arxiv:2611.04411",
       "source": "arXiv",
       "title": "TxBench: A Benchmark of Attack Transactions and Evidence-Backed Negatives on Seven EVM Chains",
@@ -6041,6 +6556,135 @@
       "pushedAt": "2026-10-24T14:49:32.084Z",
       "emailSentAt": "2026-10-24T14:49:32.084Z",
       "firstPushedAt": "2026-10-24T14:49:32.084Z"
+    },
+    {
+      "id": "arxiv:2611.10209",
+      "source": "arXiv",
+      "title": "Compact Greek Language Models from Scratch: Pretraining 500M- and 1B-Parameter Decoder-Only Transformers",
+      "authors": [
+        "Konstantinos Perifanos",
+        "Anne Laure Poite",
+        "Giannis Tsilikas",
+        "Ilias Katis",
+        "Stavros Deligiannidis",
+        "Dionysis Goutsos"
+      ],
+      "authorAffiliations": [],
+      "affiliations": [],
+      "abstract": "We present two compact decoder-only language models trained from scratch exclusively on Greek text: LexisLM-1B (1.09B parameters) and LexisLM-500M (502M parameters). Both use a dedicated 32k byte-level BPE tokenizer and a 22B-token pretraining corpus drawn primarily from Greek Wikipedia and FineWeb2. Both models complete the 22B-token schedule, with best held-out perplexities of 9.77 for LexisLM-1B and 11.31 for LexisLM-500M. Evaluation of both models on Greek-translated ARC, MMLU, and TruthfulQA shows above-chance performance on ARC-Easy, while ARC-Challenge and MMLU remain near chance. We also perform supervised fine-tuning of both models on Greek instruction data, primarily EuroAlpaca, reaching held-out instruction perplexities of 7.12 for LexisLM-500M and 6.37 for LexisLM-1B. The report describes the tokenizer, data preparation, training, and evaluation methods, providing a foundation for further work on compact Greek language models.",
+      "venue": "arXiv",
+      "published": "2026-11-06T20:53:28Z",
+      "updated": "2026-11-06T20:53:28Z",
+      "url": "http://arxiv.org/abs/2611.10209v1",
+      "pdfUrl": "https://arxiv.org/pdf/2611.10209v1",
+      "categories": [
+        "cs.CL"
+      ],
+      "collectedAt": "2026-11-10T02:45:18.494Z",
+      "firstSeenAt": "2026-11-10T02:45:18.494Z",
+      "lastSeenAt": "2026-11-10T02:45:18.494Z",
+      "collectionType": "daily-latest",
+      "matchedQuery": "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)",
+      "collectionTypes": [
+        "daily-latest"
+      ],
+      "matchedQueries": [
+        "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)"
+      ],
+      "targetThemes": [],
+      "conferenceVenues": [],
+      "conferenceYears": [],
+      "recommendationTrack": "hardware-primary",
+      "recommendationLabel": "硬件体系结构主线",
+      "recommendationScore": 147,
+      "relevanceReason": "命中 AI 处理器、体系结构、量化、训推系统或内存/缓存优化主题",
+      "pdfStatus": "remote",
+      "workflow": {
+        "digestStatus": "ready",
+        "emailStatus": "sent",
+        "digestError": "",
+        "harnessVersion": "paper-reader-v1",
+        "collectStatus": "collected",
+        "pdfStatus": "remote",
+        "harnessCheckedAt": "2026-11-11T00:38:40.148Z",
+        "harnessWarnings": [],
+        "emailSentAt": "2026-11-11T00:38:44.738Z",
+        "lastEmailError": ""
+      },
+      "digest": {
+        "summaryZh": "LexisLM 从零训练两种紧凑希腊语解码模型，使用专用分词器和统一预训练、指令微调方案。困惑度随规模改善，但部分推理基准仍接近随机水平，属于低资源语言模型报告而非硬件效率研究。",
+        "motivationZh": "希腊语生成模型多沿用多语言权重，需要了解小规模单语从零训练的能力边界。模型体积缩小并不保证知识和推理任务可用，需要同时报告语言建模与翻译后的任务评测。低资源语言模型的部署价值取决于真实任务能力，而非仅看参数量和困惑度。属于小模型与训练数据趋势，对片上部署有间接负载参考，但没有直接的量化或芯片方案。",
+        "methodZh": "用专用32k字节级BPE和希腊语语料，从随机初始化训练502M与1.09B解码器，再以希腊语指令数据微调。准备以Greek Wikipedia和FineWeb2为主的语料。两种规模共享训练配方。采用EuroAlpaca为主的指令微调并评估。本轮阅读范围未核对训练设备、推理时延或能耗，不能把紧凑参数量直接等同硬件加速。贡献是特定语言与规模的可比较训练及评测报告，不是首创小型单语模型或新微架构。",
+        "experimentsZh": "两种模型均训练22B token，并评估希腊语翻译的ARC、MMLU、TruthfulQA及指令验证集。比较两种模型规模与微调前后；本轮未核对与其他模型的匹配训练预算对照。1B/500M最佳预训练困惑度9.77/11.31；ARC-Easy高于随机，ARC-Challenge与MMLU仍近随机。微调后500M/1B指令困惑度7.12/6.37。困惑度依赖分词和数据分布，不能据其降低推断推理能力；缺少本轮已核对的硬件成本和等预算模型比较。",
+        "affiliationsZh": "未在 DBLP/arXiv 元数据中提供",
+        "tags": [
+          "希腊语模型",
+          "紧凑语言模型",
+          "从零预训练",
+          "低资源语言"
+        ],
+        "importance": 2,
+        "researchFitZh": "属于小模型与训练数据趋势，对片上部署有间接负载参考，但没有直接的量化或芯片方案。",
+        "hardwareRelevance": 1,
+        "algorithmRelevance": 3,
+        "systemRelevance": 2,
+        "readPriority": "archive",
+        "whyReadZh": "可作为低资源小模型训练边界的趋势记录，当前架构主线只需关注能力与成本未充分挂钩的限制。",
+        "limitationsZh": "困惑度依赖分词和数据分布，不能据其降低推断推理能力；缺少本轮已核对的硬件成本和等预算模型比较。",
+        "motivationDetail": {
+          "problemZh": "希腊语生成模型多沿用多语言权重，需要了解小规模单语从零训练的能力边界。",
+          "gapZh": "模型体积缩小并不保证知识和推理任务可用，需要同时报告语言建模与翻译后的任务评测。",
+          "whyImportantZh": "低资源语言模型的部署价值取决于真实任务能力，而非仅看参数量和困惑度。",
+          "userRelevanceZh": "属于小模型与训练数据趋势，对片上部署有间接负载参考，但没有直接的量化或芯片方案。",
+          "evidence": "已读取公开HTML引言与贡献、队列完整摘要；数值据摘要，未核对全文训练设备和全部基准表。 来源：https://arxiv.org/html/2611.10209v1"
+        },
+        "methodDetail": {
+          "coreIdeaZh": "用专用32k字节级BPE和希腊语语料，从随机初始化训练502M与1.09B解码器，再以希腊语指令数据微调。",
+          "componentsZh": [
+            "准备以Greek Wikipedia和FineWeb2为主的语料",
+            "两种规模共享训练配方",
+            "采用EuroAlpaca为主的指令微调并评估"
+          ],
+          "hardwareSystemDetailZh": "本轮阅读范围未核对训练设备、推理时延或能耗，不能把紧凑参数量直接等同硬件加速。",
+          "noveltyZh": "贡献是特定语言与规模的可比较训练及评测报告，不是首创小型单语模型或新微架构。",
+          "evidence": "已读取公开HTML引言与贡献、队列完整摘要；数值据摘要，未核对全文训练设备和全部基准表。 来源：https://arxiv.org/html/2611.10209v1"
+        },
+        "experimentDetail": {
+          "setupZh": "两种模型均训练22B token，并评估希腊语翻译的ARC、MMLU、TruthfulQA及指令验证集。",
+          "baselinesZh": "比较两种模型规模与微调前后；本轮未核对与其他模型的匹配训练预算对照。",
+          "metricsZh": [
+            "留出困惑度",
+            "ARC与MMLU任务得分",
+            "指令验证困惑度"
+          ],
+          "mainResultsZh": "1B/500M最佳预训练困惑度9.77/11.31；ARC-Easy高于随机，ARC-Challenge与MMLU仍近随机。微调后500M/1B指令困惑度7.12/6.37。",
+          "limitationsZh": "困惑度依赖分词和数据分布，不能据其降低推断推理能力；缺少本轮已核对的硬件成本和等预算模型比较。",
+          "evidence": "已读取公开HTML引言与贡献、队列完整摘要；数值据摘要，未核对全文训练设备和全部基准表。 来源：https://arxiv.org/html/2611.10209v1"
+        },
+        "evidence": {
+          "usedSources": [
+            "public/research-digest/daily.json: 原始元数据及完整英文摘要",
+            "https://arxiv.org/html/2611.10209v1"
+          ],
+          "affiliationEvidence": "队列DBLP/arXiv元数据未提供单位，按指定缺省文案记录，未据作者身份推测。",
+          "experimentEvidence": "已读取公开HTML引言与贡献、队列完整摘要；数值据摘要，未核对全文训练设备和全部基准表。 来源：https://arxiv.org/html/2611.10209v1",
+          "missingFields": [
+            "元数据作者单位",
+            "训练硬件和推理性能的本轮核对",
+            "完整基准分项"
+          ]
+        },
+        "confidence": {
+          "summary": 0.9,
+          "motivation": 0.88,
+          "method": 0.85,
+          "experiments": 0.82,
+          "affiliations": 0
+        }
+      },
+      "pushedAt": "2026-11-11T00:38:44.738Z",
+      "emailSentAt": "2026-11-11T00:38:44.738Z",
+      "firstPushedAt": "2026-11-11T00:38:44.738Z"
     },
     {
       "id": "arxiv:2611.08489",
@@ -6991,6 +7635,133 @@
         "emailStatus": "sent",
         "pdfStatus": "remote"
       }
+    },
+    {
+      "id": "arxiv:2611.09662",
+      "source": "arXiv",
+      "title": "How Much Conversation History Does an AI Agent Need?",
+      "authors": [
+        "Danny Kim",
+        "Fernando Koch"
+      ],
+      "authorAffiliations": [],
+      "affiliations": [],
+      "abstract": "How does using less conversational history change reader-token use and benchmark scores? We examine this question on 1,100 BEAM questions. We held the retrieval ranking and reader constant across five fixed passage budgets, and mean assigned scores rose as the passage budget grew. The score gain per additional token became smaller at the upper tested budgets. Answerable questions generally received higher scores with more context. Pooled abstention scores sometimes rose as the passage budget shrank. We also tested message retention in a controlled task with explicit conversational-state targets and compared retained user messages with token-matched recency. Qwen matched the full state more often for direct requirements when user messages were retained. Its full-state matching declined when answers depended on references to earlier offers. Mistral produced near-floor results across the retention conditions. A scoring audit leaves the correctness of BEAM answers unresolved. These experiments characterize the token and score consequences of the tested memory budgets. Reliable budget selection depends on retaining the evidence each question requires and validating the measure used to assess answer quality.",
+      "venue": "arXiv",
+      "published": "2026-11-06T16:09:04Z",
+      "updated": "2026-11-06T16:09:04Z",
+      "url": "http://arxiv.org/abs/2611.09662v1",
+      "pdfUrl": "https://arxiv.org/pdf/2611.09662v1",
+      "categories": [
+        "cs.CL",
+        "cs.AI"
+      ],
+      "collectedAt": "2026-11-10T02:45:18.495Z",
+      "firstSeenAt": "2026-11-10T02:45:18.495Z",
+      "lastSeenAt": "2026-11-10T02:45:18.495Z",
+      "collectionType": "daily-latest",
+      "matchedQuery": "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)",
+      "collectionTypes": [
+        "daily-latest"
+      ],
+      "matchedQueries": [
+        "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)"
+      ],
+      "targetThemes": [],
+      "conferenceVenues": [],
+      "conferenceYears": [],
+      "recommendationTrack": "hardware-primary",
+      "recommendationLabel": "硬件体系结构主线",
+      "recommendationScore": 143.5,
+      "relevanceReason": "命中 AI 处理器、体系结构、量化、训推系统或内存/缓存优化主题",
+      "pdfStatus": "remote",
+      "workflow": {
+        "digestStatus": "ready",
+        "emailStatus": "sent",
+        "digestError": "",
+        "harnessVersion": "paper-reader-v1",
+        "collectStatus": "collected",
+        "pdfStatus": "remote",
+        "harnessCheckedAt": "2026-11-11T00:38:40.148Z",
+        "harnessWarnings": [],
+        "emailSentAt": "2026-11-11T00:38:44.738Z",
+        "lastEmailError": ""
+      },
+      "digest": {
+        "summaryZh": "论文在固定检索排序与阅读器下改变会话历史预算，观察token成本与评分变化，并测试消息保留方式。评分审计不能确认BEAM答案正确性，因此结果不能解释为已找到可靠的最优历史长度。",
+        "motivationZh": "减少Agent会话历史可节省阅读token，却可能删去回答所需证据和跨消息依赖。预算下降带来的评分变化不等于真实正确率变化，保留直接要求也不一定保留引用关系。上下文压缩需同时验证证据覆盖和评价可靠性，否则省token结论缺乏任务保证。关联Agent上下文管理与KV容量需求，但属于策略评测而非直接的KV硬件管理算法。",
+        "methodZh": "保持检索排序和阅读模型固定，改变供给段落数，再用受控状态任务比较保留用户消息与等token近期消息。BEAM五档固定段落预算的成对比较。区分可回答与应弃答问题。评分过程审计和显式状态匹配实验。成本仅统计阅读器输入输出token，排除检索、准备和评分；不是端到端GPU时延或能耗实验。把预算节省、消息证据依赖和评分可信度分开检验，避免将评分提高直接视为正确性提高。",
+        "experimentsZh": "1100个BEAM问题，固定BM25排序和Qwen2.5-14B阅读器；状态任务另比较Qwen与Mistral的保留策略。段落数1/3/5/10/20；消息保留对照为等token近期策略，而不是无约束全文比较。段落越多平均评分越高但高预算边际收益减小；Qwen在直接要求上更受益于保留用户消息，涉及先前提议引用时下降，Mistral各条件近地板。评分审计使答案正确性仍未解决。BEAM评分不是完全正确答案比例，原评分器缺少问题和全文历史；不能导出通用最优budget，token成本也不等于全流水线成本。",
+        "affiliationsZh": "未在 DBLP/arXiv 元数据中提供",
+        "tags": [
+          "Agent记忆",
+          "上下文预算",
+          "证据保留",
+          "评价可靠性"
+        ],
+        "importance": 3,
+        "researchFitZh": "关联Agent上下文管理与KV容量需求，但属于策略评测而非直接的KV硬件管理算法。",
+        "hardwareRelevance": 2,
+        "algorithmRelevance": 3,
+        "systemRelevance": 3,
+        "readPriority": "skim",
+        "whyReadZh": "适合为上下文压缩或KV淘汰研究设计质量控制，重点关注被保留证据与真实正确性是否一致。",
+        "limitationsZh": "BEAM评分不是完全正确答案比例，原评分器缺少问题和全文历史；不能导出通用最优budget，token成本也不等于全流水线成本。",
+        "motivationDetail": {
+          "problemZh": "减少Agent会话历史可节省阅读token，却可能删去回答所需证据和跨消息依赖。",
+          "gapZh": "预算下降带来的评分变化不等于真实正确率变化，保留直接要求也不一定保留引用关系。",
+          "whyImportantZh": "上下文压缩需同时验证证据覆盖和评价可靠性，否则省token结论缺乏任务保证。",
+          "userRelevanceZh": "关联Agent上下文管理与KV容量需求，但属于策略评测而非直接的KV硬件管理算法。",
+          "evidence": "已读取公开HTML实验第3节的预算、模型、评分口径与审计；结果方向据队列完整摘要。 来源：https://arxiv.org/html/2611.09662v1"
+        },
+        "methodDetail": {
+          "coreIdeaZh": "保持检索排序和阅读模型固定，改变供给段落数，再用受控状态任务比较保留用户消息与等token近期消息。",
+          "componentsZh": [
+            "BEAM五档固定段落预算的成对比较",
+            "区分可回答与应弃答问题",
+            "评分过程审计和显式状态匹配实验"
+          ],
+          "hardwareSystemDetailZh": "成本仅统计阅读器输入输出token，排除检索、准备和评分；不是端到端GPU时延或能耗实验。",
+          "noveltyZh": "把预算节省、消息证据依赖和评分可信度分开检验，避免将评分提高直接视为正确性提高。",
+          "evidence": "已读取公开HTML实验第3节的预算、模型、评分口径与审计；结果方向据队列完整摘要。 来源：https://arxiv.org/html/2611.09662v1"
+        },
+        "experimentDetail": {
+          "setupZh": "1100个BEAM问题，固定BM25排序和Qwen2.5-14B阅读器；状态任务另比较Qwen与Mistral的保留策略。",
+          "baselinesZh": "段落数1/3/5/10/20；消息保留对照为等token近期策略，而不是无约束全文比较。",
+          "metricsZh": [
+            "阅读token数量",
+            "平均rubric评分",
+            "完整状态匹配",
+            "弃答分组表现"
+          ],
+          "mainResultsZh": "段落越多平均评分越高但高预算边际收益减小；Qwen在直接要求上更受益于保留用户消息，涉及先前提议引用时下降，Mistral各条件近地板。评分审计使答案正确性仍未解决。",
+          "limitationsZh": "BEAM评分不是完全正确答案比例，原评分器缺少问题和全文历史；不能导出通用最优budget，token成本也不等于全流水线成本。",
+          "evidence": "已读取公开HTML实验第3节的预算、模型、评分口径与审计；结果方向据队列完整摘要。 来源：https://arxiv.org/html/2611.09662v1"
+        },
+        "evidence": {
+          "usedSources": [
+            "public/research-digest/daily.json: 原始元数据及完整英文摘要",
+            "https://arxiv.org/html/2611.09662v1"
+          ],
+          "affiliationEvidence": "队列DBLP/arXiv元数据未提供单位，按指定缺省文案记录，未据作者身份推测。",
+          "experimentEvidence": "已读取公开HTML实验第3节的预算、模型、评分口径与审计；结果方向据队列完整摘要。 来源：https://arxiv.org/html/2611.09662v1",
+          "missingFields": [
+            "元数据作者单位",
+            "可靠的BEAM源证据正确性结论",
+            "直接硬件性能测量"
+          ]
+        },
+        "confidence": {
+          "summary": 0.9,
+          "motivation": 0.88,
+          "method": 0.85,
+          "experiments": 0.82,
+          "affiliations": 0
+        }
+      },
+      "pushedAt": "2026-11-11T00:38:44.738Z",
+      "emailSentAt": "2026-11-11T00:38:44.738Z",
+      "firstPushedAt": "2026-11-11T00:38:44.738Z"
     },
     {
       "id": "arxiv:2611.00290",
@@ -18249,6 +19020,133 @@
       "firstPushedAt": "2026-10-28T00:29:41.195Z"
     },
     {
+      "id": "arxiv:2611.10457",
+      "source": "arXiv",
+      "title": "Represented but Not Used: Value-Policy Dissociation in LLM Agents",
+      "authors": [
+        "Yuzhang Luo",
+        "Mohamed Aghzal",
+        "Liangming Pan",
+        "Ziyu Yao"
+      ],
+      "authorAffiliations": [],
+      "affiliations": [],
+      "abstract": "Large language model (LLM) agents need to choose actions whose consequences unfold over multiple future steps, yet poor decisions do not reveal whether the model failed to represent those consequences or failed to use them. Mechanistic interpretability has studied internal representations of environment state and plans, but sequential decision making also requires evaluating how candidate actions change future outcomes. Reinforcement learning formalizes this as action value. We study this computation in Qwen2.5-7B-Instruct, Qwen2.5-32B-Instruct, and GPT-OSS-20B across a partially observed Grid environment and WebShop, a simulated web shopping environment. We find that the relative values of candidate actions are linearly decodable from intermediate hidden states, including at states where the policy prefers a worse action. We call this gap between value representation and policy choice value-policy dissociation. To investigate how represented value relates to action selection, we compare direct interventions along the value readout direction with Natural Value Transport (NVT), a transformation learned from hidden state changes that naturally result from differences in action value. While readout-direction interventions have limited and inconsistent effects, NVT more consistently influences action preferences, particularly at later layers. We also test a closed-loop controller that uses the value readout as a sensor and NVT as an actuator, observing improvements in task outcomes. These results suggest that LLM agents can represent useful prospective value without reliably translating it into policy choice.",
+      "venue": "arXiv",
+      "published": "2026-11-07T04:17:31Z",
+      "updated": "2026-11-07T04:17:31Z",
+      "url": "http://arxiv.org/abs/2611.10457v1",
+      "pdfUrl": "https://arxiv.org/pdf/2611.10457v1",
+      "categories": [
+        "cs.AI"
+      ],
+      "collectedAt": "2026-11-10T02:45:20.394Z",
+      "firstSeenAt": "2026-11-10T02:45:20.394Z",
+      "lastSeenAt": "2026-11-10T02:45:20.394Z",
+      "collectionType": "daily-latest",
+      "matchedQuery": "(all:agent OR all:agents OR all:agentic OR all:reasoning OR all:post-training OR all:alignment OR all:multimodal OR all:world-model) AND (all:LLM OR all:foundation OR all:language)",
+      "collectionTypes": [
+        "daily-latest"
+      ],
+      "matchedQueries": [
+        "(all:agent OR all:agents OR all:agentic OR all:reasoning OR all:post-training OR all:alignment OR all:multimodal OR all:world-model) AND (all:LLM OR all:foundation OR all:language)"
+      ],
+      "targetThemes": [],
+      "conferenceVenues": [],
+      "conferenceYears": [],
+      "recommendationTrack": "algorithm-trend",
+      "recommendationLabel": "算法趋势观察",
+      "recommendationScore": 40.2,
+      "relevanceReason": "命中 LLM/Agent/多模态/后训练等算法趋势主题",
+      "pdfStatus": "remote",
+      "workflow": {
+        "digestStatus": "ready",
+        "emailStatus": "sent",
+        "digestError": "",
+        "harnessVersion": "paper-reader-v1",
+        "collectStatus": "collected",
+        "pdfStatus": "remote",
+        "harnessCheckedAt": "2026-11-11T00:38:40.148Z",
+        "harnessWarnings": [],
+        "emailSentAt": "2026-11-11T00:38:44.738Z",
+        "lastEmailError": ""
+      },
+      "digest": {
+        "summaryZh": "研究发现LLM Agent隐藏状态中可线性读出候选动作价值，即使策略最终选择较差动作。NVT依据自然价值变化学习干预，配合读出反馈改善任务表现，说明可表示的信息不一定被决策使用。",
+        "motivationZh": "Agent选择错误动作可能源于未表示未来后果，也可能源于未利用已形成的价值信息。仅观察最终行为或线性探针准确率，不能说明价值表示是否能因果影响策略。区分表示与使用有助于定位多步决策失效环节和设计有针对性的控制。属于Agent机制解释与决策算法趋势，对硬件架构只有间接工作负载意义。",
+        "methodZh": "从中间状态学习相对动作价值读出，比较沿读出方向的直接干预与自然价值变化学习出的NVT变换。线性探针评估价值排序。NVT学习自然隐藏状态差分。闭环控制以读出为传感器、NVT为执行器。这是隐藏状态分析与干预算法；本轮证据没有支持其带来芯片吞吐、显存或能耗节约。将价值可读性与策略可控性分离，并用自然表示变化构造干预而非仅沿线性读出方向移动。",
+        "experimentsZh": "Qwen2.5-7B/32B-Instruct与GPT-OSS-20B，测试部分可观察Grid和模拟WebShop。比较原策略、价值读出方向干预与NVT；本轮未逐项核对全部控制消融数值。摘要报告较差决策状态仍可读出正确的相对价值；直接读出方向干预效果有限且不稳定，NVT尤其在后层更一致改变偏好，闭环控制改善任务结果；不补写未核对的提升数值。价值标签为任务特定构造，线性可读不证明模型实际采用相同价值计算；受限环境结果不能泛化为通用Agent控制保证。",
+        "affiliationsZh": "未在 DBLP/arXiv 元数据中提供",
+        "tags": [
+          "Agent决策",
+          "机制可解释性",
+          "价值读出",
+          "隐藏状态干预"
+        ],
+        "importance": 3,
+        "researchFitZh": "属于Agent机制解释与决策算法趋势，对硬件架构只有间接工作负载意义。",
+        "hardwareRelevance": 1,
+        "algorithmRelevance": 4,
+        "systemRelevance": 2,
+        "readPriority": "skim",
+        "whyReadZh": "可浏览探针与干预之间的差异，为Agent推理研究提供方法线索，硬件主线无需优先深读。",
+        "limitationsZh": "价值标签为任务特定构造，线性可读不证明模型实际采用相同价值计算；受限环境结果不能泛化为通用Agent控制保证。",
+        "motivationDetail": {
+          "problemZh": "Agent选择错误动作可能源于未表示未来后果，也可能源于未利用已形成的价值信息。",
+          "gapZh": "仅观察最终行为或线性探针准确率，不能说明价值表示是否能因果影响策略。",
+          "whyImportantZh": "区分表示与使用有助于定位多步决策失效环节和设计有针对性的控制。",
+          "userRelevanceZh": "属于Agent机制解释与决策算法趋势，对硬件架构只有间接工作负载意义。",
+          "evidence": "已读取公开HTML摘要、模型环境与价值目标设定；干预结论来自队列完整摘要，未逐项复核闭环结果表。 来源：https://arxiv.org/html/2611.10457v1"
+        },
+        "methodDetail": {
+          "coreIdeaZh": "从中间状态学习相对动作价值读出，比较沿读出方向的直接干预与自然价值变化学习出的NVT变换。",
+          "componentsZh": [
+            "线性探针评估价值排序",
+            "NVT学习自然隐藏状态差分",
+            "闭环控制以读出为传感器、NVT为执行器"
+          ],
+          "hardwareSystemDetailZh": "这是隐藏状态分析与干预算法；本轮证据没有支持其带来芯片吞吐、显存或能耗节约。",
+          "noveltyZh": "将价值可读性与策略可控性分离，并用自然表示变化构造干预而非仅沿线性读出方向移动。",
+          "evidence": "已读取公开HTML摘要、模型环境与价值目标设定；干预结论来自队列完整摘要，未逐项复核闭环结果表。 来源：https://arxiv.org/html/2611.10457v1"
+        },
+        "experimentDetail": {
+          "setupZh": "Qwen2.5-7B/32B-Instruct与GPT-OSS-20B，测试部分可观察Grid和模拟WebShop。",
+          "baselinesZh": "比较原策略、价值读出方向干预与NVT；本轮未逐项核对全部控制消融数值。",
+          "metricsZh": [
+            "候选动作价值排序",
+            "策略偏好变化",
+            "Grid成功与WebShop奖励"
+          ],
+          "mainResultsZh": "摘要报告较差决策状态仍可读出正确的相对价值；直接读出方向干预效果有限且不稳定，NVT尤其在后层更一致改变偏好，闭环控制改善任务结果；不补写未核对的提升数值。",
+          "limitationsZh": "价值标签为任务特定构造，线性可读不证明模型实际采用相同价值计算；受限环境结果不能泛化为通用Agent控制保证。",
+          "evidence": "已读取公开HTML摘要、模型环境与价值目标设定；干预结论来自队列完整摘要，未逐项复核闭环结果表。 来源：https://arxiv.org/html/2611.10457v1"
+        },
+        "evidence": {
+          "usedSources": [
+            "public/research-digest/daily.json: 原始元数据及完整英文摘要",
+            "https://arxiv.org/html/2611.10457v1"
+          ],
+          "affiliationEvidence": "队列DBLP/arXiv元数据未提供单位，按指定缺省文案记录，未据作者身份推测。",
+          "experimentEvidence": "已读取公开HTML摘要、模型环境与价值目标设定；干预结论来自队列完整摘要，未逐项复核闭环结果表。 来源：https://arxiv.org/html/2611.10457v1",
+          "missingFields": [
+            "元数据作者单位",
+            "完整闭环及消融数值的本轮核对",
+            "硬件成本"
+          ]
+        },
+        "confidence": {
+          "summary": 0.9,
+          "motivation": 0.88,
+          "method": 0.85,
+          "experiments": 0.82,
+          "affiliations": 0
+        }
+      },
+      "pushedAt": "2026-11-11T00:38:44.738Z",
+      "emailSentAt": "2026-11-11T00:38:44.738Z",
+      "firstPushedAt": "2026-11-11T00:38:44.738Z"
+    },
+    {
       "id": "arxiv:2610.31662",
       "source": "arXiv",
       "title": "Reliable AI-Assisted Decisions via Selective Auditing",
@@ -19316,6 +20214,133 @@
       "pushedAt": "2026-11-07T00:30:51.115Z",
       "emailSentAt": "2026-11-07T00:30:51.115Z",
       "firstPushedAt": "2026-11-07T00:30:51.115Z"
+    },
+    {
+      "id": "arxiv:2611.10445",
+      "source": "arXiv",
+      "title": "DiSARM: Diverse and Surprising Association Rule Mining with Large Language Models",
+      "authors": [
+        "Lijia Liu",
+        "Hisashi Kashima"
+      ],
+      "authorAffiliations": [],
+      "affiliations": [],
+      "abstract": "Exploratory Data Analysis (EDA) aims to discover informative patterns in large datasets. For transactional data, Association Rule Mining (ARM) is an established approach that facilitates EDA by efficiently generating candidate patterns. Beyond efficient mining, identifying informative rules has also been extensively studied through both objective and subjective interestingness measures. Recent advances in Large Language Models (LLMs) offer new opportunities for assessing subjective interestingness using world knowledge. Nevertheless, relying solely on LLMs raises concerns about scalability and statistical reliability. Building on prior ARM research, we propose a hybrid framework, DiSARM, that leverages the world knowledge of LLMs to assess the subjective interestingness of rules, while maintaining statistical reliability and promoting diversity among the selected rules. Across three transactional datasets, experiments demonstrate that DiSARM effectively combines statistical reliability with surprise and diversity, offering a promising approach to ADE from transactional data.",
+      "venue": "arXiv",
+      "published": "2026-11-07T03:46:48Z",
+      "updated": "2026-11-07T03:46:48Z",
+      "url": "http://arxiv.org/abs/2611.10445v1",
+      "pdfUrl": "https://arxiv.org/pdf/2611.10445v1",
+      "categories": [
+        "cs.AI",
+        "cs.LG"
+      ],
+      "collectedAt": "2026-11-10T02:45:20.394Z",
+      "firstSeenAt": "2026-11-10T02:45:20.394Z",
+      "lastSeenAt": "2026-11-10T02:45:20.394Z",
+      "collectionType": "daily-latest",
+      "matchedQuery": "(all:agent OR all:agents OR all:agentic OR all:reasoning OR all:post-training OR all:alignment OR all:multimodal OR all:world-model) AND (all:LLM OR all:foundation OR all:language)",
+      "collectionTypes": [
+        "daily-latest"
+      ],
+      "matchedQueries": [
+        "(all:agent OR all:agents OR all:agentic OR all:reasoning OR all:post-training OR all:alignment OR all:multimodal OR all:world-model) AND (all:LLM OR all:foundation OR all:language)"
+      ],
+      "targetThemes": [],
+      "conferenceVenues": [],
+      "conferenceYears": [],
+      "recommendationTrack": "algorithm-trend",
+      "recommendationLabel": "算法趋势观察",
+      "recommendationScore": 37.2,
+      "relevanceReason": "命中 LLM/Agent/多模态/后训练等算法趋势主题",
+      "pdfStatus": "remote",
+      "workflow": {
+        "digestStatus": "ready",
+        "emailStatus": "sent",
+        "digestError": "",
+        "harnessVersion": "paper-reader-v1",
+        "collectStatus": "collected",
+        "pdfStatus": "remote",
+        "harnessCheckedAt": "2026-11-11T00:38:40.148Z",
+        "harnessWarnings": [],
+        "emailSentAt": "2026-11-11T00:38:44.738Z",
+        "lastEmailError": ""
+      },
+      "digest": {
+        "summaryZh": "DiSARM 将传统关联规则挖掘与LLM的主观惊讶度判断结合，同时考虑统计可靠性和规则多样性。它面向交易数据探索，不是LLM加速或正则表达式规则匹配，适合低优先级算法趋势记录。",
+        "motivationZh": "关联规则挖掘可生成大量模式，但统计上常见的规则不一定对分析者有信息价值。单靠统计指标难以衡量世界知识中的意外性，完全依赖LLM又面临规模和统计可靠性问题。自动数据探索需要兼顾真实关联证据、语义新意及避免规则冗余。属于LLM辅助数据分析应用，与AI处理器、KV缓存和低比特推理关联弱。",
+        "methodZh": "用传统规则挖掘保持数据支持，再由LLM判断相对常识的惊讶度，选择兼顾质量与多样性的规则集合。生成统计支持的关联候选。LLM评估主观有趣程度。多样性选择减少语义重复。本轮已读首页未披露可报告的硬件平台或运行成本；此处的规则指交易关联，不是正则表达式匹配。把LLM世界知识评价与传统ARM统计约束组合，避免让语言模型单独生成和验证数据规律。",
+        "experimentsZh": "摘要报告在三个交易型数据集上实验；本轮未读取完整实验节，因此具体数据集和模型配置不补写。本轮已读摘要和PDF首页没有给出完整对照名单，不能据此列出具体实验基线。摘要给出可靠性、惊讶度和多样性能够结合的定性结论，没有披露足以报告的数值收益，本轮不将其写为显著提升。实验数据集、评分模型、统计检验与运行成本尚未核对；LLM判断受提示和常识偏差影响，不能替代数据统计证据。",
+        "affiliationsZh": "未在 DBLP/arXiv 元数据中提供",
+        "tags": [
+          "关联规则挖掘",
+          "LLM数据探索",
+          "主观有趣性",
+          "规则多样性"
+        ],
+        "importance": 2,
+        "researchFitZh": "属于LLM辅助数据分析应用，与AI处理器、KV缓存和低比特推理关联弱。",
+        "hardwareRelevance": 1,
+        "algorithmRelevance": 3,
+        "systemRelevance": 1,
+        "readPriority": "archive",
+        "whyReadZh": "当前硬件与LLM执行研究可归档；若后续研究数据探索Agent，再核对其统计验证与LLM评价协议。",
+        "limitationsZh": "实验数据集、评分模型、统计检验与运行成本尚未核对；LLM判断受提示和常识偏差影响，不能替代数据统计证据。",
+        "motivationDetail": {
+          "problemZh": "关联规则挖掘可生成大量模式，但统计上常见的规则不一定对分析者有信息价值。",
+          "gapZh": "单靠统计指标难以衡量世界知识中的意外性，完全依赖LLM又面临规模和统计可靠性问题。",
+          "whyImportantZh": "自动数据探索需要兼顾真实关联证据、语义新意及避免规则冗余。",
+          "userRelevanceZh": "属于LLM辅助数据分析应用，与AI处理器、KV缓存和低比特推理关联弱。",
+          "evidence": "已实际读取公开arXiv摘要及PDF首页引言；未声称读取完整方法或实验表。 来源：https://arxiv.org/pdf/2611.10445"
+        },
+        "methodDetail": {
+          "coreIdeaZh": "用传统规则挖掘保持数据支持，再由LLM判断相对常识的惊讶度，选择兼顾质量与多样性的规则集合。",
+          "componentsZh": [
+            "生成统计支持的关联候选",
+            "LLM评估主观有趣程度",
+            "多样性选择减少语义重复"
+          ],
+          "hardwareSystemDetailZh": "本轮已读首页未披露可报告的硬件平台或运行成本；此处的规则指交易关联，不是正则表达式匹配。",
+          "noveltyZh": "把LLM世界知识评价与传统ARM统计约束组合，避免让语言模型单独生成和验证数据规律。",
+          "evidence": "已实际读取公开arXiv摘要及PDF首页引言；未声称读取完整方法或实验表。 来源：https://arxiv.org/pdf/2611.10445"
+        },
+        "experimentDetail": {
+          "setupZh": "摘要报告在三个交易型数据集上实验；本轮未读取完整实验节，因此具体数据集和模型配置不补写。",
+          "baselinesZh": "本轮已读摘要和PDF首页没有给出完整对照名单，不能据此列出具体实验基线。",
+          "metricsZh": [
+            "统计可靠性",
+            "主观惊讶度",
+            "所选规则多样性；具体量化定义未核对"
+          ],
+          "mainResultsZh": "摘要给出可靠性、惊讶度和多样性能够结合的定性结论，没有披露足以报告的数值收益，本轮不将其写为显著提升。",
+          "limitationsZh": "实验数据集、评分模型、统计检验与运行成本尚未核对；LLM判断受提示和常识偏差影响，不能替代数据统计证据。",
+          "evidence": "已实际读取公开arXiv摘要及PDF首页引言；未声称读取完整方法或实验表。 来源：https://arxiv.org/pdf/2611.10445"
+        },
+        "evidence": {
+          "usedSources": [
+            "public/research-digest/daily.json: 原始元数据及完整英文摘要",
+            "https://arxiv.org/pdf/2611.10445"
+          ],
+          "affiliationEvidence": "队列DBLP/arXiv元数据未提供单位，按指定缺省文案记录，未据作者身份推测。",
+          "experimentEvidence": "已实际读取公开arXiv摘要及PDF首页引言；未声称读取完整方法或实验表。 来源：https://arxiv.org/pdf/2611.10445",
+          "missingFields": [
+            "元数据作者单位",
+            "具体实验数据集和基线",
+            "数值结果与评价定义",
+            "硬件与运行成本"
+          ]
+        },
+        "confidence": {
+          "summary": 0.9,
+          "motivation": 0.88,
+          "method": 0.72,
+          "experiments": 0.65,
+          "affiliations": 0
+        }
+      },
+      "pushedAt": "2026-11-11T00:38:44.738Z",
+      "emailSentAt": "2026-11-11T00:38:44.738Z",
+      "firstPushedAt": "2026-11-11T00:38:44.738Z"
     },
     {
       "id": "arxiv:2611.06914",
