@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-11-12T01:56:26.368Z",
+  "generatedAt": "2026-11-12T02:39:16.395Z",
   "digestDate": "2026-11-12",
   "kind": "daily-new",
   "timezone": "Asia/Shanghai",
   "siteUrl": "https://YouthLiuYS.github.io/PaperDigestAgent/",
   "historyPath": "public/research-digest/papers.json",
   "sources": {
-    "collectionMode": "daily",
+    "collectionMode": "all",
     "arxivQueries": [
       "(cat:cs.AR OR cat:cs.DC OR cat:cs.PF) AND (all:LLM OR all:transformer OR all:foundation OR all:language) AND (all:accelerator OR all:processor OR all:architecture OR all:hardware OR all:system OR all:serving OR all:training OR all:inference OR all:cache)",
       "(all:quantization OR all:compression OR all:pruning OR all:sparsity OR all:low-bit) AND (all:LLM OR all:transformer OR all:language) AND (all:hardware OR all:accelerator OR all:inference OR all:serving OR all:processor)",
@@ -102,14 +102,14 @@
     ],
     "daysBack": 7,
     "maxPapers": 12,
-    "dailyMaxPapers": 8,
+    "dailyMaxPapers": 12,
     "dailyPrimaryMaxPapers": 6,
     "dailyTrendMaxPapers": 2,
     "minNewPapers": 5,
     "backfillEnabled": true,
     "backfillDays": 45,
     "backfillMaxPerQuery": 24,
-    "conferenceMaxPapers": 16,
+    "conferenceMaxPapers": 12,
     "pdfDownloadEnabled": false,
     "pdfDirectory": "public/research-digest/pdfs",
     "pdfMaxPerRun": 12
@@ -142,9 +142,9 @@
     "backfillCandidates": 0,
     "rawCandidates": 155,
     "newlyAdded": 8,
-    "pendingDigest": 8,
+    "pendingDigest": 0,
     "pendingEmail": 0,
-    "pushed": 0,
+    "pushed": 8,
     "failedDigest": 0,
     "failedEmail": 0,
     "pdfDownloaded": 0,
@@ -192,65 +192,74 @@
       "conferenceVenues": [],
       "conferenceYears": [],
       "digest": {
-        "summaryZh": "AI 摘要未生成。原始摘要要点：Large language model (LLM) inference during autoregressive decoding is fundamentally memory-bandwidth-bound. Existing three-dimensional (3D) stacked processing-...",
-        "motivationZh": "命令行启用了 --no-ai",
-        "methodZh": "请配置 AI 后重新运行，以生成方法提炼。",
-        "experimentsZh": "来源元数据未披露完整实验设置或结果。",
-        "affiliationsZh": "未在 DBLP/arXiv 元数据中提供。",
+        "summaryZh": "Tri-Stack-PIM 将存储、接口与非线性运算、密集乘加分置于三层芯片，以成熟工艺缓冲层释放先进工艺计算面积，再以就绪驱动乱序调度协调跨层依赖。关注点是功能分层与注意力复用，而非单纯把计算塞入 DRAM。",
+        "motivationZh": "LLM 解码受带宽约束，但现有堆叠方案还受到接口控制挤占计算面积、键合布局碎片化及主机非线性往返的限制。仅增加带宽或 MAC 数量不能解决跨层依赖与资源失配；静态微操作顺序也看不到运行时 DRAM 和执行单元状态。把接口控制与计算按工艺适配分开，才能同时利用垂直带宽和 GQA/MQA 的 KV 复用。直接对应近存计算、三维存储层次、矩阵与非线性单元分工和 LLM 加速器设计，适合用户的核心数据通路研究。",
+        "methodZh": "体系结构与数据流协同设计：顶层 DRAM 存储，中间成熟工艺层承载 PHY、DMA、控制与近存非线性，底层先进工艺层集中 SIMD MAC。；分层宏指令 DAG 与运行时微操作依赖跟踪；UBAR 根据就绪状态和资源占用进行乱序仲裁；联合搜索 SIMD、缓冲容量、互联及 KV 映射；以三层功能解耦释放计算层面积，并在跨层执行中结合静态数据流与动态调度，而非仅扩展 DRAM 内算术。",
+        "experimentsZh": "OPT-6.7B 的 MHA、LLaMA3-8B 的 GQA、PaLM-8B 的 MQA，batch 1–32；正文采用扩展 Ramulator 2 的周期级仿真及逻辑综合/存储模型。 建模的边缘 GPU、AttAcc、H2-LLM；GPU 使用 LPDDR5X 假设的分析模型，并非 A100 实测。 相对 GPU、AttAcc、H2-LLM 的几何平均加速分别为 4.95、2.57、1.68 倍；DSE 相对朴素参数选择的 EDP 改善 33–66 倍。正文指出 MQA 需更宽 SIMD，默认宽度并非始终占优。 这是综合与仿真评测，主指标是注意力延迟，不能写成端到端服务吞吐或硅后实测；90% 指可恢复调度空隙而非整体加速。成本模型未量化 PHY 重设计的 NRE，不能据此断言制造总成本优势。",
+        "affiliationsZh": "未在 DBLP/arXiv 元数据中提供",
         "tags": [
-          "cs.AR"
+          "三维集成",
+          "近存计算",
+          "注意力数据流",
+          "乱序调度"
         ],
-        "importance": 3,
-        "researchFitZh": "AI harness 尚未完成分析，无法判断与用户研究方向的具体关系。",
-        "hardwareRelevance": 1,
-        "algorithmRelevance": 1,
-        "systemRelevance": 1,
-        "readPriority": "archive",
-        "whyReadZh": "需要完成 motivation、method 和实验结果分析后再判断是否值得深读。",
-        "limitationsZh": "命令行启用了 --no-ai",
+        "importance": 5,
+        "hardwareRelevance": 5,
+        "algorithmRelevance": 3,
+        "systemRelevance": 5,
+        "readPriority": "deep-read",
+        "researchFitZh": "直接对应近存计算、三维存储层次、矩阵与非线性单元分工和 LLM 加速器设计，适合用户的核心数据通路研究。",
+        "whyReadZh": "优先读跨层软硬分工、SRE 与 MAC 数据供给，再核对 GPU 建模和 SIMD 宽度对比较结论的影响。",
+        "limitationsZh": "这是综合与仿真评测，主指标是注意力延迟，不能写成端到端服务吞吐或硅后实测；90% 指可恢复调度空隙而非整体加速。成本模型未量化 PHY 重设计的 NRE，不能据此断言制造总成本优势。",
         "motivationDetail": {
-          "problemZh": "harness 未完成分析。",
-          "gapZh": "harness 未完成分析。",
-          "whyImportantZh": "harness 未完成分析。",
-          "userRelevanceZh": "harness 未完成分析。",
-          "evidence": "not analyzed"
+          "problemZh": "LLM 解码受带宽约束，但现有堆叠方案还受到接口控制挤占计算面积、键合布局碎片化及主机非线性往返的限制。",
+          "gapZh": "仅增加带宽或 MAC 数量不能解决跨层依赖与资源失配；静态微操作顺序也看不到运行时 DRAM 和执行单元状态。",
+          "whyImportantZh": "把接口控制与计算按工艺适配分开，才能同时利用垂直带宽和 GQA/MQA 的 KV 复用。",
+          "userRelevanceZh": "直接对应近存计算、三维存储层次、矩阵与非线性单元分工和 LLM 加速器设计，适合用户的核心数据通路研究。",
+          "evidence": "队列完整摘要；HTML 3.1–3.4 与 4.1–4.5 已读部分，尤其 4.1 仿真/综合设置、4.2 注意力延迟定义及 4.5 成本缺口。"
         },
         "methodDetail": {
-          "coreIdeaZh": "harness 未完成分析。",
+          "coreIdeaZh": "体系结构与数据流协同设计：顶层 DRAM 存储，中间成熟工艺层承载 PHY、DMA、控制与近存非线性，底层先进工艺层集中 SIMD MAC。",
           "componentsZh": [
-            "未分析"
+            "分层宏指令 DAG 与运行时微操作依赖跟踪",
+            "UBAR 根据就绪状态和资源占用进行乱序仲裁",
+            "联合搜索 SIMD、缓冲容量、互联及 KV 映射"
           ],
-          "hardwareSystemDetailZh": "harness 未完成分析。",
-          "noveltyZh": "harness 未完成分析。",
-          "evidence": "not analyzed"
+          "hardwareSystemDetailZh": "已读正文将 softmax/reduction 留在缓冲层，计算层配置局部 SRAM；编译期决定宏观 DAG，硬件处理微操作级依赖和资源冲突。",
+          "noveltyZh": "以三层功能解耦释放计算层面积，并在跨层执行中结合静态数据流与动态调度，而非仅扩展 DRAM 内算术。",
+          "evidence": "队列完整摘要；HTML 3.1–3.4 与 4.1–4.5 已读部分，尤其 4.1 仿真/综合设置、4.2 注意力延迟定义及 4.5 成本缺口。"
         },
         "experimentDetail": {
-          "setupZh": "harness 未完成分析。",
-          "baselinesZh": "harness 未完成分析。",
+          "setupZh": "OPT-6.7B 的 MHA、LLaMA3-8B 的 GQA、PaLM-8B 的 MQA，batch 1–32；正文采用扩展 Ramulator 2 的周期级仿真及逻辑综合/存储模型。",
+          "baselinesZh": "建模的边缘 GPU、AttAcc、H2-LLM；GPU 使用 LPDDR5X 假设的分析模型，并非 A100 实测。",
           "metricsZh": [
-            "未分析"
+            "每token注意力延迟（聚合32个解码层）",
+            "能量延迟积",
+            "可绕过的顺序发射停顿"
           ],
-          "mainResultsZh": "harness 未完成分析。",
-          "limitationsZh": "harness 未完成分析。",
-          "evidence": "not analyzed"
+          "mainResultsZh": "相对 GPU、AttAcc、H2-LLM 的几何平均加速分别为 4.95、2.57、1.68 倍；DSE 相对朴素参数选择的 EDP 改善 33–66 倍。正文指出 MQA 需更宽 SIMD，默认宽度并非始终占优。",
+          "limitationsZh": "这是综合与仿真评测，主指标是注意力延迟，不能写成端到端服务吞吐或硅后实测；90% 指可恢复调度空隙而非整体加速。成本模型未量化 PHY 重设计的 NRE，不能据此断言制造总成本优势。",
+          "evidence": "队列完整摘要；HTML 3.1–3.4 与 4.1–4.5 已读部分，尤其 4.1 仿真/综合设置、4.2 注意力延迟定义及 4.5 成本缺口。"
         },
         "evidence": {
           "usedSources": [
-            "metadata"
+            "daily.json 实际元数据与完整 abstract",
+            "https://arxiv.org/html/2611.13644v1（3 Architecture、4 Evaluation 已读部分）"
           ],
-          "affiliationEvidence": "",
-          "experimentEvidence": "",
+          "affiliationEvidence": "当前队列 affiliations 与 authorAffiliations 均未提供，按本轮要求使用元数据缺失说明。",
+          "experimentEvidence": "队列完整摘要；HTML 3.1–3.4 与 4.1–4.5 已读部分，尤其 4.1 仿真/综合设置、4.2 注意力延迟定义及 4.5 成本缺口。",
           "missingFields": [
-            "motivation",
-            "method",
-            "experiments"
+            "作者单位",
+            "硅后实测",
+            "端到端服务吞吐",
+            "PHY重设计NRE"
           ]
         },
         "confidence": {
-          "summary": 0.2,
-          "motivation": 0,
-          "method": 0,
-          "experiments": 0,
+          "summary": 0.95,
+          "motivation": 0.95,
+          "method": 0.92,
+          "experiments": 0.9,
           "affiliations": 0
         }
       },
@@ -260,13 +269,20 @@
       "relevanceReason": "命中 PNM/processing-near-memory、近数据计算、memory-side/CXL/HBM 或 AI 处理器体系结构主题",
       "pdfStatus": "remote",
       "workflow": {
-        "digestStatus": "pending",
-        "emailStatus": "waiting-digest",
-        "digestError": "命令行启用了 --no-ai",
+        "digestStatus": "ready",
+        "emailStatus": "sent",
+        "digestError": "",
         "harnessVersion": "paper-reader-v1",
         "collectStatus": "collected",
-        "pdfStatus": "remote"
-      }
+        "pdfStatus": "remote",
+        "harnessCheckedAt": "2026-11-12T02:39:12.179Z",
+        "harnessWarnings": [],
+        "emailSentAt": "2026-11-12T02:39:16.394Z",
+        "lastEmailError": ""
+      },
+      "pushedAt": "2026-11-12T02:39:16.394Z",
+      "emailSentAt": "2026-11-12T02:39:16.394Z",
+      "firstPushedAt": "2026-11-12T02:39:16.394Z"
     },
     {
       "id": "arxiv:2611.13741",
@@ -313,76 +329,92 @@
       "relevanceReason": "命中 AI 处理器、体系结构、量化、训推系统或内存/缓存优化主题",
       "pdfStatus": "remote",
       "workflow": {
-        "digestStatus": "pending",
-        "emailStatus": "waiting-digest",
-        "digestError": "命令行启用了 --no-ai",
+        "digestStatus": "ready",
+        "emailStatus": "sent",
+        "digestError": "",
         "harnessVersion": "paper-reader-v1",
         "collectStatus": "collected",
-        "pdfStatus": "remote"
+        "pdfStatus": "remote",
+        "harnessCheckedAt": "2026-11-12T02:39:12.179Z",
+        "harnessWarnings": [],
+        "emailSentAt": "2026-11-12T02:39:16.394Z",
+        "lastEmailError": ""
       },
       "digest": {
-        "summaryZh": "AI 摘要未生成。原始摘要要点：Modern hardware accelerators achieve high performance through specialized instructions coupled with tightly managed memory hierarchies. These instructions impos...",
-        "motivationZh": "命令行启用了 --no-ai",
-        "methodZh": "请配置 AI 后重新运行，以生成方法提炼。",
-        "experimentsZh": "来源元数据未披露完整实验设置或结果。",
-        "affiliationsZh": "未在 DBLP/arXiv 元数据中提供。",
+        "summaryZh": "Arknife 将专用指令可见的张量布局作为一等语义，以约束代数统一逻辑轴、并行层级和存储空间，插入并消除布局修复后进行全局求解，让后端描述承载 ISA 差异。",
+        "motivationZh": "专用加速指令要求特定张量分片位置、排列及并行访问方式，错误布局影响合法性，多余转换增加数据移动。既有编译器把约束分散在手写调度中，或只支持单类目标，缺少跨 CPU/NPU/GPU 的统一指令布局模型。布局决定矩阵与向量指令间的数据衔接，跨算子保留合法布局有望减少中间搬运。与用户研究矩阵/向量单元、量化转换和本地存储高度相关，可用来思考新核心 ISA 如何向编译器暴露布局契约。",
+        "methodZh": "编译器设计以布局代数把逻辑轴映射到硬件轴，指令声明操作数要求，目标后端提供冲突修复。；指令绑定和局部可行性检查；布局修复插入与 e-graph 消冗；全局布局约束求解；保持布局的 lowering 与存储规划；共享求解器与布局代数，ISA 约束放入目标侧指令描述，减少把每种后端布局特例硬编码进编译器的需求。",
+        "experimentsZh": "x86 CPU、Hexagon NPU、NVIDIA A100；正文核对 oneDNN、QNN、MISAAL 及 A100 GEMM/MHA 比较设置。 x86 oneDNN 与 MISAAL，Hexagon QNN 与 MISAAL，A100 cuBLAS、Triton、FlashAttention、TileLang 等。 摘要报告 x86/Hexagon 相对厂商库 2.17/3.78 倍、相对 MISAAL 5.08/4.53 倍。正文 A100 TF32 GEMM 为 cuBLAS 的 97%；Hexagon 长上下文解码有收益，短上下文配置也可慢于 QNN。 收益依赖算子、形状和基线调用/权重准备口径，不能理解为所有后端普遍加速；自动权重预处理、常驻和 megakernel 融合仍是未来工作，未完整核对求解开销表。",
+        "affiliationsZh": "未在 DBLP/arXiv 元数据中提供",
         "tags": [
-          "cs.PL"
+          "张量布局",
+          "可重定向编译",
+          "存储层次",
+          "指令语义"
         ],
-        "importance": 3,
-        "researchFitZh": "AI harness 尚未完成分析，无法判断与用户研究方向的具体关系。",
-        "hardwareRelevance": 1,
-        "algorithmRelevance": 1,
-        "systemRelevance": 1,
-        "readPriority": "archive",
-        "whyReadZh": "需要完成 motivation、method 和实验结果分析后再判断是否值得深读。",
-        "limitationsZh": "命令行启用了 --no-ai",
+        "importance": 5,
+        "hardwareRelevance": 5,
+        "algorithmRelevance": 4,
+        "systemRelevance": 5,
+        "readPriority": "deep-read",
+        "researchFitZh": "与用户研究矩阵/向量单元、量化转换和本地存储高度相关，可用来思考新核心 ISA 如何向编译器暴露布局契约。",
+        "whyReadZh": "优先看指令布局声明如何连接量化与矩阵指令，再读转换消除和小形状收益，判断新核心设计应暴露哪些编译器约束。",
+        "limitationsZh": "收益依赖算子、形状和基线调用/权重准备口径，不能理解为所有后端普遍加速；自动权重预处理、常驻和 megakernel 融合仍是未来工作，未完整核对求解开销表。",
         "motivationDetail": {
-          "problemZh": "harness 未完成分析。",
-          "gapZh": "harness 未完成分析。",
-          "whyImportantZh": "harness 未完成分析。",
-          "userRelevanceZh": "harness 未完成分析。",
-          "evidence": "not analyzed"
+          "problemZh": "专用加速指令要求特定张量分片位置、排列及并行访问方式，错误布局影响合法性，多余转换增加数据移动。",
+          "gapZh": "既有编译器把约束分散在手写调度中，或只支持单类目标，缺少跨 CPU/NPU/GPU 的统一指令布局模型。",
+          "whyImportantZh": "布局决定矩阵与向量指令间的数据衔接，跨算子保留合法布局有望减少中间搬运。",
+          "userRelevanceZh": "与用户研究矩阵/向量单元、量化转换和本地存储高度相关，可用来思考新核心 ISA 如何向编译器暴露布局契约。",
+          "evidence": "队列完整摘要；HTML 5.1–5.5、6、7.1–7.2，核对布局修复、ILP、三后端设置、GEMM与端到端解码的适用范围。"
         },
         "methodDetail": {
-          "coreIdeaZh": "harness 未完成分析。",
+          "coreIdeaZh": "编译器设计以布局代数把逻辑轴映射到硬件轴，指令声明操作数要求，目标后端提供冲突修复。",
           "componentsZh": [
-            "未分析"
+            "指令绑定和局部可行性检查",
+            "布局修复插入与 e-graph 消冗",
+            "全局布局约束求解",
+            "保持布局的 lowering 与存储规划"
           ],
-          "hardwareSystemDetailZh": "harness 未完成分析。",
-          "noveltyZh": "harness 未完成分析。",
-          "evidence": "not analyzed"
+          "hardwareSystemDetailZh": "正文以 x86 VNNI、Hexagon HVX/HMX 与 VTCM、A100 warp/register fragment 为目标；硬件层级声明存储容量、并行层和通信通道。",
+          "noveltyZh": "共享求解器与布局代数，ISA 约束放入目标侧指令描述，减少把每种后端布局特例硬编码进编译器的需求。",
+          "evidence": "队列完整摘要；HTML 5.1–5.5、6、7.1–7.2，核对布局修复、ILP、三后端设置、GEMM与端到端解码的适用范围。"
         },
         "experimentDetail": {
-          "setupZh": "harness 未完成分析。",
-          "baselinesZh": "harness 未完成分析。",
+          "setupZh": "x86 CPU、Hexagon NPU、NVIDIA A100；正文核对 oneDNN、QNN、MISAAL 及 A100 GEMM/MHA 比较设置。",
+          "baselinesZh": "x86 oneDNN 与 MISAAL，Hexagon QNN 与 MISAAL，A100 cuBLAS、Triton、FlashAttention、TileLang 等。",
           "metricsZh": [
-            "未分析"
+            "算子几何平均加速",
+            "布局移动与转换开销",
+            "编译求解成本"
           ],
-          "mainResultsZh": "harness 未完成分析。",
-          "limitationsZh": "harness 未完成分析。",
-          "evidence": "not analyzed"
+          "mainResultsZh": "摘要报告 x86/Hexagon 相对厂商库 2.17/3.78 倍、相对 MISAAL 5.08/4.53 倍。正文 A100 TF32 GEMM 为 cuBLAS 的 97%；Hexagon 长上下文解码有收益，短上下文配置也可慢于 QNN。",
+          "limitationsZh": "收益依赖算子、形状和基线调用/权重准备口径，不能理解为所有后端普遍加速；自动权重预处理、常驻和 megakernel 融合仍是未来工作，未完整核对求解开销表。",
+          "evidence": "队列完整摘要；HTML 5.1–5.5、6、7.1–7.2，核对布局修复、ILP、三后端设置、GEMM与端到端解码的适用范围。"
         },
         "evidence": {
           "usedSources": [
-            "metadata"
+            "daily.json 实际元数据与完整 abstract",
+            "https://arxiv.org/html/2611.13741v1（5、6、7 已读部分）"
           ],
-          "affiliationEvidence": "",
-          "experimentEvidence": "",
+          "affiliationEvidence": "当前队列 affiliations 与 authorAffiliations 均未提供，按本轮要求使用元数据缺失说明。",
+          "experimentEvidence": "队列完整摘要；HTML 5.1–5.5、6、7.1–7.2，核对布局修复、ILP、三后端设置、GEMM与端到端解码的适用范围。",
           "missingFields": [
-            "motivation",
-            "method",
-            "experiments"
+            "作者单位",
+            "完整编译开销表复核",
+            "新目标后端复现"
           ]
         },
         "confidence": {
-          "summary": 0.2,
-          "motivation": 0,
-          "method": 0,
-          "experiments": 0,
+          "summary": 0.95,
+          "motivation": 0.94,
+          "method": 0.93,
+          "experiments": 0.9,
           "affiliations": 0
         }
-      }
+      },
+      "pushedAt": "2026-11-12T02:39:16.394Z",
+      "emailSentAt": "2026-11-12T02:39:16.394Z",
+      "firstPushedAt": "2026-11-12T02:39:16.394Z"
     },
     {
       "id": "arxiv:2611.13175",
@@ -422,76 +454,91 @@
       "relevanceReason": "命中 AI 处理器、体系结构、量化、训推系统或内存/缓存优化主题",
       "pdfStatus": "remote",
       "workflow": {
-        "digestStatus": "pending",
-        "emailStatus": "waiting-digest",
-        "digestError": "命令行启用了 --no-ai",
+        "digestStatus": "ready",
+        "emailStatus": "sent",
+        "digestError": "",
         "harnessVersion": "paper-reader-v1",
         "collectStatus": "collected",
-        "pdfStatus": "remote"
+        "pdfStatus": "remote",
+        "harnessCheckedAt": "2026-11-12T02:39:12.179Z",
+        "harnessWarnings": [],
+        "emailSentAt": "2026-11-12T02:39:16.394Z",
+        "lastEmailError": ""
       },
       "digest": {
-        "summaryZh": "AI 摘要未生成。原始摘要要点：Quantum processors now measure qubits in the middle of a circuit, and the stream of outcomes is the raw output of error correction, measurement-based state prep...",
-        "motivationZh": "命令行启用了 --no-ai",
-        "methodZh": "请配置 AI 后重新运行，以生成方法提炼。",
-        "experimentsZh": "来源元数据未披露完整实验设置或结果。",
-        "affiliationsZh": "未在 DBLP/arXiv 元数据中提供。",
+        "summaryZh": "论文证明特定 brickwork 量子电路光锥附近的测量流可由有限记忆过程精确描述，并在超导量子处理器上验证预测。这里的 memory 指测量记录的统计记忆，不是 AI 加速器缓存。",
+        "motivationZh": "量子电路中途测量产生的记录，在超出经典模拟能力后缺少可直接核对的精确统计参考。一般扰乱电路的测量流难以预测，需要寻找随系统扩展仍可精确求解的特殊因果区域。若光锥附近保留精确参考，可以对大系统动态电路做有边界的验证。属于量子动力学与量子设备验证，和用户关注的经典 LLM 芯片、SRAM 或 KV 存储层次关系很弱。",
+        "methodZh": "理论分析在一个极化量子比特与最大混合背景的 brickwork 电路中，利用光锥因果结构压缩测量记录生成过程。；光锥边缘的二态 Markov 链；光锥内部有限移动量子比特与无记忆浴；噪声可见性及双幺正性见证；把系统任意扩展时的记录统计化为光锥附近的有限记忆模型，而非经典全系统模拟。",
+        "experimentsZh": "特定 brickwork 电路理论，加上 156 量子比特超导处理器的预先规定分析演示。 与理论允许和禁止记忆出现的位置比较；摘要未披露其他实验基线名称。 作者在光锥内一、二个位置观察到预测记忆，在理论禁止处未观察到；边缘为一比特记忆，内部生成器规模由位移决定。 仅核对元数据与公开摘要，未读证明及误差条；结论限定电路与初态条件，不能外推为任意量子电路可经典模拟。",
+        "affiliationsZh": "未在 DBLP/arXiv 元数据中提供",
         "tags": [
-          "quant-ph"
+          "量子电路",
+          "测量记录",
+          "精确验证"
         ],
-        "importance": 3,
-        "researchFitZh": "AI harness 尚未完成分析，无法判断与用户研究方向的具体关系。",
+        "importance": 1,
         "hardwareRelevance": 1,
-        "algorithmRelevance": 1,
+        "algorithmRelevance": 2,
         "systemRelevance": 1,
         "readPriority": "archive",
-        "whyReadZh": "需要完成 motivation、method 和实验结果分析后再判断是否值得深读。",
-        "limitationsZh": "命令行启用了 --no-ai",
+        "researchFitZh": "属于量子动力学与量子设备验证，和用户关注的经典 LLM 芯片、SRAM 或 KV 存储层次关系很弱。",
+        "whyReadZh": "归档即可，避免把统计记忆或量子处理器关键词误当成 AI 体系结构论文。",
+        "limitationsZh": "仅核对元数据与公开摘要，未读证明及误差条；结论限定电路与初态条件，不能外推为任意量子电路可经典模拟。",
         "motivationDetail": {
-          "problemZh": "harness 未完成分析。",
-          "gapZh": "harness 未完成分析。",
-          "whyImportantZh": "harness 未完成分析。",
-          "userRelevanceZh": "harness 未完成分析。",
-          "evidence": "not analyzed"
+          "problemZh": "量子电路中途测量产生的记录，在超出经典模拟能力后缺少可直接核对的精确统计参考。",
+          "gapZh": "一般扰乱电路的测量流难以预测，需要寻找随系统扩展仍可精确求解的特殊因果区域。",
+          "whyImportantZh": "若光锥附近保留精确参考，可以对大系统动态电路做有边界的验证。",
+          "userRelevanceZh": "属于量子动力学与量子设备验证，和用户关注的经典 LLM 芯片、SRAM 或 KV 存储层次关系很弱。",
+          "evidence": "arXiv abstract 关于特定初态、光锥有限记忆结构及 156 量子比特演示的描述。"
         },
         "methodDetail": {
-          "coreIdeaZh": "harness 未完成分析。",
+          "coreIdeaZh": "理论分析在一个极化量子比特与最大混合背景的 brickwork 电路中，利用光锥因果结构压缩测量记录生成过程。",
           "componentsZh": [
-            "未分析"
+            "光锥边缘的二态 Markov 链",
+            "光锥内部有限移动量子比特与无记忆浴",
+            "噪声可见性及双幺正性见证"
           ],
-          "hardwareSystemDetailZh": "harness 未完成分析。",
-          "noveltyZh": "harness 未完成分析。",
-          "evidence": "not analyzed"
+          "hardwareSystemDetailZh": "摘要只说明在超导量子处理器上演示，没有 AI 处理器、低比特量化或缓存实现贡献。",
+          "noveltyZh": "把系统任意扩展时的记录统计化为光锥附近的有限记忆模型，而非经典全系统模拟。",
+          "evidence": "arXiv abstract 关于特定初态、光锥有限记忆结构及 156 量子比特演示的描述。"
         },
         "experimentDetail": {
-          "setupZh": "harness 未完成分析。",
-          "baselinesZh": "harness 未完成分析。",
+          "setupZh": "特定 brickwork 电路理论，加上 156 量子比特超导处理器的预先规定分析演示。",
+          "baselinesZh": "与理论允许和禁止记忆出现的位置比较；摘要未披露其他实验基线名称。",
           "metricsZh": [
-            "未分析"
+            "测量记录记忆",
+            "光锥位置依赖",
+            "与精确理论的符合性"
           ],
-          "mainResultsZh": "harness 未完成分析。",
-          "limitationsZh": "harness 未完成分析。",
-          "evidence": "not analyzed"
+          "mainResultsZh": "作者在光锥内一、二个位置观察到预测记忆，在理论禁止处未观察到；边缘为一比特记忆，内部生成器规模由位移决定。",
+          "limitationsZh": "仅核对元数据与公开摘要，未读证明及误差条；结论限定电路与初态条件，不能外推为任意量子电路可经典模拟。",
+          "evidence": "arXiv abstract 关于特定初态、光锥有限记忆结构及 156 量子比特演示的描述。"
         },
         "evidence": {
           "usedSources": [
-            "metadata"
+            "daily.json 实际元数据与完整 abstract",
+            "https://arxiv.org/abs/2611.13175"
           ],
-          "affiliationEvidence": "",
-          "experimentEvidence": "",
+          "affiliationEvidence": "当前队列 affiliations 与 authorAffiliations 均未提供，按本轮要求使用元数据缺失说明。",
+          "experimentEvidence": "arXiv abstract 关于特定初态、光锥有限记忆结构及 156 量子比特演示的描述。",
           "missingFields": [
-            "motivation",
-            "method",
-            "experiments"
+            "作者单位",
+            "设备型号",
+            "实验误差条",
+            "完整证明核查"
           ]
         },
         "confidence": {
-          "summary": 0.2,
-          "motivation": 0,
-          "method": 0,
-          "experiments": 0,
+          "summary": 0.88,
+          "motivation": 0.86,
+          "method": 0.81,
+          "experiments": 0.76,
           "affiliations": 0
         }
-      }
+      },
+      "pushedAt": "2026-11-12T02:39:16.394Z",
+      "emailSentAt": "2026-11-12T02:39:16.394Z",
+      "firstPushedAt": "2026-11-12T02:39:16.394Z"
     },
     {
       "id": "arxiv:2611.13329",
@@ -532,76 +579,92 @@
       "relevanceReason": "命中 AI 处理器、体系结构、量化、训推系统或内存/缓存优化主题",
       "pdfStatus": "remote",
       "workflow": {
-        "digestStatus": "pending",
-        "emailStatus": "waiting-digest",
-        "digestError": "命令行启用了 --no-ai",
+        "digestStatus": "ready",
+        "emailStatus": "sent",
+        "digestError": "",
         "harnessVersion": "paper-reader-v1",
         "collectStatus": "collected",
-        "pdfStatus": "remote"
+        "pdfStatus": "remote",
+        "harnessCheckedAt": "2026-11-12T02:39:12.179Z",
+        "harnessWarnings": [],
+        "emailSentAt": "2026-11-12T02:39:16.394Z",
+        "lastEmailError": ""
       },
       "digest": {
-        "summaryZh": "AI 摘要未生成。原始摘要要点：Accurate, compact exchange--correlation functionals are central to predictive density functional theory. Symbolic search and language-model agents can propose n...",
-        "motivationZh": "命令行启用了 --no-ai",
-        "methodZh": "请配置 AI 后重新运行，以生成方法提炼。",
-        "experimentsZh": "来源元数据未披露完整实验设置或结果。",
-        "affiliationsZh": "未在 DBLP/arXiv 元数据中提供。",
+        "summaryZh": "该工作用 MCP 把 LLM 智能体接到 GPU 泛函评估器，经过训练集拟合、自洽与外部验证发现 O159。重点在科学搜索和独立验证，不能由使用 GPU 推断其属于硬件加速研究。",
+        "motivationZh": "智能体能生成交换关联泛函，但候选收益是否经得住自洽计算、外部数据和物理解释仍不明确。仅比较拟合误差不足以区分物理改进与搜索偏差，也不能判断语言模型搜索是否优于演化搜索。把训练拟合与外部物理验证分开，可使科学发现更容易核查。可作为工具智能体与科学工作流的趋势案例；不直接贡献 LLM 加速器、存储层次或矩阵数据通路。",
+        "methodZh": "算法与科学评测流程结合，用持久记忆智能体提出泛函形式，经 GPU 评估筛选后进行独立自洽计算。；MCP 连接智能体与评估器；仅训练集拟合及持久记忆；重新拟合的控制泛函；自洽和外部测试；不仅搜索符号形式，还通过密度窗口控制、自洽测试和外部数据检查候选收益及物理作用。",
+        "experimentsZh": "比较 Opus-5.5、Codex GPT-6-Astra 与 SyFES 搜索，使用 MGCDB84 和 GSCDB137 验证。 GAS22、ωB97M-V、重新拟合的无窗口控制，以及 SyFES 演化搜索。 摘要报告 O159 为 13 参数泛函，自洽后 MGCDB84 留出误差较 ωB97M-V 降低 11.7%；约 400 次拟合下演化未改善 GAS22 种子。模型 token 差异仅限该筛选流程，不能推广为通用能力排名。 本轮仅读摘要，只有胜出候选进入自洽评估；未核查搜索预算公平性、误差公式和 GPU 成本，不将局部优势扩展为普遍科学能力结论。",
+        "affiliationsZh": "未在 DBLP/arXiv 元数据中提供",
         "tags": [
-          "cs.AI"
+          "科学智能体",
+          "泛函发现",
+          "物理验证"
         ],
-        "importance": 3,
-        "researchFitZh": "AI harness 尚未完成分析，无法判断与用户研究方向的具体关系。",
+        "importance": 2,
         "hardwareRelevance": 1,
-        "algorithmRelevance": 1,
-        "systemRelevance": 1,
-        "readPriority": "archive",
-        "whyReadZh": "需要完成 motivation、method 和实验结果分析后再判断是否值得深读。",
-        "limitationsZh": "命令行启用了 --no-ai",
+        "algorithmRelevance": 3,
+        "systemRelevance": 2,
+        "readPriority": "skim",
+        "researchFitZh": "可作为工具智能体与科学工作流的趋势案例；不直接贡献 LLM 加速器、存储层次或矩阵数据通路。",
+        "whyReadZh": "略读候选验证与控制实验设计，如研究科学智能体，再核对搜索预算和候选晋级规则。",
+        "limitationsZh": "本轮仅读摘要，只有胜出候选进入自洽评估；未核查搜索预算公平性、误差公式和 GPU 成本，不将局部优势扩展为普遍科学能力结论。",
         "motivationDetail": {
-          "problemZh": "harness 未完成分析。",
-          "gapZh": "harness 未完成分析。",
-          "whyImportantZh": "harness 未完成分析。",
-          "userRelevanceZh": "harness 未完成分析。",
-          "evidence": "not analyzed"
+          "problemZh": "智能体能生成交换关联泛函，但候选收益是否经得住自洽计算、外部数据和物理解释仍不明确。",
+          "gapZh": "仅比较拟合误差不足以区分物理改进与搜索偏差，也不能判断语言模型搜索是否优于演化搜索。",
+          "whyImportantZh": "把训练拟合与外部物理验证分开，可使科学发现更容易核查。",
+          "userRelevanceZh": "可作为工具智能体与科学工作流的趋势案例；不直接贡献 LLM 加速器、存储层次或矩阵数据通路。",
+          "evidence": "公开 arXiv abstract 的 O159 形式、训练/外部验证、模型与演化比较及留出误差结果。"
         },
         "methodDetail": {
-          "coreIdeaZh": "harness 未完成分析。",
+          "coreIdeaZh": "算法与科学评测流程结合，用持久记忆智能体提出泛函形式，经 GPU 评估筛选后进行独立自洽计算。",
           "componentsZh": [
-            "未分析"
+            "MCP 连接智能体与评估器",
+            "仅训练集拟合及持久记忆",
+            "重新拟合的控制泛函",
+            "自洽和外部测试"
           ],
-          "hardwareSystemDetailZh": "harness 未完成分析。",
-          "noveltyZh": "harness 未完成分析。",
-          "evidence": "not analyzed"
+          "hardwareSystemDetailZh": "摘要仅说明使用 GPU 评估器，未披露 GPU 型号、内核或数据流优化。",
+          "noveltyZh": "不仅搜索符号形式，还通过密度窗口控制、自洽测试和外部数据检查候选收益及物理作用。",
+          "evidence": "公开 arXiv abstract 的 O159 形式、训练/外部验证、模型与演化比较及留出误差结果。"
         },
         "experimentDetail": {
-          "setupZh": "harness 未完成分析。",
-          "baselinesZh": "harness 未完成分析。",
+          "setupZh": "比较 Opus-5.5、Codex GPT-6-Astra 与 SyFES 搜索，使用 MGCDB84 和 GSCDB137 验证。",
+          "baselinesZh": "GAS22、ωB97M-V、重新拟合的无窗口控制，以及 SyFES 演化搜索。",
           "metricsZh": [
-            "未分析"
+            "验证和留出误差",
+            "外部归一化误差比",
+            "筛选所需token"
           ],
-          "mainResultsZh": "harness 未完成分析。",
-          "limitationsZh": "harness 未完成分析。",
-          "evidence": "not analyzed"
+          "mainResultsZh": "摘要报告 O159 为 13 参数泛函，自洽后 MGCDB84 留出误差较 ωB97M-V 降低 11.7%；约 400 次拟合下演化未改善 GAS22 种子。模型 token 差异仅限该筛选流程，不能推广为通用能力排名。",
+          "limitationsZh": "本轮仅读摘要，只有胜出候选进入自洽评估；未核查搜索预算公平性、误差公式和 GPU 成本，不将局部优势扩展为普遍科学能力结论。",
+          "evidence": "公开 arXiv abstract 的 O159 形式、训练/外部验证、模型与演化比较及留出误差结果。"
         },
         "evidence": {
           "usedSources": [
-            "metadata"
+            "daily.json 实际元数据与完整 abstract",
+            "https://arxiv.org/abs/2611.13329"
           ],
-          "affiliationEvidence": "",
-          "experimentEvidence": "",
+          "affiliationEvidence": "当前队列 affiliations 与 authorAffiliations 均未提供，按本轮要求使用元数据缺失说明。",
+          "experimentEvidence": "公开 arXiv abstract 的 O159 形式、训练/外部验证、模型与演化比较及留出误差结果。",
           "missingFields": [
-            "motivation",
-            "method",
-            "experiments"
+            "作者单位",
+            "硬件型号",
+            "完整搜索预算",
+            "误差公式复核"
           ]
         },
         "confidence": {
-          "summary": 0.2,
-          "motivation": 0,
-          "method": 0,
-          "experiments": 0,
+          "summary": 0.9,
+          "motivation": 0.88,
+          "method": 0.83,
+          "experiments": 0.78,
           "affiliations": 0
         }
-      }
+      },
+      "pushedAt": "2026-11-12T02:39:16.394Z",
+      "emailSentAt": "2026-11-12T02:39:16.394Z",
+      "firstPushedAt": "2026-11-12T02:39:16.394Z"
     },
     {
       "id": "arxiv:2611.13594",
@@ -642,76 +705,91 @@
       "relevanceReason": "命中 AI 处理器、体系结构、量化、训推系统或内存/缓存优化主题",
       "pdfStatus": "remote",
       "workflow": {
-        "digestStatus": "pending",
-        "emailStatus": "waiting-digest",
-        "digestError": "命令行启用了 --no-ai",
+        "digestStatus": "ready",
+        "emailStatus": "sent",
+        "digestError": "",
         "harnessVersion": "paper-reader-v1",
         "collectStatus": "collected",
-        "pdfStatus": "remote"
+        "pdfStatus": "remote",
+        "harnessCheckedAt": "2026-11-12T02:39:12.179Z",
+        "harnessWarnings": [],
+        "emailSentAt": "2026-11-12T02:39:16.394Z",
+        "lastEmailError": ""
       },
       "digest": {
-        "summaryZh": "AI 摘要未生成。原始摘要要点：Large Language Models (LLMs) have achieved remarkable progress on complex reasoning tasks, yet the mechanisms by which they acquire reasoning capabilities and t...",
-        "motivationZh": "命令行启用了 --no-ai",
-        "methodZh": "请配置 AI 后重新运行，以生成方法提炼。",
-        "experimentsZh": "来源元数据未披露完整实验设置或结果。",
-        "affiliationsZh": "未在 DBLP/arXiv 元数据中提供。",
+        "summaryZh": "论文在有向图寻路这一符号任务中分析 Transformer 实现和学习 DFS 的能力，证明增加深度可显著扩大前瞻范围；结论是特定模型与训练条件下的理论结果，不是实际 LLM 推理加速。",
+        "motivationZh": "LLM 能完成多步推理，但其如何通过训练获得搜索算法、深度如何影响推理能力仍缺少机制解释。仅证明网络能够表示算法，尚不足以解释梯度训练能否学到它及能否迁移到未见图。把表达能力、训练动力学和泛化放到同一图搜索任务中，有助于区分可表示与可学习。适合跟踪推理算法与模型深度的理论趋势，但不能直接用于 GPU/NPU 核心数、时延或能耗设计估计。",
+        "methodZh": "理论工作以有向图 DFS 为对象，分别构造分层 Transformer 策略并分析梯度流学习条件。；单层 child-selection 规模下界；双层完整 DFS 构造；更深网络的有界可达前瞻；适当训练数据下的梯度流学习；从表示搜索扩展到训练动力学，并将模型深度与可达前瞻范围作明确数学关联。",
+        "experimentsZh": "摘要描述稠密有向图寻路及策划训练数据下的理论模型；没有披露实证模型或硬件设置。 单层与双层及更深 Transformer 的理论比较；未披露数值实验基线。 摘要称单层关键原语需 Ω(N²) 规模，双层完整 DFS 可用 O(N log N)；深度 k≥3 时构造的前瞻为 1+2^(k−3)，并证明条件化训练下泛化到未见图。 公开 abs 与 HTML 本轮均不可读，仅依据队列完整摘要；未核查定理假设、权重精度和训练数据条件。渐近表达能力不等同实际芯片速度或真实 LLM 的推理能力。",
+        "affiliationsZh": "未在 DBLP/arXiv 元数据中提供",
         "tags": [
-          "cs.AI"
+          "Transformer理论",
+          "图搜索",
+          "深度表达能力"
         ],
         "importance": 3,
-        "researchFitZh": "AI harness 尚未完成分析，无法判断与用户研究方向的具体关系。",
         "hardwareRelevance": 1,
-        "algorithmRelevance": 1,
+        "algorithmRelevance": 4,
         "systemRelevance": 1,
-        "readPriority": "archive",
-        "whyReadZh": "需要完成 motivation、method 和实验结果分析后再判断是否值得深读。",
-        "limitationsZh": "命令行启用了 --no-ai",
+        "readPriority": "skim",
+        "researchFitZh": "适合跟踪推理算法与模型深度的理论趋势，但不能直接用于 GPU/NPU 核心数、时延或能耗设计估计。",
+        "whyReadZh": "略读定理边界即可；若考虑架构深度取舍，应先补充现实计算与存储成本证据。",
+        "limitationsZh": "公开 abs 与 HTML 本轮均不可读，仅依据队列完整摘要；未核查定理假设、权重精度和训练数据条件。渐近表达能力不等同实际芯片速度或真实 LLM 的推理能力。",
         "motivationDetail": {
-          "problemZh": "harness 未完成分析。",
-          "gapZh": "harness 未完成分析。",
-          "whyImportantZh": "harness 未完成分析。",
-          "userRelevanceZh": "harness 未完成分析。",
-          "evidence": "not analyzed"
+          "problemZh": "LLM 能完成多步推理，但其如何通过训练获得搜索算法、深度如何影响推理能力仍缺少机制解释。",
+          "gapZh": "仅证明网络能够表示算法，尚不足以解释梯度训练能否学到它及能否迁移到未见图。",
+          "whyImportantZh": "把表达能力、训练动力学和泛化放到同一图搜索任务中，有助于区分可表示与可学习。",
+          "userRelevanceZh": "适合跟踪推理算法与模型深度的理论趋势，但不能直接用于 GPU/NPU 核心数、时延或能耗设计估计。",
+          "evidence": "队列完整 abstract 的单层下界、双层构造、深度前瞻式及梯度流学习结论；未读取证明或实验正文。"
         },
         "methodDetail": {
-          "coreIdeaZh": "harness 未完成分析。",
+          "coreIdeaZh": "理论工作以有向图 DFS 为对象，分别构造分层 Transformer 策略并分析梯度流学习条件。",
           "componentsZh": [
-            "未分析"
+            "单层 child-selection 规模下界",
+            "双层完整 DFS 构造",
+            "更深网络的有界可达前瞻",
+            "适当训练数据下的梯度流学习"
           ],
-          "hardwareSystemDetailZh": "harness 未完成分析。",
-          "noveltyZh": "harness 未完成分析。",
-          "evidence": "not analyzed"
+          "hardwareSystemDetailZh": "摘要未涉及芯片、存储布局、真实推理运行时或 kernel 优化。",
+          "noveltyZh": "从表示搜索扩展到训练动力学，并将模型深度与可达前瞻范围作明确数学关联。",
+          "evidence": "队列完整 abstract 的单层下界、双层构造、深度前瞻式及梯度流学习结论；未读取证明或实验正文。"
         },
         "experimentDetail": {
-          "setupZh": "harness 未完成分析。",
-          "baselinesZh": "harness 未完成分析。",
+          "setupZh": "摘要描述稠密有向图寻路及策划训练数据下的理论模型；没有披露实证模型或硬件设置。",
+          "baselinesZh": "单层与双层及更深 Transformer 的理论比较；未披露数值实验基线。",
           "metricsZh": [
-            "未分析"
+            "网络规模的渐近复杂度",
+            "可达前瞻范围",
+            "梯度流可学习性"
           ],
-          "mainResultsZh": "harness 未完成分析。",
-          "limitationsZh": "harness 未完成分析。",
-          "evidence": "not analyzed"
+          "mainResultsZh": "摘要称单层关键原语需 Ω(N²) 规模，双层完整 DFS 可用 O(N log N)；深度 k≥3 时构造的前瞻为 1+2^(k−3)，并证明条件化训练下泛化到未见图。",
+          "limitationsZh": "公开 abs 与 HTML 本轮均不可读，仅依据队列完整摘要；未核查定理假设、权重精度和训练数据条件。渐近表达能力不等同实际芯片速度或真实 LLM 的推理能力。",
+          "evidence": "队列完整 abstract 的单层下界、双层构造、深度前瞻式及梯度流学习结论；未读取证明或实验正文。"
         },
         "evidence": {
           "usedSources": [
-            "metadata"
+            "daily.json 实际元数据与完整 abstract（公开 abs/HTML 本轮访问失败）"
           ],
-          "affiliationEvidence": "",
-          "experimentEvidence": "",
+          "affiliationEvidence": "当前队列 affiliations 与 authorAffiliations 均未提供，按本轮要求使用元数据缺失说明。",
+          "experimentEvidence": "队列完整 abstract 的单层下界、双层构造、深度前瞻式及梯度流学习结论；未读取证明或实验正文。",
           "missingFields": [
-            "motivation",
-            "method",
-            "experiments"
+            "作者单位",
+            "完整定理及训练假设",
+            "数值实验",
+            "硬件"
           ]
         },
         "confidence": {
-          "summary": 0.2,
-          "motivation": 0,
-          "method": 0,
-          "experiments": 0,
+          "summary": 0.87,
+          "motivation": 0.86,
+          "method": 0.75,
+          "experiments": 0.6,
           "affiliations": 0
         }
-      }
+      },
+      "pushedAt": "2026-11-12T02:39:16.394Z",
+      "emailSentAt": "2026-11-12T02:39:16.394Z",
+      "firstPushedAt": "2026-11-12T02:39:16.394Z"
     },
     {
       "id": "arxiv:2611.13994",
@@ -756,76 +834,92 @@
       "relevanceReason": "命中 AI 处理器、体系结构、量化、训推系统或内存/缓存优化主题",
       "pdfStatus": "remote",
       "workflow": {
-        "digestStatus": "pending",
-        "emailStatus": "waiting-digest",
-        "digestError": "命令行启用了 --no-ai",
+        "digestStatus": "ready",
+        "emailStatus": "sent",
+        "digestError": "",
         "harnessVersion": "paper-reader-v1",
         "collectStatus": "collected",
-        "pdfStatus": "remote"
+        "pdfStatus": "remote",
+        "harnessCheckedAt": "2026-11-12T02:39:12.179Z",
+        "harnessWarnings": [],
+        "emailSentAt": "2026-11-12T02:39:16.394Z",
+        "lastEmailError": ""
       },
       "digest": {
-        "summaryZh": "AI 摘要未生成。原始摘要要点：Coding agents are increasingly proposed as autonomous builders of biomedical models, but existing benchmarks are small, near saturation or open to leaked inform...",
-        "motivationZh": "命令行启用了 --no-ai",
-        "methodZh": "请配置 AI 后重新运行，以生成方法提炼。",
-        "experimentsZh": "来源元数据未披露完整实验设置或结果。",
-        "affiliationsZh": "未在 DBLP/arXiv 元数据中提供。",
+        "summaryZh": "BioXArena-Pro 从发表研究重建生物医学建模任务，以物种或队列等完整生物单元留出降低泄漏，并比较智能体框架、基础模型和复现方法，强调对新数据的适应能力。",
+        "motivationZh": "自主生物医学建模智能体缺少足够难、较少信息泄漏且接近研究工作的基准。小规模或接近饱和的现有基准难以分辨模型与 scaffold 的作用，也未必考验新数据适配。完整生物单元留出和人工审查有助于让自主研究评测更可信。可借鉴智能体系统评测设计与 scaffold 控制，但没有针对 LLM 芯片或存储体系的直接贡献。",
+        "methodZh": "基准设计从公开研究重建任务，重新运行每项发表方法，与多种智能体配置及预训练模型消融比较。；八个生物医学领域的研究级任务；以物种或队列等单元留出；发表方法逐任务复现；AI辅助审查及最终人工审核；用任务重建和生物单元留出区分复用现成配方与适应新数据的能力。",
+        "experimentsZh": "64 个任务、8 个领域，比较 22 种智能体配置，每任务重新运行已发表方法。 逐任务发表方法，以及禁止使用预训练模型的最强智能体消融；具体全部配置未披露。 最佳配置为 55.1/100；原配方可直接使用时与发表方法打平，重建任务上方法落后 8.2 分；在最强智能体实际使用预训练模型的任务中，禁用它们降低 9 分。 仅有公开摘要；得分聚合、预算公平性和泄漏审查细节未核查，结果不支持通用生物医学研究自治或临床效果结论。",
+        "affiliationsZh": "未在 DBLP/arXiv 元数据中提供",
         "tags": [
-          "cs.LG"
+          "生物医学智能体",
+          "基准评测",
+          "独立数据划分"
         ],
-        "importance": 3,
-        "researchFitZh": "AI harness 尚未完成分析，无法判断与用户研究方向的具体关系。",
+        "importance": 2,
         "hardwareRelevance": 1,
-        "algorithmRelevance": 1,
-        "systemRelevance": 1,
-        "readPriority": "archive",
-        "whyReadZh": "需要完成 motivation、method 和实验结果分析后再判断是否值得深读。",
-        "limitationsZh": "命令行启用了 --no-ai",
+        "algorithmRelevance": 3,
+        "systemRelevance": 2,
+        "readPriority": "skim",
+        "researchFitZh": "可借鉴智能体系统评测设计与 scaffold 控制，但没有针对 LLM 芯片或存储体系的直接贡献。",
+        "whyReadZh": "略读数据划分与 scaffold 对照；对当前硬件研究以评测方法参考为主。",
+        "limitationsZh": "仅有公开摘要；得分聚合、预算公平性和泄漏审查细节未核查，结果不支持通用生物医学研究自治或临床效果结论。",
         "motivationDetail": {
-          "problemZh": "harness 未完成分析。",
-          "gapZh": "harness 未完成分析。",
-          "whyImportantZh": "harness 未完成分析。",
-          "userRelevanceZh": "harness 未完成分析。",
-          "evidence": "not analyzed"
+          "problemZh": "自主生物医学建模智能体缺少足够难、较少信息泄漏且接近研究工作的基准。",
+          "gapZh": "小规模或接近饱和的现有基准难以分辨模型与 scaffold 的作用，也未必考验新数据适配。",
+          "whyImportantZh": "完整生物单元留出和人工审查有助于让自主研究评测更可信。",
+          "userRelevanceZh": "可借鉴智能体系统评测设计与 scaffold 控制，但没有针对 LLM 芯片或存储体系的直接贡献。",
+          "evidence": "公开 arXiv abstract 的任务规模、22配置、55.1得分、8.2分比较与9分消融结果。"
         },
         "methodDetail": {
-          "coreIdeaZh": "harness 未完成分析。",
+          "coreIdeaZh": "基准设计从公开研究重建任务，重新运行每项发表方法，与多种智能体配置及预训练模型消融比较。",
           "componentsZh": [
-            "未分析"
+            "八个生物医学领域的研究级任务",
+            "以物种或队列等单元留出",
+            "发表方法逐任务复现",
+            "AI辅助审查及最终人工审核"
           ],
-          "hardwareSystemDetailZh": "harness 未完成分析。",
-          "noveltyZh": "harness 未完成分析。",
-          "evidence": "not analyzed"
+          "hardwareSystemDetailZh": "摘要未披露加速器、并行调度、显存占用或推理成本指标。",
+          "noveltyZh": "用任务重建和生物单元留出区分复用现成配方与适应新数据的能力。",
+          "evidence": "公开 arXiv abstract 的任务规模、22配置、55.1得分、8.2分比较与9分消融结果。"
         },
         "experimentDetail": {
-          "setupZh": "harness 未完成分析。",
-          "baselinesZh": "harness 未完成分析。",
+          "setupZh": "64 个任务、8 个领域，比较 22 种智能体配置，每任务重新运行已发表方法。",
+          "baselinesZh": "逐任务发表方法，以及禁止使用预训练模型的最强智能体消融；具体全部配置未披露。",
           "metricsZh": [
-            "未分析"
+            "归一化基准得分",
+            "重建任务的适配差距",
+            "预训练模型消融得分"
           ],
-          "mainResultsZh": "harness 未完成分析。",
-          "limitationsZh": "harness 未完成分析。",
-          "evidence": "not analyzed"
+          "mainResultsZh": "最佳配置为 55.1/100；原配方可直接使用时与发表方法打平，重建任务上方法落后 8.2 分；在最强智能体实际使用预训练模型的任务中，禁用它们降低 9 分。",
+          "limitationsZh": "仅有公开摘要；得分聚合、预算公平性和泄漏审查细节未核查，结果不支持通用生物医学研究自治或临床效果结论。",
+          "evidence": "公开 arXiv abstract 的任务规模、22配置、55.1得分、8.2分比较与9分消融结果。"
         },
         "evidence": {
           "usedSources": [
-            "metadata"
+            "daily.json 实际元数据与完整 abstract",
+            "https://arxiv.org/abs/2611.13994"
           ],
-          "affiliationEvidence": "",
-          "experimentEvidence": "",
+          "affiliationEvidence": "当前队列 affiliations 与 authorAffiliations 均未提供，按本轮要求使用元数据缺失说明。",
+          "experimentEvidence": "公开 arXiv abstract 的任务规模、22配置、55.1得分、8.2分比较与9分消融结果。",
           "missingFields": [
-            "motivation",
-            "method",
-            "experiments"
+            "作者单位",
+            "完整配置和预算",
+            "得分聚合公式",
+            "硬件"
           ]
         },
         "confidence": {
-          "summary": 0.2,
-          "motivation": 0,
-          "method": 0,
-          "experiments": 0,
+          "summary": 0.9,
+          "motivation": 0.88,
+          "method": 0.83,
+          "experiments": 0.8,
           "affiliations": 0
         }
-      }
+      },
+      "pushedAt": "2026-11-12T02:39:16.394Z",
+      "emailSentAt": "2026-11-12T02:39:16.394Z",
+      "firstPushedAt": "2026-11-12T02:39:16.394Z"
     },
     {
       "id": "arxiv:2611.14504",
@@ -866,77 +960,93 @@
       "relevanceReason": "命中 LLM/Agent/多模态/后训练等算法趋势主题",
       "pdfStatus": "remote",
       "workflow": {
-        "digestStatus": "pending",
-        "emailStatus": "waiting-digest",
-        "digestError": "命令行启用了 --no-ai",
+        "digestStatus": "ready",
+        "emailStatus": "sent",
+        "digestError": "",
         "harnessVersion": "paper-reader-v1",
         "collectStatus": "collected",
-        "pdfStatus": "remote"
+        "pdfStatus": "remote",
+        "harnessCheckedAt": "2026-11-12T02:39:12.179Z",
+        "harnessWarnings": [],
+        "emailSentAt": "2026-11-12T02:39:16.394Z",
+        "lastEmailError": ""
       },
       "digest": {
-        "summaryZh": "AI 摘要未生成。原始摘要要点：Foundation models trained on large unlabeled corpora develop emergent capabilities, tasks that go beyond the training objective. We extend this paradigm to mult...",
-        "motivationZh": "命令行启用了 --no-ai",
-        "methodZh": "请配置 AI 后重新运行，以生成方法提炼。",
-        "experimentsZh": "来源元数据未披露完整实验设置或结果。",
-        "affiliationsZh": "未在 DBLP/arXiv 元数据中提供。",
+        "summaryZh": "Bonbon 以蛋白质—配体序列对预训练，报告功能、残基及化学键层面的零样本能力，并做尺度与湿实验验证。其贡献集中在分子表示和生物泛化，速度宣称尚缺本轮可核查的实现口径。",
+        "motivationZh": "分子相互作用模型需要从稀疏配对数据中获得跨层级、分布外可迁移的生物能力。预训练损失平滑下降并不必然预示何时出现零样本能力，仅依赖损失尺度律可能遗漏能力转折。在统一表示上比较多层级任务和尺度，有助于理解配对数据学习的泛化边界。属于生物多模态基础模型趋势，与用户的 LLM 核心数据通路及存储架构研究联系较弱。",
+        "methodZh": "算法与表示学习工作，仅用蛋白—配体配对序列预训练，再冻结表示评估不同分辨率任务。；无任务标签和无结构坐标的序列预训练；功能/残基/化学键零样本评测；受控参数尺度实验；前瞻湿实验；在单一表示空间同时考察不同生物分辨率能力，结合连续指标尺度变化和前瞻实验。",
+        "experimentsZh": "约 3.2 万亿 token，六个模型尺度从 42M 到 1.6B 参数；湿实验覆盖七类蛋白家族的九个疾病靶点。 摘要称与 co-folding 方法比较预测速度，未披露具体方法清单和等价条件。 摘要称最大尺度多个连续能力指标跃升，预训练损失仍平滑；前瞻新化合物剂量反应命中率 61.5%。另称相对 co-folding 快五个数量级，本轮未核实硬件及任务等价性。 只读摘要，未核实结构泄漏、速度协议与湿实验样本分母；不能由剂量反应命中率推断临床疗效，也不能把算法比较速度当芯片收益。",
+        "affiliationsZh": "未在 DBLP/arXiv 元数据中提供",
         "tags": [
-          "cs.LG",
-          "q-bio.BM"
+          "生物基础模型",
+          "分子相互作用",
+          "尺度涌现"
         ],
-        "importance": 3,
-        "researchFitZh": "AI harness 尚未完成分析，无法判断与用户研究方向的具体关系。",
+        "importance": 2,
         "hardwareRelevance": 1,
-        "algorithmRelevance": 1,
+        "algorithmRelevance": 3,
         "systemRelevance": 1,
         "readPriority": "archive",
-        "whyReadZh": "需要完成 motivation、method 和实验结果分析后再判断是否值得深读。",
-        "limitationsZh": "命令行启用了 --no-ai",
+        "researchFitZh": "属于生物多模态基础模型趋势，与用户的 LLM 核心数据通路及存储架构研究联系较弱。",
+        "whyReadZh": "归档为生物基础模型案例；当前优先阅读硬件与编译论文。",
+        "limitationsZh": "只读摘要，未核实结构泄漏、速度协议与湿实验样本分母；不能由剂量反应命中率推断临床疗效，也不能把算法比较速度当芯片收益。",
         "motivationDetail": {
-          "problemZh": "harness 未完成分析。",
-          "gapZh": "harness 未完成分析。",
-          "whyImportantZh": "harness 未完成分析。",
-          "userRelevanceZh": "harness 未完成分析。",
-          "evidence": "not analyzed"
+          "problemZh": "分子相互作用模型需要从稀疏配对数据中获得跨层级、分布外可迁移的生物能力。",
+          "gapZh": "预训练损失平滑下降并不必然预示何时出现零样本能力，仅依赖损失尺度律可能遗漏能力转折。",
+          "whyImportantZh": "在统一表示上比较多层级任务和尺度，有助于理解配对数据学习的泛化边界。",
+          "userRelevanceZh": "属于生物多模态基础模型趋势，与用户的 LLM 核心数据通路及存储架构研究联系较弱。",
+          "evidence": "公开 arXiv abstract 的训练规模、模型尺度、零样本能力与 61.5% 湿实验命中率；速度仅按作者摘要宣称保留。"
         },
         "methodDetail": {
-          "coreIdeaZh": "harness 未完成分析。",
+          "coreIdeaZh": "算法与表示学习工作，仅用蛋白—配体配对序列预训练，再冻结表示评估不同分辨率任务。",
           "componentsZh": [
-            "未分析"
+            "无任务标签和无结构坐标的序列预训练",
+            "功能/残基/化学键零样本评测",
+            "受控参数尺度实验",
+            "前瞻湿实验"
           ],
-          "hardwareSystemDetailZh": "harness 未完成分析。",
-          "noveltyZh": "harness 未完成分析。",
-          "evidence": "not analyzed"
+          "hardwareSystemDetailZh": "摘要未披露训练硬件、推理时延测量平台或相对 co-folding 的执行协议。",
+          "noveltyZh": "在单一表示空间同时考察不同生物分辨率能力，结合连续指标尺度变化和前瞻实验。",
+          "evidence": "公开 arXiv abstract 的训练规模、模型尺度、零样本能力与 61.5% 湿实验命中率；速度仅按作者摘要宣称保留。"
         },
         "experimentDetail": {
-          "setupZh": "harness 未完成分析。",
-          "baselinesZh": "harness 未完成分析。",
+          "setupZh": "约 3.2 万亿 token，六个模型尺度从 42M 到 1.6B 参数；湿实验覆盖七类蛋白家族的九个疾病靶点。",
+          "baselinesZh": "摘要称与 co-folding 方法比较预测速度，未披露具体方法清单和等价条件。",
           "metricsZh": [
-            "未分析"
+            "零样本功能/位点/键类型能力",
+            "分布外泛化",
+            "剂量反应命中率",
+            "预测速度"
           ],
-          "mainResultsZh": "harness 未完成分析。",
-          "limitationsZh": "harness 未完成分析。",
-          "evidence": "not analyzed"
+          "mainResultsZh": "摘要称最大尺度多个连续能力指标跃升，预训练损失仍平滑；前瞻新化合物剂量反应命中率 61.5%。另称相对 co-folding 快五个数量级，本轮未核实硬件及任务等价性。",
+          "limitationsZh": "只读摘要，未核实结构泄漏、速度协议与湿实验样本分母；不能由剂量反应命中率推断临床疗效，也不能把算法比较速度当芯片收益。",
+          "evidence": "公开 arXiv abstract 的训练规模、模型尺度、零样本能力与 61.5% 湿实验命中率；速度仅按作者摘要宣称保留。"
         },
         "evidence": {
           "usedSources": [
-            "metadata"
+            "daily.json 实际元数据与完整 abstract",
+            "https://arxiv.org/abs/2611.14504"
           ],
-          "affiliationEvidence": "",
-          "experimentEvidence": "",
+          "affiliationEvidence": "当前队列 affiliations 与 authorAffiliations 均未提供，按本轮要求使用元数据缺失说明。",
+          "experimentEvidence": "公开 arXiv abstract 的训练规模、模型尺度、零样本能力与 61.5% 湿实验命中率；速度仅按作者摘要宣称保留。",
           "missingFields": [
-            "motivation",
-            "method",
-            "experiments"
+            "作者单位",
+            "硬件和速度协议",
+            "湿实验分母与细节",
+            "完整基线"
           ]
         },
         "confidence": {
-          "summary": 0.2,
-          "motivation": 0,
-          "method": 0,
-          "experiments": 0,
+          "summary": 0.88,
+          "motivation": 0.86,
+          "method": 0.8,
+          "experiments": 0.72,
           "affiliations": 0
         }
-      }
+      },
+      "pushedAt": "2026-11-12T02:39:16.394Z",
+      "emailSentAt": "2026-11-12T02:39:16.394Z",
+      "firstPushedAt": "2026-11-12T02:39:16.394Z"
     },
     {
       "id": "arxiv:2611.14467",
@@ -982,77 +1092,93 @@
       "relevanceReason": "命中 LLM/Agent/多模态/后训练等算法趋势主题",
       "pdfStatus": "remote",
       "workflow": {
-        "digestStatus": "pending",
-        "emailStatus": "waiting-digest",
-        "digestError": "命令行启用了 --no-ai",
+        "digestStatus": "ready",
+        "emailStatus": "sent",
+        "digestError": "",
         "harnessVersion": "paper-reader-v1",
         "collectStatus": "collected",
-        "pdfStatus": "remote"
+        "pdfStatus": "remote",
+        "harnessCheckedAt": "2026-11-12T02:39:12.179Z",
+        "harnessWarnings": [],
+        "emailSentAt": "2026-11-12T02:39:16.394Z",
+        "lastEmailError": ""
       },
       "digest": {
-        "summaryZh": "AI 摘要未生成。原始摘要要点：Policy optimization is central to language model post-training, yet principled guidance remains limited. We revisit its theoretical foundations to identify algo...",
-        "motivationZh": "命令行启用了 --no-ai",
-        "methodZh": "请配置 AI 后重新运行，以生成方法提炼。",
-        "experimentsZh": "来源元数据未披露完整实验设置或结果。",
-        "affiliationsZh": "未在 DBLP/arXiv 元数据中提供。",
+        "summaryZh": "论文分析奖励改善时最优回答概率仍可能塌缩的现象，以反复重置 KL 参考策略的 APMD 缓解，并在预训练特征上的 softmax 线性策略类证明覆盖保持；并非对任意深度 LLM 的无条件保证。",
+        "motivationZh": "语言模型后训练需要放大基础模型已能采样到的正确能力，但奖励增长不保证最优回答概率得到保留。REINFORCE 即使使用精确梯度及固定基础策略 KL 正则，也可能出现覆盖塌缩和指数慢收敛。区分奖励与响应覆盖，可解释为何初始存在正确样本仍可能难以继续优化。适合作为后训练算法理论跟踪，对采样和梯度步预算有启发；没有直接的量化执行或芯片微结构设计证据。",
+        "methodZh": "理论元算法 APMD 近似求解连续 KL 正则 RL 子问题，并把 KL 参考不断重置为最新策略。；用基础模型生成最优回答的概率刻画覆盖；构造覆盖塌缩失败案例；参考策略重置及更强子问题正则；覆盖保持的样本和梯度步保证；把参考策略更新与覆盖保持联系起来，解释正则、裁剪及目标选择如何影响优化成本。",
+        "experimentsZh": "预训练特征上的 softmax 线性策略理论分析；摘要未给真实 LLM 数值实验设置。 REINFORCE、固定参考 KL 正则，对照带显式 KL 与重置的风格化 PPO/GRPO 和隐式平方损失形式。 理论指出好初始覆盖也可在 REINFORCE 下塌缩；APMD 的参考重置在规定策略类和求解条件下支持覆盖保持与全局收敛。摘要未报告数值加速或基准得分。 仅核对公开摘要，未读完整假设、常数和证明；线性策略与风格化算法结论不能直接套用所有 PPO/GRPO 实现或真实深度模型。",
+        "affiliationsZh": "未在 DBLP/arXiv 元数据中提供",
         "tags": [
-          "cs.LG",
-          "stat.ML"
+          "后训练理论",
+          "覆盖塌缩",
+          "参考策略重置"
         ],
         "importance": 3,
-        "researchFitZh": "AI harness 尚未完成分析，无法判断与用户研究方向的具体关系。",
         "hardwareRelevance": 1,
-        "algorithmRelevance": 1,
-        "systemRelevance": 1,
-        "readPriority": "archive",
-        "whyReadZh": "需要完成 motivation、method 和实验结果分析后再判断是否值得深读。",
-        "limitationsZh": "命令行启用了 --no-ai",
+        "algorithmRelevance": 4,
+        "systemRelevance": 2,
+        "readPriority": "skim",
+        "researchFitZh": "适合作为后训练算法理论跟踪，对采样和梯度步预算有启发；没有直接的量化执行或芯片微结构设计证据。",
+        "whyReadZh": "略读覆盖定义和重置条件，再决定是否用于后训练采样预算分析；不作为硬件性能证据。",
+        "limitationsZh": "仅核对公开摘要，未读完整假设、常数和证明；线性策略与风格化算法结论不能直接套用所有 PPO/GRPO 实现或真实深度模型。",
         "motivationDetail": {
-          "problemZh": "harness 未完成分析。",
-          "gapZh": "harness 未完成分析。",
-          "whyImportantZh": "harness 未完成分析。",
-          "userRelevanceZh": "harness 未完成分析。",
-          "evidence": "not analyzed"
+          "problemZh": "语言模型后训练需要放大基础模型已能采样到的正确能力，但奖励增长不保证最优回答概率得到保留。",
+          "gapZh": "REINFORCE 即使使用精确梯度及固定基础策略 KL 正则，也可能出现覆盖塌缩和指数慢收敛。",
+          "whyImportantZh": "区分奖励与响应覆盖，可解释为何初始存在正确样本仍可能难以继续优化。",
+          "userRelevanceZh": "适合作为后训练算法理论跟踪，对采样和梯度步预算有启发；没有直接的量化执行或芯片微结构设计证据。",
+          "evidence": "公开 arXiv abstract 的覆盖塌缩、APMD 和 softmax 线性策略类收敛结论；无已核实数值实验。"
         },
         "methodDetail": {
-          "coreIdeaZh": "harness 未完成分析。",
+          "coreIdeaZh": "理论元算法 APMD 近似求解连续 KL 正则 RL 子问题，并把 KL 参考不断重置为最新策略。",
           "componentsZh": [
-            "未分析"
+            "用基础模型生成最优回答的概率刻画覆盖",
+            "构造覆盖塌缩失败案例",
+            "参考策略重置及更强子问题正则",
+            "覆盖保持的样本和梯度步保证"
           ],
-          "hardwareSystemDetailZh": "harness 未完成分析。",
-          "noveltyZh": "harness 未完成分析。",
-          "evidence": "not analyzed"
+          "hardwareSystemDetailZh": "摘要没有硬件实现、训练吞吐或内存优化评测。",
+          "noveltyZh": "把参考策略更新与覆盖保持联系起来，解释正则、裁剪及目标选择如何影响优化成本。",
+          "evidence": "公开 arXiv abstract 的覆盖塌缩、APMD 和 softmax 线性策略类收敛结论；无已核实数值实验。"
         },
         "experimentDetail": {
-          "setupZh": "harness 未完成分析。",
-          "baselinesZh": "harness 未完成分析。",
+          "setupZh": "预训练特征上的 softmax 线性策略理论分析；摘要未给真实 LLM 数值实验设置。",
+          "baselinesZh": "REINFORCE、固定参考 KL 正则，对照带显式 KL 与重置的风格化 PPO/GRPO 和隐式平方损失形式。",
           "metricsZh": [
-            "未分析"
+            "最优响应覆盖",
+            "样本复杂度",
+            "梯度步复杂度",
+            "全局收敛"
           ],
-          "mainResultsZh": "harness 未完成分析。",
-          "limitationsZh": "harness 未完成分析。",
-          "evidence": "not analyzed"
+          "mainResultsZh": "理论指出好初始覆盖也可在 REINFORCE 下塌缩；APMD 的参考重置在规定策略类和求解条件下支持覆盖保持与全局收敛。摘要未报告数值加速或基准得分。",
+          "limitationsZh": "仅核对公开摘要，未读完整假设、常数和证明；线性策略与风格化算法结论不能直接套用所有 PPO/GRPO 实现或真实深度模型。",
+          "evidence": "公开 arXiv abstract 的覆盖塌缩、APMD 和 softmax 线性策略类收敛结论；无已核实数值实验。"
         },
         "evidence": {
           "usedSources": [
-            "metadata"
+            "daily.json 实际元数据与完整 abstract",
+            "https://arxiv.org/abs/2611.14467"
           ],
-          "affiliationEvidence": "",
-          "experimentEvidence": "",
+          "affiliationEvidence": "当前队列 affiliations 与 authorAffiliations 均未提供，按本轮要求使用元数据缺失说明。",
+          "experimentEvidence": "公开 arXiv abstract 的覆盖塌缩、APMD 和 softmax 线性策略类收敛结论；无已核实数值实验。",
           "missingFields": [
-            "motivation",
-            "method",
-            "experiments"
+            "作者单位",
+            "完整证明假设",
+            "实证模型/基线结果",
+            "硬件"
           ]
         },
         "confidence": {
-          "summary": 0.2,
-          "motivation": 0,
-          "method": 0,
-          "experiments": 0,
+          "summary": 0.91,
+          "motivation": 0.89,
+          "method": 0.83,
+          "experiments": 0.64,
           "affiliations": 0
         }
-      }
+      },
+      "pushedAt": "2026-11-12T02:39:16.394Z",
+      "emailSentAt": "2026-11-12T02:39:16.394Z",
+      "firstPushedAt": "2026-11-12T02:39:16.394Z"
     }
   ]
 }
