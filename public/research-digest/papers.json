@@ -1,20 +1,20 @@
 {
-  "generatedAt": "2026-11-15T00:35:42.576Z",
+  "generatedAt": "2026-11-16T00:40:59.067Z",
   "timezone": "Asia/Shanghai",
   "siteUrl": "https://YouthLiuYS.github.io/PaperDigestAgent/",
   "stats": {
-    "total": 220,
-    "arxiv": 195,
+    "total": 228,
+    "arxiv": 203,
     "dblp": 25,
-    "dailyLatest": 219,
+    "dailyLatest": 227,
     "dailyBackfill": 0,
     "conferenceArchive": 1,
     "current": 0,
     "newlyAdded": 0,
-    "pushed": 220,
+    "pushed": 228,
     "pdfDownloaded": 0,
-    "hardwarePrimary": 163,
-    "algorithmTrend": 56,
+    "hardwarePrimary": 169,
+    "algorithmTrend": 58,
     "lowRelevance": 1
   },
   "papers": [
@@ -17945,6 +17945,134 @@
       "firstPushedAt": "2026-11-01T00:37:48.477Z"
     },
     {
+      "id": "arxiv:2611.16345",
+      "source": "arXiv",
+      "title": "DRAMA: Dissecting Attention Redundancy for Accelerating Multimodal Diffusion Large Language Models",
+      "authors": [
+        "Yi-Hsin Hung",
+        "Fangfu Liu",
+        "Shao-Yuan Lo",
+        "Chu-Song Chen"
+      ],
+      "authorAffiliations": [],
+      "affiliations": [],
+      "abstract": "Multimodal diffusion large language models (dLLMs) generate text through iterative masked denoising with bidirectional attention, offering a compelling alternative to autoregressive vision-language modeling. However, each denoising step requires a full forward pass over long multimodal sequences in which visual tokens dominate the sequence length, and a fixed step budget further compounds this quadratic per-step cost. Existing inference acceleration approaches for multimodal dLLMs characterize attention redundancy implicitly, motivating designs from isolated attention visualizations rather than from measurement. We close this gap with DRAMA, a training-free acceleration framework grounded in a systematic dissection of attention redundancy in multimodal dLLMs. By probing attention tensors along spatial and temporal axes, we reveal two persistent redundancy structures: (i) attention mass consistently concentrates on a sparse subset of visual tokens, and (ii) attention distributions rapidly stabilize across denoising steps after an initial formation phase. These findings motivate two complementary mechanisms: Spatial-Redundancy-Aware Visual Token Pruning (SVTP) and Sufficiency-Guided Adaptive Stopping (SGAS). Together, DRAMA achieves an average 18.67 times inference speedup across six vision-language benchmarks without training, architectural modification, or attention caching, while maintaining competitive accuracy. Our results establish a strong, measurement-grounded acceleration baseline for multimodal dLLM inference.",
+      "venue": "arXiv",
+      "published": "2026-11-12T06:04:08Z",
+      "updated": "2026-11-12T06:04:08Z",
+      "url": "http://arxiv.org/abs/2611.16345v1",
+      "pdfUrl": "https://arxiv.org/pdf/2611.16345v1",
+      "categories": [
+        "cs.LG",
+        "cs.AI"
+      ],
+      "collectedAt": "2026-11-15T23:58:50.586Z",
+      "firstSeenAt": "2026-11-15T23:58:50.586Z",
+      "lastSeenAt": "2026-11-15T23:58:50.586Z",
+      "collectionType": "daily-latest",
+      "matchedQuery": "(all:quantization OR all:compression OR all:pruning OR all:sparsity OR all:low-bit) AND (all:LLM OR all:transformer OR all:language) AND (all:hardware OR all:accelerator OR all:inference OR all:serving OR all:processor)",
+      "collectionTypes": [
+        "daily-latest"
+      ],
+      "matchedQueries": [
+        "(all:quantization OR all:compression OR all:pruning OR all:sparsity OR all:low-bit) AND (all:LLM OR all:transformer OR all:language) AND (all:hardware OR all:accelerator OR all:inference OR all:serving OR all:processor)"
+      ],
+      "targetThemes": [],
+      "conferenceVenues": [],
+      "conferenceYears": [],
+      "recommendationTrack": "hardware-primary",
+      "recommendationLabel": "硬件体系结构主线",
+      "recommendationScore": 89.25,
+      "relevanceReason": "命中 AI 处理器、体系结构、量化、训推系统或内存/缓存优化主题",
+      "pdfStatus": "remote",
+      "workflow": {
+        "digestStatus": "ready",
+        "emailStatus": "sent",
+        "digestError": "",
+        "harnessVersion": "paper-reader-v1",
+        "collectStatus": "collected",
+        "pdfStatus": "remote",
+        "harnessCheckedAt": "2026-11-16T00:40:54.758Z",
+        "harnessWarnings": [],
+        "emailSentAt": "2026-11-16T00:40:59.003Z",
+        "lastEmailError": ""
+      },
+      "digest": {
+        "summaryZh": "DRAMA 从视觉 token 的空间集中和去噪步骤的时间稳定性出发，组合视觉剪枝与充分性早停，无需训练或注意力缓存。摘要报告六项视觉语言基准平均加速 18.67 倍；速度与精度随配置变化，值得作为多模态扩散推理的执行优化参考。",
+        "motivationZh": "多模态扩散语言模型每轮都对长视觉序列做完整前向，固定去噪预算进一步放大注意力开销。既有加速常从零散可视化推断冗余，缺少同时覆盖空间与时间的系统测量。压缩每步参与计算的视觉上下文并减少无效步骤，可共同降低迭代推理成本。与高效 LLM 推理和注意力计算削减直接相关，可用于评估加速器工作负载随算法改变的情况。",
+        "methodZh": "先测量注意力空间集中及跨步骤稳定性，再用视觉 token 剪枝和输出充分性判断协同削减计算。SVTP 在去噪前依据问题与图像 patch 的表示相似度选择视觉上下文，保留全局概览。SGAS 根据答案充分性和连贯性判断停止时机，并比较检查点与逐步检查等策略。属于推理算法与执行流程优化，改变注意力序列和迭代次数；没有提出新芯片或专用电路。将可测量的两类冗余分别对应到剪枝与早停，避免训练和跨步注意力缓存。",
+        "experimentsZh": "正文以 LLaDA-V 7B 为主，在单张 RTX PRO 6000、BF16、batch 1 上评估六项视觉语言基准；SEED-Bench 使用子集。基线为固定 64、32、16 步的 LLaDA-V，并做去掉 SVTP 或 SGAS 的消融。摘要报告平均 18.67 倍加速和有竞争力的准确率。正文表 1 显示部分 MMBench 配置准确率低于 64 步基线，因此不能解释为无损加速。主评估为单卡、小 batch 与指定模型及任务；不同早停策略有精度取舍，结果不能直接外推到服务吞吐、能耗或所有扩散模型。",
+        "affiliationsZh": "未在 DBLP/arXiv 元数据中提供",
+        "tags": [
+          "扩散语言模型",
+          "多模态推理",
+          "视觉剪枝",
+          "自适应早停",
+          "注意力优化"
+        ],
+        "importance": 4,
+        "researchFitZh": "与高效 LLM 推理和注意力计算削减直接相关，可用于评估加速器工作负载随算法改变的情况。",
+        "hardwareRelevance": 3,
+        "algorithmRelevance": 5,
+        "systemRelevance": 4,
+        "readPriority": "deep-read",
+        "whyReadZh": "优先阅读剪枝依据、早停消融及各基准精度损失，再判断能否用于目标推理系统。",
+        "limitationsZh": "主评估为单卡、小 batch 与指定模型及任务；不同早停策略有精度取舍，结果不能直接外推到服务吞吐、能耗或所有扩散模型。",
+        "motivationDetail": {
+          "problemZh": "多模态扩散语言模型每轮都对长视觉序列做完整前向，固定去噪预算进一步放大注意力开销。",
+          "gapZh": "既有加速常从零散可视化推断冗余，缺少同时覆盖空间与时间的系统测量。",
+          "whyImportantZh": "压缩每步参与计算的视觉上下文并减少无效步骤，可共同降低迭代推理成本。",
+          "userRelevanceZh": "与高效 LLM 推理和注意力计算削减直接相关，可用于评估加速器工作负载随算法改变的情况。",
+          "evidence": "已读队列完整英文摘要、公开 HTML 第 3 节方法及第 4.1 节设置和表 1；18.67 倍来自摘要，精度取舍来自正文表 1。 来源：https://arxiv.org/html/2611.16345v1"
+        },
+        "methodDetail": {
+          "coreIdeaZh": "先测量注意力空间集中及跨步骤稳定性，再用视觉 token 剪枝和输出充分性判断协同削减计算。",
+          "componentsZh": [
+            "SVTP 在去噪前依据问题与图像 patch 的表示相似度选择视觉上下文，保留全局概览",
+            "SGAS 根据答案充分性和连贯性判断停止时机，并比较检查点与逐步检查等策略"
+          ],
+          "hardwareSystemDetailZh": "属于推理算法与执行流程优化，改变注意力序列和迭代次数；没有提出新芯片或专用电路。",
+          "noveltyZh": "将可测量的两类冗余分别对应到剪枝与早停，避免训练和跨步注意力缓存。",
+          "evidence": "已读队列完整英文摘要、公开 HTML 第 3 节方法及第 4.1 节设置和表 1；18.67 倍来自摘要，精度取舍来自正文表 1。 来源：https://arxiv.org/html/2611.16345v1"
+        },
+        "experimentDetail": {
+          "setupZh": "正文以 LLaDA-V 7B 为主，在单张 RTX PRO 6000、BF16、batch 1 上评估六项视觉语言基准；SEED-Bench 使用子集。",
+          "baselinesZh": "基线为固定 64、32、16 步的 LLaDA-V，并做去掉 SVTP 或 SGAS 的消融。",
+          "metricsZh": [
+            "任务准确率",
+            "每样本延迟",
+            "tokens/s",
+            "相对 64 步基线加速比"
+          ],
+          "mainResultsZh": "摘要报告平均 18.67 倍加速和有竞争力的准确率。正文表 1 显示部分 MMBench 配置准确率低于 64 步基线，因此不能解释为无损加速。",
+          "limitationsZh": "主评估为单卡、小 batch 与指定模型及任务；不同早停策略有精度取舍，结果不能直接外推到服务吞吐、能耗或所有扩散模型。",
+          "evidence": "已读队列完整英文摘要、公开 HTML 第 3 节方法及第 4.1 节设置和表 1；18.67 倍来自摘要，精度取舍来自正文表 1。 来源：https://arxiv.org/html/2611.16345v1"
+        },
+        "evidence": {
+          "usedSources": [
+            "public/research-digest/daily.json: 原始元数据与完整英文摘要",
+            "https://arxiv.org/html/2611.16345v1"
+          ],
+          "affiliationEvidence": "DBLP/arXiv 队列元数据未提供作者单位，按指定文案标记缺失，不依据作者身份推测。",
+          "experimentEvidence": "已读队列完整英文摘要、公开 HTML 第 3 节方法及第 4.1 节设置和表 1；18.67 倍来自摘要，精度取舍来自正文表 1。 来源：https://arxiv.org/html/2611.16345v1",
+          "missingFields": [
+            "元数据作者单位",
+            "服务并发及能耗证据"
+          ]
+        },
+        "confidence": {
+          "summary": 0.93,
+          "motivation": 0.91,
+          "method": 0.89,
+          "experiments": 0.9,
+          "affiliations": 0
+        }
+      },
+      "pushedAt": "2026-11-16T00:40:59.003Z",
+      "emailSentAt": "2026-11-16T00:40:59.003Z",
+      "firstPushedAt": "2026-11-16T00:40:59.003Z"
+    },
+    {
       "id": "arxiv:2610.39761",
       "source": "arXiv",
       "title": "GPU-Resident Speculative Decoding for In-Browser LLM Inference with WebGPU",
@@ -18202,6 +18330,137 @@
       "pushedAt": "2026-05-08T04:40:41.777Z",
       "emailSentAt": "2026-05-08T04:40:41.777Z",
       "firstPushedAt": "2026-05-08T04:40:41.777Z"
+    },
+    {
+      "id": "arxiv:2611.16744",
+      "source": "arXiv",
+      "title": "Scale-Induced Semantic Shift in Visual Prompt Injection Against VLMs and Web Agents",
+      "authors": [
+        "Yiheng Zhao",
+        "Runze Ji",
+        "Chenyu Yi",
+        "Yi Yu",
+        "Bingquan Shen",
+        "Alex Kot",
+        "Xudong Jiang"
+      ],
+      "authorAffiliations": [],
+      "affiliations": [],
+      "abstract": "Visual content in multimedia systems may be resized, compressed, or re-rendered before it is interpreted by a vision-language model. We study a security failure mode in which these transformations change the machine-readable semantics of an image: a textual instruction is not recovered at a $512\\times512$ presentation resolution under our evaluation protocol but becomes recoverable after aggressive downsampling. We formulate this behavior as Scale-Induced Semantic Shift (SISS) and develop a closed-loop black-box framework that combines dual-scale verification, selective self-hardening, shallow-layer low-rank adaptation, and pixel-space noise regularization. On a fixed 300-case benchmark, the third SISS refinement round obtains a $58.75\\%$ average attack success rate across four closed-source vision-language models, compared with $41.08\\%$ for the strongest generation baseline. A controlled sweep bounds the effect to aggressive compression: average success decreases to $17.68\\%$, $6.85\\%$, and $5.60\\%$ at $128\\times128$, $224\\times224$, and $336\\times336$, respectively. In a downstream web-agent study, the generated images increase hidden-instruction perception, but absolute behavioral compromise remains about $4\\%$. Generic input transformations provide little protection in a separate defense protocol, whereas the proposed ScaleGuard consistency detector reduces non-adaptive success from $61.4\\%$ to $24.3\\%$ and one-round defense-aware success from $42.5\\%$ to $15.0\\%$, with no observed rejection among matched clean controls. The results characterize a bounded but reproducible semantic inconsistency in multimedia preprocessing and motivate scale-consistent visual-language inference.",
+      "venue": "arXiv",
+      "published": "2026-11-12T12:57:11Z",
+      "updated": "2026-11-12T12:57:11Z",
+      "url": "http://arxiv.org/abs/2611.16744v1",
+      "pdfUrl": "https://arxiv.org/pdf/2611.16744v1",
+      "categories": [
+        "cs.AI"
+      ],
+      "collectedAt": "2026-11-15T23:58:50.586Z",
+      "firstSeenAt": "2026-11-15T23:58:50.586Z",
+      "lastSeenAt": "2026-11-15T23:58:50.586Z",
+      "collectionType": "daily-latest",
+      "matchedQuery": "(all:quantization OR all:compression OR all:pruning OR all:sparsity OR all:low-bit) AND (all:LLM OR all:transformer OR all:language) AND (all:hardware OR all:accelerator OR all:inference OR all:serving OR all:processor)",
+      "collectionTypes": [
+        "daily-latest"
+      ],
+      "matchedQueries": [
+        "(all:quantization OR all:compression OR all:pruning OR all:sparsity OR all:low-bit) AND (all:LLM OR all:transformer OR all:language) AND (all:hardware OR all:accelerator OR all:inference OR all:serving OR all:processor)"
+      ],
+      "targetThemes": [],
+      "conferenceVenues": [],
+      "conferenceYears": [],
+      "recommendationTrack": "hardware-primary",
+      "recommendationLabel": "硬件体系结构主线",
+      "recommendationScore": 88.5,
+      "relevanceReason": "命中 AI 处理器、体系结构、量化、训推系统或内存/缓存优化主题",
+      "pdfStatus": "remote",
+      "workflow": {
+        "digestStatus": "ready",
+        "emailStatus": "sent",
+        "digestError": "",
+        "harnessVersion": "paper-reader-v1",
+        "collectStatus": "collected",
+        "pdfStatus": "remote",
+        "harnessCheckedAt": "2026-11-16T00:40:54.758Z",
+        "harnessWarnings": [],
+        "emailSentAt": "2026-11-16T00:40:59.003Z",
+        "lastEmailError": ""
+      },
+      "digest": {
+        "summaryZh": "SISS 研究图像缩放使隐藏文字指令变得可读的语义不一致，结合跨尺度验证、自适应生成和一致性检测。固定测试中静态 VLM 攻击成功率较高，但下游 Web Agent 的实际行为失陷约为 4%，主要适合跟踪多模态输入预处理的安全边界。",
+        "motivationZh": "用户看到的图像与 VLM 预处理后的图像可能具有不同指令语义，使外部视觉内容越过信任边界。已有视觉攻击研究未充分分离展示尺度、模型感知尺度和最终代理行为三个环节。在网页或文档代理中，预处理造成的语义变化可能影响工具调用和任务执行安全。与多模态 Agent 推理管线可靠性有关，主要是算法与系统安全趋势，硬件加速关联较弱。",
+        "methodZh": "用双尺度指令恢复差异定义 SISS，并以黑盒反馈筛选样本和迭代强化生成，再检测跨尺度语义一致性。双尺度验证区分展示分辨率与强下采样后的指令恢复。选择性自强化结合浅层 LoRA 与像素噪声正则化。ScaleGuard 对不同尺度的模型感知做一致性检测。研究对象是图像预处理和模型安全接口，没有给出芯片、电路或推理加速实现。将攻击目标限定为跨尺度的指令语义分离，并分别衡量静态感知、代理行为和检测防御。",
+        "experimentsZh": "固定 300 个案例、四个闭源 VLM；主协议比较 512×512 与强下采样视图，并另做分辨率扫描、Web Agent 和防御实验。与生成基线中最强方案、通用输入变换防御以及无 ScaleGuard 条件比较。摘要报告第三轮平均成功率 58.75%，最强生成基线为 41.08%；在 128、224、336 分辨率下降至 17.68%、6.85%、5.60%。代理行为失陷约 4%。ScaleGuard 在独立防御协议下将非自适应成功率从 61.4% 降到 24.3%，一轮防御感知攻击从 42.5% 降到 15.0%。效果依赖强下采样和指定协议；感知攻击成功不等于工具行为被控制。干净对照未观察到拒绝并非零误报保证，也没有全面自适应安全证明。",
+        "affiliationsZh": "未在 DBLP/arXiv 元数据中提供",
+        "tags": [
+          "视觉提示注入",
+          "图像缩放",
+          "多模态安全",
+          "Web Agent"
+        ],
+        "importance": 3,
+        "researchFitZh": "与多模态 Agent 推理管线可靠性有关，主要是算法与系统安全趋势，硬件加速关联较弱。",
+        "hardwareRelevance": 1,
+        "algorithmRelevance": 4,
+        "systemRelevance": 3,
+        "readPriority": "skim",
+        "whyReadZh": "浏览威胁模型与感知到行为的差距，用于检查多模态代理预处理环节的安全假设。",
+        "limitationsZh": "效果依赖强下采样和指定协议；感知攻击成功不等于工具行为被控制。干净对照未观察到拒绝并非零误报保证，也没有全面自适应安全证明。",
+        "motivationDetail": {
+          "problemZh": "用户看到的图像与 VLM 预处理后的图像可能具有不同指令语义，使外部视觉内容越过信任边界。",
+          "gapZh": "已有视觉攻击研究未充分分离展示尺度、模型感知尺度和最终代理行为三个环节。",
+          "whyImportantZh": "在网页或文档代理中，预处理造成的语义变化可能影响工具调用和任务执行安全。",
+          "userRelevanceZh": "与多模态 Agent 推理管线可靠性有关，主要是算法与系统安全趋势，硬件加速关联较弱。",
+          "evidence": "已读队列完整摘要及公开 HTML 摘要、引言和第 III 节威胁模型；数值均来自完整摘要，防御结果属于单独协议，不能与主攻击率直接混算。 来源：https://arxiv.org/html/2611.16744v1"
+        },
+        "methodDetail": {
+          "coreIdeaZh": "用双尺度指令恢复差异定义 SISS，并以黑盒反馈筛选样本和迭代强化生成，再检测跨尺度语义一致性。",
+          "componentsZh": [
+            "双尺度验证区分展示分辨率与强下采样后的指令恢复",
+            "选择性自强化结合浅层 LoRA 与像素噪声正则化",
+            "ScaleGuard 对不同尺度的模型感知做一致性检测"
+          ],
+          "hardwareSystemDetailZh": "研究对象是图像预处理和模型安全接口，没有给出芯片、电路或推理加速实现。",
+          "noveltyZh": "将攻击目标限定为跨尺度的指令语义分离，并分别衡量静态感知、代理行为和检测防御。",
+          "evidence": "已读队列完整摘要及公开 HTML 摘要、引言和第 III 节威胁模型；数值均来自完整摘要，防御结果属于单独协议，不能与主攻击率直接混算。 来源：https://arxiv.org/html/2611.16744v1"
+        },
+        "experimentDetail": {
+          "setupZh": "固定 300 个案例、四个闭源 VLM；主协议比较 512×512 与强下采样视图，并另做分辨率扫描、Web Agent 和防御实验。",
+          "baselinesZh": "与生成基线中最强方案、通用输入变换防御以及无 ScaleGuard 条件比较。",
+          "metricsZh": [
+            "跨尺度攻击成功率",
+            "隐藏指令感知",
+            "代理行为失陷率",
+            "干净对照拒绝情况"
+          ],
+          "mainResultsZh": "摘要报告第三轮平均成功率 58.75%，最强生成基线为 41.08%；在 128、224、336 分辨率下降至 17.68%、6.85%、5.60%。代理行为失陷约 4%。ScaleGuard 在独立防御协议下将非自适应成功率从 61.4% 降到 24.3%，一轮防御感知攻击从 42.5% 降到 15.0%。",
+          "limitationsZh": "效果依赖强下采样和指定协议；感知攻击成功不等于工具行为被控制。干净对照未观察到拒绝并非零误报保证，也没有全面自适应安全证明。",
+          "evidence": "已读队列完整摘要及公开 HTML 摘要、引言和第 III 节威胁模型；数值均来自完整摘要，防御结果属于单独协议，不能与主攻击率直接混算。 来源：https://arxiv.org/html/2611.16744v1"
+        },
+        "evidence": {
+          "usedSources": [
+            "public/research-digest/daily.json: 原始元数据与完整英文摘要",
+            "https://arxiv.org/html/2611.16744v1"
+          ],
+          "affiliationEvidence": "DBLP/arXiv 队列元数据未提供作者单位，按指定文案标记缺失，不依据作者身份推测。",
+          "experimentEvidence": "已读队列完整摘要及公开 HTML 摘要、引言和第 III 节威胁模型；数值均来自完整摘要，防御结果属于单独协议，不能与主攻击率直接混算。 来源：https://arxiv.org/html/2611.16744v1",
+          "missingFields": [
+            "元数据作者单位",
+            "完整硬件配置",
+            "生产环境安全保证"
+          ]
+        },
+        "confidence": {
+          "summary": 0.93,
+          "motivation": 0.91,
+          "method": 0.89,
+          "experiments": 0.9,
+          "affiliations": 0
+        }
+      },
+      "pushedAt": "2026-11-16T00:40:59.003Z",
+      "emailSentAt": "2026-11-16T00:40:59.003Z",
+      "firstPushedAt": "2026-11-16T00:40:59.003Z"
     },
     {
       "id": "doi:10.48550/arxiv.2608.22613",
@@ -18465,6 +18724,137 @@
       "pushedAt": "2026-05-08T04:40:41.777Z",
       "emailSentAt": "2026-05-08T04:40:41.777Z",
       "firstPushedAt": "2026-05-08T04:40:41.777Z"
+    },
+    {
+      "id": "arxiv:2611.16048",
+      "source": "arXiv",
+      "title": "Privacy Leakage from Recurrent State in LLM Inference",
+      "authors": [
+        "Weimin Fu",
+        "Shikun Liu",
+        "Qiying Li",
+        "Yuntao Liu",
+        "Pan Li",
+        "Xiaolong Guo"
+      ],
+      "authorAffiliations": [],
+      "affiliations": [],
+      "abstract": "Personalized LLM services place private facts and application instructions into a prompt, then retain representations of that context for later inference. Latent-state LLMs compress part of this history into fixed-size recurrent state. The information preserved by its learned updates is implicit, and later computation can expose it even when an observer receives neither the private text nor the responses. We investigate privacy leakage from recurrent state through partial-state probing and physical observation of its use. Our methodology separates recoverable information, persistence through public dialogue, causal influence on later decisions, and leakage through power. Experiments with released hybrid implementations show that a small state observation supports multiple predictions about private facts and response rules, and that personal attributes generalize to unseen authors. The information remains inferable after public dialogue and changes later decision margins. Complete-read power recovers private facts under a fixed execution schedule. On a partitioned GPU, an unprivileged account infers age from whole-device power during public requests; a separate state-isolation experiment establishes the recurrent contribution to this channel. These findings extend context confidentiality to the lifetime and execution of retained state. They identify access-control responsibilities for serving systems, telemetry restrictions for GPU operators, and data-dependent power leakage for accelerator designers.",
+      "venue": "arXiv",
+      "published": "2026-11-11T21:57:21Z",
+      "updated": "2026-11-11T21:57:21Z",
+      "url": "http://arxiv.org/abs/2611.16048v1",
+      "pdfUrl": "https://arxiv.org/pdf/2611.16048v1",
+      "categories": [
+        "cs.CR"
+      ],
+      "collectedAt": "2026-11-15T23:58:50.586Z",
+      "firstSeenAt": "2026-11-15T23:58:50.586Z",
+      "lastSeenAt": "2026-11-15T23:58:50.586Z",
+      "collectionType": "daily-latest",
+      "matchedQuery": "(all:quantization OR all:compression OR all:pruning OR all:sparsity OR all:low-bit) AND (all:LLM OR all:transformer OR all:language) AND (all:hardware OR all:accelerator OR all:inference OR all:serving OR all:processor)",
+      "collectionTypes": [
+        "daily-latest"
+      ],
+      "matchedQueries": [
+        "(all:quantization OR all:compression OR all:pruning OR all:sparsity OR all:low-bit) AND (all:LLM OR all:transformer OR all:language) AND (all:hardware OR all:accelerator OR all:inference OR all:serving OR all:processor)"
+      ],
+      "targetThemes": [],
+      "conferenceVenues": [],
+      "conferenceYears": [],
+      "recommendationTrack": "hardware-primary",
+      "recommendationLabel": "硬件体系结构主线",
+      "recommendationScore": 87,
+      "relevanceReason": "命中 AI 处理器、体系结构、量化、训推系统或内存/缓存优化主题",
+      "pdfStatus": "remote",
+      "workflow": {
+        "digestStatus": "ready",
+        "emailStatus": "sent",
+        "digestError": "",
+        "harnessVersion": "paper-reader-v1",
+        "collectStatus": "collected",
+        "pdfStatus": "remote",
+        "harnessCheckedAt": "2026-11-16T00:40:54.758Z",
+        "harnessWarnings": [],
+        "emailSentAt": "2026-11-16T00:40:59.003Z",
+        "lastEmailError": ""
+      },
+      "digest": {
+        "summaryZh": "论文把个性化 LLM 的上下文保密范围扩展到保留的递归状态及其后续执行。作者通过部分状态探测、干预和功耗观测分离信息恢复、持久性、因果影响与物理泄漏，说明状态访问控制和 GPU 遥测隔离也应纳入推理系统设计。",
+        "motivationZh": "递归状态压缩并保留私有历史，之后即便只执行公开请求，也可能让观察者推断私有事实或指令。只保护提示文本和模型响应不足以说明潜状态中保留了什么，以及其执行是否产生可观测泄漏。长期个性化服务与多租户加速器需要同时保护状态生命周期和执行侧信号。直接关联状态缓存、GPU 隔离与加速器数据相关功耗，适合从安全约束审视高效推理架构。",
+        "methodZh": "分开测量状态可恢复信息、公开对话后持久性、状态干预的决策影响，以及执行功耗的物理观测。对保留递归状态做受预算约束的部分观测，并在未见过的人物或作者上测试。通过匹配公共对话及状态隔离干预识别递归状态贡献。在固定执行安排及分区 GPU 上分别验证功耗渠道。属于推理状态和物理侧信道研究；涉及分区 GPU 的整卡功耗访问与状态隔离，设计启示是状态权限与遥测权限共同约束。把软件可探测性与实际物理观测分层验证，避免把原始状态访问直接等同于现实功耗攻击。",
+        "experimentsZh": "正文使用 Granite-4.0-H-350M、Qwen3.5-2B 等已发布混合实现；采用合成人物历史、SynthPAI 作者划分及受控物理观测。对照包括随机猜测、匹配公开历史、无目标状态条件；物理观测和干净软件预测分开评分。摘要报告少量状态观测支持多项秘密预测，信息经过公开对话仍可推断，并影响后续决策；固定安排的完整读取功耗能恢复私有事实，分区 GPU 上非特权账户可借整卡功耗推断年龄，另有状态隔离实验确认递归贡献。软件观测权限、固定读取安排和功耗访问是不同威胁合同；合成语料与作者划分不能证明任意租户、模型或真实用户都会泄漏。本文摘要未给统一成功率，不跨协议拼接数字。",
+        "affiliationsZh": "未在 DBLP/arXiv 元数据中提供",
+        "tags": [
+          "递归状态",
+          "推理隐私",
+          "功耗侧信道",
+          "GPU 隔离",
+          "状态缓存"
+        ],
+        "importance": 4,
+        "researchFitZh": "直接关联状态缓存、GPU 隔离与加速器数据相关功耗，适合从安全约束审视高效推理架构。",
+        "hardwareRelevance": 4,
+        "algorithmRelevance": 3,
+        "systemRelevance": 5,
+        "readPriority": "deep-read",
+        "whyReadZh": "优先核对物理观测权限、状态隔离对照和遥测访问条件，再评估部署中的状态与功耗保护。",
+        "limitationsZh": "软件观测权限、固定读取安排和功耗访问是不同威胁合同；合成语料与作者划分不能证明任意租户、模型或真实用户都会泄漏。本文摘要未给统一成功率，不跨协议拼接数字。",
+        "motivationDetail": {
+          "problemZh": "递归状态压缩并保留私有历史，之后即便只执行公开请求，也可能让观察者推断私有事实或指令。",
+          "gapZh": "只保护提示文本和模型响应不足以说明潜状态中保留了什么，以及其执行是否产生可观测泄漏。",
+          "whyImportantZh": "长期个性化服务与多租户加速器需要同时保护状态生命周期和执行侧信号。",
+          "userRelevanceZh": "直接关联状态缓存、GPU 隔离与加速器数据相关功耗，适合从安全约束审视高效推理架构。",
+          "evidence": "已读队列完整摘要、公开 HTML 第 IV 节实验设置和第 V-A/V-B 节结果；物理泄漏结论取自摘要，未将软件部分观测准确率冒充物理攻击成功率。 来源：https://arxiv.org/html/2611.16048v1"
+        },
+        "methodDetail": {
+          "coreIdeaZh": "分开测量状态可恢复信息、公开对话后持久性、状态干预的决策影响，以及执行功耗的物理观测。",
+          "componentsZh": [
+            "对保留递归状态做受预算约束的部分观测，并在未见过的人物或作者上测试",
+            "通过匹配公共对话及状态隔离干预识别递归状态贡献",
+            "在固定执行安排及分区 GPU 上分别验证功耗渠道"
+          ],
+          "hardwareSystemDetailZh": "属于推理状态和物理侧信道研究；涉及分区 GPU 的整卡功耗访问与状态隔离，设计启示是状态权限与遥测权限共同约束。",
+          "noveltyZh": "把软件可探测性与实际物理观测分层验证，避免把原始状态访问直接等同于现实功耗攻击。",
+          "evidence": "已读队列完整摘要、公开 HTML 第 IV 节实验设置和第 V-A/V-B 节结果；物理泄漏结论取自摘要，未将软件部分观测准确率冒充物理攻击成功率。 来源：https://arxiv.org/html/2611.16048v1"
+        },
+        "experimentDetail": {
+          "setupZh": "正文使用 Granite-4.0-H-350M、Qwen3.5-2B 等已发布混合实现；采用合成人物历史、SynthPAI 作者划分及受控物理观测。",
+          "baselinesZh": "对照包括随机猜测、匹配公开历史、无目标状态条件；物理观测和干净软件预测分开评分。",
+          "metricsZh": [
+            "私有事实及响应规则预测准确率",
+            "公开对话后的可恢复性",
+            "干预后的决策变化",
+            "功耗观测预测"
+          ],
+          "mainResultsZh": "摘要报告少量状态观测支持多项秘密预测，信息经过公开对话仍可推断，并影响后续决策；固定安排的完整读取功耗能恢复私有事实，分区 GPU 上非特权账户可借整卡功耗推断年龄，另有状态隔离实验确认递归贡献。",
+          "limitationsZh": "软件观测权限、固定读取安排和功耗访问是不同威胁合同；合成语料与作者划分不能证明任意租户、模型或真实用户都会泄漏。本文摘要未给统一成功率，不跨协议拼接数字。",
+          "evidence": "已读队列完整摘要、公开 HTML 第 IV 节实验设置和第 V-A/V-B 节结果；物理泄漏结论取自摘要，未将软件部分观测准确率冒充物理攻击成功率。 来源：https://arxiv.org/html/2611.16048v1"
+        },
+        "evidence": {
+          "usedSources": [
+            "public/research-digest/daily.json: 原始元数据与完整英文摘要",
+            "https://arxiv.org/html/2611.16048v1"
+          ],
+          "affiliationEvidence": "DBLP/arXiv 队列元数据未提供作者单位，按指定文案标记缺失，不依据作者身份推测。",
+          "experimentEvidence": "已读队列完整摘要、公开 HTML 第 IV 节实验设置和第 V-A/V-B 节结果；物理泄漏结论取自摘要，未将软件部分观测准确率冒充物理攻击成功率。 来源：https://arxiv.org/html/2611.16048v1",
+          "missingFields": [
+            "元数据作者单位",
+            "生产多租户普适泄漏率",
+            "未完整核读物理接收器的全部实现细节"
+          ]
+        },
+        "confidence": {
+          "summary": 0.93,
+          "motivation": 0.91,
+          "method": 0.89,
+          "experiments": 0.83,
+          "affiliations": 0
+        }
+      },
+      "pushedAt": "2026-11-16T00:40:59.003Z",
+      "emailSentAt": "2026-11-16T00:40:59.003Z",
+      "firstPushedAt": "2026-11-16T00:40:59.003Z"
     },
     {
       "id": "arxiv:2605.04341",
@@ -18757,6 +19147,137 @@
       "firstPushedAt": "2026-11-09T00:34:09.788Z"
     },
     {
+      "id": "arxiv:2611.17042",
+      "source": "arXiv",
+      "title": "Infrastructure for Verifiable AI: Where Proof Costs Go and How Hardware Can Help",
+      "authors": [
+        "Yihan Xia",
+        "Wenxin Xu",
+        "Taotao Wang"
+      ],
+      "authorAffiliations": [],
+      "affiliations": [],
+      "abstract": "Users of artificial intelligence services, including those powered by large language models and other transformer-based models, need assurance that inference and training follow the declared computation without exposing private models or data. Zero-knowledge proofs can provide this assurance, but proof generation remains expensive. Hardware acceleration research often reports gains for individual cryptographic operations, leaving their effect on the full cost of proving neural-network workloads, particularly large transformer models, unclear. We introduce a four-layer framework linking verifiable AI workloads, proof systems, cryptographic kernels and hardware platforms, use it to review the literature, and add original measurements of six provers and seven kernels to identify which costs matter in practice. Our measurements show that the dominant cost changes with the proof system and input length. In low-rank fine-tuning, the cost of opening commitments to fixed model weights remains nearly constant across input lengths from 64 to 2048, while the work associated with intermediate values grows. A 13-billion-parameter fine-tuning configuration exceeds the capacity of a 40-gigabyte graphics processor but completes on an 80-gigabyte device, showing why capacity must be assessed alongside execution time. Our kernel profiling further identifies instruction issue and synchronization limits that a bandwidth-only model misses. We use these findings to assess graphics processors, reconfigurable logic, custom chips and existing artificial intelligence accelerators. The resulting research agenda connects proof-friendly numeric formats, reuse of fixed-weight commitments, heterogeneous execution and shared benchmarks to the measured bottlenecks. Effective acceleration requires selecting hardware and proof-system optimizations around the cost profile of the target workload.",
+      "venue": "arXiv",
+      "published": "2026-11-12T16:27:07Z",
+      "updated": "2026-11-12T16:27:07Z",
+      "url": "http://arxiv.org/abs/2611.17042v1",
+      "pdfUrl": "https://arxiv.org/pdf/2611.17042v1",
+      "categories": [
+        "cs.AR",
+        "cs.CR",
+        "cs.LG"
+      ],
+      "collectedAt": "2026-11-15T23:58:48.857Z",
+      "firstSeenAt": "2026-11-15T23:58:48.857Z",
+      "lastSeenAt": "2026-11-15T23:58:48.857Z",
+      "collectionType": "daily-latest",
+      "matchedQuery": "(cat:cs.AR OR cat:cs.DC OR cat:cs.PF) AND (all:LLM OR all:transformer OR all:foundation OR all:language) AND (all:accelerator OR all:processor OR all:architecture OR all:hardware OR all:system OR all:serving OR all:training OR all:inference OR all:cache)",
+      "collectionTypes": [
+        "daily-latest"
+      ],
+      "matchedQueries": [
+        "(cat:cs.AR OR cat:cs.DC OR cat:cs.PF) AND (all:LLM OR all:transformer OR all:foundation OR all:language) AND (all:accelerator OR all:processor OR all:architecture OR all:hardware OR all:system OR all:serving OR all:training OR all:inference OR all:cache)"
+      ],
+      "targetThemes": [],
+      "conferenceVenues": [],
+      "conferenceYears": [],
+      "recommendationTrack": "hardware-primary",
+      "recommendationLabel": "硬件体系结构主线",
+      "recommendationScore": 86,
+      "relevanceReason": "命中 AI 处理器、体系结构、量化、训推系统或内存/缓存优化主题",
+      "pdfStatus": "remote",
+      "workflow": {
+        "digestStatus": "ready",
+        "emailStatus": "sent",
+        "digestError": "",
+        "harnessVersion": "paper-reader-v1",
+        "collectStatus": "collected",
+        "pdfStatus": "remote",
+        "harnessCheckedAt": "2026-11-16T00:40:54.758Z",
+        "harnessWarnings": [],
+        "emailSentAt": "2026-11-16T00:40:59.003Z",
+        "lastEmailError": ""
+      },
+      "digest": {
+        "summaryZh": "这项可验证 AI 研究用工作负载、证明系统、密码内核、硬件平台四层框架拆解证明开销，并实测六个证明器和七类内核。成本随协议和序列长度改变，显存容量、指令发射及同步均可能限速，适合寻找证明计算与 AI 加速器协同优化机会。",
+        "motivationZh": "零知识证明可保证训练或推理遵守声明计算，但证明生成成本高，单内核加速未必改善完整证明。已有硬件结果往往隔离密码操作，缺少到神经网络证明端到端成本的映射。若错误判断主导内核或忽略容量约束，加速器资源可能投向无法改善总时延的部分。紧贴异构加速器、内存容量、数据搬运与软硬件协同设计，虽然应用是可验证 AI 而非普通张量推理。",
+        "methodZh": "通过四层框架连接 AI 工作负载与证明协议，再把证明阶段映射到密码内核并结合实测 roofline 定位瓶颈。对六个公开证明器按统一成本类别记录端到端阶段开销。测量七类内核并区分设备驻留与数据传输影响。结合固定权重承诺复用与数值格式讨论硬件选择。正文使用 A100 40GB 与 80GB 平台观察容量和执行开销；FPGA、ASIC 部分依据文献评估，不能当成作者新流片测量。用完整工作负载的成本份额约束硬件优化方向，展示带宽模型之外的指令发射和同步限制。",
+        "experimentsZh": "测量覆盖提示推理、整段生成、LoRA 微调步及小规模 DP-SGD；证明器固定版本，另测密码内核。跨证明系统比较成本份额与扩展趋势，并以同 GPU 的 FP16 PyTorch 计算作慢化参照；不同平台不直接比绝对时延。摘要报告 LoRA 固定权重 opening 成本在输入 64–2048 时近似稳定，中间值工作增加；13B 微调配置超出 40GB 设备容量但能在 80GB 完成。内核剖析发现指令发射和同步限制，不能统一按带宽瓶颈处理。大模型覆盖主要集中在 sumcheck 系；不同证明器的域、量化和实现不同，不能据绝对耗时排序协议。40/80GB 只有两个容量点，部分 FPGA/ASIC 结论来自文献。",
+        "affiliationsZh": "未在 DBLP/arXiv 元数据中提供",
+        "tags": [
+          "可验证 AI",
+          "零知识证明",
+          "GPU 加速",
+          "内存容量",
+          "软硬件协同"
+        ],
+        "importance": 5,
+        "researchFitZh": "紧贴异构加速器、内存容量、数据搬运与软硬件协同设计，虽然应用是可验证 AI 而非普通张量推理。",
+        "hardwareRelevance": 5,
+        "algorithmRelevance": 3,
+        "systemRelevance": 5,
+        "readPriority": "deep-read",
+        "whyReadZh": "重点阅读工作负载到密码内核的映射及容量测量，以判断 AI 加速器可复用部分和需要专门设计的部分。",
+        "limitationsZh": "大模型覆盖主要集中在 sumcheck 系；不同证明器的域、量化和实现不同，不能据绝对耗时排序协议。40/80GB 只有两个容量点，部分 FPGA/ASIC 结论来自文献。",
+        "motivationDetail": {
+          "problemZh": "零知识证明可保证训练或推理遵守声明计算，但证明生成成本高，单内核加速未必改善完整证明。",
+          "gapZh": "已有硬件结果往往隔离密码操作，缺少到神经网络证明端到端成本的映射。",
+          "whyImportantZh": "若错误判断主导内核或忽略容量约束，加速器资源可能投向无法改善总时延的部分。",
+          "userRelevanceZh": "紧贴异构加速器、内存容量、数据搬运与软硬件协同设计，虽然应用是可验证 AI 而非普通张量推理。",
+          "evidence": "已读队列完整摘要、公开 HTML 第 IV-A 方法、平台及局限和 IV-B 内核剖析；容量与长度结果来自摘要，实验范围和比较限制来自正文。 来源：https://arxiv.org/html/2611.17042v1"
+        },
+        "methodDetail": {
+          "coreIdeaZh": "通过四层框架连接 AI 工作负载与证明协议，再把证明阶段映射到密码内核并结合实测 roofline 定位瓶颈。",
+          "componentsZh": [
+            "对六个公开证明器按统一成本类别记录端到端阶段开销",
+            "测量七类内核并区分设备驻留与数据传输影响",
+            "结合固定权重承诺复用与数值格式讨论硬件选择"
+          ],
+          "hardwareSystemDetailZh": "正文使用 A100 40GB 与 80GB 平台观察容量和执行开销；FPGA、ASIC 部分依据文献评估，不能当成作者新流片测量。",
+          "noveltyZh": "用完整工作负载的成本份额约束硬件优化方向，展示带宽模型之外的指令发射和同步限制。",
+          "evidence": "已读队列完整摘要、公开 HTML 第 IV-A 方法、平台及局限和 IV-B 内核剖析；容量与长度结果来自摘要，实验范围和比较限制来自正文。 来源：https://arxiv.org/html/2611.17042v1"
+        },
+        "experimentDetail": {
+          "setupZh": "测量覆盖提示推理、整段生成、LoRA 微调步及小规模 DP-SGD；证明器固定版本，另测密码内核。",
+          "baselinesZh": "跨证明系统比较成本份额与扩展趋势，并以同 GPU 的 FP16 PyTorch 计算作慢化参照；不同平台不直接比绝对时延。",
+          "metricsZh": [
+            "证明时间及阶段占比",
+            "GPU/主机峰值内存",
+            "证明大小",
+            "验证时间",
+            "内核吞吐及 roofline"
+          ],
+          "mainResultsZh": "摘要报告 LoRA 固定权重 opening 成本在输入 64–2048 时近似稳定，中间值工作增加；13B 微调配置超出 40GB 设备容量但能在 80GB 完成。内核剖析发现指令发射和同步限制，不能统一按带宽瓶颈处理。",
+          "limitationsZh": "大模型覆盖主要集中在 sumcheck 系；不同证明器的域、量化和实现不同，不能据绝对耗时排序协议。40/80GB 只有两个容量点，部分 FPGA/ASIC 结论来自文献。",
+          "evidence": "已读队列完整摘要、公开 HTML 第 IV-A 方法、平台及局限和 IV-B 内核剖析；容量与长度结果来自摘要，实验范围和比较限制来自正文。 来源：https://arxiv.org/html/2611.17042v1"
+        },
+        "evidence": {
+          "usedSources": [
+            "public/research-digest/daily.json: 原始元数据与完整英文摘要",
+            "https://arxiv.org/html/2611.17042v1"
+          ],
+          "affiliationEvidence": "DBLP/arXiv 队列元数据未提供作者单位，按指定文案标记缺失，不依据作者身份推测。",
+          "experimentEvidence": "已读队列完整摘要、公开 HTML 第 IV-A 方法、平台及局限和 IV-B 内核剖析；容量与长度结果来自摘要，实验范围和比较限制来自正文。 来源：https://arxiv.org/html/2611.17042v1",
+          "missingFields": [
+            "元数据作者单位",
+            "作者自研 FPGA/ASIC 实测",
+            "生产推理服务完整成本"
+          ]
+        },
+        "confidence": {
+          "summary": 0.93,
+          "motivation": 0.91,
+          "method": 0.89,
+          "experiments": 0.9,
+          "affiliations": 0
+        }
+      },
+      "pushedAt": "2026-11-16T00:40:59.003Z",
+      "emailSentAt": "2026-11-16T00:40:59.003Z",
+      "firstPushedAt": "2026-11-16T00:40:59.003Z"
+    },
+    {
       "id": "arxiv:2610.29873",
       "source": "arXiv",
       "title": "HAWK: Heterogeneity-Aware KV Cache Transfer for Efficient GPU-NPU Phase-Disaggregated LLM Inference",
@@ -19023,6 +19544,136 @@
       "pushedAt": "2026-11-02T00:31:52.105Z",
       "emailSentAt": "2026-11-02T00:31:52.105Z",
       "firstPushedAt": "2026-11-02T00:31:52.105Z"
+    },
+    {
+      "id": "arxiv:2611.16502",
+      "source": "arXiv",
+      "title": "SignRot: LLM Quantization with Massive Outlier-Aware Sign-Adjusted Rotation",
+      "authors": [
+        "Jaehun Gim",
+        "Jaewoo Kim",
+        "Gyuwan Kim",
+        "Seo Yeon Park"
+      ],
+      "authorAffiliations": [],
+      "affiliations": [],
+      "abstract": "While quantization compresses LLMs and accelerates inference, outlier activations impede efficient low-bit representation. In particular, massive outliers cause substantial performance degradation. Although rotation-based methods that rely on randomized Hadamard transforms for online inference aim to mitigate this, they can produce fragmented distributions with empty bins when a massive outlier dominates a token's activation. This fragmentation severely undermines uniform quantization performance. Moreover, massive outliers concentrate in the down-projection input, where the preceding nonlinearity requires the rotation to be applied at inference time. This constraint prevents training-based approaches such as SpinQuant from learning the online rotation at this position, as a learned dense matrix cannot use the Fast Walsh-Hadamard Transform and would require a full matrix multiplication during inference. To address this, we propose SignRot (Sign-adjusted Rotation), which identifies massive outlier channels and constructs a sign adjustment vector that unifies the signs of the corresponding Hadamard row, collapsing the bimodal distribution into a unimodal profile amenable to quantization. Since the aligned outlier shifts the activation mean away from zero, we pair SignRot with asymmetric activation quantization, whose zero-point absorbs this shift. As a lightweight, drop-in improvement compatible with any Hadamard-based quantization method, SignRot requires only a single calibration forward pass and adds only element-wise sign flips at inference, without an additional matrix multiplication. Applying SignRot to QuaRot achieves a WikiText2 perplexity of 5.88 and an average zero-shot reasoning accuracy of 72.73, surpassing SpinQuant on the LLaMA3-70B model. Code is available at https://github.com/HYU-ARK-Lab/SignRot.",
+      "venue": "arXiv",
+      "published": "2026-11-12T09:05:14Z",
+      "updated": "2026-11-12T09:05:14Z",
+      "url": "http://arxiv.org/abs/2611.16502v1",
+      "pdfUrl": "https://arxiv.org/pdf/2611.16502v1",
+      "categories": [
+        "cs.AI"
+      ],
+      "collectedAt": "2026-11-15T23:58:50.586Z",
+      "firstSeenAt": "2026-11-15T23:58:50.586Z",
+      "lastSeenAt": "2026-11-15T23:58:50.586Z",
+      "collectionType": "daily-latest",
+      "matchedQuery": "(all:quantization OR all:compression OR all:pruning OR all:sparsity OR all:low-bit) AND (all:LLM OR all:transformer OR all:language) AND (all:hardware OR all:accelerator OR all:inference OR all:serving OR all:processor)",
+      "collectionTypes": [
+        "daily-latest"
+      ],
+      "matchedQueries": [
+        "(all:quantization OR all:compression OR all:pruning OR all:sparsity OR all:low-bit) AND (all:LLM OR all:transformer OR all:language) AND (all:hardware OR all:accelerator OR all:inference OR all:serving OR all:processor)"
+      ],
+      "targetThemes": [],
+      "conferenceVenues": [],
+      "conferenceYears": [],
+      "recommendationTrack": "hardware-primary",
+      "recommendationLabel": "硬件体系结构主线",
+      "recommendationScore": 83.75,
+      "relevanceReason": "命中 AI 处理器、体系结构、量化、训推系统或内存/缓存优化主题",
+      "pdfStatus": "remote",
+      "workflow": {
+        "digestStatus": "ready",
+        "emailStatus": "sent",
+        "digestError": "",
+        "harnessVersion": "paper-reader-v1",
+        "collectStatus": "collected",
+        "pdfStatus": "remote",
+        "harnessCheckedAt": "2026-11-16T00:40:54.758Z",
+        "harnessWarnings": [],
+        "emailSentAt": "2026-11-16T00:40:59.003Z",
+        "lastEmailError": ""
+      },
+      "digest": {
+        "summaryZh": "SignRot 针对 Hadamard 在线旋转在巨大离群值下产生双峰、浪费量化格点的问题，用单次校准定位通道并调整符号，再以非对称激活量化吸收均值偏移。它保留快速变换，改善低比特精度，部署实验显示相对同量化器 QuaRot 仅有小幅额外时延。",
+        "motivationZh": "巨大激活离群值在随机 Hadamard 旋转后形成碎裂分布，均匀量化格点被空区浪费并损伤精度。down-projection 前的非线性使旋转必须在线执行，稠密学习矩阵难以保持快速 Hadamard 变换的成本。低比特部署需要同时控制激活误差和在线变换开销，精度恢复若引入昂贵矩阵乘就会削弱加速价值。与 LLM 量化算法、整数矩阵乘和软硬件协同高度吻合，是本轮优先精读的执行效率论文。",
+        "methodZh": "通过校准选出巨大离群通道，对齐其 Hadamard 行符号，使离群贡献从正负分裂变为整体偏移，并配合非对称激活量化。单次校准前向得到目标通道和符号向量，推理时复用。逐元素符号翻转保留快速 Hadamard 计算，不增加稠密旋转矩阵乘。非对称激活零点吸收分布平移，与对称权重量化配合。属于量化与部署内核协同；非对称激活乘法需要零点修正，不能把无额外旋转 GEMM 理解为完全零开销。针对离群值符号造成的分布碎裂修正旋转，并把非对称量化作为必要组成，而非仅最小化旋转误差。",
+        "experimentsZh": "评估 LLaMA2/3 等模型的语言建模和六项零样本任务；部署测量为 RTX 3090 上 LLaMA2-7B、batch 1、2048-token prefill 后解码 128 步。对比 QuaRot、SpinQuant、DartQuant 及其加 SignRot 版本；部署时用相同非对称激活量化器隔离符号修正成本。摘要中的 LLaMA3-70B QuaRot+SignRot 结果为 WikiText2 PPL 5.88、平均准确率 72.73%。正文表 3 的同量化器部署比较中，SignRot 端到端比 QuaRot 增加 0.43% 时延；相对 FP16 的 1.65 倍加速属于整套量化部署收益。精度改善不是每个任务都单调成立；选择单个主导通道依赖校准代表性。速度实测来自指定单卡模型和 batch，不能外推为所有模型或硬件上的额外加速。",
+        "affiliationsZh": "未在 DBLP/arXiv 元数据中提供",
+        "tags": [
+          "LLM 量化",
+          "Hadamard 旋转",
+          "离群值",
+          "非对称量化",
+          "整数推理"
+        ],
+        "importance": 5,
+        "researchFitZh": "与 LLM 量化算法、整数矩阵乘和软硬件协同高度吻合，是本轮优先精读的执行效率论文。",
+        "hardwareRelevance": 5,
+        "algorithmRelevance": 5,
+        "systemRelevance": 4,
+        "readPriority": "deep-read",
+        "whyReadZh": "重点核对符号对齐和零点修正的内核代价，以及相同激活量化器下的精度增益，适合量化架构协同研究。",
+        "limitationsZh": "精度改善不是每个任务都单调成立；选择单个主导通道依赖校准代表性。速度实测来自指定单卡模型和 batch，不能外推为所有模型或硬件上的额外加速。",
+        "motivationDetail": {
+          "problemZh": "巨大激活离群值在随机 Hadamard 旋转后形成碎裂分布，均匀量化格点被空区浪费并损伤精度。",
+          "gapZh": "down-projection 前的非线性使旋转必须在线执行，稠密学习矩阵难以保持快速 Hadamard 变换的成本。",
+          "whyImportantZh": "低比特部署需要同时控制激活误差和在线变换开销，精度恢复若引入昂贵矩阵乘就会削弱加速价值。",
+          "userRelevanceZh": "与 LLM 量化算法、整数矩阵乘和软硬件协同高度吻合，是本轮优先精读的执行效率论文。",
+          "evidence": "已读队列完整摘要、公开 HTML 第 4 节方法、第 5.1 节设置、表 1 及第 5.3 节表 3。5.88/72.73 来自摘要且正文对应 GPTQ 行；额外开销来自同量化器的表 3。 来源：https://arxiv.org/html/2611.16502v1"
+        },
+        "methodDetail": {
+          "coreIdeaZh": "通过校准选出巨大离群通道，对齐其 Hadamard 行符号，使离群贡献从正负分裂变为整体偏移，并配合非对称激活量化。",
+          "componentsZh": [
+            "单次校准前向得到目标通道和符号向量，推理时复用",
+            "逐元素符号翻转保留快速 Hadamard 计算，不增加稠密旋转矩阵乘",
+            "非对称激活零点吸收分布平移，与对称权重量化配合"
+          ],
+          "hardwareSystemDetailZh": "属于量化与部署内核协同；非对称激活乘法需要零点修正，不能把无额外旋转 GEMM 理解为完全零开销。",
+          "noveltyZh": "针对离群值符号造成的分布碎裂修正旋转，并把非对称量化作为必要组成，而非仅最小化旋转误差。",
+          "evidence": "已读队列完整摘要、公开 HTML 第 4 节方法、第 5.1 节设置、表 1 及第 5.3 节表 3。5.88/72.73 来自摘要且正文对应 GPTQ 行；额外开销来自同量化器的表 3。 来源：https://arxiv.org/html/2611.16502v1"
+        },
+        "experimentDetail": {
+          "setupZh": "评估 LLaMA2/3 等模型的语言建模和六项零样本任务；部署测量为 RTX 3090 上 LLaMA2-7B、batch 1、2048-token prefill 后解码 128 步。",
+          "baselinesZh": "对比 QuaRot、SpinQuant、DartQuant 及其加 SignRot 版本；部署时用相同非对称激活量化器隔离符号修正成本。",
+          "metricsZh": [
+            "WikiText2/C4 困惑度",
+            "零样本平均准确率",
+            "prefill 与 decode 时延",
+            "端到端时延",
+            "峰值显存"
+          ],
+          "mainResultsZh": "摘要中的 LLaMA3-70B QuaRot+SignRot 结果为 WikiText2 PPL 5.88、平均准确率 72.73%。正文表 3 的同量化器部署比较中，SignRot 端到端比 QuaRot 增加 0.43% 时延；相对 FP16 的 1.65 倍加速属于整套量化部署收益。",
+          "limitationsZh": "精度改善不是每个任务都单调成立；选择单个主导通道依赖校准代表性。速度实测来自指定单卡模型和 batch，不能外推为所有模型或硬件上的额外加速。",
+          "evidence": "已读队列完整摘要、公开 HTML 第 4 节方法、第 5.1 节设置、表 1 及第 5.3 节表 3。5.88/72.73 来自摘要且正文对应 GPTQ 行；额外开销来自同量化器的表 3。 来源：https://arxiv.org/html/2611.16502v1"
+        },
+        "evidence": {
+          "usedSources": [
+            "public/research-digest/daily.json: 原始元数据与完整英文摘要",
+            "https://arxiv.org/html/2611.16502v1"
+          ],
+          "affiliationEvidence": "DBLP/arXiv 队列元数据未提供作者单位，按指定文案标记缺失，不依据作者身份推测。",
+          "experimentEvidence": "已读队列完整摘要、公开 HTML 第 4 节方法、第 5.1 节设置、表 1 及第 5.3 节表 3。5.88/72.73 来自摘要且正文对应 GPTQ 行；额外开销来自同量化器的表 3。 来源：https://arxiv.org/html/2611.16502v1",
+          "missingFields": [
+            "元数据作者单位",
+            "目标 NPU/ASIC 的部署数据",
+            "跨 batch 和服务负载泛化"
+          ]
+        },
+        "confidence": {
+          "summary": 0.93,
+          "motivation": 0.91,
+          "method": 0.89,
+          "experiments": 0.9,
+          "affiliations": 0
+        }
+      },
+      "pushedAt": "2026-11-16T00:40:59.003Z",
+      "emailSentAt": "2026-11-16T00:40:59.003Z",
+      "firstPushedAt": "2026-11-16T00:40:59.003Z"
     },
     {
       "id": "arxiv:2610.31667",
@@ -20068,6 +20719,143 @@
       "pushedAt": "2026-11-02T00:31:52.105Z",
       "emailSentAt": "2026-11-02T00:31:52.105Z",
       "firstPushedAt": "2026-11-02T00:31:52.105Z"
+    },
+    {
+      "id": "arxiv:2611.17294",
+      "source": "arXiv",
+      "title": "Metal Sandbox: Isolated Execution and Command Scheduling for GPU Coding Agents on Apple Silicon",
+      "authors": [
+        "Haozhe Wang",
+        "Lina Chen",
+        "Fanqi Wan",
+        "Qi Han",
+        "Yinmin Zhang",
+        "Zheng Ge",
+        "Daxin Jiang",
+        "Junchi Yan"
+      ],
+      "authorAffiliations": [],
+      "affiliations": [],
+      "abstract": "On-device inference requires kernels that make effective use of local accelerators. Efficient training and evaluation of models that generate Apple Metal kernels benefit from native macOS tools and concurrent agent sessions. These sessions alternate between model requests, development commands, and GPU execution, leaving GPU capacity idle for much of a rollout. We present Metal Sandbox, infrastructure that combines restricted per-instance file access, native command execution, and command-level scheduling across interconnected Macs. Each agent retains its workspace and private development environment. Parallel commands can run concurrently, while serial commands share one execution slot per node; eligible waiting commands can migrate to available Macs and return results to the original agent. Integration with Harbor supports task execution, automatic verification, and rollout collection through a common workflow. Controlled experiments on four Mac mini M4 nodes achieve $1.68\\times$--$2.05\\times$ gains in command throughput under concentrated demand. Sixteen static agent traces give an estimated $2.14\\times$ sustained-throughput gain for four sessions per node versus one, assuming continuously replenished sessions and unchanged mean durations. Replaying these measured traces under dynamic scheduling reduces mean tool waiting by 18.8% and batch elapsed time by 22.3%, assuming unchanged phase durations. Metal Sandbox and its Harbor integration are open-source on GitHub.",
+      "venue": "arXiv",
+      "published": "2026-11-12T18:54:42Z",
+      "updated": "2026-11-12T18:54:42Z",
+      "url": "http://arxiv.org/abs/2611.17294v1",
+      "pdfUrl": "https://arxiv.org/pdf/2611.17294v1",
+      "categories": [
+        "cs.LG",
+        "cs.AI",
+        "cs.CL",
+        "cs.DC"
+      ],
+      "collectedAt": "2026-11-15T23:58:48.857Z",
+      "firstSeenAt": "2026-11-15T23:58:48.857Z",
+      "lastSeenAt": "2026-11-15T23:58:48.857Z",
+      "collectionType": "daily-latest",
+      "matchedQuery": "(cat:cs.AR OR cat:cs.DC OR cat:cs.PF) AND (all:LLM OR all:transformer OR all:foundation OR all:language) AND (all:accelerator OR all:processor OR all:architecture OR all:hardware OR all:system OR all:serving OR all:training OR all:inference OR all:cache)",
+      "collectionTypes": [
+        "daily-latest"
+      ],
+      "matchedQueries": [
+        "(cat:cs.AR OR cat:cs.DC OR cat:cs.PF) AND (all:LLM OR all:transformer OR all:foundation OR all:language) AND (all:accelerator OR all:processor OR all:architecture OR all:hardware OR all:system OR all:serving OR all:training OR all:inference OR all:cache)",
+        "(all:agent OR all:agents OR all:agentic OR all:reasoning OR all:post-training OR all:alignment OR all:multimodal OR all:world-model) AND (all:LLM OR all:foundation OR all:language)"
+      ],
+      "targetThemes": [],
+      "conferenceVenues": [],
+      "conferenceYears": [],
+      "digest": {
+        "summaryZh": "Metal Sandbox 将编码 Agent 的原生 macOS 执行、实例文件隔离和多 Mac 命令调度结合，减少模型等待期间的 GPU 空闲。四台 M4 的受控命令测试取得吞吐收益；基于静态轨迹的持续吞吐估算和动态重放结果有固定阶段耗时等假设，应分别解读。",
+        "motivationZh": "Metal 内核开发 Agent 在模型请求、开发命令和 GPU 执行间切换，多个会话仍可能让本地 GPU 长时间空闲。仅增加独立 Agent 会话并不能解决命令需求不均和跨节点资源闲置，原生工具与工作区隔离也要保留。原生端侧内核训练和评估需要有效利用有限 Mac 加速器资源，同时让命令结果回到正确会话。与 Agent 执行系统、异构开发平台和资源调度直接相关，适合研究硬件利用率与工作流协同。",
+        "methodZh": "让每个 Agent 保留工作区和开发环境，把命令而非整个会话作为调度单位，在相连 Mac 上迁移符合条件的等待命令。受限实例文件访问与原生命令执行保持开发上下文。并行命令允许并发，串行命令每节点共享一个执行槽。通过 Harbor 统一任务验证与轨迹采集，迁移结果返回原 Agent。在互联 Apple Silicon Mac 上利用原生 Metal；命令级迁移需要共享工作区条件，缺少相关描述的调用仍留在所属节点。将原生隔离环境与细粒度命令调度结合，利用模型与工具阶段错峰而非只静态绑定会话。",
+        "experimentsZh": "受控测试使用四台 Mac mini M4、每台 32GiB、千兆以太网及固定 Metal 工作负载；另分析 16 条静态 Agent 轨迹。静态调度与允许合格串行命令迁移的动态调度对比；轨迹估算另比较每节点一个与四个会话。摘要报告集中需求受控实测吞吐提升 1.68–2.05 倍；16 条静态轨迹估算四会话相对单会话持续吞吐为 2.14 倍，假定会话持续补充且平均时长不变。动态轨迹重放平均工具等待下降 18.8%、批次耗时下降 22.3%，假定阶段时长不变。受控命令实测、持续吞吐估算和轨迹重放是不同证据；没有证明真实在线多 Agent 会话一定达到估算值，也未测得内核本身加速或能耗收益。",
+        "affiliationsZh": "未在 DBLP/arXiv 元数据中提供",
+        "tags": [
+          "Metal",
+          "Apple Silicon",
+          "Agent 系统",
+          "命令调度",
+          "GPU 利用率"
+        ],
+        "importance": 4,
+        "researchFitZh": "与 Agent 执行系统、异构开发平台和资源调度直接相关，适合研究硬件利用率与工作流协同。",
+        "hardwareRelevance": 4,
+        "algorithmRelevance": 2,
+        "systemRelevance": 5,
+        "readPriority": "deep-read",
+        "whyReadZh": "阅读命令迁移条件、隔离边界与三类评估协议，判断原生设备集群怎样提高 Agent 开发资源利用率。",
+        "limitationsZh": "受控命令实测、持续吞吐估算和轨迹重放是不同证据；没有证明真实在线多 Agent 会话一定达到估算值，也未测得内核本身加速或能耗收益。",
+        "motivationDetail": {
+          "problemZh": "Metal 内核开发 Agent 在模型请求、开发命令和 GPU 执行间切换，多个会话仍可能让本地 GPU 长时间空闲。",
+          "gapZh": "仅增加独立 Agent 会话并不能解决命令需求不均和跨节点资源闲置，原生工具与工作区隔离也要保留。",
+          "whyImportantZh": "原生端侧内核训练和评估需要有效利用有限 Mac 加速器资源，同时让命令结果回到正确会话。",
+          "userRelevanceZh": "与 Agent 执行系统、异构开发平台和资源调度直接相关，适合研究硬件利用率与工作流协同。",
+          "evidence": "已读队列完整摘要及公开 HTML 第 4 节集成描述、第 5.1/5.2 节设置和对照；所有收益数值取自摘要，并保留估算及重放假设。 来源：https://arxiv.org/html/2611.17294v1"
+        },
+        "methodDetail": {
+          "coreIdeaZh": "让每个 Agent 保留工作区和开发环境，把命令而非整个会话作为调度单位，在相连 Mac 上迁移符合条件的等待命令。",
+          "componentsZh": [
+            "受限实例文件访问与原生命令执行保持开发上下文",
+            "并行命令允许并发，串行命令每节点共享一个执行槽",
+            "通过 Harbor 统一任务验证与轨迹采集，迁移结果返回原 Agent"
+          ],
+          "hardwareSystemDetailZh": "在互联 Apple Silicon Mac 上利用原生 Metal；命令级迁移需要共享工作区条件，缺少相关描述的调用仍留在所属节点。",
+          "noveltyZh": "将原生隔离环境与细粒度命令调度结合，利用模型与工具阶段错峰而非只静态绑定会话。",
+          "evidence": "已读队列完整摘要及公开 HTML 第 4 节集成描述、第 5.1/5.2 节设置和对照；所有收益数值取自摘要，并保留估算及重放假设。 来源：https://arxiv.org/html/2611.17294v1"
+        },
+        "experimentDetail": {
+          "setupZh": "受控测试使用四台 Mac mini M4、每台 32GiB、千兆以太网及固定 Metal 工作负载；另分析 16 条静态 Agent 轨迹。",
+          "baselinesZh": "静态调度与允许合格串行命令迁移的动态调度对比；轨迹估算另比较每节点一个与四个会话。",
+          "metricsZh": [
+            "正确完成命令吞吐",
+            "工具等待",
+            "批次耗时",
+            "基于轨迹的持续吞吐估算"
+          ],
+          "mainResultsZh": "摘要报告集中需求受控实测吞吐提升 1.68–2.05 倍；16 条静态轨迹估算四会话相对单会话持续吞吐为 2.14 倍，假定会话持续补充且平均时长不变。动态轨迹重放平均工具等待下降 18.8%、批次耗时下降 22.3%，假定阶段时长不变。",
+          "limitationsZh": "受控命令实测、持续吞吐估算和轨迹重放是不同证据；没有证明真实在线多 Agent 会话一定达到估算值，也未测得内核本身加速或能耗收益。",
+          "evidence": "已读队列完整摘要及公开 HTML 第 4 节集成描述、第 5.1/5.2 节设置和对照；所有收益数值取自摘要，并保留估算及重放假设。 来源：https://arxiv.org/html/2611.17294v1"
+        },
+        "evidence": {
+          "usedSources": [
+            "public/research-digest/daily.json: 原始元数据与完整英文摘要",
+            "https://arxiv.org/html/2611.17294v1"
+          ],
+          "affiliationEvidence": "DBLP/arXiv 队列元数据未提供作者单位，按指定文案标记缺失，不依据作者身份推测。",
+          "experimentEvidence": "已读队列完整摘要及公开 HTML 第 4 节集成描述、第 5.1/5.2 节设置和对照；所有收益数值取自摘要，并保留估算及重放假设。 来源：https://arxiv.org/html/2611.17294v1",
+          "missingFields": [
+            "元数据作者单位",
+            "完整在线动态 Agent 吞吐实测",
+            "能耗与强隔离安全证明"
+          ]
+        },
+        "confidence": {
+          "summary": 0.93,
+          "motivation": 0.91,
+          "method": 0.89,
+          "experiments": 0.9,
+          "affiliations": 0
+        }
+      },
+      "recommendationTrack": "hardware-primary",
+      "recommendationLabel": "硬件体系结构主线",
+      "recommendationScore": 77.5,
+      "relevanceReason": "命中 AI 处理器、体系结构、量化、训推系统或内存/缓存优化主题",
+      "pdfStatus": "remote",
+      "workflow": {
+        "digestStatus": "ready",
+        "emailStatus": "sent",
+        "digestError": "",
+        "harnessVersion": "paper-reader-v1",
+        "collectStatus": "collected",
+        "pdfStatus": "remote",
+        "harnessCheckedAt": "2026-11-16T00:40:54.758Z",
+        "harnessWarnings": [],
+        "emailSentAt": "2026-11-16T00:40:59.003Z",
+        "lastEmailError": ""
+      },
+      "pushedAt": "2026-11-16T00:40:59.003Z",
+      "emailSentAt": "2026-11-16T00:40:59.003Z",
+      "firstPushedAt": "2026-11-16T00:40:59.003Z"
     },
     {
       "id": "arxiv:2605.04467",
@@ -29922,6 +30710,142 @@
       "firstPushedAt": "2026-11-09T00:34:09.788Z"
     },
     {
+      "id": "arxiv:2611.17332",
+      "source": "arXiv",
+      "title": "ArchSpace: Recording, Reviewing, and Referencing LLM Architecture Research",
+      "authors": [
+        "Jie Wang",
+        "Tong Zhu",
+        "JiaHao Kuang",
+        "Zhe Xu",
+        "Yunkai Chai",
+        "Dehong Zheng",
+        "Yu Cheng",
+        "Tao Ji",
+        "ZhouHan Lin",
+        "Qi Zhang",
+        "Bowen Zhou"
+      ],
+      "authorAffiliations": [],
+      "affiliations": [],
+      "abstract": "Model architecture shapes the scaling behavior, training efficiency, and inference cost of LLMs, making it a central focus of both industry and academia. In industry, teams such as those behind DeepSeek, Qwen, and Kimi routinely introduce architectural innovations, yet public reports rarely document which ideas succeeded, which were abandoned, and why. In academia, limited compute and inconsistent baselines often restrict evaluations to small-scale, single-point comparisons, making it difficult to establish whether improvements hold at larger scales or translate into broader impact. ArchSpace addresses both gaps as a public platform for Recording, Reviewing, and Referencing Architecture Researc}: each proposal is recorded with its experiments and reasoning, reviewed by the community, and referenced by later work. To evaluate ideas before costly large-scale training, ArchSpace leverages scaling laws to predict model loss at larger scales from smaller experiments, a practice widely adopted in industry. We provide initial references that make the platform usable: Qwen3.5 and OLMo3 baselines, fitted scaling laws, and a reusable training recipe. Ideas validated through this review can in turn become new baselines, and ArchSpace thereby aims to broaden the range of ideas that shape the next generation of models.",
+      "venue": "arXiv",
+      "published": "2026-11-12T18:59:52Z",
+      "updated": "2026-11-12T18:59:52Z",
+      "url": "http://arxiv.org/abs/2611.17332v1",
+      "pdfUrl": "https://arxiv.org/pdf/2611.17332v1",
+      "categories": [
+        "cs.CL",
+        "cs.LG"
+      ],
+      "collectedAt": "2026-11-15T23:58:55.929Z",
+      "firstSeenAt": "2026-11-15T23:58:55.929Z",
+      "lastSeenAt": "2026-11-15T23:58:55.929Z",
+      "collectionType": "daily-latest",
+      "matchedQuery": "(all:agent OR all:agents OR all:agentic OR all:reasoning OR all:post-training OR all:alignment OR all:multimodal OR all:world-model) AND (all:LLM OR all:foundation OR all:language)",
+      "collectionTypes": [
+        "daily-latest"
+      ],
+      "matchedQueries": [
+        "(all:agent OR all:agents OR all:agentic OR all:reasoning OR all:post-training OR all:alignment OR all:multimodal OR all:world-model) AND (all:LLM OR all:foundation OR all:language)"
+      ],
+      "targetThemes": [],
+      "conferenceVenues": [],
+      "conferenceYears": [],
+      "recommendationTrack": "algorithm-trend",
+      "recommendationLabel": "算法趋势观察",
+      "recommendationScore": 31,
+      "relevanceReason": "命中 LLM/Agent/多模态/后训练等算法趋势主题",
+      "pdfStatus": "remote",
+      "workflow": {
+        "digestStatus": "ready",
+        "emailStatus": "sent",
+        "digestError": "",
+        "harnessVersion": "paper-reader-v1",
+        "collectStatus": "collected",
+        "pdfStatus": "remote",
+        "harnessCheckedAt": "2026-11-16T00:40:54.758Z",
+        "harnessWarnings": [],
+        "emailSentAt": "2026-11-16T00:40:59.003Z",
+        "lastEmailError": ""
+      },
+      "digest": {
+        "summaryZh": "ArchSpace 面向 LLM 模型结构研究提供公开记录、社区评审和复用基线，并用缩放规律连接小规模实验与大规模损失预测。其价值是改善架构比较的证据和训练配方复用；损失预测与硬件执行效率属于不同问题，不能据拟合精度推断芯片收益。",
+        "motivationZh": "模型结构影响训练和推理成本，但公开研究常缺少失败经验，学术实验又受小规模单点比较限制。不一致的训练配方与基线使局部收益难以跨规模验证，实验和决策理由也难被后续研究复用。昂贵训练前筛选模型结构需要可比较的证据，同时应保存未成功设计以减少重复试错。对模型结构和训练效率研究具有方法论价值；与处理器微架构的联系需额外运行时测量支持。",
+        "methodZh": "把结构提案、实现、实验和评审关联保存，以 Qwen3.5 与 OLMo3 的规模梯度和缩放规律提供可引用参照。公开记录与评审机制保留实验及选择理由。在模型规模和训练预算梯度内扫描学习率与 batch size。先拟合最佳损失表面，再拟合偏离最佳超参数造成的额外损失。主要是模型结构评估与训练方法学，没有提出加速器电路；FLOPs 和模型损失不能代替目标设备的时延及内存测量。将可持续的研究记录平台与可复用的缩放基线和训练配方结合，支持跨规模判断。",
+        "experimentsZh": "正文以 Qwen3.5 和 OLMo3 基线梯度进行 IsoFLOP 与学习率/batch 扫描，使用 Dolma 3 数据及共享 tokenizer，并测试更大预算外推。比较耦合损失表面与加性消融，并以真实训练损失检查冻结系数的预测；两种模型结构各自建模。正文表 3 的全扫描损失 MAPE 为 Qwen3.5 0.25%、OLMo3 0.27%；表 4 的大预算外推平均 MAPE 为 0.32%。正文同时指出预测学习率与最佳实测值有偏差，仍需搜索，不能把低损失误差当成免调参保证。初始参考主要覆盖指定基线与配方；缩放损失准确不保证下游任务、实际吞吐或硬件效率排序一致。新模型结构仍需独立实测与更长训练验证。",
+        "affiliationsZh": "未在 DBLP/arXiv 元数据中提供",
+        "tags": [
+          "模型结构评估",
+          "缩放规律",
+          "训练配方",
+          "开放研究基线"
+        ],
+        "importance": 3,
+        "researchFitZh": "对模型结构和训练效率研究具有方法论价值；与处理器微架构的联系需额外运行时测量支持。",
+        "hardwareRelevance": 2,
+        "algorithmRelevance": 4,
+        "systemRelevance": 3,
+        "readPriority": "skim",
+        "whyReadZh": "可复用其规模扫描与配方比较思路，先浏览拟合及外推边界，硬件结论另以设备实验验证。",
+        "limitationsZh": "初始参考主要覆盖指定基线与配方；缩放损失准确不保证下游任务、实际吞吐或硬件效率排序一致。新模型结构仍需独立实测与更长训练验证。",
+        "motivationDetail": {
+          "problemZh": "模型结构影响训练和推理成本，但公开研究常缺少失败经验，学术实验又受小规模单点比较限制。",
+          "gapZh": "不一致的训练配方与基线使局部收益难以跨规模验证，实验和决策理由也难被后续研究复用。",
+          "whyImportantZh": "昂贵训练前筛选模型结构需要可比较的证据，同时应保存未成功设计以减少重复试错。",
+          "userRelevanceZh": "对模型结构和训练效率研究具有方法论价值；与处理器微架构的联系需额外运行时测量支持。",
+          "evidence": "已读队列完整摘要及公开 HTML 第 3/4 节设置、分析方法、第 4.3 节表 3 和表 4；数值为损失预测误差，不是结构精度提升或硬件加速比。 来源：https://arxiv.org/html/2611.17332v1"
+        },
+        "methodDetail": {
+          "coreIdeaZh": "把结构提案、实现、实验和评审关联保存，以 Qwen3.5 与 OLMo3 的规模梯度和缩放规律提供可引用参照。",
+          "componentsZh": [
+            "公开记录与评审机制保留实验及选择理由",
+            "在模型规模和训练预算梯度内扫描学习率与 batch size",
+            "先拟合最佳损失表面，再拟合偏离最佳超参数造成的额外损失"
+          ],
+          "hardwareSystemDetailZh": "主要是模型结构评估与训练方法学，没有提出加速器电路；FLOPs 和模型损失不能代替目标设备的时延及内存测量。",
+          "noveltyZh": "将可持续的研究记录平台与可复用的缩放基线和训练配方结合，支持跨规模判断。",
+          "evidence": "已读队列完整摘要及公开 HTML 第 3/4 节设置、分析方法、第 4.3 节表 3 和表 4；数值为损失预测误差，不是结构精度提升或硬件加速比。 来源：https://arxiv.org/html/2611.17332v1"
+        },
+        "experimentDetail": {
+          "setupZh": "正文以 Qwen3.5 和 OLMo3 基线梯度进行 IsoFLOP 与学习率/batch 扫描，使用 Dolma 3 数据及共享 tokenizer，并测试更大预算外推。",
+          "baselinesZh": "比较耦合损失表面与加性消融，并以真实训练损失检查冻结系数的预测；两种模型结构各自建模。",
+          "metricsZh": [
+            "训练损失",
+            "最佳点与全扫描 MAPE",
+            "冻结系数后的外推误差",
+            "超参数预测与实测差异"
+          ],
+          "mainResultsZh": "正文表 3 的全扫描损失 MAPE 为 Qwen3.5 0.25%、OLMo3 0.27%；表 4 的大预算外推平均 MAPE 为 0.32%。正文同时指出预测学习率与最佳实测值有偏差，仍需搜索，不能把低损失误差当成免调参保证。",
+          "limitationsZh": "初始参考主要覆盖指定基线与配方；缩放损失准确不保证下游任务、实际吞吐或硬件效率排序一致。新模型结构仍需独立实测与更长训练验证。",
+          "evidence": "已读队列完整摘要及公开 HTML 第 3/4 节设置、分析方法、第 4.3 节表 3 和表 4；数值为损失预测误差，不是结构精度提升或硬件加速比。 来源：https://arxiv.org/html/2611.17332v1"
+        },
+        "evidence": {
+          "usedSources": [
+            "public/research-digest/daily.json: 原始元数据与完整英文摘要",
+            "https://arxiv.org/html/2611.17332v1"
+          ],
+          "affiliationEvidence": "DBLP/arXiv 队列元数据未提供作者单位，按指定文案标记缺失，不依据作者身份推测。",
+          "experimentEvidence": "已读队列完整摘要及公开 HTML 第 3/4 节设置、分析方法、第 4.3 节表 3 和表 4；数值为损失预测误差，不是结构精度提升或硬件加速比。 来源：https://arxiv.org/html/2611.17332v1",
+          "missingFields": [
+            "元数据作者单位",
+            "目标设备端到端时延和能耗",
+            "跨新结构的普遍预测保证"
+          ]
+        },
+        "confidence": {
+          "summary": 0.93,
+          "motivation": 0.91,
+          "method": 0.89,
+          "experiments": 0.9,
+          "affiliations": 0
+        }
+      },
+      "pushedAt": "2026-11-16T00:40:59.003Z",
+      "emailSentAt": "2026-11-16T00:40:59.003Z",
+      "firstPushedAt": "2026-11-16T00:40:59.003Z"
+    },
+    {
       "id": "arxiv:2611.14511",
       "source": "arXiv",
       "title": "Pyrite: Building and Benchmarking Protein-Ligand Pose Ranking Agents",
@@ -30051,6 +30975,182 @@
       "pushedAt": "2026-11-13T02:34:47.864Z",
       "emailSentAt": "2026-11-13T02:34:47.864Z",
       "firstPushedAt": "2026-11-13T02:34:47.864Z"
+    },
+    {
+      "id": "arxiv:2611.17316",
+      "source": "arXiv",
+      "title": "CoReMem: Cost-Internalizing Memory for Successive Coding Tasks with Prospective Valuation",
+      "authors": [
+        "Peiwen Li",
+        "Harshit Verma",
+        "Sophia Zhou",
+        "Haiwen Wang",
+        "Ngoc Bui",
+        "Heng Chang",
+        "Fei Fei",
+        "David van Dijk",
+        "Rex Ying"
+      ],
+      "authorAffiliations": [
+        {
+          "name": "Peiwen Li",
+          "affiliation": "Yale University"
+        },
+        {
+          "name": "Harshit Verma",
+          "affiliation": "Yale University"
+        },
+        {
+          "name": "Sophia Zhou",
+          "affiliation": "Yale University"
+        },
+        {
+          "name": "Haiwen Wang",
+          "affiliation": "Yale University"
+        },
+        {
+          "name": "Ngoc Bui",
+          "affiliation": "Yale University"
+        },
+        {
+          "name": "Heng Chang",
+          "affiliation": "Tsinghua University"
+        },
+        {
+          "name": "Fei Fei",
+          "affiliation": "Goodvision AI"
+        },
+        {
+          "name": "David van Dijk",
+          "affiliation": "Yale University"
+        },
+        {
+          "name": "Rex Ying",
+          "affiliation": "Yale University"
+        }
+      ],
+      "affiliations": [
+        "Yale University",
+        "Tsinghua University",
+        "Goodvision AI"
+      ],
+      "abstract": "Coding agents tackle successive tasks on an evolving repository, carrying forward edits and writing memory before the next task is known. Selecting memory for unknown next tasks requires balancing future usefulness against the costs of writing and reading it. The actor must also decide when acting on available memory saves effort as the task unfolds. We introduce Coding-Repository Memory (CoReMem), a cost-internalizing framework that guides memory design and actor adaptation through measured memory value on the next task. Prospective segment valuation compares runs of the next task with and without individual trajectory segments from the same inherited repository state, guiding a compact memory built around anchors: repository locations and executable checks. Actor adaptation estimates on-policy memory value within rollout groups with and without memory, using a reward that prioritizes resolution and penalizes step count in successful runs. Provenance-gated value credit assigns the additional value term to steps identified as using memory-supplied anchors, while every step retains outcome credit. On ChainSWE, CoReMem raises the 27B actor's resolve rate from 21.0% to 25.7%, with 17% fewer steps and 11% fewer total cache-aware tokens, including memory-module calls, relative to the untrained actor model without memory.",
+      "venue": "arXiv",
+      "published": "2026-11-12T18:58:22Z",
+      "updated": "2026-11-12T18:58:22Z",
+      "url": "http://arxiv.org/abs/2611.17316v1",
+      "pdfUrl": "https://arxiv.org/pdf/2611.17316v1",
+      "categories": [
+        "cs.AI",
+        "cs.CL",
+        "cs.SE"
+      ],
+      "collectedAt": "2026-11-15T23:58:55.929Z",
+      "firstSeenAt": "2026-11-15T23:58:55.929Z",
+      "lastSeenAt": "2026-11-15T23:58:55.929Z",
+      "collectionType": "daily-latest",
+      "matchedQuery": "(all:agent OR all:agents OR all:agentic OR all:reasoning OR all:post-training OR all:alignment OR all:multimodal OR all:world-model) AND (all:LLM OR all:foundation OR all:language)",
+      "collectionTypes": [
+        "daily-latest"
+      ],
+      "matchedQueries": [
+        "(all:agent OR all:agents OR all:agentic OR all:reasoning OR all:post-training OR all:alignment OR all:multimodal OR all:world-model) AND (all:LLM OR all:foundation OR all:language)"
+      ],
+      "targetThemes": [],
+      "conferenceVenues": [],
+      "conferenceYears": [],
+      "recommendationTrack": "algorithm-trend",
+      "recommendationLabel": "算法趋势观察",
+      "recommendationScore": 30,
+      "relevanceReason": "命中 LLM/Agent/多模态/后训练等算法趋势主题",
+      "pdfStatus": "remote",
+      "workflow": {
+        "digestStatus": "ready",
+        "emailStatus": "sent",
+        "digestError": "",
+        "harnessVersion": "paper-reader-v1",
+        "collectStatus": "collected",
+        "pdfStatus": "remote",
+        "harnessCheckedAt": "2026-11-16T00:40:54.758Z",
+        "harnessWarnings": [],
+        "emailSentAt": "2026-11-16T00:40:59.003Z",
+        "lastEmailError": ""
+      },
+      "digest": {
+        "summaryZh": "CoReMem 用下一项任务的收益评价编码轨迹片段，将记忆压缩为仓库位置和可执行检查，再训练 Agent 在合适步骤使用记忆。ChainSWE 的 27B 结果同时改善解决率与含记忆调用的 token 成本，需区分记忆设计收益和 actor 后训练收益。",
+        "motivationZh": "连续编码任务继承不断演化的仓库，但写记忆时下一任务未知，过长或无关记忆会增加读取与执行成本。只在当前任务评价记忆难反映未来价值，仅给 Agent 记忆也不能保证它在正确步骤使用。长期 Agent 需要把成功率、推理步骤与记忆写读开销同时纳入成本目标，避免局部节省转移成其他调用负担。与 Agent 推理效率、跨任务上下文管理及成本核算相关，属于系统算法趋势，未提供专门硬件设计。",
+        "methodZh": "在同一继承仓库状态下比较下一任务有无轨迹片段的运行，用未来价值构建紧凑记忆，并在策略内估计记忆价值进行 actor 适配。前瞻片段估值保留能减少后续探索的仓库位置与可执行检查锚点。有记忆和无记忆的 rollout 组估计当前策略的边际记忆价值。解决任务优先于省步骤，额外价值信用只分配给使用记忆锚点的步骤，所有步骤仍保留结果信用。属于记忆和策略训练方法；统计缓存感知 token 并计入记忆模块调用，但没有给出芯片、带宽或能耗加速结果。将未知下一任务的记忆价值与实际使用记忆的步骤关联，既惩罚记忆成本又避免只奖励表面省步骤。",
+        "experimentsZh": "在连续继承仓库状态的 ChainSWE 上比较记忆方案及 actor 适配，报告 27B 等 actor 的结果。包括未训练且无记忆 actor、全历史、Mem0、MemOp、ReasoningBank，以及不训练 actor 的 CoReMem；完整方法同时含记忆和后训练。摘要报告 27B actor 相对未训练无记忆基线解决率从 21.0% 到 25.7%，步骤减少 17%，含记忆模块调用的总缓存感知 token 减少 11%。正文表 1 单列不训练的 CoReMem，说明完整结果不能全归因于记忆压缩。主要结果是记忆设计和 actor 训练的联合收益；特定连续仓库任务未证明通用 Agent 均受益。token 节省不直接等于同幅度时延或能耗改善，未核读全部外部分布结果。",
+        "affiliationsZh": "Yale University；Tsinghua University；Goodvision AI",
+        "tags": [
+          "Agent 记忆",
+          "连续编码任务",
+          "策略适配",
+          "成本感知",
+          "上下文管理"
+        ],
+        "importance": 3,
+        "researchFitZh": "与 Agent 推理效率、跨任务上下文管理及成本核算相关，属于系统算法趋势，未提供专门硬件设计。",
+        "hardwareRelevance": 2,
+        "algorithmRelevance": 4,
+        "systemRelevance": 4,
+        "readPriority": "skim",
+        "whyReadZh": "浏览未来任务估值和包含记忆调用的总成本核算，适合借鉴长期 Agent 的资源评估与记忆使用策略。",
+        "limitationsZh": "主要结果是记忆设计和 actor 训练的联合收益；特定连续仓库任务未证明通用 Agent 均受益。token 节省不直接等于同幅度时延或能耗改善，未核读全部外部分布结果。",
+        "motivationDetail": {
+          "problemZh": "连续编码任务继承不断演化的仓库，但写记忆时下一任务未知，过长或无关记忆会增加读取与执行成本。",
+          "gapZh": "只在当前任务评价记忆难反映未来价值，仅给 Agent 记忆也不能保证它在正确步骤使用。",
+          "whyImportantZh": "长期 Agent 需要把成功率、推理步骤与记忆写读开销同时纳入成本目标，避免局部节省转移成其他调用负担。",
+          "userRelevanceZh": "与 Agent 推理效率、跨任务上下文管理及成本核算相关，属于系统算法趋势，未提供专门硬件设计。",
+          "evidence": "已读队列完整摘要和作者单位字段，公开 HTML 第 3 节机制及表 1；21.0%→25.7%、17%/11% 来自摘要，表 1 确认完整方法与不训练消融分开。 来源：https://arxiv.org/html/2611.17316v1"
+        },
+        "methodDetail": {
+          "coreIdeaZh": "在同一继承仓库状态下比较下一任务有无轨迹片段的运行，用未来价值构建紧凑记忆，并在策略内估计记忆价值进行 actor 适配。",
+          "componentsZh": [
+            "前瞻片段估值保留能减少后续探索的仓库位置与可执行检查锚点",
+            "有记忆和无记忆的 rollout 组估计当前策略的边际记忆价值",
+            "解决任务优先于省步骤，额外价值信用只分配给使用记忆锚点的步骤，所有步骤仍保留结果信用"
+          ],
+          "hardwareSystemDetailZh": "属于记忆和策略训练方法；统计缓存感知 token 并计入记忆模块调用，但没有给出芯片、带宽或能耗加速结果。",
+          "noveltyZh": "将未知下一任务的记忆价值与实际使用记忆的步骤关联，既惩罚记忆成本又避免只奖励表面省步骤。",
+          "evidence": "已读队列完整摘要和作者单位字段，公开 HTML 第 3 节机制及表 1；21.0%→25.7%、17%/11% 来自摘要，表 1 确认完整方法与不训练消融分开。 来源：https://arxiv.org/html/2611.17316v1"
+        },
+        "experimentDetail": {
+          "setupZh": "在连续继承仓库状态的 ChainSWE 上比较记忆方案及 actor 适配，报告 27B 等 actor 的结果。",
+          "baselinesZh": "包括未训练且无记忆 actor、全历史、Mem0、MemOp、ReasoningBank，以及不训练 actor 的 CoReMem；完整方法同时含记忆和后训练。",
+          "metricsZh": [
+            "任务解决率",
+            "执行步骤",
+            "actor 与记忆模块总缓存感知 token",
+            "每 token 解决效率"
+          ],
+          "mainResultsZh": "摘要报告 27B actor 相对未训练无记忆基线解决率从 21.0% 到 25.7%，步骤减少 17%，含记忆模块调用的总缓存感知 token 减少 11%。正文表 1 单列不训练的 CoReMem，说明完整结果不能全归因于记忆压缩。",
+          "limitationsZh": "主要结果是记忆设计和 actor 训练的联合收益；特定连续仓库任务未证明通用 Agent 均受益。token 节省不直接等于同幅度时延或能耗改善，未核读全部外部分布结果。",
+          "evidence": "已读队列完整摘要和作者单位字段，公开 HTML 第 3 节机制及表 1；21.0%→25.7%、17%/11% 来自摘要，表 1 确认完整方法与不训练消融分开。 来源：https://arxiv.org/html/2611.17316v1"
+        },
+        "evidence": {
+          "usedSources": [
+            "public/research-digest/daily.json: 原始元数据与完整英文摘要",
+            "https://arxiv.org/html/2611.17316v1"
+          ],
+          "affiliationEvidence": "队列 authorAffiliations 明确列出：Peiwen Li、Harshit Verma、Sophia Zhou、Haiwen Wang、Ngoc Bui、David van Dijk、Rex Ying 为 Yale University；Heng Chang 为 Tsinghua University；Fei Fei 为 Goodvision AI。",
+          "experimentEvidence": "已读队列完整摘要和作者单位字段，公开 HTML 第 3 节机制及表 1；21.0%→25.7%、17%/11% 来自摘要，表 1 确认完整方法与不训练消融分开。 来源：https://arxiv.org/html/2611.17316v1",
+          "missingFields": [
+            "硬件时延与能耗测量",
+            "全部外部分布实验未完整核读"
+          ]
+        },
+        "confidence": {
+          "summary": 0.93,
+          "motivation": 0.91,
+          "method": 0.89,
+          "experiments": 0.9,
+          "affiliations": 0.96
+        }
+      },
+      "pushedAt": "2026-11-16T00:40:59.003Z",
+      "emailSentAt": "2026-11-16T00:40:59.003Z",
+      "firstPushedAt": "2026-11-16T00:40:59.003Z"
     },
     {
       "id": "arxiv:2611.14514",
