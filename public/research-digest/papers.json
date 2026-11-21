@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-20T02:35:45.407Z",
+  "generatedAt": "2026-11-21T02:30:26.967Z",
   "timezone": "Asia/Shanghai",
   "siteUrl": "https://YouthLiuYS.github.io/PaperDigestAgent/",
   "stats": {
@@ -13,8 +13,8 @@
     "newlyAdded": 0,
     "pushed": 240,
     "pdfDownloaded": 0,
-    "hardwarePrimary": 193,
-    "algorithmTrend": 47,
+    "hardwarePrimary": 199,
+    "algorithmTrend": 41,
     "lowRelevance": 0
   },
   "papers": [
@@ -1460,6 +1460,141 @@
       "pushedAt": "2026-11-07T00:30:51.115Z",
       "emailSentAt": "2026-11-07T00:30:51.115Z",
       "firstPushedAt": "2026-11-07T00:30:51.115Z"
+    },
+    {
+      "id": "arxiv:2611.26619",
+      "source": "arXiv",
+      "title": "TideCache: Efficient Hybrid LLM Serving with Transparent Cache Management and Layer-Wise Streaming",
+      "authors": [
+        "Jinbin Luo",
+        "Xiaozhe Yao",
+        "Shang Yang",
+        "Zhijian Liu",
+        "Song Han",
+        "Qinghao Hu"
+      ],
+      "authorAffiliations": [],
+      "affiliations": [],
+      "abstract": "Hybrid architectures have become mainstream among open-weight language models. Their global-attention and bounded-state layers maintain heterogeneous caches whose demands vary with context length and concurrency. We present TideCache, a serving system on CPU--GPU superchips with three components for allocating GPU memory among caches and managing their residency across GPU and host memory. The Transparent Cache Pool redistributes physical pages among cache components behind fixed virtual addresses, preserving cache layouts and backend interfaces. The Cache Streamer uses computation intervals provided by bounded-state layers to prefetch the next global-attention layer's prefix into GPU slots shared across global-attention layers, reducing GPU residency while overlapping layer-wise transfers with computation. Generated KV remains resident. The Request Scheduler selects resident or streamed execution and triggers capacity adjustments according to request size and queue state. Together, they let HBM released by streaming accommodate other cache components and additional requests. Implemented in SGLang and evaluated on GB300 and GH200 across seven model/platform configurations, TideCache completes up to 2.04x as many agent turns, reduces overall P50 per-token latency by 20--59%, and improves agent P50 TTFT by 1.40--3.05x compared with SGLang with HiCache.",
+      "venue": "arXiv",
+      "published": "2026-11-19T18:58:31Z",
+      "updated": "2026-11-19T18:58:31Z",
+      "url": "http://arxiv.org/abs/2611.26619v1",
+      "pdfUrl": "https://arxiv.org/pdf/2611.26619v1",
+      "categories": [
+        "cs.DC",
+        "cs.LG"
+      ],
+      "collectedAt": "2026-11-21T01:35:22.381Z",
+      "firstSeenAt": "2026-11-21T01:35:22.381Z",
+      "lastSeenAt": "2026-11-21T01:35:22.381Z",
+      "collectionType": "daily-latest",
+      "matchedQuery": "(all:prefill OR all:decoding OR all:KV OR all:cache OR all:attention) AND (all:accelerator OR all:kernel OR all:compiler OR all:serving OR all:memory) AND (all:LLM OR all:transformer)",
+      "collectionTypes": [
+        "daily-latest"
+      ],
+      "matchedQueries": [
+        "(all:prefill OR all:decoding OR all:KV OR all:cache OR all:attention) AND (all:accelerator OR all:kernel OR all:compiler OR all:serving OR all:memory) AND (all:LLM OR all:transformer)",
+        "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)",
+        "(all:agent OR all:agents OR all:agentic OR all:reasoning OR all:post-training OR all:alignment OR all:multimodal OR all:world-model) AND (all:LLM OR all:foundation OR all:language)"
+      ],
+      "targetThemes": [],
+      "conferenceVenues": [],
+      "conferenceYears": [],
+      "digest": {
+        "summaryZh": "TideCache 面向含全局注意力与有界状态层的混合LLM，在固定虚拟地址后重分配物理页，并利用层间计算窗口流式预取历史KV前缀，以共享槽位减少HBM驻留。新增KV仍留在GPU，调度器按容量与传输预算选择流式或驻留执行。",
+        "motivationZh": "混合LLM的全局KV、滑窗和循环状态随上下文及并发产生不同容量需求，固定分区容易闲置一类缓存却阻塞另一类请求。 HiCache避免重复前缀计算，但恢复的全层前缀仍持续占用HBM；把所有请求都逐步搬运又可能超过CPU–GPU链路预算。 只有同时协调缓存分区、历史前缀驻留和请求准入，才能把主机容量转为更多并发，而不把数据搬运暴露到关键路径。 直接关联长上下文混合注意力、KV层次与CPU–GPU内存协同，和用户稀疏推理缓存方向高度相关。",
+        "methodZh": "透明缓存池按物理页重分区，Cache Streamer跨全局注意力层复用双缓冲槽，调度器选择适合流式化的请求。 保持每层张量虚拟地址和后端接口不变，仅在安全同步点移动未被使用的物理页映射。 仅流式读取已有主机副本的历史前缀；利用有界状态层及注意力计算间隔预取下一层，新增KV保持驻留。 Free/Ready标志协调H2D拷贝与完整CUDA graph，动态批量拷贝只移动选中的前缀。 根据请求规模、队列和传输隐藏预算选择驻留/流式执行，并触发容量调整。 系统实现于SGLang，在GB300与GH200 CPU–GPU超级芯片上评测，通过NVLink-C2C连接主机内存和GPU；不是新的存内计算芯片。 把无接口变更的页重分区与选择性层流式传输结合，释放出的HBM可用于其他缓存组件或新增请求。",
+        "experimentsZh": "正文第5节采用七种模型/平台配置，混合ShareGPT和多轮Claude Code轨迹，在内存压力负载点评测GB300、GH200。 主要比较调优缓存分区的SGLang+HiCache，并考察无HiCache及组件消融。 相对调优SGLang+HiCache，最高完成2.04倍Agent轮次，整体P50每token延迟降低20–59%，Agent P50 TTFT加速1.40–3.05倍。 每token延迟定义为端到端请求延迟除以输出token数，包含排队和prefill，不能当纯decode TPOT；部分大模型仅保留前若干层。收益依赖缓存压力、混合层计算窗口与高带宽链路，新增KV不可无限卸载。",
+        "affiliationsZh": "未在 DBLP/arXiv 元数据中提供",
+        "tags": [
+          "混合注意力",
+          "KV缓存",
+          "分层流式传输",
+          "虚拟内存",
+          "推理调度"
+        ],
+        "importance": 5,
+        "researchFitZh": "直接关联长上下文混合注意力、KV层次与CPU–GPU内存协同，和用户稀疏推理缓存方向高度相关。",
+        "hardwareRelevance": 5,
+        "algorithmRelevance": 3,
+        "systemRelevance": 5,
+        "readPriority": "deep-read",
+        "whyReadZh": "优先读页映射安全协议、层流式握手与传输预算如何约束真实并发收益。",
+        "limitationsZh": "每token延迟定义为端到端请求延迟除以输出token数，包含排队和prefill，不能当纯decode TPOT；部分大模型仅保留前若干层。收益依赖缓存压力、混合层计算窗口与高带宽链路，新增KV不可无限卸载。",
+        "motivationDetail": {
+          "problemZh": "混合LLM的全局KV、滑窗和循环状态随上下文及并发产生不同容量需求，固定分区容易闲置一类缓存却阻塞另一类请求。",
+          "gapZh": "HiCache避免重复前缀计算，但恢复的全层前缀仍持续占用HBM；把所有请求都逐步搬运又可能超过CPU–GPU链路预算。",
+          "whyImportantZh": "只有同时协调缓存分区、历史前缀驻留和请求准入，才能把主机容量转为更多并发，而不把数据搬运暴露到关键路径。",
+          "userRelevanceZh": "直接关联长上下文混合注意力、KV层次与CPU–GPU内存协同，和用户稀疏推理缓存方向高度相关。",
+          "evidence": "完整摘要给出三组件及2.04倍、20–59%、1.40–3.05倍；已读 https://arxiv.org/html/2611.26619v1 第4节和第5.1–5.2节，核实历史/新增KV边界、Free/Ready握手、七配置、模型截层与P50指标定义。"
+        },
+        "methodDetail": {
+          "coreIdeaZh": "透明缓存池按物理页重分区，Cache Streamer跨全局注意力层复用双缓冲槽，调度器选择适合流式化的请求。",
+          "componentsZh": [
+            "保持每层张量虚拟地址和后端接口不变，仅在安全同步点移动未被使用的物理页映射。",
+            "仅流式读取已有主机副本的历史前缀；利用有界状态层及注意力计算间隔预取下一层，新增KV保持驻留。",
+            "Free/Ready标志协调H2D拷贝与完整CUDA graph，动态批量拷贝只移动选中的前缀。",
+            "根据请求规模、队列和传输隐藏预算选择驻留/流式执行，并触发容量调整。"
+          ],
+          "hardwareSystemDetailZh": "系统实现于SGLang，在GB300与GH200 CPU–GPU超级芯片上评测，通过NVLink-C2C连接主机内存和GPU；不是新的存内计算芯片。",
+          "noveltyZh": "把无接口变更的页重分区与选择性层流式传输结合，释放出的HBM可用于其他缓存组件或新增请求。",
+          "evidence": "完整摘要给出三组件及2.04倍、20–59%、1.40–3.05倍；已读 https://arxiv.org/html/2611.26619v1 第4节和第5.1–5.2节，核实历史/新增KV边界、Free/Ready握手、七配置、模型截层与P50指标定义。"
+        },
+        "experimentDetail": {
+          "setupZh": "正文第5节采用七种模型/平台配置，混合ShareGPT和多轮Claude Code轨迹，在内存压力负载点评测GB300、GH200。",
+          "baselinesZh": "主要比较调优缓存分区的SGLang+HiCache，并考察无HiCache及组件消融。",
+          "metricsZh": [
+            "Agent完成turns/s",
+            "全混合负载P50每token延迟",
+            "Agent P50 TTFT"
+          ],
+          "mainResultsZh": "相对调优SGLang+HiCache，最高完成2.04倍Agent轮次，整体P50每token延迟降低20–59%，Agent P50 TTFT加速1.40–3.05倍。",
+          "limitationsZh": "每token延迟定义为端到端请求延迟除以输出token数，包含排队和prefill，不能当纯decode TPOT；部分大模型仅保留前若干层。收益依赖缓存压力、混合层计算窗口与高带宽链路，新增KV不可无限卸载。",
+          "evidence": "完整摘要给出三组件及2.04倍、20–59%、1.40–3.05倍；已读 https://arxiv.org/html/2611.26619v1 第4节和第5.1–5.2节，核实历史/新增KV边界、Free/Ready握手、七配置、模型截层与P50指标定义。"
+        },
+        "evidence": {
+          "usedSources": [
+            "metadata",
+            "abstract",
+            "https://arxiv.org/html/2611.26619v1"
+          ],
+          "affiliationEvidence": "队列元数据affiliations及authorAffiliations均为空，本轮未读取PDF前两页；采用规定缺失表述，不根据作者姓名推断单位。",
+          "experimentEvidence": "完整摘要给出三组件及2.04倍、20–59%、1.40–3.05倍；已读 https://arxiv.org/html/2611.26619v1 第4节和第5.1–5.2节，核实历史/新增KV边界、Free/Ready握手、七配置、模型截层与P50指标定义。",
+          "missingFields": [
+            "作者单位",
+            "低带宽PCIe平台泛化未验证",
+            "PDF前两页未读取"
+          ]
+        },
+        "confidence": {
+          "summary": 0.97,
+          "motivation": 0.97,
+          "method": 0.96,
+          "experiments": 0.94,
+          "affiliations": 0
+        }
+      },
+      "recommendationTrack": "hardware-primary",
+      "recommendationLabel": "硬件体系结构主线",
+      "recommendationScore": 197.5,
+      "relevanceReason": "命中 AI 处理器、体系结构、量化、训推系统或内存/缓存优化主题",
+      "pdfStatus": "remote",
+      "workflow": {
+        "digestStatus": "ready",
+        "emailStatus": "sent",
+        "digestError": "",
+        "harnessVersion": "paper-reader-v1",
+        "collectStatus": "collected",
+        "pdfStatus": "remote",
+        "harnessCheckedAt": "2026-11-21T02:30:22.032Z",
+        "harnessWarnings": [],
+        "emailSentAt": "2026-11-21T02:30:26.893Z",
+        "lastEmailError": ""
+      },
+      "pushedAt": "2026-11-21T02:30:26.893Z",
+      "emailSentAt": "2026-11-21T02:30:26.893Z",
+      "firstPushedAt": "2026-11-21T02:30:26.893Z"
     },
     {
       "id": "arxiv:2610.37033",
@@ -2916,6 +3051,140 @@
       "firstPushedAt": "2026-11-05T02:33:26.283Z"
     },
     {
+      "id": "arxiv:2611.26472",
+      "source": "arXiv",
+      "title": "FoldSim: Scaling Cycle-Exact RTL Simulation with Hierarchical Folding and Static Scheduling",
+      "authors": [
+        "Chengxuan Wang",
+        "Nikhil Rout",
+        "Yang-gon Kim",
+        "Jacob Leigh",
+        "Yufan Du",
+        "Blaise Tine"
+      ],
+      "authorAffiliations": [],
+      "affiliations": [],
+      "abstract": "RTL simulation is essential for hardware design and verification, yet its execution time grows rapidly with design scale and complexity. CPU- and GPU-based simulators exploit parallelism to accelerate RTL evaluation, but achieving high simulation throughput for large designs remains challenging. FPGA-based simulators offer higher throughput by mapping RTL computations directly onto hardware, but their scalability is constrained by FPGA resource capacity. We present FoldSim, an automated framework that enables cycle-exact simulation of large RTL designs on a single FPGA through hierarchical folding. FoldSim maps instances across the design hierarchy onto shared logic while maintaining their independent state. Given foldable module classes, its compiler constructs a static schedule that coordinates their execution, reducing dynamic synchronization overhead and making state accesses predictable. FoldSim backs state that exceeds on-chip capacity with external memory and brings it to the shared circuits as needed. A configurable DRAM model separates target-memory timing from host delays. The compiler explores replica allocations and state placement to balance resource savings against simulation time. On one AMD Alveo V80, FoldSim runs an 8-SM GPU and a 1,024-node Rocket datacenter with 4,096 processor cores. The unfolded implementations require approximately 16x and 200x as many LUTs as FoldSim's, respectively. The datacenter keeps about 1.9 GB of state in HBM, while a 4-SM GPU completes a 1024x1024 GEMM in 4.24 seconds, versus 26 hours in software RTL simulation.",
+      "venue": "arXiv",
+      "published": "2026-11-19T17:33:28Z",
+      "updated": "2026-11-19T17:33:28Z",
+      "url": "http://arxiv.org/abs/2611.26472v1",
+      "pdfUrl": "https://arxiv.org/pdf/2611.26472v1",
+      "categories": [
+        "cs.AR"
+      ],
+      "collectedAt": "2026-11-21T01:35:27.451Z",
+      "firstSeenAt": "2026-11-21T01:35:27.451Z",
+      "lastSeenAt": "2026-11-21T01:35:27.451Z",
+      "collectionType": "daily-latest",
+      "matchedQuery": "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)",
+      "collectionTypes": [
+        "daily-latest"
+      ],
+      "matchedQueries": [
+        "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)"
+      ],
+      "targetThemes": [],
+      "conferenceVenues": [],
+      "conferenceYears": [],
+      "recommendationTrack": "hardware-primary",
+      "recommendationLabel": "硬件体系结构主线",
+      "recommendationScore": 181,
+      "relevanceReason": "命中 AI 处理器、体系结构、量化、训推系统或内存/缓存优化主题",
+      "pdfStatus": "remote",
+      "workflow": {
+        "digestStatus": "ready",
+        "emailStatus": "sent",
+        "digestError": "",
+        "harnessVersion": "paper-reader-v1",
+        "collectStatus": "collected",
+        "pdfStatus": "remote",
+        "harnessCheckedAt": "2026-11-21T02:30:22.032Z",
+        "harnessWarnings": [],
+        "emailSentAt": "2026-11-21T02:30:26.893Z",
+        "lastEmailError": ""
+      },
+      "digest": {
+        "summaryZh": "FoldSim 将RTL层次中的相同实例映射到共享逻辑并保留独立状态，以静态调度减少同步开销，把超出片上容量的状态放入HBM。它在单张Alveo V80上运行大型GPU与Rocket系统的周期精确仿真，适合研究芯片验证和架构评测方法。",
+        "motivationZh": "RTL验证随设计规模迅速变慢，直接映射FPGA虽快，却受逻辑和状态容量限制，单个复杂SM也可能放不下。 仅在顶层共享实例不足以容纳深层重复结构，多FPGA切分又引入通信；动态token同步还消耗资源与执行时间。 在单FPGA上共享多层重复电路并预测状态访问，可让更大芯片设计获得可用的周期精确验证吞吐。 关联AI处理器/GPU RTL验证、FPGA加速与层次状态管理，也能为可复现芯片架构研究提供评测基础。",
+        "methodZh": "对多层模块类独立选择物理副本数，用编译期静态调度协调依赖，并虚拟化每实例状态。 相同实例复用逻辑，但通过独立状态存储保留各实例语义。 编译期协调跨模块执行，减少运行时token驱动同步和冗余求值。 HBM保存超额状态，按静态计划预取；状态晚到时停顿宿主执行而不改变目标周期。 配置化DRAM模型分离目标存储时序与FPGA宿主延迟，编译器探索副本数和状态放置。 目标平台为AMD Alveo V80；完整4/8-SM与数据中心测试有FPGA实测，小/中GPU和部分机制比较采用Verilator周期数结合布线后频率。 将层次实例折叠、全局静态依赖调度和外存状态虚拟化合在一个自动编译流程，扩展单FPGA容量。",
+        "experimentsZh": "评测Vortex RISC-V GPU及Rocket数据中心，包括GEMM和网络负载；单V80运行8-SM GPU及1024节点、4096核心系统。 比较未折叠参考、移植到V80的FireSim、自实现动态token折叠，以及软件RTL仿真。 8-SM和1024节点未折叠LUT需求估计分别约为折叠实现的16倍和200倍；数据中心约1.9GB状态驻留HBM。4-SM模拟1024×1024 GEMM为4.24秒，对照软件RTL为26小时。 LUT倍数使用未折叠资源估计，并非两个均可放入同卡的实测实现；4.24秒是模拟器执行该目标负载的时间，不是物理GPU GEMM性能。不同规模比较存在实测与组合估计口径，适用性仍受可折叠结构与HBM状态访问约束。",
+        "affiliationsZh": "未在 DBLP/arXiv 元数据中提供",
+        "tags": [
+          "RTL仿真",
+          "FPGA",
+          "层次折叠",
+          "静态调度",
+          "状态虚拟化"
+        ],
+        "importance": 5,
+        "researchFitZh": "关联AI处理器/GPU RTL验证、FPGA加速与层次状态管理，也能为可复现芯片架构研究提供评测基础。",
+        "hardwareRelevance": 5,
+        "algorithmRelevance": 3,
+        "systemRelevance": 5,
+        "readPriority": "deep-read",
+        "whyReadZh": "优先阅读静态时序保持、状态虚拟化与资源/吞吐权衡，评估能否复用为核心验证平台。",
+        "limitationsZh": "LUT倍数使用未折叠资源估计，并非两个均可放入同卡的实测实现；4.24秒是模拟器执行该目标负载的时间，不是物理GPU GEMM性能。不同规模比较存在实测与组合估计口径，适用性仍受可折叠结构与HBM状态访问约束。",
+        "motivationDetail": {
+          "problemZh": "RTL验证随设计规模迅速变慢，直接映射FPGA虽快，却受逻辑和状态容量限制，单个复杂SM也可能放不下。",
+          "gapZh": "仅在顶层共享实例不足以容纳深层重复结构，多FPGA切分又引入通信；动态token同步还消耗资源与执行时间。",
+          "whyImportantZh": "在单FPGA上共享多层重复电路并预测状态访问，可让更大芯片设计获得可用的周期精确验证吞吐。",
+          "userRelevanceZh": "关联AI处理器/GPU RTL验证、FPGA加速与层次状态管理，也能为可复现芯片架构研究提供评测基础。",
+          "evidence": "完整摘要给出V80、8-SM、1024节点/4096核心、16/200倍、1.9GB及4.24秒对26小时；已读 https://arxiv.org/html/2611.26472v1 第5.1–5.4节与表2–4，确认未折叠估计、FPGA/Verilator组合评测和FireSim基线。"
+        },
+        "methodDetail": {
+          "coreIdeaZh": "对多层模块类独立选择物理副本数，用编译期静态调度协调依赖，并虚拟化每实例状态。",
+          "componentsZh": [
+            "相同实例复用逻辑，但通过独立状态存储保留各实例语义。",
+            "编译期协调跨模块执行，减少运行时token驱动同步和冗余求值。",
+            "HBM保存超额状态，按静态计划预取；状态晚到时停顿宿主执行而不改变目标周期。",
+            "配置化DRAM模型分离目标存储时序与FPGA宿主延迟，编译器探索副本数和状态放置。"
+          ],
+          "hardwareSystemDetailZh": "目标平台为AMD Alveo V80；完整4/8-SM与数据中心测试有FPGA实测，小/中GPU和部分机制比较采用Verilator周期数结合布线后频率。",
+          "noveltyZh": "将层次实例折叠、全局静态依赖调度和外存状态虚拟化合在一个自动编译流程，扩展单FPGA容量。",
+          "evidence": "完整摘要给出V80、8-SM、1024节点/4096核心、16/200倍、1.9GB及4.24秒对26小时；已读 https://arxiv.org/html/2611.26472v1 第5.1–5.4节与表2–4，确认未折叠估计、FPGA/Verilator组合评测和FireSim基线。"
+        },
+        "experimentDetail": {
+          "setupZh": "评测Vortex RISC-V GPU及Rocket数据中心，包括GEMM和网络负载；单V80运行8-SM GPU及1024节点、4096核心系统。",
+          "baselinesZh": "比较未折叠参考、移植到V80的FireSim、自实现动态token折叠，以及软件RTL仿真。",
+          "metricsZh": [
+            "每目标周期宿主时间",
+            "LUT与片上状态资源",
+            "HBM状态容量",
+            "指令/周期一致性",
+            "应用仿真墙钟时间"
+          ],
+          "mainResultsZh": "8-SM和1024节点未折叠LUT需求估计分别约为折叠实现的16倍和200倍；数据中心约1.9GB状态驻留HBM。4-SM模拟1024×1024 GEMM为4.24秒，对照软件RTL为26小时。",
+          "limitationsZh": "LUT倍数使用未折叠资源估计，并非两个均可放入同卡的实测实现；4.24秒是模拟器执行该目标负载的时间，不是物理GPU GEMM性能。不同规模比较存在实测与组合估计口径，适用性仍受可折叠结构与HBM状态访问约束。",
+          "evidence": "完整摘要给出V80、8-SM、1024节点/4096核心、16/200倍、1.9GB及4.24秒对26小时；已读 https://arxiv.org/html/2611.26472v1 第5.1–5.4节与表2–4，确认未折叠估计、FPGA/Verilator组合评测和FireSim基线。"
+        },
+        "evidence": {
+          "usedSources": [
+            "metadata",
+            "abstract",
+            "https://arxiv.org/html/2611.26472v1"
+          ],
+          "affiliationEvidence": "队列元数据affiliations及authorAffiliations均为空，本轮未读取PDF前两页；采用规定缺失表述，不根据作者姓名推断单位。",
+          "experimentEvidence": "完整摘要给出V80、8-SM、1024节点/4096核心、16/200倍、1.9GB及4.24秒对26小时；已读 https://arxiv.org/html/2611.26472v1 第5.1–5.4节与表2–4，确认未折叠估计、FPGA/Verilator组合评测和FireSim基线。",
+          "missingFields": [
+            "作者单位",
+            "更广泛自定义NPU RTL适配未核实",
+            "PDF前两页未读取"
+          ]
+        },
+        "confidence": {
+          "summary": 0.97,
+          "motivation": 0.95,
+          "method": 0.94,
+          "experiments": 0.93,
+          "affiliations": 0
+        }
+      },
+      "pushedAt": "2026-11-21T02:30:26.893Z",
+      "emailSentAt": "2026-11-21T02:30:26.893Z",
+      "firstPushedAt": "2026-11-21T02:30:26.893Z"
+    },
+    {
       "id": "arxiv:2611.13741",
       "source": "arXiv",
       "title": "Retargetable Compilation for Tensor Kernels via a Unified Layout Abstraction",
@@ -3581,6 +3850,141 @@
       "pushedAt": "2026-11-03T02:36:27.905Z",
       "emailSentAt": "2026-11-03T02:36:27.905Z",
       "firstPushedAt": "2026-11-03T02:36:27.905Z"
+    },
+    {
+      "id": "arxiv:2611.26567",
+      "source": "arXiv",
+      "title": "Efficient and Variation-Tolerant Tree Inference via Compact and Scalable Mapping in Analog CAMs",
+      "authors": [
+        "Zhicheng Xu",
+        "Wenqing Shi",
+        "Pengyu Ren",
+        "Chao Li",
+        "Bo Wen",
+        "Ruibin Mao",
+        "Xunzhao Yin",
+        "Xiaobo Sharon Hu",
+        "Can Li"
+      ],
+      "authorAffiliations": [],
+      "affiliations": [],
+      "abstract": "Tree-based machine learning methods are widely adopted for their interpretability and state-of-the-art accuracy on tabular data. These methods face efficiency challenges on conventional architectures due to irregular memory access patterns during tree traversal. Prior work uses analog CAM to accelerate tree traversal, but inefficient mapping requires exponentially more analog CAM columns as tree depth increases. Accuracy is also degraded by device non-idealities such as programming variations and soft decision boundaries. To address these challenges, we propose ACTIVAR, a compact variation-tolerant tree implementation in a dense analog CAM array via software-hardware codesign. On the software side, we introduce an analog-CAM-aware compact tree model that employs hierarchical subtrees with shared features to maximize hardware utilization. This dense mapping introduces redundancy, improving both model accuracy and hardware defect tolerance. Additionally, we develop Variation-Enhanced Training, which utilizes a fuzzy overlap boundary strategy to build models resilient to analog noise. On the hardware side, we design a FeFET-based analog CAM cell with a driver to sharpen decision thresholds and implement a pipelined multi-core architecture to optimize throughput and energy consumption. Across 13 classification and regression datasets, ACTIVAR maintains near-software-level accuracy while reducing hardware overhead by up to 99% compared with prior analog-CAM-based soft-tree designs. Under realistic hardware noise conditions, ACTIVAR limits accuracy degradation to just 3.7% on the MNIST dataset, whereas baseline models suffer a catastrophic 49.6% drop. Furthermore, the ACTIVAR architecture achieves energy efficiency gains ranging from $10^4$ to $10^6$ times over commercial general-purpose processors, establishing it as a highly efficient solution for high-capacity machine learning at the edge.",
+      "venue": "arXiv",
+      "published": "2026-11-19T18:35:20Z",
+      "updated": "2026-11-19T18:35:20Z",
+      "url": "http://arxiv.org/abs/2611.26567v1",
+      "pdfUrl": "https://arxiv.org/pdf/2611.26567v1",
+      "categories": [
+        "cs.ET"
+      ],
+      "collectedAt": "2026-11-21T01:35:27.451Z",
+      "firstSeenAt": "2026-11-21T01:35:27.451Z",
+      "lastSeenAt": "2026-11-21T01:35:27.451Z",
+      "collectionType": "daily-latest",
+      "matchedQuery": "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)",
+      "collectionTypes": [
+        "daily-latest"
+      ],
+      "matchedQueries": [
+        "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)"
+      ],
+      "targetThemes": [],
+      "conferenceVenues": [],
+      "conferenceYears": [],
+      "recommendationTrack": "hardware-primary",
+      "recommendationLabel": "硬件体系结构主线",
+      "recommendationScore": 169,
+      "relevanceReason": "命中 AI 处理器、体系结构、量化、训推系统或内存/缓存优化主题",
+      "pdfStatus": "remote",
+      "workflow": {
+        "digestStatus": "ready",
+        "emailStatus": "sent",
+        "digestError": "",
+        "harnessVersion": "paper-reader-v1",
+        "collectStatus": "collected",
+        "pdfStatus": "remote",
+        "harnessCheckedAt": "2026-11-21T02:30:22.032Z",
+        "harnessWarnings": [],
+        "emailSentAt": "2026-11-21T02:30:26.893Z",
+        "lastEmailError": ""
+      },
+      "digest": {
+        "summaryZh": "ACTIVAR 将决策树改写为共享特征的分层紧凑子树，配合模糊边界训练、较硬的FeFET比较边界及选择性多核执行，减少模拟CAM映射浪费并提高抗噪性。它面向树模型而非LLM，系统能效主要来自经器件数据校准的仿真。",
+        "motivationZh": "树遍历在传统处理器上产生不规则访存，而既有模拟CAM映射随树深增长浪费列资源，器件变化和软阈值又降低准确率。 只将原有树直接映射到阵列难以同时兼顾可扩展性和模拟非理想性，需要联合改变模型结构、训练与电路。 紧凑映射可控制阵列需求，容错训练与更锐利阈值则决定这种模拟加速能否保留实际预测质量。 属于树推理的模拟存储计算协同，硬件机制可参考；与LLM核心和PNM主线距离较远，优先级低于通用推理系统。",
+        "methodZh": "用共享特征的分层紧凑子树匹配模拟CAM阵列，并将器件噪声容忍纳入训练和阈值电路。 紧凑树按层级子树映射，复用特征并减少深树映射时的空耗。 Variation-Enhanced Training通过模糊重叠边界复制邻近样本，增加对变化和输入噪声的容忍。 FeFET CAM单元结合驱动器锐化比较边界，WTA产生子树输出。 多核流水与NoC按路径选择性激活子树，避免每次查询开启全部阵列。 PDF第V节以28nm FeFET器件实验校准Preisach模型，用Spectre和45nm PTM外围MOS模型评估电路；整体多核能耗不等于完整芯片实测。 联合紧凑树结构、重叠边界训练与锐化比较电路，解决规则阵列和不规则树结构及模拟非理想性之间的错配。",
+        "experimentsZh": "覆盖13个分类/回归数据集，包括MNIST、Fashion-MNIST与UCI HAR；模型化器件阈值变化、输入电压噪声和软决策边界。 比较同总深度Scikit-learn树、模拟CAM上的CART及既有soft-tree，并报告相对Apple M2的能量比较。 摘要报告相对先前soft-tree最高约99%硬件开销减少；PDF中MNIST的CART准确率从87.9%到38.3%，相差49.6个百分点，ACTIVAR相应下降约3.7个百分点。论文另报告相对CPU能效10^4–10^6倍，属于跨平台建模比较。 噪声分布、外围模型、数据集与CPU能量口径会显著影响大倍数结果；不能视为完整ACTIVAR芯片流片或通用LLM加速。已读取PDF部分章节，但未独立复现实验或全系统能量核算。",
+        "affiliationsZh": "Zhicheng Xu、Wenqing Shi、Bo Wen、Ruibin Mao、Can Li：香港大学电机电子工程系及先进半导体与集成电路中心；Pengyu Ren、Xiaobo Sharon Hu：美国圣母大学计算机科学与工程系；Chao Li、Xunzhao Yin：浙江大学信息与电子工程学院。",
+        "tags": [
+          "模拟CAM",
+          "树推理",
+          "FeFET",
+          "容错训练",
+          "紧凑映射"
+        ],
+        "importance": 3,
+        "researchFitZh": "属于树推理的模拟存储计算协同，硬件机制可参考；与LLM核心和PNM主线距离较远，优先级低于通用推理系统。",
+        "hardwareRelevance": 5,
+        "algorithmRelevance": 4,
+        "systemRelevance": 3,
+        "readPriority": "skim",
+        "whyReadZh": "略读树到阵列映射与模拟容错协同，重点核查大能效倍数的系统边界。",
+        "limitationsZh": "噪声分布、外围模型、数据集与CPU能量口径会显著影响大倍数结果；不能视为完整ACTIVAR芯片流片或通用LLM加速。已读取PDF部分章节，但未独立复现实验或全系统能量核算。",
+        "motivationDetail": {
+          "problemZh": "树遍历在传统处理器上产生不规则访存，而既有模拟CAM映射随树深增长浪费列资源，器件变化和软阈值又降低准确率。",
+          "gapZh": "只将原有树直接映射到阵列难以同时兼顾可扩展性和模拟非理想性，需要联合改变模型结构、训练与电路。",
+          "whyImportantZh": "紧凑映射可控制阵列需求，容错训练与更锐利阈值则决定这种模拟加速能否保留实际预测质量。",
+          "userRelevanceZh": "属于树推理的模拟存储计算协同，硬件机制可参考；与LLM核心和PNM主线距离较远，优先级低于通用推理系统。",
+          "evidence": "原始摘要提供13数据集、99%、3.7/49.6和10^4–10^6；已读 https://arxiv.org/pdf/2611.26567 第V–VII节及图15（PDF第11页截图），确认Spectre/器件校准、87.9到38.3的百分点含义、soft-tree/CART及Apple M2比较。"
+        },
+        "methodDetail": {
+          "coreIdeaZh": "用共享特征的分层紧凑子树匹配模拟CAM阵列，并将器件噪声容忍纳入训练和阈值电路。",
+          "componentsZh": [
+            "紧凑树按层级子树映射，复用特征并减少深树映射时的空耗。",
+            "Variation-Enhanced Training通过模糊重叠边界复制邻近样本，增加对变化和输入噪声的容忍。",
+            "FeFET CAM单元结合驱动器锐化比较边界，WTA产生子树输出。",
+            "多核流水与NoC按路径选择性激活子树，避免每次查询开启全部阵列。"
+          ],
+          "hardwareSystemDetailZh": "PDF第V节以28nm FeFET器件实验校准Preisach模型，用Spectre和45nm PTM外围MOS模型评估电路；整体多核能耗不等于完整芯片实测。",
+          "noveltyZh": "联合紧凑树结构、重叠边界训练与锐化比较电路，解决规则阵列和不规则树结构及模拟非理想性之间的错配。",
+          "evidence": "原始摘要提供13数据集、99%、3.7/49.6和10^4–10^6；已读 https://arxiv.org/pdf/2611.26567 第V–VII节及图15（PDF第11页截图），确认Spectre/器件校准、87.9到38.3的百分点含义、soft-tree/CART及Apple M2比较。"
+        },
+        "experimentDetail": {
+          "setupZh": "覆盖13个分类/回归数据集，包括MNIST、Fashion-MNIST与UCI HAR；模型化器件阈值变化、输入电压噪声和软决策边界。",
+          "baselinesZh": "比较同总深度Scikit-learn树、模拟CAM上的CART及既有soft-tree，并报告相对Apple M2的能量比较。",
+          "metricsZh": [
+            "分类准确率",
+            "回归归一化RMSE",
+            "CAM单元数",
+            "模型估计推理能量"
+          ],
+          "mainResultsZh": "摘要报告相对先前soft-tree最高约99%硬件开销减少；PDF中MNIST的CART准确率从87.9%到38.3%，相差49.6个百分点，ACTIVAR相应下降约3.7个百分点。论文另报告相对CPU能效10^4–10^6倍，属于跨平台建模比较。",
+          "limitationsZh": "噪声分布、外围模型、数据集与CPU能量口径会显著影响大倍数结果；不能视为完整ACTIVAR芯片流片或通用LLM加速。已读取PDF部分章节，但未独立复现实验或全系统能量核算。",
+          "evidence": "原始摘要提供13数据集、99%、3.7/49.6和10^4–10^6；已读 https://arxiv.org/pdf/2611.26567 第V–VII节及图15（PDF第11页截图），确认Spectre/器件校准、87.9到38.3的百分点含义、soft-tree/CART及Apple M2比较。"
+        },
+        "evidence": {
+          "usedSources": [
+            "metadata",
+            "abstract",
+            "https://arxiv.org/pdf/2611.26567"
+          ],
+          "affiliationEvidence": "实际读取 https://arxiv.org/pdf/2611.26567 第1页作者上标1/2/3/4与对应单位脚注，按上标映射作者；非由姓名或邮件域名推断。",
+          "experimentEvidence": "原始摘要提供13数据集、99%、3.7/49.6和10^4–10^6；已读 https://arxiv.org/pdf/2611.26567 第V–VII节及图15（PDF第11页截图），确认Spectre/器件校准、87.9到38.3的百分点含义、soft-tree/CART及Apple M2比较。",
+          "missingFields": [
+            "完整多核芯片实测",
+            "全系统CPU与模拟阵列能量口径未独立复核"
+          ]
+        },
+        "confidence": {
+          "summary": 0.95,
+          "motivation": 0.93,
+          "method": 0.92,
+          "experiments": 0.87,
+          "affiliations": 0.98
+        }
+      },
+      "pushedAt": "2026-11-21T02:30:26.893Z",
+      "emailSentAt": "2026-11-21T02:30:26.893Z",
+      "firstPushedAt": "2026-11-21T02:30:26.893Z"
     },
     {
       "id": "arxiv:2611.11823",
@@ -4369,6 +4773,145 @@
       "pushedAt": "2026-11-14T02:37:52.779Z",
       "emailSentAt": "2026-11-14T02:37:52.779Z",
       "firstPushedAt": "2026-11-14T02:37:52.779Z"
+    },
+    {
+      "id": "arxiv:2611.25813",
+      "source": "arXiv",
+      "title": "Efficient and Robust Drafting with Multi-Token Prediction",
+      "authors": [
+        "Filippo Galgani",
+        "Ziwei Ji",
+        "Omri Homburger",
+        "Ganesh Jawahar",
+        "Michelle Ramanovich",
+        "Ivan Korotkov",
+        "Luciano Martins",
+        "Utku Evci",
+        "Edouard Yvinec",
+        "Pooja Consul",
+        "Vivek Kumar",
+        "Tal Schuster"
+      ],
+      "authorAffiliations": [],
+      "affiliations": [],
+      "abstract": "Speculative decoding has emerged as a critical technique for accelerating Large Language Model (LLM) inference by decoupling generation into a drafting phase and a parallel verification phase. A crucial challenge is therefore designing a drafter that is both lightweight and accurate enough to approximate the predictions of the target model. We present a highly optimized Multi-Token Prediction (MTP) architecture that extends existing backbone LLMs to efficiently produce high-quality drafts. Built around a single shared drafting head, our approach features three core architectural optimizations: target activation injection to anchor semantic planning, zero-copy KV-cache cross-attention to bypass prefill compute and reduce memory overhead, and an efficient clustered vocabulary projection to reduce the cost of full-vocabulary decoding. Testing these improvements with the Gemma 4 model family, our G-MTP shows out-of-the-box speedups for both large server-side setups (up to 3.1$\\times$) and smaller models targeting memory-constrained on-device environments (up to 2.3$\\times$ on H100 and up to 2.2$\\times$ on a smartphone GPU). In addition, we present parameter-efficient fine-tuning recipes for G-MTP that keep the drafter aligned with the backbone LLM under domain shift, requiring up to 1.83$\\times$ fewer target forward passes than tuning only the backbone.",
+      "venue": "arXiv",
+      "published": "2026-11-19T09:33:39Z",
+      "updated": "2026-11-19T09:33:39Z",
+      "url": "http://arxiv.org/abs/2611.25813v1",
+      "pdfUrl": "https://arxiv.org/pdf/2611.25813v1",
+      "categories": [
+        "cs.CL"
+      ],
+      "collectedAt": "2026-11-21T01:35:27.451Z",
+      "firstSeenAt": "2026-11-21T01:35:27.451Z",
+      "lastSeenAt": "2026-11-21T01:35:27.451Z",
+      "collectionType": "daily-latest",
+      "matchedQuery": "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)",
+      "collectionTypes": [
+        "daily-latest"
+      ],
+      "matchedQueries": [
+        "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)"
+      ],
+      "targetThemes": [],
+      "conferenceVenues": [],
+      "conferenceYears": [],
+      "recommendationTrack": "hardware-primary",
+      "recommendationLabel": "硬件体系结构主线",
+      "recommendationScore": 164,
+      "relevanceReason": "命中 AI 处理器、体系结构、量化、训推系统或内存/缓存优化主题",
+      "pdfStatus": "remote",
+      "workflow": {
+        "digestStatus": "ready",
+        "emailStatus": "sent",
+        "digestError": "",
+        "harnessVersion": "paper-reader-v1",
+        "collectStatus": "collected",
+        "pdfStatus": "remote",
+        "harnessCheckedAt": "2026-11-21T02:30:22.032Z",
+        "harnessWarnings": [],
+        "emailSentAt": "2026-11-21T02:30:26.893Z",
+        "lastEmailError": ""
+      },
+      "digest": {
+        "summaryZh": "G-MTP 用共享草稿头反复生成候选，注入目标模型激活并直接读取已预填充KV，省去独立草稿模型的prefill及增长缓存；小模型还采用聚类词表投影。它同时关注草稿接受率与墙钟收益，适合长上下文、端侧和MoE推理系统研究。",
+        "motivationZh": "推测解码要求草稿既便宜又准确，独立草稿模型重复prefill、维护上下文和全词表投影会抵消验证阶段的收益。 接受率或理论block效率高不保证实际加速，尤其端侧内存有限、MoE验证可能激活更多专家，领域微调还会使草稿与目标失配。 降低草稿访存和投影开销并保持与目标模型一致，才能把少做目标前向转成端侧或服务器吞吐收益。 直接契合KV复用、内存受限推理、MoE执行及软硬件友好解码，可优先阅读系统成本与接受率权衡。",
+        "methodZh": "以单个共享MTP Transformer草稿头递归预测，结合目标激活、静态KV快照交叉注意力及可选聚类词表投影。 将目标最终激活与新token嵌入拼接投影，后续草稿步骤递归传递隐藏态。 直接交叉注意目标最后预填充的局部/全局层KV，以固定查询位置编码复用快照，无需草稿自己的增长KV。 小型E2B/E4B用两阶段聚类选择缩减精确词表投影；大模型仍使用全词表。 参数高效蒸馏适配让草稿跟随领域微调后的目标分布。 服务器使用H100与vLLM，端侧还测试智能手机GPU及Edge TPU；属于模型/内核协同的推理方案，并非新芯片。 把共享头、零拷贝目标KV和词表路由联合优化，并把领域适配纳入草稿与主干一致性维护。",
+        "experimentsZh": "正文以Gemma 4系列在SPEED-Bench的H100配置评测；31B用两张H100、BF16、batch1。附录还用Galaxy S26 Ultra的量化LiteRT-LM模型。 比较普通自回归解码；31B相同条件比较DFlash、EAGLE-3；领域适配比较只微调主干。 31B吞吐从73.2到230.1 tokens/s，为3.14倍；手机GPU上E4B报告2.18倍，且该手机实验未启用聚类词表投影。摘要另称领域适配最多减少至约1/1.83的目标前向次数。 加速随模型、batch、lookahead和任务变化；MoE较长草稿可增加验证成本，不能用接受率替代吞吐。手机与H100的提示集合、量化和投影设置不同，峰值不可直接横比。",
+        "affiliationsZh": "未在 DBLP/arXiv 元数据中提供",
+        "tags": [
+          "推测解码",
+          "MTP",
+          "零拷贝KV",
+          "词表投影",
+          "端侧推理"
+        ],
+        "importance": 5,
+        "researchFitZh": "直接契合KV复用、内存受限推理、MoE执行及软硬件友好解码，可优先阅读系统成本与接受率权衡。",
+        "hardwareRelevance": 3,
+        "algorithmRelevance": 5,
+        "systemRelevance": 5,
+        "readPriority": "deep-read",
+        "whyReadZh": "优先读KV快照语义、草稿投影成本与MoE验证退化，寻找可测的核心与缓存优化机会。",
+        "limitationsZh": "加速随模型、batch、lookahead和任务变化；MoE较长草稿可增加验证成本，不能用接受率替代吞吐。手机与H100的提示集合、量化和投影设置不同，峰值不可直接横比。",
+        "motivationDetail": {
+          "problemZh": "推测解码要求草稿既便宜又准确，独立草稿模型重复prefill、维护上下文和全词表投影会抵消验证阶段的收益。",
+          "gapZh": "接受率或理论block效率高不保证实际加速，尤其端侧内存有限、MoE验证可能激活更多专家，领域微调还会使草稿与目标失配。",
+          "whyImportantZh": "降低草稿访存和投影开销并保持与目标模型一致，才能把少做目标前向转成端侧或服务器吞吐收益。",
+          "userRelevanceZh": "直接契合KV复用、内存受限推理、MoE执行及软硬件友好解码，可优先阅读系统成本与接受率权衡。",
+          "evidence": "完整摘要提供服务器约3.1倍、手机约2.2倍和1.83倍前向次数；已读 https://arxiv.org/html/2611.25813v1 第3–4节、表1–2与附录A.2，确认31B73.2/230.1、手机2.18倍且使用全词表投影及不同提示集合。"
+        },
+        "methodDetail": {
+          "coreIdeaZh": "以单个共享MTP Transformer草稿头递归预测，结合目标激活、静态KV快照交叉注意力及可选聚类词表投影。",
+          "componentsZh": [
+            "将目标最终激活与新token嵌入拼接投影，后续草稿步骤递归传递隐藏态。",
+            "直接交叉注意目标最后预填充的局部/全局层KV，以固定查询位置编码复用快照，无需草稿自己的增长KV。",
+            "小型E2B/E4B用两阶段聚类选择缩减精确词表投影；大模型仍使用全词表。",
+            "参数高效蒸馏适配让草稿跟随领域微调后的目标分布。"
+          ],
+          "hardwareSystemDetailZh": "服务器使用H100与vLLM，端侧还测试智能手机GPU及Edge TPU；属于模型/内核协同的推理方案，并非新芯片。",
+          "noveltyZh": "把共享头、零拷贝目标KV和词表路由联合优化，并把领域适配纳入草稿与主干一致性维护。",
+          "evidence": "完整摘要提供服务器约3.1倍、手机约2.2倍和1.83倍前向次数；已读 https://arxiv.org/html/2611.25813v1 第3–4节、表1–2与附录A.2，确认31B73.2/230.1、手机2.18倍且使用全词表投影及不同提示集合。"
+        },
+        "experimentDetail": {
+          "setupZh": "正文以Gemma 4系列在SPEED-Bench的H100配置评测；31B用两张H100、BF16、batch1。附录还用Galaxy S26 Ultra的量化LiteRT-LM模型。",
+          "baselinesZh": "比较普通自回归解码；31B相同条件比较DFlash、EAGLE-3；领域适配比较只微调主干。",
+          "metricsZh": [
+            "端到端生成tokens/s",
+            "草稿接受率与block效率",
+            "目标模型前向次数",
+            "不同lookahead与batch下吞吐"
+          ],
+          "mainResultsZh": "31B吞吐从73.2到230.1 tokens/s，为3.14倍；手机GPU上E4B报告2.18倍，且该手机实验未启用聚类词表投影。摘要另称领域适配最多减少至约1/1.83的目标前向次数。",
+          "limitationsZh": "加速随模型、batch、lookahead和任务变化；MoE较长草稿可增加验证成本，不能用接受率替代吞吐。手机与H100的提示集合、量化和投影设置不同，峰值不可直接横比。",
+          "evidence": "完整摘要提供服务器约3.1倍、手机约2.2倍和1.83倍前向次数；已读 https://arxiv.org/html/2611.25813v1 第3–4节、表1–2与附录A.2，确认31B73.2/230.1、手机2.18倍且使用全词表投影及不同提示集合。"
+        },
+        "evidence": {
+          "usedSources": [
+            "metadata",
+            "abstract",
+            "https://arxiv.org/html/2611.25813v1"
+          ],
+          "affiliationEvidence": "队列元数据affiliations及authorAffiliations均为空，本轮未读取PDF前两页；采用规定缺失表述，不根据作者姓名推断单位。",
+          "experimentEvidence": "完整摘要提供服务器约3.1倍、手机约2.2倍和1.83倍前向次数；已读 https://arxiv.org/html/2611.25813v1 第3–4节、表1–2与附录A.2，确认31B73.2/230.1、手机2.18倍且使用全词表投影及不同提示集合。",
+          "missingFields": [
+            "作者单位",
+            "完整领域适配表未逐项核读",
+            "PDF前两页未读取"
+          ]
+        },
+        "confidence": {
+          "summary": 0.97,
+          "motivation": 0.97,
+          "method": 0.96,
+          "experiments": 0.94,
+          "affiliations": 0
+        }
+      },
+      "pushedAt": "2026-11-21T02:30:26.893Z",
+      "emailSentAt": "2026-11-21T02:30:26.893Z",
+      "firstPushedAt": "2026-11-21T02:30:26.893Z"
     },
     {
       "id": "arxiv:2610.41803",
@@ -5398,6 +5941,136 @@
       "pushedAt": "2026-10-30T00:36:26.783Z",
       "emailSentAt": "2026-10-30T00:36:26.783Z",
       "firstPushedAt": "2026-10-30T00:36:26.783Z"
+    },
+    {
+      "id": "arxiv:2611.26584",
+      "source": "arXiv",
+      "title": "Represented but misread: Post-training changes how language models read out what they represent",
+      "authors": [
+        "Jochen Laubrock"
+      ],
+      "authorAffiliations": [],
+      "affiliations": [],
+      "abstract": "Does post-training change what a language model represents, or how this representation is read out into an answer? We compared linear probes with the models' own answers, analyzed with signal detection theory, in six open-weight base models and their post-trained versions. For judgments of whether German texts were written by a human or an AI, probes and word n-gram classifiers separated the classes well, but the answers did not and often ordered the texts inversely. Post-training lowered the sensitivity of the answers on average ($Δd' = -0.34$ across model families; -0.29 across three prompts). It also changed the use of a stated base rate: Base models shifted their log-odds by less than the stated change in prior odds, most post-trained models by more. In two models with stage-wise checkpoints, the change occurred during supervised fine-tuning, model stitching implicated the early layers, and from mid-depth on internal states at positions after the text, not those of the text, transferred the change between checkpoints. Our corpora cannot be shared, so we add a case reproducible from public data, the truth of negated statements. Here, post-training acted in the opposite direction: Probes decoded truth at or near ceiling in every model, the answers of several base models did not use it, and post-training repaired them; by mid-depth the repair resided at the positions after the statement; below it, the representation of the statement contributed, strongly in one of four models. In a training study, adding 2,000 correctly labeled authorship judgments of news texts to otherwise identical fine-tuning data improved the answers on our newspaper and textbook corpora and inverted them on the chats, where they followed a news-trained probe of the base model. Post-training thus changed how a judgment is read out of what a model represents, and a small training signal can set its direction.",
+      "venue": "arXiv",
+      "published": "2026-11-19T18:43:56Z",
+      "updated": "2026-11-19T18:43:56Z",
+      "url": "http://arxiv.org/abs/2611.26584v1",
+      "pdfUrl": "https://arxiv.org/pdf/2611.26584v1",
+      "categories": [
+        "cs.CL",
+        "cs.LG"
+      ],
+      "collectedAt": "2026-11-21T01:35:27.451Z",
+      "firstSeenAt": "2026-11-21T01:35:27.451Z",
+      "lastSeenAt": "2026-11-21T01:35:27.451Z",
+      "collectionType": "daily-latest",
+      "matchedQuery": "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)",
+      "collectionTypes": [
+        "daily-latest"
+      ],
+      "matchedQueries": [
+        "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)",
+        "(all:agent OR all:agents OR all:agentic OR all:reasoning OR all:post-training OR all:alignment OR all:multimodal OR all:world-model) AND (all:LLM OR all:foundation OR all:language)"
+      ],
+      "targetThemes": [],
+      "conferenceVenues": [],
+      "conferenceYears": [],
+      "digest": {
+        "summaryZh": "本文区分模型内部可解码的信息与最终回答是否使用该信息，发现后训练可改变读出方向，且在人机文本判断与否定句真值任务上效果相反。它用探针、信号检测和模型拼接定位变化，提示不能把内部表示可分性直接当作输出能力。",
+        "motivationZh": "模型内部表征中可解码的判断信息，不一定被生成答案正确利用，后训练改变的是表征还是读出尚需拆分。 只看最终任务准确率或探针效果会混淆信息存在与行为使用，也无法解释相同后训练在不同任务上方向相反。 区分可表示与可读出，有助于评估后训练收益、跨域失败及小量监督数据带来的行为方向变化。 属于LLM可解释性和后训练趋势，没有直接硬件、KV或量化执行贡献，适合低优先略读。",
+        "methodZh": "对比线性探针与模型自身回答，采用信号检测、阶段检查点和模型拼接分析表征到答案的转换。 六种开源基础模型与后训练版本参与德语人机文本作者判断。 通过阶段检查点和早层/文本后位置的状态迁移，定位读出变化。 增加公开否定句真值任务，以及加入正确作者标签的微调实验，考察方向与跨语料迁移。 这是表示与行为分析实验；摘要没有可核实的GPU型号、推理效率或硬件数据通路设计。 用探针和行为间的差距及跨检查点拼接证据，讨论后训练如何改变信息读出而非笼统归因于知识增加或丢失。",
+        "experimentsZh": "六组基础/后训练模型，德语作者识别与公开否定句真值任务；摘要另报告加入2000条新闻作者判断训练样本。 比较基础与后训练版本、线性探针、词n-gram分类器，以及保持其他微调数据相同的对照。 摘要报告作者判断跨模型平均Δd′=-0.34，而否定句真值任务中后训练修复若干基础模型的错误读出；2000条监督在新闻/教材上改善，却在聊天语料上反转，不能归结为统一的后训练退化。 作者判断语料不可共享，公开真值任务提供部分可复现案例；本轮只核读摘要，未逐项核实模型名、探针协议及拼接控制，不能将局部结论推广到所有任务。",
+        "affiliationsZh": "未在 DBLP/arXiv 元数据中提供",
+        "tags": [
+          "后训练",
+          "线性探针",
+          "表征读出",
+          "领域迁移"
+        ],
+        "importance": 3,
+        "researchFitZh": "属于LLM可解释性和后训练趋势，没有直接硬件、KV或量化执行贡献，适合低优先略读。",
+        "hardwareRelevance": 1,
+        "algorithmRelevance": 4,
+        "systemRelevance": 2,
+        "readPriority": "skim",
+        "whyReadZh": "略读内部可解码与行为可用的区别，作为后训练评估和跨域解释的参考。",
+        "limitationsZh": "作者判断语料不可共享，公开真值任务提供部分可复现案例；本轮只核读摘要，未逐项核实模型名、探针协议及拼接控制，不能将局部结论推广到所有任务。",
+        "motivationDetail": {
+          "problemZh": "模型内部表征中可解码的判断信息，不一定被生成答案正确利用，后训练改变的是表征还是读出尚需拆分。",
+          "gapZh": "只看最终任务准确率或探针效果会混淆信息存在与行为使用，也无法解释相同后训练在不同任务上方向相反。",
+          "whyImportantZh": "区分可表示与可读出，有助于评估后训练收益、跨域失败及小量监督数据带来的行为方向变化。",
+          "userRelevanceZh": "属于LLM可解释性和后训练趋势，没有直接硬件、KV或量化执行贡献，适合低优先略读。",
+          "evidence": "实际读取 https://arxiv.org/abs/2611.26584 与完整摘要，给出六模型、Δd′=-0.34、2000条新闻监督及两个任务方向相反；摘要明确作者识别语料不可共享。"
+        },
+        "methodDetail": {
+          "coreIdeaZh": "对比线性探针与模型自身回答，采用信号检测、阶段检查点和模型拼接分析表征到答案的转换。",
+          "componentsZh": [
+            "六种开源基础模型与后训练版本参与德语人机文本作者判断。",
+            "通过阶段检查点和早层/文本后位置的状态迁移，定位读出变化。",
+            "增加公开否定句真值任务，以及加入正确作者标签的微调实验，考察方向与跨语料迁移。"
+          ],
+          "hardwareSystemDetailZh": "这是表示与行为分析实验；摘要没有可核实的GPU型号、推理效率或硬件数据通路设计。",
+          "noveltyZh": "用探针和行为间的差距及跨检查点拼接证据，讨论后训练如何改变信息读出而非笼统归因于知识增加或丢失。",
+          "evidence": "实际读取 https://arxiv.org/abs/2611.26584 与完整摘要，给出六模型、Δd′=-0.34、2000条新闻监督及两个任务方向相反；摘要明确作者识别语料不可共享。"
+        },
+        "experimentDetail": {
+          "setupZh": "六组基础/后训练模型，德语作者识别与公开否定句真值任务；摘要另报告加入2000条新闻作者判断训练样本。",
+          "baselinesZh": "比较基础与后训练版本、线性探针、词n-gram分类器，以及保持其他微调数据相同的对照。",
+          "metricsZh": [
+            "信号检测敏感度d′",
+            "基率引起的log-odds偏移",
+            "探针与回答一致性",
+            "拼接后的行为迁移"
+          ],
+          "mainResultsZh": "摘要报告作者判断跨模型平均Δd′=-0.34，而否定句真值任务中后训练修复若干基础模型的错误读出；2000条监督在新闻/教材上改善，却在聊天语料上反转，不能归结为统一的后训练退化。",
+          "limitationsZh": "作者判断语料不可共享，公开真值任务提供部分可复现案例；本轮只核读摘要，未逐项核实模型名、探针协议及拼接控制，不能将局部结论推广到所有任务。",
+          "evidence": "实际读取 https://arxiv.org/abs/2611.26584 与完整摘要，给出六模型、Δd′=-0.34、2000条新闻监督及两个任务方向相反；摘要明确作者识别语料不可共享。"
+        },
+        "evidence": {
+          "usedSources": [
+            "metadata",
+            "abstract",
+            "https://arxiv.org/abs/2611.26584"
+          ],
+          "affiliationEvidence": "队列元数据affiliations及authorAffiliations均为空，本轮未读取PDF前两页；采用规定缺失表述，不根据作者姓名推断单位。",
+          "experimentEvidence": "实际读取 https://arxiv.org/abs/2611.26584 与完整摘要，给出六模型、Δd′=-0.34、2000条新闻监督及两个任务方向相反；摘要明确作者识别语料不可共享。",
+          "missingFields": [
+            "作者单位",
+            "具体模型全名与完整评测表未核读",
+            "作者识别私有语料",
+            "硬件与计算开销",
+            "PDF前两页未读取"
+          ]
+        },
+        "confidence": {
+          "summary": 0.93,
+          "motivation": 0.92,
+          "method": 0.87,
+          "experiments": 0.8,
+          "affiliations": 0
+        }
+      },
+      "recommendationTrack": "hardware-primary",
+      "recommendationLabel": "硬件体系结构主线",
+      "recommendationScore": 159.5,
+      "relevanceReason": "命中 AI 处理器、体系结构、量化、训推系统或内存/缓存优化主题",
+      "pdfStatus": "remote",
+      "workflow": {
+        "digestStatus": "ready",
+        "emailStatus": "sent",
+        "digestError": "",
+        "harnessVersion": "paper-reader-v1",
+        "collectStatus": "collected",
+        "pdfStatus": "remote",
+        "harnessCheckedAt": "2026-11-21T02:30:22.032Z",
+        "harnessWarnings": [],
+        "emailSentAt": "2026-11-21T02:30:26.893Z",
+        "lastEmailError": ""
+      },
+      "pushedAt": "2026-11-21T02:30:26.893Z",
+      "emailSentAt": "2026-11-21T02:30:26.893Z",
+      "firstPushedAt": "2026-11-21T02:30:26.893Z"
     },
     {
       "id": "arxiv:2610.35272",
@@ -7434,6 +8107,140 @@
       "pushedAt": "2026-11-05T02:33:26.283Z",
       "emailSentAt": "2026-11-05T02:33:26.283Z",
       "firstPushedAt": "2026-11-05T02:33:26.283Z"
+    },
+    {
+      "id": "arxiv:2611.25678",
+      "source": "arXiv",
+      "title": "Lightweight Low-Frequency Non-Intrusive Load Monitoring via Karhunen-Loève Feature Distillation and Temporal Convolutional Networks",
+      "authors": [
+        "Sanka Peeris",
+        "Pandula Thennakoon",
+        "Praveen Sumanasekara",
+        "Roshan Godaliyadda",
+        "Parakrama Ekanayake",
+        "Janaka Ekanayake"
+      ],
+      "authorAffiliations": [],
+      "affiliations": [],
+      "abstract": "Non-Intrusive Load Monitoring (NILM) is a critical enabler for demand-side management which allows for smart grid optimization. A deployment-ready NILM solution necessitates three key features: accurate disaggregation, low-frequency sampling, and low computational cost. This paper proposes a lightweight, edge-oriented NILM framework that combines activity-boundary-aware synthetic data augmentation with Karhunen-Loève Transform (KLT) feature extraction and a Temporal Convolutional Network (TCN). The augmentation stage extracts and recombines complete or near-complete appliance activation segments so that the model can be trained without new fully labeled household aggregates. The KLT filter bank extracts decorrelated, appliance-informed temporal features which are then fed into a compact TCN along with the original aggregate for energy disaggregation. Evaluations on two standard NILM datasets, UK-DALE and REDD, at 10-s sampling and with leave-one-house-out testing, demonstrate that the proposed architecture achieves comparable or superior disaggregation accuracy relative to NILMFormer, BERT4NILM, BiLSTM, and BiGRU. The computational footprint of the framework is 31,009 parameters, the fewest of the five models compared, and on a single CPU thread it needs 2.78 ms per 1000 samples, 84-95% less than the baselines. These results demonstrate a favorable accuracy-efficiency tradeoff for low-frequency smart-meter NILM.",
+      "venue": "arXiv",
+      "published": "2026-11-19T07:55:51Z",
+      "updated": "2026-11-19T07:55:51Z",
+      "url": "http://arxiv.org/abs/2611.25678v1",
+      "pdfUrl": "https://arxiv.org/pdf/2611.25678v1",
+      "categories": [
+        "eess.SP",
+        "cs.LG",
+        "eess.SY"
+      ],
+      "collectedAt": "2026-11-21T01:35:27.451Z",
+      "firstSeenAt": "2026-11-21T01:35:27.451Z",
+      "lastSeenAt": "2026-11-21T01:35:27.451Z",
+      "collectionType": "daily-latest",
+      "matchedQuery": "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)",
+      "collectionTypes": [
+        "daily-latest"
+      ],
+      "matchedQueries": [
+        "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)"
+      ],
+      "targetThemes": [],
+      "conferenceVenues": [],
+      "conferenceYears": [],
+      "recommendationTrack": "hardware-primary",
+      "recommendationLabel": "硬件体系结构主线",
+      "recommendationScore": 155,
+      "relevanceReason": "命中 AI 处理器、体系结构、量化、训推系统或内存/缓存优化主题",
+      "pdfStatus": "remote",
+      "workflow": {
+        "digestStatus": "ready",
+        "emailStatus": "sent",
+        "digestError": "",
+        "harnessVersion": "paper-reader-v1",
+        "collectStatus": "collected",
+        "pdfStatus": "remote",
+        "harnessCheckedAt": "2026-11-21T02:30:22.032Z",
+        "harnessWarnings": [],
+        "emailSentAt": "2026-11-21T02:30:26.893Z",
+        "lastEmailError": ""
+      },
+      "digest": {
+        "summaryZh": "该NILM方案用完整设备活动片段合成训练数据，再以KLT去相关特征和原始总功率共同输入小型TCN。它在低频家庭负荷分解中取得较好的精度与开销折中，但延迟是在工作站CPU测得，尚不能当作嵌入式电表部署结果。",
+        "motivationZh": "低频智能电表的总功率分解需要兼顾设备估计精度、有限标签和低计算成本，重型序列模型不便部署。 新增家庭完整标注代价高，低频信号又缺少细节，单纯压小模型可能损失设备活动特征。 通过可复用活动数据与针对设备的时序特征减少模型负担，可降低负荷监测应用的训练和执行门槛。 属于非LLM边缘时序算法，可参考轻量模型设计，但与当前AI核心、量化和KV层次主线关联较弱。",
+        "methodZh": "将活动边界感知数据合成、经验KLT滤波和紧凑时序卷积结合做逐设备功率回归。 抽取完整或近完整设备激活片段重组总负荷，避免新增完整家庭聚合标签。 从训练家庭推导KLT滤波器并冻结，生成去相关通道，同时保留原始总功率通道。 小型残差扩张TCN输出每设备功率，之后按设备阈值处理；每设备训练独立模型。 单线程推理在Intel Xeon工作站测量，训练配置含RTX 6000 Ada；论文将资源受限电表实测留作后续，未给专用芯片。 通过数据边界与设备相关低频特征减少对大型注意力或双向循环模型的依赖，而不只缩减网络参数。",
+        "experimentsZh": "UK-DALE和REDD按10秒采样、留一家庭评测，正文表1–2给出配置；每设备模型31009参数。 NILMFormer、BERT4NILM、BiLSTM、BiGRU，使用相同回归目标。 摘要报告31009参数，单CPU线程每1000样本2.78ms，相对四基线低84–95%；准确率在多项设备/指标上接近或优于基线，并非每项均最好。 工作站CPU延迟不等于电表硬件实测；每设备独立模型，多设备总开销需合计，未来窗口特征与实际在线缓冲延迟也需另评估。",
+        "affiliationsZh": "未在 DBLP/arXiv 元数据中提供",
+        "tags": [
+          "边缘推理",
+          "负荷分解",
+          "KLT特征",
+          "时序卷积"
+        ],
+        "importance": 2,
+        "researchFitZh": "属于非LLM边缘时序算法，可参考轻量模型设计，但与当前AI核心、量化和KV层次主线关联较弱。",
+        "hardwareRelevance": 2,
+        "algorithmRelevance": 3,
+        "systemRelevance": 2,
+        "readPriority": "archive",
+        "whyReadZh": "归档为特征工程与小型网络协同案例，当前LLM与芯片研究无需优先深读。",
+        "limitationsZh": "工作站CPU延迟不等于电表硬件实测；每设备独立模型，多设备总开销需合计，未来窗口特征与实际在线缓冲延迟也需另评估。",
+        "motivationDetail": {
+          "problemZh": "低频智能电表的总功率分解需要兼顾设备估计精度、有限标签和低计算成本，重型序列模型不便部署。",
+          "gapZh": "新增家庭完整标注代价高，低频信号又缺少细节，单纯压小模型可能损失设备活动特征。",
+          "whyImportantZh": "通过可复用活动数据与针对设备的时序特征减少模型负担，可降低负荷监测应用的训练和执行门槛。",
+          "userRelevanceZh": "属于非LLM边缘时序算法，可参考轻量模型设计，但与当前AI核心、量化和KV层次主线关联较弱。",
+          "evidence": "完整摘要给出UK-DALE/REDD、10秒、31009参数及2.78ms/84–95%；已读 https://arxiv.org/html/2611.25678v1 第II-B–III-A、表1–2及计算复杂度段，确认训练滤波器冻结、每设备独立模型及工作站测量限制。"
+        },
+        "methodDetail": {
+          "coreIdeaZh": "将活动边界感知数据合成、经验KLT滤波和紧凑时序卷积结合做逐设备功率回归。",
+          "componentsZh": [
+            "抽取完整或近完整设备激活片段重组总负荷，避免新增完整家庭聚合标签。",
+            "从训练家庭推导KLT滤波器并冻结，生成去相关通道，同时保留原始总功率通道。",
+            "小型残差扩张TCN输出每设备功率，之后按设备阈值处理；每设备训练独立模型。"
+          ],
+          "hardwareSystemDetailZh": "单线程推理在Intel Xeon工作站测量，训练配置含RTX 6000 Ada；论文将资源受限电表实测留作后续，未给专用芯片。",
+          "noveltyZh": "通过数据边界与设备相关低频特征减少对大型注意力或双向循环模型的依赖，而不只缩减网络参数。",
+          "evidence": "完整摘要给出UK-DALE/REDD、10秒、31009参数及2.78ms/84–95%；已读 https://arxiv.org/html/2611.25678v1 第II-B–III-A、表1–2及计算复杂度段，确认训练滤波器冻结、每设备独立模型及工作站测量限制。"
+        },
+        "experimentDetail": {
+          "setupZh": "UK-DALE和REDD按10秒采样、留一家庭评测，正文表1–2给出配置；每设备模型31009参数。",
+          "baselinesZh": "NILMFormer、BERT4NILM、BiLSTM、BiGRU，使用相同回归目标。",
+          "metricsZh": [
+            "功率MAE",
+            "状态BA/F1",
+            "参数量与运算量",
+            "单CPU线程每1000样本耗时"
+          ],
+          "mainResultsZh": "摘要报告31009参数，单CPU线程每1000样本2.78ms，相对四基线低84–95%；准确率在多项设备/指标上接近或优于基线，并非每项均最好。",
+          "limitationsZh": "工作站CPU延迟不等于电表硬件实测；每设备独立模型，多设备总开销需合计，未来窗口特征与实际在线缓冲延迟也需另评估。",
+          "evidence": "完整摘要给出UK-DALE/REDD、10秒、31009参数及2.78ms/84–95%；已读 https://arxiv.org/html/2611.25678v1 第II-B–III-A、表1–2及计算复杂度段，确认训练滤波器冻结、每设备独立模型及工作站测量限制。"
+        },
+        "evidence": {
+          "usedSources": [
+            "metadata",
+            "abstract",
+            "https://arxiv.org/html/2611.25678v1"
+          ],
+          "affiliationEvidence": "队列元数据affiliations及authorAffiliations均为空，本轮未读取PDF前两页；采用规定缺失表述，不根据作者姓名推断单位。",
+          "experimentEvidence": "完整摘要给出UK-DALE/REDD、10秒、31009参数及2.78ms/84–95%；已读 https://arxiv.org/html/2611.25678v1 第II-B–III-A、表1–2及计算复杂度段，确认训练滤波器冻结、每设备独立模型及工作站测量限制。",
+          "missingFields": [
+            "作者单位",
+            "嵌入式电表实测",
+            "多设备总开销与流式缓冲延迟",
+            "PDF前两页未读取"
+          ]
+        },
+        "confidence": {
+          "summary": 0.94,
+          "motivation": 0.91,
+          "method": 0.92,
+          "experiments": 0.88,
+          "affiliations": 0
+        }
+      },
+      "pushedAt": "2026-11-21T02:30:26.893Z",
+      "emailSentAt": "2026-11-21T02:30:26.893Z",
+      "firstPushedAt": "2026-11-21T02:30:26.893Z"
     },
     {
       "id": "arxiv:2611.22937",
@@ -30486,6 +31293,272 @@
       "firstPushedAt": "2026-11-18T00:33:12.653Z"
     },
     {
+      "id": "arxiv:2611.26596",
+      "source": "arXiv",
+      "title": "PGX: Physically Grounded Execution for Long-Horizon Humanoid Loco-Manipulation",
+      "authors": [
+        "Kai Lu",
+        "Chenyang Ma",
+        "Ioannis Havoutis"
+      ],
+      "authorAffiliations": [],
+      "affiliations": [],
+      "abstract": "Robotic vision-language-action (VLA) models can execute diverse individual manipulation skills, yet they still struggle with long-horizon loco-manipulation tasks, where temporal structure, skills, and precision are tightly coupled within a monolithic model. We propose Physically Grounded Execution (PGX), a framework that offloads temporal and precision control to two classical training-free components, allowing the VLA to focus on stage-specific skill dynamics. PGX decomposes long-horizon loco-manipulation into three layers: (i) a predicate-based state machine governs task progression, using physical predicates to gate phase transitions, trigger recovery, and coordinate navigation and waiting. Shared predicate semantics connect offline demonstration segmentation, online execution, and stage-wise evaluation; (ii) VLA skills operate within active manipulation phases, with flat or stage-trained models concentrating on task-relevant actions; and (iii) world-coordinate locking (WCL) maintains spatial consistency through base station keeping, object-relative positioning, and world-anchored contact targets. We demonstrate the effectiveness of PGX with extensive experiments conducted on three simulated tasks and one real-world task using a Unitree G1 humanoid robot for long-horizon loco-manipulation, showing improvements in stage progression and task success rates. Project page is available at: https://kl-research.github.io/pgx",
+      "venue": "arXiv",
+      "published": "2026-11-19T18:52:18Z",
+      "updated": "2026-11-19T18:52:18Z",
+      "url": "http://arxiv.org/abs/2611.26596v1",
+      "pdfUrl": "https://arxiv.org/pdf/2611.26596v1",
+      "categories": [
+        "cs.RO",
+        "cs.AI"
+      ],
+      "collectedAt": "2026-11-21T01:35:32.520Z",
+      "firstSeenAt": "2026-11-21T01:35:32.520Z",
+      "lastSeenAt": "2026-11-21T01:35:32.520Z",
+      "collectionType": "daily-latest",
+      "matchedQuery": "(all:agent OR all:agents OR all:agentic OR all:reasoning OR all:post-training OR all:alignment OR all:multimodal OR all:world-model) AND (all:LLM OR all:foundation OR all:language)",
+      "collectionTypes": [
+        "daily-latest"
+      ],
+      "matchedQueries": [
+        "(all:agent OR all:agents OR all:agentic OR all:reasoning OR all:post-training OR all:alignment OR all:multimodal OR all:world-model) AND (all:LLM OR all:foundation OR all:language)"
+      ],
+      "targetThemes": [],
+      "conferenceVenues": [],
+      "conferenceYears": [],
+      "recommendationTrack": "algorithm-trend",
+      "recommendationLabel": "算法趋势观察",
+      "recommendationScore": 41.8,
+      "relevanceReason": "命中 LLM/Agent/多模态/后训练等算法趋势主题",
+      "pdfStatus": "remote",
+      "workflow": {
+        "digestStatus": "ready",
+        "emailStatus": "sent",
+        "digestError": "",
+        "harnessVersion": "paper-reader-v1",
+        "collectStatus": "collected",
+        "pdfStatus": "remote",
+        "harnessCheckedAt": "2026-11-21T02:30:22.032Z",
+        "harnessWarnings": [],
+        "emailSentAt": "2026-11-21T02:30:26.893Z",
+        "lastEmailError": ""
+      },
+      "digest": {
+        "summaryZh": "PGX 将长时程人形机器人任务拆为物理谓词状态机、阶段VLA技能和世界坐标锁定，让传统控制承担阶段切换与精确空间约束。作者在仿真和Unitree G1真实任务中报告更好的阶段推进与成功率，主要贡献是执行框架而非模型或硬件加速。",
+        "motivationZh": "单体VLA在长时程移动操作中同时承担时序、技能与精度，易因阶段切换和空间漂移使多阶段任务失败。 即使单项操作技能可用，缺乏明确阶段条件、恢复机制与世界坐标一致性，仍会累积长任务执行误差。 把可形式化的时序和几何约束交给训练无关组件，可让学习策略集中于当前操作技能，并使阶段失败更可诊断。 关联VLA/Agent执行编排与经典控制协同，属于次要算法系统趋势，不提供NPU或内存层次贡献。",
+        "methodZh": "以物理谓词状态机管理任务进程，以VLA执行操作阶段，再用world-coordinate locking约束空间一致性。 物理谓词控制阶段进入、恢复、导航和等待，贯通离线示教切分与在线评估。 平坦或分阶段训练的VLA只在活动操作阶段输出相关动作。 世界坐标锁定结合基座保持、物体相对定位和世界锚定接触目标。 在Unitree G1人形机器人上展示真实任务；所读摘要没有计算芯片、推理延迟、能耗或专用硬件设计。 将任务时间结构与空间精度从单体VLA中显式剥离，以共享物理谓词连接数据切分、执行和评价。",
+        "experimentsZh": "摘要报告三项模拟任务和一项真实Unitree G1长程移动操作任务。 摘要提到平坦与阶段训练模型，但未披露完整基线名称、对照配置或消融表。 作者称阶段推进与任务成功率改善；本轮可读摘要没有各任务成功率、增益或统计区间，不补造数值。 本轮仅核读摘要，无法核验任务细节、各组件消融与人工谓词工程成本；单真实任务也不足以证明广泛泛化。",
+        "affiliationsZh": "未在 DBLP/arXiv 元数据中提供",
+        "tags": [
+          "VLA",
+          "长程机器人",
+          "状态机",
+          "坐标锁定"
+        ],
+        "importance": 3,
+        "researchFitZh": "关联VLA/Agent执行编排与经典控制协同，属于次要算法系统趋势，不提供NPU或内存层次贡献。",
+        "hardwareRelevance": 1,
+        "algorithmRelevance": 4,
+        "systemRelevance": 3,
+        "readPriority": "skim",
+        "whyReadZh": "略读经典状态机与VLA职责分配，关注训练无关控制能解决哪些长任务失败。",
+        "limitationsZh": "本轮仅核读摘要，无法核验任务细节、各组件消融与人工谓词工程成本；单真实任务也不足以证明广泛泛化。",
+        "motivationDetail": {
+          "problemZh": "单体VLA在长时程移动操作中同时承担时序、技能与精度，易因阶段切换和空间漂移使多阶段任务失败。",
+          "gapZh": "即使单项操作技能可用，缺乏明确阶段条件、恢复机制与世界坐标一致性，仍会累积长任务执行误差。",
+          "whyImportantZh": "把可形式化的时序和几何约束交给训练无关组件，可让学习策略集中于当前操作技能，并使阶段失败更可诊断。",
+          "userRelevanceZh": "关联VLA/Agent执行编排与经典控制协同，属于次要算法系统趋势，不提供NPU或内存层次贡献。",
+          "evidence": "实际读取 https://arxiv.org/abs/2611.26596 与完整摘要，明确三层结构、三模拟/一真实任务及Unitree G1；摘要只给定性改进，未列实验数字。"
+        },
+        "methodDetail": {
+          "coreIdeaZh": "以物理谓词状态机管理任务进程，以VLA执行操作阶段，再用world-coordinate locking约束空间一致性。",
+          "componentsZh": [
+            "物理谓词控制阶段进入、恢复、导航和等待，贯通离线示教切分与在线评估。",
+            "平坦或分阶段训练的VLA只在活动操作阶段输出相关动作。",
+            "世界坐标锁定结合基座保持、物体相对定位和世界锚定接触目标。"
+          ],
+          "hardwareSystemDetailZh": "在Unitree G1人形机器人上展示真实任务；所读摘要没有计算芯片、推理延迟、能耗或专用硬件设计。",
+          "noveltyZh": "将任务时间结构与空间精度从单体VLA中显式剥离，以共享物理谓词连接数据切分、执行和评价。",
+          "evidence": "实际读取 https://arxiv.org/abs/2611.26596 与完整摘要，明确三层结构、三模拟/一真实任务及Unitree G1；摘要只给定性改进，未列实验数字。"
+        },
+        "experimentDetail": {
+          "setupZh": "摘要报告三项模拟任务和一项真实Unitree G1长程移动操作任务。",
+          "baselinesZh": "摘要提到平坦与阶段训练模型，但未披露完整基线名称、对照配置或消融表。",
+          "metricsZh": [
+            "阶段推进表现",
+            "最终任务成功率；具体数值未披露"
+          ],
+          "mainResultsZh": "作者称阶段推进与任务成功率改善；本轮可读摘要没有各任务成功率、增益或统计区间，不补造数值。",
+          "limitationsZh": "本轮仅核读摘要，无法核验任务细节、各组件消融与人工谓词工程成本；单真实任务也不足以证明广泛泛化。",
+          "evidence": "实际读取 https://arxiv.org/abs/2611.26596 与完整摘要，明确三层结构、三模拟/一真实任务及Unitree G1；摘要只给定性改进，未列实验数字。"
+        },
+        "evidence": {
+          "usedSources": [
+            "metadata",
+            "abstract",
+            "https://arxiv.org/abs/2611.26596"
+          ],
+          "affiliationEvidence": "队列元数据affiliations及authorAffiliations均为空，本轮未读取PDF前两页；采用规定缺失表述，不根据作者姓名推断单位。",
+          "experimentEvidence": "实际读取 https://arxiv.org/abs/2611.26596 与完整摘要，明确三层结构、三模拟/一真实任务及Unitree G1；摘要只给定性改进，未列实验数字。",
+          "missingFields": [
+            "作者单位",
+            "完整对照与消融结果",
+            "任务成功率与统计区间",
+            "计算平台与开销",
+            "PDF前两页未读取"
+          ]
+        },
+        "confidence": {
+          "summary": 0.92,
+          "motivation": 0.92,
+          "method": 0.89,
+          "experiments": 0.65,
+          "affiliations": 0
+        }
+      },
+      "pushedAt": "2026-11-21T02:30:26.893Z",
+      "emailSentAt": "2026-11-21T02:30:26.893Z",
+      "firstPushedAt": "2026-11-21T02:30:26.893Z"
+    },
+    {
+      "id": "arxiv:2611.26565",
+      "source": "arXiv",
+      "title": "PhyDEX: A Benchmark for Physical Reasoning in Vision-Language-Action Models via Dynamic Extrinsic Dexterity",
+      "authors": [
+        "Hao Vo",
+        "Taisei Hanyu",
+        "Yuki Ikebe",
+        "Pham Tri Quang",
+        "Sreevenkata Anjani Tishita Godavarthi",
+        "Nghi D. Q. Bui",
+        "Daniel Sonntag",
+        "Chase Rainwater",
+        "Duy Minh Ho Nguyen",
+        "Anh Nguyen",
+        "Ngan Le"
+      ],
+      "authorAffiliations": [],
+      "affiliations": [],
+      "abstract": "Vision-Language-Action (VLA) models have advanced rapidly in language-conditioned robotic manipulation, yet existing benchmarks mainly evaluate gripper--object contact and largely ignore how objects interact with the environment through gravity, friction, inertia, and mass distribution. As a result, it remains unclear whether current policies truly understand physics or merely interpolate from their training data. We address this gap through the lens of dynamic extrinsic dexterity and introduce PhyDEX, a throwing benchmark in which a robot must infer an object's mass, center of mass, and friction to send it to a destination beyond its kinematic workspace. PhyDEX contains 35K trajectories (143 hours) across nine tasks and 100 scenes, covering uniform, irregular, and dynamic-mass objects with static, multiple, and moving destinations. All data are generated by a scalable, fully automatic pipeline that combines grasp generation, motion planning, and closed-loop throw optimization under randomized physical properties. We evaluate three representative VLAs, GR00T N1.7, DynamicVLA, and ForceVLA, and find that all achieve success rates below 3\\%. Our analysis reveals two key bottlenecks: limited robustness of pretrained models, which causes most failures before the throw, and physical blindness, as providing ground-truth physical properties roughly doubles success. Experiments on a humanoid robot and in the real world show the same failure patterns. We hope PhyDEX will drive the development of physically grounded robot policies.",
+      "venue": "arXiv",
+      "published": "2026-11-19T18:33:43Z",
+      "updated": "2026-11-19T18:33:43Z",
+      "url": "http://arxiv.org/abs/2611.26565v1",
+      "pdfUrl": "https://arxiv.org/pdf/2611.26565v1",
+      "categories": [
+        "cs.RO"
+      ],
+      "collectedAt": "2026-11-21T01:35:32.520Z",
+      "firstSeenAt": "2026-11-21T01:35:32.520Z",
+      "lastSeenAt": "2026-11-21T01:35:32.520Z",
+      "collectionType": "daily-latest",
+      "matchedQuery": "(all:agent OR all:agents OR all:agentic OR all:reasoning OR all:post-training OR all:alignment OR all:multimodal OR all:world-model) AND (all:LLM OR all:foundation OR all:language)",
+      "collectionTypes": [
+        "daily-latest"
+      ],
+      "matchedQueries": [
+        "(all:agent OR all:agents OR all:agentic OR all:reasoning OR all:post-training OR all:alignment OR all:multimodal OR all:world-model) AND (all:LLM OR all:foundation OR all:language)"
+      ],
+      "targetThemes": [],
+      "conferenceVenues": [],
+      "conferenceYears": [],
+      "recommendationTrack": "algorithm-trend",
+      "recommendationLabel": "算法趋势观察",
+      "recommendationScore": 41.8,
+      "relevanceReason": "命中 LLM/Agent/多模态/后训练等算法趋势主题",
+      "pdfStatus": "remote",
+      "workflow": {
+        "digestStatus": "ready",
+        "emailStatus": "sent",
+        "digestError": "",
+        "harnessVersion": "paper-reader-v1",
+        "collectStatus": "collected",
+        "pdfStatus": "remote",
+        "harnessCheckedAt": "2026-11-21T02:30:22.032Z",
+        "harnessWarnings": [],
+        "emailSentAt": "2026-11-21T02:30:26.893Z",
+        "lastEmailError": ""
+      },
+      "digest": {
+        "summaryZh": "PhyDEX 用投掷任务检验VLA是否利用质量、质心、摩擦与环境动力学，将目标放到机械臂工作空间之外。其自动生成多场景轨迹和低成功率评测揭示预训练鲁棒性与物理信息缺口，适合追踪具身模型能力边界，不能直接解释为硬件瓶颈。",
+        "motivationZh": "常见VLA基准重视夹爪–物体接触，较少检验物体与重力、摩擦、惯性及质量分布的耦合，难以区分物理推理与训练内插。 需要通过超出静态可达范围的动态操作，明确改变物理属性并观察策略是否使用相关信息。 只有拆分投掷前鲁棒性和投掷物理决策失败，才能避免用一个总体成功率误判模型能力来源。 属于具身基础模型评测趋势，可用于了解未来VLA负载需求，未给出芯片或推理效率优化。",
+        "methodZh": "建立动态外在灵巧投掷基准，以随机物理属性和多种目标条件检验VLA的环境交互能力。 覆盖均匀、不规则及动态质量物体，以及静止、多目标和移动目的地。 自动流水线结合抓取生成、运动规划和闭环投掷优化生成轨迹。 比较代表VLA并提供真实物理属性作为对照，分辨感知/鲁棒性与物理信息不足。 摘要涉及人形机器人和真实世界实验，但未披露可核实的推理芯片、计时、能耗或硬件结构。 将环境动力学和工作空间外的投掷作为可控评测轴，而不仅评估常规抓取放置成功。",
+        "experimentsZh": "摘要给出35K轨迹、143小时、九任务和100场景，评估GR00T N1.7、DynamicVLA、ForceVLA。 三种代表VLA相互比较，并用提供真实物理属性的设置检查物理信息贡献。 三种VLA成功率均低于3%；摘要称提供真实物理属性大致使成功翻倍，但未给每模型精确增益或置信区间，人形及真实实验呈现相似失败模式。 低成功率同时含投掷前失败，不能把全部失败归为缺乏物理推理；本轮未读完整控制协议、训练划分和真实实验表，翻倍也不代表已达到可用水平。",
+        "affiliationsZh": "未在 DBLP/arXiv 元数据中提供",
+        "tags": [
+          "VLA评测",
+          "物理推理",
+          "机器人投掷",
+          "域外泛化"
+        ],
+        "importance": 3,
+        "researchFitZh": "属于具身基础模型评测趋势，可用于了解未来VLA负载需求，未给出芯片或推理效率优化。",
+        "hardwareRelevance": 1,
+        "algorithmRelevance": 4,
+        "systemRelevance": 2,
+        "readPriority": "skim",
+        "whyReadZh": "略读失败分解与物理属性对照，了解VLA基准如何避免把鲁棒性与推理混淆。",
+        "limitationsZh": "低成功率同时含投掷前失败，不能把全部失败归为缺乏物理推理；本轮未读完整控制协议、训练划分和真实实验表，翻倍也不代表已达到可用水平。",
+        "motivationDetail": {
+          "problemZh": "常见VLA基准重视夹爪–物体接触，较少检验物体与重力、摩擦、惯性及质量分布的耦合，难以区分物理推理与训练内插。",
+          "gapZh": "需要通过超出静态可达范围的动态操作，明确改变物理属性并观察策略是否使用相关信息。",
+          "whyImportantZh": "只有拆分投掷前鲁棒性和投掷物理决策失败，才能避免用一个总体成功率误判模型能力来源。",
+          "userRelevanceZh": "属于具身基础模型评测趋势，可用于了解未来VLA负载需求，未给出芯片或推理效率优化。",
+          "evidence": "实际读取 https://arxiv.org/abs/2611.26565 与完整摘要，核实35K/143小时、九任务100场景、三模型、均低于3%及真实物理属性约翻倍；没有补造精确分项结果。"
+        },
+        "methodDetail": {
+          "coreIdeaZh": "建立动态外在灵巧投掷基准，以随机物理属性和多种目标条件检验VLA的环境交互能力。",
+          "componentsZh": [
+            "覆盖均匀、不规则及动态质量物体，以及静止、多目标和移动目的地。",
+            "自动流水线结合抓取生成、运动规划和闭环投掷优化生成轨迹。",
+            "比较代表VLA并提供真实物理属性作为对照，分辨感知/鲁棒性与物理信息不足。"
+          ],
+          "hardwareSystemDetailZh": "摘要涉及人形机器人和真实世界实验，但未披露可核实的推理芯片、计时、能耗或硬件结构。",
+          "noveltyZh": "将环境动力学和工作空间外的投掷作为可控评测轴，而不仅评估常规抓取放置成功。",
+          "evidence": "实际读取 https://arxiv.org/abs/2611.26565 与完整摘要，核实35K/143小时、九任务100场景、三模型、均低于3%及真实物理属性约翻倍；没有补造精确分项结果。"
+        },
+        "experimentDetail": {
+          "setupZh": "摘要给出35K轨迹、143小时、九任务和100场景，评估GR00T N1.7、DynamicVLA、ForceVLA。",
+          "baselinesZh": "三种代表VLA相互比较，并用提供真实物理属性的设置检查物理信息贡献。",
+          "metricsZh": [
+            "任务成功率",
+            "投掷前失败与投掷失败分布",
+            "真实物理属性辅助的成功变化"
+          ],
+          "mainResultsZh": "三种VLA成功率均低于3%；摘要称提供真实物理属性大致使成功翻倍，但未给每模型精确增益或置信区间，人形及真实实验呈现相似失败模式。",
+          "limitationsZh": "低成功率同时含投掷前失败，不能把全部失败归为缺乏物理推理；本轮未读完整控制协议、训练划分和真实实验表，翻倍也不代表已达到可用水平。",
+          "evidence": "实际读取 https://arxiv.org/abs/2611.26565 与完整摘要，核实35K/143小时、九任务100场景、三模型、均低于3%及真实物理属性约翻倍；没有补造精确分项结果。"
+        },
+        "evidence": {
+          "usedSources": [
+            "metadata",
+            "abstract",
+            "https://arxiv.org/abs/2611.26565"
+          ],
+          "affiliationEvidence": "队列元数据affiliations及authorAffiliations均为空，本轮未读取PDF前两页；采用规定缺失表述，不根据作者姓名推断单位。",
+          "experimentEvidence": "实际读取 https://arxiv.org/abs/2611.26565 与完整摘要，核实35K/143小时、九任务100场景、三模型、均低于3%及真实物理属性约翻倍；没有补造精确分项结果。",
+          "missingFields": [
+            "作者单位",
+            "完整训练/测试与控制协议",
+            "分项数值及统计区间",
+            "推理平台与开销",
+            "PDF前两页未读取"
+          ]
+        },
+        "confidence": {
+          "summary": 0.94,
+          "motivation": 0.93,
+          "method": 0.89,
+          "experiments": 0.82,
+          "affiliations": 0
+        }
+      },
+      "pushedAt": "2026-11-21T02:30:26.893Z",
+      "emailSentAt": "2026-11-21T02:30:26.893Z",
+      "firstPushedAt": "2026-11-21T02:30:26.893Z"
+    },
+    {
       "id": "arxiv:2611.08462",
       "source": "arXiv",
       "title": "OopsieRecover: Learning Transferable VLA Corrections from Semantic Interventions",
@@ -34683,1041 +35756,6 @@
       "pushedAt": "2026-11-05T02:33:26.283Z",
       "emailSentAt": "2026-11-05T02:33:26.283Z",
       "firstPushedAt": "2026-11-05T02:33:26.283Z"
-    },
-    {
-      "id": "arxiv:2611.08449",
-      "source": "arXiv",
-      "title": "VFlash: Fast, Accurate Visual Planning via Flash Primitive Decoding",
-      "authors": [
-        "Yu-Cheng Chou",
-        "Shihao Wang",
-        "Jin Huang",
-        "Chi-Pin Huang",
-        "Chiao-An Yang",
-        "Xianzhe Fan",
-        "Jing Wang",
-        "Zhiqi Li",
-        "Yuanguo Kuang",
-        "Ruijie Zheng",
-        "Johan Bjorck",
-        "Sifei Liu",
-        "Hang Su",
-        "Abhishek Badki",
-        "Lei Zhang",
-        "Alan Yuille",
-        "Linxi \"Jim'' Fan",
-        "Jan Kautz",
-        "Zhiding Yu"
-      ],
-      "authorAffiliations": [],
-      "affiliations": [],
-      "abstract": "Models for physical AI tasks, such as robotics and autonomous driving, need not reason solely in language. They can use visual plans--points, bounding boxes, and trajectories--to represent spatial goals and anticipate motion. However, autoregressive vision-language models generate these plans one coordinate token at a time, making richer predictions increasingly costly. We introduce VFlash, a method for fast, accurate visual planning through Flash Primitive Decoding. VFlash exploits the known structure of visual primitives to predict their coordinates jointly, using a lightweight drafter that generates an entire primitive in one forward pass. The layout adapts to the primitive's type, dimensionality, and length, supporting compact boxes and long, variable-length trajectories. Crucially, spatial accuracy need not require reproducing an autoregressive model's exact token sequence. VFlash therefore trains on annotated primitives and directly accepts structurally valid predictions without target-token agreement. Across the evaluated 2D and 3D robot trajectory tasks, VFlash consistently reduces prediction errors relative to autoregressive decoding. Preliminary single-rollout measurements indicate approximately 25x faster generation for 3D point motion forecasting. A world action model conditioned on VFlash plans achieves 70.2% average success across four MolmoSpaces task suites, compared with 62.6% for the baseline.",
-      "venue": "arXiv",
-      "published": "2026-11-05T18:44:43Z",
-      "updated": "2026-11-05T18:44:43Z",
-      "url": "http://arxiv.org/abs/2611.08449v1",
-      "pdfUrl": "https://arxiv.org/pdf/2611.08449v1",
-      "categories": [
-        "cs.RO",
-        "cs.CV"
-      ],
-      "collectedAt": "2026-11-07T23:39:05.453Z",
-      "firstSeenAt": "2026-11-07T23:39:05.453Z",
-      "lastSeenAt": "2026-11-07T23:39:05.453Z",
-      "collectionType": "daily-latest",
-      "matchedQuery": "(all:agent OR all:agents OR all:agentic OR all:reasoning OR all:post-training OR all:alignment OR all:multimodal OR all:world-model) AND (all:LLM OR all:foundation OR all:language)",
-      "collectionTypes": [
-        "daily-latest"
-      ],
-      "matchedQueries": [
-        "(all:agent OR all:agents OR all:agentic OR all:reasoning OR all:post-training OR all:alignment OR all:multimodal OR all:world-model) AND (all:LLM OR all:foundation OR all:language)"
-      ],
-      "targetThemes": [],
-      "conferenceVenues": [],
-      "conferenceYears": [],
-      "recommendationTrack": "algorithm-trend",
-      "recommendationLabel": "算法趋势观察",
-      "recommendationScore": 35.6,
-      "relevanceReason": "命中 LLM/Agent/多模态/后训练等算法趋势主题",
-      "pdfStatus": "remote",
-      "workflow": {
-        "digestStatus": "ready",
-        "emailStatus": "sent",
-        "digestError": "",
-        "harnessVersion": "paper-reader-v1",
-        "collectStatus": "collected",
-        "pdfStatus": "remote",
-        "harnessCheckedAt": "2026-11-08T00:36:52.028Z",
-        "harnessWarnings": [],
-        "emailSentAt": "2026-11-08T00:36:56.931Z",
-        "lastEmailError": ""
-      },
-      "digest": {
-        "summaryZh": "VFlash 将视觉规划中的点、框和轨迹作为结构化原语整体预测，减少逐坐标自回归解码。初步结果显示较高速度和机器人规划成功率，但原语接受机制不保证与目标模型逐词元分布一致。",
-        "motivationZh": "视觉规划使用坐标序列表示动作目标，逐坐标自回归解码延迟随结构长度增加。逐词元草稿方式未充分利用几何原语内坐标的关联与可变结构。机器人交互需要及时产生完整规划原语，推理延迟与规划质量需同时衡量。属于多模态推理与结构化解码趋势，可关注执行粒度变化，对芯片本体的联系较间接。",
-        "methodZh": "轻量草稿模型联合生成完整视觉原语，并自适应处理类型、维度及长度。；基于标注原语训练草稿解码器；一次预测原语内部关联坐标；接受结构有效的草稿而非要求与目标模型完全一致；属于推理解码算法与软件路径优化；本轮已读摘要未给出足以报告的硬件型号及部署成本。；将解码粒度由词元提高到可变结构的视觉原语，以结构有效性换取快速规划。",
-        "experimentsZh": "评估二维、三维视觉任务和机器人规划；在 MolmoSpaces 的四个任务套件比较动作模型规划。摘要对照传统自回归视觉解码及基准动作规划模型，具体模型和设备需进一步核对。摘要报告初步单次 rollout 的三维点运动预测约 25 倍解码速度，并报告 MolmoSpaces 四套件规划成功率 70.2%，对照为 62.6%。25 倍来自初步单次 rollout，不能推广为所有端到端任务；允许与目标不同的原语意味着它不是严格无损的逐词元推测解码。",
-        "affiliationsZh": "未在 DBLP/arXiv 元数据中提供",
-        "tags": [
-          "视觉规划",
-          "结构化解码",
-          "多模态推理",
-          "机器人"
-        ],
-        "importance": 3,
-        "researchFitZh": "属于多模态推理与结构化解码趋势，可关注执行粒度变化，对芯片本体的联系较间接。",
-        "hardwareRelevance": 2,
-        "algorithmRelevance": 4,
-        "systemRelevance": 3,
-        "readPriority": "skim",
-        "whyReadZh": "值得浏览原语级联合生成如何改变解码依赖，同时核对真实控制闭环中的延迟和准确率。",
-        "limitationsZh": "25 倍来自初步单次 rollout，不能推广为所有端到端任务；允许与目标不同的原语意味着它不是严格无损的逐词元推测解码。",
-        "motivationDetail": {
-          "problemZh": "视觉规划使用坐标序列表示动作目标，逐坐标自回归解码延迟随结构长度增加。",
-          "gapZh": "逐词元草稿方式未充分利用几何原语内坐标的关联与可变结构。",
-          "whyImportantZh": "机器人交互需要及时产生完整规划原语，推理延迟与规划质量需同时衡量。",
-          "userRelevanceZh": "属于多模态推理与结构化解码趋势，可关注执行粒度变化，对芯片本体的联系较间接。",
-          "evidence": "已读取公开 arXiv 摘要及 HTML 的摘要和章节结构；数字据摘要，未核对完整附录的计时设备。 来源：https://arxiv.org/html/2611.08449v1"
-        },
-        "methodDetail": {
-          "coreIdeaZh": "轻量草稿模型联合生成完整视觉原语，并自适应处理类型、维度及长度。",
-          "componentsZh": [
-            "基于标注原语训练草稿解码器",
-            "一次预测原语内部关联坐标",
-            "接受结构有效的草稿而非要求与目标模型完全一致"
-          ],
-          "hardwareSystemDetailZh": "属于推理解码算法与软件路径优化；本轮已读摘要未给出足以报告的硬件型号及部署成本。",
-          "noveltyZh": "将解码粒度由词元提高到可变结构的视觉原语，以结构有效性换取快速规划。",
-          "evidence": "已读取公开 arXiv 摘要及 HTML 的摘要和章节结构；数字据摘要，未核对完整附录的计时设备。 来源：https://arxiv.org/html/2611.08449v1"
-        },
-        "experimentDetail": {
-          "setupZh": "评估二维、三维视觉任务和机器人规划；在 MolmoSpaces 的四个任务套件比较动作模型规划。",
-          "baselinesZh": "摘要对照传统自回归视觉解码及基准动作规划模型，具体模型和设备需进一步核对。",
-          "metricsZh": [
-            "原语预测误差",
-            "解码速度",
-            "机器人规划成功率"
-          ],
-          "mainResultsZh": "摘要报告初步单次 rollout 的三维点运动预测约 25 倍解码速度，并报告 MolmoSpaces 四套件规划成功率 70.2%，对照为 62.6%。",
-          "limitationsZh": "25 倍来自初步单次 rollout，不能推广为所有端到端任务；允许与目标不同的原语意味着它不是严格无损的逐词元推测解码。",
-          "evidence": "已读取公开 arXiv 摘要及 HTML 的摘要和章节结构；数字据摘要，未核对完整附录的计时设备。 来源：https://arxiv.org/html/2611.08449v1"
-        },
-        "evidence": {
-          "usedSources": [
-            "public/research-digest/daily.json: 原始元数据与完整英文摘要",
-            "https://arxiv.org/html/2611.08449v1"
-          ],
-          "affiliationEvidence": "DBLP/arXiv 队列元数据中的 affiliations 与 authorAffiliations 均未提供；按指定缺省文案记录。",
-          "experimentEvidence": "已读取公开 arXiv 摘要及 HTML 的摘要和章节结构；数字据摘要，未核对完整附录的计时设备。 来源：https://arxiv.org/html/2611.08449v1",
-          "missingFields": [
-            "元数据作者单位",
-            "完整计时硬件配置",
-            "端到端闭环延迟及充分重复测量"
-          ]
-        },
-        "confidence": {
-          "summary": 0.9,
-          "motivation": 0.88,
-          "method": 0.75,
-          "experiments": 0.72,
-          "affiliations": 0
-        }
-      },
-      "pushedAt": "2026-11-08T00:36:56.931Z",
-      "emailSentAt": "2026-11-08T00:36:56.931Z",
-      "firstPushedAt": "2026-11-08T00:36:56.931Z"
-    },
-    {
-      "id": "arxiv:2611.05368",
-      "source": "arXiv",
-      "title": "GUILD: Guided Iterative Data Collection for Imitation Learning",
-      "authors": [
-        "Shivin Dass",
-        "Kevin Nguyen",
-        "Rohan Yelandur",
-        "Junhong Xu",
-        "Roberto Martín-Martín"
-      ],
-      "authorAffiliations": [],
-      "affiliations": [],
-      "abstract": "Imitation learning policies in robotics are trained on datasets collected through costly real-world teleoperation. Often, the data-collection process is unguided, relying on the teleoperator's intuition, resulting in data that contributes little to overall policy performance. Recent work has shown that curating such unguided datasets can substantially improve policy performance, but these approaches operate by filtering existing datasets after collection and therefore do not prevent the acquisition of uninformative data. In this work, we propose GUILD, a novel Guided Data Collection (GDC) method that actively reasons about which data should be collected to maximize downstream policy performance. We introduce an iterative framework that alternates between 1) task proposal and data collection and 2) data evaluation to close the loop. For task proposal, we leverage semantic priors from vision-language models to identify relevant environments, object configurations, and goals for data collection. However, since semantic relevance does not imply policy improvement, we perform data evaluation. By leveraging predictive data attribution we approximate how the collected trajectories influence policy performance on a target deployment setting. This signal is then used as feedback to guide subsequent data collection, closing the data collection loop. We evaluate our approach in simulation and real robot settings, demonstrating that guided data collection substantially improves sample efficiency and deployment performance compared to passive data collection strategies, multiple baselines and experienced roboticists. More information at https://robin-lab.cs.utexas.edu/guild2026/",
-      "venue": "arXiv",
-      "published": "2026-11-03T18:57:35Z",
-      "updated": "2026-11-03T18:57:35Z",
-      "url": "http://arxiv.org/abs/2611.05368v1",
-      "pdfUrl": "https://arxiv.org/pdf/2611.05368v1",
-      "categories": [
-        "cs.RO",
-        "cs.LG"
-      ],
-      "collectedAt": "2026-11-05T00:55:15.745Z",
-      "firstSeenAt": "2026-11-05T00:55:15.745Z",
-      "lastSeenAt": "2026-11-05T00:55:15.745Z",
-      "collectionType": "daily-latest",
-      "matchedQuery": "(all:agent OR all:agents OR all:agentic OR all:reasoning OR all:post-training OR all:alignment OR all:multimodal OR all:world-model) AND (all:LLM OR all:foundation OR all:language)",
-      "collectionTypes": [
-        "daily-latest"
-      ],
-      "matchedQueries": [
-        "(all:agent OR all:agents OR all:agentic OR all:reasoning OR all:post-training OR all:alignment OR all:multimodal OR all:world-model) AND (all:LLM OR all:foundation OR all:language)"
-      ],
-      "targetThemes": [],
-      "conferenceVenues": [],
-      "conferenceYears": [],
-      "recommendationTrack": "algorithm-trend",
-      "recommendationLabel": "算法趋势观察",
-      "recommendationScore": 35.6,
-      "relevanceReason": "命中 LLM/Agent/多模态/后训练等算法趋势主题",
-      "pdfStatus": "remote",
-      "workflow": {
-        "digestStatus": "ready",
-        "emailStatus": "sent",
-        "digestError": "",
-        "harnessVersion": "paper-reader-v1",
-        "collectStatus": "collected",
-        "pdfStatus": "remote",
-        "harnessCheckedAt": "2026-11-05T02:33:22.259Z",
-        "harnessWarnings": [],
-        "emailSentAt": "2026-11-05T02:33:26.283Z",
-        "lastEmailError": ""
-      },
-      "digest": {
-        "summaryZh": "GUILD循环执行任务提议、采集和数据评估，先用VLM语义先验选环境、物体与目标，再以预测数据归因指导下一轮。摘要报告主动采集比所测对照提高样本效率和部署表现，但没有披露可直接引用的量化幅度。",
-        "motivationZh": "机器人示教昂贵，靠操作员直觉采集可能获得很多对目标部署无帮助的轨迹。事后过滤无法避免不必要的采集；语义相关也未必能转化为策略性能。把轨迹影响估计反馈给采集过程，可以更早将预算用于有效任务。可参考多模态Agent反馈闭环，与量化、注意力核心及KV层级并无直接关联。",
-        "methodZh": "GUILD循环执行任务提议、采集和数据评估，先用VLM语义先验选环境、物体与目标，再以预测数据归因指导下一轮。归因估计轨迹对目标策略表现的贡献；工作重点是机器人数据采集决策，未涉及硬件新设计。把筛选从采后移到采集决策，并用性能反馈补充语义相关性。",
-        "experimentsZh": "在仿真与真实机器人环境评估，关注目标部署的策略表现。比较被动采集、多种基线和有经验的机器人操作者；摘要未列全部配置。摘要报告主动采集比所测对照提高样本效率和部署表现，但没有披露可直接引用的量化幅度。已读摘要没有完整机器人配置、采集成本或各任务误差范围，不能外推到所有部署。",
-        "affiliationsZh": "未在 DBLP/arXiv 元数据中提供",
-        "tags": [
-          "模仿学习",
-          "主动采集",
-          "数据归因"
-        ],
-        "importance": 2,
-        "researchFitZh": "可参考多模态Agent反馈闭环，与量化、注意力核心及KV层级并无直接关联。",
-        "hardwareRelevance": 1,
-        "algorithmRelevance": 4,
-        "systemRelevance": 2,
-        "readPriority": "skim",
-        "whyReadZh": "可参考多模态Agent反馈闭环，与量化、注意力核心及KV层级并无直接关联。把轨迹影响估计反馈给采集过程，可以更早将预算用于有效任务。",
-        "limitationsZh": "已读摘要没有完整机器人配置、采集成本或各任务误差范围，不能外推到所有部署。",
-        "motivationDetail": {
-          "problemZh": "机器人示教昂贵，靠操作员直觉采集可能获得很多对目标部署无帮助的轨迹。",
-          "gapZh": "事后过滤无法避免不必要的采集；语义相关也未必能转化为策略性能。",
-          "whyImportantZh": "把轨迹影响估计反馈给采集过程，可以更早将预算用于有效任务。",
-          "userRelevanceZh": "可参考多模态Agent反馈闭环，与量化、注意力核心及KV层级并无直接关联。",
-          "evidence": "队列元数据与完整原始摘要；已读公开摘要提供闭环方案、仿真与实机评测及定性结论。"
-        },
-        "methodDetail": {
-          "coreIdeaZh": "GUILD循环执行任务提议、采集和数据评估，先用VLM语义先验选环境、物体与目标，再以预测数据归因指导下一轮。",
-          "componentsZh": [
-            "VLM任务提议",
-            "示教采集",
-            "预测数据归因",
-            "迭代反馈"
-          ],
-          "hardwareSystemDetailZh": "归因估计轨迹对目标策略表现的贡献；工作重点是机器人数据采集决策，未涉及硬件新设计。",
-          "noveltyZh": "把筛选从采后移到采集决策，并用性能反馈补充语义相关性。",
-          "evidence": "队列元数据与完整原始摘要；已读公开摘要提供闭环方案、仿真与实机评测及定性结论。"
-        },
-        "experimentDetail": {
-          "setupZh": "在仿真与真实机器人环境评估，关注目标部署的策略表现。",
-          "baselinesZh": "比较被动采集、多种基线和有经验的机器人操作者；摘要未列全部配置。",
-          "metricsZh": [
-            "样本效率",
-            "目标部署性能"
-          ],
-          "mainResultsZh": "摘要报告主动采集比所测对照提高样本效率和部署表现，但没有披露可直接引用的量化幅度。",
-          "limitationsZh": "已读摘要没有完整机器人配置、采集成本或各任务误差范围，不能外推到所有部署。",
-          "evidence": "队列元数据与完整原始摘要；已读公开摘要提供闭环方案、仿真与实机评测及定性结论。"
-        },
-        "evidence": {
-          "usedSources": [
-            "public/research-digest/daily.json: metadata and complete original abstract",
-            "https://arxiv.org/abs/2611.05368v1"
-          ],
-          "affiliationEvidence": "队列 affiliations 与 authorAffiliations 字段均为空；按元数据缺失口径填写。",
-          "experimentEvidence": "队列元数据与完整原始摘要；已读公开摘要提供闭环方案、仿真与实机评测及定性结论。",
-          "missingFields": [
-            "结构化作者单位",
-            "未核验全文实验细节"
-          ]
-        },
-        "confidence": {
-          "summary": 0.9,
-          "motivation": 0.86,
-          "method": 0.8,
-          "experiments": 0.77,
-          "affiliations": 0
-        }
-      },
-      "pushedAt": "2026-11-05T02:33:26.283Z",
-      "emailSentAt": "2026-11-05T02:33:26.283Z",
-      "firstPushedAt": "2026-11-05T02:33:26.283Z"
-    },
-    {
-      "id": "arxiv:2610.32967",
-      "source": "arXiv",
-      "title": "MiD-VLM: Detecting and Grounding Global Semantic Misinformation in Image-Caption Pairs",
-      "authors": [
-        "Tarunya Prasad",
-        "Bharatesh Chakravarthi"
-      ],
-      "authorAffiliations": [],
-      "affiliations": [],
-      "abstract": "Semantic misinformation can arise when an authentic image is paired with a caption that changes or distorts its narrative. Because the image itself may contain no visible signs of manipulation, methods designed to detect pixel-level artifacts can miss these misleading image-caption pairs. We study this problem using DGM4+, a dataset designed to evaluate the detection of global scene and semantic inconsistencies. We propose a multimodal model that combines image-text representations from SigLIP with visual scene features from DINOv2 through a projection MLP, and adapts Qwen2-VL-7B using LoRA. The model jointly predicts whether an image-caption pair is authentic, identifies the manipulation type, and grounds the misleading caption tokens. On the DGM4+ validation split, the model achieves an F1 score of $0.9679$ for binary authenticity classification. These results suggest that parameter-efficient adaptation of vision-language models is promising for detecting semantic inconsistencies, while also motivating further work on precise token-level grounding.",
-      "venue": "arXiv",
-      "published": "2026-10-23T17:55:02Z",
-      "updated": "2026-10-23T17:55:02Z",
-      "url": "http://arxiv.org/abs/2610.32967v1",
-      "pdfUrl": "https://arxiv.org/pdf/2610.32967v1",
-      "categories": [
-        "cs.CV"
-      ],
-      "collectedAt": "2026-10-26T23:55:25.257Z",
-      "firstSeenAt": "2026-10-26T23:55:25.257Z",
-      "lastSeenAt": "2026-10-26T23:55:25.257Z",
-      "collectionType": "daily-latest",
-      "matchedQuery": "(all:agent OR all:agents OR all:agentic OR all:reasoning OR all:post-training OR all:alignment OR all:multimodal OR all:world-model) AND (all:LLM OR all:foundation OR all:language)",
-      "collectionTypes": [
-        "daily-latest"
-      ],
-      "matchedQueries": [
-        "(all:agent OR all:agents OR all:agentic OR all:reasoning OR all:post-training OR all:alignment OR all:multimodal OR all:world-model) AND (all:LLM OR all:foundation OR all:language)"
-      ],
-      "targetThemes": [],
-      "conferenceVenues": [],
-      "conferenceYears": [],
-      "recommendationTrack": "algorithm-trend",
-      "recommendationLabel": "算法趋势观察",
-      "recommendationScore": 35.6,
-      "relevanceReason": "命中 LLM/Agent/多模态/后训练等算法趋势主题",
-      "pdfStatus": "remote",
-      "workflow": {
-        "digestStatus": "ready",
-        "emailStatus": "sent",
-        "digestError": "",
-        "harnessVersion": "paper-reader-v1",
-        "collectStatus": "collected",
-        "pdfStatus": "remote",
-        "harnessCheckedAt": "2026-10-27T02:31:09.976Z",
-        "harnessWarnings": [],
-        "emailSentAt": "2026-10-27T02:31:15.153Z",
-        "lastEmailError": ""
-      },
-      "digest": {
-        "summaryZh": "真实图像配上扭曲叙事的标题也能产生语义误导，因此依赖像素篡改痕迹的检测会漏掉图文不一致。MiD-VLM将SigLIP图文表示与DINOv2场景特征经投影MLP融合，对Qwen2-VL-7B进行LoRA适配，联合预测真假、操纵类型和误导caption token位置。DGM4+验证集二元分类F1为0.9679；该数字不代表独立测试集或token定位精度。",
-        "motivationZh": "真实图像配上扭曲叙事的标题也能产生语义误导，因此依赖像素篡改痕迹的检测会漏掉图文不一致。需要同时识别全局语义冲突、操纵类型和误导文本位置，而非只判断图像是否编辑。图文真实性评估必须结合视觉场景与文本叙事，才能识别没有像素伪造的误导。可追踪多模态推理负载与参数高效适配，但缺少计算核心优化，不能当作芯片性能基线。",
-        "methodZh": "MiD-VLM将SigLIP图文表示与DINOv2场景特征经投影MLP融合，对Qwen2-VL-7B进行LoRA适配，联合预测真假、操纵类型和误导caption token位置。模型与训练方法研究；摘要未给出硬件平台、延迟、内存占用或张量执行优化。面向全局场景语义冲突联合训练分类与文本定位，而非只检测局部图像伪造。",
-        "experimentsZh": "DGM4+图文对数据集；报告Qwen2-VL-7B适配模型在validation split的分类结果。已读摘要未披露具体对照方法、消融或测试集结果。DGM4+验证集二元分类F1为0.9679；该数字不代表独立测试集或token定位精度。只有摘要证据；没有基线表、训练规模、外域泛化及精确token定位数值，不能据单项F1声称全面领先。",
-        "affiliationsZh": "未在 DBLP/arXiv 元数据中提供",
-        "tags": [
-          "图文误导检测",
-          "多模态LoRA",
-          "语义定位"
-        ],
-        "importance": 2,
-        "researchFitZh": "可追踪多模态推理负载与参数高效适配，但缺少计算核心优化，不能当作芯片性能基线。",
-        "hardwareRelevance": 1,
-        "algorithmRelevance": 4,
-        "systemRelevance": 2,
-        "readPriority": "skim",
-        "whyReadZh": "可追踪多模态推理负载与参数高效适配，但缺少计算核心优化，不能当作芯片性能基线。建议按实际问题和证据范围选择后续阅读优先级。",
-        "limitationsZh": "只有摘要证据；没有基线表、训练规模、外域泛化及精确token定位数值，不能据单项F1声称全面领先。",
-        "motivationDetail": {
-          "problemZh": "真实图像配上扭曲叙事的标题也能产生语义误导，因此依赖像素篡改痕迹的检测会漏掉图文不一致。",
-          "gapZh": "需要同时识别全局语义冲突、操纵类型和误导文本位置，而非只判断图像是否编辑。",
-          "whyImportantZh": "图文真实性评估必须结合视觉场景与文本叙事，才能识别没有像素伪造的误导。",
-          "userRelevanceZh": "可追踪多模态推理负载与参数高效适配，但缺少计算核心优化，不能当作芯片性能基线。",
-          "evidence": "https://arxiv.org/abs/2610.32967v1 的公开摘要与daily.json元数据；未读全文"
-        },
-        "methodDetail": {
-          "coreIdeaZh": "MiD-VLM将SigLIP图文表示与DINOv2场景特征经投影MLP融合，对Qwen2-VL-7B进行LoRA适配，联合预测真假、操纵类型和误导caption token位置。",
-          "componentsZh": [
-            "SigLIP图文表示",
-            "DINOv2场景特征",
-            "MLP投影融合",
-            "Qwen2-VL LoRA多任务"
-          ],
-          "hardwareSystemDetailZh": "模型与训练方法研究；摘要未给出硬件平台、延迟、内存占用或张量执行优化。",
-          "noveltyZh": "面向全局场景语义冲突联合训练分类与文本定位，而非只检测局部图像伪造。",
-          "evidence": "https://arxiv.org/abs/2610.32967v1 的公开摘要与daily.json元数据；未读全文"
-        },
-        "experimentDetail": {
-          "setupZh": "DGM4+图文对数据集；报告Qwen2-VL-7B适配模型在validation split的分类结果。",
-          "baselinesZh": "已读摘要未披露具体对照方法、消融或测试集结果。",
-          "metricsZh": [
-            "二元真实性F1",
-            "操纵类别与token定位（未给结果）"
-          ],
-          "mainResultsZh": "DGM4+验证集二元分类F1为0.9679；该数字不代表独立测试集或token定位精度。",
-          "limitationsZh": "只有摘要证据；没有基线表、训练规模、外域泛化及精确token定位数值，不能据单项F1声称全面领先。",
-          "evidence": "https://arxiv.org/abs/2610.32967v1 的公开摘要与daily.json元数据；未读全文"
-        },
-        "evidence": {
-          "usedSources": [
-            "daily.json metadata",
-            "https://arxiv.org/abs/2610.32967v1"
-          ],
-          "affiliationEvidence": "队列authorAffiliations与affiliations均为空，按任务规则保留元数据缺失说明。",
-          "experimentEvidence": "https://arxiv.org/abs/2610.32967v1 的公开摘要与daily.json元数据；未读全文",
-          "missingFields": [
-            "元数据作者单位",
-            "全文方法与实验细节"
-          ]
-        },
-        "confidence": {
-          "summary": 0.87,
-          "motivation": 0.86,
-          "method": 0.8,
-          "experiments": 0.76,
-          "affiliations": 0
-        }
-      },
-      "pushedAt": "2026-10-27T02:31:15.153Z",
-      "emailSentAt": "2026-10-27T02:31:15.153Z",
-      "firstPushedAt": "2026-10-27T02:31:15.153Z"
-    },
-    {
-      "id": "arxiv:2605.05161",
-      "source": "arXiv",
-      "title": "Wasserstein-Aligned Localisation for VLM-Based Distributional OOD Detection in Medical Imaging",
-      "authors": [
-        "Bernhard Kainz",
-        "Johanna P Mueller",
-        "Matthew Baugh",
-        "Cosmin Bercea"
-      ],
-      "authorAffiliations": [],
-      "affiliations": [],
-      "abstract": "Zero-shot anomaly localisation via vision-language models (VLMs) offers a compelling approach for rare pathology detection, yet its performance is fundamentally limited by the absence of healthy anatomical context. We reformulate zero-shot localisation as a comparative inference problem in which anomalies are identified through structured comparison against reference distributions of normal anatomy. We introduce WALDO, a training-free framework grounded in optimal transport theory that enables comparative reasoning through: (i) entropy-weighted Sliced Wasserstein distances for anatomically-aware reference selection from DINOv2 patch distributions, (ii) Goldilocks zone sampling exploiting the non-monotonic relationship between reference similarity and localisation accuracy, and (iii) self-consistency aggregation via weighted non-maximum suppression. We theoretically analyse the Goldilocks effect through distributional divergence, and show that references with moderate similarity minimize a bias-variance trade-off in comparative visual reasoning. On the NOVA brain MRI benchmark, WALDO with Qwen2.5-VL-72B achieves $43.5_{\\pm1.6}\\%$ mAP@30 (95\\% CI: [40.4, 46.7]), representing a 19\\% relative improvement over zero-shot baselines. Cross-model evaluation shows consistent gains: GPT-4o achieves $32.0_{\\pm6.5}\\%$ and Qwen3-VL-32B achieves $32.0_{\\pm6.6}\\%$ mAP@30. Paired McNemar tests confirm statistical significance ($p<0.01$). Source code is available at https://github.com/bkainz/WALDO_MICCAI26_demo .",
-      "venue": "arXiv",
-      "published": "2026-05-06T17:32:34Z",
-      "updated": "2026-05-06T17:32:34Z",
-      "url": "http://arxiv.org/abs/2605.05161v1",
-      "pdfUrl": "https://arxiv.org/pdf/2605.05161v1",
-      "categories": [
-        "cs.CV"
-      ],
-      "collectedAt": "2026-05-07T05:39:26.482Z",
-      "firstSeenAt": "2026-05-07T05:39:26.482Z",
-      "lastSeenAt": "2026-05-07T05:39:26.482Z",
-      "collectionType": "daily-latest",
-      "matchedQuery": "(all:agent OR all:agents OR all:agentic OR all:reasoning OR all:post-training OR all:alignment OR all:multimodal OR all:world-model) AND (all:LLM OR all:foundation OR all:language)",
-      "collectionTypes": [
-        "daily-latest"
-      ],
-      "matchedQueries": [
-        "(all:agent OR all:agents OR all:agentic OR all:reasoning OR all:post-training OR all:alignment OR all:multimodal OR all:world-model) AND (all:LLM OR all:foundation OR all:language)"
-      ],
-      "targetThemes": [],
-      "conferenceVenues": [],
-      "conferenceYears": [],
-      "recommendationTrack": "algorithm-trend",
-      "recommendationLabel": "算法趋势观察",
-      "recommendationScore": 35.6,
-      "relevanceReason": "命中 LLM/Agent/多模态/后训练等算法趋势主题",
-      "pdfStatus": "remote",
-      "workflow": {
-        "digestStatus": "ready",
-        "emailStatus": "sent",
-        "digestError": "",
-        "harnessVersion": "paper-reader-v1",
-        "collectStatus": "collected",
-        "pdfStatus": "remote",
-        "harnessCheckedAt": "2026-05-08T04:26:53.405Z",
-        "harnessWarnings": [],
-        "emailSentAt": "2026-05-08T04:40:41.777Z",
-        "lastEmailError": ""
-      },
-      "digest": {
-        "summaryZh": "WALDO 将 VLM 零样本异常定位改写为与正常解剖 reference distributions 的比较推理问题，使用 DINOv2 patch distributions、entropy-weighted Sliced Wasserstein 距离、Goldilocks reference sampling 和 self-consistency 聚合改善医学影像 OOD 定位。",
-        "motivationZh": "VLM 零样本异常定位适合稀有病灶检测，但缺少健康解剖上下文会限制定位效果；直接让模型判断异常难以处理参考相似度、解剖结构差异和比较推理的 bias-variance trade-off。",
-        "methodZh": "WALDO 是 training-free framework：先用 DINOv2 patch distributions 和 entropy-weighted Sliced Wasserstein distances 选择解剖感知 references；再利用 Goldilocks zone sampling 选择中等相似度参考；最后用 weighted non-maximum suppression 做 self-consistency aggregation，并从 distributional divergence 解释 Goldilocks effect。",
-        "experimentsZh": "摘要披露在 NOVA brain MRI benchmark 上，WALDO+Qwen2.5-VL-72B 达到 43.5±1.6% mAP@30，95% CI [40.4,46.7]，相对 zero-shot baselines 提升 19%；跨模型中 GPT-4o 与 Qwen3-VL-32B 均达 32.0% mAP@30，paired McNemar tests 显著 p<0.01。摘要未披露 baseline 名称、样本规模和推理成本。",
-        "affiliationsZh": "未在 DBLP/arXiv 元数据中提供",
-        "tags": [
-          "医学影像",
-          "OOD detection",
-          "VLM",
-          "Wasserstein",
-          "zero-shot"
-        ],
-        "importance": 3,
-        "researchFitZh": "偏医学 VLM 应用与算法评估，对用户硬件/系统主方向间接相关，主要用于多模态趋势跟踪。",
-        "hardwareRelevance": 1,
-        "algorithmRelevance": 4,
-        "systemRelevance": 2,
-        "readPriority": "skim",
-        "whyReadZh": "可浏览其 reference selection 与 VLM 比较推理设计；若关注大模型医学推理成本，再看推理效率。",
-        "limitationsZh": "摘要未披露 baseline 名称、数据规模、reference 库构建成本和各 VLM 推理开销。",
-        "motivationDetail": {
-          "problemZh": "VLM 零样本病灶定位缺少健康解剖上下文，异常定位能力受限。",
-          "gapZh": "现有方法没有系统利用正常 anatomy reference distributions 做比较推理。",
-          "whyImportantZh": "稀有病灶检测依赖少样本或零样本能力，定位可靠性直接影响临床筛查价值。",
-          "userRelevanceZh": "与多模态 VLM 趋势相关，但不属于硬件或 LLM serving 核心方向。",
-          "evidence": "abstract"
-        },
-        "methodDetail": {
-          "coreIdeaZh": "把异常定位变成与正常参考分布的 optimal-transport 比较，并聚合多参考定位结果。",
-          "componentsZh": [
-            "DINOv2 patch distributions",
-            "entropy-weighted Sliced Wasserstein distance",
-            "Goldilocks zone sampling",
-            "weighted NMS aggregation"
-          ],
-          "hardwareSystemDetailZh": "摘要未涉及硬件优化；方法会调用大 VLM，推理成本未披露。",
-          "noveltyZh": "用中等相似度 reference 的 Goldilocks effect 平衡比较推理中的 bias 和 variance。",
-          "evidence": "abstract"
-        },
-        "experimentDetail": {
-          "setupZh": "NOVA brain MRI benchmark，跨 Qwen2.5-VL-72B、GPT-4o、Qwen3-VL-32B 评估。",
-          "baselinesZh": "zero-shot baselines；摘要未列具体名称。",
-          "metricsZh": [
-            "mAP@30",
-            "95% confidence interval",
-            "paired McNemar test"
-          ],
-          "mainResultsZh": "Qwen2.5-VL-72B 达 43.5±1.6% mAP@30，相对 zero-shot baselines 提升 19%；GPT-4o 和 Qwen3-VL-32B 均为 32.0% mAP@30，p<0.01。",
-          "limitationsZh": "摘要未披露样本规模、baseline 名称和推理成本。",
-          "evidence": "abstract"
-        },
-        "evidence": {
-          "usedSources": [
-            "metadata",
-            "abstract"
-          ],
-          "affiliationEvidence": "",
-          "experimentEvidence": "abstract reports NOVA brain MRI results: 43.5±1.6% mAP@30, 95% CI [40.4,46.7], 19% relative improvement, 32.0±6.5% and 32.0±6.6% cross-model mAP@30, p<0.01",
-          "missingFields": [
-            "affiliations",
-            "baseline names",
-            "dataset size",
-            "inference cost"
-          ]
-        },
-        "confidence": {
-          "summary": 0.88,
-          "motivation": 0.86,
-          "method": 0.86,
-          "experiments": 0.84,
-          "affiliations": 0.05
-        }
-      },
-      "pushedAt": "2026-05-08T04:40:41.777Z",
-      "emailSentAt": "2026-05-08T04:40:41.777Z",
-      "firstPushedAt": "2026-05-08T04:40:41.777Z"
-    },
-    {
-      "id": "arxiv:2610.31624",
-      "source": "arXiv",
-      "title": "Questioning Instrumental Convergence in RLVR: Checkpoint Evidence from OLMo-3",
-      "authors": [
-        "Barış Alparslan",
-        "Sandy Tanwisuth",
-        "Caleb Petterson"
-      ],
-      "authorAffiliations": [],
-      "affiliations": [],
-      "abstract": "Instrumental convergence is often invoked as a general reason to expect capable agents to acquire or express power-seeking subgoals: self-preservation, resource acquisition, deception, or resistance to oversight which poses an important threat to the society. For LLMs, reinforcement learning is the first stage of post-training that directly optimizes behavior against an objective; therefore, it is the stage where convergent instrumental behavior, on IC grounds, likely to appear. Does reinforcement learning with verifiable rewards (RLVR) make a model more likely to express instrumental-convergence behavior, or does this depend on the training regime, evaluation frame, and stage of post-training? We study this question as a checkpoint-conditioned behavioral trajectory rather than as a single before/after safety score. Using InstrumentalEval, we evaluate OLMo-3-7B-Think across SFT, DPO, 13 intermediate RLVR checkpoints, and the final RLVR model. The trajectory is nonmonotonic: instrumental rate rises from 25.0% at SFT to 46.1% near RLVR step 200, then falls to 11.8% at the final checkpoint. Paired item-level tests and step-wise regression support the final SFT-to-RLVR reduction. Prompt framing does not explain this pattern: a harmful-prompt indicator combined with other framing effects explains only 15% of within-checkpoint score variance on average, and Iterative Null-space Projection (INLP) removes a detectable framing direction without changing the SFT-to-final-RLVR gap. Together with preliminary 32B endpoint results (35.53% SFT to 22.37% RLVR final), these findings indicate that RLVR does not monotonically increase instrumental behavior in this setting: the rate rises early, then falls below the SFT baseline. The result is specific to this model family and benchmark, and judge agreement is moderate, so absolute rates should be read cautiously.",
-      "venue": "arXiv",
-      "published": "2026-10-22T17:44:41Z",
-      "updated": "2026-10-22T17:44:41Z",
-      "url": "http://arxiv.org/abs/2610.31624v1",
-      "pdfUrl": "https://arxiv.org/pdf/2610.31624v1",
-      "categories": [
-        "cs.LG",
-        "cs.AI"
-      ],
-      "collectedAt": "2026-10-25T22:35:56.105Z",
-      "firstSeenAt": "2026-10-25T22:35:56.105Z",
-      "lastSeenAt": "2026-10-25T22:35:56.105Z",
-      "collectionType": "daily-latest",
-      "matchedQuery": "(all:agent OR all:agents OR all:agentic OR all:reasoning OR all:post-training OR all:alignment OR all:multimodal OR all:world-model) AND (all:LLM OR all:foundation OR all:language)",
-      "collectionTypes": [
-        "daily-latest"
-      ],
-      "matchedQueries": [
-        "(all:agent OR all:agents OR all:agentic OR all:reasoning OR all:post-training OR all:alignment OR all:multimodal OR all:world-model) AND (all:LLM OR all:foundation OR all:language)"
-      ],
-      "targetThemes": [],
-      "conferenceVenues": [],
-      "conferenceYears": [],
-      "recommendationTrack": "algorithm-trend",
-      "recommendationLabel": "算法趋势观察",
-      "recommendationScore": 35.5,
-      "relevanceReason": "命中 LLM/Agent/多模态/后训练等算法趋势主题",
-      "pdfStatus": "remote",
-      "workflow": {
-        "digestStatus": "ready",
-        "emailStatus": "sent",
-        "digestError": "",
-        "harnessVersion": "paper-reader-v1",
-        "collectStatus": "collected",
-        "pdfStatus": "remote",
-        "harnessCheckedAt": "2026-10-26T02:32:32.991Z",
-        "harnessWarnings": [],
-        "emailSentAt": "2026-10-26T02:32:37.592Z",
-        "lastEmailError": ""
-      },
-      "digest": {
-        "summaryZh": "RLVR是否促使模型表达自保、资源获取等工具性行为，不能由训练前后单个安全分数解释。使用InstrumentalEval沿OLMo-3-7B-Think的SFT、DPO、中间及最终RLVR检查点测量行为轨迹，并以配对检验、逐步回归和INLP排查提示框架解释。7B行为率从SFT的25.0%升至约step 200的46.1%，最终降至11.8%；初步32B从35.53%降至22.37%。",
-        "motivationZh": "RLVR是否促使模型表达自保、资源获取等工具性行为，不能由训练前后单个安全分数解释。只比较端点会掩盖中间训练阶段的非单调行为，提示框架还可能干扰评估。检查训练过程而非单一终态，有助于更准确理解后训练安全变化。作为后训练与Agent行为趋势跟踪，和推理芯片计算核心直接关联较低。",
-        "methodZh": "使用InstrumentalEval沿OLMo-3-7B-Think的SFT、DPO、中间及最终RLVR检查点测量行为轨迹，并以配对检验、逐步回归和INLP排查提示框架解释。行为实证研究，摘要未包含芯片架构、内存优化或硬件加速方法。把工具性行为看作随检查点变化的轨迹，而非假设随RLVR单调上升。",
-        "experimentsZh": "InstrumentalEval，OLMo-3-7B-Think含13个中间RLVR检查点，另有初步32B端点评估。SFT与DPO及最终RLVR端点作为阶段对照，并测试提示框架因素。7B行为率从SFT的25.0%升至约step 200的46.1%，最终降至11.8%；初步32B从35.53%降至22.37%。结论限定该模型家族与基准；裁判一致性中等，不能视为通用安全性保证；仅核验摘要。",
-        "affiliationsZh": "未在 DBLP/arXiv 元数据中提供",
-        "tags": [
-          "RLVR",
-          "检查点评估",
-          "Agent安全"
-        ],
-        "importance": 2,
-        "researchFitZh": "作为后训练与Agent行为趋势跟踪，和推理芯片计算核心直接关联较低。",
-        "hardwareRelevance": 1,
-        "algorithmRelevance": 4,
-        "systemRelevance": 2,
-        "readPriority": "skim",
-        "whyReadZh": "作为后训练与Agent行为趋势跟踪，和推理芯片计算核心直接关联较低。建议结合其证据边界决定后续阅读与对比范围。",
-        "limitationsZh": "结论限定该模型家族与基准；裁判一致性中等，不能视为通用安全性保证；仅核验摘要。",
-        "motivationDetail": {
-          "problemZh": "RLVR是否促使模型表达自保、资源获取等工具性行为，不能由训练前后单个安全分数解释。",
-          "gapZh": "只比较端点会掩盖中间训练阶段的非单调行为，提示框架还可能干扰评估。",
-          "whyImportantZh": "检查训练过程而非单一终态，有助于更准确理解后训练安全变化。",
-          "userRelevanceZh": "作为后训练与Agent行为趋势跟踪，和推理芯片计算核心直接关联较低。",
-          "evidence": "已读 https://arxiv.org/abs/2610.31624v1 公开摘要；并核对daily.json元数据"
-        },
-        "methodDetail": {
-          "coreIdeaZh": "使用InstrumentalEval沿OLMo-3-7B-Think的SFT、DPO、中间及最终RLVR检查点测量行为轨迹，并以配对检验、逐步回归和INLP排查提示框架解释。",
-          "componentsZh": [
-            "训练检查点行为轨迹",
-            "配对检验与回归",
-            "INLP提示因素分析"
-          ],
-          "hardwareSystemDetailZh": "行为实证研究，摘要未包含芯片架构、内存优化或硬件加速方法。",
-          "noveltyZh": "把工具性行为看作随检查点变化的轨迹，而非假设随RLVR单调上升。",
-          "evidence": "已读 https://arxiv.org/abs/2610.31624v1 公开摘要；并核对daily.json元数据"
-        },
-        "experimentDetail": {
-          "setupZh": "InstrumentalEval，OLMo-3-7B-Think含13个中间RLVR检查点，另有初步32B端点评估。",
-          "baselinesZh": "SFT与DPO及最终RLVR端点作为阶段对照，并测试提示框架因素。",
-          "metricsZh": [
-            "工具性行为率",
-            "检查点内方差解释比例"
-          ],
-          "mainResultsZh": "7B行为率从SFT的25.0%升至约step 200的46.1%，最终降至11.8%；初步32B从35.53%降至22.37%。",
-          "limitationsZh": "结论限定该模型家族与基准；裁判一致性中等，不能视为通用安全性保证；仅核验摘要。",
-          "evidence": "已读 https://arxiv.org/abs/2610.31624v1 公开摘要；并核对daily.json元数据"
-        },
-        "evidence": {
-          "usedSources": [
-            "daily.json metadata",
-            "https://arxiv.org/abs/2610.31624v1"
-          ],
-          "affiliationEvidence": "队列authorAffiliations和affiliations为空；按任务要求保留缺失单位说明。",
-          "experimentEvidence": "已读 https://arxiv.org/abs/2610.31624v1 公开摘要；并核对daily.json元数据",
-          "missingFields": [
-            "元数据作者单位",
-            "全文方法和实验细节"
-          ]
-        },
-        "confidence": {
-          "summary": 0.87,
-          "motivation": 0.87,
-          "method": 0.79,
-          "experiments": 0.73,
-          "affiliations": 0
-        }
-      },
-      "pushedAt": "2026-10-26T02:32:37.592Z",
-      "emailSentAt": "2026-10-26T02:32:37.592Z",
-      "firstPushedAt": "2026-10-26T02:32:37.592Z"
-    },
-    {
-      "id": "arxiv:2611.17324",
-      "source": "arXiv",
-      "title": "K2V: Generative Keyframing For Physically Plausible Video Generation",
-      "authors": [
-        "Felix O'Mahony",
-        "Daniel Olmeda Reino",
-        "Roberto Cipolla",
-        "Ayush Tewari"
-      ],
-      "authorAffiliations": [],
-      "affiliations": [],
-      "abstract": "Video diffusion models are able to generate samples with high-quality appearance and textural qualities. However, content produced by these methods is known to exhibit significant physical errors. This is because, in a classical video generation setting, all physical reasoning must take place simultaneously and exclusively within the diffusion process.We propose to resolve these issues by redistributing the task of physical reasoning onto a language model-backed keyframe generation module, which allows for explicit reasoning in language, and fine-grained control over the appearance of the video at important moments in the video. We then condition a video generation model with these keyframes, reducing the role of the diffusion model to the simpler task of interpolating between physically-correct intermediate states, rather than inferring an entire sequence with diffusion. Results demonstrate that our approach significantly outperforms existing approaches, achieving state-of-the-art performance on the Physics-IQ Verified benchmark and PhyGenBench.",
-      "venue": "arXiv",
-      "published": "2026-11-12T18:59:09Z",
-      "updated": "2026-11-12T18:59:09Z",
-      "url": "http://arxiv.org/abs/2611.17324v1",
-      "pdfUrl": "https://arxiv.org/pdf/2611.17324v1",
-      "categories": [
-        "cs.CV"
-      ],
-      "collectedAt": "2026-11-14T23:57:09.956Z",
-      "firstSeenAt": "2026-11-14T23:57:09.956Z",
-      "lastSeenAt": "2026-11-14T23:57:09.956Z",
-      "collectionType": "daily-latest",
-      "matchedQuery": "(all:agent OR all:agents OR all:agentic OR all:reasoning OR all:post-training OR all:alignment OR all:multimodal OR all:world-model) AND (all:LLM OR all:foundation OR all:language)",
-      "collectionTypes": [
-        "daily-latest"
-      ],
-      "matchedQueries": [
-        "(all:agent OR all:agents OR all:agentic OR all:reasoning OR all:post-training OR all:alignment OR all:multimodal OR all:world-model) AND (all:LLM OR all:foundation OR all:language)"
-      ],
-      "targetThemes": [],
-      "conferenceVenues": [],
-      "conferenceYears": [],
-      "recommendationTrack": "algorithm-trend",
-      "recommendationLabel": "算法趋势观察",
-      "recommendationScore": 35.2,
-      "relevanceReason": "命中 LLM/Agent/多模态/后训练等算法趋势主题",
-      "pdfStatus": "remote",
-      "workflow": {
-        "digestStatus": "ready",
-        "emailStatus": "sent",
-        "digestError": "",
-        "harnessVersion": "paper-reader-v1",
-        "collectStatus": "collected",
-        "pdfStatus": "remote",
-        "harnessCheckedAt": "2026-11-15T00:35:37.746Z",
-        "harnessWarnings": [],
-        "emailSentAt": "2026-11-15T00:35:42.516Z",
-        "lastEmailError": ""
-      },
-      "digest": {
-        "summaryZh": "K2V 先由语言模型支持的关键帧模块显式规划物理状态，再让视频扩散模型在这些状态之间生成，减少单次扩散承担全部物理推理的压力。它属于生成工作流改造，评测质量收益并非芯片执行加速。",
-        "motivationZh": "视频扩散可有较好外观，却会产生明显物理错误，关键状态缺乏显式控制。仅靠整段扩散过程同时完成推理和渲染，难以校验中间物理状态。将推理与生成分工有助于提高可控性及物理一致性，但应计入额外规划成本。属于多模态与世界模型趋势，对LLM加速器的关系主要是新工作流负载而非直接架构贡献。",
-        "methodZh": "先生成重要时刻的关键帧并进行显式语言推理，再用关键帧条件化视频生成。语言模型支持的关键帧规划。以关键帧约束视频模型。把物理状态推理与中间帧生成分工。正文以Wan2.2等视频骨干评测，并包含生成与规划成本分析；本轮不把质量分数转换成硬件效率。将物理推理外置为可控中间状态，让扩散模型更多承担状态间插值。",
-        "experimentsZh": "在Physics-IQ Verified和PhyGenBench测试，正文列出Wan2.2-5B与14B组合。与相应Wan2.2、LTX-Video和NEWTON等比较，区分首帧条件及文本条件任务。PhyGenBench表中K2V+Wan2.2的平均PCA分为0.633，Wan2.2-5B为0.544、14B为0.527；摘要报告在两项基准取得较强表现。该评分上限为1，不是通用物理正确率。评测依赖基准与判分，关键帧正确仍不保证所有中间动力学正确；有额外规划和校验成本，未据此推断端到端加速。",
-        "affiliationsZh": "未在 DBLP/arXiv 元数据中提供",
-        "tags": [
-          "关键帧规划",
-          "视频生成",
-          "物理一致性",
-          "多模态工作流"
-        ],
-        "importance": 3,
-        "researchFitZh": "属于多模态与世界模型趋势，对LLM加速器的关系主要是新工作流负载而非直接架构贡献。",
-        "hardwareRelevance": 1,
-        "algorithmRelevance": 4,
-        "systemRelevance": 2,
-        "readPriority": "skim",
-        "whyReadZh": "可浏览显式中间状态如何分担生成推理，适合趋势跟踪，硬件主线不需优先深读。",
-        "limitationsZh": "评测依赖基准与判分，关键帧正确仍不保证所有中间动力学正确；有额外规划和校验成本，未据此推断端到端加速。",
-        "motivationDetail": {
-          "problemZh": "视频扩散可有较好外观，却会产生明显物理错误，关键状态缺乏显式控制。",
-          "gapZh": "仅靠整段扩散过程同时完成推理和渲染，难以校验中间物理状态。",
-          "whyImportantZh": "将推理与生成分工有助于提高可控性及物理一致性，但应计入额外规划成本。",
-          "userRelevanceZh": "属于多模态与世界模型趋势，对LLM加速器的关系主要是新工作流负载而非直接架构贡献。",
-          "evidence": "已读取公开HTML摘要、基准说明和PhyGenBench表2及成本段；未完整核对所有方法消融。 来源：https://arxiv.org/html/2611.17324v1"
-        },
-        "methodDetail": {
-          "coreIdeaZh": "先生成重要时刻的关键帧并进行显式语言推理，再用关键帧条件化视频生成。",
-          "componentsZh": [
-            "语言模型支持的关键帧规划",
-            "以关键帧约束视频模型",
-            "把物理状态推理与中间帧生成分工"
-          ],
-          "hardwareSystemDetailZh": "正文以Wan2.2等视频骨干评测，并包含生成与规划成本分析；本轮不把质量分数转换成硬件效率。",
-          "noveltyZh": "将物理推理外置为可控中间状态，让扩散模型更多承担状态间插值。",
-          "evidence": "已读取公开HTML摘要、基准说明和PhyGenBench表2及成本段；未完整核对所有方法消融。 来源：https://arxiv.org/html/2611.17324v1"
-        },
-        "experimentDetail": {
-          "setupZh": "在Physics-IQ Verified和PhyGenBench测试，正文列出Wan2.2-5B与14B组合。",
-          "baselinesZh": "与相应Wan2.2、LTX-Video和NEWTON等比较，区分首帧条件及文本条件任务。",
-          "metricsZh": [
-            "物理合理性评分",
-            "可控性",
-            "每视频规划加生成成本"
-          ],
-          "mainResultsZh": "PhyGenBench表中K2V+Wan2.2的平均PCA分为0.633，Wan2.2-5B为0.544、14B为0.527；摘要报告在两项基准取得较强表现。该评分上限为1，不是通用物理正确率。",
-          "limitationsZh": "评测依赖基准与判分，关键帧正确仍不保证所有中间动力学正确；有额外规划和校验成本，未据此推断端到端加速。",
-          "evidence": "已读取公开HTML摘要、基准说明和PhyGenBench表2及成本段；未完整核对所有方法消融。 来源：https://arxiv.org/html/2611.17324v1"
-        },
-        "evidence": {
-          "usedSources": [
-            "public/research-digest/daily.json: 原始元数据及完整英文摘要",
-            "https://arxiv.org/html/2611.17324v1"
-          ],
-          "affiliationEvidence": "队列DBLP/arXiv元数据未提供作者单位，按指定缺省文案记录，不据作者身份猜测。",
-          "experimentEvidence": "已读取公开HTML摘要、基准说明和PhyGenBench表2及成本段；未完整核对所有方法消融。 来源：https://arxiv.org/html/2611.17324v1",
-          "missingFields": [
-            "元数据作者单位",
-            "全部基准与消融结果的本轮复核",
-            "直接硬件效率比较"
-          ]
-        },
-        "confidence": {
-          "summary": 0.91,
-          "motivation": 0.88,
-          "method": 0.8,
-          "experiments": 0.86,
-          "affiliations": 0
-        }
-      },
-      "pushedAt": "2026-11-15T00:35:42.516Z",
-      "emailSentAt": "2026-11-15T00:35:42.516Z",
-      "firstPushedAt": "2026-11-15T00:35:42.516Z"
-    },
-    {
-      "id": "arxiv:2610.31650",
-      "source": "arXiv",
-      "title": "EpiSEM-Bench: Evaluating Safety and Evidence Recovery in LLM Agents under Missing Evidence",
-      "authors": [
-        "Qijin Zhang",
-        "Hanzhen Wang",
-        "Yuehan Zhao",
-        "Haoyu Dai",
-        "Yao Shu",
-        "Zhongxiang Dai",
-        "Shuang Qiu"
-      ],
-      "authorAffiliations": [],
-      "affiliations": [],
-      "abstract": "Tool-using language model agents rely on environmental facts to decide whether an action is permitted. When a tool response omits a safety-relevant fact, an agent may carry out a prohibited action even though the user request is benign and every returned statement is true. We introduce \\bench{}, an executable benchmark for evaluating unsafe execution, safety boundaries, and evidence recovery in LLM agents under missing evidence. It contains 300 matched unsafe/safe task pairs across six domains. By systematically suppressing critical facts, the benchmark measures unsafe execution under critical evidence omission and determines the minimum observed failure cardinality, including failures with full evidence and cases with no observed failure after exhaustive testing. An independent audit tool tests whether agents seek missing facts and then withhold prohibited actions while completing permissible tasks. The benchmark reveals substantial variation across the ten models in omission robustness, evidence acquisition, and appropriate action. Resistance to missing evidence does not necessarily translate into useful recovery. Recovery access reduces unsafe execution for all ten models, but agents differ in whether they actively obtain the missing facts and use them to act appropriately in both worlds.",
-      "venue": "arXiv",
-      "published": "2026-10-22T17:57:04Z",
-      "updated": "2026-10-22T17:57:04Z",
-      "url": "http://arxiv.org/abs/2610.31650v1",
-      "pdfUrl": "https://arxiv.org/pdf/2610.31650v1",
-      "categories": [
-        "cs.AI",
-        "cs.LG"
-      ],
-      "collectedAt": "2026-10-25T22:35:56.103Z",
-      "firstSeenAt": "2026-10-25T22:35:56.103Z",
-      "lastSeenAt": "2026-10-25T22:35:56.103Z",
-      "collectionType": "daily-latest",
-      "matchedQuery": "(all:agent OR all:agents OR all:agentic OR all:reasoning OR all:post-training OR all:alignment OR all:multimodal OR all:world-model) AND (all:LLM OR all:foundation OR all:language)",
-      "collectionTypes": [
-        "daily-latest"
-      ],
-      "matchedQueries": [
-        "(all:agent OR all:agents OR all:agentic OR all:reasoning OR all:post-training OR all:alignment OR all:multimodal OR all:world-model) AND (all:LLM OR all:foundation OR all:language)"
-      ],
-      "targetThemes": [],
-      "conferenceVenues": [],
-      "conferenceYears": [],
-      "recommendationTrack": "algorithm-trend",
-      "recommendationLabel": "算法趋势观察",
-      "recommendationScore": 35.2,
-      "relevanceReason": "命中 LLM/Agent/多模态/后训练等算法趋势主题",
-      "pdfStatus": "remote",
-      "workflow": {
-        "digestStatus": "ready",
-        "emailStatus": "sent",
-        "digestError": "",
-        "harnessVersion": "paper-reader-v1",
-        "collectStatus": "collected",
-        "pdfStatus": "remote",
-        "harnessCheckedAt": "2026-10-26T02:32:32.991Z",
-        "harnessWarnings": [],
-        "emailSentAt": "2026-10-26T02:32:37.592Z",
-        "lastEmailError": ""
-      },
-      "digest": {
-        "summaryZh": "Agent工具响应可能每句都真实，却遗漏决定行动是否允许的事实，从而令良性请求触发不安全执行。EpiSEM-Bench构造安全/不安全匹配任务，系统性抑制关键事实并测量最小观察失败基数；通过独立审计工具测试能否主动补证并采取恰当行动。十个模型在缺证鲁棒性和补证利用上差异明显；恢复访问均减少违规执行，但抗遗漏不必然意味着有效补证，摘要未给具体降幅。",
-        "motivationZh": "Agent工具响应可能每句都真实，却遗漏决定行动是否允许的事实，从而令良性请求触发不安全执行。仅测试错误信息或拒答不足以区分缺证鲁棒性、主动找证据和完成允许任务的能力。工具型Agent必须获取关键事实，同时保持对允许任务的实际可用性。适合Agent系统评估与工具调用可靠性趋势跟踪，并非计算核心或硬件基线。",
-        "methodZh": "EpiSEM-Bench构造安全/不安全匹配任务，系统性抑制关键事实并测量最小观察失败基数；通过独立审计工具测试能否主动补证并采取恰当行动。可执行Agent评测基准，不提供矩阵阵列、量化数据通路或片上存储设计。分别评估证据缺失下的违规执行与恢复证据后对两种情境的合适行为。",
-        "experimentsZh": "300对安全/不安全匹配任务、六个领域、十个模型，比较证据遗漏与可使用恢复工具的情境。同一任务的安全/不安全世界以及补证工具可用前后形成对照；摘要未列具体十模型名称。十个模型在缺证鲁棒性和补证利用上差异明显；恢复访问均减少违规执行，但抗遗漏不必然意味着有效补证，摘要未给具体降幅。仅核验摘要；模型名单、逐领域分数与统计细节未披露于已读资料，不能推断生产可靠性。",
-        "affiliationsZh": "未在 DBLP/arXiv 元数据中提供",
-        "tags": [
-          "Agent评测",
-          "证据恢复",
-          "工具可靠性"
-        ],
-        "importance": 3,
-        "researchFitZh": "适合Agent系统评估与工具调用可靠性趋势跟踪，并非计算核心或硬件基线。",
-        "hardwareRelevance": 1,
-        "algorithmRelevance": 4,
-        "systemRelevance": 3,
-        "readPriority": "skim",
-        "whyReadZh": "适合Agent系统评估与工具调用可靠性趋势跟踪，并非计算核心或硬件基线。建议结合其证据边界决定后续阅读与对比范围。",
-        "limitationsZh": "仅核验摘要；模型名单、逐领域分数与统计细节未披露于已读资料，不能推断生产可靠性。",
-        "motivationDetail": {
-          "problemZh": "Agent工具响应可能每句都真实，却遗漏决定行动是否允许的事实，从而令良性请求触发不安全执行。",
-          "gapZh": "仅测试错误信息或拒答不足以区分缺证鲁棒性、主动找证据和完成允许任务的能力。",
-          "whyImportantZh": "工具型Agent必须获取关键事实，同时保持对允许任务的实际可用性。",
-          "userRelevanceZh": "适合Agent系统评估与工具调用可靠性趋势跟踪，并非计算核心或硬件基线。",
-          "evidence": "已读 https://arxiv.org/abs/2610.31650v1 公开摘要；并核对daily.json元数据"
-        },
-        "methodDetail": {
-          "coreIdeaZh": "EpiSEM-Bench构造安全/不安全匹配任务，系统性抑制关键事实并测量最小观察失败基数；通过独立审计工具测试能否主动补证并采取恰当行动。",
-          "componentsZh": [
-            "匹配安全任务对",
-            "关键证据抑制",
-            "最小失败基数",
-            "独立审计补证工具"
-          ],
-          "hardwareSystemDetailZh": "可执行Agent评测基准，不提供矩阵阵列、量化数据通路或片上存储设计。",
-          "noveltyZh": "分别评估证据缺失下的违规执行与恢复证据后对两种情境的合适行为。",
-          "evidence": "已读 https://arxiv.org/abs/2610.31650v1 公开摘要；并核对daily.json元数据"
-        },
-        "experimentDetail": {
-          "setupZh": "300对安全/不安全匹配任务、六个领域、十个模型，比较证据遗漏与可使用恢复工具的情境。",
-          "baselinesZh": "同一任务的安全/不安全世界以及补证工具可用前后形成对照；摘要未列具体十模型名称。",
-          "metricsZh": [
-            "不安全执行率",
-            "补证行为",
-            "恰当行动",
-            "最小观察失败基数"
-          ],
-          "mainResultsZh": "十个模型在缺证鲁棒性和补证利用上差异明显；恢复访问均减少违规执行，但抗遗漏不必然意味着有效补证，摘要未给具体降幅。",
-          "limitationsZh": "仅核验摘要；模型名单、逐领域分数与统计细节未披露于已读资料，不能推断生产可靠性。",
-          "evidence": "已读 https://arxiv.org/abs/2610.31650v1 公开摘要；并核对daily.json元数据"
-        },
-        "evidence": {
-          "usedSources": [
-            "daily.json metadata",
-            "https://arxiv.org/abs/2610.31650v1"
-          ],
-          "affiliationEvidence": "队列authorAffiliations和affiliations为空；按任务要求保留缺失单位说明。",
-          "experimentEvidence": "已读 https://arxiv.org/abs/2610.31650v1 公开摘要；并核对daily.json元数据",
-          "missingFields": [
-            "元数据作者单位",
-            "全文方法和实验细节"
-          ]
-        },
-        "confidence": {
-          "summary": 0.87,
-          "motivation": 0.87,
-          "method": 0.79,
-          "experiments": 0.73,
-          "affiliations": 0
-        }
-      },
-      "pushedAt": "2026-10-26T02:32:37.592Z",
-      "emailSentAt": "2026-10-26T02:32:37.592Z",
-      "firstPushedAt": "2026-10-26T02:32:37.592Z"
-    },
-    {
-      "id": "arxiv:2610.40649",
-      "source": "arXiv",
-      "title": "Rethinking Neural Thickets Without Weight Perturbations",
-      "authors": [
-        "Nicolas Dufour",
-        "Elouan Gardès",
-        "Amil Dravid",
-        "Patrick Pérez",
-        "Loic Landrieu"
-      ],
-      "authorAffiliations": [],
-      "affiliations": [],
-      "abstract": "The Neural Thickets hypothesis posits that pretrained language models lie in dense neighborhoods of task-specific experts in weight space, which random Gaussian perturbations can uncover. We reproduce the reported gains, but show that they do not require this geometric explanation. Perturbing a single decoder block already recovers much of the improvement, while keeping the model entirely frozen and adding a random bias to its output logits matches or exceeds full-weight perturbations on most reasoning tasks. This suggests an alternative explanation based on output diversity, validation-based selection, and voting. We formalize this view as Perturb-Select-Vote (PSV), a general procedure that generates perturbed predictors, selects high-performing members on a small validation set, and aggregates their predictions. This interpretation connects Neural Thickets to established inference-time methods, including sampling, self-consistency, and verifier-guided selection. A first-order analysis further shows that small weight perturbations act primarily through their induced logit shifts. We extend this analysis to vision, where logit PSV substantially improves performance under domain shift, including on Earth observation, while full-weight perturbations provide little additional benefit. Together, these results suggest that the gains attributed to nearby weight-space experts can instead be obtained through output diversity, selection, and voting. Logit PSV realizes these benefits with a fully frozen model, providing a simple, training-free alternative to full-weight perturbation ensembles across language and vision.",
-      "venue": "arXiv",
-      "published": "2026-10-29T17:59:29Z",
-      "updated": "2026-10-29T17:59:29Z",
-      "url": "http://arxiv.org/abs/2610.40649v1",
-      "pdfUrl": "https://arxiv.org/pdf/2610.40649v1",
-      "categories": [
-        "cs.LG",
-        "cs.AI",
-        "cs.CV"
-      ],
-      "collectedAt": "2026-11-01T23:38:44.551Z",
-      "firstSeenAt": "2026-11-01T23:38:44.551Z",
-      "lastSeenAt": "2026-11-01T23:38:44.551Z",
-      "collectionType": "daily-latest",
-      "matchedQuery": "(all:agent OR all:agents OR all:agentic OR all:reasoning OR all:post-training OR all:alignment OR all:multimodal OR all:world-model) AND (all:LLM OR all:foundation OR all:language)",
-      "collectionTypes": [
-        "daily-latest"
-      ],
-      "matchedQueries": [
-        "(all:agent OR all:agents OR all:agentic OR all:reasoning OR all:post-training OR all:alignment OR all:multimodal OR all:world-model) AND (all:LLM OR all:foundation OR all:language)"
-      ],
-      "targetThemes": [],
-      "conferenceVenues": [],
-      "conferenceYears": [],
-      "recommendationTrack": "algorithm-trend",
-      "recommendationLabel": "算法趋势观察",
-      "recommendationScore": 34.2,
-      "relevanceReason": "命中 LLM/Agent/多模态/后训练等算法趋势主题",
-      "pdfStatus": "remote",
-      "workflow": {
-        "digestStatus": "ready",
-        "emailStatus": "sent",
-        "digestError": "",
-        "harnessVersion": "paper-reader-v1",
-        "collectStatus": "collected",
-        "pdfStatus": "remote",
-        "harnessCheckedAt": "2026-11-02T00:31:47.014Z",
-        "harnessWarnings": [],
-        "emailSentAt": "2026-11-02T00:31:52.105Z",
-        "lastEmailError": ""
-      },
-      "digest": {
-        "summaryZh": "论文重新检验Neural Thickets解释，发现冻结模型后仅扰动logit再选择投票，也能复现多数推理增益。PSV将收益归因于输出多样性与验证筛选，减少修改整套权重的必要性。",
-        "motivationZh": "权重随机扰动的性能提升被解释为附近存在任务专家，但收益机制尚需对照。若输出扰动即可获得同样提升，权重空间几何解释并非必要条件。澄清增益来源可避免昂贵权重副本并建立公平推理时比较。属于推理时集成算法趋势，可关注冻结权重的系统影响；尚无直接硬件速度证据。",
-        "methodZh": "Perturb-Select-Vote先生成扰动预测器，再以小验证集选择并投票；对照全权重、单块和logit扰动。冻结模型logit偏置；验证集筛选；投票聚合；一阶logit位移分析；视觉域偏移扩展。算法仅需冻结基础权重，摘要未披露GPU型号、存储开销或端到端时延测量。用输出层多样性解释已有权重扰动结果，给出免训练且不修改权重的替代。",
-        "experimentsZh": "复现语言推理任务并拓展到视觉域偏移和地球观测；公开摘要未列完整数据与模型。全权重高斯扰动、单decoder块扰动、logit PSV，并联系采样和self-consistency。作者称logit偏置在多数推理任务匹配或超过全权重扰动，视觉中权重扰动的额外收益有限；摘要未披露分数。验证选择与投票本身有额外推理成本；没有数值时不推断内存或能耗节省，结论需完整实验表核对。",
-        "affiliationsZh": "未在 DBLP/arXiv 元数据中提供",
-        "tags": [
-          "推理时集成",
-          "Logit扰动",
-          "验证选择"
-        ],
-        "importance": 3,
-        "researchFitZh": "属于推理时集成算法趋势，可关注冻结权重的系统影响；尚无直接硬件速度证据。",
-        "hardwareRelevance": 1,
-        "algorithmRelevance": 4,
-        "systemRelevance": 2,
-        "readPriority": "skim",
-        "whyReadZh": "属于推理时集成算法趋势，可关注冻结权重的系统影响；尚无直接硬件速度证据。继续阅读需优先核对证据边界和基线公平性。",
-        "limitationsZh": "验证选择与投票本身有额外推理成本；没有数值时不推断内存或能耗节省，结论需完整实验表核对。",
-        "motivationDetail": {
-          "problemZh": "权重随机扰动的性能提升被解释为附近存在任务专家，但收益机制尚需对照。",
-          "gapZh": "若输出扰动即可获得同样提升，权重空间几何解释并非必要条件。",
-          "whyImportantZh": "澄清增益来源可避免昂贵权重副本并建立公平推理时比较。",
-          "userRelevanceZh": "属于推理时集成算法趋势，可关注冻结权重的系统影响；尚无直接硬件速度证据。",
-          "evidence": "读取队列完整摘要和arXiv摘要，未声称读过完整实验。 来源：https://arxiv.org/abs/2610.40649v1"
-        },
-        "methodDetail": {
-          "coreIdeaZh": "Perturb-Select-Vote先生成扰动预测器，再以小验证集选择并投票；对照全权重、单块和logit扰动。",
-          "componentsZh": [
-            "冻结模型logit偏置",
-            "验证集筛选",
-            "投票聚合",
-            "一阶logit位移分析",
-            "视觉域偏移扩展"
-          ],
-          "hardwareSystemDetailZh": "算法仅需冻结基础权重，摘要未披露GPU型号、存储开销或端到端时延测量。",
-          "noveltyZh": "用输出层多样性解释已有权重扰动结果，给出免训练且不修改权重的替代。",
-          "evidence": "读取队列完整摘要和arXiv摘要，未声称读过完整实验。 来源：https://arxiv.org/abs/2610.40649v1"
-        },
-        "experimentDetail": {
-          "setupZh": "复现语言推理任务并拓展到视觉域偏移和地球观测；公开摘要未列完整数据与模型。",
-          "baselinesZh": "全权重高斯扰动、单decoder块扰动、logit PSV，并联系采样和self-consistency。",
-          "metricsZh": [
-            "任务表现",
-            "域偏移鲁棒性"
-          ],
-          "mainResultsZh": "作者称logit偏置在多数推理任务匹配或超过全权重扰动，视觉中权重扰动的额外收益有限；摘要未披露分数。",
-          "limitationsZh": "验证选择与投票本身有额外推理成本；没有数值时不推断内存或能耗节省，结论需完整实验表核对。",
-          "evidence": "读取队列完整摘要和arXiv摘要，未声称读过完整实验。 来源：https://arxiv.org/abs/2610.40649v1"
-        },
-        "evidence": {
-          "usedSources": [
-            "public/research-digest/daily.json metadata and supplied complete abstract",
-            "https://arxiv.org/abs/2610.40649v1"
-          ],
-          "affiliationEvidence": "队列DBLP/arXiv元数据未提供单位，按任务要求保留未知。",
-          "experimentEvidence": "读取队列完整摘要和arXiv摘要，未声称读过完整实验。 来源：https://arxiv.org/abs/2610.40649v1",
-          "missingFields": [
-            "作者单位",
-            "完整模型数据与分数",
-            "计算资源与时延"
-          ]
-        },
-        "confidence": {
-          "summary": 0.88,
-          "motivation": 0.86,
-          "method": 0.86,
-          "experiments": 0.72,
-          "affiliations": 0
-        }
-      },
-      "pushedAt": "2026-11-02T00:31:52.105Z",
-      "emailSentAt": "2026-11-02T00:31:52.105Z",
-      "firstPushedAt": "2026-11-02T00:31:52.105Z"
     }
   ],
   "kind": "history",
