@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-11-23T00:58:35.640Z",
+  "generatedAt": "2026-11-23T02:35:11.126Z",
   "digestDate": "2026-11-23",
   "kind": "daily-new",
   "timezone": "Asia/Shanghai",
   "siteUrl": "https://YouthLiuYS.github.io/PaperDigestAgent/",
   "historyPath": "public/research-digest/papers.json",
   "sources": {
-    "collectionMode": "daily",
+    "collectionMode": "all",
     "arxivQueries": [
       "(cat:cs.AR OR cat:cs.DC OR cat:cs.PF) AND (all:LLM OR all:transformer OR all:foundation OR all:language) AND (all:accelerator OR all:processor OR all:architecture OR all:hardware OR all:system OR all:serving OR all:training OR all:inference OR all:cache)",
       "(all:quantization OR all:compression OR all:pruning OR all:sparsity OR all:low-bit) AND (all:LLM OR all:transformer OR all:language) AND (all:hardware OR all:accelerator OR all:inference OR all:serving OR all:processor)",
@@ -102,14 +102,14 @@
     ],
     "daysBack": 7,
     "maxPapers": 12,
-    "dailyMaxPapers": 8,
+    "dailyMaxPapers": 12,
     "dailyPrimaryMaxPapers": 6,
     "dailyTrendMaxPapers": 2,
     "minNewPapers": 5,
     "backfillEnabled": true,
     "backfillDays": 45,
     "backfillMaxPerQuery": 24,
-    "conferenceMaxPapers": 16,
+    "conferenceMaxPapers": 12,
     "pdfDownloadEnabled": false,
     "pdfDirectory": "public/research-digest/pdfs",
     "pdfMaxPerRun": 12
@@ -142,9 +142,9 @@
     "backfillCandidates": 0,
     "rawCandidates": 145,
     "newlyAdded": 8,
-    "pendingDigest": 8,
+    "pendingDigest": 0,
     "pendingEmail": 0,
-    "pushed": 0,
+    "pushed": 8,
     "failedDigest": 0,
     "failedEmail": 0,
     "pdfDownloaded": 0,
@@ -191,67 +191,76 @@
       "conferenceVenues": [],
       "conferenceYears": [],
       "digest": {
-        "summaryZh": "AI 摘要未生成。原始摘要要点：Attention in large language models (LLMs) scores every query against every key with a full dot product. We investigate whether this dot product must be computed...",
-        "motivationZh": "命令行启用了 --no-ai",
-        "methodZh": "请配置 AI 后重新运行，以生成方法提炼。",
-        "experimentsZh": "来源元数据未披露完整实验设置或结果。",
-        "affiliationsZh": "未在 DBLP/arXiv 元数据中提供。",
+        "summaryZh": "HiSA 保留Q/K投影，只按相对位置与RoPE频率裁掉点积中的特征对，而非选择少数token。它把静态频率窗口转成可过期的分块K缓存，并实现FlashAttention-3版本；小模型实验支持该结构，但计算减少并不自动转为训练提速。",
+        "motivationZh": "注意力对每个query/key计算完整特征点积，长上下文下运算与缓存访问代价持续增长。 多数稀疏注意力沿token维选择，而较少利用RoPE不同频率特征对的有效距离；只跳计算也不一定减少缓存驻留。 若稀疏规则由位置预先确定，可省去内容选择开销，并把不再需要的key特征真正移出缓存。 直接关联RoPE、稀疏注意力、KV层次与GPU内核，对用户长上下文推理研究高度相关。",
+        "methodZh": "将RoPE注意力得分拆为频率对贡献，仅在相对旋转未超过角度预算的距离内保留相应特征对。 保持Q/K投影完整，以固定位置规则决定部分点积，不依赖逐token内容选择。 各key特征块使用按频率窗口确定长度的环形缓存，超出整体作用距离的token值也可丢弃。 精确规则用Triton，块化规则移植到FlashAttention-3，训练与推理使用对应稀疏模式。 属于模型结构、缓存布局与GPU内核协同；性能表使用单张H200，不是新加速器芯片。 把特征维RoPE窗口同时落到注意力算术和真实KV生命周期，而非只做token稀疏或跳过读取。",
+        "experimentsZh": "135M和360M的SmolLM规格在OpenWebText从头训练，比较4K与延长16K上下文；解码表使用H200。 同设置稠密注意力和FlashAttention-3，另比较相同自定义内核但不丢特征的对照。 4K实验只计算约29–34%点积且验证损失较低；16K、batch128解码比稠密FA3约快42%，KV从45.0降至29.1GiB。但16K训练Flash-HiSA仅有稠密FA3的94%吞吐。 主要验证135M/360M小模型；42%解码收益也包含查询tile改变，同内核消融只快约13%。减少QK乘积不等于整层运算或训练时间等比例减少，不能直接作为大模型免训练替换。",
+        "affiliationsZh": "Ambroise Borbely：EPFL及Swiss Data Science Center（EPFL与ETH Zurich）；Mathieu Salzmann：EPFL；Olivier Verscheure：Swiss Data Science Center（EPFL与ETH Zurich）。",
         "tags": [
-          "cs.LG",
-          "cs.CL"
+          "RoPE",
+          "特征维稀疏",
+          "KV缓存",
+          "FlashAttention",
+          "推理内核"
         ],
-        "importance": 3,
-        "researchFitZh": "AI harness 尚未完成分析，无法判断与用户研究方向的具体关系。",
-        "hardwareRelevance": 1,
-        "algorithmRelevance": 1,
-        "systemRelevance": 1,
-        "readPriority": "archive",
-        "whyReadZh": "需要完成 motivation、method 和实验结果分析后再判断是否值得深读。",
-        "limitationsZh": "命令行启用了 --no-ai",
+        "importance": 5,
+        "researchFitZh": "直接关联RoPE、稀疏注意力、KV层次与GPU内核，对用户长上下文推理研究高度相关。",
+        "hardwareRelevance": 4,
+        "algorithmRelevance": 5,
+        "systemRelevance": 5,
+        "readPriority": "deep-read",
+        "whyReadZh": "优先核读频率窗口到缓存过期的映射，以及算术节省如何被GPU执行开销抵消。",
+        "limitationsZh": "主要验证135M/360M小模型；42%解码收益也包含查询tile改变，同内核消融只快约13%。减少QK乘积不等于整层运算或训练时间等比例减少，不能直接作为大模型免训练替换。",
         "motivationDetail": {
-          "problemZh": "harness 未完成分析。",
-          "gapZh": "harness 未完成分析。",
-          "whyImportantZh": "harness 未完成分析。",
-          "userRelevanceZh": "harness 未完成分析。",
-          "evidence": "not analyzed"
+          "problemZh": "注意力对每个query/key计算完整特征点积，长上下文下运算与缓存访问代价持续增长。",
+          "gapZh": "多数稀疏注意力沿token维选择，而较少利用RoPE不同频率特征对的有效距离；只跳计算也不一定减少缓存驻留。",
+          "whyImportantZh": "若稀疏规则由位置预先确定，可省去内容选择开销，并把不再需要的key特征真正移出缓存。",
+          "userRelevanceZh": "直接关联RoPE、稀疏注意力、KV层次与GPU内核，对用户长上下文推理研究高度相关。",
+          "evidence": "完整摘要给出约三分之一QK乘积；已读 https://arxiv.org/html/2611.26363v1 第3–4节、表4–6，核实135M/360M、H200、45.0/29.1GiB、42%与同内核13%和训练94%吞吐。"
         },
         "methodDetail": {
-          "coreIdeaZh": "harness 未完成分析。",
+          "coreIdeaZh": "将RoPE注意力得分拆为频率对贡献，仅在相对旋转未超过角度预算的距离内保留相应特征对。",
           "componentsZh": [
-            "未分析"
+            "保持Q/K投影完整，以固定位置规则决定部分点积，不依赖逐token内容选择。",
+            "各key特征块使用按频率窗口确定长度的环形缓存，超出整体作用距离的token值也可丢弃。",
+            "精确规则用Triton，块化规则移植到FlashAttention-3，训练与推理使用对应稀疏模式。"
           ],
-          "hardwareSystemDetailZh": "harness 未完成分析。",
-          "noveltyZh": "harness 未完成分析。",
-          "evidence": "not analyzed"
+          "hardwareSystemDetailZh": "属于模型结构、缓存布局与GPU内核协同；性能表使用单张H200，不是新加速器芯片。",
+          "noveltyZh": "把特征维RoPE窗口同时落到注意力算术和真实KV生命周期，而非只做token稀疏或跳过读取。",
+          "evidence": "完整摘要给出约三分之一QK乘积；已读 https://arxiv.org/html/2611.26363v1 第3–4节、表4–6，核实135M/360M、H200、45.0/29.1GiB、42%与同内核13%和训练94%吞吐。"
         },
         "experimentDetail": {
-          "setupZh": "harness 未完成分析。",
-          "baselinesZh": "harness 未完成分析。",
+          "setupZh": "135M和360M的SmolLM规格在OpenWebText从头训练，比较4K与延长16K上下文；解码表使用H200。",
+          "baselinesZh": "同设置稠密注意力和FlashAttention-3，另比较相同自定义内核但不丢特征的对照。",
           "metricsZh": [
-            "未分析"
+            "验证损失",
+            "实际计算的QK点积比例",
+            "训练/解码吞吐",
+            "KV显存"
           ],
-          "mainResultsZh": "harness 未完成分析。",
-          "limitationsZh": "harness 未完成分析。",
-          "evidence": "not analyzed"
+          "mainResultsZh": "4K实验只计算约29–34%点积且验证损失较低；16K、batch128解码比稠密FA3约快42%，KV从45.0降至29.1GiB。但16K训练Flash-HiSA仅有稠密FA3的94%吞吐。",
+          "limitationsZh": "主要验证135M/360M小模型；42%解码收益也包含查询tile改变，同内核消融只快约13%。减少QK乘积不等于整层运算或训练时间等比例减少，不能直接作为大模型免训练替换。",
+          "evidence": "完整摘要给出约三分之一QK乘积；已读 https://arxiv.org/html/2611.26363v1 第3–4节、表4–6，核实135M/360M、H200、45.0/29.1GiB、42%与同内核13%和训练94%吞吐。"
         },
         "evidence": {
           "usedSources": [
-            "metadata"
+            "metadata",
+            "abstract",
+            "https://arxiv.org/html/2611.26363v1"
           ],
-          "affiliationEvidence": "",
-          "experimentEvidence": "",
+          "affiliationEvidence": "实际读取arXiv HTML首部逐作者Affiliation字段，明确对应单位；队列元数据虽为空，单位由已读正文首部补充。",
+          "experimentEvidence": "完整摘要给出约三分之一QK乘积；已读 https://arxiv.org/html/2611.26363v1 第3–4节、表4–6，核实135M/360M、H200、45.0/29.1GiB、42%与同内核13%和训练94%吞吐。",
           "missingFields": [
-            "motivation",
-            "method",
-            "experiments"
+            "大规模模型泛化",
+            "PDF前两页未读取"
           ]
         },
         "confidence": {
-          "summary": 0.2,
-          "motivation": 0,
-          "method": 0,
-          "experiments": 0,
-          "affiliations": 0
+          "summary": 0.97,
+          "motivation": 0.96,
+          "method": 0.95,
+          "experiments": 0.94,
+          "affiliations": 0.97
         }
       },
       "recommendationTrack": "hardware-primary",
@@ -260,13 +269,20 @@
       "relevanceReason": "命中 AI 处理器、体系结构、量化、训推系统或内存/缓存优化主题",
       "pdfStatus": "remote",
       "workflow": {
-        "digestStatus": "pending",
-        "emailStatus": "waiting-digest",
-        "digestError": "命令行启用了 --no-ai",
+        "digestStatus": "ready",
+        "emailStatus": "sent",
+        "digestError": "",
         "harnessVersion": "paper-reader-v1",
         "collectStatus": "collected",
-        "pdfStatus": "remote"
-      }
+        "pdfStatus": "remote",
+        "harnessCheckedAt": "2026-11-23T02:35:05.729Z",
+        "harnessWarnings": [],
+        "emailSentAt": "2026-11-23T02:35:11.126Z",
+        "lastEmailError": ""
+      },
+      "pushedAt": "2026-11-23T02:35:11.126Z",
+      "emailSentAt": "2026-11-23T02:35:11.126Z",
+      "firstPushedAt": "2026-11-23T02:35:11.126Z"
     },
     {
       "id": "arxiv:2611.26358",
@@ -536,77 +552,97 @@
       "relevanceReason": "命中 AI 处理器、体系结构、量化、训推系统或内存/缓存优化主题",
       "pdfStatus": "remote",
       "workflow": {
-        "digestStatus": "pending",
-        "emailStatus": "waiting-digest",
-        "digestError": "命令行启用了 --no-ai",
+        "digestStatus": "ready",
+        "emailStatus": "sent",
+        "digestError": "",
         "harnessVersion": "paper-reader-v1",
         "collectStatus": "collected",
-        "pdfStatus": "remote"
+        "pdfStatus": "remote",
+        "harnessCheckedAt": "2026-11-23T02:35:05.729Z",
+        "harnessWarnings": [],
+        "emailSentAt": "2026-11-23T02:35:11.126Z",
+        "lastEmailError": ""
       },
       "digest": {
-        "summaryZh": "AI 摘要未生成。原始摘要要点：Beam is a sparse Mixture-of-Experts (MoE) model with 501.3B total parameters and 23.4B active parameters, specifically built and optimized for coding, reasoning...",
-        "motivationZh": "命令行启用了 --no-ai",
-        "methodZh": "请配置 AI 后重新运行，以生成方法提炼。",
-        "experimentsZh": "来源元数据未披露完整实验设置或结果。",
-        "affiliationsZh": "未在 DBLP/arXiv 元数据中提供。",
+        "summaryZh": "Beam 报告面向编码和Agent的稀疏MoE训练与服务方案，结合长上下文训练、异步强化学习、专家FP8/NVFP4和DFlash 2草稿模型。值得重点看低精度模块边界与真实服务口径，报告中的活跃参数、GPU数和吞吐倍数不能混作同一效率指标。",
+        "motivationZh": "编码与长程Agent模型需要在大容量知识、上下文、推理训练和服务成本之间权衡，单看总参数难以判断执行代价。 稀疏MoE减少每token激活计算，却仍有权重驻留、路由、KV容量及访存瓶颈，量化和草稿收益依赖具体部署。 完整训练到服务的证据可帮助识别哪些低精度组件和并行配置真正改善吞吐，而不只依据模型规模宣传。 关联MoE低比特、长上下文服务与推测解码；优先阅读量化和部署章节，其余能力训练可作为背景。",
+        "methodZh": "将稀疏MoE、局部/全局注意力、长上下文训练、异步RL及低精度服务组织成完整模型系统。 摘要报告501.3B总参数、23.4B活跃参数和两阶段midtraining扩展到1M上下文。 NVFP4版本仅路由MoE专家W4A4，其他主要模块维持BF16、路由器FP32；不能把整个模型称为全FP4。 1.93B的DFlash 2使用块扩散草稿，并限制草稿上下文窗口，使草稿成本不随全上下文线性增长。 大规模异步RL配合低精度和系统并行优化服务与训练执行。 摘要中的RL规模是10.5K GB300 GPU；量化服务实测则用B300 SXM和SGLang，分别比较4/8GPU副本，不能混用两个平台口径。 报告将模块选择性量化、草稿设计和长程Agent部署共同优化，适合研究模型/硬件配置之间的实际取舍。",
+        "experimentsZh": "已读量化和推测解码章节：服务比较BF16、FP8、NVFP4，在B300上使用固定长度负载与AgentX编码会话回放。 同一Beam的BF16/FP8检查点；NVFP4校准比较RTN、four-over-six与Local Hessian，服务须区分4卡和8卡。 报告称固定8K输入/1K输出、50 tokens/s/user时，4卡NVFP4每GPU吞吐约为8卡BF16的6.0倍；同为8卡时为4.2倍。DFlash 2报告解码吞吐1.9–3.0倍；均是具体部署或负载结果。 6倍比较同时改变精度和副本GPU数，不能当同资源单内核加速；服务点部分插值，能力分数受采样波动影响。本轮只核读架构、量化与草稿重点，未独立复核全部训练/能力/安全评测。",
+        "affiliationsZh": "未在 DBLP/arXiv 元数据中提供",
         "tags": [
-          "cs.CL",
-          "cs.AI"
+          "MoE",
+          "NVFP4",
+          "推测解码",
+          "Agent训练",
+          "服务吞吐"
         ],
-        "importance": 3,
-        "researchFitZh": "AI harness 尚未完成分析，无法判断与用户研究方向的具体关系。",
-        "hardwareRelevance": 1,
-        "algorithmRelevance": 1,
-        "systemRelevance": 1,
-        "readPriority": "archive",
-        "whyReadZh": "需要完成 motivation、method 和实验结果分析后再判断是否值得深读。",
-        "limitationsZh": "命令行启用了 --no-ai",
+        "importance": 4,
+        "researchFitZh": "关联MoE低比特、长上下文服务与推测解码；优先阅读量化和部署章节，其余能力训练可作为背景。",
+        "hardwareRelevance": 4,
+        "algorithmRelevance": 4,
+        "systemRelevance": 5,
+        "readPriority": "deep-read",
+        "whyReadZh": "优先读专家量化边界和每GPU吞吐/用户速度曲线，建立MoE低比特部署的可比基线。",
+        "limitationsZh": "6倍比较同时改变精度和副本GPU数，不能当同资源单内核加速；服务点部分插值，能力分数受采样波动影响。本轮只核读架构、量化与草稿重点，未独立复核全部训练/能力/安全评测。",
         "motivationDetail": {
-          "problemZh": "harness 未完成分析。",
-          "gapZh": "harness 未完成分析。",
-          "whyImportantZh": "harness 未完成分析。",
-          "userRelevanceZh": "harness 未完成分析。",
-          "evidence": "not analyzed"
+          "problemZh": "编码与长程Agent模型需要在大容量知识、上下文、推理训练和服务成本之间权衡，单看总参数难以判断执行代价。",
+          "gapZh": "稀疏MoE减少每token激活计算，却仍有权重驻留、路由、KV容量及访存瓶颈，量化和草稿收益依赖具体部署。",
+          "whyImportantZh": "完整训练到服务的证据可帮助识别哪些低精度组件和并行配置真正改善吞吐，而不只依据模型规模宣传。",
+          "userRelevanceZh": "关联MoE低比特、长上下文服务与推测解码；优先阅读量化和部署章节，其余能力训练可作为背景。",
+          "evidence": "完整摘要提供501.3B/23.4B、1M、10.5K GB300和1.93B草稿；已读 https://arxiv.org/html/2611.26358v1 第2.1.1、4.5–4.6节与表15–16，核实专家NVFP4范围、B300服务、4/8GPU的6.0/4.2倍及DFlash2的1.9–3.0倍。"
         },
         "methodDetail": {
-          "coreIdeaZh": "harness 未完成分析。",
+          "coreIdeaZh": "将稀疏MoE、局部/全局注意力、长上下文训练、异步RL及低精度服务组织成完整模型系统。",
           "componentsZh": [
-            "未分析"
+            "摘要报告501.3B总参数、23.4B活跃参数和两阶段midtraining扩展到1M上下文。",
+            "NVFP4版本仅路由MoE专家W4A4，其他主要模块维持BF16、路由器FP32；不能把整个模型称为全FP4。",
+            "1.93B的DFlash 2使用块扩散草稿，并限制草稿上下文窗口，使草稿成本不随全上下文线性增长。",
+            "大规模异步RL配合低精度和系统并行优化服务与训练执行。"
           ],
-          "hardwareSystemDetailZh": "harness 未完成分析。",
-          "noveltyZh": "harness 未完成分析。",
-          "evidence": "not analyzed"
+          "hardwareSystemDetailZh": "摘要中的RL规模是10.5K GB300 GPU；量化服务实测则用B300 SXM和SGLang，分别比较4/8GPU副本，不能混用两个平台口径。",
+          "noveltyZh": "报告将模块选择性量化、草稿设计和长程Agent部署共同优化，适合研究模型/硬件配置之间的实际取舍。",
+          "evidence": "完整摘要提供501.3B/23.4B、1M、10.5K GB300和1.93B草稿；已读 https://arxiv.org/html/2611.26358v1 第2.1.1、4.5–4.6节与表15–16，核实专家NVFP4范围、B300服务、4/8GPU的6.0/4.2倍及DFlash2的1.9–3.0倍。"
         },
         "experimentDetail": {
-          "setupZh": "harness 未完成分析。",
-          "baselinesZh": "harness 未完成分析。",
+          "setupZh": "已读量化和推测解码章节：服务比较BF16、FP8、NVFP4，在B300上使用固定长度负载与AgentX编码会话回放。",
+          "baselinesZh": "同一Beam的BF16/FP8检查点；NVFP4校准比较RTN、four-over-six与Local Hessian，服务须区分4卡和8卡。",
           "metricsZh": [
-            "未分析"
+            "每GPU输出吞吐",
+            "固定每用户速度下的服务容量",
+            "KV可驻留量",
+            "量化后KL/任务质量",
+            "草稿解码吞吐"
           ],
-          "mainResultsZh": "harness 未完成分析。",
-          "limitationsZh": "harness 未完成分析。",
-          "evidence": "not analyzed"
+          "mainResultsZh": "报告称固定8K输入/1K输出、50 tokens/s/user时，4卡NVFP4每GPU吞吐约为8卡BF16的6.0倍；同为8卡时为4.2倍。DFlash 2报告解码吞吐1.9–3.0倍；均是具体部署或负载结果。",
+          "limitationsZh": "6倍比较同时改变精度和副本GPU数，不能当同资源单内核加速；服务点部分插值，能力分数受采样波动影响。本轮只核读架构、量化与草稿重点，未独立复核全部训练/能力/安全评测。",
+          "evidence": "完整摘要提供501.3B/23.4B、1M、10.5K GB300和1.93B草稿；已读 https://arxiv.org/html/2611.26358v1 第2.1.1、4.5–4.6节与表15–16，核实专家NVFP4范围、B300服务、4/8GPU的6.0/4.2倍及DFlash2的1.9–3.0倍。"
         },
         "evidence": {
           "usedSources": [
-            "metadata"
+            "metadata",
+            "abstract",
+            "https://arxiv.org/html/2611.26358v1"
           ],
-          "affiliationEvidence": "",
-          "experimentEvidence": "",
+          "affiliationEvidence": "队列affiliations与authorAffiliations为空或缺失，本轮未核实可靠单位；采用规定缺失表述，不由作者姓名推断。",
+          "experimentEvidence": "完整摘要提供501.3B/23.4B、1M、10.5K GB300和1.93B草稿；已读 https://arxiv.org/html/2611.26358v1 第2.1.1、4.5–4.6节与表15–16，核实专家NVFP4范围、B300服务、4/8GPU的6.0/4.2倍及DFlash2的1.9–3.0倍。",
           "missingFields": [
-            "motivation",
-            "method",
-            "experiments"
+            "作者单位",
+            "作者单位未在本轮可用元数据中提供",
+            "训练与全能力评测未全面复核",
+            "PDF前两页未读取"
           ]
         },
         "confidence": {
-          "summary": 0.2,
-          "motivation": 0,
-          "method": 0,
-          "experiments": 0,
+          "summary": 0.96,
+          "motivation": 0.94,
+          "method": 0.93,
+          "experiments": 0.91,
           "affiliations": 0
         }
-      }
+      },
+      "pushedAt": "2026-11-23T02:35:11.126Z",
+      "emailSentAt": "2026-11-23T02:35:11.126Z",
+      "firstPushedAt": "2026-11-23T02:35:11.126Z"
     },
     {
       "id": "arxiv:2611.25976",
@@ -649,77 +685,92 @@
       "relevanceReason": "命中 AI 处理器、体系结构、量化、训推系统或内存/缓存优化主题",
       "pdfStatus": "remote",
       "workflow": {
-        "digestStatus": "pending",
-        "emailStatus": "waiting-digest",
-        "digestError": "命令行启用了 --no-ai",
+        "digestStatus": "ready",
+        "emailStatus": "sent",
+        "digestError": "",
         "harnessVersion": "paper-reader-v1",
         "collectStatus": "collected",
-        "pdfStatus": "remote"
+        "pdfStatus": "remote",
+        "harnessCheckedAt": "2026-11-23T02:35:05.729Z",
+        "harnessWarnings": [],
+        "emailSentAt": "2026-11-23T02:35:11.126Z",
+        "lastEmailError": ""
       },
       "digest": {
-        "summaryZh": "AI 摘要未生成。原始摘要要点：We tested whether energy estimates of open-weight large language models (LLMs) scale proportionally with an exactly stated food weight, and whether computing en...",
-        "motivationZh": "命令行启用了 --no-ai",
-        "methodZh": "请配置 AI 后重新运行，以生成方法提炼。",
-        "experimentsZh": "来源元数据未披露完整实验设置或结果。",
-        "affiliationsZh": "未在 DBLP/arXiv 元数据中提供。",
+        "summaryZh": "本文固定食物种类、改变明确给出的重量，发现若干LLM的食物热量估计向典型份量压缩；让模型给能量密度再由程序乘重量可减轻误差。这里energy指食物能量，不是推理功耗，属于数量推理可靠性应用评测。",
+        "motivationZh": "LLM对常见份量热量估计看似合理，却可能不随明确重量成比例变化，导致极小或极大份量系统性偏差。 只评估典型份量会遮蔽缩放斜率问题，也难区分缺乏能量密度知识与未正确执行数量关系。 跨重量重复测同一食物能定位数值缩放失败，程序化乘法对照可检查知识与计算之间的断层。 与LLM数值可靠性和工具分工有关，但不涉及芯片能效、低精度硬件或KV缓存，属于主题外应用归档。",
+        "methodZh": "以预先规定的剂量–响应协议改变重量，估计输出对重量的弹性，并与程序执行密度乘重量对照。 七种模型对168种USDA食物在九档明确重量下估计热量。 把比例缩放的理想弹性1作为参照，观察典型份量附近的偏差压缩。 两步法先获取模型自己的能量密度，再在代码中乘重量；另比较精度和提示设置。 这是模型行为评测，full precision指排查量化影响的对照；摘要没有硬件功耗或加速器实验。 将食物热量问答从单点准确率改成固定食物的重量响应曲线，区分密度知识与最终数量输出。",
+        "experimentsZh": "摘要披露七开源模型、168食物、九种重量，范围为默认份量的0.25–4倍。 直接询问、提供密度及代码两步计算，并比较全精度与简单提示。 七模型弹性0.548–0.979，95%区间均低于1；两步法将极端份量典型误差因子从1.47–2.43降至1.20–1.38，结论限于此协议。 本轮仅核读摘要，未逐项核实模型、提示和营养数据库分项；不能推广成所有食品的可靠估算或个体饮食建议，更不能当芯片能耗研究。",
+        "affiliationsZh": "未在 DBLP/arXiv 元数据中提供",
         "tags": [
-          "cs.CL",
-          "cs.AI"
+          "LLM评测",
+          "数量缩放",
+          "食物能量",
+          "工具计算"
         ],
-        "importance": 3,
-        "researchFitZh": "AI harness 尚未完成分析，无法判断与用户研究方向的具体关系。",
+        "importance": 1,
+        "researchFitZh": "与LLM数值可靠性和工具分工有关，但不涉及芯片能效、低精度硬件或KV缓存，属于主题外应用归档。",
         "hardwareRelevance": 1,
-        "algorithmRelevance": 1,
+        "algorithmRelevance": 3,
         "systemRelevance": 1,
         "readPriority": "archive",
-        "whyReadZh": "需要完成 motivation、method 和实验结果分析后再判断是否值得深读。",
-        "limitationsZh": "命令行启用了 --no-ai",
+        "whyReadZh": "归档为数量缩放失真的评测案例，当前体系结构研究无需优先深读。",
+        "limitationsZh": "本轮仅核读摘要，未逐项核实模型、提示和营养数据库分项；不能推广成所有食品的可靠估算或个体饮食建议，更不能当芯片能耗研究。",
         "motivationDetail": {
-          "problemZh": "harness 未完成分析。",
-          "gapZh": "harness 未完成分析。",
-          "whyImportantZh": "harness 未完成分析。",
-          "userRelevanceZh": "harness 未完成分析。",
-          "evidence": "not analyzed"
+          "problemZh": "LLM对常见份量热量估计看似合理，却可能不随明确重量成比例变化，导致极小或极大份量系统性偏差。",
+          "gapZh": "只评估典型份量会遮蔽缩放斜率问题，也难区分缺乏能量密度知识与未正确执行数量关系。",
+          "whyImportantZh": "跨重量重复测同一食物能定位数值缩放失败，程序化乘法对照可检查知识与计算之间的断层。",
+          "userRelevanceZh": "与LLM数值可靠性和工具分工有关，但不涉及芯片能效、低精度硬件或KV缓存，属于主题外应用归档。",
+          "evidence": "实际读取 https://arxiv.org/abs/2611.25976 和完整摘要，明确七模型/168食物/九重量、0.548–0.979与误差因子；energy在此是食物热量，未披露硬件功耗。"
         },
         "methodDetail": {
-          "coreIdeaZh": "harness 未完成分析。",
+          "coreIdeaZh": "以预先规定的剂量–响应协议改变重量，估计输出对重量的弹性，并与程序执行密度乘重量对照。",
           "componentsZh": [
-            "未分析"
+            "七种模型对168种USDA食物在九档明确重量下估计热量。",
+            "把比例缩放的理想弹性1作为参照，观察典型份量附近的偏差压缩。",
+            "两步法先获取模型自己的能量密度，再在代码中乘重量；另比较精度和提示设置。"
           ],
-          "hardwareSystemDetailZh": "harness 未完成分析。",
-          "noveltyZh": "harness 未完成分析。",
-          "evidence": "not analyzed"
+          "hardwareSystemDetailZh": "这是模型行为评测，full precision指排查量化影响的对照；摘要没有硬件功耗或加速器实验。",
+          "noveltyZh": "将食物热量问答从单点准确率改成固定食物的重量响应曲线，区分密度知识与最终数量输出。",
+          "evidence": "实际读取 https://arxiv.org/abs/2611.25976 和完整摘要，明确七模型/168食物/九重量、0.548–0.979与误差因子；energy在此是食物热量，未披露硬件功耗。"
         },
         "experimentDetail": {
-          "setupZh": "harness 未完成分析。",
-          "baselinesZh": "harness 未完成分析。",
+          "setupZh": "摘要披露七开源模型、168食物、九种重量，范围为默认份量的0.25–4倍。",
+          "baselinesZh": "直接询问、提供密度及代码两步计算，并比较全精度与简单提示。",
           "metricsZh": [
-            "未分析"
+            "估计对重量的弹性",
+            "置信区间",
+            "极端份量误差因子"
           ],
-          "mainResultsZh": "harness 未完成分析。",
-          "limitationsZh": "harness 未完成分析。",
-          "evidence": "not analyzed"
+          "mainResultsZh": "七模型弹性0.548–0.979，95%区间均低于1；两步法将极端份量典型误差因子从1.47–2.43降至1.20–1.38，结论限于此协议。",
+          "limitationsZh": "本轮仅核读摘要，未逐项核实模型、提示和营养数据库分项；不能推广成所有食品的可靠估算或个体饮食建议，更不能当芯片能耗研究。",
+          "evidence": "实际读取 https://arxiv.org/abs/2611.25976 和完整摘要，明确七模型/168食物/九重量、0.548–0.979与误差因子；energy在此是食物热量，未披露硬件功耗。"
         },
         "evidence": {
           "usedSources": [
-            "metadata"
+            "metadata",
+            "abstract",
+            "https://arxiv.org/abs/2611.25976"
           ],
-          "affiliationEvidence": "",
-          "experimentEvidence": "",
+          "affiliationEvidence": "队列affiliations与authorAffiliations为空或缺失，本轮未核实可靠单位；采用规定缺失表述，不由作者姓名推断。",
+          "experimentEvidence": "实际读取 https://arxiv.org/abs/2611.25976 和完整摘要，明确七模型/168食物/九重量、0.548–0.979与误差因子；energy在此是食物热量，未披露硬件功耗。",
           "missingFields": [
-            "motivation",
-            "method",
-            "experiments"
+            "作者单位",
+            "具体模型与完整分项表未核读",
+            "PDF前两页未读取"
           ]
         },
         "confidence": {
-          "summary": 0.2,
-          "motivation": 0,
-          "method": 0,
-          "experiments": 0,
+          "summary": 0.94,
+          "motivation": 0.92,
+          "method": 0.89,
+          "experiments": 0.83,
           "affiliations": 0
         }
-      }
+      },
+      "pushedAt": "2026-11-23T02:35:11.126Z",
+      "emailSentAt": "2026-11-23T02:35:11.126Z",
+      "firstPushedAt": "2026-11-23T02:35:11.126Z"
     },
     {
       "id": "arxiv:2611.26334",
@@ -758,67 +809,77 @@
       "conferenceVenues": [],
       "conferenceYears": [],
       "digest": {
-        "summaryZh": "AI 摘要未生成。原始摘要要点：Video diffusion transformers reuse key--value (KV) caches across denoising steps, which quickly becomes a bottleneck for long video generation. We find that qua...",
-        "motivationZh": "命令行启用了 --no-ai",
-        "methodZh": "请配置 AI 后重新运行，以生成方法提炼。",
-        "experimentsZh": "来源元数据未披露完整实验设置或结果。",
-        "affiliationsZh": "未在 DBLP/arXiv 元数据中提供。",
+        "summaryZh": "TRQ 利用相邻视频帧KV的通道均值结构，为每段视频在线拟合离散旋转，再以2比特编码缓存。它在相近压缩率下提高视频一致性并提供融合Triton实现，但核心收益是压缩质量，不能把旋转内核优化误称为视频生成端到端加速。",
+        "motivationZh": "长视频扩散反复复用KV，缓存很大；直接对跨远时间向量量化会放大动态范围和误差。 LLM常用旋转/量化未充分利用邻近视频token的稳定通道模式，这种模式又随视频而变，统一静态旋转未必合适。 以低元数据开销适配每视频的缓存分布，可在有限显存下保留更长生成历史与跨帧一致性。 关联低比特KV、旋转量化和GPU融合实现，对研究量化转换与缓存访问有参考价值，负载为视频DiT。",
+        "methodZh": "按相邻时间块拟合正交变换，把通道均值展平以便量化偏置吸收，再用紧凑参数编码旋转。 变换由2×2平面旋转树及共享Hadamard组成，每个离散角只存两比特。 对每个新视频无梯度拟合；贪心的全局最优只针对固定树下的均值展平目标。 编码使用INT2及分组元数据，注意力前逆旋转恢复原通道坐标。 Triton融合树各级拟合/遍历，减少多次启动与中间张量；仍存在离线布局校准。 CUDA/Triton软件实现，附录旋转计时用H100 80GB；不是原生INT2注意力硬件，也不是无需反量化恢复。 利用时间邻近性做逐视频在线旋转，兼顾量化误差与角度元数据，而非仅采用固定通道旋转。",
+        "experimentsZh": "LongCat-Video-13B、HY-WorldPlay-8B及Self-Forcing-Wan-1.3B，使用匹配提示评估480p，并另测LongCat 720p。 BF16 KV参考与QVG、KIVI、QuaRot、TurboQuant，量化对照采用INT2并说明不同元数据口径。 摘要报告主体一致性LongCat为92.02对QVG90.38，HY为87.61对86.33；LongCat480p表中压缩为6.89倍，耗时为稠密的1.05倍，因此质量改善不等于端到端更快。 收益依赖时间冗余，快速运动/切镜头仍是边界；均值目标最优不代表任务质量或运行时间全局最优。部分保真指标只测首次受影响窗口，VBench才覆盖完整rollout。",
+        "affiliationsZh": "Ryan Lucas、Petros Prastakos、Rahul Mazumder：麻省理工学院 Operations Research Center。",
         "tags": [
-          "cs.CV",
-          "cs.AI"
+          "视频扩散",
+          "INT2 KV",
+          "在线旋转",
+          "Triton",
+          "量化元数据"
         ],
-        "importance": 3,
-        "researchFitZh": "AI harness 尚未完成分析，无法判断与用户研究方向的具体关系。",
-        "hardwareRelevance": 1,
-        "algorithmRelevance": 1,
-        "systemRelevance": 1,
-        "readPriority": "archive",
-        "whyReadZh": "需要完成 motivation、method 和实验结果分析后再判断是否值得深读。",
-        "limitationsZh": "命令行启用了 --no-ai",
+        "importance": 4,
+        "researchFitZh": "关联低比特KV、旋转量化和GPU融合实现，对研究量化转换与缓存访问有参考价值，负载为视频DiT。",
+        "hardwareRelevance": 3,
+        "algorithmRelevance": 5,
+        "systemRelevance": 4,
+        "readPriority": "deep-read",
+        "whyReadZh": "优先读在线旋转参数、元数据与逆变换成本，区分存储质量收益和真实执行收益。",
+        "limitationsZh": "收益依赖时间冗余，快速运动/切镜头仍是边界；均值目标最优不代表任务质量或运行时间全局最优。部分保真指标只测首次受影响窗口，VBench才覆盖完整rollout。",
         "motivationDetail": {
-          "problemZh": "harness 未完成分析。",
-          "gapZh": "harness 未完成分析。",
-          "whyImportantZh": "harness 未完成分析。",
-          "userRelevanceZh": "harness 未完成分析。",
-          "evidence": "not analyzed"
+          "problemZh": "长视频扩散反复复用KV，缓存很大；直接对跨远时间向量量化会放大动态范围和误差。",
+          "gapZh": "LLM常用旋转/量化未充分利用邻近视频token的稳定通道模式，这种模式又随视频而变，统一静态旋转未必合适。",
+          "whyImportantZh": "以低元数据开销适配每视频的缓存分布，可在有限显存下保留更长生成历史与跨帧一致性。",
+          "userRelevanceZh": "关联低比特KV、旋转量化和GPU融合实现，对研究量化转换与缓存访问有参考价值，负载为视频DiT。",
+          "evidence": "完整摘要给出两模型主体一致性；已读 https://arxiv.org/html/2611.26334v1 第4.5–5节、表1与附录表4，核实LongCat6.89倍/耗时1.05倍、H100旋转计时、离线校准及指标时间窗口。"
         },
         "methodDetail": {
-          "coreIdeaZh": "harness 未完成分析。",
+          "coreIdeaZh": "按相邻时间块拟合正交变换，把通道均值展平以便量化偏置吸收，再用紧凑参数编码旋转。",
           "componentsZh": [
-            "未分析"
+            "变换由2×2平面旋转树及共享Hadamard组成，每个离散角只存两比特。",
+            "对每个新视频无梯度拟合；贪心的全局最优只针对固定树下的均值展平目标。",
+            "编码使用INT2及分组元数据，注意力前逆旋转恢复原通道坐标。",
+            "Triton融合树各级拟合/遍历，减少多次启动与中间张量；仍存在离线布局校准。"
           ],
-          "hardwareSystemDetailZh": "harness 未完成分析。",
-          "noveltyZh": "harness 未完成分析。",
-          "evidence": "not analyzed"
+          "hardwareSystemDetailZh": "CUDA/Triton软件实现，附录旋转计时用H100 80GB；不是原生INT2注意力硬件，也不是无需反量化恢复。",
+          "noveltyZh": "利用时间邻近性做逐视频在线旋转，兼顾量化误差与角度元数据，而非仅采用固定通道旋转。",
+          "evidence": "完整摘要给出两模型主体一致性；已读 https://arxiv.org/html/2611.26334v1 第4.5–5节、表1与附录表4，核实LongCat6.89倍/耗时1.05倍、H100旋转计时、离线校准及指标时间窗口。"
         },
         "experimentDetail": {
-          "setupZh": "harness 未完成分析。",
-          "baselinesZh": "harness 未完成分析。",
+          "setupZh": "LongCat-Video-13B、HY-WorldPlay-8B及Self-Forcing-Wan-1.3B，使用匹配提示评估480p，并另测LongCat 720p。",
+          "baselinesZh": "BF16 KV参考与QVG、KIVI、QuaRot、TurboQuant，量化对照采用INT2并说明不同元数据口径。",
           "metricsZh": [
-            "未分析"
+            "VBench主体/背景一致性",
+            "PSNR/SSIM/LPIPS",
+            "实际编码压缩率",
+            "相对BF16生成耗时"
           ],
-          "mainResultsZh": "harness 未完成分析。",
-          "limitationsZh": "harness 未完成分析。",
-          "evidence": "not analyzed"
+          "mainResultsZh": "摘要报告主体一致性LongCat为92.02对QVG90.38，HY为87.61对86.33；LongCat480p表中压缩为6.89倍，耗时为稠密的1.05倍，因此质量改善不等于端到端更快。",
+          "limitationsZh": "收益依赖时间冗余，快速运动/切镜头仍是边界；均值目标最优不代表任务质量或运行时间全局最优。部分保真指标只测首次受影响窗口，VBench才覆盖完整rollout。",
+          "evidence": "完整摘要给出两模型主体一致性；已读 https://arxiv.org/html/2611.26334v1 第4.5–5节、表1与附录表4，核实LongCat6.89倍/耗时1.05倍、H100旋转计时、离线校准及指标时间窗口。"
         },
         "evidence": {
           "usedSources": [
-            "metadata"
+            "metadata",
+            "abstract",
+            "https://arxiv.org/html/2611.26334v1"
           ],
-          "affiliationEvidence": "",
-          "experimentEvidence": "",
+          "affiliationEvidence": "实际读取arXiv HTML首部共同Affiliation字段，三位作者对应MIT Operations Research Center。",
+          "experimentEvidence": "完整摘要给出两模型主体一致性；已读 https://arxiv.org/html/2611.26334v1 第4.5–5节、表1与附录表4，核实LongCat6.89倍/耗时1.05倍、H100旋转计时、离线校准及指标时间窗口。",
           "missingFields": [
-            "motivation",
-            "method",
-            "experiments"
+            "其他模态在线旋转适用性",
+            "PDF前两页未读取"
           ]
         },
         "confidence": {
-          "summary": 0.2,
-          "motivation": 0,
-          "method": 0,
-          "experiments": 0,
-          "affiliations": 0
+          "summary": 0.96,
+          "motivation": 0.95,
+          "method": 0.95,
+          "experiments": 0.94,
+          "affiliations": 0.97
         }
       },
       "recommendationTrack": "hardware-primary",
@@ -827,13 +888,20 @@
       "relevanceReason": "命中 AI 处理器、体系结构、量化、训推系统或内存/缓存优化主题",
       "pdfStatus": "remote",
       "workflow": {
-        "digestStatus": "pending",
-        "emailStatus": "waiting-digest",
-        "digestError": "命令行启用了 --no-ai",
+        "digestStatus": "ready",
+        "emailStatus": "sent",
+        "digestError": "",
         "harnessVersion": "paper-reader-v1",
         "collectStatus": "collected",
-        "pdfStatus": "remote"
-      }
+        "pdfStatus": "remote",
+        "harnessCheckedAt": "2026-11-23T02:35:05.729Z",
+        "harnessWarnings": [],
+        "emailSentAt": "2026-11-23T02:35:11.126Z",
+        "lastEmailError": ""
+      },
+      "pushedAt": "2026-11-23T02:35:11.126Z",
+      "emailSentAt": "2026-11-23T02:35:11.126Z",
+      "firstPushedAt": "2026-11-23T02:35:11.126Z"
     },
     {
       "id": "arxiv:2611.26419",
@@ -874,76 +942,94 @@
       "relevanceReason": "命中 AI 处理器、体系结构、量化、训推系统或内存/缓存优化主题",
       "pdfStatus": "remote",
       "workflow": {
-        "digestStatus": "pending",
-        "emailStatus": "waiting-digest",
-        "digestError": "命令行启用了 --no-ai",
+        "digestStatus": "ready",
+        "emailStatus": "sent",
+        "digestError": "",
         "harnessVersion": "paper-reader-v1",
         "collectStatus": "collected",
-        "pdfStatus": "remote"
+        "pdfStatus": "remote",
+        "harnessCheckedAt": "2026-11-23T02:35:05.729Z",
+        "harnessWarnings": [],
+        "emailSentAt": "2026-11-23T02:35:11.126Z",
+        "lastEmailError": ""
       },
       "digest": {
-        "summaryZh": "AI 摘要未生成。原始摘要要点：Each fibre-reinforced composite structure has a unique material architecture. The manufacturing methods used and the presence of defects lead to local variation...",
-        "motivationZh": "命令行启用了 --no-ai",
-        "methodZh": "请配置 AI 后重新运行，以生成方法提炼。",
-        "experimentsZh": "来源元数据未披露完整实验设置或结果。",
-        "affiliationsZh": "未在 DBLP/arXiv 元数据中提供。",
+        "summaryZh": "本文以材料编码器、SNN长期状态和Transformer短期应变模块构造复合材料代理，通过递归微调抑制漂移，再接入非线性有限元求解器。它的memory指材料状态建模，world model指材料响应，未提供神经形态芯片或LLM硬件优化。",
+        "motivationZh": "带缺陷复合结构需要在每个积分点持续追踪局部不可逆材料状态，多尺度高保真计算随结构和时间步迅速增贵。 代理模型既要表达任意局部材料架构，又须在未知长度递归中稳定，且每积分点可用内存有限。 能稳定保留状态的代理可替代大量重复材料尺度求解，使带缺陷结构分析更可行。 属于材料计算与时序代理应用，SNN记忆并非硬件内存层次，和AI推理核心主线关联有限。",
+        "methodZh": "组合材料架构编码、脉冲神经网络长期状态记忆与短期应变Transformer，再耦合有限元求解。 材料编码器表示局部纤维架构和缺陷。 SNN记忆块追踪长期内部状态，Transformer块学习短时施加应变。 依次进行材料编码、短窗口基础训练和带scheduled sampling的递归微调，抑制预测反馈漂移。 推理时拆分训练模型并接入非线性FE求解器做结构尺度分析。 软件代理与FE求解集成；已读摘要未披露神经形态设备、GPU型号、吞吐或真实内存测量。 把长期材料状态、短期载荷与局部几何表征分工，并用递归训练维持求解器闭环稳定。",
+        "experimentsZh": "与IM7/8552原始及起皱层合板的拉伸、压缩和横向剪切实验对照。 实验材料响应作为参考；摘要未给具体代理/求解器效率基线清单。 摘要报告预测误差0.4%–4.8%，支持测试材料下的响应拟合；未报告可核实的加速倍数或硬件能耗。 本轮只读摘要，误差定义、计算节省、缺陷泛化和递归长度未核实；不能由computationally efficient或SNN名称推断已实现硬件加速。",
+        "affiliationsZh": "未在 DBLP/arXiv 元数据中提供",
         "tags": [
-          "cs.LG"
+          "有限元代理",
+          "脉冲记忆",
+          "复合材料",
+          "递归稳定性"
         ],
-        "importance": 3,
-        "researchFitZh": "AI harness 尚未完成分析，无法判断与用户研究方向的具体关系。",
+        "importance": 1,
+        "researchFitZh": "属于材料计算与时序代理应用，SNN记忆并非硬件内存层次，和AI推理核心主线关联有限。",
         "hardwareRelevance": 1,
-        "algorithmRelevance": 1,
-        "systemRelevance": 1,
+        "algorithmRelevance": 3,
+        "systemRelevance": 2,
         "readPriority": "archive",
-        "whyReadZh": "需要完成 motivation、method 和实验结果分析后再判断是否值得深读。",
-        "limitationsZh": "命令行启用了 --no-ai",
+        "whyReadZh": "归档为长期状态代理建模案例，避免将材料world model误当LLM体系结构研究。",
+        "limitationsZh": "本轮只读摘要，误差定义、计算节省、缺陷泛化和递归长度未核实；不能由computationally efficient或SNN名称推断已实现硬件加速。",
         "motivationDetail": {
-          "problemZh": "harness 未完成分析。",
-          "gapZh": "harness 未完成分析。",
-          "whyImportantZh": "harness 未完成分析。",
-          "userRelevanceZh": "harness 未完成分析。",
-          "evidence": "not analyzed"
+          "problemZh": "带缺陷复合结构需要在每个积分点持续追踪局部不可逆材料状态，多尺度高保真计算随结构和时间步迅速增贵。",
+          "gapZh": "代理模型既要表达任意局部材料架构，又须在未知长度递归中稳定，且每积分点可用内存有限。",
+          "whyImportantZh": "能稳定保留状态的代理可替代大量重复材料尺度求解，使带缺陷结构分析更可行。",
+          "userRelevanceZh": "属于材料计算与时序代理应用，SNN记忆并非硬件内存层次，和AI推理核心主线关联有限。",
+          "evidence": "实际读取 https://arxiv.org/abs/2611.26419 与完整摘要，给出三模块、三阶段训练、IM7/8552三类加载及0.4%–4.8%；未披露速度/硬件实验。"
         },
         "methodDetail": {
-          "coreIdeaZh": "harness 未完成分析。",
+          "coreIdeaZh": "组合材料架构编码、脉冲神经网络长期状态记忆与短期应变Transformer，再耦合有限元求解。",
           "componentsZh": [
-            "未分析"
+            "材料编码器表示局部纤维架构和缺陷。",
+            "SNN记忆块追踪长期内部状态，Transformer块学习短时施加应变。",
+            "依次进行材料编码、短窗口基础训练和带scheduled sampling的递归微调，抑制预测反馈漂移。",
+            "推理时拆分训练模型并接入非线性FE求解器做结构尺度分析。"
           ],
-          "hardwareSystemDetailZh": "harness 未完成分析。",
-          "noveltyZh": "harness 未完成分析。",
-          "evidence": "not analyzed"
+          "hardwareSystemDetailZh": "软件代理与FE求解集成；已读摘要未披露神经形态设备、GPU型号、吞吐或真实内存测量。",
+          "noveltyZh": "把长期材料状态、短期载荷与局部几何表征分工，并用递归训练维持求解器闭环稳定。",
+          "evidence": "实际读取 https://arxiv.org/abs/2611.26419 与完整摘要，给出三模块、三阶段训练、IM7/8552三类加载及0.4%–4.8%；未披露速度/硬件实验。"
         },
         "experimentDetail": {
-          "setupZh": "harness 未完成分析。",
-          "baselinesZh": "harness 未完成分析。",
+          "setupZh": "与IM7/8552原始及起皱层合板的拉伸、压缩和横向剪切实验对照。",
+          "baselinesZh": "实验材料响应作为参考；摘要未给具体代理/求解器效率基线清单。",
           "metricsZh": [
-            "未分析"
+            "材料响应预测误差",
+            "递归状态跟踪；速度与内存指标未披露"
           ],
-          "mainResultsZh": "harness 未完成分析。",
-          "limitationsZh": "harness 未完成分析。",
-          "evidence": "not analyzed"
+          "mainResultsZh": "摘要报告预测误差0.4%–4.8%，支持测试材料下的响应拟合；未报告可核实的加速倍数或硬件能耗。",
+          "limitationsZh": "本轮只读摘要，误差定义、计算节省、缺陷泛化和递归长度未核实；不能由computationally efficient或SNN名称推断已实现硬件加速。",
+          "evidence": "实际读取 https://arxiv.org/abs/2611.26419 与完整摘要，给出三模块、三阶段训练、IM7/8552三类加载及0.4%–4.8%；未披露速度/硬件实验。"
         },
         "evidence": {
           "usedSources": [
-            "metadata"
+            "metadata",
+            "abstract",
+            "https://arxiv.org/abs/2611.26419"
           ],
-          "affiliationEvidence": "",
-          "experimentEvidence": "",
+          "affiliationEvidence": "队列affiliations与authorAffiliations为空或缺失，本轮未核实可靠单位；采用规定缺失表述，不由作者姓名推断。",
+          "experimentEvidence": "实际读取 https://arxiv.org/abs/2611.26419 与完整摘要，给出三模块、三阶段训练、IM7/8552三类加载及0.4%–4.8%；未披露速度/硬件实验。",
           "missingFields": [
-            "motivation",
-            "method",
-            "experiments"
+            "作者单位",
+            "误差定义与完整结果表",
+            "实际计算/内存节省",
+            "推理硬件",
+            "PDF前两页未读取"
           ]
         },
         "confidence": {
-          "summary": 0.2,
-          "motivation": 0,
-          "method": 0,
-          "experiments": 0,
+          "summary": 0.92,
+          "motivation": 0.91,
+          "method": 0.87,
+          "experiments": 0.74,
           "affiliations": 0
         }
-      }
+      },
+      "pushedAt": "2026-11-23T02:35:11.126Z",
+      "emailSentAt": "2026-11-23T02:35:11.126Z",
+      "firstPushedAt": "2026-11-23T02:35:11.126Z"
     },
     {
       "id": "arxiv:2611.26106",
@@ -990,76 +1076,96 @@
       "relevanceReason": "命中 AI 处理器、体系结构、量化、训推系统或内存/缓存优化主题",
       "pdfStatus": "remote",
       "workflow": {
-        "digestStatus": "pending",
-        "emailStatus": "waiting-digest",
-        "digestError": "命令行启用了 --no-ai",
+        "digestStatus": "ready",
+        "emailStatus": "sent",
+        "digestError": "",
         "harnessVersion": "paper-reader-v1",
         "collectStatus": "collected",
-        "pdfStatus": "remote"
+        "pdfStatus": "remote",
+        "harnessCheckedAt": "2026-11-23T02:35:05.729Z",
+        "harnessWarnings": [],
+        "emailSentAt": "2026-11-23T02:35:11.126Z",
+        "lastEmailError": ""
       },
       "digest": {
-        "summaryZh": "AI 摘要未生成。原始摘要要点：Long-context decoding repeatedly reads a growing KV cache. FP4 reduces cache storage and traffic but needs block scaling to handle its limited dynamic range. Ap...",
-        "motivationZh": "命令行启用了 --no-ai",
-        "methodZh": "请配置 AI 后重新运行，以生成方法提炼。",
-        "experimentsZh": "来源元数据未披露完整实验设置或结果。",
-        "affiliationsZh": "未在 DBLP/arXiv 元数据中提供。",
+        "summaryZh": "AscMLA 让K和V共享同一FP4编码但采用不同尺度：V逐token尺度折入概率，K按通道块拟合尺度，使QK和PV都能直接使用低精度载荷。尺度多缓冲与预取避免异步MMA等待，重点解决潜变量共享和块缩放归约方向不一致的问题。",
+        "motivationZh": "MLA共享压缩潜变量，但QK按通道归约、PV按token归约，FP4块尺度无法在两种矩阵乘中直接共用。 外部或融合反量化V增加执行/共享内存流量，分开编码K/V又破坏潜变量共享的容量优势。 低比特DRAM流量节省只有避免中间V扩展并及时供给尺度，才能转成内核和服务收益。 高度契合MLA长上下文、KV低比特与矩阵/向量流水协同，可为计算核心和尺度数据通路研究提供直接例子。",
+        "methodZh": "先按V需求产生共享FP4码，再在固定码上拟合K的块尺度，以非对称尺度视图保留单份载荷。 K每16通道一尺度用于原生NVFP4 QK；V每token一尺度，在概率转换时相乘后供给FP8×FP4 PV。 V尺度仅改变softmax分子，不改变归一化分母，RoPE分量独立保留。 多TMEM槽保留K尺度至MMA完成，独立多级SMEM队列预取V尺度并提前放入寄存器。 缓存写内核一次生成码和两类尺度，decode追加新token而不重量化旧缓存。 评测平台为CUDA计算能力10.3的八GPU系统，内核实验用单GPU；使用CUTLASS DSL、TMA、TMEM与cp.async，所读设置未明确商品GPU型号。 共享FP4码不强制共享尺度，把表示设计与消费者生命周期匹配，避免V扩展和尺度覆盖等待。",
+        "experimentsZh": "40种内核配置覆盖batch16–128、上下文16K–256K和64/128头；冷L2 CUDA graph计时，Kimi-K2.6另有服务评测。 TRT-LLM/FlashInfer FP8、CAKE NVFP4、外部反量化和SageAttention3的MLA改编。 相对FP8缓存少38.2%；40配置几何平均比TRT-LLM FP8快1.35倍、比CAKE NVFP4快1.26倍。论文另报告Kimi-K2.6最高负载服务吞吐提高18.8%，两种收益口径不同。 内核计时的查询和KV预先准备，不含缓存写入/模型全前向；低精度精度权衡与硬件指令可用性必须核对。不能由名称推断Ascend平台，也不能把1.35倍内核收益当全服务加速。",
+        "affiliationsZh": "Zechun Zhou、Han Li、Jingwei Sun、Guangzhong Sun、Jing Li：中国科学技术大学；Zhiyong Zheng、Xiaomin Zhang、Lin Ye：快手科技。",
         "tags": [
-          "cs.DC"
+          "MLA",
+          "FP4 KV",
+          "异步流水",
+          "尺度缓存",
+          "GPU内核"
         ],
-        "importance": 3,
-        "researchFitZh": "AI harness 尚未完成分析，无法判断与用户研究方向的具体关系。",
-        "hardwareRelevance": 1,
-        "algorithmRelevance": 1,
-        "systemRelevance": 1,
-        "readPriority": "archive",
-        "whyReadZh": "需要完成 motivation、method 和实验结果分析后再判断是否值得深读。",
-        "limitationsZh": "命令行启用了 --no-ai",
+        "importance": 5,
+        "researchFitZh": "高度契合MLA长上下文、KV低比特与矩阵/向量流水协同，可为计算核心和尺度数据通路研究提供直接例子。",
+        "hardwareRelevance": 5,
+        "algorithmRelevance": 5,
+        "systemRelevance": 5,
+        "readPriority": "deep-read",
+        "whyReadZh": "优先读尺度归约错配、softmax分子处理和TMEM/SMEM生命周期，适合核心数据通路研究。",
+        "limitationsZh": "内核计时的查询和KV预先准备，不含缓存写入/模型全前向；低精度精度权衡与硬件指令可用性必须核对。不能由名称推断Ascend平台，也不能把1.35倍内核收益当全服务加速。",
         "motivationDetail": {
-          "problemZh": "harness 未完成分析。",
-          "gapZh": "harness 未完成分析。",
-          "whyImportantZh": "harness 未完成分析。",
-          "userRelevanceZh": "harness 未完成分析。",
-          "evidence": "not analyzed"
+          "problemZh": "MLA共享压缩潜变量，但QK按通道归约、PV按token归约，FP4块尺度无法在两种矩阵乘中直接共用。",
+          "gapZh": "外部或融合反量化V增加执行/共享内存流量，分开编码K/V又破坏潜变量共享的容量优势。",
+          "whyImportantZh": "低比特DRAM流量节省只有避免中间V扩展并及时供给尺度，才能转成内核和服务收益。",
+          "userRelevanceZh": "高度契合MLA长上下文、KV低比特与矩阵/向量流水协同，可为计算核心和尺度数据通路研究提供直接例子。",
+          "evidence": "原始摘要给出38.2%、1.35/1.26倍；已读 https://arxiv.org/html/2611.26106v1 第II–IV节及结论，核实双尺度共享码、40配置、预备KV的冷L2计时和18.8%服务吞吐。"
         },
         "methodDetail": {
-          "coreIdeaZh": "harness 未完成分析。",
+          "coreIdeaZh": "先按V需求产生共享FP4码，再在固定码上拟合K的块尺度，以非对称尺度视图保留单份载荷。",
           "componentsZh": [
-            "未分析"
+            "K每16通道一尺度用于原生NVFP4 QK；V每token一尺度，在概率转换时相乘后供给FP8×FP4 PV。",
+            "V尺度仅改变softmax分子，不改变归一化分母，RoPE分量独立保留。",
+            "多TMEM槽保留K尺度至MMA完成，独立多级SMEM队列预取V尺度并提前放入寄存器。",
+            "缓存写内核一次生成码和两类尺度，decode追加新token而不重量化旧缓存。"
           ],
-          "hardwareSystemDetailZh": "harness 未完成分析。",
-          "noveltyZh": "harness 未完成分析。",
-          "evidence": "not analyzed"
+          "hardwareSystemDetailZh": "评测平台为CUDA计算能力10.3的八GPU系统，内核实验用单GPU；使用CUTLASS DSL、TMA、TMEM与cp.async，所读设置未明确商品GPU型号。",
+          "noveltyZh": "共享FP4码不强制共享尺度，把表示设计与消费者生命周期匹配，避免V扩展和尺度覆盖等待。",
+          "evidence": "原始摘要给出38.2%、1.35/1.26倍；已读 https://arxiv.org/html/2611.26106v1 第II–IV节及结论，核实双尺度共享码、40配置、预备KV的冷L2计时和18.8%服务吞吐。"
         },
         "experimentDetail": {
-          "setupZh": "harness 未完成分析。",
-          "baselinesZh": "harness 未完成分析。",
+          "setupZh": "40种内核配置覆盖batch16–128、上下文16K–256K和64/128头；冷L2 CUDA graph计时，Kimi-K2.6另有服务评测。",
+          "baselinesZh": "TRT-LLM/FlashInfer FP8、CAKE NVFP4、外部反量化和SageAttention3的MLA改编。",
           "metricsZh": [
-            "未分析"
+            "完整decode内核延迟",
+            "KV字节/token",
+            "DRAM/SMEM流量",
+            "注意力与任务精度",
+            "服务吞吐和延迟目标"
           ],
-          "mainResultsZh": "harness 未完成分析。",
-          "limitationsZh": "harness 未完成分析。",
-          "evidence": "not analyzed"
+          "mainResultsZh": "相对FP8缓存少38.2%；40配置几何平均比TRT-LLM FP8快1.35倍、比CAKE NVFP4快1.26倍。论文另报告Kimi-K2.6最高负载服务吞吐提高18.8%，两种收益口径不同。",
+          "limitationsZh": "内核计时的查询和KV预先准备，不含缓存写入/模型全前向；低精度精度权衡与硬件指令可用性必须核对。不能由名称推断Ascend平台，也不能把1.35倍内核收益当全服务加速。",
+          "evidence": "原始摘要给出38.2%、1.35/1.26倍；已读 https://arxiv.org/html/2611.26106v1 第II–IV节及结论，核实双尺度共享码、40配置、预备KV的冷L2计时和18.8%服务吞吐。"
         },
         "evidence": {
           "usedSources": [
-            "metadata"
+            "metadata",
+            "abstract",
+            "https://arxiv.org/html/2611.26106v1"
           ],
-          "affiliationEvidence": "",
-          "experimentEvidence": "",
+          "affiliationEvidence": "实际读取arXiv HTML首部作者上标1/2及单位：中国科学技术大学、快手科技；按上标对应，不由姓名猜测。",
+          "experimentEvidence": "原始摘要给出38.2%、1.35/1.26倍；已读 https://arxiv.org/html/2611.26106v1 第II–IV节及结论，核实双尺度共享码、40配置、预备KV的冷L2计时和18.8%服务吞吐。",
           "missingFields": [
-            "motivation",
-            "method",
-            "experiments"
+            "商品GPU型号未在已读配置中披露",
+            "完整服务协议未逐项核读",
+            "PDF前两页未读取"
           ]
         },
         "confidence": {
-          "summary": 0.2,
-          "motivation": 0,
-          "method": 0,
-          "experiments": 0,
-          "affiliations": 0
+          "summary": 0.97,
+          "motivation": 0.97,
+          "method": 0.97,
+          "experiments": 0.94,
+          "affiliations": 0.98
         }
-      }
+      },
+      "pushedAt": "2026-11-23T02:35:11.126Z",
+      "emailSentAt": "2026-11-23T02:35:11.126Z",
+      "firstPushedAt": "2026-11-23T02:35:11.126Z"
     },
     {
       "id": "doi:10.1007/978-981-92-3438-7_6",
@@ -1098,76 +1204,92 @@
       "relevanceReason": "命中 LLM/Agent/多模态/后训练等算法趋势主题",
       "pdfStatus": "none",
       "workflow": {
-        "digestStatus": "pending",
-        "emailStatus": "waiting-digest",
-        "digestError": "命令行启用了 --no-ai",
+        "digestStatus": "ready",
+        "emailStatus": "sent",
+        "digestError": "",
         "harnessVersion": "paper-reader-v1",
         "collectStatus": "collected",
-        "pdfStatus": "none"
+        "pdfStatus": "none",
+        "harnessCheckedAt": "2026-11-23T02:35:05.729Z",
+        "harnessWarnings": [],
+        "emailSentAt": "2026-11-23T02:35:11.126Z",
+        "lastEmailError": ""
       },
       "digest": {
-        "summaryZh": "AI 摘要未生成；当前来源元数据未提供摘要。",
-        "motivationZh": "命令行启用了 --no-ai",
-        "methodZh": "来源未提供摘要，无法可靠提炼方法。",
-        "experimentsZh": "来源元数据未披露完整实验设置或结果。",
-        "affiliationsZh": "未在 DBLP/arXiv 元数据中提供。",
+        "summaryZh": "DiagLoRA-VLLM 将轴承故障时频图的统计指纹与故障物理语义对齐，再以LoRA适配多模态模型，面向小样本诊断。出版社摘要提供CWRU数据与准确率结果，但全文受订阅限制，不能补造主干、物理约束形式或硬件效率。",
+        "motivationZh": "轴承故障诊断依赖大量标签、单模态输入且缺少显式物理机制，导致小样本下泛化和解释不足。 仅凭数据拟合难把时频外观与故障物理语义对应起来，完整微调多模态大模型也可能成本较高。 显式对齐时频指纹与物理语义，并限制适配参数，有助于探索少量数据下的诊断方法。 关联多模态LoRA应用，可作后训练案例；未见芯片、低比特执行或内存层次贡献，低优先归档。",
+        "methodZh": "构造故障时频图统计指纹库及多模态语义对齐数据，再对预训练多模态模型进行LoRA适配。 统计指纹库建立图像特征与故障物理语义之间的显式对应。 通过低秩适配实现参数高效微调。 公开摘要将该方法定位为物理约束诊断，但未说明约束究竟是损失、结构或提示规则。 仅能核实算法和训练摘要，未披露训练芯片、参数节省比例、内存及推理延迟。 把时频指纹的物理语义对齐与多模态低秩适配组合于小样本故障诊断。",
+        "experimentsZh": "出版社摘要使用CWRU数据集，400训练样本，报告6个epoch内收敛。 仅称优于经典深度学习模型，公开摘要未列基线名称、划分或重复实验。 公开摘要称400训练样本下准确率98.75%，6个epoch内收敛；没有足够信息验证类别设置、泄漏控制或跨工况泛化。 队列无摘要，已读取出版社公开摘要但未获订阅全文；底座、LoRA秩、物理约束和完整实验未披露。队列会议写ICIC2027，出版社页面写ICIC2026和2026-07-14上线，保留此差异。",
+        "affiliationsZh": "Zijian Guo：天津职业技术师范大学机械工程学院；Hui Li：天津市智能机器人技术与应用重点实验室。",
         "tags": [
-          "Inproceedings"
+          "多模态诊断",
+          "LoRA",
+          "小样本",
+          "物理语义"
         ],
-        "importance": 3,
-        "researchFitZh": "AI harness 尚未完成分析，无法判断与用户研究方向的具体关系。",
+        "importance": 2,
+        "researchFitZh": "关联多模态LoRA应用，可作后训练案例；未见芯片、低比特执行或内存层次贡献，低优先归档。",
         "hardwareRelevance": 1,
-        "algorithmRelevance": 1,
-        "systemRelevance": 1,
+        "algorithmRelevance": 3,
+        "systemRelevance": 2,
         "readPriority": "archive",
-        "whyReadZh": "需要完成 motivation、method 和实验结果分析后再判断是否值得深读。",
-        "limitationsZh": "命令行启用了 --no-ai",
+        "whyReadZh": "作为LoRA领域应用归档，若进一步研究需先核查数据划分与物理约束细节。",
+        "limitationsZh": "队列无摘要，已读取出版社公开摘要但未获订阅全文；底座、LoRA秩、物理约束和完整实验未披露。队列会议写ICIC2027，出版社页面写ICIC2026和2026-07-14上线，保留此差异。",
         "motivationDetail": {
-          "problemZh": "harness 未完成分析。",
-          "gapZh": "harness 未完成分析。",
-          "whyImportantZh": "harness 未完成分析。",
-          "userRelevanceZh": "harness 未完成分析。",
-          "evidence": "not analyzed"
+          "problemZh": "轴承故障诊断依赖大量标签、单模态输入且缺少显式物理机制，导致小样本下泛化和解释不足。",
+          "gapZh": "仅凭数据拟合难把时频外观与故障物理语义对应起来，完整微调多模态大模型也可能成本较高。",
+          "whyImportantZh": "显式对齐时频指纹与物理语义，并限制适配参数，有助于探索少量数据下的诊断方法。",
+          "userRelevanceZh": "关联多模态LoRA应用，可作后训练案例；未见芯片、低比特执行或内存层次贡献，低优先归档。",
+          "evidence": "实际读取 https://link.springer.com/chapter/10.1007/978-981-92-3438-7_6 的Abstract和Author information；摘要明确CWRU、400样本、6epoch及98.75%，页面ICIC2026/2026-07-14与队列年份不同。"
         },
         "methodDetail": {
-          "coreIdeaZh": "harness 未完成分析。",
+          "coreIdeaZh": "构造故障时频图统计指纹库及多模态语义对齐数据，再对预训练多模态模型进行LoRA适配。",
           "componentsZh": [
-            "未分析"
+            "统计指纹库建立图像特征与故障物理语义之间的显式对应。",
+            "通过低秩适配实现参数高效微调。",
+            "公开摘要将该方法定位为物理约束诊断，但未说明约束究竟是损失、结构或提示规则。"
           ],
-          "hardwareSystemDetailZh": "harness 未完成分析。",
-          "noveltyZh": "harness 未完成分析。",
-          "evidence": "not analyzed"
+          "hardwareSystemDetailZh": "仅能核实算法和训练摘要，未披露训练芯片、参数节省比例、内存及推理延迟。",
+          "noveltyZh": "把时频指纹的物理语义对齐与多模态低秩适配组合于小样本故障诊断。",
+          "evidence": "实际读取 https://link.springer.com/chapter/10.1007/978-981-92-3438-7_6 的Abstract和Author information；摘要明确CWRU、400样本、6epoch及98.75%，页面ICIC2026/2026-07-14与队列年份不同。"
         },
         "experimentDetail": {
-          "setupZh": "harness 未完成分析。",
-          "baselinesZh": "harness 未完成分析。",
+          "setupZh": "出版社摘要使用CWRU数据集，400训练样本，报告6个epoch内收敛。",
+          "baselinesZh": "仅称优于经典深度学习模型，公开摘要未列基线名称、划分或重复实验。",
           "metricsZh": [
-            "未分析"
+            "诊断准确率",
+            "收敛epoch；硬件效率未披露"
           ],
-          "mainResultsZh": "harness 未完成分析。",
-          "limitationsZh": "harness 未完成分析。",
-          "evidence": "not analyzed"
+          "mainResultsZh": "公开摘要称400训练样本下准确率98.75%，6个epoch内收敛；没有足够信息验证类别设置、泄漏控制或跨工况泛化。",
+          "limitationsZh": "队列无摘要，已读取出版社公开摘要但未获订阅全文；底座、LoRA秩、物理约束和完整实验未披露。队列会议写ICIC2027，出版社页面写ICIC2026和2026-07-14上线，保留此差异。",
+          "evidence": "实际读取 https://link.springer.com/chapter/10.1007/978-981-92-3438-7_6 的Abstract和Author information；摘要明确CWRU、400样本、6epoch及98.75%，页面ICIC2026/2026-07-14与队列年份不同。"
         },
         "evidence": {
           "usedSources": [
-            "metadata"
+            "metadata",
+            "https://link.springer.com/chapter/10.1007/978-981-92-3438-7_6 (公开完整Abstract及Author information)"
           ],
-          "affiliationEvidence": "",
-          "experimentEvidence": "",
+          "affiliationEvidence": "出版社Author information明确逐作者对应：Zijian Guo—School of Mechanical Engineering, Tianjin University of Technology and Education；Hui Li—Tianjin Key Laboratory of Intelligent Robot Technology and Application。",
+          "experimentEvidence": "实际读取 https://link.springer.com/chapter/10.1007/978-981-92-3438-7_6 的Abstract和Author information；摘要明确CWRU、400样本、6epoch及98.75%，页面ICIC2026/2026-07-14与队列年份不同。",
           "missingFields": [
-            "motivation",
-            "method",
-            "experiments"
+            "订阅全文未读取",
+            "底座和LoRA配置",
+            "物理约束实现",
+            "完整实验划分与基线",
+            "队列与出版社会议年份不一致"
           ]
         },
         "confidence": {
-          "summary": 0.2,
-          "motivation": 0,
-          "method": 0,
-          "experiments": 0,
-          "affiliations": 0
+          "summary": 0.91,
+          "motivation": 0.89,
+          "method": 0.78,
+          "experiments": 0.73,
+          "affiliations": 0.97
         }
-      }
+      },
+      "pushedAt": "2026-11-23T02:35:11.126Z",
+      "emailSentAt": "2026-11-23T02:35:11.126Z",
+      "firstPushedAt": "2026-11-23T02:35:11.126Z"
     },
     {
       "id": "doi:10.1007/978-981-92-3426-4_20",
@@ -1210,76 +1332,93 @@
       "relevanceReason": "命中 LLM/Agent/多模态/后训练等算法趋势主题",
       "pdfStatus": "none",
       "workflow": {
-        "digestStatus": "pending",
-        "emailStatus": "waiting-digest",
-        "digestError": "命令行启用了 --no-ai",
+        "digestStatus": "ready",
+        "emailStatus": "sent",
+        "digestError": "",
         "harnessVersion": "paper-reader-v1",
         "collectStatus": "collected",
-        "pdfStatus": "none"
+        "pdfStatus": "none",
+        "harnessCheckedAt": "2026-11-23T02:35:05.729Z",
+        "harnessWarnings": [],
+        "emailSentAt": "2026-11-23T02:35:11.126Z",
+        "lastEmailError": ""
       },
       "digest": {
-        "summaryZh": "AI 摘要未生成；当前来源元数据未提供摘要。",
-        "motivationZh": "命令行启用了 --no-ai",
-        "methodZh": "来源未提供摘要，无法可靠提炼方法。",
-        "experimentsZh": "来源元数据未披露完整实验设置或结果。",
-        "affiliationsZh": "未在 DBLP/arXiv 元数据中提供。",
+        "summaryZh": "Divide and Enhance 以两阶段法律语料微调建立专家模型，再用结构化Agent流程分解法律查询，并通过混合RAG约束回答。出版社公开摘要说明了框架与评测集，但没有足够数值和基线细节，作者的领先表述仍需全文验证。",
+        "motivationZh": "中文法律问题同时要求结构化推理、领域知识和事实准确性，通用LLM单次生成难以兼顾。 仅做领域微调不能自动组织复杂查询，仅加检索也不能保证推理流程和专家模型能力匹配。 将专业知识适配与任务拆解、证据检索结合，可更有针对性地研究领域Agent回答可靠性。 属于领域LLM和Agent趋势，结合用户法律背景可略读，但不应挤占芯片与推理系统论文时间。",
+        "methodZh": "Enhance用两阶段法律语料微调建立专家，Divide将其嵌入查询分解与混合RAG的结构化流程。 两阶段微调使用中文法律语料，公开摘要未说明各阶段目标与模型配置。 定制推理框架把复杂法律查询分解为结构化步骤。 混合RAG为回答提供检索支撑，具体检索器和融合策略未披露。 领域适配和Agent流程设计；公开摘要没有训练GPU、推理token成本、延迟或存储资源评测。 把法律专家适配、结构化查询分解与混合检索统一，而不是只增加领域训练或单一检索组件。",
+        "experimentsZh": "出版社摘要明确在LAIW和LegalEval-Q基准上评估。 公开摘要仅称相对基线提升，没有具体模型、检索基线或组件消融名单。 作者宣称推理、准确性和质量改善并达领先结果；公开摘要没有可核实的分数、提升幅度或统计显著性，不能转写成已验证排名。 队列没有摘要，已读出版社公开摘要，订阅全文未读取；不足以核验数据、基线、幻觉或真实法律可靠性。队列为ICIC2027，出版社页为ICIC2026并标2026-07-21上线，保留年份差异。",
+        "affiliationsZh": "Fangfang Li、Yiquan Wang、Zhijie Yang、Chengzhang Zhu：中南大学计算机学院；Chengzhang Zhu、Wei Li：中南大学人文学院；Yuxuan Huang：利物浦大学计算机科学系。",
         "tags": [
-          "Inproceedings"
+          "法律LLM",
+          "领域适配",
+          "Agent工作流",
+          "混合RAG"
         ],
-        "importance": 3,
-        "researchFitZh": "AI harness 尚未完成分析，无法判断与用户研究方向的具体关系。",
+        "importance": 2,
+        "researchFitZh": "属于领域LLM和Agent趋势，结合用户法律背景可略读，但不应挤占芯片与推理系统论文时间。",
         "hardwareRelevance": 1,
-        "algorithmRelevance": 1,
-        "systemRelevance": 1,
-        "readPriority": "archive",
-        "whyReadZh": "需要完成 motivation、method 和实验结果分析后再判断是否值得深读。",
-        "limitationsZh": "命令行启用了 --no-ai",
+        "algorithmRelevance": 3,
+        "systemRelevance": 3,
+        "readPriority": "skim",
+        "whyReadZh": "略读领域适配与流程拆分的职责边界，后续须核查完整消融和证据正确性。",
+        "limitationsZh": "队列没有摘要，已读出版社公开摘要，订阅全文未读取；不足以核验数据、基线、幻觉或真实法律可靠性。队列为ICIC2027，出版社页为ICIC2026并标2026-07-21上线，保留年份差异。",
         "motivationDetail": {
-          "problemZh": "harness 未完成分析。",
-          "gapZh": "harness 未完成分析。",
-          "whyImportantZh": "harness 未完成分析。",
-          "userRelevanceZh": "harness 未完成分析。",
-          "evidence": "not analyzed"
+          "problemZh": "中文法律问题同时要求结构化推理、领域知识和事实准确性，通用LLM单次生成难以兼顾。",
+          "gapZh": "仅做领域微调不能自动组织复杂查询，仅加检索也不能保证推理流程和专家模型能力匹配。",
+          "whyImportantZh": "将专业知识适配与任务拆解、证据检索结合，可更有针对性地研究领域Agent回答可靠性。",
+          "userRelevanceZh": "属于领域LLM和Agent趋势，结合用户法律背景可略读，但不应挤占芯片与推理系统论文时间。",
+          "evidence": "实际读取 https://link.springer.com/chapter/10.1007/978-981-92-3426-4_20 的Abstract和Author information，确认两阶段微调、混合RAG、LAIW/LegalEval-Q及无公开数值；出版社ICIC2026/2026-07-21与队列年份不同。"
         },
         "methodDetail": {
-          "coreIdeaZh": "harness 未完成分析。",
+          "coreIdeaZh": "Enhance用两阶段法律语料微调建立专家，Divide将其嵌入查询分解与混合RAG的结构化流程。",
           "componentsZh": [
-            "未分析"
+            "两阶段微调使用中文法律语料，公开摘要未说明各阶段目标与模型配置。",
+            "定制推理框架把复杂法律查询分解为结构化步骤。",
+            "混合RAG为回答提供检索支撑，具体检索器和融合策略未披露。"
           ],
-          "hardwareSystemDetailZh": "harness 未完成分析。",
-          "noveltyZh": "harness 未完成分析。",
-          "evidence": "not analyzed"
+          "hardwareSystemDetailZh": "领域适配和Agent流程设计；公开摘要没有训练GPU、推理token成本、延迟或存储资源评测。",
+          "noveltyZh": "把法律专家适配、结构化查询分解与混合检索统一，而不是只增加领域训练或单一检索组件。",
+          "evidence": "实际读取 https://link.springer.com/chapter/10.1007/978-981-92-3426-4_20 的Abstract和Author information，确认两阶段微调、混合RAG、LAIW/LegalEval-Q及无公开数值；出版社ICIC2026/2026-07-21与队列年份不同。"
         },
         "experimentDetail": {
-          "setupZh": "harness 未完成分析。",
-          "baselinesZh": "harness 未完成分析。",
+          "setupZh": "出版社摘要明确在LAIW和LegalEval-Q基准上评估。",
+          "baselinesZh": "公开摘要仅称相对基线提升，没有具体模型、检索基线或组件消融名单。",
           "metricsZh": [
-            "未分析"
+            "推理表现",
+            "准确性",
+            "法律文本质量；具体指标定义和数值未披露"
           ],
-          "mainResultsZh": "harness 未完成分析。",
-          "limitationsZh": "harness 未完成分析。",
-          "evidence": "not analyzed"
+          "mainResultsZh": "作者宣称推理、准确性和质量改善并达领先结果；公开摘要没有可核实的分数、提升幅度或统计显著性，不能转写成已验证排名。",
+          "limitationsZh": "队列没有摘要，已读出版社公开摘要，订阅全文未读取；不足以核验数据、基线、幻觉或真实法律可靠性。队列为ICIC2027，出版社页为ICIC2026并标2026-07-21上线，保留年份差异。",
+          "evidence": "实际读取 https://link.springer.com/chapter/10.1007/978-981-92-3426-4_20 的Abstract和Author information，确认两阶段微调、混合RAG、LAIW/LegalEval-Q及无公开数值；出版社ICIC2026/2026-07-21与队列年份不同。"
         },
         "evidence": {
           "usedSources": [
-            "metadata"
+            "metadata",
+            "https://link.springer.com/chapter/10.1007/978-981-92-3426-4_20 (公开完整Abstract及Author information)"
           ],
-          "affiliationEvidence": "",
-          "experimentEvidence": "",
+          "affiliationEvidence": "出版社Author information逐组列出Central South University计算机学院/人文学院及University of Liverpool计算机系，并列对应作者，按该列表映射。",
+          "experimentEvidence": "实际读取 https://link.springer.com/chapter/10.1007/978-981-92-3426-4_20 的Abstract和Author information，确认两阶段微调、混合RAG、LAIW/LegalEval-Q及无公开数值；出版社ICIC2026/2026-07-21与队列年份不同。",
           "missingFields": [
-            "motivation",
-            "method",
-            "experiments"
+            "订阅全文未读取",
+            "基线名称和具体数值",
+            "两阶段训练及RAG配置",
+            "资源开销",
+            "队列与出版社会议年份不一致"
           ]
         },
         "confidence": {
-          "summary": 0.2,
-          "motivation": 0,
-          "method": 0,
-          "experiments": 0,
-          "affiliations": 0
+          "summary": 0.91,
+          "motivation": 0.9,
+          "method": 0.8,
+          "experiments": 0.63,
+          "affiliations": 0.97
         }
-      }
+      },
+      "pushedAt": "2026-11-23T02:35:11.126Z",
+      "emailSentAt": "2026-11-23T02:35:11.126Z",
+      "firstPushedAt": "2026-11-23T02:35:11.126Z"
     }
   ]
 }
