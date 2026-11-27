@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-26T00:37:15.735Z",
+  "generatedAt": "2026-11-27T00:34:29.833Z",
   "timezone": "Asia/Shanghai",
   "siteUrl": "https://YouthLiuYS.github.io/PaperDigestAgent/",
   "stats": {
@@ -13,8 +13,8 @@
     "newlyAdded": 0,
     "pushed": 240,
     "pdfDownloaded": 0,
-    "hardwarePrimary": 223,
-    "algorithmTrend": 17,
+    "hardwarePrimary": 229,
+    "algorithmTrend": 11,
     "lowRelevance": 0
   },
   "papers": [
@@ -2928,6 +2928,136 @@
       "pushedAt": "2026-11-14T02:37:52.779Z",
       "emailSentAt": "2026-11-14T02:37:52.779Z",
       "firstPushedAt": "2026-11-14T02:37:52.779Z"
+    },
+    {
+      "id": "arxiv:2611.33691",
+      "source": "arXiv",
+      "title": "L2C2: Enhancing Large-scale Chiplets for Agent Long-Context LLM Inference with Sparse and Distributed Attention",
+      "authors": [
+        "Kangbo Bai",
+        "Zhonghua Mu",
+        "Hongze Zhou",
+        "Tianyu Jia"
+      ],
+      "authorAffiliations": [],
+      "affiliations": [],
+      "abstract": "Long-context inference is a rising demand for LLMs, especially for agent applications. Sparse attention (SpAt) and chiplet technology are promising solutions to reduce computations and scale hardware performance. However, deploying SpAt on distributed chiplets necessitates context parallelism for workload partitioning, introducing complex distributed attention. In this work, we present L2C2, a system optimization for distributed SpAt in long-context inference. During the partial-prefill stage, we propose a novel Split-Comm Attention mechanism that leverages the high-bandwidth interconnect of chiplets to trade communication overhead for reduced memory access. We combine it with conventional Ring Attention to form a Bi-Mode method that adapts to varying input sequence lengths. During the decoding stage, we analyze the cause of memory access imbalance and address it by static interleaved token assignment. Dynamic agile cache balancing is also proposed to adapt to SpAt skewness. Evaluations show our optimization can achieve 1.45$\\times$ and 1.53$\\times$ speedup in partial-prefill and decoding with SpAt on large-scale chiplets.",
+      "venue": "arXiv",
+      "published": "2026-11-25T02:56:00Z",
+      "updated": "2026-11-25T02:56:00Z",
+      "url": "http://arxiv.org/abs/2611.33691v1",
+      "pdfUrl": "https://arxiv.org/pdf/2611.33691v1",
+      "categories": [
+        "cs.AR"
+      ],
+      "collectedAt": "2026-11-26T02:52:32.481Z",
+      "firstSeenAt": "2026-11-26T02:52:32.481Z",
+      "lastSeenAt": "2026-11-26T02:52:32.481Z",
+      "collectionType": "daily-latest",
+      "matchedQuery": "(cat:cs.AR OR cat:cs.DC OR cat:cs.PF) AND (all:LLM OR all:transformer OR all:foundation OR all:language) AND (all:accelerator OR all:processor OR all:architecture OR all:hardware OR all:system OR all:serving OR all:training OR all:inference OR all:cache)",
+      "collectionTypes": [
+        "daily-latest"
+      ],
+      "matchedQueries": [
+        "(cat:cs.AR OR cat:cs.DC OR cat:cs.PF) AND (all:LLM OR all:transformer OR all:foundation OR all:language) AND (all:accelerator OR all:processor OR all:architecture OR all:hardware OR all:system OR all:serving OR all:training OR all:inference OR all:cache)",
+        "(all:prefill OR all:decoding OR all:KV OR all:cache OR all:attention) AND (all:accelerator OR all:kernel OR all:compiler OR all:serving OR all:memory) AND (all:LLM OR all:transformer)",
+        "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)"
+      ],
+      "targetThemes": [],
+      "conferenceVenues": [],
+      "conferenceYears": [],
+      "digest": {
+        "summaryZh": "L2C2 针对长上下文稀疏注意力的多chiplet执行，在部分预填充用Split-Comm与Ring双模式平衡通信和KV访存，解码时结合交错分配与动态缓存迁移。模拟报告部分预填充、解码分别1.45与1.53倍加速；收益依赖序列长度和互连条件，尚非流片实测。",
+        "motivationZh": "长上下文稀疏注意力在多chiplet上下文并行中，仍受重复KV访问和不同分片的访问偏斜限制。Ring Attention偏重通信重叠，可能重复读同一KV块；连续token分配也可能把稀疏热点集中到少数存储分片。减少注意力计算后，访存、互连与负载均衡决定能否把分片数量转化为吞吐。直接对应稀疏KV管理、LLM加速器与chiplet存储层次，适合研究分布式注意力的数据搬运与核心空闲利用。",
+        "methodZh": "按阶段优化分布式稀疏注意力：部分预填充在Split-Comm和Ring间选择，解码用交错KV分配与小规模动态迁移均衡。先分发Q并合并选择相同KV块的查询，再聚合局部注意力，减少跨步重复读。按新输入和缓存长度选择双模式，避免大输入时通信无法隐藏的负收益。静态交错token布局分散热点，并利用低负载分片空闲窗口迁移热块。采用ASTRA-sim/NS3、Ramulator2.0及Timeloop建模；默认8×8 die阵列、HP=8/CP=8，属于体系结构模拟与运行时协同，不是实体chiplet芯片实测。利用高速片间互连把部分不可重叠通信换成KV复用，并将静态分散与每轮小粒度迁移结合。",
+        "experimentsZh": "正文6.1以Llama3.1 405B、稀疏注意力轨迹和batch8评估资源匹配的MCM/GPU配置；6.3–6.4分别测部分预填充与解码。部分预填充比较Ring Attention与Split-Comm/双模式，解码比较原token分配及缓存均衡配置，另对比不同并行策略。指标包括：部分预填充延迟、解码延迟/吞吐、KV访问延迟、分片负载不均衡。摘要报告部分预填充1.45×、解码1.53×加速；正文6.3的1.45×对应512k缓存、新输入512 token的MCM设置，不能当作任意序列长度收益。结果依赖互连带宽、SRAM分块和输入长度；正文明确大输入时Split-Comm可能负收益，迁移隐藏亦需满足时间窗口。没有实芯片测量，本轮未独立复现模拟器。",
+        "affiliationsZh": "未在 DBLP/arXiv 元数据中提供",
+        "tags": [
+          "稀疏注意力",
+          "chiplet",
+          "上下文并行",
+          "KV负载均衡",
+          "访存复用"
+        ],
+        "importance": 5,
+        "researchFitZh": "直接对应稀疏KV管理、LLM加速器与chiplet存储层次，适合研究分布式注意力的数据搬运与核心空闲利用。",
+        "hardwareRelevance": 5,
+        "algorithmRelevance": 4,
+        "systemRelevance": 5,
+        "readPriority": "deep-read",
+        "whyReadZh": "优先核对以通信换访存的适用边界及解码热点迁移，直接贴合稀疏推理和核心存储数据流研究。",
+        "limitationsZh": "结果依赖互连带宽、SRAM分块和输入长度；正文明确大输入时Split-Comm可能负收益，迁移隐藏亦需满足时间窗口。没有实芯片测量，本轮未独立复现模拟器。",
+        "motivationDetail": {
+          "problemZh": "长上下文稀疏注意力在多chiplet上下文并行中，仍受重复KV访问和不同分片的访问偏斜限制。",
+          "gapZh": "Ring Attention偏重通信重叠，可能重复读同一KV块；连续token分配也可能把稀疏热点集中到少数存储分片。",
+          "whyImportantZh": "减少注意力计算后，访存、互连与负载均衡决定能否把分片数量转化为吞吐。",
+          "userRelevanceZh": "直接对应稀疏KV管理、LLM加速器与chiplet存储层次，适合研究分布式注意力的数据搬运与核心空闲利用。",
+          "evidence": "已实际读取队列完整摘要、公开HTML4.2双模式、第5节迁移说明与6.1–6.3设置和结果；1.53×来自摘要，1.45×条件及模拟口径由正文核实。 来源：https://arxiv.org/html/2611.33691v1"
+        },
+        "methodDetail": {
+          "coreIdeaZh": "按阶段优化分布式稀疏注意力：部分预填充在Split-Comm和Ring间选择，解码用交错KV分配与小规模动态迁移均衡。",
+          "componentsZh": [
+            "先分发Q并合并选择相同KV块的查询，再聚合局部注意力，减少跨步重复读",
+            "按新输入和缓存长度选择双模式，避免大输入时通信无法隐藏的负收益",
+            "静态交错token布局分散热点，并利用低负载分片空闲窗口迁移热块"
+          ],
+          "hardwareSystemDetailZh": "采用ASTRA-sim/NS3、Ramulator2.0及Timeloop建模；默认8×8 die阵列、HP=8/CP=8，属于体系结构模拟与运行时协同，不是实体chiplet芯片实测。",
+          "noveltyZh": "利用高速片间互连把部分不可重叠通信换成KV复用，并将静态分散与每轮小粒度迁移结合。",
+          "evidence": "已实际读取队列完整摘要、公开HTML4.2双模式、第5节迁移说明与6.1–6.3设置和结果；1.53×来自摘要，1.45×条件及模拟口径由正文核实。 来源：https://arxiv.org/html/2611.33691v1"
+        },
+        "experimentDetail": {
+          "setupZh": "正文6.1以Llama3.1 405B、稀疏注意力轨迹和batch8评估资源匹配的MCM/GPU配置；6.3–6.4分别测部分预填充与解码。",
+          "baselinesZh": "部分预填充比较Ring Attention与Split-Comm/双模式，解码比较原token分配及缓存均衡配置，另对比不同并行策略。",
+          "metricsZh": [
+            "部分预填充延迟",
+            "解码延迟/吞吐",
+            "KV访问延迟",
+            "分片负载不均衡"
+          ],
+          "mainResultsZh": "摘要报告部分预填充1.45×、解码1.53×加速；正文6.3的1.45×对应512k缓存、新输入512 token的MCM设置，不能当作任意序列长度收益。",
+          "limitationsZh": "结果依赖互连带宽、SRAM分块和输入长度；正文明确大输入时Split-Comm可能负收益，迁移隐藏亦需满足时间窗口。没有实芯片测量，本轮未独立复现模拟器。",
+          "evidence": "已实际读取队列完整摘要、公开HTML4.2双模式、第5节迁移说明与6.1–6.3设置和结果；1.53×来自摘要，1.45×条件及模拟口径由正文核实。 来源：https://arxiv.org/html/2611.33691v1"
+        },
+        "evidence": {
+          "usedSources": [
+            "public/research-digest/daily.json: 实际读取的原始元数据与完整英文摘要",
+            "https://arxiv.org/html/2611.33691v1"
+          ],
+          "affiliationEvidence": "队列DBLP/arXiv的affiliations与authorAffiliations均为空，按用户规定保留缺省文案，不据姓名猜测单位。",
+          "experimentEvidence": "已实际读取队列完整摘要、公开HTML4.2双模式、第5节迁移说明与6.1–6.3设置和结果；1.53×来自摘要，1.45×条件及模拟口径由正文核实。 来源：https://arxiv.org/html/2611.33691v1",
+          "missingFields": [
+            "作者单位（元数据缺失）",
+            "实体chiplet系统测量与独立复现（本轮未获得）"
+          ]
+        },
+        "confidence": {
+          "summary": 0.94,
+          "motivation": 0.92,
+          "method": 0.91,
+          "experiments": 0.91,
+          "affiliations": 0
+        }
+      },
+      "recommendationTrack": "hardware-primary",
+      "recommendationLabel": "硬件体系结构主线",
+      "recommendationScore": 185.5,
+      "relevanceReason": "命中 AI 处理器、体系结构、量化、训推系统或内存/缓存优化主题",
+      "pdfStatus": "remote",
+      "workflow": {
+        "digestStatus": "ready",
+        "emailStatus": "sent",
+        "digestError": "",
+        "harnessVersion": "paper-reader-v1",
+        "collectStatus": "collected",
+        "pdfStatus": "remote",
+        "harnessCheckedAt": "2026-11-27T00:34:24.240Z",
+        "harnessWarnings": [],
+        "emailSentAt": "2026-11-27T00:34:29.766Z",
+        "lastEmailError": ""
+      },
+      "pushedAt": "2026-11-27T00:34:29.766Z",
+      "emailSentAt": "2026-11-27T00:34:29.766Z",
+      "firstPushedAt": "2026-11-27T00:34:29.766Z"
     },
     {
       "id": "arxiv:2611.10316",
@@ -20402,6 +20532,389 @@
       "firstPushedAt": "2026-10-24T14:49:32.084Z"
     },
     {
+      "id": "arxiv:2611.33737",
+      "source": "arXiv",
+      "title": "Shared-Harmonic Characterization and Robust Orientation-Selection Certification for Directional Sensing Under Anisotropic Target Motion",
+      "authors": [
+        "Mingyu Kim",
+        "Daniel J. Stilwell",
+        "Jorge G. Jimenez"
+      ],
+      "authorAffiliations": [],
+      "affiliations": [],
+      "abstract": "Directional sensors are often oriented using historical target trajectories, while future trajectories remain uncertain at deployment. This letter addresses two post-placement questions: i) when orientation materially affects detection and ii) when a historically selected orientation remains reliable under future target-motion shift. We develop a placement-aware framework for anisotropy-induced detection (AID), showing that orientation sensitivity is governed by harmonic modes shared by the locally visible target-direction distribution and the sensor trajectory-incidence response. The resulting AID measure admits an exact RMS interpretation for the retained-harmonic orientation response. We then introduce a sensor-induced directional discrepancy, derive a conditional bound on future orientation regret, and obtain sufficient certificates for robust orientation selection whenever the future sensor-relevant shift lies within a prescribed discrepancy radius. Using 2025 AIS ship-traffic data near Terrebonne Bay, Louisiana, historical AID is strongly correlated with held-out orientation sensitivity ($r=0.908$). Across four angular-response widths, AID explains orientation-sensitivity variation with $R^2=0.920$, compared with $R^2=0.239$ for target-only anisotropy. At the nominal threshold, 316 of 350 locations are empirically classified as orientation-useful, and all retain gain above the threshold across five held-out windows.",
+      "venue": "arXiv",
+      "published": "2026-11-25T03:58:24Z",
+      "updated": "2026-11-25T03:58:24Z",
+      "url": "http://arxiv.org/abs/2611.33737v1",
+      "pdfUrl": "https://arxiv.org/pdf/2611.33737v1",
+      "categories": [
+        "eess.SY"
+      ],
+      "collectedAt": "2026-11-26T02:52:37.998Z",
+      "firstSeenAt": "2026-11-26T02:52:37.998Z",
+      "lastSeenAt": "2026-11-26T02:52:37.998Z",
+      "collectionType": "daily-latest",
+      "matchedQuery": "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)",
+      "collectionTypes": [
+        "daily-latest"
+      ],
+      "matchedQueries": [
+        "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)"
+      ],
+      "targetThemes": [],
+      "conferenceVenues": [],
+      "conferenceYears": [],
+      "recommendationTrack": "hardware-primary",
+      "recommendationLabel": "硬件体系结构主线",
+      "recommendationScore": 141,
+      "relevanceReason": "命中 AI 处理器、体系结构、量化、训推系统或内存/缓存优化主题",
+      "pdfStatus": "remote",
+      "workflow": {
+        "digestStatus": "ready",
+        "emailStatus": "sent",
+        "digestError": "",
+        "harnessVersion": "paper-reader-v1",
+        "collectStatus": "collected",
+        "pdfStatus": "remote",
+        "harnessCheckedAt": "2026-11-27T00:34:24.240Z",
+        "harnessWarnings": [],
+        "emailSentAt": "2026-11-27T00:34:29.766Z",
+        "lastEmailError": ""
+      },
+      "digest": {
+        "summaryZh": "该文用目标方向分布与传感器响应共享的谐波刻画朝向敏感性，再给出未来方向漂移半径内的条件稳健证书。船舶AIS数据验证了指标与留出敏感性的关联；经验校准半径不保证任意未来漂移，且研究属于定向感知，与AI芯片或KV缓存主线关系很弱。",
+        "motivationZh": "传感器朝向依据历史轨迹选定，未来目标运动方向变化可能使历史最优朝向失效。只统计目标方向各向异性，没有考虑传感器位置可见性与角响应，难解释何时朝向真正影响检测。必须区分可从历史数据估计的朝向价值与需要额外漂移假设的未来可靠性保证。属于传感与稳健决策理论，未涉及LLM执行、量化或计算核心，队列硬件标签不代表与研究主线直接相关。",
+        "methodZh": "将局部目标方向密度与传感器入射响应的共享谐波形成AID指标，并用传感器诱导差异界定未来朝向遗憾。纳入位置可见性与角响应，而非只看全局目标方向。对保留谐波响应给出RMS解释。在指定差异半径内推导条件证书，并以严格留出轨迹检验经验选择。研究使用角响应模型与AIS轨迹验证，正文说明响应并非某一实物传感器标定；没有AI处理器或内存架构实现。把朝向敏感性归因于目标和传感器共同保留的方向频率，并区分条件证书与经验校准。",
+        "experimentsZh": "摘要与正文V使用2025年路易斯安那Terrebonne Bay船舶AIS数据，在350候选位置并按时间分历史、校准与留出窗口验证。对比仅目标各向异性的指标，并改变传感器角响应宽度；不是芯片性能或LLM算法基线。指标包括：AID与留出敏感性的相关性、敏感性解释度R²、留出朝向增益、条件稳健性。摘要报告相关系数0.908；四种角响应宽度下AID解释度R²为0.920，对比目标单独各向异性0.239；316/350位置在名义阈值下有用，并在五个留出窗口保留阈值以上增益。经验差异半径不保证未来漂移被覆盖，正文明确不能当无条件证书；结果限于轨迹数据与建模响应，不是实物传感器部署或AI硬件加速验证。",
+        "affiliationsZh": "未在 DBLP/arXiv 元数据中提供",
+        "tags": [
+          "方向感知",
+          "谐波分析",
+          "稳健证书",
+          "低相关归档"
+        ],
+        "importance": 1,
+        "researchFitZh": "属于传感与稳健决策理论，未涉及LLM执行、量化或计算核心，队列硬件标签不代表与研究主线直接相关。",
+        "hardwareRelevance": 1,
+        "algorithmRelevance": 2,
+        "systemRelevance": 1,
+        "readPriority": "archive",
+        "whyReadZh": "按低相关传感理论归档即可；只有研究方向转向定向感知与分布漂移时才需继续深读。",
+        "limitationsZh": "经验差异半径不保证未来漂移被覆盖，正文明确不能当无条件证书；结果限于轨迹数据与建模响应，不是实物传感器部署或AI硬件加速验证。",
+        "motivationDetail": {
+          "problemZh": "传感器朝向依据历史轨迹选定，未来目标运动方向变化可能使历史最优朝向失效。",
+          "gapZh": "只统计目标方向各向异性，没有考虑传感器位置可见性与角响应，难解释何时朝向真正影响检测。",
+          "whyImportantZh": "必须区分可从历史数据估计的朝向价值与需要额外漂移假设的未来可靠性保证。",
+          "userRelevanceZh": "属于传感与稳健决策理论，未涉及LLM执行、量化或计算核心，队列硬件标签不代表与研究主线直接相关。",
+          "evidence": "已读队列完整摘要及公开HTML IV–V的差异半径与AIS设置；数值来自摘要，经验半径非无条件保证和非实物标定由正文明确说明。 来源：https://arxiv.org/html/2611.33737v1"
+        },
+        "methodDetail": {
+          "coreIdeaZh": "将局部目标方向密度与传感器入射响应的共享谐波形成AID指标，并用传感器诱导差异界定未来朝向遗憾。",
+          "componentsZh": [
+            "纳入位置可见性与角响应，而非只看全局目标方向",
+            "对保留谐波响应给出RMS解释",
+            "在指定差异半径内推导条件证书，并以严格留出轨迹检验经验选择"
+          ],
+          "hardwareSystemDetailZh": "研究使用角响应模型与AIS轨迹验证，正文说明响应并非某一实物传感器标定；没有AI处理器或内存架构实现。",
+          "noveltyZh": "把朝向敏感性归因于目标和传感器共同保留的方向频率，并区分条件证书与经验校准。",
+          "evidence": "已读队列完整摘要及公开HTML IV–V的差异半径与AIS设置；数值来自摘要，经验半径非无条件保证和非实物标定由正文明确说明。 来源：https://arxiv.org/html/2611.33737v1"
+        },
+        "experimentDetail": {
+          "setupZh": "摘要与正文V使用2025年路易斯安那Terrebonne Bay船舶AIS数据，在350候选位置并按时间分历史、校准与留出窗口验证。",
+          "baselinesZh": "对比仅目标各向异性的指标，并改变传感器角响应宽度；不是芯片性能或LLM算法基线。",
+          "metricsZh": [
+            "AID与留出敏感性的相关性",
+            "敏感性解释度R²",
+            "留出朝向增益",
+            "条件稳健性"
+          ],
+          "mainResultsZh": "摘要报告相关系数0.908；四种角响应宽度下AID解释度R²为0.920，对比目标单独各向异性0.239；316/350位置在名义阈值下有用，并在五个留出窗口保留阈值以上增益。",
+          "limitationsZh": "经验差异半径不保证未来漂移被覆盖，正文明确不能当无条件证书；结果限于轨迹数据与建模响应，不是实物传感器部署或AI硬件加速验证。",
+          "evidence": "已读队列完整摘要及公开HTML IV–V的差异半径与AIS设置；数值来自摘要，经验半径非无条件保证和非实物标定由正文明确说明。 来源：https://arxiv.org/html/2611.33737v1"
+        },
+        "evidence": {
+          "usedSources": [
+            "public/research-digest/daily.json: 实际读取的原始元数据与完整英文摘要",
+            "https://arxiv.org/html/2611.33737v1"
+          ],
+          "affiliationEvidence": "队列DBLP/arXiv的affiliations与authorAffiliations均为空，按用户规定保留缺省文案，不据姓名猜测单位。",
+          "experimentEvidence": "已读队列完整摘要及公开HTML IV–V的差异半径与AIS设置；数值来自摘要，经验半径非无条件保证和非实物标定由正文明确说明。 来源：https://arxiv.org/html/2611.33737v1",
+          "missingFields": [
+            "作者单位（元数据缺失）",
+            "实物传感器标定与部署证据（当前建模口径未覆盖）"
+          ]
+        },
+        "confidence": {
+          "summary": 0.94,
+          "motivation": 0.92,
+          "method": 0.91,
+          "experiments": 0.91,
+          "affiliations": 0
+        }
+      },
+      "pushedAt": "2026-11-27T00:34:29.766Z",
+      "emailSentAt": "2026-11-27T00:34:29.766Z",
+      "firstPushedAt": "2026-11-27T00:34:29.766Z"
+    },
+    {
+      "id": "arxiv:2611.33271",
+      "source": "arXiv",
+      "title": "The black hole IR triangle for scalar QED",
+      "authors": [
+        "Fabiano Feleppa",
+        "Nava Gaddam",
+        "Nico Groenenboom"
+      ],
+      "authorAffiliations": [],
+      "affiliations": [],
+      "abstract": "We construct the black hole infrared triangle of scalar QED on a stretched Schwarzschild horizon at tree level. In the covariant phase space of the near-horizon Maxwell field, the soft charge is a corner term. The memory is the zero mode of the gauge-invariant radiative field along the generators. It is conjugate to the boundary gauge mode that labels the degenerate horizon vacua, and Gauss' law fixes it by the flux of charge through the horizon. The Noether flux of the residual gauge transformation through the stretched horizon is not conserved by the scattering, because charged matter crosses the stretched horizon in both directions. The flux with its matter part removed is the soft charge, which generates the large gauge transformation. Its Ward identity is equivalent to a soft photon theorem in every radiative partial wave, which we derive from the near-horizon Feynman rules and, where these do not control the emission, from the field equations at leading order. The main difference from null infinity is that on a stretched horizon both radial branches of the field are independent boundary data. The hard charge is a radial flux. With both branches present it weights each leg by the direction of its radial motion, and the soft factor is a sign per leg. The endpoint data on the two branches give two boundary observables, the time-integrated transverse magnetic and electric fields. The field radiated by a scattering process contributes only to the first, where it cancels the change in the Coulomb memory of the charges, so that the soft charge is conserved. A charge that crosses the horizon enters both. We also discuss the infrared divergence, the dressing of the external states, and the fate of the memory in the Hartle--Hawking state, where it performs a random walk driven by the Hawking radiation.",
+      "venue": "arXiv",
+      "published": "2026-11-24T19:00:01Z",
+      "updated": "2026-11-24T19:00:01Z",
+      "url": "http://arxiv.org/abs/2611.33271v1",
+      "pdfUrl": "https://arxiv.org/pdf/2611.33271v1",
+      "categories": [
+        "hep-th",
+        "gr-qc"
+      ],
+      "collectedAt": "2026-11-26T02:52:37.998Z",
+      "firstSeenAt": "2026-11-26T02:52:37.998Z",
+      "lastSeenAt": "2026-11-26T02:52:37.998Z",
+      "collectionType": "daily-latest",
+      "matchedQuery": "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)",
+      "collectionTypes": [
+        "daily-latest"
+      ],
+      "matchedQueries": [
+        "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)"
+      ],
+      "targetThemes": [],
+      "conferenceVenues": [],
+      "conferenceYears": [],
+      "recommendationTrack": "hardware-primary",
+      "recommendationLabel": "硬件体系结构主线",
+      "recommendationScore": 141,
+      "relevanceReason": "命中 AI 处理器、体系结构、量化、训推系统或内存/缓存优化主题",
+      "pdfStatus": "remote",
+      "workflow": {
+        "digestStatus": "ready",
+        "emailStatus": "sent",
+        "digestError": "",
+        "harnessVersion": "paper-reader-v1",
+        "collectStatus": "collected",
+        "pdfStatus": "remote",
+        "harnessCheckedAt": "2026-11-27T00:34:24.240Z",
+        "harnessWarnings": [],
+        "emailSentAt": "2026-11-27T00:34:29.766Z",
+        "lastEmailError": ""
+      },
+      "digest": {
+        "summaryZh": "该文在Schwarzschild黑洞的拉伸视界上，建立标量QED的软光子定理、Ward恒等式与电磁记忆之间的树级联系，强调两条径向分支带来的边界差异。这里的memory指场论记忆效应，不是计算机存储；属于理论物理误命中，按低相关归档。",
+        "motivationZh": "无穷远边界上的红外三角关系，不能直接照搬到带双向物质通量的黑洞拉伸视界。视界两条径向分支具有独立边界数据，软荷、硬荷和记忆的守恒关系需要重新建立。区分不同边界条件对守恒荷和软定理的作用，是本文理论一致性问题的核心。属于高能理论与广义相对论，和AI计算核心、KV缓存及存储层次无直接联系，应识别为检索误命中。",
+        "methodZh": "在近视界Maxwell协变相空间中定义软荷与边界零模，并把Ward恒等式、软光子定理及电磁记忆联系起来。保留两条径向分支的独立边界数据并区分软荷与物质通量。通过近视界费曼规则及领先阶场方程建立软定理。分析积分电磁场边界可观测量以及散射记忆的抵消关系。纯理论场论推导；memory是电磁场的记忆效应，不表示DRAM、缓存、PNM或AI加速器硬件。在拉伸视界双分支条件下构建树级红外三角，说明其与无穷远边界的差别。",
+        "experimentsZh": "论文研究Schwarzschild拉伸视界上的树级标量QED与近视界Maxwell场；没有机器学习数据集或芯片评测设置。理论上与无穷远的软定理、边界电荷及记忆结构对照，经验性能基线不适用。指标包括：Ward恒等式与软定理的一致性、软荷守恒关系（理论而非性能指标）。可读摘要建立软荷与记忆零模的关系，说明辐射记忆与库仑记忆变化抵消从而满足软荷守恒，并讨论热态记忆；没有可报告的硬件加速、能耗或模型准确率结果。结论限于文中树级近视界理论设定，本轮未逐项独立校验推导；不能把场论memory或infrared术语解释成AI内存与低功耗研究。",
+        "affiliationsZh": "未在 DBLP/arXiv 元数据中提供",
+        "tags": [
+          "理论物理",
+          "标量QED",
+          "视界记忆",
+          "低相关归档"
+        ],
+        "importance": 1,
+        "researchFitZh": "属于高能理论与广义相对论，和AI计算核心、KV缓存及存储层次无直接联系，应识别为检索误命中。",
+        "hardwareRelevance": 1,
+        "algorithmRelevance": 1,
+        "systemRelevance": 1,
+        "readPriority": "archive",
+        "whyReadZh": "与计算机体系结构研究不相关，保留完整来源并低优先归档，避免memory关键词造成方向误判。",
+        "limitationsZh": "结论限于文中树级近视界理论设定，本轮未逐项独立校验推导；不能把场论memory或infrared术语解释成AI内存与低功耗研究。",
+        "motivationDetail": {
+          "problemZh": "无穷远边界上的红外三角关系，不能直接照搬到带双向物质通量的黑洞拉伸视界。",
+          "gapZh": "视界两条径向分支具有独立边界数据，软荷、硬荷和记忆的守恒关系需要重新建立。",
+          "whyImportantZh": "区分不同边界条件对守恒荷和软定理的作用，是本文理论一致性问题的核心。",
+          "userRelevanceZh": "属于高能理论与广义相对论，和AI计算核心、KV缓存及存储层次无直接联系，应识别为检索误命中。",
+          "evidence": "已实际读取队列完整摘要和公开HTML摘要及引言；证据为理论关系陈述，没有假造实验设置或把电磁记忆等同存储缓存。 来源：https://arxiv.org/html/2611.33271v1"
+        },
+        "methodDetail": {
+          "coreIdeaZh": "在近视界Maxwell协变相空间中定义软荷与边界零模，并把Ward恒等式、软光子定理及电磁记忆联系起来。",
+          "componentsZh": [
+            "保留两条径向分支的独立边界数据并区分软荷与物质通量",
+            "通过近视界费曼规则及领先阶场方程建立软定理",
+            "分析积分电磁场边界可观测量以及散射记忆的抵消关系"
+          ],
+          "hardwareSystemDetailZh": "纯理论场论推导；memory是电磁场的记忆效应，不表示DRAM、缓存、PNM或AI加速器硬件。",
+          "noveltyZh": "在拉伸视界双分支条件下构建树级红外三角，说明其与无穷远边界的差别。",
+          "evidence": "已实际读取队列完整摘要和公开HTML摘要及引言；证据为理论关系陈述，没有假造实验设置或把电磁记忆等同存储缓存。 来源：https://arxiv.org/html/2611.33271v1"
+        },
+        "experimentDetail": {
+          "setupZh": "论文研究Schwarzschild拉伸视界上的树级标量QED与近视界Maxwell场；没有机器学习数据集或芯片评测设置。",
+          "baselinesZh": "理论上与无穷远的软定理、边界电荷及记忆结构对照，经验性能基线不适用。",
+          "metricsZh": [
+            "Ward恒等式与软定理的一致性",
+            "软荷守恒关系（理论而非性能指标）"
+          ],
+          "mainResultsZh": "可读摘要建立软荷与记忆零模的关系，说明辐射记忆与库仑记忆变化抵消从而满足软荷守恒，并讨论热态记忆；没有可报告的硬件加速、能耗或模型准确率结果。",
+          "limitationsZh": "结论限于文中树级近视界理论设定，本轮未逐项独立校验推导；不能把场论memory或infrared术语解释成AI内存与低功耗研究。",
+          "evidence": "已实际读取队列完整摘要和公开HTML摘要及引言；证据为理论关系陈述，没有假造实验设置或把电磁记忆等同存储缓存。 来源：https://arxiv.org/html/2611.33271v1"
+        },
+        "evidence": {
+          "usedSources": [
+            "public/research-digest/daily.json: 实际读取的原始元数据与完整英文摘要",
+            "https://arxiv.org/html/2611.33271v1"
+          ],
+          "affiliationEvidence": "队列DBLP/arXiv的affiliations与authorAffiliations均为空，按用户规定保留缺省文案，不据姓名猜测单位。",
+          "experimentEvidence": "已实际读取队列完整摘要和公开HTML摘要及引言；证据为理论关系陈述，没有假造实验设置或把电磁记忆等同存储缓存。 来源：https://arxiv.org/html/2611.33271v1",
+          "missingFields": [
+            "作者单位（元数据缺失）",
+            "硬件/机器学习实验不适用于该理论工作"
+          ]
+        },
+        "confidence": {
+          "summary": 0.94,
+          "motivation": 0.92,
+          "method": 0.83,
+          "experiments": 0.85,
+          "affiliations": 0
+        }
+      },
+      "pushedAt": "2026-11-27T00:34:29.766Z",
+      "emailSentAt": "2026-11-27T00:34:29.766Z",
+      "firstPushedAt": "2026-11-27T00:34:29.766Z"
+    },
+    {
+      "id": "arxiv:2611.32968",
+      "source": "arXiv",
+      "title": "Quantum-Inspired Tensor Train Spectral Solver for High-Resolution PDEs with Non-Periodic Boundary Conditions",
+      "authors": [
+        "Sascha H. Hauck",
+        "Nis-Luca van Hülst",
+        "Matthias Kabel",
+        "Dieter Jaksch",
+        "Nicolas R. Gauger"
+      ],
+      "authorAffiliations": [],
+      "affiliations": [],
+      "abstract": "Tensor train (TT) methods enable high-resolution computational mechanics simulations by exploiting low-rank structure in discretized fields and operators. While the superfast Fourier transform (SFFT) has enabled efficient TT-based spectral solvers for periodic problems, corresponding representations for non-periodic boundary conditions remain underexplored. We introduce the superfast cosine and sine transforms (SFCT and SFST), extending the TT spectral framework to homogeneous Neumann and Dirichlet boundary conditions, respectively. Building on a quantum-circuit construction of the discrete cosine and sine transforms, we derive both transforms from a shared TT operator representation and prove that their TT ranks are bounded by $6r_S$, independently of the discretization order, where $r_S$ is the rank of the SFFT at the prescribed accuracy. The measured ranks plateau near 32 for grid sizes up to $2^{26}$ points. For Rayleigh-Bénard convection, spectral pressure projection achieves up to a 7-fold speedup in the Poisson solve relative to a preconditioned physical-space TT solver while maintaining comparable accuracy. Three-dimensional computational homogenization achieves a 2-6-fold speedup and a 4-7-fold reduction in memory consumption compared with the existing TT-based approach. The results establish an efficient TT framework for spectral PDE solvers with non-periodic boundary conditions.",
+      "venue": "arXiv",
+      "published": "2026-11-24T17:05:00Z",
+      "updated": "2026-11-24T17:05:00Z",
+      "url": "http://arxiv.org/abs/2611.32968v1",
+      "pdfUrl": "https://arxiv.org/pdf/2611.32968v1",
+      "categories": [
+        "math.NA",
+        "cond-mat.mtrl-sci",
+        "cs.CE",
+        "physics.flu-dyn",
+        "quant-ph"
+      ],
+      "collectedAt": "2026-11-26T02:52:37.998Z",
+      "firstSeenAt": "2026-11-26T02:52:37.998Z",
+      "lastSeenAt": "2026-11-26T02:52:37.998Z",
+      "collectionType": "daily-latest",
+      "matchedQuery": "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)",
+      "collectionTypes": [
+        "daily-latest"
+      ],
+      "matchedQueries": [
+        "(all:PNM OR all:\"processing near memory\" OR all:\"processing-near-memory\" OR all:near-memory OR all:near-data OR all:memory-side OR all:CXL OR all:HBM OR all:chiplet) AND (all:LLM OR all:transformer OR all:AI OR all:accelerator OR all:processor)"
+      ],
+      "targetThemes": [],
+      "conferenceVenues": [],
+      "conferenceYears": [],
+      "recommendationTrack": "hardware-primary",
+      "recommendationLabel": "硬件体系结构主线",
+      "recommendationScore": 141,
+      "relevanceReason": "命中 AI 处理器、体系结构、量化、训推系统或内存/缓存优化主题",
+      "pdfStatus": "remote",
+      "workflow": {
+        "digestStatus": "ready",
+        "emailStatus": "sent",
+        "digestError": "",
+        "harnessVersion": "paper-reader-v1",
+        "collectStatus": "collected",
+        "pdfStatus": "remote",
+        "harnessCheckedAt": "2026-11-27T00:34:24.240Z",
+        "harnessWarnings": [],
+        "emailSentAt": "2026-11-27T00:34:29.766Z",
+        "lastEmailError": ""
+      },
+      "digest": {
+        "summaryZh": "该文把量子电路启发的余弦、正弦变换写成低秩Tensor Train算子，将谱PDE求解扩展至齐次Neumann和Dirichlet边界。摘要报告Poisson求解最高7倍加速，均匀化2–6倍加速及4–7倍内存缩减；这是数值计算方法，未证明量子芯片或LLM硬件收益。",
+        "motivationZh": "Tensor Train谱求解在周期边界已有高效傅里叶表示，非周期边界对应的紧凑算子表示仍不足。直接沿用周期扩展或既有物理空间TT求解，可能增加求解时间和内存，限制高分辨率计算。保留低秩结构并适配真实边界条件，才有可能把张量压缩用于更广泛的力学问题。属于低秩数值求解，可作计算方法背景，但不直接贡献LLM量化、推理数据流或AI芯片架构。",
+        "methodZh": "从离散余弦/正弦变换的量子电路构造共同TT算子，形成SFCT/SFST并用于非周期谱求解。分别对应齐次Neumann与Dirichlet边界。推导相对SFFT秩的界并数值检查算子秩与误差。用于Rayleigh–Bénard压力投影和三维均匀化，比较TT求解方案。quantum-inspired指构造启发，不能据标题认定运行于量子芯片；本轮已读部分未核实具体CPU/GPU型号。在共同TT算子表达中扩展非周期变换，并把边界适配用于减少计算域与低秩求解成本。",
+        "experimentsZh": "摘要评估高分辨率变换、Rayleigh–Bénard对流和三维计算均匀化；正文5.4在相同物理分辨率比较镜像与缩减域TT方案。Poisson参考为预条件物理空间TT求解器；均匀化参考为既有TT方法，正文明确比较镜像与缩减域配置。指标包括：TT秩、数值误差、Poisson求解时间、均匀化迭代时间与内存。摘要报告变换秩在最多2^26网格点时约32，Poisson求解最高7×，三维均匀化2–6×加速及4–7×内存缩减；不同数字来自不同子实验，不能合并为统一全流程收益。收益依赖低秩结构、边界条件和比较口径；网格点数、变换秩和三维求解规模不是同一指标。硬件型号和跨平台效果本轮未核验，也未证明对LLM负载可直接迁移。",
+        "affiliationsZh": "未在 DBLP/arXiv 元数据中提供",
+        "tags": [
+          "TensorTrain",
+          "谱PDE求解",
+          "非周期边界",
+          "低相关归档"
+        ],
+        "importance": 2,
+        "researchFitZh": "属于低秩数值求解，可作计算方法背景，但不直接贡献LLM量化、推理数据流或AI芯片架构。",
+        "hardwareRelevance": 1,
+        "algorithmRelevance": 3,
+        "systemRelevance": 2,
+        "readPriority": "archive",
+        "whyReadZh": "作为低秩数值方法归档即可；若未来研究压缩算子或科学计算负载，再核对秩增长与精度成本。",
+        "limitationsZh": "收益依赖低秩结构、边界条件和比较口径；网格点数、变换秩和三维求解规模不是同一指标。硬件型号和跨平台效果本轮未核验，也未证明对LLM负载可直接迁移。",
+        "motivationDetail": {
+          "problemZh": "Tensor Train谱求解在周期边界已有高效傅里叶表示，非周期边界对应的紧凑算子表示仍不足。",
+          "gapZh": "直接沿用周期扩展或既有物理空间TT求解，可能增加求解时间和内存，限制高分辨率计算。",
+          "whyImportantZh": "保留低秩结构并适配真实边界条件，才有可能把张量压缩用于更广泛的力学问题。",
+          "userRelevanceZh": "属于低秩数值求解，可作计算方法背景，但不直接贡献LLM量化、推理数据流或AI芯片架构。",
+          "evidence": "已读队列完整摘要、公开HTML方法目录与5.4均匀化评估；7×、2–6×、4–7×及变换秩来自摘要，比较域和分辨率条件由5.4核对。 来源：https://arxiv.org/html/2611.32968v1"
+        },
+        "methodDetail": {
+          "coreIdeaZh": "从离散余弦/正弦变换的量子电路构造共同TT算子，形成SFCT/SFST并用于非周期谱求解。",
+          "componentsZh": [
+            "分别对应齐次Neumann与Dirichlet边界",
+            "推导相对SFFT秩的界并数值检查算子秩与误差",
+            "用于Rayleigh–Bénard压力投影和三维均匀化，比较TT求解方案"
+          ],
+          "hardwareSystemDetailZh": "quantum-inspired指构造启发，不能据标题认定运行于量子芯片；本轮已读部分未核实具体CPU/GPU型号。",
+          "noveltyZh": "在共同TT算子表达中扩展非周期变换，并把边界适配用于减少计算域与低秩求解成本。",
+          "evidence": "已读队列完整摘要、公开HTML方法目录与5.4均匀化评估；7×、2–6×、4–7×及变换秩来自摘要，比较域和分辨率条件由5.4核对。 来源：https://arxiv.org/html/2611.32968v1"
+        },
+        "experimentDetail": {
+          "setupZh": "摘要评估高分辨率变换、Rayleigh–Bénard对流和三维计算均匀化；正文5.4在相同物理分辨率比较镜像与缩减域TT方案。",
+          "baselinesZh": "Poisson参考为预条件物理空间TT求解器；均匀化参考为既有TT方法，正文明确比较镜像与缩减域配置。",
+          "metricsZh": [
+            "TT秩",
+            "数值误差",
+            "Poisson求解时间",
+            "均匀化迭代时间与内存"
+          ],
+          "mainResultsZh": "摘要报告变换秩在最多2^26网格点时约32，Poisson求解最高7×，三维均匀化2–6×加速及4–7×内存缩减；不同数字来自不同子实验，不能合并为统一全流程收益。",
+          "limitationsZh": "收益依赖低秩结构、边界条件和比较口径；网格点数、变换秩和三维求解规模不是同一指标。硬件型号和跨平台效果本轮未核验，也未证明对LLM负载可直接迁移。",
+          "evidence": "已读队列完整摘要、公开HTML方法目录与5.4均匀化评估；7×、2–6×、4–7×及变换秩来自摘要，比较域和分辨率条件由5.4核对。 来源：https://arxiv.org/html/2611.32968v1"
+        },
+        "evidence": {
+          "usedSources": [
+            "public/research-digest/daily.json: 实际读取的原始元数据与完整英文摘要",
+            "https://arxiv.org/html/2611.32968v1"
+          ],
+          "affiliationEvidence": "队列DBLP/arXiv的affiliations与authorAffiliations均为空，按用户规定保留缺省文案，不据姓名猜测单位。",
+          "experimentEvidence": "已读队列完整摘要、公开HTML方法目录与5.4均匀化评估；7×、2–6×、4–7×及变换秩来自摘要，比较域和分辨率条件由5.4核对。 来源：https://arxiv.org/html/2611.32968v1",
+          "missingFields": [
+            "作者单位（元数据缺失）",
+            "具体评测硬件和跨平台执行成本（本轮未核验）"
+          ]
+        },
+        "confidence": {
+          "summary": 0.94,
+          "motivation": 0.92,
+          "method": 0.91,
+          "experiments": 0.91,
+          "affiliations": 0
+        }
+      },
+      "pushedAt": "2026-11-27T00:34:29.766Z",
+      "emailSentAt": "2026-11-27T00:34:29.766Z",
+      "firstPushedAt": "2026-11-27T00:34:29.766Z"
+    },
+    {
       "id": "arxiv:2611.22008",
       "source": "arXiv",
       "title": "Stokes flow in a wedge with a moving contact point: well-posedness with a fixed contact angle and Navier slip",
@@ -22763,6 +23276,138 @@
       "firstPushedAt": "2026-11-22T00:38:24.779Z"
     },
     {
+      "id": "arxiv:2611.32954",
+      "source": "arXiv",
+      "title": "LoomKV: Lossless KV Cache Compression from GPU Memory to SSD for LLM Serving",
+      "authors": [
+        "Wentao Zhu",
+        "Ziao Sheng",
+        "Peng Deng",
+        "Huiqi Hu",
+        "Xuan Zhou",
+        "Xing Wei",
+        "Zhuang Wang"
+      ],
+      "authorAffiliations": [],
+      "affiliations": [],
+      "abstract": "Large language model (LLM) serving engines offload the key/value (KV) cache from GPU memory to host DRAM and SSD so multi-turn and agent requests can reuse prompt prefixes. Capacity then limits service at two levels: external tiers govern prefix reuse before eviction, while the GPU KV pool bounds concurrent long requests, and lossy compression alters KV values and outputs. LoomKV brings lossless KV compression to both external tiers (tier mode) and the GPU pool (pool mode) on an unmodified engine. Using a calibrated per-head two-level 3-bit code over BF16 high bytes (sign and upper seven exponent bits), LoomKV stores BF16 KV at 0.71 of its raw size across nine models and FP8 KV at 0.85-0.87. In tier mode, TileStream writes exact-length records with length readback off the load path, leaving tier storage, eviction, and prefetch unchanged, and decompresses fetched records straight into scattered GPU pages. In pool mode, FragPack packs variable-length records into smaller shared-budget GPU pages read in place by a fused decode-attention kernel faster than FlashAttention-3 on BF16. Built with LMCache and vLLM, LoomKV makes compressed tiers act as 1.4x larger raw tiers on AgentX: across LMCache's LRU cliff, tier mode delivers 2.7-3.6x raw's goodput and 1.9-3.1x lower mean time-to-first-token (TTFT), shifts the cliff identically under other simulated replacement policies, and cuts repeated-prompt TTFT up to 1.7x via SSD-to-DRAM promotion. When tiers hold the working set, pool mode fits 1.31-1.34x as many GPU tokens, admitting 12 long requests with roughly raw's queue and goodput at 8. On an AI IDE trace where both tiers and the GPU pool are constrained, tier and pool modes raise goodput by 1.24x and 1.59x. Where raw capacity suffices, compression costs at most 2.2% throughput; tier mode is bit-exact with raw tiers, and pool mode matches FlashAttention-3's numerical accuracy.",
+      "venue": "arXiv",
+      "published": "2026-11-24T16:54:37Z",
+      "updated": "2026-11-24T16:54:37Z",
+      "url": "http://arxiv.org/abs/2611.32954v1",
+      "pdfUrl": "https://arxiv.org/pdf/2611.32954v1",
+      "categories": [
+        "cs.AI"
+      ],
+      "collectedAt": "2026-11-26T02:52:34.286Z",
+      "firstSeenAt": "2026-11-26T02:52:34.286Z",
+      "lastSeenAt": "2026-11-26T02:52:34.286Z",
+      "collectionType": "daily-latest",
+      "matchedQuery": "(all:quantization OR all:compression OR all:pruning OR all:sparsity OR all:low-bit) AND (all:LLM OR all:transformer OR all:language) AND (all:hardware OR all:accelerator OR all:inference OR all:serving OR all:processor)",
+      "collectionTypes": [
+        "daily-latest"
+      ],
+      "matchedQueries": [
+        "(all:quantization OR all:compression OR all:pruning OR all:sparsity OR all:low-bit) AND (all:LLM OR all:transformer OR all:language) AND (all:hardware OR all:accelerator OR all:inference OR all:serving OR all:processor)"
+      ],
+      "targetThemes": [],
+      "conferenceVenues": [],
+      "conferenceYears": [],
+      "recommendationTrack": "hardware-primary",
+      "recommendationLabel": "硬件体系结构主线",
+      "recommendationScore": 116.5,
+      "relevanceReason": "命中 AI 处理器、体系结构、量化、训推系统或内存/缓存优化主题",
+      "pdfStatus": "remote",
+      "workflow": {
+        "digestStatus": "ready",
+        "emailStatus": "sent",
+        "digestError": "",
+        "harnessVersion": "paper-reader-v1",
+        "collectStatus": "collected",
+        "pdfStatus": "remote",
+        "harnessCheckedAt": "2026-11-27T00:34:24.240Z",
+        "harnessWarnings": [],
+        "emailSentAt": "2026-11-27T00:34:29.766Z",
+        "lastEmailError": ""
+      },
+      "digest": {
+        "summaryZh": "LoomKV 通过逐头码本对KV高字节无损编码，分别扩展DRAM/SSD缓存与GPU池容量，并融合解压和解码注意力。BF16约存为原大小0.71，容量临界点可提高goodput；tier恢复逐位一致，pool注意力因求和顺序变化只保证对照中的数值精度，不能混同输出逐位一致。",
+        "motivationZh": "LLM多轮与Agent服务同时受外部前缀缓存和GPU KV池容量限制，有损压缩又会改变KV及输出。压缩后的字节变短不一定增加实际可分配容量，解压与散写、长度同步还可能抵消缓存收益。必须把无损编码、内存分配和传输关键路径联动，才能用较少空间换取缓存命中与并发容量。直接对应KV缓存、无损表示、GPU本地存储及分层服务系统，适合与低比特有损量化的质量成本进行区分。",
+        "methodZh": "共享一套逐头无损码本，在tier模式保存精确长度对象，在pool模式用小页打包并由融合内核原位解码。BF16低字节原样保留，高字节用码本符号和逃逸编码；3-bit符号不等于3-bit数值量化。TileStream恢复到分散GPU页，并把长度读回放到加载路径外。FragPack将可变记录放入共享预算小页，融合解压和注意力，避免完整中间张量。实现接入LMCache/vLLM；tier保留原注意力后端，pool采用融合解压注意力。评测为双H800服务器，GPU池额外元数据与缓冲计入同一容量预算。把无损编码同时做成可实际利用的外部缓存对象和GPU池页，而不是只优化传输压缩率。",
+        "experimentsZh": "正文VIII-A：双80GB H800，主要模型Qwen3-30B-A3B及GLM-4-9B；AgentX多轮轨迹与第二AI IDE工作负载，另测九模型压缩率。对比原始BF16 LMCache/vLLM及FP8 KV；内核另与SplitZip、ExANS和nvCOMP等比较，质量需分tier与pool口径。指标包括：实际存储比例、满足TTFT/ITL门槛的goodput、引擎TTFT、GPU可容纳token数、输出数值一致性。摘要报告BF16大小约为原始0.71；AgentX跨LRU容量临界点时tier goodput为原始2.7–3.6×，pool可容纳1.31–1.34× GPU token；容量充足时吞吐代价最高2.2%。容量临界点增益不能外推为所有负载的解码加速；TTFT是引擎时间，不含代理等待。KV存储无损不代表融合注意力输出逐位相同，pool因求和次序变化有舍入差异；结果依赖缓存和并发预算。",
+        "affiliationsZh": "未在 DBLP/arXiv 元数据中提供",
+        "tags": [
+          "无损KV压缩",
+          "GPU内存池",
+          "分层缓存",
+          "融合解压",
+          "LLM服务"
+        ],
+        "importance": 5,
+        "researchFitZh": "直接对应KV缓存、无损表示、GPU本地存储及分层服务系统，适合与低比特有损量化的质量成本进行区分。",
+        "hardwareRelevance": 4,
+        "algorithmRelevance": 4,
+        "systemRelevance": 5,
+        "readPriority": "deep-read",
+        "whyReadZh": "优先阅读码本解码到寄存器的数据流、压缩页分配和同步规避，核对字节节省如何成为可用容量与goodput。",
+        "limitationsZh": "容量临界点增益不能外推为所有负载的解码加速；TTFT是引擎时间，不含代理等待。KV存储无损不代表融合注意力输出逐位相同，pool因求和次序变化有舍入差异；结果依赖缓存和并发预算。",
+        "motivationDetail": {
+          "problemZh": "LLM多轮与Agent服务同时受外部前缀缓存和GPU KV池容量限制，有损压缩又会改变KV及输出。",
+          "gapZh": "压缩后的字节变短不一定增加实际可分配容量，解压与散写、长度同步还可能抵消缓存收益。",
+          "whyImportantZh": "必须把无损编码、内存分配和传输关键路径联动，才能用较少空间换取缓存命中与并发容量。",
+          "userRelevanceZh": "直接对应KV缓存、无损表示、GPU本地存储及分层服务系统，适合与低比特有损量化的质量成本进行区分。",
+          "evidence": "已读队列完整摘要、公开HTML III–IV的双模式与编码、VIII-A设置及VIII-E容量评估；0.71、2.7–3.6×和2.2%来自摘要，池内1.31–1.34×与精度边界由正文核实。 来源：https://arxiv.org/html/2611.32954v1"
+        },
+        "methodDetail": {
+          "coreIdeaZh": "共享一套逐头无损码本，在tier模式保存精确长度对象，在pool模式用小页打包并由融合内核原位解码。",
+          "componentsZh": [
+            "BF16低字节原样保留，高字节用码本符号和逃逸编码；3-bit符号不等于3-bit数值量化",
+            "TileStream恢复到分散GPU页，并把长度读回放到加载路径外",
+            "FragPack将可变记录放入共享预算小页，融合解压和注意力，避免完整中间张量"
+          ],
+          "hardwareSystemDetailZh": "实现接入LMCache/vLLM；tier保留原注意力后端，pool采用融合解压注意力。评测为双H800服务器，GPU池额外元数据与缓冲计入同一容量预算。",
+          "noveltyZh": "把无损编码同时做成可实际利用的外部缓存对象和GPU池页，而不是只优化传输压缩率。",
+          "evidence": "已读队列完整摘要、公开HTML III–IV的双模式与编码、VIII-A设置及VIII-E容量评估；0.71、2.7–3.6×和2.2%来自摘要，池内1.31–1.34×与精度边界由正文核实。 来源：https://arxiv.org/html/2611.32954v1"
+        },
+        "experimentDetail": {
+          "setupZh": "正文VIII-A：双80GB H800，主要模型Qwen3-30B-A3B及GLM-4-9B；AgentX多轮轨迹与第二AI IDE工作负载，另测九模型压缩率。",
+          "baselinesZh": "对比原始BF16 LMCache/vLLM及FP8 KV；内核另与SplitZip、ExANS和nvCOMP等比较，质量需分tier与pool口径。",
+          "metricsZh": [
+            "实际存储比例",
+            "满足TTFT/ITL门槛的goodput",
+            "引擎TTFT",
+            "GPU可容纳token数",
+            "输出数值一致性"
+          ],
+          "mainResultsZh": "摘要报告BF16大小约为原始0.71；AgentX跨LRU容量临界点时tier goodput为原始2.7–3.6×，pool可容纳1.31–1.34× GPU token；容量充足时吞吐代价最高2.2%。",
+          "limitationsZh": "容量临界点增益不能外推为所有负载的解码加速；TTFT是引擎时间，不含代理等待。KV存储无损不代表融合注意力输出逐位相同，pool因求和次序变化有舍入差异；结果依赖缓存和并发预算。",
+          "evidence": "已读队列完整摘要、公开HTML III–IV的双模式与编码、VIII-A设置及VIII-E容量评估；0.71、2.7–3.6×和2.2%来自摘要，池内1.31–1.34×与精度边界由正文核实。 来源：https://arxiv.org/html/2611.32954v1"
+        },
+        "evidence": {
+          "usedSources": [
+            "public/research-digest/daily.json: 实际读取的原始元数据与完整英文摘要",
+            "https://arxiv.org/html/2611.32954v1"
+          ],
+          "affiliationEvidence": "队列DBLP/arXiv的affiliations与authorAffiliations均为空，按用户规定保留缺省文案，不据姓名猜测单位。",
+          "experimentEvidence": "已读队列完整摘要、公开HTML III–IV的双模式与编码、VIII-A设置及VIII-E容量评估；0.71、2.7–3.6×和2.2%来自摘要，池内1.31–1.34×与精度边界由正文核实。 来源：https://arxiv.org/html/2611.32954v1",
+          "missingFields": [
+            "作者单位（元数据缺失）",
+            "其他GPU与生产独立复现（本轮未核验）"
+          ]
+        },
+        "confidence": {
+          "summary": 0.94,
+          "motivation": 0.92,
+          "method": 0.91,
+          "experiments": 0.91,
+          "affiliations": 0
+        }
+      },
+      "pushedAt": "2026-11-27T00:34:29.766Z",
+      "emailSentAt": "2026-11-27T00:34:29.766Z",
+      "firstPushedAt": "2026-11-27T00:34:29.766Z"
+    },
+    {
       "id": "arxiv:2611.08363",
       "source": "arXiv",
       "title": "StrataFlux: Memory-Hierarchy-Native Low-Bit LLM Inference",
@@ -24665,6 +25310,140 @@
       "pushedAt": "2026-05-08T04:40:41.777Z",
       "emailSentAt": "2026-05-08T04:40:41.777Z",
       "firstPushedAt": "2026-05-08T04:40:41.777Z"
+    },
+    {
+      "id": "arxiv:2611.33542",
+      "source": "arXiv",
+      "title": "RankCast: Phase-Aware Rank Balancing in MoE Serving",
+      "authors": [
+        "Kaidi Fu",
+        "Xu-Hao Lu",
+        "Pingwei Sun",
+        "Jianchao Tan",
+        "Yuchen Xie",
+        "Xunliang Cai"
+      ],
+      "authorAffiliations": [],
+      "affiliations": [],
+      "abstract": "Modern large language model (LLM) inference increasingly adopts disaggregated architectures that separate Prefill (P) and Decode (D) phases. Meanwhile, Expert Parallelism (EP) has been widely adopted in large Mixture-of-Experts (MoE) model serving. However, load imbalance still slows down MoE inference because each layer must wait for the busiest EP rank. The main source of latency differs between prefill and decode. Prefill is compute-bound, and its MoE layers' latency is determined by the maximum token count of the busiest rank. At the same time, under moderate batch sizes, Decode is memory-bound, so the latency is dominated by the maximum active-expert count across ranks. To solve both problems under a unified framework, we present RankCast, a system that reduces rank-level maximum token counts during prefill and active-expert counts during decode. For every token, RankCast preserves the predicted Top-p experts and chooses the remaining k-p from its Top-L candidates (L > k). In prefill, RankCast yields a price per rank that steers flexible assignments to less loaded ranks. In decode, RankCast closes experts on the busiest ranks while preserving the constraints for each token. Both paths are implemented and tested in the state-of-the-art inference frameworks SGLang and DeepEP. We overlap RankCast's kernels with model execution and reuse the existing DeepEP communication channel for metadata transmission. On Qwen3-235B-A22B with EP=8 and Qwen3.5-397B-A17B with EP=16, RankCast removes over 75% of the busiest rank's excess prefill load, improves prefill input throughput by up to 19%, and reduces decode time per output token by up to 10%. The quality cost is below one percentage point.",
+      "venue": "arXiv",
+      "published": "2026-11-24T23:37:38Z",
+      "updated": "2026-11-24T23:37:38Z",
+      "url": "http://arxiv.org/abs/2611.33542v1",
+      "pdfUrl": "https://arxiv.org/pdf/2611.33542v1",
+      "categories": [
+        "cs.DC",
+        "cs.AI",
+        "cs.LG"
+      ],
+      "collectedAt": "2026-11-26T02:52:32.481Z",
+      "firstSeenAt": "2026-11-26T02:52:32.481Z",
+      "lastSeenAt": "2026-11-26T02:52:32.481Z",
+      "collectionType": "daily-latest",
+      "matchedQuery": "(cat:cs.AR OR cat:cs.DC OR cat:cs.PF) AND (all:LLM OR all:transformer OR all:foundation OR all:language) AND (all:accelerator OR all:processor OR all:architecture OR all:hardware OR all:system OR all:serving OR all:training OR all:inference OR all:cache)",
+      "collectionTypes": [
+        "daily-latest"
+      ],
+      "matchedQueries": [
+        "(cat:cs.AR OR cat:cs.DC OR cat:cs.PF) AND (all:LLM OR all:transformer OR all:foundation OR all:language) AND (all:accelerator OR all:processor OR all:architecture OR all:hardware OR all:system OR all:serving OR all:training OR all:inference OR all:cache)",
+        "(all:prefill OR all:decoding OR all:KV OR all:cache OR all:attention) AND (all:accelerator OR all:kernel OR all:compiler OR all:serving OR all:memory) AND (all:LLM OR all:transformer)"
+      ],
+      "targetThemes": [],
+      "conferenceVenues": [],
+      "conferenceYears": [],
+      "digest": {
+        "summaryZh": "RankCast 按阶段均衡MoE：prefill降低最忙rank的token数，decode降低活跃专家数。它保护预测Top-p并调整其余专家，复用DeepEP通道传递元数据。两种Qwen模型报告最高19%输入吞吐提升和10% TPOT下降；路由会改变，质量代价低于1个百分点。",
+        "motivationZh": "专家并行的每层受最忙rank拖慢，但prefill与中等batch的decode所受资源瓶颈不同。只均衡token数不能保证decode减少权重读取，只均衡专家位置也可能受负载动态和复制占用显存限制。计算受限与访存受限阶段需要不同最大负载目标，否则平均负载均衡仍可能留下关键rank长尾。直接关联MoE推理系统及prefill/decode异构需求，可用于分析专家权重带宽、批量大小和分布式调度。",
+        "methodZh": "保持每token的受保护专家前缀，将其余选择限制在Top-L候选内，再分别按prefill token负载和decode活跃专家数优化。prefill用rank价格把可调整路由分给低负载rank。decode在最忙rank关闭部分专家，修复候选以满足每token选择约束。以旁路kernel重叠执行，复用DeepEP已有通信传递统计与候选元数据。属于SGLang/DeepEP服务运行时与路由协同，正文使用两节点H800部署，Qwen3-235B为EP8，Qwen3.5-397B为EP16；不是新增硬件或保持原路由完全不变的放置算法。同一候选约束下按阶段切换优化目标，明确token计算量与活跃专家权重读取量的差异。",
+        "experimentsZh": "正文5.1评估Qwen3-235B-A22B和Qwen3.5-397B-A17B；聊天、代码及长上下文工作负载，测prefill输入吞吐、decode中位TPOT与质量。主要收益相对同部署原生Top-k；prefill另比在线EPLB，decode还做XShare/OEA离线比较，需区别在线与离线口径。指标包括：最大/平均rank token负载、最大活跃专家数、输入token吞吐、中位TPOT、任务质量百分点变化。摘要报告消除最忙rank超过75%的额外prefill负载，最高19%输入吞吐提升、最高10% TPOT下降，所测质量代价低于1个百分点；这些是不同设置的最高值。改变候选专家选择，因此不是无损路由；预测Top-p不等于总能保留真实Top-p。正文仅测同模型家族、最多16GPU，其他门控方式未验证，且未测与专家放置优化联合效果。",
+        "affiliationsZh": "未在 DBLP/arXiv 元数据中提供",
+        "tags": [
+          "MoE服务",
+          "阶段感知",
+          "专家并行",
+          "负载均衡",
+          "权重带宽"
+        ],
+        "importance": 5,
+        "researchFitZh": "直接关联MoE推理系统及prefill/decode异构需求，可用于分析专家权重带宽、批量大小和分布式调度。",
+        "hardwareRelevance": 3,
+        "algorithmRelevance": 4,
+        "systemRelevance": 5,
+        "readPriority": "deep-read",
+        "whyReadZh": "重点读prefill与decode为何用不同目标及其kernel重叠条件，适合研究计算与访存异构的推理系统。",
+        "limitationsZh": "改变候选专家选择，因此不是无损路由；预测Top-p不等于总能保留真实Top-p。正文仅测同模型家族、最多16GPU，其他门控方式未验证，且未测与专家放置优化联合效果。",
+        "motivationDetail": {
+          "problemZh": "专家并行的每层受最忙rank拖慢，但prefill与中等batch的decode所受资源瓶颈不同。",
+          "gapZh": "只均衡token数不能保证decode减少权重读取，只均衡专家位置也可能受负载动态和复制占用显存限制。",
+          "whyImportantZh": "计算受限与访存受限阶段需要不同最大负载目标，否则平均负载均衡仍可能留下关键rank长尾。",
+          "userRelevanceZh": "直接关联MoE推理系统及prefill/decode异构需求，可用于分析专家权重带宽、批量大小和分布式调度。",
+          "evidence": "已读队列摘要、公开HTML第4节流水线、5.1设置、5.3–5.4质量和预测精度及第6节限制；19%/10%/低于1pp来自摘要与结论，平台与非无损边界来自正文。 来源：https://arxiv.org/html/2611.33542v1"
+        },
+        "methodDetail": {
+          "coreIdeaZh": "保持每token的受保护专家前缀，将其余选择限制在Top-L候选内，再分别按prefill token负载和decode活跃专家数优化。",
+          "componentsZh": [
+            "prefill用rank价格把可调整路由分给低负载rank",
+            "decode在最忙rank关闭部分专家，修复候选以满足每token选择约束",
+            "以旁路kernel重叠执行，复用DeepEP已有通信传递统计与候选元数据"
+          ],
+          "hardwareSystemDetailZh": "属于SGLang/DeepEP服务运行时与路由协同，正文使用两节点H800部署，Qwen3-235B为EP8，Qwen3.5-397B为EP16；不是新增硬件或保持原路由完全不变的放置算法。",
+          "noveltyZh": "同一候选约束下按阶段切换优化目标，明确token计算量与活跃专家权重读取量的差异。",
+          "evidence": "已读队列摘要、公开HTML第4节流水线、5.1设置、5.3–5.4质量和预测精度及第6节限制；19%/10%/低于1pp来自摘要与结论，平台与非无损边界来自正文。 来源：https://arxiv.org/html/2611.33542v1"
+        },
+        "experimentDetail": {
+          "setupZh": "正文5.1评估Qwen3-235B-A22B和Qwen3.5-397B-A17B；聊天、代码及长上下文工作负载，测prefill输入吞吐、decode中位TPOT与质量。",
+          "baselinesZh": "主要收益相对同部署原生Top-k；prefill另比在线EPLB，decode还做XShare/OEA离线比较，需区别在线与离线口径。",
+          "metricsZh": [
+            "最大/平均rank token负载",
+            "最大活跃专家数",
+            "输入token吞吐",
+            "中位TPOT",
+            "任务质量百分点变化"
+          ],
+          "mainResultsZh": "摘要报告消除最忙rank超过75%的额外prefill负载，最高19%输入吞吐提升、最高10% TPOT下降，所测质量代价低于1个百分点；这些是不同设置的最高值。",
+          "limitationsZh": "改变候选专家选择，因此不是无损路由；预测Top-p不等于总能保留真实Top-p。正文仅测同模型家族、最多16GPU，其他门控方式未验证，且未测与专家放置优化联合效果。",
+          "evidence": "已读队列摘要、公开HTML第4节流水线、5.1设置、5.3–5.4质量和预测精度及第6节限制；19%/10%/低于1pp来自摘要与结论，平台与非无损边界来自正文。 来源：https://arxiv.org/html/2611.33542v1"
+        },
+        "evidence": {
+          "usedSources": [
+            "public/research-digest/daily.json: 实际读取的原始元数据与完整英文摘要",
+            "https://arxiv.org/html/2611.33542v1"
+          ],
+          "affiliationEvidence": "队列DBLP/arXiv的affiliations与authorAffiliations均为空，按用户规定保留缺省文案，不据姓名猜测单位。",
+          "experimentEvidence": "已读队列摘要、公开HTML第4节流水线、5.1设置、5.3–5.4质量和预测精度及第6节限制；19%/10%/低于1pp来自摘要与结论，平台与非无损边界来自正文。 来源：https://arxiv.org/html/2611.33542v1",
+          "missingFields": [
+            "作者单位（元数据缺失）",
+            "其他模型门控、超过16GPU在线与放置联合验证（正文未覆盖）"
+          ]
+        },
+        "confidence": {
+          "summary": 0.94,
+          "motivation": 0.92,
+          "method": 0.91,
+          "experiments": 0.91,
+          "affiliations": 0
+        }
+      },
+      "recommendationTrack": "hardware-primary",
+      "recommendationLabel": "硬件体系结构主线",
+      "recommendationScore": 96,
+      "relevanceReason": "命中 AI 处理器、体系结构、量化、训推系统或内存/缓存优化主题",
+      "pdfStatus": "remote",
+      "workflow": {
+        "digestStatus": "ready",
+        "emailStatus": "sent",
+        "digestError": "",
+        "harnessVersion": "paper-reader-v1",
+        "collectStatus": "collected",
+        "pdfStatus": "remote",
+        "harnessCheckedAt": "2026-11-27T00:34:24.240Z",
+        "harnessWarnings": [],
+        "emailSentAt": "2026-11-27T00:34:29.766Z",
+        "lastEmailError": ""
+      },
+      "pushedAt": "2026-11-27T00:34:29.766Z",
+      "emailSentAt": "2026-11-27T00:34:29.766Z",
+      "firstPushedAt": "2026-11-27T00:34:29.766Z"
     },
     {
       "id": "arxiv:2604.27085",
@@ -34672,6 +35451,138 @@
       "firstPushedAt": "2026-11-18T00:33:12.653Z"
     },
     {
+      "id": "arxiv:2611.33739",
+      "source": "arXiv",
+      "title": "RegHarness: Regulating What Code-as-Policy Agents Keep from Steps to Skills",
+      "authors": [
+        "Shengming Liu",
+        "Yunyi Gao",
+        "Xinyi Wang",
+        "Jianyong Sun",
+        "Shuai Wang",
+        "Yi Deng",
+        "Li Chenye",
+        "Mingcai Zhou",
+        "Sim Kuan Goh"
+      ],
+      "authorAffiliations": [],
+      "affiliations": [],
+      "abstract": "Code-as-Policy agents generate, execute, and revise robot programs, but often lack explicit mechanisms to govern what persists across executions: which actions are retained within a trial and which code modifications carry over to subsequent runs. This leaves two critical aspects of agent behavior insufficiently controlled: step-level execution and cross-run adaptation. We present RegHarness, a two-level harness that governs both forms of persistence for the RATs agent team, without relying on a vision-language-action (VLA) policy or demonstrations. Within each trial, run-time governance evaluates each proposed step from a reset scene, replaying the committed steps, while a fixed-rule controller commits the step only when both RATs' verifier and a task-long LLM auditor approve it. Between runs, a coding agent uses logged failures to develop and test revisions to skills, primitives, and rules, which remain disabled by default until explicitly enabled by the authors. Using a single low-cost model across all run-time roles, RegHarness achieves an 87.8% success rate (158/180) on paired LIBERO-PRO trials, compared with 39.4% for RATs, and a 72.0% success rate on MolmoSpaces trials. A $2\\times2$ ablation study of RegHarness's two levels shows that its skill refinement alone increases RATs' successful trials from 71 to 135, whereas run-time governance alone achieves 105 and RATs' native stepwise reset-and-replay mode achieves only 46. These findings suggest that, for Code-as-Policy agents operating with low-cost models, task success depends not only on how generated programs are executed, but also on the quality of the reusable skills they invoke and how those skills evolve across runs.",
+      "venue": "arXiv",
+      "published": "2026-11-25T04:01:05Z",
+      "updated": "2026-11-25T04:01:05Z",
+      "url": "http://arxiv.org/abs/2611.33739v1",
+      "pdfUrl": "https://arxiv.org/pdf/2611.33739v1",
+      "categories": [
+        "cs.RO"
+      ],
+      "collectedAt": "2026-11-26T02:52:39.752Z",
+      "firstSeenAt": "2026-11-26T02:52:39.752Z",
+      "lastSeenAt": "2026-11-26T02:52:39.752Z",
+      "collectionType": "daily-latest",
+      "matchedQuery": "(all:agent OR all:agents OR all:agentic OR all:reasoning OR all:post-training OR all:alignment OR all:multimodal OR all:world-model) AND (all:LLM OR all:foundation OR all:language)",
+      "collectionTypes": [
+        "daily-latest"
+      ],
+      "matchedQueries": [
+        "(all:agent OR all:agents OR all:agentic OR all:reasoning OR all:post-training OR all:alignment OR all:multimodal OR all:world-model) AND (all:LLM OR all:foundation OR all:language)"
+      ],
+      "targetThemes": [],
+      "conferenceVenues": [],
+      "conferenceYears": [],
+      "recommendationTrack": "algorithm-trend",
+      "recommendationLabel": "算法趋势观察",
+      "recommendationScore": 41.8,
+      "relevanceReason": "命中 LLM/Agent/多模态/后训练等算法趋势主题",
+      "pdfStatus": "remote",
+      "workflow": {
+        "digestStatus": "ready",
+        "emailStatus": "sent",
+        "digestError": "",
+        "harnessVersion": "paper-reader-v1",
+        "collectStatus": "collected",
+        "pdfStatus": "remote",
+        "harnessCheckedAt": "2026-11-27T00:34:24.240Z",
+        "harnessWarnings": [],
+        "emailSentAt": "2026-11-27T00:34:29.766Z",
+        "lastEmailError": ""
+      },
+      "digest": {
+        "summaryZh": "RegHarness 将机器人代码Agent的单次步骤提交与跨运行技能修订分开治理：重置重放后由验证器和审计器共同批准步骤，离线修订由作者选择启用。LIBERO-PRO配对试验为158/180，但开发状态、预算和提示差异影响解释，不能把成功率全归给单个审计模块或完全自主学习。",
+        "motivationZh": "代码式机器人Agent不仅会生成错误步骤，也缺少控制哪些步骤和技能改动跨执行保留的明确机制。仅重试整段程序或重置重放，既不保证每个提交步骤有充分证据，也不保证失败后技能库被适当修订。运行中错误控制和跨运行能力积累是不同问题，需要区分其收益、成本及开发信息暴露。属于Agent harness与具身控制趋势，可参考执行证据和技能持久化的边界；对芯片核心和存储层次贡献较间接。",
+        "methodZh": "用双层harness治理持久化：单次试验执行验证通过后才提交步骤，跨运行通过日志驱动技能修订并由作者选择启用。从重置场景重放已提交步骤，再评估新步骤。固定规则控制器结合RATs验证器与任务级LLM审计。离线编码Agent修订技能、原语和规则，默认停用并经作者门控冻结后评测。这是机器人Agent执行与开发流程研究，未依赖VLA或示范训练；使用多角色模型调用和重放，不能据成功率推断计算硬件加速或零额外开销。明确区分一步是否应保留与技能如何跨运行演进，并用组合配置检查两层治理的作用。",
+        "experimentsZh": "公开正文4.1：LIBERO-PRO的180配对任务–状态试验，另有300状态扩展与MolmoSpaces；各运行角色使用同一低成本模型别名。比较RATs、其原生stepwise replay、仅精炼技能、仅运行治理及双层组合，属于整套配置而非完全相同预算的单变量实验。指标包括：任务成功率、技能与运行治理消融、重放/调用成本、开发与测试状态差异。摘要与表1的180配对试验：组合158/180（87.8%），RATs71/180（39.4%）；技能单独135、治理单独105、原生重放46。扩展300试验为260/300（86.7%），两种比例口径不同。开发状态占配对试验三分之一，作者称技能增益为上界估计；不同配置预算、提示和证据格式也不同。离线修订有作者门控与特权信息暴露，不能表述成完全自主、无泄漏风险的技能进化。",
+        "affiliationsZh": "未在 DBLP/arXiv 元数据中提供",
+        "tags": [
+          "AgentHarness",
+          "代码策略",
+          "运行验证",
+          "技能修订"
+        ],
+        "importance": 3,
+        "researchFitZh": "属于Agent harness与具身控制趋势，可参考执行证据和技能持久化的边界；对芯片核心和存储层次贡献较间接。",
+        "hardwareRelevance": 1,
+        "algorithmRelevance": 4,
+        "systemRelevance": 3,
+        "readPriority": "skim",
+        "whyReadZh": "可略读步骤提交与跨运行技能持久化的划分，重点核查评测预算、开发暴露和人工门控如何影响结论。",
+        "limitationsZh": "开发状态占配对试验三分之一，作者称技能增益为上界估计；不同配置预算、提示和证据格式也不同。离线修订有作者门控与特权信息暴露，不能表述成完全自主、无泄漏风险的技能进化。",
+        "motivationDetail": {
+          "problemZh": "代码式机器人Agent不仅会生成错误步骤，也缺少控制哪些步骤和技能改动跨执行保留的明确机制。",
+          "gapZh": "仅重试整段程序或重置重放，既不保证每个提交步骤有充分证据，也不保证失败后技能库被适当修订。",
+          "whyImportantZh": "运行中错误控制和跨运行能力积累是不同问题，需要区分其收益、成本及开发信息暴露。",
+          "userRelevanceZh": "属于Agent harness与具身控制趋势，可参考执行证据和技能持久化的边界；对芯片核心和存储层次贡献较间接。",
+          "evidence": "已读队列完整摘要、公开HTML3.6离线修订、4.1协议、表1和4.2–4.3；区分158/180与260/300，开发状态和整套配置差异均由正文明确披露。 来源：https://arxiv.org/html/2611.33739v1"
+        },
+        "methodDetail": {
+          "coreIdeaZh": "用双层harness治理持久化：单次试验执行验证通过后才提交步骤，跨运行通过日志驱动技能修订并由作者选择启用。",
+          "componentsZh": [
+            "从重置场景重放已提交步骤，再评估新步骤",
+            "固定规则控制器结合RATs验证器与任务级LLM审计",
+            "离线编码Agent修订技能、原语和规则，默认停用并经作者门控冻结后评测"
+          ],
+          "hardwareSystemDetailZh": "这是机器人Agent执行与开发流程研究，未依赖VLA或示范训练；使用多角色模型调用和重放，不能据成功率推断计算硬件加速或零额外开销。",
+          "noveltyZh": "明确区分一步是否应保留与技能如何跨运行演进，并用组合配置检查两层治理的作用。",
+          "evidence": "已读队列完整摘要、公开HTML3.6离线修订、4.1协议、表1和4.2–4.3；区分158/180与260/300，开发状态和整套配置差异均由正文明确披露。 来源：https://arxiv.org/html/2611.33739v1"
+        },
+        "experimentDetail": {
+          "setupZh": "公开正文4.1：LIBERO-PRO的180配对任务–状态试验，另有300状态扩展与MolmoSpaces；各运行角色使用同一低成本模型别名。",
+          "baselinesZh": "比较RATs、其原生stepwise replay、仅精炼技能、仅运行治理及双层组合，属于整套配置而非完全相同预算的单变量实验。",
+          "metricsZh": [
+            "任务成功率",
+            "技能与运行治理消融",
+            "重放/调用成本",
+            "开发与测试状态差异"
+          ],
+          "mainResultsZh": "摘要与表1的180配对试验：组合158/180（87.8%），RATs71/180（39.4%）；技能单独135、治理单独105、原生重放46。扩展300试验为260/300（86.7%），两种比例口径不同。",
+          "limitationsZh": "开发状态占配对试验三分之一，作者称技能增益为上界估计；不同配置预算、提示和证据格式也不同。离线修订有作者门控与特权信息暴露，不能表述成完全自主、无泄漏风险的技能进化。",
+          "evidence": "已读队列完整摘要、公开HTML3.6离线修订、4.1协议、表1和4.2–4.3；区分158/180与260/300，开发状态和整套配置差异均由正文明确披露。 来源：https://arxiv.org/html/2611.33739v1"
+        },
+        "evidence": {
+          "usedSources": [
+            "public/research-digest/daily.json: 实际读取的原始元数据与完整英文摘要",
+            "https://arxiv.org/html/2611.33739v1"
+          ],
+          "affiliationEvidence": "队列DBLP/arXiv的affiliations与authorAffiliations均为空，按用户规定保留缺省文案，不据姓名猜测单位。",
+          "experimentEvidence": "已读队列完整摘要、公开HTML3.6离线修订、4.1协议、表1和4.2–4.3；区分158/180与260/300，开发状态和整套配置差异均由正文明确披露。 来源：https://arxiv.org/html/2611.33739v1",
+          "missingFields": [
+            "作者单位（元数据缺失）",
+            "等预算单变量因果归因与自动接受修订验证（当前协议未提供）"
+          ]
+        },
+        "confidence": {
+          "summary": 0.94,
+          "motivation": 0.92,
+          "method": 0.91,
+          "experiments": 0.91,
+          "affiliations": 0
+        }
+      },
+      "pushedAt": "2026-11-27T00:34:29.766Z",
+      "emailSentAt": "2026-11-27T00:34:29.766Z",
+      "firstPushedAt": "2026-11-27T00:34:29.766Z"
+    },
+    {
       "id": "arxiv:2611.26596",
       "source": "arXiv",
       "title": "PGX: Physically Grounded Execution for Long-Horizon Humanoid Loco-Manipulation",
@@ -35065,924 +35976,6 @@
       "pushedAt": "2026-11-07T00:30:51.115Z",
       "emailSentAt": "2026-11-07T00:30:51.115Z",
       "firstPushedAt": "2026-11-07T00:30:51.115Z"
-    },
-    {
-      "id": "arxiv:2605.05126",
-      "source": "arXiv",
-      "title": "ConsisVLA-4D: Advancing Spatiotemporal Consistency in Efficient 3D-Perception and 4D-Reasoning for Robotic Manipulation",
-      "authors": [
-        "Wei Li",
-        "Jizhihui Liu",
-        "Li Yixing",
-        "Junwen Tong",
-        "Rui Shao",
-        "Liqiang Nie"
-      ],
-      "authorAffiliations": [],
-      "affiliations": [],
-      "abstract": "Current Vision-Language-Action (VLA) models primarily focus on mapping 2D observations to actions, but exhibit notable limitations in spatiotemporal perception and reasoning: 1) spatial representations often rely on additional sensors, introducing substantial computational overhead; 2) visual reasoning is typically limited to future-frame prediction, lacking alignment with the instruction-grounded scene and thus compromising spatiotemporal consistency. To address these challenges, we propose ConsisVLA-4D, a unified and efficient framework that enhances spatiotemporal consistency in 3D perception and 4D reasoning. Specifically, we design: 1) CV-Aligner, which ensures cross-view object semantic consistency by filtering instruction-relevant regions and aligning object identities across multiple viewpoints; 2) CO-Fuser, which guarantees cross-object spatial geometric consistency by eliminating spatial relation ambiguities between objects across views using compact latent representations. Building upon these, we introduce 3) CS-Thinker to achieve cross-scene spatiotemporal consistency as actions unfold. It learns implicit knowledge of local dynamics from object-semantic tokens of CV-Aligner and global depth from geometric tokens of CO-Fuser, thereby enhancing efficient visual reasoning under scene variations. Extensive experiments demonstrate that, benefiting from its efficient spatiotemporal consistency design, ConsisVLA-4D achieves 21.6% and 41.5% performance improvements, along with 2.3-fold and 2.4-fold inference speedups compared to OpenVLA on the LIBERO benchmark and real-world platforms, respectively.ConsisVLA-4D is open-sourced and publicly available at",
-      "venue": "arXiv",
-      "published": "2026-05-06T16:55:44Z",
-      "updated": "2026-05-06T16:55:44Z",
-      "url": "http://arxiv.org/abs/2605.05126v1",
-      "pdfUrl": "https://arxiv.org/pdf/2605.05126v1",
-      "categories": [
-        "cs.RO"
-      ],
-      "collectedAt": "2026-05-07T04:10:38.024Z",
-      "firstSeenAt": "2026-05-07T04:10:38.024Z",
-      "lastSeenAt": "2026-05-07T04:10:38.024Z",
-      "collectionType": "daily-latest",
-      "matchedQuery": "(all:agent OR all:agents OR all:agentic OR all:reasoning OR all:post-training OR all:alignment OR all:multimodal OR all:world-model) AND (all:LLM OR all:foundation OR all:language)",
-      "collectionTypes": [
-        "daily-latest"
-      ],
-      "matchedQueries": [
-        "(all:agent OR all:agents OR all:agentic OR all:reasoning OR all:post-training OR all:alignment OR all:multimodal OR all:world-model) AND (all:LLM OR all:foundation OR all:language)"
-      ],
-      "targetThemes": [],
-      "conferenceVenues": [],
-      "conferenceYears": [],
-      "recommendationTrack": "algorithm-trend",
-      "recommendationLabel": "算法趋势观察",
-      "recommendationScore": 41.8,
-      "relevanceReason": "命中 LLM/Agent/多模态/后训练等算法趋势主题",
-      "pdfStatus": "remote",
-      "workflow": {
-        "digestStatus": "ready",
-        "emailStatus": "sent",
-        "digestError": "",
-        "harnessVersion": "paper-reader-v1",
-        "collectStatus": "collected",
-        "pdfStatus": "remote",
-        "harnessCheckedAt": "2026-05-08T04:26:53.405Z",
-        "harnessWarnings": [],
-        "emailSentAt": "2026-05-08T04:40:41.777Z",
-        "lastEmailError": ""
-      },
-      "digest": {
-        "summaryZh": "ConsisVLA-4D 面向机器人操作中的 VLA 模型，试图在不依赖额外传感器带来高开销的情况下增强 3D perception 与 4D reasoning 的时空一致性，通过跨视角语义对齐、跨物体几何融合和动作展开中的动态推理提升表现。",
-        "motivationZh": "当前 VLA 多把 2D observation 映射到 action，空间表示常依赖额外传感器而增加计算开销，视觉推理又常停留在 future-frame prediction，缺少与 instruction-grounded scene 的一致对齐，导致机器人操作中的时空感知和推理不稳定。",
-        "methodZh": "框架包含三部分：CV-Aligner 过滤 instruction-relevant regions 并跨多视角对齐 object identities；CO-Fuser 用 compact latent representations 消除跨视角 object spatial relation ambiguity；CS-Thinker 从 object-semantic tokens 学 local dynamics、从 geometric tokens 学 global depth，用于动作展开时的跨场景时空一致性。",
-        "experimentsZh": "摘要披露在 LIBERO benchmark 和 real-world platforms 上，相对 OpenVLA 分别获得 21.6% 与 41.5% performance improvements，并分别有 2.3x 与 2.4x inference speedups。摘要未披露具体任务数、硬件平台、成功率定义和其他 baseline。",
-        "affiliationsZh": "未在 DBLP/arXiv 元数据中提供",
-        "tags": [
-          "VLA",
-          "机器人操作",
-          "3D perception",
-          "4D reasoning",
-          "时空一致性"
-        ],
-        "importance": 3,
-        "researchFitZh": "属于多模态/机器人算法趋势，对用户主方向只有间接系统效率参考价值。",
-        "hardwareRelevance": 2,
-        "algorithmRelevance": 4,
-        "systemRelevance": 3,
-        "readPriority": "skim",
-        "whyReadZh": "可快速浏览其在无需额外传感器下取得加速的设计，但不是 AI 处理器或 LLM serving 核心论文。",
-        "limitationsZh": "摘要未披露硬件平台、任务分布、除 OpenVLA 外的 baseline 和失败案例。",
-        "motivationDetail": {
-          "problemZh": "VLA 模型在 3D/4D 时空感知和 instruction-grounded reasoning 上存在一致性不足。",
-          "gapZh": "额外传感器增加计算开销，future-frame prediction 不能保证与场景指令对齐。",
-          "whyImportantZh": "机器人操作需要动作展开过程中稳定理解物体身份、几何关系和动态变化。",
-          "userRelevanceZh": "与多模态和高效推理有间接关系，但不属于核心硬件架构方向。",
-          "evidence": "abstract"
-        },
-        "methodDetail": {
-          "coreIdeaZh": "用语义对齐、几何融合和动态推理三个模块提升 VLA 的跨视角、跨物体和跨场景一致性。",
-          "componentsZh": [
-            "CV-Aligner",
-            "CO-Fuser",
-            "CS-Thinker",
-            "compact latent representations"
-          ],
-          "hardwareSystemDetailZh": "摘要强调 efficient design 和 inference speedups，但未说明硬件或系统实现。",
-          "noveltyZh": "把 3D perception 与 4D reasoning 统一进 VLA 操作框架，强调多层次一致性。",
-          "evidence": "abstract"
-        },
-        "experimentDetail": {
-          "setupZh": "LIBERO benchmark 和 real-world platforms。",
-          "baselinesZh": "OpenVLA。",
-          "metricsZh": [
-            "performance improvement",
-            "inference speedup"
-          ],
-          "mainResultsZh": "相对 OpenVLA，LIBERO 上 21.6% 提升、2.3x 加速；真实平台上 41.5% 提升、2.4x 加速。",
-          "limitationsZh": "摘要未披露硬件、任务细节和其他 baseline。",
-          "evidence": "abstract"
-        },
-        "evidence": {
-          "usedSources": [
-            "metadata",
-            "abstract"
-          ],
-          "affiliationEvidence": "",
-          "experimentEvidence": "abstract reports 21.6% and 41.5% performance improvements plus 2.3x and 2.4x inference speedups over OpenVLA on LIBERO and real-world platforms",
-          "missingFields": [
-            "affiliations",
-            "hardware platform",
-            "task details",
-            "additional baselines"
-          ]
-        },
-        "confidence": {
-          "summary": 0.86,
-          "motivation": 0.86,
-          "method": 0.84,
-          "experiments": 0.76,
-          "affiliations": 0.05
-        }
-      },
-      "pushedAt": "2026-05-08T04:40:41.777Z",
-      "emailSentAt": "2026-05-08T04:40:41.777Z",
-      "firstPushedAt": "2026-05-08T04:40:41.777Z"
-    },
-    {
-      "id": "arxiv:2611.00616",
-      "source": "arXiv",
-      "title": "Enhancing Language Model Reasoning with Structured Multi-Level Modeling",
-      "authors": [
-        "Siheng Xiong",
-        "Ali Payani",
-        "Faramarz Fekri"
-      ],
-      "authorAffiliations": [],
-      "affiliations": [],
-      "abstract": "Inference-time scaling enhances a model's reasoning by extending its chain-of-thought (CoT). However, existing approaches typically rely on a single policy trained with outcome-reward reinforcement learning (RL), which often suffers from long-horizon plan failures where the implicit plan drifts from valid strategies, especially for small LMs with limited capacity. To address this, we propose Multi-Level Reasoning (MLR), which reformulates long-CoT generation as a two-level stochastic process. A high-level planner generates structured step descriptors specifying both the reasoning mode and the semantic subgoal. The low-level executor then produces detailed reasoning conditioned on these descriptors, forming an alternating plan--execute loop. To maintain scalability, we adopt a minimal design where the base model serves as the low-level policy and a lightweight LoRA module implements the high-level policy. For training, we observe that outcome-reward RL provides sparse and delayed feedback for long trajectories (e.g., several thousand tokens), hindering credit assignment. We therefore introduce iterative Step-DPO, a process-level preference optimization scheme that leverages Twisted Sequential Monte Carlo (TSMC) to provide scalable stepwise supervision. This yields more effective training, improved stability, and higher accuracy. Extensive experiments on challenging math, science, and logical reasoning benchmarks show that, under the same reduced data budget (10% SFT and 5% preference relative to the DeepSeek-R1 distillation setup), MLR outperforms both SFT-based distillation and strong RL/preference-optimization baselines across multiple base models and tasks. Moreover, MLR exhibits slower performance degradation on long-horizon reasoning, demonstrating stronger robustness under extended CoT generation.",
-      "venue": "arXiv",
-      "published": "2026-10-31T04:33:35Z",
-      "updated": "2026-10-31T04:33:35Z",
-      "url": "http://arxiv.org/abs/2611.00616v1",
-      "pdfUrl": "https://arxiv.org/pdf/2611.00616v1",
-      "categories": [
-        "cs.CL"
-      ],
-      "collectedAt": "2026-11-03T02:22:35.554Z",
-      "firstSeenAt": "2026-11-03T02:22:35.554Z",
-      "lastSeenAt": "2026-11-03T02:22:35.554Z",
-      "collectionType": "daily-latest",
-      "matchedQuery": "(all:agent OR all:agents OR all:agentic OR all:reasoning OR all:post-training OR all:alignment OR all:multimodal OR all:world-model) AND (all:LLM OR all:foundation OR all:language)",
-      "collectionTypes": [
-        "daily-latest"
-      ],
-      "matchedQueries": [
-        "(all:agent OR all:agents OR all:agentic OR all:reasoning OR all:post-training OR all:alignment OR all:multimodal OR all:world-model) AND (all:LLM OR all:foundation OR all:language)"
-      ],
-      "targetThemes": [],
-      "conferenceVenues": [],
-      "conferenceYears": [],
-      "recommendationTrack": "algorithm-trend",
-      "recommendationLabel": "算法趋势观察",
-      "recommendationScore": 41.2,
-      "relevanceReason": "命中 LLM/Agent/多模态/后训练等算法趋势主题",
-      "pdfStatus": "remote",
-      "workflow": {
-        "digestStatus": "ready",
-        "emailStatus": "sent",
-        "digestError": "",
-        "harnessVersion": "paper-reader-v1",
-        "collectStatus": "collected",
-        "pdfStatus": "remote",
-        "harnessCheckedAt": "2026-11-03T02:36:23.804Z",
-        "harnessWarnings": [],
-        "emailSentAt": "2026-11-03T02:36:27.905Z",
-        "lastEmailError": ""
-      },
-      "digest": {
-        "summaryZh": "小语言模型长CoT推理容易出现高层计划漂移，结果奖励在长轨迹上又稀疏且延迟，难以正确分配训练信用。MLR把CoT分成高层步骤描述和低层条件执行，用轻量LoRA实现规划策略，结合TSMC生成步骤监督并进行迭代Step-DPO。摘要报告在同一缩减数据预算下优于SFT蒸馏与强RL/偏好优化对照，延长CoT时性能下降较慢，未给具体准确率或时延数值。",
-        "motivationZh": "小语言模型长CoT推理容易出现高层计划漂移，结果奖励在长轨迹上又稀疏且延迟，难以正确分配训练信用。单一策略同时承担计划与细节生成，难以维持长程有效策略；单靠最终结果奖励不能稳定监督中间步骤。显式拆分计划与执行并提供步骤偏好信号，可能改善长推理的可靠性和数据利用效率。适合作为Agent及长推理负载趋势跟踪，可关注计划/执行交替对服务调度的影响，但论文未提出硬件设计。",
-        "methodZh": "MLR把CoT分成高层步骤描述和低层条件执行，用轻量LoRA实现规划策略，结合TSMC生成步骤监督并进行迭代Step-DPO。同一基础模型承担低层策略，轻量LoRA模块承担高层策略；交替plan-execute，属于训练和推理组织方法。把推理模式和语义子目标显式化，并以过程级偏好优化缓解长轨迹的稀疏奖励问题。",
-        "experimentsZh": "多个基础模型上的数学、科学和逻辑推理基准；相对DeepSeek-R1蒸馏设置仅用10% SFT与5%偏好数据。SFT蒸馏及强化学习/偏好优化基线；摘要未列具体模型、基准全名和全部准确率。摘要报告在同一缩减数据预算下优于SFT蒸馏与强RL/偏好优化对照，延长CoT时性能下降较慢，未给具体准确率或时延数值。公开摘要页读取返回DisabledError，仅据队列完整摘要；TSMC成本、LoRA切换开销和端到端推理效率未核验。",
-        "affiliationsZh": "未在 DBLP/arXiv 元数据中提供",
-        "tags": [
-          "分层推理",
-          "Step-DPO",
-          "推理时扩展"
-        ],
-        "importance": 3,
-        "researchFitZh": "适合作为Agent及长推理负载趋势跟踪，可关注计划/执行交替对服务调度的影响，但论文未提出硬件设计。",
-        "hardwareRelevance": 1,
-        "algorithmRelevance": 5,
-        "systemRelevance": 3,
-        "readPriority": "skim",
-        "whyReadZh": "适合作为Agent及长推理负载趋势跟踪，可关注计划/执行交替对服务调度的影响，但论文未提出硬件设计。阅读时应按实际证据范围判断可用于对照的结论。",
-        "limitationsZh": "公开摘要页读取返回DisabledError，仅据队列完整摘要；TSMC成本、LoRA切换开销和端到端推理效率未核验。",
-        "motivationDetail": {
-          "problemZh": "小语言模型长CoT推理容易出现高层计划漂移，结果奖励在长轨迹上又稀疏且延迟，难以正确分配训练信用。",
-          "gapZh": "单一策略同时承担计划与细节生成，难以维持长程有效策略；单靠最终结果奖励不能稳定监督中间步骤。",
-          "whyImportantZh": "显式拆分计划与执行并提供步骤偏好信号，可能改善长推理的可靠性和数据利用效率。",
-          "userRelevanceZh": "适合作为Agent及长推理负载趋势跟踪，可关注计划/执行交替对服务调度的影响，但论文未提出硬件设计。",
-          "evidence": "daily.json实际元数据及完整原始英文摘要；公开arXiv页面读取返回DisabledError，未读取公开全文。"
-        },
-        "methodDetail": {
-          "coreIdeaZh": "MLR把CoT分成高层步骤描述和低层条件执行，用轻量LoRA实现规划策略，结合TSMC生成步骤监督并进行迭代Step-DPO。",
-          "componentsZh": [
-            "结构化步骤描述",
-            "基础模型执行器",
-            "LoRA高层规划器",
-            "TSMC与迭代Step-DPO"
-          ],
-          "hardwareSystemDetailZh": "同一基础模型承担低层策略，轻量LoRA模块承担高层策略；交替plan-execute，属于训练和推理组织方法。",
-          "noveltyZh": "把推理模式和语义子目标显式化，并以过程级偏好优化缓解长轨迹的稀疏奖励问题。",
-          "evidence": "daily.json实际元数据及完整原始英文摘要；公开arXiv页面读取返回DisabledError，未读取公开全文。"
-        },
-        "experimentDetail": {
-          "setupZh": "多个基础模型上的数学、科学和逻辑推理基准；相对DeepSeek-R1蒸馏设置仅用10% SFT与5%偏好数据。",
-          "baselinesZh": "SFT蒸馏及强化学习/偏好优化基线；摘要未列具体模型、基准全名和全部准确率。",
-          "metricsZh": [
-            "推理准确率",
-            "训练稳定性",
-            "长程性能退化"
-          ],
-          "mainResultsZh": "摘要报告在同一缩减数据预算下优于SFT蒸馏与强RL/偏好优化对照，延长CoT时性能下降较慢，未给具体准确率或时延数值。",
-          "limitationsZh": "公开摘要页读取返回DisabledError，仅据队列完整摘要；TSMC成本、LoRA切换开销和端到端推理效率未核验。",
-          "evidence": "daily.json完整摘要给出10% SFT、5%偏好数据的相对预算与定性结果；摘要未披露绝对准确率、硬件或吞吐。"
-        },
-        "evidence": {
-          "usedSources": [
-            "public/research-digest/daily.json: supplied metadata and complete original abstract"
-          ],
-          "affiliationEvidence": "authorAffiliations和affiliations均为空；遵循任务要求保留元数据缺失说明。",
-          "experimentEvidence": "daily.json完整摘要给出10% SFT、5%偏好数据的相对预算与定性结果；摘要未披露绝对准确率、硬件或吞吐。",
-          "missingFields": [
-            "DBLP/arXiv元数据作者单位",
-            "全文方法、实验细节及硬件配置"
-          ]
-        },
-        "confidence": {
-          "summary": 0.8,
-          "motivation": 0.85,
-          "method": 0.77,
-          "experiments": 0.73,
-          "affiliations": 0
-        }
-      },
-      "pushedAt": "2026-11-03T02:36:27.905Z",
-      "emailSentAt": "2026-11-03T02:36:27.905Z",
-      "firstPushedAt": "2026-11-03T02:36:27.905Z"
-    },
-    {
-      "id": "arxiv:2610.35817",
-      "source": "arXiv",
-      "title": "Pretraining Knows What, Simulation Teaches How: Compositional Generalization in a Sim-Trained Robot Agent",
-      "authors": [
-        "Benjamin Pikus",
-        "Daniel Saunders",
-        "Mircea Mironenco",
-        "Salman Mohammadi",
-        "Mathew Mathew",
-        "Sirou Zhu",
-        "Divya Makkar",
-        "Xuhua Huang",
-        "Qinbo Li",
-        "Supreeth Narasimhaswamy",
-        "Siyuan Cen",
-        "Thomas Neff",
-        "Dejia Xu",
-        "Shyamal Buch"
-      ],
-      "authorAffiliations": [],
-      "affiliations": [],
-      "abstract": "A robot policy needs to understand what a task is asking for in a scene, and how to move the robot to accomplish that task. To achieve these two skills, we introduce Zero-real Agent Policy (ZAP), a recipe that teaches a small off-the-shelf vision-language model to control a robot via a simple tool harness. We use a pretrained 27B parameter model to bootstrap world understanding and reasoning, followed by supervised fine-tuning and GRPO on simple simulated tasks to teach it how to move the robot. Without any real-world robot data during training, ZAP reaches 96.7% success on real-world tasks, matching GPT-6 Astra in our harness and outperforming the MolmoAct2 VLA (33.3%), while running 3x faster and 17x cheaper than GPT-6 Astra. We demonstrate that ZAP also generalizes to completely new objects, goals, strategies, and language by seating a test tube in a rack (and choosing a different hole in the rack when prompted), handing a test tube between arms mid-air, drawing an X on a tic-tac-toe board, and playing chess. These goals and types of manipulation don't appear in our training data. Furthermore, ZAP also transfers to an unseen embodiment. On a single-arm Franka, ZAP reaches 55.9% on RoboLab-120, 4.9 percentage points ahead of the leading VLA/WAM baseline.",
-      "venue": "arXiv",
-      "published": "2026-10-26T17:44:34Z",
-      "updated": "2026-10-26T17:44:34Z",
-      "url": "http://arxiv.org/abs/2610.35817v1",
-      "pdfUrl": "https://arxiv.org/pdf/2610.35817v1",
-      "categories": [
-        "cs.RO",
-        "cs.AI",
-        "cs.CV",
-        "cs.LG"
-      ],
-      "collectedAt": "2026-10-27T23:47:32.870Z",
-      "firstSeenAt": "2026-10-27T23:47:32.870Z",
-      "lastSeenAt": "2026-10-27T23:47:32.870Z",
-      "collectionType": "daily-latest",
-      "matchedQuery": "(all:agent OR all:agents OR all:agentic OR all:reasoning OR all:post-training OR all:alignment OR all:multimodal OR all:world-model) AND (all:LLM OR all:foundation OR all:language)",
-      "collectionTypes": [
-        "daily-latest"
-      ],
-      "matchedQueries": [
-        "(all:agent OR all:agents OR all:agentic OR all:reasoning OR all:post-training OR all:alignment OR all:multimodal OR all:world-model) AND (all:LLM OR all:foundation OR all:language)"
-      ],
-      "targetThemes": [],
-      "conferenceVenues": [],
-      "conferenceYears": [],
-      "recommendationTrack": "algorithm-trend",
-      "recommendationLabel": "算法趋势观察",
-      "recommendationScore": 41,
-      "relevanceReason": "命中 LLM/Agent/多模态/后训练等算法趋势主题",
-      "pdfStatus": "remote",
-      "workflow": {
-        "digestStatus": "ready",
-        "emailStatus": "sent",
-        "digestError": "",
-        "harnessVersion": "paper-reader-v1",
-        "collectStatus": "collected",
-        "pdfStatus": "remote",
-        "harnessCheckedAt": "2026-10-28T00:29:37.226Z",
-        "harnessWarnings": [],
-        "emailSentAt": "2026-10-28T00:29:41.195Z",
-        "lastEmailError": ""
-      },
-      "digest": {
-        "summaryZh": "机器人既需要理解任务和场景，也需要掌握执行运动；仅依赖大模型通用推理或真实机器人数据训练都有成本。ZAP以预训练27B模型提供世界理解，在简单模拟任务上先SFT再GRPO，通过工具harness学习机器人动作，训练不使用真实机器人数据。摘要报告真实任务96.7%，MolmoAct2为33.3%，相对GPT-6 Astra快3倍且便宜17倍；Franka RoboLab-120为55.9%，高4.9个百分点。",
-        "motivationZh": "机器人既需要理解任务和场景，也需要掌握执行运动；仅依赖大模型通用推理或真实机器人数据训练都有成本。需验证预训练理解加模拟动作学习能否组合泛化到未见物体、目标及具身。若模拟训练可转移到真实任务，可降低数据采集与在线Agent执行成本。关注VLM微调和具身Agent成本，属于算法系统趋势，不能用作低精度注意力计算核心基线。",
-        "methodZh": "ZAP以预训练27B模型提供世界理解，在简单模拟任务上先SFT再GRPO，通过工具harness学习机器人动作，训练不使用真实机器人数据。模型训练及机器人控制方法，未披露专用芯片或矩阵向量微架构优化。将预训练语义能力与模拟动作学习分工，检验零真实数据训练下的组合泛化。",
-        "experimentsZh": "真实机器人任务、未见目标操作及单臂Franka上的RoboLab-120；训练仅使用模拟机器人数据。同harness中的GPT-6 Astra与MolmoAct2 VLA，另比较RoboLab-120领先VLA/WAM。摘要报告真实任务96.7%，MolmoAct2为33.3%，相对GPT-6 Astra快3倍且便宜17倍；Franka RoboLab-120为55.9%，高4.9个百分点。结果限定论文任务与harness；仅核验摘要，未读取任务数量、置信区间和成本口径，不能外推到所有机器人任务。",
-        "affiliationsZh": "未在 DBLP/arXiv 元数据中提供",
-        "tags": [
-          "模拟到真实",
-          "VLM动作学习",
-          "组合泛化"
-        ],
-        "importance": 3,
-        "researchFitZh": "关注VLM微调和具身Agent成本，属于算法系统趋势，不能用作低精度注意力计算核心基线。",
-        "hardwareRelevance": 1,
-        "algorithmRelevance": 4,
-        "systemRelevance": 3,
-        "readPriority": "skim",
-        "whyReadZh": "关注VLM微调和具身Agent成本，属于算法系统趋势，不能用作低精度注意力计算核心基线。按证据范围和真实研究层级决定后续阅读与对比。",
-        "limitationsZh": "结果限定论文任务与harness；仅核验摘要，未读取任务数量、置信区间和成本口径，不能外推到所有机器人任务。",
-        "motivationDetail": {
-          "problemZh": "机器人既需要理解任务和场景，也需要掌握执行运动；仅依赖大模型通用推理或真实机器人数据训练都有成本。",
-          "gapZh": "需验证预训练理解加模拟动作学习能否组合泛化到未见物体、目标及具身。",
-          "whyImportantZh": "若模拟训练可转移到真实任务，可降低数据采集与在线Agent执行成本。",
-          "userRelevanceZh": "关注VLM微调和具身Agent成本，属于算法系统趋势，不能用作低精度注意力计算核心基线。",
-          "evidence": "daily.json实际元数据与完整原始摘要；已读 https://arxiv.org/abs/2610.35817v1；未读全文"
-        },
-        "methodDetail": {
-          "coreIdeaZh": "ZAP以预训练27B模型提供世界理解，在简单模拟任务上先SFT再GRPO，通过工具harness学习机器人动作，训练不使用真实机器人数据。",
-          "componentsZh": [
-            "预训练VLM理解",
-            "模拟任务SFT",
-            "GRPO动作学习",
-            "工具harness与真实迁移"
-          ],
-          "hardwareSystemDetailZh": "模型训练及机器人控制方法，未披露专用芯片或矩阵向量微架构优化。",
-          "noveltyZh": "将预训练语义能力与模拟动作学习分工，检验零真实数据训练下的组合泛化。",
-          "evidence": "daily.json实际元数据与完整原始摘要；已读 https://arxiv.org/abs/2610.35817v1；未读全文"
-        },
-        "experimentDetail": {
-          "setupZh": "真实机器人任务、未见目标操作及单臂Franka上的RoboLab-120；训练仅使用模拟机器人数据。",
-          "baselinesZh": "同harness中的GPT-6 Astra与MolmoAct2 VLA，另比较RoboLab-120领先VLA/WAM。",
-          "metricsZh": [
-            "任务成功率",
-            "运行速度",
-            "成本",
-            "跨具身泛化"
-          ],
-          "mainResultsZh": "摘要报告真实任务96.7%，MolmoAct2为33.3%，相对GPT-6 Astra快3倍且便宜17倍；Franka RoboLab-120为55.9%，高4.9个百分点。",
-          "limitationsZh": "结果限定论文任务与harness；仅核验摘要，未读取任务数量、置信区间和成本口径，不能外推到所有机器人任务。",
-          "evidence": "daily.json实际元数据与完整原始摘要；已读 https://arxiv.org/abs/2610.35817v1；未读全文"
-        },
-        "evidence": {
-          "usedSources": [
-            "daily.json metadata and supplied abstract",
-            "https://arxiv.org/abs/2610.35817v1"
-          ],
-          "affiliationEvidence": "队列authorAffiliations与affiliations为空，按任务要求保留元数据缺失说明。",
-          "experimentEvidence": "daily.json实际元数据与完整原始摘要；已读 https://arxiv.org/abs/2610.35817v1；未读全文",
-          "missingFields": [
-            "元数据作者单位",
-            "全文方法与实验细节"
-          ]
-        },
-        "confidence": {
-          "summary": 0.86,
-          "motivation": 0.85,
-          "method": 0.78,
-          "experiments": 0.74,
-          "affiliations": 0
-        }
-      },
-      "pushedAt": "2026-10-28T00:29:41.195Z",
-      "emailSentAt": "2026-10-28T00:29:41.195Z",
-      "firstPushedAt": "2026-10-28T00:29:41.195Z"
-    },
-    {
-      "id": "arxiv:2611.29732",
-      "source": "arXiv",
-      "title": "Reinforcement Learning from LLM-Generated (Suboptimal) Demonstrations",
-      "authors": [
-        "Anurag Kadkol",
-        "Lawson L. S. Wong"
-      ],
-      "authorAffiliations": [],
-      "affiliations": [],
-      "abstract": "Reinforcement learning (RL) has achieved substantial progress across many domains, but training an agent \\textit{tabula rasa} remains highly sample-inefficient. A common remedy is to initialize the agent using a neural network pretrained on demonstrations. However, collecting demonstrations is expensive, and the demonstrations themselves can be suboptimal. In this work, we use a large language model (LLM) to generate an advice policy that produces demonstration data with effectively no human cost. We use this data to warmstart a DQN agent, and use the advice policy itself to guide exploration during training. Because LLM-generated advice is often suboptimal, we further introduce a value warmstart method that initializes the agent to recognize promising states from the advice policy's behavior, without directly copying its actions. To characterize the robustness of this method, we systematically perturb individual sub-skills of an LLM-generated advice policy for a long-horizon, sparse-reward task. Degraded advice still meaningfully accelerates learning relative to unaided baselines. These results suggest that LLM-generated advice, though suboptimal, can be a cheap alternative to costly human demonstrations.",
-      "venue": "arXiv",
-      "published": "2026-11-22T19:56:10Z",
-      "updated": "2026-11-22T19:56:10Z",
-      "url": "http://arxiv.org/abs/2611.29732v1",
-      "pdfUrl": "https://arxiv.org/pdf/2611.29732v1",
-      "categories": [
-        "cs.AI",
-        "cs.LG"
-      ],
-      "collectedAt": "2026-11-24T04:48:39.099Z",
-      "firstSeenAt": "2026-11-24T04:48:39.099Z",
-      "lastSeenAt": "2026-11-24T04:48:39.099Z",
-      "collectionType": "daily-latest",
-      "matchedQuery": "(all:agent OR all:agents OR all:agentic OR all:reasoning OR all:post-training OR all:alignment OR all:multimodal OR all:world-model) AND (all:LLM OR all:foundation OR all:language)",
-      "collectionTypes": [
-        "daily-latest"
-      ],
-      "matchedQueries": [
-        "(all:agent OR all:agents OR all:agentic OR all:reasoning OR all:post-training OR all:alignment OR all:multimodal OR all:world-model) AND (all:LLM OR all:foundation OR all:language)"
-      ],
-      "targetThemes": [],
-      "conferenceVenues": [],
-      "conferenceYears": [],
-      "recommendationTrack": "algorithm-trend",
-      "recommendationLabel": "算法趋势观察",
-      "recommendationScore": 40.2,
-      "relevanceReason": "命中 LLM/Agent/多模态/后训练等算法趋势主题",
-      "pdfStatus": "remote",
-      "workflow": {
-        "digestStatus": "ready",
-        "emailStatus": "sent",
-        "digestError": "",
-        "harnessVersion": "paper-reader-v1",
-        "collectStatus": "collected",
-        "pdfStatus": "remote",
-        "harnessCheckedAt": "2026-11-25T00:38:07.188Z",
-        "harnessWarnings": [],
-        "emailSentAt": "2026-11-25T00:38:12.136Z",
-        "lastEmailError": ""
-      },
-      "digest": {
-        "summaryZh": "该工作用 LLM 生成建议策略和示范，初始化 DQN 并辅助探索，再以价值预热减少对次优动作的直接模仿。可读摘要称，在长时程稀疏奖励任务中破坏建议的部分子技能后仍能帮助学习；本轮全文读取失败，缺少任务名称、硬件和定量对照，结论仅限摘要层面。",
-        "motivationZh": "从零训练强化学习智能体样本开销大，而人工示范昂贵，自动生成示范又可能包含次优行为。直接复制建议动作会继承策略错误，因此需要从有缺陷的示范中提取有用状态价值而非盲从动作。降低示范采集成本的同时，必须明确次优建议会怎样影响探索和学习可靠性。属于 LLM 辅助智能体学习的算法趋势，与加速器、量化和存储层次仅间接相关。",
-        "methodZh": "让 LLM 生成建议策略形成示范，用示范预热 DQN 并引导探索，以价值预热识别有希望的状态。建议策略提供示范轨迹并参与后续探索。价值预热利用建议行为所到达状态的价值信息，减少直接动作模仿。逐项扰动建议策略的子技能，检验退化建议的鲁棒性。摘要未披露硬件、训练时长、吞吐或加速器实现；这里的学习加快指相对无建议策略的学习进展，不能解释为芯片运行加速。把廉价 LLM 建议与价值初始化结合，特别关注建议并不最优时仍可利用的信息。",
-        "experimentsZh": "实际读到的 arXiv 摘要只说明 DQN 与长时程、稀疏奖励任务，并对子技能做系统扰动；任务名称、模型配置、种子及硬件均未披露于可读部分。摘要称比较无建议基线，并涉及示范预热和建议引导；具体基线实现与完整消融未能读取。指标包括：学习进展或样本效率（摘要定性描述）、建议子技能退化后的鲁棒性。摘要定性报告退化建议仍比无辅助基线更快学习；本轮没有可支持加速倍数、回报数值或显著性判断的正文证据。公开 HTML 和 PDF 获取失败，仅实际读取元数据与 arXiv 摘要；算法实现、任务细节、定量实验和复现条件尚缺，不据此判断大规模泛化或系统收益。",
-        "affiliationsZh": "未在 DBLP/arXiv 元数据中提供",
-        "tags": [
-          "LLM建议",
-          "强化学习",
-          "DQN",
-          "次优示范"
-        ],
-        "importance": 2,
-        "researchFitZh": "属于 LLM 辅助智能体学习的算法趋势，与加速器、量化和存储层次仅间接相关。",
-        "hardwareRelevance": 1,
-        "algorithmRelevance": 4,
-        "systemRelevance": 2,
-        "readPriority": "skim",
-        "whyReadZh": "先跟踪价值预热如何降低错误模仿风险；待全文可读再判断样本效率证据，硬件方向优先级较低。",
-        "limitationsZh": "公开 HTML 和 PDF 获取失败，仅实际读取元数据与 arXiv 摘要；算法实现、任务细节、定量实验和复现条件尚缺，不据此判断大规模泛化或系统收益。",
-        "motivationDetail": {
-          "problemZh": "从零训练强化学习智能体样本开销大，而人工示范昂贵，自动生成示范又可能包含次优行为。",
-          "gapZh": "直接复制建议动作会继承策略错误，因此需要从有缺陷的示范中提取有用状态价值而非盲从动作。",
-          "whyImportantZh": "降低示范采集成本的同时，必须明确次优建议会怎样影响探索和学习可靠性。",
-          "userRelevanceZh": "属于 LLM 辅助智能体学习的算法趋势，与加速器、量化和存储层次仅间接相关。",
-          "evidence": "已读 daily.json 的完整原始摘要和 arXiv 摘要页；公开 HTML/PDF 请求均失败，未声称读过全文，实验仅保留摘要明确给出的定性结论。 来源：https://arxiv.org/abs/2611.29732"
-        },
-        "methodDetail": {
-          "coreIdeaZh": "让 LLM 生成建议策略形成示范，用示范预热 DQN 并引导探索，以价值预热识别有希望的状态。",
-          "componentsZh": [
-            "建议策略提供示范轨迹并参与后续探索",
-            "价值预热利用建议行为所到达状态的价值信息，减少直接动作模仿",
-            "逐项扰动建议策略的子技能，检验退化建议的鲁棒性"
-          ],
-          "hardwareSystemDetailZh": "摘要未披露硬件、训练时长、吞吐或加速器实现；这里的学习加快指相对无建议策略的学习进展，不能解释为芯片运行加速。",
-          "noveltyZh": "把廉价 LLM 建议与价值初始化结合，特别关注建议并不最优时仍可利用的信息。",
-          "evidence": "已读 daily.json 的完整原始摘要和 arXiv 摘要页；公开 HTML/PDF 请求均失败，未声称读过全文，实验仅保留摘要明确给出的定性结论。 来源：https://arxiv.org/abs/2611.29732"
-        },
-        "experimentDetail": {
-          "setupZh": "实际读到的 arXiv 摘要只说明 DQN 与长时程、稀疏奖励任务，并对子技能做系统扰动；任务名称、模型配置、种子及硬件均未披露于可读部分。",
-          "baselinesZh": "摘要称比较无建议基线，并涉及示范预热和建议引导；具体基线实现与完整消融未能读取。",
-          "metricsZh": [
-            "学习进展或样本效率（摘要定性描述）",
-            "建议子技能退化后的鲁棒性"
-          ],
-          "mainResultsZh": "摘要定性报告退化建议仍比无辅助基线更快学习；本轮没有可支持加速倍数、回报数值或显著性判断的正文证据。",
-          "limitationsZh": "公开 HTML 和 PDF 获取失败，仅实际读取元数据与 arXiv 摘要；算法实现、任务细节、定量实验和复现条件尚缺，不据此判断大规模泛化或系统收益。",
-          "evidence": "已读 daily.json 的完整原始摘要和 arXiv 摘要页；公开 HTML/PDF 请求均失败，未声称读过全文，实验仅保留摘要明确给出的定性结论。 来源：https://arxiv.org/abs/2611.29732"
-        },
-        "evidence": {
-          "usedSources": [
-            "public/research-digest/daily.json: 已实际读取的原始元数据与完整英文摘要",
-            "https://arxiv.org/abs/2611.29732"
-          ],
-          "affiliationEvidence": "队列 DBLP/arXiv 元数据的 affiliations 与 authorAffiliations 均为空，按用户规定记录缺省文案；未猜测作者单位。",
-          "experimentEvidence": "已读 daily.json 的完整原始摘要和 arXiv 摘要页；公开 HTML/PDF 请求均失败，未声称读过全文，实验仅保留摘要明确给出的定性结论。 来源：https://arxiv.org/abs/2611.29732",
-          "missingFields": [
-            "作者单位（元数据缺失）",
-            "全文不可读",
-            "具体任务与模型配置",
-            "定量结果及统计信息",
-            "硬件与执行成本"
-          ]
-        },
-        "confidence": {
-          "summary": 0.84,
-          "motivation": 0.93,
-          "method": 0.78,
-          "experiments": 0.62,
-          "affiliations": 0
-        }
-      },
-      "pushedAt": "2026-11-25T00:38:12.136Z",
-      "emailSentAt": "2026-11-25T00:38:12.136Z",
-      "firstPushedAt": "2026-11-25T00:38:12.136Z"
-    },
-    {
-      "id": "arxiv:2611.10457",
-      "source": "arXiv",
-      "title": "Represented but Not Used: Value-Policy Dissociation in LLM Agents",
-      "authors": [
-        "Yuzhang Luo",
-        "Mohamed Aghzal",
-        "Liangming Pan",
-        "Ziyu Yao"
-      ],
-      "authorAffiliations": [],
-      "affiliations": [],
-      "abstract": "Large language model (LLM) agents need to choose actions whose consequences unfold over multiple future steps, yet poor decisions do not reveal whether the model failed to represent those consequences or failed to use them. Mechanistic interpretability has studied internal representations of environment state and plans, but sequential decision making also requires evaluating how candidate actions change future outcomes. Reinforcement learning formalizes this as action value. We study this computation in Qwen2.5-7B-Instruct, Qwen2.5-32B-Instruct, and GPT-OSS-20B across a partially observed Grid environment and WebShop, a simulated web shopping environment. We find that the relative values of candidate actions are linearly decodable from intermediate hidden states, including at states where the policy prefers a worse action. We call this gap between value representation and policy choice value-policy dissociation. To investigate how represented value relates to action selection, we compare direct interventions along the value readout direction with Natural Value Transport (NVT), a transformation learned from hidden state changes that naturally result from differences in action value. While readout-direction interventions have limited and inconsistent effects, NVT more consistently influences action preferences, particularly at later layers. We also test a closed-loop controller that uses the value readout as a sensor and NVT as an actuator, observing improvements in task outcomes. These results suggest that LLM agents can represent useful prospective value without reliably translating it into policy choice.",
-      "venue": "arXiv",
-      "published": "2026-11-07T04:17:31Z",
-      "updated": "2026-11-07T04:17:31Z",
-      "url": "http://arxiv.org/abs/2611.10457v1",
-      "pdfUrl": "https://arxiv.org/pdf/2611.10457v1",
-      "categories": [
-        "cs.AI"
-      ],
-      "collectedAt": "2026-11-10T02:45:20.394Z",
-      "firstSeenAt": "2026-11-10T02:45:20.394Z",
-      "lastSeenAt": "2026-11-10T02:45:20.394Z",
-      "collectionType": "daily-latest",
-      "matchedQuery": "(all:agent OR all:agents OR all:agentic OR all:reasoning OR all:post-training OR all:alignment OR all:multimodal OR all:world-model) AND (all:LLM OR all:foundation OR all:language)",
-      "collectionTypes": [
-        "daily-latest"
-      ],
-      "matchedQueries": [
-        "(all:agent OR all:agents OR all:agentic OR all:reasoning OR all:post-training OR all:alignment OR all:multimodal OR all:world-model) AND (all:LLM OR all:foundation OR all:language)"
-      ],
-      "targetThemes": [],
-      "conferenceVenues": [],
-      "conferenceYears": [],
-      "recommendationTrack": "algorithm-trend",
-      "recommendationLabel": "算法趋势观察",
-      "recommendationScore": 40.2,
-      "relevanceReason": "命中 LLM/Agent/多模态/后训练等算法趋势主题",
-      "pdfStatus": "remote",
-      "workflow": {
-        "digestStatus": "ready",
-        "emailStatus": "sent",
-        "digestError": "",
-        "harnessVersion": "paper-reader-v1",
-        "collectStatus": "collected",
-        "pdfStatus": "remote",
-        "harnessCheckedAt": "2026-11-11T00:38:40.148Z",
-        "harnessWarnings": [],
-        "emailSentAt": "2026-11-11T00:38:44.738Z",
-        "lastEmailError": ""
-      },
-      "digest": {
-        "summaryZh": "研究发现LLM Agent隐藏状态中可线性读出候选动作价值，即使策略最终选择较差动作。NVT依据自然价值变化学习干预，配合读出反馈改善任务表现，说明可表示的信息不一定被决策使用。",
-        "motivationZh": "Agent选择错误动作可能源于未表示未来后果，也可能源于未利用已形成的价值信息。仅观察最终行为或线性探针准确率，不能说明价值表示是否能因果影响策略。区分表示与使用有助于定位多步决策失效环节和设计有针对性的控制。属于Agent机制解释与决策算法趋势，对硬件架构只有间接工作负载意义。",
-        "methodZh": "从中间状态学习相对动作价值读出，比较沿读出方向的直接干预与自然价值变化学习出的NVT变换。线性探针评估价值排序。NVT学习自然隐藏状态差分。闭环控制以读出为传感器、NVT为执行器。这是隐藏状态分析与干预算法；本轮证据没有支持其带来芯片吞吐、显存或能耗节约。将价值可读性与策略可控性分离，并用自然表示变化构造干预而非仅沿线性读出方向移动。",
-        "experimentsZh": "Qwen2.5-7B/32B-Instruct与GPT-OSS-20B，测试部分可观察Grid和模拟WebShop。比较原策略、价值读出方向干预与NVT；本轮未逐项核对全部控制消融数值。摘要报告较差决策状态仍可读出正确的相对价值；直接读出方向干预效果有限且不稳定，NVT尤其在后层更一致改变偏好，闭环控制改善任务结果；不补写未核对的提升数值。价值标签为任务特定构造，线性可读不证明模型实际采用相同价值计算；受限环境结果不能泛化为通用Agent控制保证。",
-        "affiliationsZh": "未在 DBLP/arXiv 元数据中提供",
-        "tags": [
-          "Agent决策",
-          "机制可解释性",
-          "价值读出",
-          "隐藏状态干预"
-        ],
-        "importance": 3,
-        "researchFitZh": "属于Agent机制解释与决策算法趋势，对硬件架构只有间接工作负载意义。",
-        "hardwareRelevance": 1,
-        "algorithmRelevance": 4,
-        "systemRelevance": 2,
-        "readPriority": "skim",
-        "whyReadZh": "可浏览探针与干预之间的差异，为Agent推理研究提供方法线索，硬件主线无需优先深读。",
-        "limitationsZh": "价值标签为任务特定构造，线性可读不证明模型实际采用相同价值计算；受限环境结果不能泛化为通用Agent控制保证。",
-        "motivationDetail": {
-          "problemZh": "Agent选择错误动作可能源于未表示未来后果，也可能源于未利用已形成的价值信息。",
-          "gapZh": "仅观察最终行为或线性探针准确率，不能说明价值表示是否能因果影响策略。",
-          "whyImportantZh": "区分表示与使用有助于定位多步决策失效环节和设计有针对性的控制。",
-          "userRelevanceZh": "属于Agent机制解释与决策算法趋势，对硬件架构只有间接工作负载意义。",
-          "evidence": "已读取公开HTML摘要、模型环境与价值目标设定；干预结论来自队列完整摘要，未逐项复核闭环结果表。 来源：https://arxiv.org/html/2611.10457v1"
-        },
-        "methodDetail": {
-          "coreIdeaZh": "从中间状态学习相对动作价值读出，比较沿读出方向的直接干预与自然价值变化学习出的NVT变换。",
-          "componentsZh": [
-            "线性探针评估价值排序",
-            "NVT学习自然隐藏状态差分",
-            "闭环控制以读出为传感器、NVT为执行器"
-          ],
-          "hardwareSystemDetailZh": "这是隐藏状态分析与干预算法；本轮证据没有支持其带来芯片吞吐、显存或能耗节约。",
-          "noveltyZh": "将价值可读性与策略可控性分离，并用自然表示变化构造干预而非仅沿线性读出方向移动。",
-          "evidence": "已读取公开HTML摘要、模型环境与价值目标设定；干预结论来自队列完整摘要，未逐项复核闭环结果表。 来源：https://arxiv.org/html/2611.10457v1"
-        },
-        "experimentDetail": {
-          "setupZh": "Qwen2.5-7B/32B-Instruct与GPT-OSS-20B，测试部分可观察Grid和模拟WebShop。",
-          "baselinesZh": "比较原策略、价值读出方向干预与NVT；本轮未逐项核对全部控制消融数值。",
-          "metricsZh": [
-            "候选动作价值排序",
-            "策略偏好变化",
-            "Grid成功与WebShop奖励"
-          ],
-          "mainResultsZh": "摘要报告较差决策状态仍可读出正确的相对价值；直接读出方向干预效果有限且不稳定，NVT尤其在后层更一致改变偏好，闭环控制改善任务结果；不补写未核对的提升数值。",
-          "limitationsZh": "价值标签为任务特定构造，线性可读不证明模型实际采用相同价值计算；受限环境结果不能泛化为通用Agent控制保证。",
-          "evidence": "已读取公开HTML摘要、模型环境与价值目标设定；干预结论来自队列完整摘要，未逐项复核闭环结果表。 来源：https://arxiv.org/html/2611.10457v1"
-        },
-        "evidence": {
-          "usedSources": [
-            "public/research-digest/daily.json: 原始元数据及完整英文摘要",
-            "https://arxiv.org/html/2611.10457v1"
-          ],
-          "affiliationEvidence": "队列DBLP/arXiv元数据未提供单位，按指定缺省文案记录，未据作者身份推测。",
-          "experimentEvidence": "已读取公开HTML摘要、模型环境与价值目标设定；干预结论来自队列完整摘要，未逐项复核闭环结果表。 来源：https://arxiv.org/html/2611.10457v1",
-          "missingFields": [
-            "元数据作者单位",
-            "完整闭环及消融数值的本轮核对",
-            "硬件成本"
-          ]
-        },
-        "confidence": {
-          "summary": 0.9,
-          "motivation": 0.88,
-          "method": 0.85,
-          "experiments": 0.82,
-          "affiliations": 0
-        }
-      },
-      "pushedAt": "2026-11-11T00:38:44.738Z",
-      "emailSentAt": "2026-11-11T00:38:44.738Z",
-      "firstPushedAt": "2026-11-11T00:38:44.738Z"
-    },
-    {
-      "id": "arxiv:2610.31662",
-      "source": "arXiv",
-      "title": "Reliable AI-Assisted Decisions via Selective Auditing",
-      "authors": [
-        "Isaac Gibbs",
-        "Elise L. Han",
-        "Ryan J. Tibshirani",
-        "Tijana Zrnic"
-      ],
-      "authorAffiliations": [],
-      "affiliations": [],
-      "abstract": "We consider online monitoring of an AI system that produces a sequence of decisions. At each round, the system outputs a proposed decision together with a confidence score estimating the trustworthiness of the decision. The decision and confidence score need not be produced by the same model: for example, one agent may propose a decision, while a separate verifier agent evaluates it and outputs a correctness or safety score. Based on this information, we must decide whether to accept the AI decision automatically or consult an expert, such as a human auditor, who reviews the proposal and either accepts or corrects it. We formulate this task as an online constrained optimization problem in which the goal is to minimize the frequency of expert auditing while guaranteeing that the fraction of AI errors that go unaudited stays below a user-defined threshold. We derive a family of algorithms with provable error-control guarantees with no assumptions, including a method that is optimally efficient: it asymptotically attains the best achievable auditing rate for both adversarial and i.i.d. data streams. Experiments on screening harmful requests to large language models, qualitative text annotation, and data labeling show that our methods achieve valid error control in practice while substantially reducing the need for human auditing compared to baselines.",
-      "venue": "arXiv",
-      "published": "2026-10-22T17:59:22Z",
-      "updated": "2026-10-22T17:59:22Z",
-      "url": "http://arxiv.org/abs/2610.31662v1",
-      "pdfUrl": "https://arxiv.org/pdf/2610.31662v1",
-      "categories": [
-        "stat.ML",
-        "cs.LG",
-        "stat.ME"
-      ],
-      "collectedAt": "2026-10-23T23:11:01.503Z",
-      "firstSeenAt": "2026-10-23T23:11:01.503Z",
-      "lastSeenAt": "2026-10-23T23:11:01.503Z",
-      "collectionType": "daily-latest",
-      "matchedQuery": "(all:agent OR all:agents OR all:agentic OR all:reasoning OR all:post-training OR all:alignment OR all:multimodal OR all:world-model) AND (all:LLM OR all:foundation OR all:language)",
-      "collectionTypes": [
-        "daily-latest"
-      ],
-      "matchedQueries": [
-        "(all:agent OR all:agents OR all:agentic OR all:reasoning OR all:post-training OR all:alignment OR all:multimodal OR all:world-model) AND (all:LLM OR all:foundation OR all:language)"
-      ],
-      "targetThemes": [],
-      "conferenceVenues": [],
-      "conferenceYears": [],
-      "recommendationTrack": "algorithm-trend",
-      "recommendationLabel": "算法趋势观察",
-      "recommendationScore": 40.2,
-      "relevanceReason": "命中 LLM/Agent/多模态/后训练等算法趋势主题",
-      "pdfStatus": "remote",
-      "workflow": {
-        "digestStatus": "ready",
-        "emailStatus": "sent",
-        "digestError": "",
-        "harnessVersion": "paper-reader-v1",
-        "collectStatus": "collected",
-        "pdfStatus": "remote",
-        "harnessCheckedAt": "2026-10-24T14:49:27.163Z",
-        "harnessWarnings": [],
-        "emailSentAt": "2026-10-24T14:49:32.084Z",
-        "lastEmailError": ""
-      },
-      "digest": {
-        "summaryZh": "论文研究AI决策的选择性审计：系统为每个自动决策提供置信度，算法只把部分低可信或风险较高样本交给专家，同时约束未被审计的AI错误比例不超过用户设定阈值。作者给出自适应阈值、置信度校准和渐近最优审计算法，并在安全审核、文本编码和数据标注上验证。",
-        "motivationZh": "在AI辅助决策中，全部交给人工审核成本高，完全自动化又会留下不可接受的错误；同时模型置信度可能失准，且数据流可能是非独立甚至对抗性的。因此需要在线选择哪些决策必须人工审计，在尽量减少专家工作量的同时，对“错误逃过审计”的比例给出明确且可证明的控制保证。",
-        "methodZh": "作者把问题写成在线约束优化：每轮观察AI决策及置信分数，决定自动接受还是调用专家。基础算法维护一个随已观察错误加减更新的阈值，置信度低于阈值时审计；进一步加入置信度再校准，并提出optimally efficient selective auditing，使长期审计率逼近在给定错误约束下可达到的最优水平，同时扩展到批处理和其他错误指标。",
-        "experimentsZh": "应用实验覆盖LLM安全审核、质性文本编码和四类数据标注任务。安全实验使用SORRY-Bench 7040条样本和StrongREJECT 1361条样本，以GPT-5.4自一致性8次判断形成置信度，并与随机审计及事后oracle阈值比较；各方法在SORRY-Bench上把错误率控制在目标附近，校准阈值和最优方法节省的审计工作多于基础加性阈值。其他任务也显示最优方法通常获得更高审计节省。",
-        "affiliationsZh": "Isaac Gibbs：University of Toronto；Elise L. Han：Stanford University；Ryan J. Tibshirani：University of California, Berkeley；Tijana Zrnic：Stanford University",
-        "tags": [
-          "选择性审计",
-          "AI安全",
-          "在线学习",
-          "置信度校准",
-          "Human-in-the-loop"
-        ],
-        "importance": 3,
-        "researchFitZh": "属于Agent/AI系统可靠性与人机协同算法，可为自动化Agent中的验证器和人工升级机制提供理论框架；与芯片计算核心本身没有直接联系。",
-        "hardwareRelevance": 1,
-        "algorithmRelevance": 5,
-        "systemRelevance": 3,
-        "readPriority": "skim",
-        "whyReadZh": "若设计高可靠Agent工作流或自动审核系统值得阅读，尤其是其“置信度+选择性人工复核”的控制框架；对当前NPU/GPU微架构主线属于次要趋势。",
-        "limitationsZh": "理论保证针对论文定义的错误比例和反馈机制；真实部署中置信分数质量、人工审计延迟、分布漂移与高风险少数事件可能改变实际收益。",
-        "motivationDetail": {
-          "problemZh": "AI连续产生决策时，若全部人工核验成本过高，而完全自动接受又无法控制漏审错误。",
-          "gapZh": "简单置信阈值通常缺少对自适应/对抗数据流的误差控制与审计效率最优保证，置信分数本身也可能失准。",
-          "whyImportantZh": "在安全审核、标注和专业决策中，需要同时满足可靠性约束与有限人工预算。",
-          "userRelevanceZh": "可直接借鉴到Agent验证器与human escalation流程，但不是用户当前芯片计算核心研究的主线论文。",
-          "evidence": "arXiv HTML abstract、Sections 3-6。"
-        },
-        "methodDetail": {
-          "coreIdeaZh": "用在线自适应阈值把专家审计作为稀缺资源分配给低置信决策，并在长期控制漏审错误比例。",
-          "componentsZh": [
-            "additive thresholding",
-            "confidence calibration",
-            "optimally efficient selective auditing",
-            "批处理/其他错误指标扩展"
-          ],
-          "hardwareSystemDetailZh": "无专用硬件设计；系统抽象是AI决策器、置信度/验证器与专家审核三部分的在线闭环。",
-          "noveltyZh": "在很少分布假设下给出误差控制，并进一步追求审计率的渐近最优效率，而非只做经验阈值选择。",
-          "evidence": "arXiv HTML Sections 3-5，lines 79-84及相关定理。"
-        },
-        "experimentDetail": {
-          "setupZh": "安全审核使用SORRY-Bench 7040条与StrongREJECT 1361条样本；GPT-5.4作为弱验证器并以8次独立判断形成自一致置信度。另测试访谈文本编码和四类数据标注任务。",
-          "baselinesZh": "随机审计、事后oracle fixed threshold，以及基础additive thresholding、带confidence calibration版本和optimally efficient方法的相互比较。",
-          "metricsZh": [
-            "错误率Err(T)",
-            "审计工作节省Eff(T)",
-            "目标错误阈值α"
-          ],
-          "mainResultsZh": "SORRY-Bench上各方法错误率接近目标α，带校准的阈值和最优方法比基础阈值节省更多审核；StrongREJECT上两种高效方法略高于目标α。文本编码与标注任务中，最优方法通常更接近oracle的审核节省。",
-          "limitationsZh": "部分“人工审核”实验用更强模型做代理，且论文正文可读片段未给出所有任务的统一具体节省百分比，因此这里只报告定性比较。",
-          "evidence": "arXiv HTML Section 6，lines 345-373。"
-        },
-        "evidence": {
-          "usedSources": [
-            "daily.json metadata/abstract",
-            "arXiv HTML author block",
-            "arXiv HTML Sections 3-6"
-          ],
-          "affiliationEvidence": "arXiv HTML首页明确列出University of Toronto、Stanford University和UC Berkeley。",
-          "experimentEvidence": "arXiv HTML Section 6明确给出SORRY-Bench/StrongREJECT规模、GPT-5.4与K=8设置、baselines及结果方向。",
-          "missingFields": [
-            "所有实验的精确audit-saving百分比",
-            "硬件/芯片评测"
-          ]
-        },
-        "confidence": {
-          "summary": 0.98,
-          "motivation": 0.98,
-          "method": 0.96,
-          "experiments": 0.94,
-          "affiliations": 0.99
-        }
-      },
-      "pushedAt": "2026-10-24T14:49:32.084Z",
-      "emailSentAt": "2026-10-24T14:49:32.084Z",
-      "firstPushedAt": "2026-10-24T14:49:32.084Z"
-    },
-    {
-      "id": "arxiv:2611.06911",
-      "source": "arXiv",
-      "title": "BEAKER: An Expert-Curated Benchmark for Embodied Brains in Self-Driving Chemical Laboratories",
-      "authors": [
-        "Fei Lin",
-        "Tengchao Zhang",
-        "Ziyang Gong",
-        "Xiaotong Yu",
-        "Bohan Zhang",
-        "Yifan Zhou",
-        "Qihao Yang",
-        "Ji Dai",
-        "Dong Li",
-        "Yining Jiang",
-        "Qinghua Ni",
-        "Jun Huang",
-        "Qiang Zhang",
-        "Yue Zhou",
-        "Zhihang Zhong",
-        "Yonglin Tian",
-        "Fei-Yue Wang",
-        "Xue Yang"
-      ],
-      "authorAffiliations": [],
-      "affiliations": [],
-      "abstract": "Self-Driving Chemical Laboratories (SDCLs) are moving chemical experimentation toward embodied automation, where machines must perceive laboratory scenes, reason about experimental states, and act under physical, procedural, and safety constraints. Although Multimodal Large Language Models (MLLMs) are increasingly considered as embodied brains for such systems, existing laboratory benchmarks mainly focus on safety, anomaly detection, or general scientific understanding, leaving their execution-oriented embodied capabilities underexplored. To fill this gap, we introduce BEAKER, a Benchmark for evaluating Embodied Actionability, Knowledge, Experimentation, and Reasoning in SDCLs. BEAKER contains 1,000 expert-curated question-answer samples across 11 image and video task types, covering key judgments required for chemical laboratory execution, including affordance grounding, trajectory planning, equipment, state, and safety recognition, apparatus setup, operation and step reasoning, and temporal procedure reasoning. All questions and annotations are manually created and reviewed by chemistry and embodied Artificial Intelligence (AI) experts, without AI-assisted generation or annotation. We evaluate 28 general-purpose, science-oriented, chemistry-specialized, and embodied MLLMs in an offline, single-turn setting. Results show that current models can follow coarse experimental procedures in videos, but still struggle to ground actions into operable regions and feasible trajectories, to recognize fine-grained laboratory apparatus, states, and safety norms, and to order steps in mid-length procedures. BEAKER thus reveals a clear gap between coarse procedural understanding and the precise, action-grounded perception required for laboratory execution, providing a diagnostic benchmark for future MLLMs in SDCLs.",
-      "venue": "arXiv",
-      "published": "2026-11-04T18:57:17Z",
-      "updated": "2026-11-04T18:57:17Z",
-      "url": "http://arxiv.org/abs/2611.06911v1",
-      "pdfUrl": "https://arxiv.org/pdf/2611.06911v1",
-      "categories": [
-        "cs.AI"
-      ],
-      "collectedAt": "2026-11-06T00:57:54.940Z",
-      "firstSeenAt": "2026-11-06T00:57:54.940Z",
-      "lastSeenAt": "2026-11-06T00:57:54.940Z",
-      "collectionType": "daily-latest",
-      "matchedQuery": "(all:agent OR all:agents OR all:agentic OR all:reasoning OR all:post-training OR all:alignment OR all:multimodal OR all:world-model) AND (all:LLM OR all:foundation OR all:language)",
-      "collectionTypes": [
-        "daily-latest"
-      ],
-      "matchedQueries": [
-        "(all:agent OR all:agents OR all:agentic OR all:reasoning OR all:post-training OR all:alignment OR all:multimodal OR all:world-model) AND (all:LLM OR all:foundation OR all:language)"
-      ],
-      "targetThemes": [],
-      "conferenceVenues": [],
-      "conferenceYears": [],
-      "recommendationTrack": "algorithm-trend",
-      "recommendationLabel": "算法趋势观察",
-      "recommendationScore": 39.2,
-      "relevanceReason": "命中 LLM/Agent/多模态/后训练等算法趋势主题",
-      "pdfStatus": "remote",
-      "workflow": {
-        "digestStatus": "ready",
-        "emailStatus": "sent",
-        "digestError": "",
-        "harnessVersion": "paper-reader-v1",
-        "collectStatus": "collected",
-        "pdfStatus": "remote",
-        "harnessCheckedAt": "2026-11-06T02:38:41.285Z",
-        "harnessWarnings": [],
-        "emailSentAt": "2026-11-06T02:38:46.333Z",
-        "lastEmailError": ""
-      },
-      "digest": {
-        "summaryZh": "BEAKER由化学和具身AI专家手工编制、审核图像与视频问答，覆盖行动可供性、轨迹、装置和时序推理。模型能理解粗流程，但在操作区域、可行轨迹、细仪器和中等长度步骤排序上仍困难，摘要未给总分。",
-        "motivationZh": "实验室Agent需要判断可操作区域、轨迹与仪器状态，而已有题集偏重一般知识或异常识别。理解视频的大致流程不代表能选对操作位置和可行步骤，缺乏执行导向的诊断。专家审核的行动任务可揭示感知到实际操作之间的能力差距。适合多模态与具身Agent趋势跟踪，未涉及GPU/NPU或量化设计。",
-        "methodZh": "BEAKER由化学和具身AI专家手工编制、审核图像与视频问答，覆盖行动可供性、轨迹、装置和时序推理。离线单轮问答，不是实验室机器人闭环控制或真实试剂操作。按执行需求组织任务，且避免AI辅助生成与标注引入同源评估偏差。",
-        "experimentsZh": "1,000条专家题、11类任务，对28个通用、科学、化学及具身MLLM评测。不同模型类别按任务类型对比；摘要未列完整模型名单。模型能理解粗流程，但在操作区域、可行轨迹、细仪器和中等长度步骤排序上仍困难，摘要未给总分。离线题目表现不能当作真实实验执行成功率；本轮未读评分规则和模型细表。",
-        "affiliationsZh": "未在 DBLP/arXiv 元数据中提供",
-        "tags": [
-          "实验室Agent",
-          "多模态基准",
-          "行动落地"
-        ],
-        "importance": 2,
-        "researchFitZh": "适合多模态与具身Agent趋势跟踪，未涉及GPU/NPU或量化设计。",
-        "hardwareRelevance": 1,
-        "algorithmRelevance": 3,
-        "systemRelevance": 2,
-        "readPriority": "skim",
-        "whyReadZh": "适合多模态与具身Agent趋势跟踪，未涉及GPU/NPU或量化设计。专家审核的行动任务可揭示感知到实际操作之间的能力差距。",
-        "limitationsZh": "离线题目表现不能当作真实实验执行成功率；本轮未读评分规则和模型细表。",
-        "motivationDetail": {
-          "problemZh": "实验室Agent需要判断可操作区域、轨迹与仪器状态，而已有题集偏重一般知识或异常识别。",
-          "gapZh": "理解视频的大致流程不代表能选对操作位置和可行步骤，缺乏执行导向的诊断。",
-          "whyImportantZh": "专家审核的行动任务可揭示感知到实际操作之间的能力差距。",
-          "userRelevanceZh": "适合多模态与具身Agent趋势跟踪，未涉及GPU/NPU或量化设计。",
-          "evidence": "队列元数据与完整原始英文摘要；已读arXiv摘要给出规模、人工审核、单轮设置及定性发现。"
-        },
-        "methodDetail": {
-          "coreIdeaZh": "BEAKER由化学和具身AI专家手工编制、审核图像与视频问答，覆盖行动可供性、轨迹、装置和时序推理。",
-          "componentsZh": [
-            "人工专家题集",
-            "图像视频任务",
-            "分项能力诊断"
-          ],
-          "hardwareSystemDetailZh": "离线单轮问答，不是实验室机器人闭环控制或真实试剂操作。",
-          "noveltyZh": "按执行需求组织任务，且避免AI辅助生成与标注引入同源评估偏差。",
-          "evidence": "队列元数据与完整原始英文摘要；已读arXiv摘要给出规模、人工审核、单轮设置及定性发现。"
-        },
-        "experimentDetail": {
-          "setupZh": "1,000条专家题、11类任务，对28个通用、科学、化学及具身MLLM评测。",
-          "baselinesZh": "不同模型类别按任务类型对比；摘要未列完整模型名单。",
-          "metricsZh": [
-            "分项问答表现",
-            "行动与轨迹落地能力"
-          ],
-          "mainResultsZh": "模型能理解粗流程，但在操作区域、可行轨迹、细仪器和中等长度步骤排序上仍困难，摘要未给总分。",
-          "limitationsZh": "离线题目表现不能当作真实实验执行成功率；本轮未读评分规则和模型细表。",
-          "evidence": "队列元数据与完整原始英文摘要；已读arXiv摘要给出规模、人工审核、单轮设置及定性发现。"
-        },
-        "evidence": {
-          "usedSources": [
-            "public/research-digest/daily.json: metadata and complete original abstract",
-            "https://arxiv.org/abs/2611.06911v1"
-          ],
-          "affiliationEvidence": "队列 affiliations 与 authorAffiliations 字段均为空；按任务要求填写元数据缺失说明。",
-          "experimentEvidence": "队列元数据与完整原始英文摘要；已读arXiv摘要给出规模、人工审核、单轮设置及定性发现。",
-          "missingFields": [
-            "结构化作者单位",
-            "未核验全文方法与实验细节"
-          ]
-        },
-        "confidence": {
-          "summary": 0.88,
-          "motivation": 0.85,
-          "method": 0.79,
-          "experiments": 0.75,
-          "affiliations": 0
-        }
-      },
-      "pushedAt": "2026-11-06T02:38:46.333Z",
-      "emailSentAt": "2026-11-06T02:38:46.333Z",
-      "firstPushedAt": "2026-11-06T02:38:46.333Z"
     }
   ],
   "kind": "history",
